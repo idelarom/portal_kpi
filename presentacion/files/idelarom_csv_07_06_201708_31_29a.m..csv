@@ -1,0 +1,72 @@
+Id;Nombre;Porcentaje_completado;Duración;Comienzo;Fin;Predecesoras;Nombres_de_los_recursos;Nivel_de_esquema
+1;PREVENTA;100%;149 días;mar 25/10/16;vie 19/05/17;;;1
+2;Planeación;100%;110 días;lun 28/11/16;lun 01/05/17;;;2
+3; Plan de recursos humanos;100%;2 horas;lun 28/11/16;lun 28/11/16;;;3
+4; Plan de implementación;100%;4 horas;lun 28/11/16;lun 28/11/16;3;IG,DV,BS;3
+5; Definir plan de comunicación;100%;2 horas;lun 28/11/16;lun 28/11/16;4;;3
+6;Requerimientos listo  (Servidores y Acceso) México , Colombia;100%;0 horas;lun 23/01/17;lun 23/01/17;;Cemex;3
+7;Requerimientos listos  USA;100%;0 horas;lun 01/05/17;lun 01/05/17;;Cemex;3
+8;Requerimientos Europa ;100%;0 horas;lun 23/01/17;lun 23/01/17;;Cemex;3
+9;Diseño;100%;2 días;mar 24/01/17;mié 25/01/17;;;2
+10;Analisis para migración de   los 8 ACS ;100%;1 día;mar 24/01/17;mar 24/01/17;6FC+1 día;;3
+11;Realizar Plan de  migración (Reunión con Cliente);100%;1 día;mié 25/01/17;mié 25/01/17;10;IG,BS;3
+12;Ejecución;100%;149 días;mar 25/10/16;vie 19/05/17;;;2
+13;Deployment ISE ;100%;1 día;mar 07/02/17;mar 07/02/17;;IG;3
+14;Migración de ACS España TACACs;100%;2 días;mié 08/02/17;jue 09/02/17;;;3
+15;Montar  base de datos manualmente;100%;1 día;mié 08/02/17;mié 08/02/17;13;IG;4
+16;Pruebas en diferentes dispositivos;100%;1 día;jue 09/02/17;jue 09/02/17;15;IG;4
+17; Europa ;100%;9 días;vie 10/02/17;mié 22/02/17;;;3
+18; Migración de ACS España  hacia 3 ISEs EUROPA ;100%;6 días;vie 10/02/17;vie 17/02/17;;;4
+19; Configuración de politicas de Radius ;100%;1 día;vie 10/02/17;vie 10/02/17;16;;5
+20; Configuración de requerimientos de ISE;100%;1 día;lun 13/02/17;lun 13/02/17;19;;5
+21; Configuración de AD;100%;1 día;mar 14/02/17;mar 14/02/17;20;;5
+22; Configuración de WLC por SSID;100%;1 día;mié 15/02/17;mié 15/02/17;21;;5
+23; Configuración de Políticas de autenticación;100%;1 día;jue 16/02/17;jue 16/02/17;22;;5
+24; Configuración de invitados /sin activar;100%;1 día;vie 17/02/17;vie 17/02/17;23;;5
+25; Migración de ACS Inglaterra  hacia  ISE EUROPA ;100%;3 días;lun 20/02/17;mié 22/02/17;;;4
+26;  Configuración de politicas de Radius ;100%;0.5 días;lun 20/02/17;lun 20/02/17;24;;5
+27;  Configuración de requerimientos de ISE;100%;0.5 días;lun 20/02/17;lun 20/02/17;26;;5
+28;  Configuración de AD;100%;0.5 días;mar 21/02/17;mar 21/02/17;27;;5
+29;  Configuración de WLC por SSID;100%;0.5 días;mar 21/02/17;mar 21/02/17;28;;5
+30;  Configuración de Políticas de autenticación;100%;0.5 días;mié 22/02/17;mié 22/02/17;29;;5
+31;  Configuración de invitados /sin activar;100%;0.5 días;mié 22/02/17;mié 22/02/17;30;;5
+32;Europa Listo para fase pruebas;100%;0 horas;mié 22/02/17;mié 22/02/17;31;;4
+33;Mexico;100%;8 días;jue 23/02/17;lun 06/03/17;;;3
+34;Configuración ISE MEX  (Management y Politicas);100%;1 día;jue 23/02/17;jue 23/02/17;32;IG;4
+35;Configuración de Politicas de ACS a ISE de Colombia ;100%;1 día;vie 24/02/17;vie 24/02/17;34;IG;4
+36;Configuración de politicas de Radius ;100%;1 día;lun 27/02/17;lun 27/02/17;35;IG;4
+37;Configuración de requerimientos de ISE;100%;1 día;mar 28/02/17;mar 28/02/17;36;IG;4
+38;Configuración de AD;100%;1 día;mié 01/03/17;mié 01/03/17;37;IG;4
+39;Configuración de WLC por SSID;100%;1 día;jue 02/03/17;jue 02/03/17;38;IG;4
+40;Configuración de Políticas de autenticación;100%;1 día;vie 03/03/17;vie 03/03/17;39;IG;4
+41;Configuración de invitados /sin activar;100%;1 día;lun 06/03/17;lun 06/03/17;40;IG;4
+42;México listo  a Pruebas  ;100%;0 horas;lun 06/03/17;lun 06/03/17;41;IG;4
+43;Migración de ACS hacia 2 ISE USA;100%;12 días;lun 01/05/17;mar 16/05/17;;;3
+44; Configuración de politicas de Radius ;100%;6 días;lun 01/05/17;lun 08/05/17;;IG;4
+45; Configuración de requerimientos de ISE;100%;1 día;mar 09/05/17;mar 09/05/17;44;IG;4
+46; Configuración de AD;100%;1 día;mié 10/05/17;mié 10/05/17;45;IG;4
+47; Configuración de WLC por SSID;100%;1 día;jue 11/05/17;jue 11/05/17;46;IG;4
+48; Configuración de Políticas de autenticación;100%;1 día;vie 12/05/17;vie 12/05/17;47;IG;4
+49; Configuración de invitados /sin activar;100%;1 día;lun 15/05/17;lun 15/05/17;48;IG;4
+50; Pruebas  de autenticación (tokens cuando aplique);100%;1 día;mar 16/05/17;mar 16/05/17;49;IG;4
+51; USA listo para pruebas;100%;0 horas;mar 16/05/17;mar 16/05/17;50;IG;4
+52;Pruebas  &  Fine Tunning;100%;60 días;vie 24/02/17;jue 18/05/17;;;3
+53;Pruebas y Fine tunning  Europa;100%;4 días;vie 24/02/17;mié 01/03/17;32FC+1 día;IG;4
+54;Pruebas y Fine tunning  LATAM;100%;4 días;mié 08/03/17;lun 13/03/17;42FC+1 día;IG;4
+55;Pruebas y Fine Tunning USA;100%;1 día;jue 18/05/17;jue 18/05/17;51FC+1 día;IG;4
+56;Documentación y Trasferencia de conocimientos;100%;49 días;mar 14/03/17;vie 19/05/17;;;3
+57;Documentación Europa;100%;1 día;mar 14/03/17;mar 14/03/17;54;IG;4
+58;Documentación  LATAM;100%;1 día;mié 15/03/17;mié 15/03/17;57;IG;4
+59;Documentación USA;100%;1 día;vie 19/05/17;vie 19/05/17;55;IG;4
+60;Transferencia de conocimientos;100%;2 días;mié 15/03/17;jue 16/03/17;57;IG;4
+61;Liberación a producción;100%;2 días;mar 25/10/16;mié 26/10/16;;;3
+62;Liberación ISE Europa;100%;1 día;mar 25/10/16;mar 25/10/16;;IG;4
+63;Monitoreo;100%;2 días;mar 25/10/16;mié 26/10/16;;IG;4
+64;Liberación ISE  México (LATAM);100%;1 día;mar 25/10/16;mar 25/10/16;;IG;4
+65;Monitoreo;100%;2 días;mar 25/10/16;mié 26/10/16;;IG;4
+66;Liberación ISE  USA;100%;1 día;mar 25/10/16;mar 25/10/16;;IG;4
+67;Monitoreo;100%;2 días;mar 25/10/16;mié 26/10/16;;IG;4
+68;Cierre;100%;0.75 días;jue 27/10/16;jue 27/10/16;;;2
+69;Reunión de cierre y lecciones aprendidas;100%;2 horas;jue 27/10/16;jue 27/10/16;67;IG,DV,BS;3
+70;Transfercia a soporte;100%;2 horas;jue 27/10/16;jue 27/10/16;69;IG;3
+71;Firma de documento de cierre;100%;2 horas;jue 27/10/16;jue 27/10/16;70;IG;3
