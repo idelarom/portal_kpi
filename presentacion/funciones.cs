@@ -80,18 +80,7 @@ namespace presentacion
             }
         }
 
-        public static void ActualizaAvances()
-        {
-            try
-            {
-                ProyectosCOM proyecto_actualiza = new ProyectosCOM();
-                DataSet dsss = proyecto_actualiza.actualizar_avances();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+  
 
         public static Boolean Format(DataTable dt)
         {

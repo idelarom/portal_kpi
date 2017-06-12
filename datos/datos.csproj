@@ -53,23 +53,6 @@
   <ItemGroup>
     <Compile Include="conexion.cs" />
     <Compile Include="Datos.cs" />
-    <Compile Include="Modelos\menus.cs" />
-    <Compile Include="Modelos\Model.cs" />
-    <Compile Include="Modelos\proyectos.cs" />
-    <Compile Include="Modelos\proyectos_clientes_contactos.cs" />
-    <Compile Include="Modelos\proyectos_correos_historial.cs" />
-    <Compile Include="Modelos\proyectos_documentos.cs" />
-    <Compile Include="Modelos\proyectos_empleados.cs" />
-    <Compile Include="Modelos\proyectos_entregables.cs" />
-    <Compile Include="Modelos\proyectos_involucrados.cs" />
-    <Compile Include="Modelos\proyectos_minutas.cs" />
-    <Compile Include="Modelos\proyectos_minutas_participantes.cs" />
-    <Compile Include="Modelos\proyectos_minutas_pendientes.cs" />
-    <Compile Include="Modelos\proyectos_tareas.cs" />
-    <Compile Include="Modelos\roles_proyecto.cs" />
-    <Compile Include="Modelos\usuarios.cs" />
-    <Compile Include="Modelos\usuarios_perfiles.cs" />
-    <Compile Include="Modelos\usuarios_proyectos.cs" />
     <Compile Include="NAVISION\Employee.cs" />
     <Compile Include="NAVISION\NAVISION.cs" />
     <Compile Include="OPTRACKER\ModelOPT.cs" />

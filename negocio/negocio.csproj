@@ -50,20 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Componentes\ClientesCOM.cs" />
-    <Compile Include="Componentes\CorreosCOM.cs" />
-    <Compile Include="Componentes\DocumentosCOM.cs" />
     <Compile Include="Componentes\EmpleadosCOM.cs" />
-    <Compile Include="Componentes\EntregablesCOM.cs" />
-    <Compile Include="Componentes\InvolucradosCOM.cs" />
-    <Compile Include="Componentes\MenuCOM.cs" />
-    <Compile Include="Componentes\MinutasCOM.cs" />
-    <Compile Include="Componentes\ProyectosCOM.cs" />
-    <Compile Include="Componentes\ReportesCOM.cs" />
-    <Compile Include="Componentes\RolesCOM.cs" />
-    <Compile Include="Componentes\TareasCOM.cs" />
     <Compile Include="Componentes\To.cs" />
-    <Compile Include="Componentes\UsuariosCOM.cs" />
     <Compile Include="Entidades\ArbolInvolucrados.cs" />
     <Compile Include="Entidades\SiteDataItem.cs" />
     <Compile Include="Entidades\UsuariosENT.cs" />

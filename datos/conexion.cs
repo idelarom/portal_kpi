@@ -86,16 +86,11 @@ namespace datos
         //obtener cadena de conexion segun el parametro de  System.Configuration.ConfigurationManager.AppSettings["cs"];
         public static string obten_cadena_con(int ValueCadCon)
         {
-            string cadena;
+            string cadena = "";
             try
             {
                 switch (ValueCadCon)
                 {
-                    case 1:
-                    default:
-                        cadena = System.Configuration.ConfigurationManager.ConnectionStrings["Modeldb"].ToString();
-                        break;
-
                     case 2:
                         cadena = System.Configuration.ConfigurationManager.ConnectionStrings["NAVISION"].ToString();
                         break;
