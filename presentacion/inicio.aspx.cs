@@ -24,33 +24,7 @@ namespace presentacion
             {
                 string usuario = Session["usuario"] as string;
             }
-           // div_usuarios.Visible = Convert.ToBoolean(Session["administrador"]);
         }
-
-
-        #region FUNCIONES
-
-        //private void Menu(string filtro)
-        //{
-        //    try
-        //    {
-        //        int id_menu_padre = Request.QueryString["m"] == null ? 0 : Convert.ToInt32(funciones.de64aTexto(Request.QueryString["m"]));
-        //        bool admnistrador = Convert.ToBoolean(Session["administrador"]);
-        //        bool cliente = Convert.ToBoolean(Session["cliente"]);
-        //        MenuCOM menus = new MenuCOM();
-        //        DataSet ds = menus.ListadoMenus(id_menu_padre,admnistrador, filtro, cliente);
-        //        DataTable dt_menus = ds.Tables[0];
-        //        if (dt_menus.Rows.Count > 0)
-        //        {
-        //            repeat_menu.DataSource = dt_menus;
-        //            repeat_menu.DataBind();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Alert.ShowAlertError(ex.ToString(), this);
-        //    }
-        //}
 
 
         private void ModalShow(string modalname)
@@ -59,8 +33,6 @@ namespace presentacion
                              "ModalShow('" + modalname + "');", true);
         }
 
-
-
-        #endregion
+        
     }
 }

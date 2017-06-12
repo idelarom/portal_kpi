@@ -43,80 +43,7 @@ namespace presentacion
         }
 
 
-        //private string EditarUsuario(int id_usuario, string usuario, string contraseña, int id_uperfil)
-        //{
-        //    try
-        //    {
-        //        usuarios entidad = new usuarios();
-        //        UsuariosCOM usuarios = new UsuariosCOM();
-        //        entidad.id_usuario = id_usuario;
-        //        entidad.password = usuario;
-        //        entidad.usuario = contraseña;
-        //        entidad.id_uperfil = id_uperfil;
-        //        entidad.usuario_edicion = "Sistema";
-        //        return  usuarios.Editar(entidad);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.ToString();
-        //    }
-        //}
-
-        //private string EditarUsuarioImagen(int id_usuario, string imagen)
-        //{
-        //    try
-        //    {
-        //        usuarios entidad = new usuarios();
-        //        UsuariosCOM usuarios = new UsuariosCOM();
-        //        entidad.id_usuario = id_usuario;
-        //        entidad.img_profile = imagen;
-        //        entidad.usuario_edicion = "Sistema";
-        //        return usuarios.EditarImagen(entidad);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.ToString();
-        //    }
-        //}
-        //protected void lnkguardarconfiguracion_Click(object sender, EventArgs e)
-        //{
-        //    string vmensaje = "";
-        //    try
-        //    {
-        //        if (contraseña.Visible && rtxtcontraseña.Text == "")
-        //        {
-        //            vmensaje = "Ingrese una Contraseña";
-        //        }
-        //        else if (contraseña.Visible && rtxtcontraseña.Text != "")
-        //        {
-        //            vmensaje = EditarUsuario(Convert.ToInt32(Session["id_usuario"]), funciones.deTextoa64(rtxtcontraseña.Text.Trim()), (Session["usuario"] as string).ToUpper().Trim(), Convert.ToInt32(Session["id_uperfil"]));
-
-        //            Session["password"] = rtxtcontraseña.Text.Trim();
-        //        }
-        //        else {
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        vmensaje = ex.ToString();
-        //    }
-        //    finally {
-        //        lnkcargandotermina22.Style["display"]= "none";
-        //        lnkguardarconfiguracion22.Visible = true;
-        //        if (vmensaje == "")
-        //        {
-        //            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
-        //                    "ModalClose('#myModalUserConfig');", true);
-        //            Alert.ShowAlert("Configuración guardada correctamente","Mensaje del Sistema",this.Page);
-        //        }
-        //        else {
-        //            Alert.ShowAlertError(vmensaje,this.Page);
-        //        }
-        //    }
-        //}
-
-      
+       
 
         private void CargarImagen()
         {
@@ -142,37 +69,6 @@ namespace presentacion
             }
         }
 
-        //protected void lnksubirfotoperfil_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (fupfotoperfil.HasFile)
-        //        {
-        //            if (Path.GetExtension(fupfotoperfil.FileName).ToLower() != ".jpg"
-        //                || Path.GetExtension(fupfotoperfil.FileName).ToLower() != ".png"
-        //                || Path.GetExtension(fupfotoperfil.FileName).ToLower() != ".gif"
-        //                || Path.GetExtension(fupfotoperfil.FileName).ToLower() != ".jpeg")
-        //            {
-
-        //                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/files/users/"));//path localDateTime localDate = DateTime.Now;
-                       
-        //                string name = dirInfo + (Session["usuario"] as string).Trim() + Path.GetExtension(fupfotoperfil.FileName);
-        //                funciones.UploadFile(fupfotoperfil, name.Trim(), this.Page);
-        //                Session["imagen"] = (Session["usuario"] as string).Trim() + Path.GetExtension(fupfotoperfil.FileName);
-        //                EditarUsuarioImagen(Convert.ToInt32(Session["id_usuario"]),(Session["usuario"] as string).Trim() + Path.GetExtension(fupfotoperfil.FileName));
-        //                CargarImagen();
-        //                Alert.ShowAlert("Configuración guardada correctamente", "Mensaje del Sistema", this.Page);
-        //            }
-        //            else
-        //            {
-        //                Alert.ShowAlertError("Solo se admiten formatos de imagen JPG, PNG, GIF Y JPEG", this.Page);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Alert.ShowAlertError(ex.ToString(), this.Page);
-        //    }
-        //}
+      
     }
 }
