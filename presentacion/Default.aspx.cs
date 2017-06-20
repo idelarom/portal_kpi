@@ -6,7 +6,7 @@ namespace presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Redirect("~/login.aspx?c=1");
+            Response.Redirect("~/login.aspx");
         }
     }
 }

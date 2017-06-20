@@ -11,10 +11,6 @@ namespace presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-               
-            }
         }
 
         protected void btniniciar_Click(object sender, EventArgs e)
@@ -51,6 +47,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
+                Alert.ShowAlertInfo(ex.ToString(), "Mensaje del Sistema", this);
                 return false;
             }
         }

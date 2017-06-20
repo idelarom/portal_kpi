@@ -91,6 +91,9 @@ namespace datos
             {
                 switch (ValueCadCon)
                 {
+                    case 1:
+                        cadena = System.Configuration.ConfigurationManager.ConnectionStrings["DB_PORTAL"].ToString();
+                        break;
                     case 2:
                         cadena = System.Configuration.ConfigurationManager.ConnectionStrings["NAVISION"].ToString();
                         break;

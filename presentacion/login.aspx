@@ -50,7 +50,7 @@
                     <asp:Button ID="btniniciar" runat="server" Text="Iniciar Sesión" CssClass="btn btn-danger" OnClick="btniniciar_Click" OnClientClick="return ConfirmMinutaModal();" />
                 </div>
 
-                <div class="col-xs-12" runat="server" id="div_cambiodomiinio" visible="false">
+                <div class="col-xs-12" runat="server" id="div_cambiodomiinio" visible="true">
                     <br />
                     <p>
                         ¿No puedes Iniciar Sesión?

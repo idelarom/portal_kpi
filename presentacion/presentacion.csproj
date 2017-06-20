@@ -151,7 +151,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="admon\Default.aspx" />
     <Content Include="bin\ClosedXML.dll" />
     <Content Include="bin\datos.dll" />
     <Content Include="bin\datos.pdb" />
@@ -189,6 +188,7 @@
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\npm.js" />
+    <Content Include="catalogo_perfiles.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="dist\css\AdminLTE.css" />
     <Content Include="dist\css\AdminLTE.min.css" />
@@ -267,44 +267,11 @@
     <Content Include="img\loading.gif" />
     <Content Include="img\loading_2.gif" />
     <Content Include="img\logo_bar.png" />
+    <Content Include="img\logo_bar_sm.png" />
     <Content Include="img\logo_login.png" />
     <Content Include="img\user.png" />
     <Content Include="inicio.aspx" />
     <Content Include="login.aspx" />
-    <Content Include="pages\calendar.html" />
-    <Content Include="pages\charts\chartjs.html" />
-    <Content Include="pages\charts\flot.html" />
-    <Content Include="pages\charts\inline.html" />
-    <Content Include="pages\charts\morris.html" />
-    <Content Include="pages\examples\404.html" />
-    <Content Include="pages\examples\500.html" />
-    <Content Include="pages\examples\blank.html" />
-    <Content Include="pages\examples\invoice-print.html" />
-    <Content Include="pages\examples\invoice.html" />
-    <Content Include="pages\examples\lockscreen.html" />
-    <Content Include="pages\examples\login.html" />
-    <Content Include="pages\examples\pace.html" />
-    <Content Include="pages\examples\profile.html" />
-    <Content Include="pages\examples\register.html" />
-    <Content Include="pages\forms\advanced.html" />
-    <Content Include="pages\forms\editors.html" />
-    <Content Include="pages\forms\general.html" />
-    <Content Include="pages\layout\boxed.html" />
-    <Content Include="pages\layout\collapsed-sidebar.html" />
-    <Content Include="pages\layout\fixed.html" />
-    <Content Include="pages\layout\top-nav.html" />
-    <Content Include="pages\mailbox\compose.html" />
-    <Content Include="pages\mailbox\mailbox.html" />
-    <Content Include="pages\mailbox\read-mail.html" />
-    <Content Include="pages\tables\data.html" />
-    <Content Include="pages\tables\simple.html" />
-    <Content Include="pages\UI\buttons.html" />
-    <Content Include="pages\UI\general.html" />
-    <Content Include="pages\UI\icons.html" />
-    <Content Include="pages\UI\modals.html" />
-    <Content Include="pages\UI\sliders.html" />
-    <Content Include="pages\UI\timeline.html" />
-    <Content Include="pages\widgets.html" />
     <Content Include="plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="plugins\bootstrap-slider\slider.css" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1235,14 +1202,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="admon\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Alert.cs" />
+    <Compile Include="catalogo_perfiles.aspx.cs">
+      <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="admon\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="catalogo_perfiles.aspx.designer.cs">
+      <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Alert.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
