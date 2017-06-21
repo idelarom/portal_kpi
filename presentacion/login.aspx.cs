@@ -111,7 +111,6 @@ namespace presentacion
 
         protected void lnkcambiardominio_Click(object sender, EventArgs e)
         {
-            //sisisisisis
             div_dominio.Visible = div_dominio.Visible ? false : true;
         }
     }
