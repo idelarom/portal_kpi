@@ -210,7 +210,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Alert.ShowAlertError(ex.ToString(), page);
+                Alert.ShowAlertError(ex.Message, page);
                 return false;
             }
         }

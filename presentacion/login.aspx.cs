@@ -30,24 +30,24 @@ namespace presentacion
                 bool retur = true;
                 if (usuario == "")
                 {
-                    Alert.ShowAlertInfo("Ingrese Usuario", "Mensaje del Sistema", this);
+                    Toast.Info("Ingrese Usuario", "Mensaje del Sistema", this);
                     retur = false;
                 }
                 if (password == "")
                 {
-                    Alert.ShowAlertInfo("Ingrese Contraseña", "Mensaje del Sistema", this);
+                    Toast.Info("Ingrese Contraseña", "Mensaje del Sistema", this);
                     retur = false;
                 }
                 if (!LoginActive(usuario, password, rtxtdominio.Text.Trim()))
                 {
-                    Alert.ShowAlertInfo("Credenciales Invalidas", "Mensaje del Sistema", this);
+                    Toast.Error("Credenciales Invalidas", this);
                     retur = false;
                 }
                 return retur;
             }
             catch (Exception ex)
             {
-                Alert.ShowAlertInfo(ex.ToString(), "Mensaje del Sistema", this);
+                Alert.ShowAlertInfo(ex.Message, "Mensaje del Sistema", this);
                 return false;
             }
         }

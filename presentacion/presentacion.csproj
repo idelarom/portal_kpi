@@ -1248,6 +1248,7 @@
       <DependentUpon>Login.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Toast.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

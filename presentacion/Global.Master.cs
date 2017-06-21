@@ -65,7 +65,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Alert.ShowAlertError(ex.ToString(), this.Page);
+                Alert.ShowAlertError(ex.Message, this.Page);
             }
         }
 

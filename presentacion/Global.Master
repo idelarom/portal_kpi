@@ -74,6 +74,8 @@
     <script src="dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <style type="text/css">
         .skin-blue .main-header .navbar .sidebar-toggle:hover {
             background-color: #C42C2C;
