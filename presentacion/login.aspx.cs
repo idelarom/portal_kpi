@@ -25,7 +25,7 @@ namespace presentacion
 
         private Boolean Login(string usuario, string password)
         {
-            //HEHEHE
+            //jajajaa
             try
             {
                 bool retur = true;
