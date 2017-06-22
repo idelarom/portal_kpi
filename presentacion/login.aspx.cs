@@ -9,7 +9,6 @@ namespace presentacion
 {
     public partial class login : System.Web.UI.Page
     {
-        //676
         protected void Page_Load(object sender, EventArgs e)
         {
         }
