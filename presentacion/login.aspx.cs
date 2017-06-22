@@ -33,12 +33,12 @@ namespace presentacion
                     Toast.Info("Ingrese Usuario", "Mensaje del Sistema", this);
                     retur = false;
                 }
-                if (password == "")
+                else if (password == "")
                 {
                     Toast.Info("Ingrese Contraseña", "Mensaje del Sistema", this);
                     retur = false;
                 }
-                if (!LoginActive(usuario, password, rtxtdominio.Text.Trim()))
+                else if (!LoginActive(usuario, password, rtxtdominio.Text.Trim()))
                 {
                     Toast.Error("Credenciales Invalidas", this);
                     retur = false;
