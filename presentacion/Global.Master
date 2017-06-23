@@ -300,7 +300,80 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <li><a href="inicio.aspx"><i class="fa fa-dashboard"></i><span>DashBoard</span></a></li>
+                        <asp:Repeater ID="repeat_menu" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
+                            <ItemTemplate>
+                                <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
+                                    <i class="fa fa-circle-o"></i><%# Eval("name") %></a></li>
 
+                                <li class="treeview" id="mml" runat="server">
+                                    <a href="#">
+                                        <i class="fa fa-share"></i><span><%# Eval("name") %></span>
+                                        <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
+                                            <ItemTemplate>
+                                                <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
+                                                    <i class="fa fa-circle-o"></i><%# Eval("name") %></a></li>
+
+                                                <li id="mml" runat="server">
+                                                    <a href="#">
+                                                        <i class="fa fa-share"></i><span><%# Eval("name") %></span>
+                                                        <span class="pull-right-container">
+                                                            <i class="fa fa-angle-left pull-right"></i>
+                                                        </span>
+                                                    </a>
+                                                    <ul class="treeview-menu">
+                                                        <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
+                                                            <ItemTemplate>
+                                                                <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
+                                                                    <i class="fa fa-circle-o"></i><%# Eval("name") %></a></li>
+
+                                                                <li id="mml" runat="server">
+                                                                    <a href="#">
+                                                                        <i class="fa fa-share"></i><span><%# Eval("name") %></span>
+                                                                        <span class="pull-right-container">
+                                                                            <i class="fa fa-angle-left pull-right"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                    <ul class="treeview-menu">
+                                                                        <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
+                                                                            <ItemTemplate>
+                                                                                <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
+                                                                                    <i class="fa fa-circle-o"></i><%# Eval("name") %></a></li>
+
+                                                                                <li id="mml" runat="server">
+                                                                                    <a href="#">
+                                                                                        <i class="fa fa-share"></i><span><%# Eval("name") %></span>
+                                                                                        <span class="pull-right-container">
+                                                                                            <i class="fa fa-angle-left pull-right"></i>
+                                                                                        </span>
+                                                                                    </a>
+                                                                                    <ul class="treeview-menu">
+                                                                                        <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
+                                                                                            <ItemTemplate>
+                                                                                            </ItemTemplate>
+                                                                                        </asp:Repeater>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ItemTemplate>
+                                                                        </asp:Repeater>
+                                                                    </ul>
+                                                                </li>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
+                                                    </ul>
+                                                </li>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                    </ul>
+                                </li>
+
+                            </ItemTemplate>
+                        </asp:Repeater>
+                        
                     </ul>
                 </section>
                 <!-- /.sidebar -->

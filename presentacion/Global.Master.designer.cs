@@ -121,6 +121,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Label lblname2;
         
         /// <summary>
+        /// Control repeat_menu.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeat_menu;
+        
+        /// <summary>
         /// Control RadScriptManager1.
         /// </summary>
         /// <remarks>
