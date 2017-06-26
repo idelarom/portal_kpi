@@ -1393,6 +1393,7 @@
     <Content Include="bin\ApplicationInsights.config" />
     <Content Include="bin\presentacion.dll.config" />
     <Content Include="primitive\codemirror\LICENSE" />
+    <None Include="Properties\PublishProfiles\kpi.pubxml" />
     <None Include="Properties\PublishProfiles\proyectos.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
