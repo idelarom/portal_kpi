@@ -33,5 +33,10 @@ namespace presentacion
                 Toast.Error("Error al cargar el catalogo de widgets: " + ex.Message,this);
             }
         }
+
+        protected void lnknuevowidget_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

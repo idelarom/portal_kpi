@@ -91,9 +91,9 @@
         </div>
         
         <div class="col-lg-12">
-           <%-- <asp:LinkButton ID="lnknuevoperfil" OnClick="lnknuevoperfil_Click" CssClass="btn btn-primary btn-flat" runat="server">
+            <asp:LinkButton ID="lnknuevowidget" OnClick="lnknuevowidget_Click" CssClass="btn btn-primary btn-flat" runat="server">
                 Nuevo widget&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
-            </asp:LinkButton>--%>
+            </asp:LinkButton>
             <div class="table table-responsive">
                 <telerik:RadGrid ID="grid_widgets" runat="server" Skin="Metro">
                     <MasterTableView AutoGenerateColumns="false" CssClass="dvv table table-responsive"
