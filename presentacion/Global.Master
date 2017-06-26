@@ -303,11 +303,11 @@
                         <asp:Repeater ID="repeat_menu" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
                             <ItemTemplate>
                                 <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
-                                    <i class="fa fa-circle-o"></i><%# Eval("name") %></a></li>
+                                    <i class='<%# Eval("icon_ad") %>'></i><%# Eval("name") %></a></li>
 
                                 <li class="treeview" id="mml" runat="server">
                                     <a href="#">
-                                        <i class="fa fa-share"></i><span><%# Eval("name") %></span>
+                                        <i class='<%# Eval("icon_ad") %>'></i><span><%# Eval("name") %></span>
                                         <span class="pull-right-container">
                                             <i class="fa fa-angle-left pull-right"></i>
                                         </span>
@@ -316,11 +316,11 @@
                                         <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
                                             <ItemTemplate>
                                                 <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
-                                                    <i class="fa fa-circle-o"></i><%# Eval("name") %></a></li>
+                                                    <i class='<%# Eval("icon_ad") %>'></i><%# Eval("name") %></a></li>
 
                                                 <li id="mml" runat="server">
                                                     <a href="#">
-                                                        <i class="fa fa-share"></i><span><%# Eval("name") %></span>
+                                                        <i class='<%# Eval("icon_ad") %>'></i><span><%# Eval("name") %></span>
                                                         <span class="pull-right-container">
                                                             <i class="fa fa-angle-left pull-right"></i>
                                                         </span>
@@ -329,11 +329,11 @@
                                                         <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
                                                             <ItemTemplate>
                                                                 <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
-                                                                    <i class="fa fa-circle-o"></i><%# Eval("name") %></a></li>
+                                                                    <i class='<%# Eval("icon_ad") %>'></i><%# Eval("name") %></a></li>
 
                                                                 <li id="mml" runat="server">
                                                                     <a href="#">
-                                                                        <i class="fa fa-share"></i><span><%# Eval("name") %></span>
+                                                                        <i class='<%# Eval("icon_ad") %>'></i><span><%# Eval("name") %></span>
                                                                         <span class="pull-right-container">
                                                                             <i class="fa fa-angle-left pull-right"></i>
                                                                         </span>
@@ -342,11 +342,11 @@
                                                                         <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
                                                                             <ItemTemplate>
                                                                                 <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
-                                                                                    <i class="fa fa-circle-o"></i><%# Eval("name") %></a></li>
+                                                                                    <i class='<%# Eval("icon_ad") %>'></i><%# Eval("name") %></a></li>
 
                                                                                 <li id="mml" runat="server">
                                                                                     <a href="#">
-                                                                                        <i class="fa fa-share"></i><span><%# Eval("name") %></span>
+                                                                                        <i class='<%# Eval("icon_ad") %>'></i><span><%# Eval("name") %></span>
                                                                                         <span class="pull-right-container">
                                                                                             <i class="fa fa-angle-left pull-right"></i>
                                                                                         </span>
