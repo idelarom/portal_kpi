@@ -137,16 +137,16 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="Telerik.Web.Design">
-      <HintPath>..\..\..\..\HUMBERTO\Telerik\Telerik.Web.Design.dll</HintPath>
+      <HintPath>..\..\..\..\Documents\Visual Studio 2010\WebSites\OPTracker2015\OPTracker2015\Bin\Telerik.Web.Design.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.Device.Detection">
-      <HintPath>..\..\..\..\HUMBERTO\Telerik\Telerik.Web.Device.Detection.dll</HintPath>
+      <HintPath>..\..\..\..\Documents\Visual Studio 2010\WebSites\OPTracker2015\OPTracker2015\Bin\Telerik.Web.Device.Detection.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI">
-      <HintPath>..\..\..\..\HUMBERTO\Telerik\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\..\..\..\Documents\Visual Studio 2010\WebSites\OPTracker2015\OPTracker2015\Bin\Telerik.Web.UI.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\..\..\..\HUMBERTO\Telerik\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\..\..\..\Documents\Visual Studio 2010\WebSites\OPTracker2015\OPTracker2015\Bin\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -189,6 +189,7 @@
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="catalogo_perfiles.aspx" />
+    <Content Include="catalogo_widgets.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="dist\css\AdminLTE.css" />
     <Content Include="dist\css\AdminLTE.min.css" />
@@ -1209,6 +1210,13 @@
     </Compile>
     <Compile Include="catalogo_perfiles.aspx.designer.cs">
       <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="catalogo_widgets.aspx.cs">
+      <DependentUpon>catalogo_widgets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalogo_widgets.aspx.designer.cs">
+      <DependentUpon>catalogo_widgets.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

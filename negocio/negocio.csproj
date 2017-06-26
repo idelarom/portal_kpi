@@ -53,6 +53,7 @@
     <Compile Include="Componentes\EmpleadosCOM.cs" />
     <Compile Include="Componentes\PerfilesCOM.cs" />
     <Compile Include="Componentes\To.cs" />
+    <Compile Include="Componentes\WidgetsCOM.cs" />
     <Compile Include="Entidades\ArbolInvolucrados.cs" />
     <Compile Include="Entidades\SiteDataItem.cs" />
     <Compile Include="Entidades\UsuariosENT.cs" />

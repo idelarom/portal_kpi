@@ -338,7 +338,6 @@ namespace presentacion
             txtbuscarempleado.Text = "";
             rdllista_empleados.DataSource = null;
             rdllista_empleados.DataBind();
-            ModalShow("#myModal");
         }
 
         protected void lnkguardar_Click(object sender, EventArgs e)
