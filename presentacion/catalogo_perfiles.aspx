@@ -60,7 +60,9 @@
                     return true;
                 } else {
                     alert('ES NECESARIO EL MOTIVO DE LA ELIMINACIÓN.');
+
                     ReturnPrompMsg();
+                    return false;
                 }
             } else {
                 return false;
@@ -103,7 +105,7 @@
         <div class="col-lg-12">
             <h4 class="page-header">Catálogo Perfiles de Usuarios</h4>
         </div>
-        
+
         <div class="col-lg-12">
             <asp:LinkButton ID="lnknuevoperfil" OnClick="lnknuevoperfil_Click" CssClass="btn btn-primary btn-flat" runat="server">
                 Nuevo Perfil de Usuario&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
@@ -119,7 +121,7 @@
                                 <ItemStyle HorizontalAlign="Center" />
                                 <ItemTemplate>
                                     <a style="cursor: pointer;" onclick='<%# "return OpenModalEditGrid("+DataBinder.Eval(Container.DataItem, "id_perfil").ToString()+@",""" +"actualizar"+@""""+");" %>'>
-                                         <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                                        <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                     </a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
@@ -138,31 +140,31 @@
                             <telerik:GridBoundColumn DataField="Perfil" HeaderText="Perfil" UniqueName="Perfil"
                                 Visible="true">
                             </telerik:GridBoundColumn>
-                            
+
                             <telerik:GridTemplateColumn HeaderText="Usuarios Relacionados">
-                                <HeaderStyle Width="150px" />
+                                <HeaderStyle Width="140px" />
                                 <ItemStyle HorizontalAlign="Center" />
-                                 <ItemTemplate>
+                                <ItemTemplate>
                                     <button class="btn btn-warning btn-flat" style="cursor: pointer;" onclick='<%# "return OpenModalEditGrid("+DataBinder.Eval(Container.DataItem, "id_perfil").ToString()+@",""" +"usuarios"+@""""+");" %>'>
-                                         <%# DataBinder.Eval(Container.DataItem, "total_usuarios").ToString() %>
+                                        <%# DataBinder.Eval(Container.DataItem, "total_usuarios").ToString() %>
                                     </button>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
                             <telerik:GridTemplateColumn HeaderText="Widgets Relacionados">
                                 <HeaderStyle Width="140px" />
                                 <ItemStyle HorizontalAlign="Center" />
-                                 <ItemTemplate>
+                                <ItemTemplate>
                                     <button class="btn btn-info btn-flat" style="cursor: pointer;" onclick='<%# "return OpenModalEditGrid("+DataBinder.Eval(Container.DataItem, "id_perfil").ToString()+@",""" +"widgets"+@""""+");" %>'>
-                                         <%# DataBinder.Eval(Container.DataItem, "total_widgets").ToString() %>
+                                        <%# DataBinder.Eval(Container.DataItem, "total_widgets").ToString() %>
                                     </button>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
                             <telerik:GridTemplateColumn HeaderText="Menus Relacionados">
-                                <HeaderStyle Width="140px" />
+                                <HeaderStyle Width="130px" />
                                 <ItemStyle HorizontalAlign="Center" />
-                                 <ItemTemplate>
+                                <ItemTemplate>
                                     <button class="btn btn-danger btn-flat" style="cursor: pointer;" onclick='<%# "return OpenModalEditGrid("+DataBinder.Eval(Container.DataItem, "id_perfil").ToString()+@",""" +"menus"+@""""+");" %>'>
-                                         <%# DataBinder.Eval(Container.DataItem, "total_menus").ToString() %>
+                                        <%# DataBinder.Eval(Container.DataItem, "total_menus").ToString() %>
                                     </button>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
@@ -189,14 +191,14 @@
                             <h4 class="modal-title">Perfiles de Usuario</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="row"  id="div_perfil" runat="server">
+                            <div class="row" id="div_perfil" runat="server">
                                 <div class="col-lg-12 col-sm-12">
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Nombre del Perfil</strong></h5>
                                     <telerik:RadTextBox ID="rtxtperfil" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
                             </div>
 
-                            <div class="row"  id="div_empleados" runat="server">
+                            <div class="row" id="div_empleados" runat="server">
                                 <div class="col-lg-12 col-xs-12">
                                     <h5><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Usuarios&nbsp;</strong><small>Usuarios relacionados a este perfil</small></h5>
                                     <div style="text-align: left;" class="input-group input-group-sm">
@@ -260,7 +262,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
-    <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display:none;" />
+    <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display: none;" />
     <asp:HiddenField ID="hdfmotivos" runat="server" />
     <asp:HiddenField ID="hdfcommand" runat="server" />
     <asp:HiddenField ID="hdfid_perfil" runat="server" />
