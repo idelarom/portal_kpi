@@ -48,6 +48,36 @@ namespace negocio.Componentes
             return ds;
         }
 
+        public DataTable GetUsers(Employee entidad)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                NAVISION context = new NAVISION();
+                var query = context.Employee
+                                .Where(s => s.Status == 1 && s.Usuario_Red != "")
+                                .Select(u => new
+                                {
+                                    u.No_,                                    
+                                    Usuario_Red = (u.Usuario_Red.Trim()),                                  
+                                    nombre_completo = (u.First_Name.Trim() + " " + u.Last_Name.Trim()),
+                                    nombre_usuario = (u.First_Name.Trim() + " " + u.Last_Name.Trim() + " | " + u.Usuario_Red.Trim())
+                                })
+                                .OrderBy(u => u.nombre_usuario);
+                dt = To.DataTable(query.ToList());
+                //dt.Columns.Add("nombre_completo");
+                //foreach (DataRow row in dt.Rows)
+                //{
+                //    row["nombre_completo"] = row["First_Name"].ToString().Trim() + " " + row["Last_Name"].ToString().Trim();
+                //}
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                return dt;
+            }
+        }
+
         /// <summary>
         /// Devuelve un DatatTable con la informacion de un empleado
         /// </summary>
@@ -118,7 +148,7 @@ namespace negocio.Componentes
                                     u.Resp_Area_Gerencia,
                                     u.Puesto,
                                     u.Resp_Area,
-                                    u.Usuario_Red,
+                                    Usuario_Red = (u.Usuario_Red.Trim()),
                                     u.Resp_Gerencia,
                                     u.Centro_de_Costos,
                                     u.No_Celular_Oficina,
@@ -167,7 +197,8 @@ namespace negocio.Componentes
                                     u.MotivoModificacion,
                                     u.TipoBaja,
                                     u.ActivoFijo,
-                                    nombre_completo =(u.First_Name.Trim()  +" "+ u.Last_Name.Trim() )
+                                    nombre_completo =(u.First_Name.Trim()  +" "+ u.Last_Name.Trim()),
+                                    nombre_usuario= (u.First_Name.Trim() + " " + u.Last_Name.Trim()+" | "+u.Usuario_Red.Trim())
                                 })
                                 .OrderBy(u => u.First_Name);
                 dt = To.DataTable(query.ToList());
