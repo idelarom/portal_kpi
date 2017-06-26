@@ -83,7 +83,19 @@
             $("#<%= imgloadempleado_.ClientID%>").show();
              $("#<%= lblbe2.ClientID%>").show();
              return true;
-         }
+          }
+
+        function OpenModalEditGrid(id_perfil, command) {
+          var myHidden = document.getElementById('<%= hdfid_perfil.ClientID %>');
+
+            myHidden.value = id_perfil;
+
+              var commando = document.getElementById('<%= hdfcommand.ClientID %>');
+
+            commando.value = command;
+            document.getElementById('<%= btneventgrid.ClientID%>').click();
+            return false;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -106,18 +118,17 @@
                                 <HeaderStyle Width="50px" />
                                 <ItemStyle HorizontalAlign="Center" />
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="lnkcommand" runat="server" CommandName="Editar" 
-                                        CommandArgument='<%# DataBinder.Eval(Container.DataItem, "id_perfil").ToString() %>'>
-                                              <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                                    </asp:LinkButton>
+                                    <a style="cursor: pointer;" onclick='<%# "return OpenModalEditGrid("+DataBinder.Eval(Container.DataItem, "id_perfil").ToString()+@",""" +"actualizar"+@""""+");" %>'>
+                                         <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                                    </a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
                             <telerik:GridTemplateColumn HeaderText="">
                                 <HeaderStyle Width="50px" />
                                 <ItemStyle HorizontalAlign="Center" />
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="lnkcommand2" Visible="true"  runat="server" CommandName="Eliminar" 
-                                        OnClientClick="return ConfirmEntregableDelete('¿Desea Eliminar este Perfil?')"
+                                    <asp:LinkButton ID="lnkcommand2" Visible="true" runat="server" CommandName="Eliminar"
+                                        OnClientClick="return ConfirmEntregableDelete('¿Desea Eliminar este Perfil?')" OnClick="lnkcommand2_Click"
                                         CommandArgument='<%# DataBinder.Eval(Container.DataItem, "id_perfil").ToString() %>'>
                                          <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                     </asp:LinkButton>
@@ -127,6 +138,16 @@
                             <telerik:GridBoundColumn DataField="Perfil" HeaderText="Perfil" UniqueName="Perfil"
                                 Visible="true">
                             </telerik:GridBoundColumn>
+                            
+                            <telerik:GridTemplateColumn HeaderText="Usuarios Relacionados">
+                                <HeaderStyle Width="150px" />
+                                <ItemStyle HorizontalAlign="Center" />
+                                 <ItemTemplate>
+                                    <button class="btn btn-warning btn-flat" style="cursor: pointer;" onclick='<%# "return OpenModalEditGrid("+DataBinder.Eval(Container.DataItem, "id_perfil").ToString()+@",""" +"usuarios"+@""""+");" %>'>
+                                         <%# DataBinder.Eval(Container.DataItem, "total_usuarios").ToString() %>
+                                    </button>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>
                         </Columns>
                     </MasterTableView>
                 </telerik:RadGrid>
@@ -139,6 +160,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                 <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btneventgrid" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="lnknuevoperfil" EventName="Click" />
                 </Triggers>
                 <ContentTemplate>
@@ -149,52 +171,51 @@
                             <h4 class="modal-title">Perfiles de Usuario</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
+                            <div class="row"  id="div_perfil" runat="server">
                                 <div class="col-lg-12 col-sm-12">
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Nombre del Perfil</strong></h5>
                                     <telerik:RadTextBox ID="rtxtperfil" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
                             </div>
-                            
-                                <div class="row" id="div_empleados" runat="server">
 
-                                    <div class="col-lg-12 col-xs-12">
-                                        <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Seleccione los usuarios (empleados) a relacionar</strong></h5>
-                                        <div style="text-align: left;" class="input-group input-group-sm">
-                                            <asp:TextBox ID="txtbuscarempleado" CssClass="form-control" placeholder="Buscar" runat="server"></asp:TextBox>
-                                            <span class="input-group-btn">
-                                                <asp:LinkButton ID="btnbuscarempleado2" CssClass="btn btn-primary btn-flat" runat="server"
-                                                    OnClientClick="return ChangedTextLoad2();" OnClick="btnbuscarempleado2_Click">
+                            <div class="row"  id="div_empleados" runat="server">
+                                <div class="col-lg-12 col-xs-12">
+                                    <h5><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Usuarios&nbsp;</strong><small>Usuarios relacionados a este perfil</small></h5>
+                                    <div style="text-align: left;" class="input-group input-group-sm">
+                                        <asp:TextBox ID="txtbuscarempleado" CssClass="form-control" placeholder="Buscar" runat="server"></asp:TextBox>
+                                        <span class="input-group-btn">
+                                            <asp:LinkButton ID="btnbuscarempleado2" CssClass="btn btn-primary btn-flat" runat="server"
+                                                OnClientClick="return ChangedTextLoad2();" OnClick="btnbuscarempleado2_Click">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
-                                                </asp:LinkButton>
-                                            </span>
-                                        </div>
-
-                                        <asp:Image ID="imgloadempleado_" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
-                                        <label id="lblbe2" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
+                                            </asp:LinkButton>
+                                        </span>
                                     </div>
 
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div style="height: 150px; min-width:500px; overflow: scroll;">
-                                            <asp:Repeater ID="rdllista_empleados" runat="server">
-                                                <ItemTemplate>
-                                                    <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">
-                                                        <Triggers>
-                                                            <asp:AsyncPostBackTrigger ControlID="mycheck" EventName="CheckedChanged" />
-                                                        </Triggers>
-                                                        <ContentTemplate>
-                                                            <asp:CheckBox ID="mycheck" Text='<%# Eval("nombre_usuario").ToString()  %>'
-                                                                ToolTip='<%# Eval("Usuario_Red").ToString()  %>' OnCheckedChanged="mycheck_CheckedChanged"
-                                                                runat="server"
-                                                                AutoPostBack="true"></asp:CheckBox>
-                                                            <br />
-                                                        </ContentTemplate>
-                                                    </asp:UpdatePanel>
-                                                </ItemTemplate>
-                                            </asp:Repeater>
-                                        </div>
+                                    <asp:Image ID="imgloadempleado_" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                    <label id="lblbe2" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div style="height: 150px; min-width: 500px; overflow: scroll;">
+                                        <asp:Repeater ID="rdllista_empleados" runat="server">
+                                            <ItemTemplate>
+                                                <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">
+                                                    <Triggers>
+                                                        <asp:AsyncPostBackTrigger ControlID="mycheck" EventName="CheckedChanged" />
+                                                    </Triggers>
+                                                    <ContentTemplate>
+                                                        <asp:CheckBox ID="mycheck" Text='<%# Eval("nombre_usuario").ToString()  %>'
+                                                            ToolTip='<%# Eval("Usuario_Red").ToString()  %>' OnCheckedChanged="mycheck_CheckedChanged"
+                                                            runat="server"
+                                                            AutoPostBack="true"></asp:CheckBox>
+                                                        <br />
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
                                     </div>
                                 </div>
+                            </div>
                             <asp:TextBox ID="txtid_perfil" Visible="false" runat="server"></asp:TextBox>
                         </div>
                         <div class="modal-footer ">
@@ -221,5 +242,8 @@
             </asp:UpdatePanel>
         </div>
     </div>
+    <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display:none;" />
     <asp:HiddenField ID="hdfmotivos" runat="server" />
+    <asp:HiddenField ID="hdfcommand" runat="server" />
+    <asp:HiddenField ID="hdfid_perfil" runat="server" />
 </asp:Content>

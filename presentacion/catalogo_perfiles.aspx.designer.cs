@@ -40,6 +40,15 @@ namespace presentacion {
         protected global::System.Web.UI.UpdatePanel UpdatePanel15;
         
         /// <summary>
+        /// Control div_perfil.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_perfil;
+        
+        /// <summary>
         /// Control rtxtperfil.
         /// </summary>
         /// <remarks>
@@ -148,6 +157,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnkguardar;
         
         /// <summary>
+        /// Control btneventgrid.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btneventgrid;
+        
+        /// <summary>
         /// Control hdfmotivos.
         /// </summary>
         /// <remarks>
@@ -155,5 +173,23 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfmotivos;
+        
+        /// <summary>
+        /// Control hdfcommand.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfcommand;
+        
+        /// <summary>
+        /// Control hdfid_perfil.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfid_perfil;
     }
 }

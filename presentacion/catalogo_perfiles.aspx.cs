@@ -32,6 +32,7 @@ namespace presentacion
                 Employee entidad = new Employee();
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 DataTable dt_original = empleados.GetUsers(entidad);
+               
                 DataTable dt = new DataTable();
                 if (filtro == "")
                 {
@@ -62,6 +63,29 @@ namespace presentacion
             }
         }
 
+        private String UsuarioTienePerfil(string usuario, int id_perfil)
+        {
+            try
+            {
+                Employee entidad = new Employee();
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                DataTable dt_original = empleados.GetUsers(entidad);
+
+                DataTable dt = new DataTable();
+                if (dt_original.Select("usuario_red = '" + usuario.Trim().ToUpper() + "'").Length > 0)
+                {
+                    dt = dt_original.Select("usuario_red = '" + usuario.Trim().ToUpper() + "'").CopyToDataTable();
+                }
+                int vid_perfil = Convert.ToInt32(dt.Rows[0]["id_perfil"]);
+                string perfil = dt.Rows[0]["perfil"].ToString().Trim();
+                perfil = id_perfil == vid_perfil ? "" : perfil;
+                return perfil;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
         private void AgregarUsuarioPerfiles(string usuario)
         {
             try
@@ -152,6 +176,37 @@ namespace presentacion
             }
         }
 
+        private String CadenaUsuarios()
+        {
+            try
+            {
+                string cadena = "";
+                DataTable dt = ViewState["dt_usuarios"] as DataTable;
+                foreach (DataRow row in dt.Rows)
+                {
+                    cadena = cadena + row["usuario"].ToString().Trim().ToUpper() + ";";
+                }
+                return cadena;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+
+        private int TotalCadenaUsuarios()
+        {
+            try
+            {
+                DataTable dt = ViewState["dt_usuarios"] as DataTable;
+                return dt.Rows.Count;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
         private void CargarCatalogo(int id_perfil)
         {
             try
@@ -161,6 +216,21 @@ namespace presentacion
                 DataTable dt = ds.Tables[0];
                 grid_perfiles.DataSource = dt;
                 grid_perfiles.DataBind();
+                if (id_perfil > 0)
+                {
+                    DataTable dt_usuarios_original = perfiles.sp_usuarios_perfiles(id_perfil).Tables[0];
+                    if (dt_usuarios_original.Rows.Count > 0)
+                    {
+                        rtxtperfil.Text = dt.Rows[0]["perfil"].ToString();
+                        txtid_perfil.Text = id_perfil.ToString();
+                        System.Data.DataView view = new System.Data.DataView(dt_usuarios_original);
+                        System.Data.DataTable selected = view.ToTable("Selected", false, "usuario");
+                        ViewState["dt_usuarios"] = selected;
+                        rdllista_empleados.DataSource = dt_usuarios_original;
+                        rdllista_empleados.DataBind();
+                        CheckValuesListUsuarios();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -194,6 +264,60 @@ namespace presentacion
                 lblerror.Text="Error al guardar perfil: " + ex.Message;
             }
         }
+
+        private void EditarPerfil(int idperfil,string perfil, string cadena_usuarios, int total_cadena_usuarios, string cadena_widgets, int total_cadena_widgets)
+        {
+            div_error.Visible = false;
+            try
+            {
+
+                PerfilesCOM perfiles = new PerfilesCOM();
+                string usuario = Session["usuario"] as string;
+                DataSet ds = perfiles.sp_editar_perfiles(idperfil,perfil, usuario, cadena_usuarios, total_cadena_usuarios, cadena_widgets, total_cadena_widgets);
+                DataTable dt = ds.Tables[0];
+                string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al editar perfil. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
+                if (vmensaje == "")
+                {
+                    System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                  "AlertGO('Perfil Guardado Correctamente', 'catalogo_perfiles.aspx');", true);
+                }
+                else
+                {
+                    div_error.Visible = true;
+                    lblerror.Text = vmensaje;
+                }
+            }
+            catch (Exception ex)
+            {
+                lblerror.Text = "Error al editar perfil: " + ex.Message;
+            }
+        }
+
+        private void EliminarPerfil(int id_perfil,string comenatrios)
+        {
+            try
+            {
+
+                PerfilesCOM perfiles = new PerfilesCOM();
+                string usuario = Session["usuario"] as string;
+                DataSet ds = perfiles.sp_borrar_perfiles(id_perfil, usuario, comenatrios);
+                DataTable dt = ds.Tables[0];
+                string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al eliminar perfil. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
+                if (vmensaje == "")
+                {
+                    System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                  "AlertGO('Perfil Guardado Correctamente', 'catalogo_perfiles.aspx');", true);
+                }
+                else
+                {
+                    Toast.Error("Error al eliminar perfil: " + vmensaje, this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al eliminar perfil: " + ex.Message,this);
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -207,19 +331,30 @@ namespace presentacion
 
         protected void lnknuevoperfil_Click(object sender, EventArgs e)
         {
+            div_empleados.Visible = true;
+            div_perfil.Visible = true;
             txtid_perfil.Text = "";
             rtxtperfil.Text = "";
+            txtbuscarempleado.Text = "";
+            rdllista_empleados.DataSource = null;
+            rdllista_empleados.DataBind();
             ModalShow("#myModal");
         }
 
         protected void lnkguardar_Click(object sender, EventArgs e)
         {
-            string cadena_perfiles = "";
-            int total_cadena_perfiles = 0;
+            string cadena_perfiles = CadenaUsuarios(); 
+            int total_cadena_perfiles = TotalCadenaUsuarios();
             string cadena_widgets = "";
             int total_cadena_widgets = 0;
             string perfil = rtxtperfil.Text.Trim();
-            AgregarPerfil(perfil,cadena_perfiles,total_cadena_perfiles,cadena_widgets,total_cadena_widgets);
+            if (txtid_perfil.Text == "")
+            {
+                AgregarPerfil(perfil, cadena_perfiles, total_cadena_perfiles, cadena_widgets, total_cadena_widgets);
+            }
+            else {
+                EditarPerfil(Convert.ToInt32(txtid_perfil.Text),perfil, cadena_perfiles, total_cadena_perfiles, cadena_widgets, total_cadena_widgets);
+            }
         }
 
         protected void btnbuscarempleado2_Click(object sender, EventArgs e)
@@ -242,10 +377,55 @@ namespace presentacion
 
             CheckBox item = sender as CheckBox;
             string usuario = item.ToolTip.ToString().Trim().ToUpper();
+            string perfil = UsuarioTienePerfil(usuario, Convert.ToInt32(txtid_perfil.Text==""?"0": txtid_perfil.Text));
             EliminarUsuarioPerfiles(usuario);
             if (item.Checked)
             {
-                AgregarUsuarioPerfiles(usuario);
+                if (perfil == "")
+                {
+                    AgregarUsuarioPerfiles(usuario);
+                }
+                else
+                {
+                    item.Checked = false;
+                    Toast.Error("El usuario " + usuario.ToUpper() + " ya esta relacionado al perfil: " + perfil.ToUpper(), this);
+                }
+            }
+           
+
+        }
+
+        protected void lnkcommand2_Click(object sender, EventArgs e)
+        {
+            LinkButton lnk = sender as LinkButton;
+            int id_perfil = Convert.ToInt32(lnk.CommandArgument);
+            switch (lnk.CommandName.ToLower())
+            {
+                case "eliminar":
+                    EliminarPerfil(id_perfil, hdfmotivos.Value.Trim());
+                    break;
+            }
+        }
+
+        protected void btneventgrid_Click(object sender, EventArgs e)
+        {
+            int id_perfil = Convert.ToInt32(hdfid_perfil.Value);
+            div_empleados.Visible = false;
+            div_perfil.Visible = false;
+            switch (hdfcommand.Value.ToLower())
+            {
+                case "actualizar":
+                    div_empleados.Visible = true;
+                    div_perfil.Visible = true;
+                    CargarCatalogo(id_perfil);
+                    ModalShow("#myModal");
+                    break;
+                case "usuarios":
+                    div_empleados.Visible = true;
+                    div_perfil.Visible = false;
+                    CargarCatalogo(id_perfil);
+                    ModalShow("#myModal");
+                    break;
             }
         }
     }

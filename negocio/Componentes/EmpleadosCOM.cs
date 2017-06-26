@@ -13,6 +13,7 @@ namespace negocio.Componentes
 
     public class EmpleadosCOM
     {
+        
         public DataSet sp_menu(int pid_menu_padre)
         {
             DataSet ds = new DataSet();
@@ -51,32 +52,20 @@ namespace negocio.Componentes
         public DataTable GetUsers(Employee entidad)
         {
             DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
             try
             {
-                NAVISION context = new NAVISION();
-                var query = context.Employee
-                                .Where(s => s.Status == 1 && s.Usuario_Red != "")
-                                .Select(u => new
-                                {
-                                    u.No_,                                    
-                                    Usuario_Red = (u.Usuario_Red.Trim()),                                  
-                                    nombre_completo = (u.First_Name.Trim() + " " + u.Last_Name.Trim()),
-                                    nombre_usuario = (u.First_Name.Trim() + " " + u.Last_Name.Trim() + " | " + u.Usuario_Red.Trim())
-                                })
-                                .OrderBy(u => u.nombre_usuario);
-                dt = To.DataTable(query.ToList());
-                //dt.Columns.Add("nombre_completo");
-                //foreach (DataRow row in dt.Rows)
-                //{
-                //    row["nombre_completo"] = row["First_Name"].ToString().Trim() + " " + row["Last_Name"].ToString().Trim();
-                //}
-                return dt;
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_listado_usuarios", listparameters, false, 1);
             }
             catch (Exception ex)
             {
-                return dt;
+                throw ex;
             }
-        }
+            return ds.Tables[0];
+    }
 
         /// <summary>
         /// Devuelve un DatatTable con la informacion de un empleado
