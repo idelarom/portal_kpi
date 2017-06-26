@@ -148,6 +148,24 @@
                                     </button>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
+                            <telerik:GridTemplateColumn HeaderText="Widgets Relacionados">
+                                <HeaderStyle Width="140px" />
+                                <ItemStyle HorizontalAlign="Center" />
+                                 <ItemTemplate>
+                                    <button class="btn btn-info btn-flat" style="cursor: pointer;" onclick='<%# "return OpenModalEditGrid("+DataBinder.Eval(Container.DataItem, "id_perfil").ToString()+@",""" +"widgets"+@""""+");" %>'>
+                                         <%# DataBinder.Eval(Container.DataItem, "total_widgets").ToString() %>
+                                    </button>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>
+                            <telerik:GridTemplateColumn HeaderText="Menus Relacionados">
+                                <HeaderStyle Width="140px" />
+                                <ItemStyle HorizontalAlign="Center" />
+                                 <ItemTemplate>
+                                    <button class="btn btn-danger btn-flat" style="cursor: pointer;" onclick='<%# "return OpenModalEditGrid("+DataBinder.Eval(Container.DataItem, "id_perfil").ToString()+@",""" +"menus"+@""""+");" %>'>
+                                         <%# DataBinder.Eval(Container.DataItem, "total_menus").ToString() %>
+                                    </button>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>
                         </Columns>
                     </MasterTableView>
                 </telerik:RadGrid>
