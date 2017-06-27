@@ -136,50 +136,25 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telerik.Web.Design">
-      <HintPath>..\..\..\..\Documents\Visual Studio 2010\WebSites\OPTracker2015\OPTracker2015\Bin\Telerik.Web.Design.dll</HintPath>
+    <Reference Include="Telerik.Web.Design, Version=2015.3.930.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\telerik\Telerik.Web.Design.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Device.Detection">
-      <HintPath>..\..\..\..\Documents\Visual Studio 2010\WebSites\OPTracker2015\OPTracker2015\Bin\Telerik.Web.Device.Detection.dll</HintPath>
+    <Reference Include="Telerik.Web.Device.Detection, Version=2015.3.930.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\telerik\Telerik.Web.Device.Detection.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI">
-      <HintPath>..\..\..\..\Documents\Visual Studio 2010\WebSites\OPTracker2015\OPTracker2015\Bin\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2015.3.930.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\telerik\Telerik.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\..\..\..\Documents\Visual Studio 2010\WebSites\OPTracker2015\OPTracker2015\Bin\Telerik.Web.UI.Skins.dll</HintPath>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2015.3.930.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\telerik\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\ClosedXML.dll" />
-    <Content Include="bin\datos.dll" />
-    <Content Include="bin\datos.pdb" />
-    <Content Include="bin\DocumentFormat.OpenXml.dll" />
-    <Content Include="bin\EntityFramework.dll" />
-    <Content Include="bin\EntityFramework.SqlServer.dll" />
-    <Content Include="bin\EnvDTE.dll" />
-    <Content Include="bin\Microsoft.AI.Agent.Intercept.dll" />
-    <Content Include="bin\Microsoft.AI.DependencyCollector.dll" />
-    <Content Include="bin\Microsoft.AI.PerfCounterCollector.dll" />
-    <Content Include="bin\Microsoft.AI.ServerTelemetryChannel.dll" />
-    <Content Include="bin\Microsoft.AI.Web.dll" />
-    <Content Include="bin\Microsoft.AI.WindowsServer.dll" />
-    <Content Include="bin\Microsoft.ApplicationInsights.dll" />
-    <Content Include="bin\Microsoft.Diagnostics.Tracing.EventSource.dll" />
-    <Content Include="bin\Microsoft.Threading.Tasks.dll" />
-    <Content Include="bin\Microsoft.Threading.Tasks.Extensions.Desktop.dll" />
-    <Content Include="bin\Microsoft.Threading.Tasks.Extensions.dll" />
-    <Content Include="bin\negocio.dll" />
-    <Content Include="bin\negocio.pdb" />
-    <Content Include="bin\presentacion.dll" />
-    <Content Include="bin\presentacion.pdb" />
-    <Content Include="bin\System.IO.dll" />
-    <Content Include="bin\System.Runtime.dll" />
-    <Content Include="bin\System.Threading.Tasks.dll" />
-    <Content Include="bin\Telerik.Web.Design.dll" />
-    <Content Include="bin\Telerik.Web.Device.Detection.dll" />
-    <Content Include="bin\Telerik.Web.UI.dll" />
-    <Content Include="bin\Telerik.Web.UI.Skins.dll" />
     <Content Include="bootstrap\css\bootstrap-theme.css" />
     <Content Include="bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="bootstrap\css\bootstrap.css" />
@@ -1390,8 +1365,6 @@
     <Content Include="plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="Global.Master" />
     <Content Include="Login.Master" />
-    <Content Include="bin\ApplicationInsights.config" />
-    <Content Include="bin\presentacion.dll.config" />
     <Content Include="primitive\codemirror\LICENSE" />
     <None Include="Properties\PublishProfiles\kpi.pubxml" />
     <None Include="Properties\PublishProfiles\proyectos.pubxml" />
@@ -1404,9 +1377,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\datos\datos.csproj">

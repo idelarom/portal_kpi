@@ -12,22 +12,19 @@ namespace negocio.Componentes
 {
     public class WidgetsCOM
     {
-        public DataSet sp_editar_widgets(int id_perfil, string perfil, string usuario, string cadena_usuarios, int total_cadena_usuarios, string cadena_widgets, int total_cadena_widgets)
+        public DataSet sp_editar_widgets(int id_widget, string widget, string icono, string usuario)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pid_perfil", SqlDbType = SqlDbType.Int, Value = id_perfil });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pperfil", SqlDbType = SqlDbType.Int, Value = perfil });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_widget", SqlDbType = SqlDbType.Int, Value = widget });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pwidget", SqlDbType = SqlDbType.Int, Value = widget });
+            listparameters.Add(new SqlParameter() { ParameterName = "@picono", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pcadena_usuarios", SqlDbType = SqlDbType.Int, Value = cadena_usuarios });
-            listparameters.Add(new SqlParameter() { ParameterName = "@ptotal_cadena_usuarios", SqlDbType = SqlDbType.Int, Value = total_cadena_usuarios });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pcadena_widgets", SqlDbType = SqlDbType.Int, Value = cadena_widgets });
-            listparameters.Add(new SqlParameter() { ParameterName = "@ptotal_cadena_widgets", SqlDbType = SqlDbType.Int, Value = total_cadena_widgets });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("sp_editar_perfiles", listparameters, false, 1);
+                ds = data.enviar("sp_editar_widget", listparameters, false, 1);
             }
             catch (Exception ex)
             {
@@ -36,21 +33,18 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_agregar_widgets(string perfil, string usuario, string cadena_usuarios, int total_cadena_usuarios, string cadena_widgets, int total_cadena_widgets)
+        public DataSet sp_agregar_widgets(string widget, string icono, string usuario)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pperfil", SqlDbType = SqlDbType.Int, Value = perfil });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pwidget", SqlDbType = SqlDbType.Int, Value = widget });
+            listparameters.Add(new SqlParameter() { ParameterName = "@picono", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pcadena_usuarios", SqlDbType = SqlDbType.Int, Value = cadena_usuarios });
-            listparameters.Add(new SqlParameter() { ParameterName = "@ptotal_cadena_usuarios", SqlDbType = SqlDbType.Int, Value = total_cadena_usuarios });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pcadena_widgets", SqlDbType = SqlDbType.Int, Value = cadena_widgets });
-            listparameters.Add(new SqlParameter() { ParameterName = "@ptotal_cadena_widgets", SqlDbType = SqlDbType.Int, Value = total_cadena_widgets });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("sp_agregar_perfiles", listparameters, false, 1);
+                ds = data.enviar("sp_agregar_widgets", listparameters, false, 1);
             }
             catch (Exception ex)
             {

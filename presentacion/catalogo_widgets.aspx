@@ -66,7 +66,7 @@
 
          }
 
-         <%-- function ConfirmEmpleadoProyectoModal(msg) {
+         function ConfirmwidgetProyectoModal(msg) {
             if (confirm(msg)) {
                 $("#<%= lnkcargando.ClientID%>").show();
                 $("#<%= lnkguardar.ClientID%>").hide();
@@ -75,7 +75,7 @@
                 return false;
             }
           }
-
+<%-- 
 
           function ChangedTextLoad2() {
             $("#<%= imgloadempleado_.ClientID%>").show();
@@ -133,28 +133,34 @@
 
         </div>
     </div>
-   <%-- <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="lnknuevoperfil" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="lnknuevowidget" EventName="Click" />
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Perfiles de Usuario</h4>
+                            <h4 class="modal-title">Widgets</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
+                            <div class="row" id="div_widget"  runat="server">
                                 <div class="col-lg-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Nombre del widget</strong></h5>
-                                    <telerik:RadTextBox ID="rtxtperfil" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                                    <h5><strong><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Nombre del widget</strong></h5>
+                                    <telerik:RadTextBox ID="rtxtwidget" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
+                                 <div class="col-lg-12 col-sm-12">
+                                    <h5><strong><i class="fa fa-paint-brush" aria-hidden="true"></i>&nbsp;Nombre de la clase del icono para el widget</strong></h5>
+                                     <span><a onclick="window.open('http://ionicons.com/')" class="btn btn-info" role="button">Iconos para widgets</a></span>
+                                    <telerik:RadTextBox ID="rtxticono" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                                </div>
+                                
                             </div>
                             
-                                <div class="row" id="div_empleados" runat="server">
+                                <%--<div class="row" id="div_empleados" runat="server">
 
                                     <div class="col-lg-12 col-xs-12">
                                         <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Seleccione los usuarios (empleados) a relacionar</strong></h5>
@@ -192,8 +198,8 @@
                                             </asp:Repeater>
                                         </div>
                                     </div>
-                                </div>
-                            <asp:TextBox ID="txtid_perfil" Visible="false" runat="server"></asp:TextBox>
+                                </div>--%>
+                            <asp:TextBox ID="txtid_widget" Visible="false" runat="server"></asp:TextBox>
                         </div>
                         <div class="modal-footer ">
                             <div class="row" id="div_error" runat="server" visible="false" style="text-align: left;">
@@ -209,8 +215,8 @@
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando...
                             </asp:LinkButton>
-                            <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" 
-                                OnClientClick="return ConfirmEmpleadoProyectoModal('¿Desea Guardar este Perfil?');" runat="server">
+                              <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
+                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este widget?');" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                             </asp:LinkButton>
                         </div>
@@ -218,6 +224,6 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
-    </div>--%>
+    </div>
     <asp:HiddenField ID="hdfmotivos" runat="server" />
 </asp:Content>
