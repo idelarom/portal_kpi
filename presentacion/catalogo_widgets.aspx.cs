@@ -120,7 +120,7 @@ namespace presentacion
                 if (vmensaje == "")
                 {
                     System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
-                  "AlertGO('Widget Guardado Correctamente', 'catalogo_widgets.aspx');", true);
+                  "AlertGO('Widget eliminado Correctamente', 'catalogo_widgets.aspx');", true);
                 }
                 else
                 {
