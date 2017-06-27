@@ -47,6 +47,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
+                Toast.Error("Error al cargar el menu: "+ex.Message,this.Page);
                 return null;
             }
         }

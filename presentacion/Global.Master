@@ -107,7 +107,6 @@
             margin-bottom: 5px;
             margin-left: 5px;
         }
-
         .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
             height: auto;
             padding: 10px;

@@ -86,7 +86,12 @@
              $("#<%= lblbe2.ClientID%>").show();
              return true;
           }
-
+        
+          function ChangedTextLoad() {
+            $("#<%= img_widget.ClientID%>").show();
+             $("#<%= lblwidget.ClientID%>").show();
+             return true;
+          }
         function OpenModalEditGrid(id_perfil, command) {
           var myHidden = document.getElementById('<%= hdfid_perfil.ClientID %>');
 
@@ -197,67 +202,134 @@
                                     <telerik:RadTextBox ID="rtxtperfil" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
                             </div>
-
-                            <div class="row" id="div_empleados" runat="server">
-                                <div class="col-lg-12 col-xs-12">
-                                    <h5><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Usuarios&nbsp;</strong><small>Usuarios relacionados a este perfil</small></h5>
-                                    <div style="text-align: left;" class="input-group input-group-sm">
-                                        <asp:TextBox ID="txtbuscarempleado" CssClass="form-control" placeholder="Buscar" runat="server"></asp:TextBox>
-                                        <span class="input-group-btn">
-                                            <asp:LinkButton ID="btnbuscarempleado2" CssClass="btn btn-primary btn-flat" runat="server"
-                                                OnClientClick="return ChangedTextLoad2();" OnClick="btnbuscarempleado2_Click">
-                                                <i class="fa fa-search" aria-hidden="true"></i>
-                                            </asp:LinkButton>
-                                        </span>
-                                    </div>
-
-                                    <asp:Image ID="imgloadempleado_" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
-                                    <label id="lblbe2" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
-                                </div>
-
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div style="height: 150px; min-width: 500px; overflow: scroll;">
-                                        <asp:Repeater ID="rdllista_empleados" runat="server">
-                                            <ItemTemplate>
-                                                <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">
-                                                    <Triggers>
-                                                        <asp:AsyncPostBackTrigger ControlID="mycheck" EventName="CheckedChanged" />
-                                                    </Triggers>
-                                                    <ContentTemplate>
-                                                        <asp:CheckBox ID="mycheck" Text='<%# Eval("nombre_usuario").ToString()  %>'
-                                                            ToolTip='<%# Eval("Usuario_Red").ToString()  %>' OnCheckedChanged="mycheck_CheckedChanged"
-                                                            runat="server"
-                                                            AutoPostBack="true"></asp:CheckBox>
-                                                        <br />
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
-                                    </div>
-                                </div>
-                            </div>
-                            <asp:TextBox ID="txtid_perfil" Visible="false" runat="server"></asp:TextBox>
-                        </div>
-                        <div class="modal-footer ">
-                            <div class="row" id="div_error" runat="server" visible="false" style="text-align: left;">
+                            <br />
+                            <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="alert alert-danger alert-dismissible">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                        <asp:Label ID="lblerror" runat="server" Text=""></asp:Label>
+                                    <div class="nav-tabs-custom">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active" id="tusu" runat="server">
+                                                <asp:LinkButton ID="lnkusuarios" CommandName="usuarios" runat="server" OnClick="lnkusuarios_Click">
+                                                    <strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Usuarios</strong>
+                                                </asp:LinkButton>
+                                            </li>
+                                            <li class="" id="twid" runat="server">
+                                                <asp:LinkButton ID="LinkButton6" CommandName="widgets" runat="server" OnClick="lnkusuarios_Click"><strong>Widgets</strong></asp:LinkButton>
+                                            </li>
+                                            <li class="" id="tmen" runat="server">
+                                                <asp:LinkButton ID="LinkButton7" CommandName="menus" runat="server" OnClick="lnkusuarios_Click"><strong>Menus</strong></asp:LinkButton>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="div_empleados" runat="server">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-xs-12">
+                                                        <h5><strong>Usuarios relacionados a este perfil</strong></h5>
+                                                        <div style="text-align: left;" class="input-group input-group-sm">
+                                                            <asp:TextBox ID="txtbuscarempleado" CssClass="form-control" placeholder="Buscar" runat="server"></asp:TextBox>
+                                                            <span class="input-group-btn">
+                                                                <asp:LinkButton ID="btnbuscarempleado2" CssClass="btn btn-primary btn-flat" runat="server"
+                                                                    OnClientClick="return ChangedTextLoad2();" OnClick="btnbuscarempleado2_Click">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                                </asp:LinkButton>
+                                                            </span>
+                                                        </div>
+
+                                                        <asp:Image ID="imgloadempleado_" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                                        <label id="lblbe2" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
+                                                    </div>
+
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div style="height: 120px; min-width: 500px; overflow: scroll;">
+                                                            <asp:Repeater ID="rdllista_empleados" runat="server">
+                                                                <ItemTemplate>
+                                                                    <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">
+                                                                        <Triggers>
+                                                                            <asp:AsyncPostBackTrigger ControlID="mycheck" EventName="CheckedChanged" />
+                                                                        </Triggers>
+                                                                        <ContentTemplate>
+                                                                            <asp:CheckBox ID="mycheck" Text='<%# Eval("nombre_usuario").ToString()  %>'
+                                                                                ToolTip='<%# Eval("Usuario_Red").ToString()  %>' OnCheckedChanged="mycheck_CheckedChanged"
+                                                                                runat="server"
+                                                                                AutoPostBack="true"></asp:CheckBox>
+                                                                            <br />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                </ItemTemplate>
+                                                            </asp:Repeater>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="div_widgets" runat="server">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-xs-12">
+                                                        <h5><strong>Widgets relacionados a este perfil</strong></h5>
+                                                        <div style="text-align: left;" class="input-group input-group-sm">
+                                                            <asp:TextBox ID="txtbuscarwidget" CssClass="form-control" placeholder="Buscar" runat="server"></asp:TextBox>
+                                                            <span class="input-group-btn">
+                                                                <asp:LinkButton ID="lnkbuscarwidget" CssClass="btn btn-primary btn-flat" runat="server"
+                                                                    OnClientClick="return ChangedTextLoad1();" OnClick="lnkbuscarwidget_Click">
+                                                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                                                </asp:LinkButton>
+                                                            </span>
+                                                        </div>
+
+                                                        <asp:Image ID="img_widget" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                                        <label id="lblwidget" runat="server" style="display: none; color: #1565c0">Buscando Widgets</label>
+                                                    </div>
+
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div style="height: 120px; min-width: 500px; overflow: scroll;">
+                                                            <asp:Repeater ID="repeater_widgets" runat="server">
+                                                                <ItemTemplate>
+                                                                    <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">
+                                                                        <Triggers>
+                                                                            <asp:AsyncPostBackTrigger ControlID="mycheck_widgets" EventName="CheckedChanged" />
+                                                                        </Triggers>
+                                                                        <ContentTemplate>
+                                                                            <asp:CheckBox ID="mycheck_widgets" Text='<%# Eval("widget").ToString()  %>'
+                                                                                ToolTip='<%# Eval("id_widget").ToString()  %>' OnCheckedChanged="mycheck_widgets_CheckedChanged"
+                                                                                runat="server"
+                                                                                AutoPostBack="true"></asp:CheckBox>
+                                                                            <br />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                </ItemTemplate>
+                                                            </asp:Repeater>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="div_menus" runat="server">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+
+                                <asp:TextBox ID="txtid_perfil" Visible="false" runat="server"></asp:TextBox>
                             </div>
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                            <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                            </div>
+                            <div class="modal-footer ">
+                                <div class="row" id="div_error" runat="server" visible="false" style="text-align: left;">
+                                    <div class="col-lg-12">
+                                        <div class="alert alert-danger alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                            <asp:Label ID="lblerror" runat="server" Text=""></asp:Label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando...
-                            </asp:LinkButton>
-                            <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
-                                OnClientClick="return ConfirmEmpleadoProyectoModal('¿Desea Guardar este Perfil?');" runat="server">
+                                </asp:LinkButton>
+                                <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
+                                    OnClientClick="return ConfirmEmpleadoProyectoModal('¿Desea Guardar este Perfil?');" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
-                            </asp:LinkButton>
+                                </asp:LinkButton>
+                            </div>
                         </div>
-                    </div>
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>

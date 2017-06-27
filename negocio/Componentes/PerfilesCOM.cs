@@ -94,7 +94,24 @@ namespace negocio.Componentes
             }
             return ds;
         }
-
+        
+        public DataSet sp_widgets_perfiles(int pid_perfil)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_perfil", SqlDbType = SqlDbType.Int, Value = pid_perfil });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_widgets_perfiles", listparameters, false, 1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
         public DataSet sp_usuarios_perfiles(int pid_perfil)
         {
             DataSet ds = new DataSet();
