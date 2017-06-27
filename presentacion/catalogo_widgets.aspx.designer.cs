@@ -112,6 +112,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnkguardar;
         
         /// <summary>
+        /// btneventgrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btneventgrid;
+        
+        /// <summary>
         /// hdfmotivos control.
         /// </summary>
         /// <remarks>
@@ -119,5 +128,23 @@ namespace presentacion {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfmotivos;
+        
+        /// <summary>
+        /// hdfcommand control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfcommand;
+        
+        /// <summary>
+        /// hdfid_widget control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfid_widget;
     }
 }

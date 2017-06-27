@@ -1,6 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_perfiles.aspx.cs" Inherits="presentacion.catalogo_perfiles" %>
-
-
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 
@@ -116,10 +114,10 @@
                 Nuevo Perfil de Usuario&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
             </asp:LinkButton>
             <div class="table table-responsive">
-                <telerik:RadGrid ID="grid_perfiles" runat="server" Skin="Metro">
-                    <MasterTableView AutoGenerateColumns="false" CssClass="dvv table table-responsive"
-                        HeaderStyle-BackColor="White" HeaderStyle-ForeColor="Black"
-                        Width="100%">
+                                <telerik:RadGrid ID="grid_perfiles" runat="server" Skin="Metro">
+                    <mastertableview autogeneratecolumns="false" cssclass="dvv table table-responsive"
+                        headerstyle-backcolor="White" headerstyle-forecolor="Black"
+                        width="100%">
                         <Columns>
                             <telerik:GridTemplateColumn HeaderText="">
                                 <HeaderStyle Width="50px" />
@@ -174,7 +172,7 @@
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
                         </Columns>
-                    </MasterTableView>
+                    </mastertableview>
                 </telerik:RadGrid>
             </div>
 

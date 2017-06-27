@@ -35,9 +35,16 @@ namespace presentacion
             {
                 WidgetsCOM widcom = new WidgetsCOM();
                 DataSet ds = widcom.sp_catalogo_widgets(id_widget);
+                DataTable dt = ds.Tables[0];
                 grid_widgets.DataSource = ds.Tables[0];
                 grid_widgets.DataBind();
-            }
+                if (id_widget > 0)
+                {
+                    rtxtwidget.Text = dt.Rows[0]["widget"].ToString();
+                    rtxticono.Text = dt.Rows[0]["icono"].ToString();
+                    txtid_widget.Text = id_widget.ToString();
+                }
+                }
             catch (Exception ex)
             {
 
@@ -68,6 +75,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
+                div_error.Visible = true;
                 lblerror.Text = "Error al guardar widget: " + ex.Message;
             }
         }
@@ -86,7 +94,7 @@ namespace presentacion
                 if (vmensaje == "")
                 {
                     System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
-                  "AlertGO('Perfil Guardado Correctamente', 'catalogo_perfiles.aspx');", true);
+                  "AlertGO('Widget Guardado Correctamente', 'catalogo_widgets.aspx');", true);
                 }
                 else
                 {
@@ -96,19 +104,41 @@ namespace presentacion
             }
             catch (Exception ex)
             {
+                div_error.Visible = true;
                 lblerror.Text = "Error al editar perfil: " + ex.Message;
             }
         }
-
+        private void Eliminarwidget(int id_widget, string comenatrios)
+        {
+            try
+            {
+                WidgetsCOM Widget = new WidgetsCOM();
+                string usuario = Session["usuario"] as string;
+                DataSet ds = Widget.sp_borrar_widgets(id_widget, usuario, comenatrios);
+                DataTable dt = ds.Tables[0];
+                string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al eliminar widget. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
+                if (vmensaje == "")
+                {
+                    System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                  "AlertGO('Widget Guardado Correctamente', 'catalogo_widgets.aspx');", true);
+                }
+                else
+                {
+                    div_error.Visible = true;
+                    Toast.Error("Error al eliminar perfil: " + vmensaje, this);
+                }
+            }
+            catch (Exception ex)
+            {
+                div_error.Visible = true;
+                Toast.Error("Error al eliminar perfil: " + ex.Message, this);
+            }
+        }
         protected void lnknuevowidget_Click(object sender, EventArgs e)
         {
-            //div_empleados.Visible = true;
             div_widget.Visible = true;
             txtid_widget.Text = "";
             rtxtwidget.Text = "";
-            //txtbuscarempleado.Text = "";
-            //rdllista_empleados.DataSource = null;
-            //rdllista_empleados.DataBind();
             ModalShow("#myModal");
         }
 
@@ -140,6 +170,38 @@ namespace presentacion
                 Toast.Error("Error al relacionar usuario: " + ex.Message, this);
             }
            
+        }
+        protected void lnkcommand2_Click(object sender, EventArgs e)
+        {
+            LinkButton lnk = sender as LinkButton;
+            int id_widget = Convert.ToInt32(lnk.CommandArgument);
+            switch (lnk.CommandName.ToLower())
+            {
+                case "eliminar":
+                    Eliminarwidget(id_widget, hdfmotivos.Value.Trim());
+                    break;
+            }
+        }
+        protected void btneventgrid_Click(object sender, EventArgs e)
+        {
+            int id_widget = Convert.ToInt32(hdfid_widget.Value);
+            //div_empleados.Visible = false;
+            div_widget.Visible = false;
+            switch (hdfcommand.Value.ToLower())
+            {
+                case "actualizar":
+                    //div_empleados.Visible = true;
+                    div_widget.Visible = true;
+                    Cargar_catalogo_widgets(id_widget);
+                    ModalShow("#myModal");
+                    break;
+                //case "usuarios":
+                //    div_empleados.Visible = true;
+                //    div_perfil.Visible = false;
+                //    CargarCatalogo(id_perfil);
+                //    ModalShow("#myModal");
+                //    break;
+            }
         }
     }
 }

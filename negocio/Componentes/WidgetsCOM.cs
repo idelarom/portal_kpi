@@ -17,7 +17,7 @@ namespace negocio.Componentes
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pid_widget", SqlDbType = SqlDbType.Int, Value = widget });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_widget", SqlDbType = SqlDbType.Int, Value = id_widget });
             listparameters.Add(new SqlParameter() { ParameterName = "@pwidget", SqlDbType = SqlDbType.Int, Value = widget });
             listparameters.Add(new SqlParameter() { ParameterName = "@picono", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
@@ -53,18 +53,18 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_borrar_widgets(int pid_perfil, string usuario, string comentarios)
+        public DataSet sp_borrar_widgets(int id_widget, string usuario, string comentarios)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pid_perfil", SqlDbType = SqlDbType.Int, Value = pid_perfil });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_widget", SqlDbType = SqlDbType.Int, Value = id_widget });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
             listparameters.Add(new SqlParameter() { ParameterName = "@pcomentarios", SqlDbType = SqlDbType.Int, Value = comentarios });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("sp_borrar_perfiles", listparameters, false, 1);
+                ds = data.enviar("sp_borrar_widget", listparameters, false, 1);
             }
             catch (Exception ex)
             {
