@@ -280,6 +280,12 @@ namespace presentacion
         {
             try
             {
+                if (ViewState["dt_menus"] == null)
+                {
+                    DataTable dt_new = new DataTable();
+                    dt_new.Columns.Add("id_menu");
+                    ViewState["dt_menus"] = dt_new;
+                }
                 DataTable dt = ViewState["dt_menus"] as DataTable;
                 foreach (DataRow row in dt.Rows)
                 {
@@ -536,6 +542,17 @@ namespace presentacion
                         repeater_widgets.DataSource = dt_widgets_original;
                         repeater_widgets.DataBind();
                         CheckValuesListWidgets();
+                    }
+
+                    DataTable dt_menus_original = perfiles.sp_menus_perfiles(id_perfil).Tables[0];
+                    if (dt_menus_original.Rows.Count > 0)
+                    {
+                        System.Data.DataView view = new System.Data.DataView(dt_menus_original);
+                        System.Data.DataTable selected = view.ToTable("Selected", false, "id_menu");
+                        ViewState["dt_menus"] = selected;
+                        repeater_menus.DataSource = dt_menus_original;
+                        repeater_menus.DataBind();
+                        CheckValuesListMenus();
                     }
                 }
             }
@@ -824,7 +841,7 @@ namespace presentacion
         {
             if (txtbuscarmenu.Text.Trim().Length > 2 || txtbuscarmenu.Text.Trim().Length == 0)
             {
-                CargarListadoWidgets(txtbuscarwidget.Text.Trim());
+                CargarListadoMenus(txtbuscarwidget.Text.Trim());
                 imgmenu.Style["display"] = "none";
                 lblmenu.Style["display"] = "none";
             }
