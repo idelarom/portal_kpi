@@ -37,6 +37,12 @@ namespace presentacion
                 DataTable dt = ds.Tables[0];
                 grid_menus.DataSource = ds.Tables[0];
                 grid_menus.DataBind();
+
+                DataSet ds1 = menu.sp_catalogo_menus(0);
+                ddlmenupadre.DataSource = ds1;
+                ddlmenupadre.DataTextField = "name";                            // FieldName of Table in DataBase
+                ddlmenupadre.DataValueField= "id_menu";
+                ddlmenupadre.DataBind();
                 if (id_menu > 0)
                 {
                     rtxtmenu.Text = dt.Rows[0]["name"].ToString();
@@ -44,7 +50,7 @@ namespace presentacion
                     
                     if (!String.IsNullOrEmpty(dt.Rows[0]["id_menu_padre"].ToString()))
                     {
-                        ddlmenupadre.SelectedIndex = Convert.ToInt32(dt.Rows[0]["id_menu_padre"].ToString());
+                        ddlmenupadre.SelectedValue = dt.Rows[0]["id_menu_padre"].ToString();
                         rtxtUrl.Text = dt.Rows[0]["menu"].ToString();
                         Chkmenupadre.Checked = false;
                     }
@@ -52,18 +58,19 @@ namespace presentacion
                     {
                         Chkmenupadre.Checked = true;
                     }
-                   
+                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "showContentSubmenu();", true);
+
                     txtid_menu.Text = id_menu.ToString();
                 }
             }
             catch (Exception ex)
             {
 
-                Toast.Error("Error al cargar el catalogo de widgets: " + ex.Message, this);
+                Toast.Error("Error al cargar el catalogo de menu: " + ex.Message, this);
             }
         }
 
-        private void Agregarmenu(string menu, string icono, Int32 id_menu_padre, string url)
+        private void Agregarmenu(string menu, string icono, int id_menu_padre, string url)
         {
             div_error.Visible = false;
             try
@@ -119,7 +126,7 @@ namespace presentacion
                 lblerror.Text = "Error al editar menú: " + ex.Message;
             }
         }
-        private void Eliminarwidget(int id_menu, string comenatrios)
+        private void Eliminarmenu(int id_menu, string comenatrios)
         {
             try
             {
@@ -145,7 +152,6 @@ namespace presentacion
                 Toast.Error("Error al eliminar menú: " + ex.Message, this);
             }
         }
-
         protected void lnknuevomenu_Click(object sender, EventArgs e)
         {
             div_menu.Visible = true;
@@ -159,31 +165,48 @@ namespace presentacion
         {
             try
             {
+                string id_menu = txtid_menu.Text.Trim();
+                string menu = rtxtmenu.Text.Trim();               
+                string icono = rtxticono.Text.Trim();
+                string url = rtxtUrl.Text.Trim();
+                
                 if (Chkmenupadre.Checked)
                 {
-
-                }
-                else
-                {
-
-                }
-                
-                if (rtxtmenu.Text != "" && rtxticono.Text != "")
-                {
-                    string menu = rtxtwidget.Text.Trim();
-                    string icono = rtxticono.Text.Trim();
-                    if (txtid_widget.Text == "")
+                    if (rtxtmenu.Text != "" && rtxticono.Text != "")
                     {
-                        Agregarwidget(menu, icono);
+                        if (id_menu == "")
+                        {
+                            Agregarmenu(menu, icono, 0, "");
+                        }
+                        else
+                        {
+                            EditarMenu(Convert.ToInt32(id_menu), menu, icono, 0, "");
+                        }
                     }
                     else
                     {
-                        Editarwidget(Convert.ToInt32(txtid_widget.Text), widget, icono);
+                        Toast.Info("favor de llenar los campos", "DATOS REQUERIDOS", this);
                     }
                 }
                 else
                 {
-                    Toast.Info("favor de llenar los campos", "DATOS REQUERIDOS", this);
+                    int id_menu_padre = Convert.ToInt32(ddlmenupadre.SelectedValue);
+                    if (rtxtmenu.Text != "" && rtxticono.Text != "")
+                    {
+
+                        if (id_menu == "")
+                        {
+                            Agregarmenu(menu, icono, id_menu_padre, url);
+                        }
+                        else
+                        {
+                            EditarMenu(Convert.ToInt32(id_menu), menu, icono, id_menu_padre, url);
+                        }
+                    }
+                    else
+                    {
+                        Toast.Info("favor de llenar los campos", "DATOS REQUERIDOS", this);
+                    }
                 }
             }
             catch (Exception ex)
@@ -195,35 +218,34 @@ namespace presentacion
         }
         protected void lnkcommand2_Click(object sender, EventArgs e)
         {
-            //LinkButton lnk = sender as LinkButton;
-            //int id_widget = Convert.ToInt32(lnk.CommandArgument);
-            //switch (lnk.CommandName.ToLower())
-            //{
-            //    case "eliminar":
-            //        Eliminarwidget(id_widget, hdfmotivos.Value.Trim());
-            //        break;
-            //}
+            LinkButton lnk = sender as LinkButton;
+            int id_menu = Convert.ToInt32(lnk.CommandArgument);
+            switch (lnk.CommandName.ToLower())
+            {
+                case "eliminar":
+                    Eliminarmenu(id_menu, hdfmotivos.Value.Trim());
+                    break;
+            }
         }
         protected void btneventgrid_Click(object sender, EventArgs e)
         {
-            //int id_widget = Convert.ToInt32(hdfid_widget.Value);
-            ////div_empleados.Visible = false;
-            //div_widget.Visible = false;
-            //switch (hdfcommand.Value.ToLower())
-            //{
-            //    case "actualizar":
-            //        //div_empleados.Visible = true;
-            //        div_widget.Visible = true;
-            //        Cargar_catalogo_widgets(id_widget);
-            //        ModalShow("#myModal");
-            //        break;
-            //        //case "usuarios":
-            //        //    div_empleados.Visible = true;
-            //        //    div_perfil.Visible = false;
-            //        //    CargarCatalogo(id_perfil);
-            //        //    ModalShow("#myModal");
-            //        //    break;
-            //}
+            int id_menu = Convert.ToInt32(hdfid_menu.Value);
+            div_menu.Visible = false;
+            switch (hdfcommand.Value.ToLower())
+            {
+                case "actualizar":
+                    div_menu.Visible = true;
+                    Cargar_catalogo_menus(id_menu);
+
+                    ModalShow("#myModal");
+                    break;
+                    //case "usuarios":
+                    //    div_empleados.Visible = true;
+                    //    div_perfil.Visible = false;
+                    //    CargarCatalogo(id_perfil);
+                    //    ModalShow("#myModal");
+                    //    break;
+            }
         }
     }
 }

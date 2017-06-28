@@ -61,13 +61,13 @@ namespace negocio.Componentes
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pid_widget", SqlDbType = SqlDbType.Int, Value = id_menu });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_menu", SqlDbType = SqlDbType.Int, Value = id_menu });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
             listparameters.Add(new SqlParameter() { ParameterName = "@pcomentarios", SqlDbType = SqlDbType.Int, Value = comentarios });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("sp_borrar_widget", listparameters, false, 1);
+                ds = data.enviar("sp_borrar_menu", listparameters, false, 1);
             }
             catch (Exception ex)
             {
