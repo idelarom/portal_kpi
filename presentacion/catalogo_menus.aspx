@@ -76,7 +76,7 @@
             }
           }
 
-         function OpenModalEditGrid(id_widget, command) {
+          function OpenModalEditGrid(id_menu, command) {
           var myHidden = document.getElementById('<%= hdfid_menu.ClientID %>');
 
              myHidden.value = id_menu;
@@ -178,12 +178,12 @@
                                 </div>
                                 <div id="Datossubmenu">
                                     <div class="col-lg-12 col-sm-12">
-                                        <h5><strong><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Url del submenu</strong></h5>
+                                        <h5><strong><i class="fa fa-internet-explorer" aria-hidden="true"></i>&nbsp;Url del submenu</strong></h5>
                                         <telerik:RadTextBox ID="rtxtUrl" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                     </div>
-                                    <div class="col-lg-12 col-sm-12">
-                                        <h5><strong><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Menu principal</strong></h5>
-                                        <asp:DropDownList ID="ddlmenupadre" class="btn btn-default dropdown-toggle" data-toggle="dropdown" runat="server"></asp:DropDownList>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Menu principal</strong></h5>
+                                        <asp:DropDownList ID="ddlmenupadre" CssClass="form-control" runat="server"></asp:DropDownList>
                                     </div>
                                 </div>
                                 
@@ -206,7 +206,7 @@
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando...
                             </asp:LinkButton>
                               <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
-                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este widget?');" runat="server">
+                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este menu?');" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                             </asp:LinkButton>
                         </div>
