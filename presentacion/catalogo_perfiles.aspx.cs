@@ -94,12 +94,13 @@ namespace presentacion
                 Toast.Error("Error al cargar lista de widgets. " + ex.Message, this);
             }
         }
+
         private void CargarListadoMenus(string filtro)
         {
             try
             {
-                WidgetsCOM widgets = new WidgetsCOM();
-                DataTable dt_original = widgets.sp_catalogo_widgets(0).Tables[0];
+                MenusCOM widgets = new MenusCOM();
+                DataTable dt_original = widgets.sp_catalogo_menus(0).Tables[0];
 
                 DataTable dt = new DataTable();
                 if (filtro == "")
@@ -108,17 +109,17 @@ namespace presentacion
                 }
                 else
                 {
-                    if (dt_original.Select("widget like '%" + filtro + "%'").Length > 0)
+                    if (dt_original.Select("name like '%" + filtro + "%'").Length > 0)
                     {
-                        dt = filtro == "" ? dt_original : dt_original.Select("widget like '%" + filtro + "%'").CopyToDataTable();
+                        dt = filtro == "" ? dt_original : dt_original.Select("name like '%" + filtro + "%'").CopyToDataTable();
                     }
                 }
 
                 if (dt.Rows.Count > 0)
                 {
-                    repeater_widgets.DataSource = dt;
-                    repeater_widgets.DataBind();
-                    CheckValuesListWidgets();
+                    repeater_menus.DataSource = dt;
+                    repeater_menus.DataBind();
+                    CheckValuesListMenus();
                 }
                 else
                 {
@@ -127,7 +128,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar lista de widgets. " + ex.Message, this);
+                Toast.Error("Error al cargar lista de menus. " + ex.Message, this);
             }
         }
 
@@ -253,6 +254,49 @@ namespace presentacion
             }
         }
 
+        private void AgregarMenusoPerfiles(int id_menu)
+        {
+            try
+            {
+                if (ViewState["dt_menus"] == null)
+                {
+                    DataTable dt_new = new DataTable();
+                    dt_new.Columns.Add("id_menu");
+                    ViewState["dt_menus"] = dt_new;
+                }
+                DataTable dt = ViewState["dt_menus"] as DataTable;
+                DataRow row = dt.NewRow();
+                row["id_menu"] = id_menu;
+                dt.Rows.Add(row);
+                ViewState["dt_menus"] = dt;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al relacionar menu: " + ex.Message, this);
+            }
+        }
+
+        private void EliminarMenusPerfiles(int id_menu)
+        {
+            try
+            {
+                DataTable dt = ViewState["dt_menus"] as DataTable;
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (id_menu == Convert.ToInt32(row["id_menu"]))
+                    {
+                        row.Delete();
+                        break;
+                    }
+                }
+                ViewState["dt_menus"] = dt;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al eliminar menu: " + ex.Message, this);
+            }
+        }
+
         private Boolean ExistUsuarioPerfiles(string usuario)
         {
             try
@@ -297,6 +341,28 @@ namespace presentacion
             }
         }
 
+        private Boolean ExistMenusPerfiles(string id_menu)
+        {
+            try
+            {
+                bool exist = false;
+                DataTable dt = ViewState["dt_menus"] as DataTable;
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (id_menu.Trim().ToUpper() == row["id_menu"].ToString().Trim().ToUpper())
+                    {
+                        exist = true;
+                        break;
+                    }
+                }
+                return exist;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         private void CheckValuesListUsuarios()
         {
             try
@@ -326,6 +392,22 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar lista de widgets: " + ex.Message, this);
+            }
+        }
+
+        private void CheckValuesListMenus()
+        {
+            try
+            {
+                foreach (RepeaterItem item in repeater_menus.Items)
+                {
+                    CheckBox check = item.FindControl("mycheck_menus") as CheckBox;
+                    check.Checked = ExistMenusPerfiles(check.ToolTip.Trim().ToUpper());
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar lista de menus: " + ex.Message, this);
             }
         }
 
@@ -391,6 +473,37 @@ namespace presentacion
             }
         }
 
+        private String CadenaMenus()
+        {
+            try
+            {
+                string cadena = "";
+                DataTable dt = ViewState["dt_menus"] as DataTable;
+                foreach (DataRow row in dt.Rows)
+                {
+                    cadena = cadena + row["id_menu"].ToString().Trim().ToUpper() + ";";
+                }
+                return cadena;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+        private int TotalCadenaMenus()
+        {
+            try
+            {
+                DataTable dt = ViewState["dt_menus"] as DataTable;
+                return dt.Rows.Count;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+
         private void CargarCatalogo(int id_perfil)
         {
             try
@@ -406,7 +519,7 @@ namespace presentacion
                     txtid_perfil.Text = id_perfil.ToString();
                     DataTable dt_usuarios_original = perfiles.sp_usuarios_perfiles(id_perfil).Tables[0];
                     if (dt_usuarios_original.Rows.Count > 0)
-                    {                       
+                    {
                         System.Data.DataView view = new System.Data.DataView(dt_usuarios_original);
                         System.Data.DataTable selected = view.ToTable("Selected", false, "usuario");
                         ViewState["dt_usuarios"] = selected;
@@ -424,7 +537,6 @@ namespace presentacion
                         repeater_widgets.DataBind();
                         CheckValuesListWidgets();
                     }
-
                 }
             }
             catch (Exception ex)
@@ -433,14 +545,17 @@ namespace presentacion
             }
         }
 
-        private void AgregarPerfil(string perfil, string cadena_usuarios, int total_cadena_usuarios, string cadena_widgets, int total_cadena_widgets)
+        private void AgregarPerfil(string perfil, string cadena_usuarios,
+            int total_cadena_usuarios, string cadena_widgets,
+            int total_cadena_widgets, string cadena_menus, int total_cadena_menus)
         {
             div_error.Visible = false;
             try
             {
                 PerfilesCOM perfiles = new PerfilesCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = perfiles.sp_agregar_perfiles(perfil, usuario, cadena_usuarios, total_cadena_usuarios, cadena_widgets, total_cadena_widgets);
+                DataSet ds = perfiles.sp_agregar_perfiles(perfil, usuario, cadena_usuarios, total_cadena_usuarios,
+                    cadena_widgets, total_cadena_widgets, cadena_menus, total_cadena_menus);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al guardar perfil. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -460,14 +575,16 @@ namespace presentacion
             }
         }
 
-        private void EditarPerfil(int idperfil, string perfil, string cadena_usuarios, int total_cadena_usuarios, string cadena_widgets, int total_cadena_widgets)
+        private void EditarPerfil(int idperfil, string perfil, string cadena_usuarios,
+            int total_cadena_usuarios, string cadena_widgets, int total_cadena_widgets, string cadena_menus, int total_cadena_menus)
         {
             div_error.Visible = false;
             try
             {
                 PerfilesCOM perfiles = new PerfilesCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = perfiles.sp_editar_perfiles(idperfil, perfil, usuario, cadena_usuarios, total_cadena_usuarios, cadena_widgets, total_cadena_widgets);
+                DataSet ds = perfiles.sp_editar_perfiles(idperfil, perfil, usuario, cadena_usuarios, total_cadena_usuarios,
+                    cadena_widgets, total_cadena_widgets, cadena_menus, total_cadena_menus);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al editar perfil. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -547,6 +664,7 @@ namespace presentacion
             {
                 ViewState["dt_usuarios"] = null;
                 ViewState["dt_widgets"] = null;
+                ViewState["dt_menus"] = null;
                 CargarCatalogo(0);
             }
         }
@@ -571,23 +689,27 @@ namespace presentacion
             string cadena_widgets = CadenaWidgets();
             int total_cadena_widgets = TotalCadenaWidgets();
             string perfil = rtxtperfil.Text.Trim();
+            string cadena_menus = CadenaMenus();
+            int total_cadena_menus = TotalCadenaMenus();
             div_error.Visible = false;
             if (rtxtperfil.Text == "")
             {
                 div_error.Visible = true;
                 lblerror.Text = "Ingrese el nombre del perfil";
             }
-            else {
+            else
+            {
                 if (txtid_perfil.Text == "")
                 {
-                    AgregarPerfil(perfil, cadena_perfiles, total_cadena_perfiles, cadena_widgets, total_cadena_widgets);
+                    AgregarPerfil(perfil, cadena_perfiles, total_cadena_perfiles,
+                        cadena_widgets, total_cadena_widgets, cadena_menus, total_cadena_menus);
                 }
                 else
                 {
-                    EditarPerfil(Convert.ToInt32(txtid_perfil.Text), perfil, cadena_perfiles, total_cadena_perfiles, cadena_widgets, total_cadena_widgets);
+                    EditarPerfil(Convert.ToInt32(txtid_perfil.Text), perfil,
+                        cadena_perfiles, total_cadena_perfiles, cadena_widgets, total_cadena_widgets, cadena_menus, total_cadena_menus);
                 }
             }
-            
         }
 
         protected void btnbuscarempleado2_Click(object sender, EventArgs e)
@@ -652,11 +774,13 @@ namespace presentacion
                     Tabs("usuarios");
                     ModalShow("#myModal");
                     break;
+
                 case "widgets":
                     CargarCatalogo(id_perfil);
                     Tabs("widgets");
                     ModalShow("#myModal");
                     break;
+
                 case "menus":
                     CargarCatalogo(id_perfil);
                     Tabs("menus");
@@ -690,8 +814,6 @@ namespace presentacion
             }
         }
 
-
-
         protected void lnkusuarios_Click(object sender, EventArgs e)
         {
             LinkButton lnk = sender as LinkButton;
@@ -700,7 +822,6 @@ namespace presentacion
 
         protected void lnkbuscarmenu_Click(object sender, EventArgs e)
         {
-
             if (txtbuscarmenu.Text.Trim().Length > 2 || txtbuscarmenu.Text.Trim().Length == 0)
             {
                 CargarListadoWidgets(txtbuscarwidget.Text.Trim());
@@ -715,7 +836,13 @@ namespace presentacion
 
         protected void mycheck_menus_CheckedChanged(object sender, EventArgs e)
         {
-
+            CheckBox item = sender as CheckBox;
+            int id_menu = Convert.ToInt32(item.ToolTip.Trim());
+            EliminarMenusPerfiles(id_menu);
+            if (item.Checked)
+            {
+                AgregarMenusoPerfiles(id_menu);
+            }
         }
     }
 }
