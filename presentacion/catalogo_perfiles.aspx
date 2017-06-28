@@ -85,7 +85,12 @@
              return true;
           }
         
-          function ChangedTextLoad() {
+          function ChangedTextLoad3() {
+            $("#<%= imgmenu.ClientID%>").show();
+             $("#<%= lblmenu.ClientID%>").show();
+             return true;
+          }
+          function ChangedTextLoad1() {
             $("#<%= img_widget.ClientID%>").show();
              $("#<%= lblwidget.ClientID%>").show();
              return true;
@@ -211,10 +216,12 @@
                                                 </asp:LinkButton>
                                             </li>
                                             <li class="" id="twid" runat="server">
-                                                <asp:LinkButton ID="LinkButton6" CommandName="widgets" runat="server" OnClick="lnkusuarios_Click"><strong>Widgets</strong></asp:LinkButton>
+                                                <asp:LinkButton ID="LinkButton6" CommandName="widgets" runat="server" OnClick="lnkusuarios_Click"><strong>
+                                                   <i class="fa fa-window-restore" aria-hidden="true"></i>&nbsp;Widgets</strong></asp:LinkButton>
                                             </li>
                                             <li class="" id="tmen" runat="server">
-                                                <asp:LinkButton ID="LinkButton7" CommandName="menus" runat="server" OnClick="lnkusuarios_Click"><strong>Menus</strong></asp:LinkButton>
+                                                <asp:LinkButton ID="LinkButton7" CommandName="menus" runat="server" OnClick="lnkusuarios_Click"><strong>
+                                                    <i class="fa fa-window-maximize" aria-hidden="true"></i>&nbsp;Menus</strong></asp:LinkButton>
                                             </li>
                                         </ul>
                                         <div class="tab-content">
@@ -227,7 +234,7 @@
                                                             <span class="input-group-btn">
                                                                 <asp:LinkButton ID="btnbuscarempleado2" CssClass="btn btn-primary btn-flat" runat="server"
                                                                     OnClientClick="return ChangedTextLoad2();" OnClick="btnbuscarempleado2_Click">
-                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                                    <i class="fa fa-search" aria-hidden="true"></i>
                                                                 </asp:LinkButton>
                                                             </span>
                                                         </div>
@@ -299,6 +306,44 @@
                                                 </div>
                                             </div>
                                             <div class="tab-pane" id="div_menus" runat="server">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-xs-12">
+                                                        <h5><strong>Menus relacionados a este perfil</strong></h5>
+                                                        <div style="text-align: left;" class="input-group input-group-sm">
+                                                            <asp:TextBox ID="txtbuscarmenu" CssClass="form-control" placeholder="Buscar" runat="server"></asp:TextBox>
+                                                            <span class="input-group-btn">
+                                                                <asp:LinkButton ID="lnkbuscarmenu" CssClass="btn btn-primary btn-flat" runat="server"
+                                                                    OnClientClick="return ChangedTextLoad3();" OnClick="lnkbuscarmenu_Click">
+                                                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                                                </asp:LinkButton>
+                                                            </span>
+                                                        </div>
+
+                                                        <asp:Image ID="imgmenu" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                                        <label id="lblmenu" runat="server" style="display: none; color: #1565c0">Buscando Menus</label>
+                                                    </div>
+
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                        <div style="height: 120px; min-width: 500px; overflow: scroll;">
+                                                            <asp:Repeater ID="repeater_menus" runat="server">
+                                                                <ItemTemplate>
+                                                                    <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">
+                                                                        <Triggers>
+                                                                            <asp:AsyncPostBackTrigger ControlID="mycheck_menus" EventName="CheckedChanged" />
+                                                                        </Triggers>
+                                                                        <ContentTemplate>
+                                                                            <asp:CheckBox ID="mycheck_menus" Text='<%# Eval("name").ToString()  %>'
+                                                                                ToolTip='<%# Eval("id_menu").ToString()  %>' OnCheckedChanged="mycheck_menus_CheckedChanged"
+                                                                                runat="server"
+                                                                                AutoPostBack="true"></asp:CheckBox>
+                                                                            <br />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                </ItemTemplate>
+                                                            </asp:Repeater>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

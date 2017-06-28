@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Componentes\ConfiguracionDashboardCOM.cs" />
     <Compile Include="Componentes\EmpleadosCOM.cs" />
     <Compile Include="Componentes\MenusCOM.cs" />
     <Compile Include="Componentes\PerfilesCOM.cs" />
