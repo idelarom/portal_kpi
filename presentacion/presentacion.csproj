@@ -163,6 +163,7 @@
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\npm.js" />
+    <Content Include="catalogo_menus.aspx" />
     <Content Include="catalogo_perfiles.aspx" />
     <Content Include="catalogo_widgets.aspx" />
     <Content Include="Default.aspx" />
@@ -1179,6 +1180,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alert.cs" />
+    <Compile Include="catalogo_menus.aspx.cs">
+      <DependentUpon>catalogo_menus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalogo_menus.aspx.designer.cs">
+      <DependentUpon>catalogo_menus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="catalogo_perfiles.aspx.cs">
       <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1391,6 +1399,9 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

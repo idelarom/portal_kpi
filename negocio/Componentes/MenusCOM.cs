@@ -7,24 +7,25 @@ using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 
-
 namespace negocio.Componentes
 {
-    public class WidgetsCOM
+    public class MenusCOM
     {
-        public DataSet sp_editar_widgets(int id_widget, string widget, string icono, string usuario)
+        public DataSet sp_editar_menus(int id_menu, int id_menu_padre, string menu, string url, string icono, string usuario)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pid_widget", SqlDbType = SqlDbType.Int, Value = id_widget });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pwidget", SqlDbType = SqlDbType.Int, Value = widget });
-            listparameters.Add(new SqlParameter() { ParameterName = "@picono", SqlDbType = SqlDbType.Int, Value = icono });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_menu", SqlDbType = SqlDbType.Int, Value = id_menu });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_menu_padre", SqlDbType = SqlDbType.Int, Value = id_menu_padre });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pname", SqlDbType = SqlDbType.Int, Value = menu });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pmenu", SqlDbType = SqlDbType.Int, Value = url });
+            listparameters.Add(new SqlParameter() { ParameterName = "@picon_ad", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("sp_editar_widget", listparameters, false, 1);
+                ds = data.enviar("sp_editar_menu", listparameters, false, 1);
             }
             catch (Exception ex)
             {
@@ -33,18 +34,20 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_agregar_widgets(string widget, string icono, string usuario)
+        public DataSet sp_agregar_menus(int id_menu_padre, string menu, string url, string icono, string usuario)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pwidget", SqlDbType = SqlDbType.Int, Value = widget });
-            listparameters.Add(new SqlParameter() { ParameterName = "@picono", SqlDbType = SqlDbType.Int, Value = icono });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_menu_padre", SqlDbType = SqlDbType.Int, Value = id_menu_padre });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pname", SqlDbType = SqlDbType.Int, Value = menu });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pmenu", SqlDbType = SqlDbType.Int, Value = url });
+            listparameters.Add(new SqlParameter() { ParameterName = "@picon_ad", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("sp_agregar_widgets", listparameters, false, 1);
+                ds = data.enviar("sp_agregar_menu", listparameters, false, 1);
             }
             catch (Exception ex)
             {
@@ -53,12 +56,12 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_borrar_widgets(int id_widget, string usuario, string comentarios)
+        public DataSet sp_borrar_menus(int id_menu, string usuario, string comentarios)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pid_widget", SqlDbType = SqlDbType.Int, Value = id_widget });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_widget", SqlDbType = SqlDbType.Int, Value = id_menu });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
             listparameters.Add(new SqlParameter() { ParameterName = "@pcomentarios", SqlDbType = SqlDbType.Int, Value = comentarios });
             try
@@ -73,16 +76,16 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_catalogo_widgets(int id_widget)
+        public DataSet sp_catalogo_menus(int id_menu)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pid_widget", SqlDbType = SqlDbType.Int, Value = id_widget });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_menu", SqlDbType = SqlDbType.Int, Value = id_menu });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("sp_catalogo_widgets", listparameters, false, 1);
+                ds = data.enviar("sp_catalogo_menus", listparameters, false, 1);
             }
             catch (Exception ex)
             {
@@ -90,6 +93,5 @@ namespace negocio.Componentes
             }
             return ds;
         }
-        
     }
 }

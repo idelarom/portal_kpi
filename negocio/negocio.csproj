@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Componentes\EmpleadosCOM.cs" />
+    <Compile Include="Componentes\MenusCOM.cs" />
     <Compile Include="Componentes\PerfilesCOM.cs" />
     <Compile Include="Componentes\To.cs" />
     <Compile Include="Componentes\WidgetsCOM.cs" />

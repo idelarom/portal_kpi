@@ -105,7 +105,7 @@ namespace presentacion
             catch (Exception ex)
             {
                 div_error.Visible = true;
-                lblerror.Text = "Error al editar perfil: " + ex.Message;
+                lblerror.Text = "Error al editar widget: " + ex.Message;
             }
         }
         private void Eliminarwidget(int id_widget, string comenatrios)
@@ -125,13 +125,13 @@ namespace presentacion
                 else
                 {
                     div_error.Visible = true;
-                    Toast.Error("Error al eliminar perfil: " + vmensaje, this);
+                    Toast.Error("Error al eliminar widget: " + vmensaje, this);
                 }
             }
             catch (Exception ex)
             {
                 div_error.Visible = true;
-                Toast.Error("Error al eliminar perfil: " + ex.Message, this);
+                Toast.Error("Error al eliminar widget: " + ex.Message, this);
             }
         }
         protected void lnknuevowidget_Click(object sender, EventArgs e)
@@ -139,6 +139,7 @@ namespace presentacion
             div_widget.Visible = true;
             txtid_widget.Text = "";
             rtxtwidget.Text = "";
+            rtxticono.Text = "";
             ModalShow("#myModal");
         }
 
