@@ -33,15 +33,16 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_order_divs_prueba()
+        public DataSet sp_order_widgets(string usuario)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("sp_order_divs_prueba", listparameters, false, 1);
+                ds = data.enviar("sp_order_widgets", listparameters, false, 1);
             }
             catch (Exception ex)
             {

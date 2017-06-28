@@ -165,6 +165,7 @@
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="catalogo_perfiles.aspx" />
     <Content Include="catalogo_widgets.aspx" />
+    <Content Include="configuracion_dashboard.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="dist\css\AdminLTE.css" />
     <Content Include="dist\css\AdminLTE.min.css" />
@@ -1193,6 +1194,13 @@
     <Compile Include="catalogo_widgets.aspx.designer.cs">
       <DependentUpon>catalogo_widgets.aspx</DependentUpon>
     </Compile>
+    <Compile Include="configuracion_dashboard.aspx.cs">
+      <DependentUpon>configuracion_dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="configuracion_dashboard.aspx.designer.cs">
+      <DependentUpon>configuracion_dashboard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1391,6 +1399,9 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -212,7 +212,51 @@
             } else {
                 return false;
             }
-        }
+           }
+
+           //DEVUELVE NOTIFICACION DE ESCRITORIO
+           function NotificacionDesktop(title, Mensaje, img) {
+               if (!("Notification" in window)) {
+                   Notifica(Mensaje);
+               }
+               else if (Notification.permission === "granted") {
+                   var options = {
+                       body: Mensaje,
+                       icon: img,
+                       dir: "ltr",
+                       tag: "Mensaje del Portal"
+                   };
+                   var notification = new Notification(title, options);
+                   notification.onclick = function () {
+                       notification.close();
+                   };
+                   setTimeout(function () {
+                       notification.close();
+                   }, 8000);
+               }
+               else if (Notification.permission !== 'denied') {
+                   Notification.requestPermission(function (permission) {
+                       if (!('permission' in Notification)) {
+                           Notification.permission = permission;
+                       }
+                       if (permission === "granted") {
+                           var options = {
+                               body: Mensaje,
+                               icon: img,
+                               dir: "ltr",
+                               tag: "Mensaje del Portal"
+                           };
+                           var notification = new Notification(title, options);
+                           notification.onclick = function () {
+                               notification.close();
+                           };
+                           setTimeout(function () {
+                               notification.close();
+                           }, 8000);
+
+                       }
+                   });
+               }
     </script>
 </head>
 <body class="hold-transition skin-blue sidebar-collapse  sidebar-mini">
@@ -267,6 +311,9 @@
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
+                                             <asp:LinkButton ID="LinkButton2" runat="server" CssClass="btn btn-default btn-flat"
+                                                  PostBackUrl="configuracion_dashboard.aspx">
+                                                <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Configuración</asp:LinkButton>
                                         </div>
                                         <div class="pull-right">
                                             <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-default btn-flat"
@@ -353,6 +400,40 @@
                                                                                     <ul class="treeview-menu">
                                                                                         <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
                                                                                             <ItemTemplate>
+                                                                                                <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
+                                                                                                    <i class='<%# Eval("icon_ad") %>'></i><%# Eval("name") %></a></li>
+
+                                                                                                <li id="mml" runat="server">
+                                                                                                    <a href="#">
+                                                                                                        <i class='<%# Eval("icon_ad") %>'></i><span><%# Eval("name") %></span>
+                                                                                                        <span class="pull-right-container">
+                                                                                                            <i class="fa fa-angle-left pull-right"></i>
+                                                                                                        </span>
+                                                                                                    </a>
+                                                                                                    <ul class="treeview-menu">
+                                                                                                        <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
+                                                                                                            <ItemTemplate>
+                                                                                                                <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
+                                                                                                                    <i class='<%# Eval("icon_ad") %>'></i><%# Eval("name") %></a></li>
+
+                                                                                                                <li id="mml" runat="server">
+                                                                                                                    <a href="#">
+                                                                                                                        <i class='<%# Eval("icon_ad") %>'></i><span><%# Eval("name") %></span>
+                                                                                                                        <span class="pull-right-container">
+                                                                                                                            <i class="fa fa-angle-left pull-right"></i>
+                                                                                                                        </span>
+                                                                                                                    </a>
+                                                                                                                    <ul class="treeview-menu">
+                                                                                                                        <asp:Repeater ID="repeater_menu_multi" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
+                                                                                                                            <ItemTemplate>
+                                                                                                                            </ItemTemplate>
+                                                                                                                        </asp:Repeater>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ItemTemplate>
+                                                                                                        </asp:Repeater>
+                                                                                                    </ul>
+                                                                                                </li>
                                                                                             </ItemTemplate>
                                                                                         </asp:Repeater>
                                                                                     </ul>

@@ -94,6 +94,42 @@ namespace presentacion
                 Toast.Error("Error al cargar lista de widgets. " + ex.Message, this);
             }
         }
+        private void CargarListadoMenus(string filtro)
+        {
+            try
+            {
+                WidgetsCOM widgets = new WidgetsCOM();
+                DataTable dt_original = widgets.sp_catalogo_widgets(0).Tables[0];
+
+                DataTable dt = new DataTable();
+                if (filtro == "")
+                {
+                    dt = dt_original;
+                }
+                else
+                {
+                    if (dt_original.Select("widget like '%" + filtro + "%'").Length > 0)
+                    {
+                        dt = filtro == "" ? dt_original : dt_original.Select("widget like '%" + filtro + "%'").CopyToDataTable();
+                    }
+                }
+
+                if (dt.Rows.Count > 0)
+                {
+                    repeater_widgets.DataSource = dt;
+                    repeater_widgets.DataBind();
+                    CheckValuesListWidgets();
+                }
+                else
+                {
+                    Toast.Info("No se encontro ninguna coincidencia. Intentelo nuevamente.", "Mensaje del Sistema", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar lista de widgets. " + ex.Message, this);
+            }
+        }
 
         private String UsuarioTienePerfil(string usuario, int id_perfil)
         {
@@ -660,6 +696,26 @@ namespace presentacion
         {
             LinkButton lnk = sender as LinkButton;
             Tabs(lnk.CommandName.ToLower());
+        }
+
+        protected void lnkbuscarmenu_Click(object sender, EventArgs e)
+        {
+
+            if (txtbuscarmenu.Text.Trim().Length > 2 || txtbuscarmenu.Text.Trim().Length == 0)
+            {
+                CargarListadoWidgets(txtbuscarwidget.Text.Trim());
+                imgmenu.Style["display"] = "none";
+                lblmenu.Style["display"] = "none";
+            }
+            else
+            {
+                Toast.Info("Ingrese un minimo de 3 caracteres para realizar la busqueda.", "Mensaje del Sistema", this);
+            }
+        }
+
+        protected void mycheck_menus_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

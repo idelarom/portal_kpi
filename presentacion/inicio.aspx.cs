@@ -32,15 +32,18 @@ namespace presentacion
             try
             {
                 EmpleadosCOM componente = new EmpleadosCOM();
-                DataSet ds = componente.sp_order_divs_prueba();
+                DataSet ds = componente.sp_order_widgets(Convert.ToString(Session["usuario"]));
                 DataTable dt = ds.Tables[0];
                 string value = dt.Rows[0]["order"].ToString().Trim();
-                StringBuilder sb = new StringBuilder();
-                sb.Append("<script type='text/javascript'>");
-                sb.Append("$(document).ready(function () {");
-                sb.Append(value);
-                sb.Append("});</script>");
-                ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(),sb.ToString(),false);
+                if (value != "")
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<script type='text/javascript'>");
+                    sb.Append("$(document).ready(function () {");
+                    sb.Append(value);
+                    sb.Append("});</script>");
+                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), sb.ToString(), false);
+                }
             }
             catch (Exception ex)
             {
