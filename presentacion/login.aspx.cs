@@ -66,7 +66,7 @@ namespace presentacion
                     Employee entidad = new Employee();
                     entidad.Usuario_Red = username.Trim();
                     EmpleadosCOM empleados = new EmpleadosCOM();
-                    DataTable dt = empleados.GetLogin(entidad);
+                    DataTable dt = empleados.GetLogin(username);
                     if (isValid && dt.Rows.Count > 0)
                     {
                         DataRow row = dt.Rows[0];
@@ -87,11 +87,10 @@ namespace presentacion
                         Session["password"] = password;
                         Session["contraseña"] = password;
                         Session["nombre"] = nombre_user;
-                        Session["correo_pm"] = row["Company_E_Mail"].ToString().Trim().ToLower();
+                        Session["correo"] = row["Company_E_Mail"].ToString().Trim().ToLower();
                         Session["puesto"] = puesto_user;
-                        Session["administrador"] = admin;
-                        Session["cliente"] = false;
-                        Session["id_cliente"] = 0;
+                        Session["perfil"] = row["perfil"].ToString().Trim().ToLower();
+                        Session["id_perfil"] =Convert.ToInt32(row["id_perfil"]);
                     }
                     else
                     {
@@ -110,9 +109,6 @@ namespace presentacion
 
         protected void lnkcambiardominio_Click(object sender, EventArgs e)
         {
-
-
-
             div_dominio.Visible = div_dominio.Visible ? false : true;
         }
     }

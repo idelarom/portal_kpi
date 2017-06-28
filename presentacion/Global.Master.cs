@@ -32,7 +32,10 @@ namespace presentacion
                 lblname3.Text = nombre;
                 lblpuesto.Text = puesto;
                 CargarImagen();
-
+                if (Convert.ToInt32(Session["id_perfil"]) == 0)
+                {
+                    Toast.Info("El usuario en uso: "+Convert.ToString(Session["usuario"]).ToUpper()+", no cuenta con un perfil asignado. Por favor, comuniquese con su administrador.","Mensaje del sistema",this.Page);
+                }
             }
         }
 
@@ -41,7 +44,7 @@ namespace presentacion
             try
             {
                 EmpleadosCOM componente = new EmpleadosCOM();
-                DataSet ds = componente.sp_menu(id_menu_padre);
+                DataSet ds = componente.sp_menu(id_menu_padre, Convert.ToString(Session["usuario"]));
                 return ds.Tables[0];
 
             }
