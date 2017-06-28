@@ -214,49 +214,7 @@
             }
            }
 
-           //DEVUELVE NOTIFICACION DE ESCRITORIO
-           function NotificacionDesktop(title, Mensaje, img) {
-               if (!("Notification" in window)) {
-                   Notifica(Mensaje);
-               }
-               else if (Notification.permission === "granted") {
-                   var options = {
-                       body: Mensaje,
-                       icon: img,
-                       dir: "ltr",
-                       tag: "Mensaje del Portal"
-                   };
-                   var notification = new Notification(title, options);
-                   notification.onclick = function () {
-                       notification.close();
-                   };
-                   setTimeout(function () {
-                       notification.close();
-                   }, 8000);
-               }
-               else if (Notification.permission !== 'denied') {
-                   Notification.requestPermission(function (permission) {
-                       if (!('permission' in Notification)) {
-                           Notification.permission = permission;
-                       }
-                       if (permission === "granted") {
-                           var options = {
-                               body: Mensaje,
-                               icon: img,
-                               dir: "ltr",
-                               tag: "Mensaje del Portal"
-                           };
-                           var notification = new Notification(title, options);
-                           notification.onclick = function () {
-                               notification.close();
-                           };
-                           setTimeout(function () {
-                               notification.close();
-                           }, 8000);
-
-                       }
-                   });
-               }
+          
     </script>
 </head>
 <body class="hold-transition skin-blue sidebar-collapse  sidebar-mini">
