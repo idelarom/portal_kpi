@@ -31,6 +31,7 @@ namespace presentacion
                 lblname2.Text = nombre;
                 lblname3.Text = nombre;
                 lblpuesto.Text = puesto;
+                lblperfil.Text = Session["perfil"] as string;
                 CargarImagen();
                 if (Convert.ToInt32(Session["id_perfil"]) == 0)
                 {

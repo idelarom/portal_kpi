@@ -1382,8 +1382,7 @@
     <Content Include="Global.Master" />
     <Content Include="Login.Master" />
     <Content Include="primitive\codemirror\LICENSE" />
-    <None Include="Properties\PublishProfiles\kpi.pubxml" />
-    <None Include="Properties\PublishProfiles\proyectos.pubxml" />
+    <None Include="Properties\PublishProfiles\portal.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1407,9 +1406,6 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

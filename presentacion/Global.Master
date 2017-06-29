@@ -1,6 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Global.Master.cs" Inherits="presentacion.Global" %>
-
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -264,14 +264,13 @@
                                             <asp:Label ID="lblname3" runat="server" Text="Label"></asp:Label>
                                             <small>
                                                 <asp:Label ID="lblpuesto" runat="server" Text="Label"></asp:Label></small>
+                                            <small>
+                                                <asp:Label ID="lblperfil" runat="server" Text="Perfil"></asp:Label></small>
                                         </p>
                                     </li>
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                             <asp:LinkButton ID="LinkButton2" runat="server" CssClass="btn btn-default btn-flat"
-                                                  PostBackUrl="configuracion_dashboard.aspx">
-                                                <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Configuración</asp:LinkButton>
                                         </div>
                                         <div class="pull-right">
                                             <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-default btn-flat"
