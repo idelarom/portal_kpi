@@ -103,12 +103,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-            <h4 class="page-header">Catálogo de menus</h4>
+            <h4 class="page-header">Catálogo de menús</h4>
         </div>
         
         <div class="col-lg-12">
             <asp:LinkButton ID="lnknuevomenu" OnClick="lnknuevomenu_Click" CssClass="btn btn-primary btn-flat" runat="server">
-                Nuevo menu&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                Nuevo menú&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
             </asp:LinkButton>
             <div class="table table-responsive">
                 <telerik:RadGrid ID="grid_menus" runat="server" Skin="Metro">

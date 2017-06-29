@@ -158,7 +158,8 @@ namespace presentacion
             txtid_menu.Text = "";
             rtxtmenu.Text = "";
             rtxticono.Text = "";
-            rtxtUrl.Text = "";            
+            rtxtUrl.Text = "";
+            Chkmenupadre.Checked = false;         
             ModalShow("#myModal");
         }
         protected void lnkguardar_Click(object sender, EventArgs e)
