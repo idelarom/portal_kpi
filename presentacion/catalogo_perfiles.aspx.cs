@@ -1,6 +1,7 @@
 ﻿using datos.NAVISION;
 using negocio.Componentes;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Web.UI.WebControls;
 
@@ -582,13 +583,12 @@ namespace presentacion
                 }
                 else
                 {
-                    div_error.Visible = true;
-                    lblerror.Text = vmensaje;
+                    Toast.Error(vmensaje, this);
                 }
             }
             catch (Exception ex)
             {
-                lblerror.Text = "Error al guardar perfil: " + ex.Message;
+                Toast.Error("Error al guardar perfil: " + ex.Message, this);
             }
         }
 
@@ -611,14 +611,12 @@ namespace presentacion
                 }
                 else
                 {
-                    div_error.Visible = true;
-                    lblerror.Text = vmensaje;
+                    Toast.Error(vmensaje, this);
                 }
             }
             catch (Exception ex)
             {
-                div_error.Visible = true;
-                lblerror.Text = "Error al editar perfil: " + ex.Message;
+                Toast.Error("Error al editar perfil: " + ex.Message, this);
             }
         }
 
@@ -711,8 +709,7 @@ namespace presentacion
             div_error.Visible = false;
             if (rtxtperfil.Text == "")
             {
-                div_error.Visible = true;
-                lblerror.Text = "Ingrese el nombre del perfil";
+                Toast.Error("Ingrese el nombre del perfil",this);
             }
             else
             {
@@ -860,6 +857,88 @@ namespace presentacion
             {
                 AgregarMenusoPerfiles(id_menu);
             }
+        }
+
+        protected void cbxcheckall_empleados_CheckedChanged(object sender, EventArgs e)
+        {
+            ViewState["dt_usuarios"] = null;
+            if (cbxcheckall_empleados.Checked)
+            {
+                DataTable dt_new = new DataTable();
+                dt_new.Columns.Add("usuario");
+                foreach (RepeaterItem item in rdllista_empleados.Items)
+                {
+                    CheckBox check = item.FindControl("mycheck") as CheckBox;
+                    check.Checked = true;
+                    DataRow row = dt_new.NewRow();
+                    row["usuario"] = check.ToolTip.Trim().ToUpper();
+                    dt_new.Rows.Add(row);
+                }
+                ViewState["dt_usuarios"] = dt_new;
+            }
+            else {
+                foreach (RepeaterItem item in rdllista_empleados.Items)
+                {
+                    CheckBox check = item.FindControl("mycheck") as CheckBox;
+                    check.Checked = false;
+                }
+            }
+        }
+
+        protected void cbxcheckall_widgets_CheckedChanged(object sender, EventArgs e)
+        {
+
+            ViewState["dt_widgets"] = null;
+            if (cbxcheckall_widgets.Checked)
+            {
+                DataTable dt_new = new DataTable();
+                dt_new.Columns.Add("id_widget");
+                foreach (RepeaterItem item in repeater_widgets.Items)
+                {
+                    CheckBox check = item.FindControl("mycheck_widgets") as CheckBox;
+                    check.Checked = true;
+                    DataRow row = dt_new.NewRow();
+                    row["id_widget"] = check.ToolTip.Trim().ToUpper();
+                    dt_new.Rows.Add(row);
+                }
+                ViewState["dt_widgets"] = dt_new;
+            }
+            else
+            {
+                foreach (RepeaterItem item in repeater_widgets.Items)
+                {
+                    CheckBox check = item.FindControl("mycheck_widgets") as CheckBox;
+                    check.Checked = false;
+                }
+            }
+        }
+
+        protected void cbxcheckall_menus_CheckedChanged(object sender, EventArgs e)
+        {
+            ViewState["dt_menus"] = null;
+            if (cbxcheckall_menus.Checked)
+            {
+                DataTable dt_new = new DataTable();
+                dt_new.Columns.Add("id_menu");
+                foreach (RepeaterItem item in repeater_menus.Items)
+                {
+                    CheckBox check = item.FindControl("mycheck_menus") as CheckBox;
+                    check.Checked = true;
+                    DataRow row = dt_new.NewRow();
+                    row["id_menu"] = check.ToolTip.Trim().ToUpper();
+                    dt_new.Rows.Add(row);
+                }
+                ViewState["dt_menus"] = dt_new;
+            }
+            else
+            {
+                foreach (RepeaterItem item in repeater_menus.Items)
+                {
+                    CheckBox check = item.FindControl("mycheck_menus") as CheckBox;
+                    check.Checked = false;
+                }
+            }
+
         }
     }
 }
