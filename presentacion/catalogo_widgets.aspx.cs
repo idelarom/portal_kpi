@@ -52,7 +52,7 @@ namespace presentacion
                 Toast.Error("Error al cargar el catalogo de widgets: " + ex.Message,this);
             }
         }
-        private void Agregarwidget(string widget, string icono, string rtxtejemplo_html)
+        private void Agregarwidget(string widget, string icono, string ejemplo_html)
         {
             div_error.Visible = false;
             try
@@ -60,7 +60,7 @@ namespace presentacion
 
                 WidgetsCOM Widget = new WidgetsCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = Widget.sp_agregar_widgets(widget, icono, rtxtejemplo_html, usuario);
+                DataSet ds = Widget.sp_agregar_widgets(widget, icono, ejemplo_html, usuario);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al guardar Widget. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -81,7 +81,7 @@ namespace presentacion
             }
         }
 
-        private void Editarwidget(int id_widget, string widget, string icono, string rtxtejemplo_html)
+        private void Editarwidget(int id_widget, string widget, string icono, string ejemplo_html)
         {
             div_error.Visible = false;
             try
@@ -89,7 +89,7 @@ namespace presentacion
 
                 WidgetsCOM Widget = new WidgetsCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = Widget.sp_editar_widgets(id_widget,widget, icono, rtxtejemplo_html, usuario);
+                DataSet ds = Widget.sp_editar_widgets(id_widget,widget, icono, ejemplo_html, usuario);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al editar perfil. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
