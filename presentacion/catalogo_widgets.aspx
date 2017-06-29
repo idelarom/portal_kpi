@@ -130,6 +130,9 @@
                             <telerik:GridBoundColumn DataField="widget" HeaderText="widget" UniqueName="widget"
                                 Visible="true">
                             </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn DataField="ejemplo_html" HeaderText="ejemplo_html" UniqueName="ejemplo_html"
+                                Visible="true">
+                            </telerik:GridBoundColumn>
                         </Columns>
                     </MasterTableView>
                 </telerik:RadGrid>
@@ -163,7 +166,11 @@
                                      <span><a onclick="window.open('http://ionicons.com/')" class="btn btn-info" role="button">Iconos para widgets</a></span>
                                     <telerik:RadTextBox ID="rtxticono" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
-                                
+                                <div class="col-lg-12 col-sm-12">
+                                    <h5><strong><i class="fa fa-html5" aria-hidden="true"></i>&nbsp;Codigo html de ejemplo para el widget</strong></h5>
+                                     <span><a onclick="window.open('http://ionicons.com/')" class="btn btn-info" role="button">Iconos para widgets</a></span>
+                                    <telerik:RadTextBox ID="rtxtejemplo_html" Width="100%" runat="server" Skin="Bootstrap" TextMode="MultiLine" Rows="3" MaxLength="8000"></telerik:RadTextBox>
+                                </div>
                             </div>
                             
                             <asp:TextBox ID="txtid_widget" Visible="false" runat="server"></asp:TextBox>
