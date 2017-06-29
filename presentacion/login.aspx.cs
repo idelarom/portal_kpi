@@ -2,8 +2,11 @@
 using negocio.Componentes;
 using System;
 using System.Data;
+using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
 
 namespace presentacion
 {
@@ -52,7 +55,6 @@ namespace presentacion
             }
         }
 
-
         private Boolean LoginActive(string username, string password, string dominio)
         {
             try
@@ -63,12 +65,25 @@ namespace presentacion
                     Boolean isValid = false;
                     // validate the credentials
                     isValid = pc.ValidateCredentials(username, password);
+
                     Employee entidad = new Employee();
                     entidad.Usuario_Red = username.Trim();
                     EmpleadosCOM empleados = new EmpleadosCOM();
                     DataTable dt = empleados.GetLogin(username);
                     if (isValid && dt.Rows.Count > 0)
                     {
+                        DirectoryEntry directoryEntry = new DirectoryEntry("LDAP://" + dominio, username, password);
+                        //Create a searcher on your DirectoryEntry
+                        DirectorySearcher adSearch = new DirectorySearcher(directoryEntry);
+                        adSearch.SearchScope = SearchScope.Subtree;    //Look into all subtree during the search
+                        adSearch.Filter = "(&(ObjectClass=user)(sAMAccountName=" + username + "))";    //Filter information, here i'm looking at a user with given username
+                        SearchResult sResult = adSearch.FindOne();       //username is unique, so I want to find only one
+                        string imagen = "";
+                        if (sResult.Properties["thumbnailPhoto"].Count > 0)
+                        {
+                            byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
+                            imagen = GuardarImagenUsuario(array_img, username + ".png");
+                        }
                         DataRow row = dt.Rows[0];
                         string nombre = "";
                         string puesto = "";
@@ -77,16 +92,15 @@ namespace presentacion
                         nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
                                     funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' '));
                         puesto = (row["puesto"].ToString().Trim());
-                        perfil= row["perfil"].ToString().Trim().ToLower();
-                        
+                        perfil = row["perfil"].ToString().Trim().ToLower();
                         //pasamos aminusculas
                         nombre = nombre.ToLower();
                         puesto = puesto.ToLower();
                         //pasamos a estilos title
                         String nombre_user = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
-                        String perfil_= CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil);
+                        String perfil_ = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil);
                         String puesto_user = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto);
-                        Boolean admin = false;
+                        Session["imagen"] = imagen;
                         Session["usuario"] = username;
                         Session["password"] = password;
                         Session["contraseña"] = password;
@@ -94,7 +108,7 @@ namespace presentacion
                         Session["correo"] = row["Company_E_Mail"].ToString().Trim().ToLower();
                         Session["puesto"] = puesto_user;
                         Session["perfil"] = perfil_;
-                        Session["id_perfil"] =Convert.ToInt32(row["id_perfil"]);
+                        Session["id_perfil"] = Convert.ToInt32(row["id_perfil"]);
                     }
                     else
                     {
@@ -105,6 +119,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
+                Toast.Error(ex.Message, this);
                 return false;
             }
         }
@@ -114,6 +129,22 @@ namespace presentacion
         protected void lnkcambiardominio_Click(object sender, EventArgs e)
         {
             div_dominio.Visible = div_dominio.Visible ? false : true;
+        }
+
+        protected String GuardarImagenUsuario(byte[] array, string name_image)
+        {
+            Image imagen = byteArrayToImage(array);
+            DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));//path local
+            string name = dirInfo.ToString() + name_image;
+            imagen.Save(name);
+            return name_image;
+        }
+
+        public Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
         }
     }
 }

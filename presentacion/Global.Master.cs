@@ -25,6 +25,7 @@ namespace presentacion
             }
             if (!IsPostBack)
             {
+                CargarImagen();
                 CargarMenu();
                 string nombre = Session["nombre"] == null ? "" : Session["nombre"] as string;
                 lblname.Text = nombre;
@@ -39,7 +40,29 @@ namespace presentacion
                 }
             }
         }
-
+        private void CargarImagen()
+        {
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));
+                string imagen = Session["imagen"] as string;
+                if (imagen != "" && File.Exists(dirInfo.ToString().Trim() + imagen))
+                {
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    imguser.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                    imguser2.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                    imguser3.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                }
+            }
+            catch (Exception ex)
+            {
+                Alert.ShowAlertError(ex.ToString(), this.Page);
+            }
+        }
         private DataTable TableMenu(int id_menu_padre)
         {
             try
@@ -106,30 +129,6 @@ namespace presentacion
 
 
        
-
-        private void CargarImagen()
-        {
-            try
-            {
-                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/files/users/"));
-                string imagen = Session["imagen"] as string;
-                if (imagen != "" && File.Exists(dirInfo.ToString().Trim()+imagen))
-                {
-                    DateTime localDate = DateTime.Now;
-                    string date = localDate.ToString();
-                    date = date.Replace("/", "_");
-                    date = date.Replace(":", "_");
-                    date = date.Replace(" ", "");
-                    imguser.ImageUrl = "~/files/users/" + imagen+"?date="+ date;
-                    imguser2.ImageUrl = "~/files/users/" + imagen + "?date=" + date;
-                    imguser3.ImageUrl = "~/files/users/" + imagen + "?date=" + date;
-                }
-            }
-            catch (Exception ex)
-            {
-                Alert.ShowAlertError(ex.Message, this.Page);
-            }
-        }
 
        
     }
