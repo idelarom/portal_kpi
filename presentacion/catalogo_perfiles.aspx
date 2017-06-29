@@ -244,7 +244,8 @@
                                                     </div>
 
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <div style="height: 120px; min-width: 500px; overflow: scroll;">
+                                                        <asp:CheckBox ID="cbxcheckall_empleados" Text="Seleccionar todos" OnCheckedChanged="cbxcheckall_empleados_CheckedChanged" AutoPostBack="true" runat="server" />
+                                                        <div style="height: 150px; min-width: 500px; overflow: scroll;">
                                                             <asp:Repeater ID="rdllista_empleados" runat="server">
                                                                 <ItemTemplate>
                                                                     <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">
@@ -284,7 +285,10 @@
                                                     </div>
 
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <div style="height: 120px; min-width: 500px; overflow: scroll;">
+                                                        <asp:CheckBox ID="cbxcheckall_widgets" Text="Seleccionar todos" 
+                                                            OnCheckedChanged="cbxcheckall_widgets_CheckedChanged" AutoPostBack="true" runat="server" />
+                                                       
+                                                        <div style="height: 150px; min-width: 500px; overflow: scroll;">
                                                             <asp:Repeater ID="repeater_widgets" runat="server">
                                                                 <ItemTemplate>
                                                                     <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">
@@ -324,7 +328,9 @@
                                                     </div>
 
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <div style="height: 120px; min-width: 500px; overflow: scroll;">
+                                                        <asp:CheckBox ID="cbxcheckall_menus" Text="Seleccionar todos" 
+                                                            OnCheckedChanged="cbxcheckall_menus_CheckedChanged" AutoPostBack="true" runat="server" />
+                                                        <div style="height: 150px; min-width: 500px; overflow: scroll;">
                                                             <asp:Repeater ID="repeater_menus" runat="server">
                                                                 <ItemTemplate>
                                                                     <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">

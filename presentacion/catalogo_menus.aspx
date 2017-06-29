@@ -59,6 +59,7 @@
                 } else {
                     alert('ES NECESARIO EL MOTIVO DE LA ELIMINACIÓN.');
                     ReturnPrompMsg();
+                    return false;
                 }
             } else {
                 return false;

@@ -157,6 +157,15 @@ namespace presentacion {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblbe2;
         
         /// <summary>
+        /// Control cbxcheckall_empleados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxcheckall_empleados;
+        
+        /// <summary>
         /// Control rdllista_empleados.
         /// </summary>
         /// <remarks>
@@ -211,6 +220,15 @@ namespace presentacion {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblwidget;
         
         /// <summary>
+        /// Control cbxcheckall_widgets.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxcheckall_widgets;
+        
+        /// <summary>
         /// Control repeater_widgets.
         /// </summary>
         /// <remarks>
@@ -263,6 +281,15 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblmenu;
+        
+        /// <summary>
+        /// Control cbxcheckall_menus.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxcheckall_menus;
         
         /// <summary>
         /// Control repeater_menus.

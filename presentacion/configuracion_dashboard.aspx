@@ -3,7 +3,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-           function ConfirmEmpleadoProyectoModal(msg) {
+        function ConfirmEmpleadoProyectoModal(msg) {
+           
             if (confirm(msg)) {
                 $("#<%= lnkcargando.ClientID%>").show();
                 $("#<%= lnkguardar.ClientID%>").hide();
@@ -18,7 +19,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-            <h4 class="page-header">Configuración de Dashboard y Widgets
+            <h4 class="page-header">Configuración de Dashboard
                 <small> Puede configurar los widgets que quiera visualizar y el orden en el que los quiera visualizar</small>
             </h4>
 

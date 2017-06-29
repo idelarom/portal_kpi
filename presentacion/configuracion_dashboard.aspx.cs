@@ -107,7 +107,7 @@ namespace presentacion
             }
         }
 
-        private int TotalCadenaWidgets()
+        protected int TotalCadenaWidgets()
         {
             try
             {
@@ -121,5 +121,8 @@ namespace presentacion
                 return 0;
             }
         }
+
+
+        
     }
 }
