@@ -237,7 +237,6 @@ namespace presentacion
                 case "actualizar":
                     div_menu.Visible = true;
                     Cargar_catalogo_menus(id_menu);
-
                     ModalShow("#myModal");
                     break;
                     //case "usuarios":
