@@ -87,7 +87,27 @@
             commando.value = command;
             document.getElementById('<%= btneventgrid.ClientID%>').click();
             return false;
-        }
+         }
+
+       function CaracteresRestantes() {
+ 
+          var maxlimit = 8000;
+          // pega o label
+          var label = document.getElementById('<%=lblcarcteresres.ClientID %>');
+          // paga a textbox
+          var textbox = document.getElementById('<%=rtxtejemplo_html.ClientID %>');
+ 
+          // passou do limite?
+           if (textbox.value.length > maxlimit) {
+               // trim!
+               textbox.value = textbox.value.substring(0, maxlimit);
+               alert("Se rebaso el limite maximo de caracteres permitidos, su mensaje fue limitado a los caracteres permitidos");
+           }
+           else { // conta
+               label.innerText = (maxlimit - textbox.value.length) + " caracteres restantes de " + maxlimit;
+           }
+       }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -168,7 +188,8 @@
                                 </div>
                                 <div class="col-lg-12 col-sm-12">
                                     <h5><strong><i class="fa fa-html5" aria-hidden="true"></i>&nbsp;Codigo html de ejemplo para el widget</strong></h5>
-                                    <telerik:RadTextBox ID="rtxtejemplo_html" Width="100%" runat="server" Skin="Bootstrap" TextMode="MultiLine" Rows="3" MaxLength="8000"></telerik:RadTextBox>
+                                    <telerik:RadTextBox ID="rtxtejemplo_html" Width="100%" runat="server" Skin="Bootstrap" TextMode="MultiLine" Rows="3" MaxLength="8000" onKeyDown="CaracteresRestantes();" onKeyUp="CaracteresRestantes();"></telerik:RadTextBox>
+                                    <asp:Label ID="lblcarcteresres" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
                             
