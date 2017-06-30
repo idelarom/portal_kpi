@@ -76,6 +76,15 @@ namespace presentacion {
         protected global::Telerik.Web.UI.RadTextBox rtxtejemplo_html;
         
         /// <summary>
+        /// lblcarcteresres control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblcarcteresres;
+        
+        /// <summary>
         /// txtid_widget control.
         /// </summary>
         /// <remarks>
