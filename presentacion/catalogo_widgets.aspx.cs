@@ -142,6 +142,7 @@ namespace presentacion
             rtxtwidget.Text = "";
             rtxticono.Text = "";
             rtxtejemplo_html.Text = "";
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "CaracteresRestantes();", true);
             ModalShow("#myModal");
         }
 
@@ -197,6 +198,7 @@ namespace presentacion
                     //div_empleados.Visible = true;
                     div_widget.Visible = true;
                     Cargar_catalogo_widgets(id_widget);
+                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "CaracteresRestantes();", true);
                     ModalShow("#myModal");
                     break;
                 //case "usuarios":
