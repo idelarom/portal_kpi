@@ -250,6 +250,7 @@
     <Content Include="img\user.png" />
     <Content Include="inicio.aspx" />
     <Content Include="login.aspx" />
+    <Content Include="mantenimiento.aspx" />
     <Content Include="plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="plugins\bootstrap-slider\slider.css" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1245,6 +1246,13 @@
     </Compile>
     <Compile Include="Login.Master.designer.cs">
       <DependentUpon>Login.Master</DependentUpon>
+    </Compile>
+    <Compile Include="mantenimiento.aspx.cs">
+      <DependentUpon>mantenimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mantenimiento.aspx.designer.cs">
+      <DependentUpon>mantenimiento.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Toast.cs" />

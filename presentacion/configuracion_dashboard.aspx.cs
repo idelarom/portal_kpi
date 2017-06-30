@@ -1,16 +1,7 @@
-﻿using datos.NAVISION;
-using negocio.Componentes;
-using negocio.Entidades;
+﻿using negocio.Componentes;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
@@ -35,7 +26,6 @@ namespace presentacion
                 DataTable dt = ds.Tables[0];
                 if (dt.Rows.Count > 0)
                 {
-
                     rdl_widgets_permitidos.DataTextField = "widget";
                     rdl_widgets_permitidos.DataValueField = "id_widget";
                     rdl_widgets_permitidos.DataSource = dt;
@@ -50,17 +40,16 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar listado: "+ex.Message,this);
+                Toast.Error("Error al cargar listado: " + ex.Message, this);
             }
         }
-
 
         protected void lnkguardar_Click(object sender, EventArgs e)
         {
             string cadena_widgets = CadenaWidgets();
             int total_cadena_widgets = TotalCadenaWidgets();
             string usuario = Convert.ToString(Session["usuario"]);
-            GuardarConfiguracion(usuario,cadena_widgets,total_cadena_widgets);
+            GuardarConfiguracion(usuario, cadena_widgets, total_cadena_widgets);
         }
 
         private void GuardarConfiguracion(string usuario, string cadena_widgets, int total_cadena_widgets)
@@ -68,7 +57,7 @@ namespace presentacion
             try
             {
                 ConfiguracionDashboardCOM config = new ConfiguracionDashboardCOM();
-                DataSet ds = config.sp_guardar_usuarios_config(usuario,cadena_widgets,total_cadena_widgets);
+                DataSet ds = config.sp_guardar_usuarios_config(usuario, cadena_widgets, total_cadena_widgets);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al guardar con figuración. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -86,6 +75,7 @@ namespace presentacion
                 Toast.Error("Error al guardar configuración: " + ex.Message, this);
             }
         }
+
         private string CadenaWidgets()
         {
             try
@@ -132,14 +122,12 @@ namespace presentacion
                 DataTable dt = ds.Tables[0];
                 if (dt.Rows.Count > 0)
                 {
-
-                    
-                    DataTable dts = dt.Select("id_widget = "+id_widget+"").CopyToDataTable().Rows.Count > 0 ? 
+                    DataTable dts = dt.Select("id_widget = " + id_widget + "").CopyToDataTable().Rows.Count > 0 ?
                                         dt.Select("id_widget = " + id_widget + "").CopyToDataTable() : new DataTable();
                     string html = dts.Rows.Count > 0 ? dts.Rows[0]["codigo_html"].ToString() : "";
                     if (html != "")
                     {
-                        PlaceHolder1.Controls.Add(new Literal() { Text=html });
+                        PlaceHolder1.Controls.Add(new Literal() { Text = html });
                         ModalShow("#myModal");
                     }
                 }
@@ -155,6 +143,5 @@ namespace presentacion
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
                              "ModalShow('" + modalname + "');", true);
         }
-
     }
 }
