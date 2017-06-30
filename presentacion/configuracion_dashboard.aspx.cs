@@ -122,7 +122,39 @@ namespace presentacion
             }
         }
 
+        protected void btnview_html_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string id_widget = hdfid_widget.Value.Trim();
+                ConfiguracionDashboardCOM config = new ConfiguracionDashboardCOM();
+                DataSet ds = config.sp_usuario_widgets(Session["usuario"] as string);
+                DataTable dt = ds.Tables[0];
+                if (dt.Rows.Count > 0)
+                {
 
-        
+                    
+                    DataTable dts = dt.Select("id_widget = "+id_widget+"").CopyToDataTable().Rows.Count > 0 ? 
+                                        dt.Select("id_widget = " + id_widget + "").CopyToDataTable() : new DataTable();
+                    string html = dts.Rows.Count > 0 ? dts.Rows[0]["codigo_html"].ToString() : "";
+                    if (html != "")
+                    {
+                        PlaceHolder1.Controls.Add(new Literal() { Text=html });
+                        ModalShow("#myModal");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al visualizar ejemplo html: " + ex.Message, this);
+            }
+        }
+
+        private void ModalShow(string modalname)
+        {
+            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                             "ModalShow('" + modalname + "');", true);
+        }
+
     }
 }

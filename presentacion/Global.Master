@@ -291,7 +291,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel" >
                         <div class="pull-left image">
-                            <asp:Image ID="imguser3" runat="server" class="img-circle"   ImageUrl="~/img/user.png"/>
+                            <asp:Image ID="imguser3" runat="server" class="img-circle"  ImageUrl="~/img/user.png"/>
                         </div>
                         <div class="pull-left info">
                             <p>
