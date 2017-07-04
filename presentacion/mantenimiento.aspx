@@ -4,21 +4,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-              <div class="error-page">
-        <h2 class="headline text-yellow"> 404</h2>
+            <div class="error-page">
+                <div class="error-content">
+                   
 
-        <div class="error-content">
-          <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
-
-          <p>
-            We could not find the page you were looking for.
-            Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
-          </p>
-
-        </div>
-        <!-- /.error-content -->
-      </div>
-
+                </div>
+                <!-- /.error-content -->
+            </div>
+            <img class=" img-responsive" src="img/mant.jpg" style="margin-left: auto; margin-right: auto; display: block;max-height:500px" />
         </div>
     </div>
 </asp:Content>

@@ -2,16 +2,16 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
- 
+
     <script type="text/javascript">
         function ModalClose() {
             $('#myModalExcel').modal('hide');
         }
-        
+
         $(document).ready(function () {
 
         });
-       
+
     </script>
     <style type="text/css">
         .small-box .icon {
@@ -25,14 +25,14 @@
             font-size: 65px;
             color: white;
         }
-        .rcbList li{
+
+        .rcbList li {
             font-size: 10px;
         }
-        .rcbCheckAllItems label{
+
+        .rcbCheckAllItems label {
             font-size: 11px;
         }
-
-       
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

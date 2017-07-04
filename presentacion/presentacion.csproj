@@ -248,6 +248,7 @@
     <Content Include="img\logo_bar_sm.png" />
     <Content Include="img\logo_login.png" />
     <Content Include="img\user.png" />
+    <Content Include="img\mant.jpg" />
     <Content Include="inicio.aspx" />
     <Content Include="login.aspx" />
     <Content Include="mantenimiento.aspx" />
