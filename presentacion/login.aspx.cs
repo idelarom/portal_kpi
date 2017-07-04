@@ -84,6 +84,22 @@ namespace presentacion
                             byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
                             imagen = GuardarImagenUsuario(array_img, username + ".png");
                         }
+                        //DataTable dt_atrr = new DataTable();
+                        //dt_atrr.Columns.Add("atributo");
+                        //dt_atrr.Columns.Add("valor");
+                        //foreach (string propName in sResult.Properties.PropertyNames)
+                        //{
+                        //    ResultPropertyValueCollection valueCollection =
+                        //    sResult.Properties[propName];
+                        //    foreach (Object propertyValue in valueCollection)
+                        //    {
+                        //        DataRow row_attr = dt_atrr.NewRow();
+                        //        row_attr["atributo"] = propName;
+                        //        row_attr["valor"] = propertyValue.ToString();
+                        //        dt_atrr.Rows.Add(row_attr);
+                        //    }
+                        //}
+
                         DataRow row = dt.Rows[0];
                         string nombre = "";
                         string puesto = "";

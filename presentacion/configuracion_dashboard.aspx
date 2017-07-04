@@ -4,17 +4,17 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         function ConfirmEmpleadoProyectoModal(msg) {
-           if (confirm(msg)) {
+            if (confirm(msg)) {
                 $("#<%= lnkcargando.ClientID%>").show();
-                $("#<%= lnkguardar.ClientID%>").hide();
-                return true;
-            } else {
-                return false;
-            }
-            return false;
-          }
-        function onDoubleClic(sender, e) {            
-             var myHidden = document.getElementById('<%= hdfid_widget.ClientID %>');
+               $("#<%= lnkguardar.ClientID%>").hide();
+               return true;
+           } else {
+               return false;
+           }
+           return false;
+       }
+       function onDoubleClic(sender, e) {
+           var myHidden = document.getElementById('<%= hdfid_widget.ClientID %>');
 
             myHidden.value = e.get_item().get_value();
             document.getElementById('<%= btnview_html.ClientID%>').click();
@@ -29,7 +29,7 @@
             </h4>
 
         </div>
-       
+
         <div class="col-lg-12">
             <asp:UpdatePanel ID="UPDA" runat="server">
                 <Triggers>
@@ -50,7 +50,7 @@
                                         Width="100%" AllowTransferDuplicates="false"
                                         AllowTransfer="true" TransferToID="rdl_widgets_actuales" TransferMode="Move"
                                         ButtonSettings-AreaWidth="35px" Skin="Bootstrap" EnableDragAndDrop="true"
-                                           OnClientItemDoubleClicking="onDoubleClic">
+                                        OnClientItemDoubleClicking="onDoubleClic">
                                     </telerik:RadListBox>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
@@ -59,8 +59,12 @@
                                     <telerik:RadListBox RenderMode="Lightweight" AllowDelete="true" AllowReorder="true" runat="server"
                                         ID="rdl_widgets_actuales" Height="200px" Width="100%"
                                         ButtonSettings-AreaWidth="35px" Skin="Bootstrap" SelectionMode="Multiple" EnableDragAndDrop="true"
-                                         OnClientItemDoubleClicking="onDoubleClic">
+                                        OnClientItemDoubleClicking="onDoubleClic">
                                     </telerik:RadListBox>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <h6>Si no marcaa ningun widget, se cargara la configuración inicial de su perfil.</h6>
                                 </div>
                             </div>
 
@@ -81,7 +85,7 @@
         </div>
     </div>
 
-      <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                 <Triggers>
@@ -99,7 +103,7 @@
                         </div>
                         <div class="modal-footer ">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                       
+
                         </div>
                     </div>
                 </ContentTemplate>

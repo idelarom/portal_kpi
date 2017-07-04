@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_perfiles.aspx.cs" Inherits="presentacion.catalogo_perfiles" %>
-<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
@@ -49,7 +49,7 @@
                 return false;
             }
         }
-         function ReturnPrompMsg() {
+        function ReturnPrompMsg() {
             var motivo = prompt("Motivo de Eliminación", "");
             if (motivo != null) {
                 if (motivo != '') {
@@ -66,9 +66,9 @@
                 return false;
             }
 
-         }
+        }
 
-          function ConfirmEmpleadoProyectoModal(msg) {
+        function ConfirmEmpleadoProyectoModal(msg) {
             if (confirm(msg)) {
                 $("#<%= lnkcargando.ClientID%>").show();
                 $("#<%= lnkguardar.ClientID%>").hide();
@@ -76,36 +76,35 @@
             } else {
                 return false;
             }
-          }
+        }
 
-
-          function ChangedTextLoad2() {
+        function ChangedTextLoad2() {
             $("#<%= imgloadempleado_.ClientID%>").show();
-             $("#<%= lblbe2.ClientID%>").show();
-             return true;
-          }
-        
-          function ChangedTextLoad3() {
-            $("#<%= imgmenu.ClientID%>").show();
-             $("#<%= lblmenu.ClientID%>").show();
-             return true;
-          }
-          function ChangedTextLoad1() {
-            $("#<%= img_widget.ClientID%>").show();
-             $("#<%= lblwidget.ClientID%>").show();
-             return true;
-          }
-        function OpenModalEditGrid(id_perfil, command) {
-          var myHidden = document.getElementById('<%= hdfid_perfil.ClientID %>');
+            $("#<%= lblbe2.ClientID%>").show();
+            return true;
+        }
 
-            myHidden.value = id_perfil;
+        function ChangedTextLoad3() {
+            $("#<%= imgmenu.ClientID%>").show();
+            $("#<%= lblmenu.ClientID%>").show();
+            return true;
+        }
+        function ChangedTextLoad1() {
+            $("#<%= img_widget.ClientID%>").show();
+              $("#<%= lblwidget.ClientID%>").show();
+              return true;
+          }
+          function OpenModalEditGrid(id_perfil, command) {
+              var myHidden = document.getElementById('<%= hdfid_perfil.ClientID %>');
+
+              myHidden.value = id_perfil;
 
               var commando = document.getElementById('<%= hdfcommand.ClientID %>');
 
-            commando.value = command;
-            document.getElementById('<%= btneventgrid.ClientID%>').click();
-            return false;
-        }
+              commando.value = command;
+              document.getElementById('<%= btneventgrid.ClientID%>').click();
+              return false;
+          }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -119,10 +118,10 @@
                 Nuevo Perfil de Usuario&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
             </asp:LinkButton>
             <div class="table table-responsive">
-                                <telerik:RadGrid ID="grid_perfiles" runat="server" Skin="Metro">
-                    <mastertableview autogeneratecolumns="false" cssclass="dvv table table-responsive"
-                        headerstyle-backcolor="White" headerstyle-forecolor="Black"
-                        width="100%">
+                <telerik:RadGrid ID="grid_perfiles" runat="server" Skin="Metro">
+                    <MasterTableView AutoGenerateColumns="false" CssClass="dvv table table-responsive"
+                        HeaderStyle-BackColor="White" HeaderStyle-ForeColor="Black"
+                        Width="100%">
                         <Columns>
                             <telerik:GridTemplateColumn HeaderText="">
                                 <HeaderStyle Width="50px" />
@@ -177,11 +176,9 @@
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
                         </Columns>
-                    </mastertableview>
+                    </MasterTableView>
                 </telerik:RadGrid>
             </div>
-
-
         </div>
     </div>
     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
@@ -285,9 +282,9 @@
                                                     </div>
 
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <asp:CheckBox ID="cbxcheckall_widgets" Text="Seleccionar todos" 
+                                                        <asp:CheckBox ID="cbxcheckall_widgets" Text="Seleccionar todos"
                                                             OnCheckedChanged="cbxcheckall_widgets_CheckedChanged" AutoPostBack="true" runat="server" />
-                                                       
+
                                                         <div style="height: 150px; min-width: 500px; overflow: scroll;">
                                                             <asp:Repeater ID="repeater_widgets" runat="server">
                                                                 <ItemTemplate>
@@ -328,7 +325,7 @@
                                                     </div>
 
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <asp:CheckBox ID="cbxcheckall_menus" Text="Seleccionar todos" 
+                                                        <asp:CheckBox ID="cbxcheckall_menus" Text="Seleccionar todos"
                                                             OnCheckedChanged="cbxcheckall_menus_CheckedChanged" AutoPostBack="true" runat="server" />
                                                         <div style="height: 150px; min-width: 500px; overflow: scroll;">
                                                             <asp:Repeater ID="repeater_menus" runat="server">
@@ -355,30 +352,29 @@
                                     </div>
                                 </div>
 
-
                                 <asp:TextBox ID="txtid_perfil" Visible="false" runat="server"></asp:TextBox>
                             </div>
-                            </div>
-                            <div class="modal-footer ">
-                                <div class="row" id="div_error" runat="server" visible="false" style="text-align: left;">
-                                    <div class="col-lg-12">
-                                        <div class="alert alert-danger alert-dismissible">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                            <asp:Label ID="lblerror" runat="server" Text=""></asp:Label>
-                                        </div>
+                        </div>
+                        <div class="modal-footer ">
+                            <div class="row" id="div_error" runat="server" visible="false" style="text-align: left;">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <asp:Label ID="lblerror" runat="server" Text=""></asp:Label>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                                <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                            </div>
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando...
-                                </asp:LinkButton>
-                                <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
-                                    OnClientClick="return ConfirmEmpleadoProyectoModal('¿Desea Guardar este Perfil?');" runat="server">
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
+                                OnClientClick="return ConfirmEmpleadoProyectoModal('¿Desea Guardar este Perfil?');" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
-                                </asp:LinkButton>
-                            </div>
+                            </asp:LinkButton>
                         </div>
+                    </div>
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
