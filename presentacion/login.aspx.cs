@@ -101,30 +101,33 @@ namespace presentacion
                         //}
 
                         DataRow row = dt.Rows[0];
-                        string nombre = "";
-                        string puesto = "";
-                        string perfil = "";
                         //recuperamos datos
-                        nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
+                        string nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
                                     funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' '));
-                        puesto = (row["puesto"].ToString().Trim());
-                        perfil = row["perfil"].ToString().Trim().ToLower();
+                        string puesto = (row["puesto"].ToString().Trim());
+                        string perfil = row["perfil"].ToString().Trim().ToLower();
                         //pasamos aminusculas
                         nombre = nombre.ToLower();
                         puesto = puesto.ToLower();
                         //pasamos a estilos title
-                        String nombre_user = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
-                        String perfil_ = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil);
-                        String puesto_user = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto);
                         Session["imagen"] = imagen;
                         Session["usuario"] = username;
                         Session["password"] = password;
                         Session["contraseña"] = password;
-                        Session["nombre"] = nombre_user;
+                        Session["nombre"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
                         Session["correo"] = row["Company_E_Mail"].ToString().Trim().ToLower();
-                        Session["puesto"] = puesto_user;
-                        Session["perfil"] = perfil_;
+                        Session["puesto"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto);
+                        Session["perfil"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil); 
                         Session["id_perfil"] = Convert.ToInt32(row["id_perfil"]);
+                        String os = hdfos.Value.Trim();
+                        String os_vers = hdfosversion.Value.Trim();
+                        String browser = hdfbrowser.Value.Trim();
+                        String device = hdfdevice.Value.Trim();
+                        Session["os"] =os;
+                        Session["os_vers"] = os_vers;
+                        Session["browser"] = browser;
+                        Session["device"] = device;
+                        DataSet ds = empleados.sp_agregar_usuario_sesiones(username.Trim().ToUpper(),os,os_vers,browser, device);
                     }
                     else
                     {

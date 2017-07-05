@@ -13,7 +13,68 @@ namespace negocio.Componentes
 
     public class EmpleadosCOM
     {
-        
+        public DataSet sp_usuario_sesiones(string usuario)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_usuario_sesiones", listparameters, false, 1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
+        public DataSet sp_agregar_usuario_sesiones(string usuario, string os, string os_version, string browser, string device)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pos", SqlDbType = SqlDbType.Int, Value = os });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pos_version", SqlDbType = SqlDbType.Int, Value = os_version });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pbrowser", SqlDbType = SqlDbType.Int, Value = browser });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pdevice", SqlDbType = SqlDbType.Int, Value = device });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_agregar_usuario_sesiones", listparameters, false, 1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
+        public DataSet sp_eliminar_usuario_sesiones(string usuario, string os, string os_version, string browser, string device)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pos", SqlDbType = SqlDbType.Int, Value = os });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pos_version", SqlDbType = SqlDbType.Int, Value = os_version });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pbrowser", SqlDbType = SqlDbType.Int, Value = browser });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pdevice", SqlDbType = SqlDbType.Int, Value = device });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_eliminar_usuario_sesiones", listparameters, false, 1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
         public DataSet sp_menu(int pid_menu_padre, string usuario)
         {
             DataSet ds = new DataSet();

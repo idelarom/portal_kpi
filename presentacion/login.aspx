@@ -18,9 +18,56 @@
     </style>
     <script type="text/javascript">
         function ConfirmMinutaModal() {
+            GetInfoDevice();
             $("#<%= lnkiniciandosession.ClientID%>").show();
             $("#<%= btniniciar.ClientID%>").hide();
             return true;
+        }
+        function GetInfoDevice() {
+            
+            var client = new ClientJS(); // Create A New Client Object
+
+            var browser = client.getBrowser(); // Get Browser
+            var OS = client.getOS(); // Get OS Version
+            var osVersion = client.getOSVersion(); // Get OS Version
+            var isMobile = client.isMobile(); // Check For Mobile
+            var isMobileAndroid = client.isMobileAndroid(); // Check For Mobile Android
+            var isMobileWindows = client.isMobileWindows(); // Check For Mobile Windows
+            var isMobileBlackBerry = client.isMobileBlackBerry(); // Check For Mobile Blackberry
+            var isMobileIOS = client.isMobileIOS(); // Check For Mobile iOS
+            var isIphone = client.isIphone(); // Check For iPhone
+            var isIpad = client.isIpad(); // Check For iPad
+            var isIpod = client.isIpod(); // Check For iPod
+
+            var device = "";
+            if (isMobile) {
+                if (isMobileAndroid) {
+                    device = "Dispositivo Android";
+                } else if (isMobileWindows) {
+                    device = "Dispositivo Windows Phone";
+                } else if (isMobileBlackBerry) {
+                    device = "Dispositivo Black Berry";
+                }  else if (isMobileIOS) {
+                    if (isIphone) {
+                        device = "Dispositivo iPhone";
+                    } else if (isIpod) {
+                        device = "Dispositivo iPod";
+                    } else if (isIpad) {
+                        device = "Dispositivo iPad";
+                    }
+                }
+            } else {
+                device = "Dispositivo de Computo";
+            }
+            console.log("Dispositivo: " + device);
+            console.log("Navegador: " + browser);
+            console.log("OS: "+OS);
+            console.log("OS_Version: " + osVersion);           
+            
+            $('#<%= hdfdevice.ClientID%>').val(device);
+            $('#<%= hdfos.ClientID%>').val(OS);
+            $('#<%= hdfosversion.ClientID%>').val(osVersion);
+            $('#<%= hdfbrowser.ClientID%>').val(browser);
         }
     </script>
 </asp:Content>
@@ -79,6 +126,10 @@
                     </p>
                 </div>
             </div>
+    <asp:HiddenField ID="hdfdevice" runat="server" />
+    <asp:HiddenField ID="hdfos" runat="server" />
+    <asp:HiddenField ID="hdfosversion" runat="server" />
+    <asp:HiddenField ID="hdfbrowser" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

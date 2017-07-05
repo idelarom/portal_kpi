@@ -297,6 +297,9 @@
                             <p>
                                 <asp:Label ID="lblname2" runat="server" Text="Label"></asp:Label>
                             </p>
+                            <a style="cursor:pointer" onclick="return ModalShow('#myModalUserInfo');"><i class="fa fa-circle text-success"></i> Conectado en 
+                               <asp:Label ID="lbldispo" runat="server" Text="1"></asp:Label> dispositivo(s).
+                            </a>
                         </div>
                     </div>
                     <!-- /.search form -->
@@ -434,17 +437,53 @@
             </div>
         </div>
         
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModalUserConfig" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">         
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModalUserInfo" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">   
+            <asp:UpdatePanel ID="mpupdate_panel" runat="server">
+                <ContentTemplate>
+
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Preferencia de Usuario</h4>
+                            <h4 class="modal-title">Información del Usuario</h4>
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                
+                                <div class="col-lg-12">
+                                    <asp:LinkButton ID="lnkactualizar" CssClass="btn btn-primary btn-flat" OnClick="lnkactualizar_Click" runat="server">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </asp:LinkButton>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table no-margin">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dispositivo</th>
+                                                    <th>Tiempo Conectado</th>
+                                                    <th>Sistema Operativo</th>
+                                                    <th>Navegador</th>
+                                                    <th>Conectado desde</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="repeat_devices" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td><%# Eval("dispositivo") %></td>
+                                                            <td><%# Eval("tiempo_conectado") %></td>
+                                                            <td><%# Eval("sistema_operativo") %></td>
+                                                            <td><%# Eval("navegador") %></td>
+                                                            <td><%# Eval("fecha_inicio_Sesion") %></td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer ">
@@ -458,9 +497,11 @@
                                 </div>
                             </div>
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                            
+
                         </div>
                     </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
     </div>
     </form>
