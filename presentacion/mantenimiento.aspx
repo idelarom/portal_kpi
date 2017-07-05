@@ -11,7 +11,7 @@
                 </div>
                 <!-- /.error-content -->
             </div>
-            <img class=" img-responsive" src="img/mant.jpg" style="margin-left: auto; margin-right: auto; display: block;max-height:500px" />
+            <img class=" img-responsive" src="img/mant.jpg" style="margin-left: auto; margin-right: auto; display: block;max-height:580px" />
         </div>
     </div>
 </asp:Content>
