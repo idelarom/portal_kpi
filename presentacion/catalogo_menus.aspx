@@ -166,20 +166,22 @@
                         <div class="modal-body">
                             <div class="row" id="div_menu"  runat="server">
                                 <div class="col-lg-12 col-sm-12">
-                                    <asp:CheckBox ID="Chkmenupadre" runat="server" onchange="showContentSubmenu()" Text="Es menu principal" />
+                                    <asp:CheckBox ID="Chkmenupadre"  runat="server" onchange="showContentSubmenu()" Text="Es menu principal" />
                                 </div>
                                 <div class="col-lg-12 col-sm-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Nombre del menu</strong></h5>
                                     <telerik:RadTextBox ID="rtxtmenu" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
                                 <div class="col-lg-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-paint-brush" aria-hidden="true"></i>&nbsp;Nombre de la clase del icono para el widget</strong></h5>
-                                     <span><a onclick="window.open('http://fontawesome.io/icons/ ')" class="btn btn-info" role="button">Iconos para menus</a></span>
+                                    <h5><strong><i class="fa fa-paint-brush" aria-hidden="true"></i>&nbsp;Nombre de la clase del icono para el menu</strong>
+                                        
+                                     <span><a onclick="window.open('http://fontawesome.io/icons/ ')" class="btn btn-info btn-sm" role="button">Iconos para menus</a></span>
+                                    </h5>
                                     <telerik:RadTextBox ID="rtxticono" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
                                 <div id="Datossubmenu">
                                     <div class="col-lg-12 col-sm-12">
-                                        <h5><strong><i class="fa fa-internet-explorer" aria-hidden="true"></i>&nbsp;Url del submenu</strong></h5>
+                                        <h5><strong><i class="fa fa-internet-explorer" aria-hidden="true"></i>&nbsp;Url</strong></h5>
                                         <telerik:RadTextBox ID="rtxtUrl" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -188,6 +190,9 @@
                                     </div>
                                 </div>
                                 
+                                <div class="col-lg-12 col-sm-12">
+                                    <asp:CheckBox ID="cbxmantenimiento" runat="server"  Text="En mantenimiento" />
+                                </div>
                             </div>
                             
                             <asp:TextBox ID="txtid_menu" Visible="false" runat="server"></asp:TextBox>

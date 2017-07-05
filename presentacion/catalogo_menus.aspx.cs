@@ -47,7 +47,7 @@ namespace presentacion
                 {
                     rtxtmenu.Text = dt.Rows[0]["name"].ToString();
                     rtxticono.Text = dt.Rows[0]["icon_ad"].ToString();
-                    
+                    cbxmantenimiento.Checked = Convert.ToBoolean(dt.Rows[0]["en_mantenimiento"]);
                     if (!String.IsNullOrEmpty(dt.Rows[0]["id_menu_padre"].ToString()))
                     {
                         ddlmenupadre.SelectedValue = dt.Rows[0]["id_menu_padre"].ToString();
@@ -70,7 +70,7 @@ namespace presentacion
             }
         }
 
-        private void Agregarmenu(string menu, string icono, int id_menu_padre, string url)
+        private void Agregarmenu(string menu, string icono, int id_menu_padre, string url, bool en_mantenimiento)
         {
             div_error.Visible = false;
             try
@@ -78,7 +78,7 @@ namespace presentacion
 
                 MenusCOM menus = new MenusCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = menus.sp_agregar_menus(id_menu_padre, menu, url, icono, usuario);
+                DataSet ds = menus.sp_agregar_menus(id_menu_padre, menu, url, icono, usuario,en_mantenimiento);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al guardar menú. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -98,7 +98,7 @@ namespace presentacion
                 lblerror.Text = "Error al guardar menu: " + ex.Message;
             }
         }
-        private void EditarMenu(int id_menu , string menu, string icono, int id_menu_padre, string url)
+        private void EditarMenu(int id_menu , string menu, string icono, int id_menu_padre, string url, bool en_mantenimiento)
         {
             div_error.Visible = false;
             try
@@ -106,7 +106,7 @@ namespace presentacion
 
                 MenusCOM menus = new MenusCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = menus.sp_editar_menus(id_menu, id_menu_padre, menu, url, icono, usuario);
+                DataSet ds = menus.sp_editar_menus(id_menu, id_menu_padre, menu, url, icono, usuario, en_mantenimiento);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al editar menú . Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -159,7 +159,8 @@ namespace presentacion
             rtxtmenu.Text = "";
             rtxticono.Text = "";
             rtxtUrl.Text = "";
-            Chkmenupadre.Checked = false;         
+            Chkmenupadre.Checked = false;
+            cbxmantenimiento.Checked = false;
             ModalShow("#myModal");
         }
         protected void lnkguardar_Click(object sender, EventArgs e)
@@ -170,18 +171,18 @@ namespace presentacion
                 string menu = rtxtmenu.Text.Trim();               
                 string icono = rtxticono.Text.Trim();
                 string url = rtxtUrl.Text.Trim();
-                
+                bool en_mantenimiento = cbxmantenimiento.Checked;
                 if (Chkmenupadre.Checked)
                 {
                     if (rtxtmenu.Text != "" && rtxticono.Text != "")
                     {
                         if (id_menu == "")
                         {
-                            Agregarmenu(menu, icono, 0, "");
+                            Agregarmenu(menu, icono, 0, "", en_mantenimiento);
                         }
                         else
                         {
-                            EditarMenu(Convert.ToInt32(id_menu), menu, icono, 0, "");
+                            EditarMenu(Convert.ToInt32(id_menu), menu, icono, 0, "", en_mantenimiento);
                         }
                     }
                     else
@@ -197,11 +198,11 @@ namespace presentacion
 
                         if (id_menu == "")
                         {
-                            Agregarmenu(menu, icono, id_menu_padre, url);
+                            Agregarmenu(menu, icono, id_menu_padre, url, en_mantenimiento);
                         }
                         else
                         {
-                            EditarMenu(Convert.ToInt32(id_menu), menu, icono, id_menu_padre, url);
+                            EditarMenu(Convert.ToInt32(id_menu), menu, icono, id_menu_padre, url, en_mantenimiento);
                         }
                     }
                     else

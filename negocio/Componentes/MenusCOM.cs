@@ -11,7 +11,7 @@ namespace negocio.Componentes
 {
     public class MenusCOM
     {
-        public DataSet sp_editar_menus(int id_menu, int id_menu_padre, string menu, string url, string icono, string usuario)
+        public DataSet sp_editar_menus(int id_menu, int id_menu_padre, string menu, string url, string icono, string usuario, bool en_mantenimiento)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -22,6 +22,7 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@pmenu", SqlDbType = SqlDbType.Int, Value = url });
             listparameters.Add(new SqlParameter() { ParameterName = "@picon_ad", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@en_mantenimiento", SqlDbType = SqlDbType.Int, Value = en_mantenimiento });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
@@ -34,7 +35,7 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_agregar_menus(int id_menu_padre, string menu, string url, string icono, string usuario)
+        public DataSet sp_agregar_menus(int id_menu_padre, string menu, string url, string icono, string usuario, bool en_mantenimiento)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -44,6 +45,7 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@pmenu", SqlDbType = SqlDbType.Int, Value = url });
             listparameters.Add(new SqlParameter() { ParameterName = "@picon_ad", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@en_mantenimiento", SqlDbType = SqlDbType.Int, Value = en_mantenimiento });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
