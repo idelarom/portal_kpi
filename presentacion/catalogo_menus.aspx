@@ -188,11 +188,10 @@
                                         <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Menu principal</strong></h5>
                                         <asp:DropDownList ID="ddlmenupadre" CssClass="form-control" runat="server"></asp:DropDownList>
                                     </div>
-                                </div>
-                                
-                                <div class="col-lg-12 col-sm-12">
-                                    <asp:CheckBox ID="cbxmantenimiento" runat="server"  Text="En mantenimiento" />
-                                </div>
+                                    <div class="col-lg-12 col-sm-12">
+                                       <asp:CheckBox ID="cbxmantenimiento" runat="server"  Text="En mantenimiento" />
+                                    </div>
+                                </div> 
                             </div>
                             
                             <asp:TextBox ID="txtid_menu" Visible="false" runat="server"></asp:TextBox>
