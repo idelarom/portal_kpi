@@ -26,7 +26,7 @@
             return true;
         }
         function GetInfoDevice() {
-            
+
             var client = new ClientJS(); // Create A New Client Object
 
             var browser = client.getBrowser(); // Get Browser
@@ -49,7 +49,7 @@
                     device = "Dispositivo Windows Phone";
                 } else if (isMobileBlackBerry) {
                     device = "Dispositivo Black Berry";
-                }  else if (isMobileIOS) {
+                } else if (isMobileIOS) {
                     if (isIphone) {
                         device = "Dispositivo iPhone";
                     } else if (isIpod) {
@@ -63,21 +63,45 @@
             }
             console.log("Dispositivo: " + device);
             console.log("Navegador: " + browser);
-            console.log("OS: "+OS);
-            console.log("OS_Version: " + osVersion);           
-            
+            console.log("OS: " + OS);
+            console.log("OS_Version: " + osVersion);
             $('#<%= hdfdevice.ClientID%>').val(device);
             $('#<%= hdfos.ClientID%>').val(OS);
             $('#<%= hdfosversion.ClientID%>').val(osVersion);
             $('#<%= hdfbrowser.ClientID%>').val(browser);
+
         }
-   
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            initGeolocation();
+        });
+        function initGeolocation() {
+            $.getJSON('https://ipinfo.io', function (response) {
+                var ip = response.ip;
+                var region = response.city + ", " + response.region + ", " + response.country;
+                var lat = response.loc.split(',')[0];
+                var lon = response.loc.split(',')[1];
+                var proveedor = response.org;
+
+                $('#<%= hdfip.ClientID%>').val(ip);
+                $('#<%= hdfregion.ClientID%>').val(region);
+                $('#<%= hdflatitud.ClientID%>').val(lat);
+                $('#<%= hdflongitud.ClientID%>').val(lon);
+                $('#<%= hdfproveedor.ClientID%>').val(proveedor);
+                console.log(ip);
+                console.log(region);
+                console.log(lat);
+                console.log(lon);
+                console.log(proveedor);
+            });
+     }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-             <div class="form-group has-feedback" id="div_dominio" runat="server" visible="false">
+            <div class="form-group has-feedback" id="div_dominio" runat="server" visible="false">
                 <telerik:RadTextBox ID="rtxtdominio" runat="server" Text="migesa.net" CssClass="form-control" Width="100%" Skin="Bootstrap" placeholder="Dominio"></telerik:RadTextBox>
                 <span class="glyphicon glyphicon-cloud form-control-feedback"></span>
             </div>
@@ -97,7 +121,8 @@
                     <asp:LinkButton ID="lnkiniciandosession" CssClass="btn btn-danger btn-block" runat="server" OnClientClick="return false;" Style="display: none;">
                           <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Iniciando Sesión</asp:LinkButton>
-                    <asp:Button ID="btniniciar" runat="server" Text="Iniciar Sesión" CssClass="btn btn-danger" OnClick="btniniciar_Click" OnClientClick="return ConfirmMinutaModal();" />
+                    <asp:Button ID="btniniciar" runat="server" Text="Iniciar Sesión" CssClass="btn btn-danger" 
+                        OnClick="btniniciar_Click" OnClientClick="return ConfirmMinutaModal();" />
                 </div>
 
                 <div class="col-xs-12" runat="server" id="div_cambiodomiinio" visible="true">
@@ -129,10 +154,15 @@
                     </p>
                 </div>
             </div>
-    <asp:HiddenField ID="hdfdevice" runat="server" />
-    <asp:HiddenField ID="hdfos" runat="server" />
-    <asp:HiddenField ID="hdfosversion" runat="server" />
-    <asp:HiddenField ID="hdfbrowser" runat="server" />
+            <asp:HiddenField ID="hdfip" runat="server" />
+            <asp:HiddenField ID="hdfregion" runat="server" />
+            <asp:HiddenField ID="hdflatitud" runat="server" />
+            <asp:HiddenField ID="hdflongitud" runat="server" />
+            <asp:HiddenField ID="hdfproveedor" runat="server" />
+            <asp:HiddenField ID="hdfdevice" runat="server" />
+            <asp:HiddenField ID="hdfos" runat="server" />
+            <asp:HiddenField ID="hdfosversion" runat="server" />
+            <asp:HiddenField ID="hdfbrowser" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

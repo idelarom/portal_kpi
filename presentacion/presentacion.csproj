@@ -1185,6 +1185,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="WebService.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alert.cs" />
@@ -1216,6 +1217,7 @@
     <Compile Include="configuracion_dashboard.aspx.designer.cs">
       <DependentUpon>configuracion_dashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controlador.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1262,6 +1264,10 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Toast.cs" />
+    <Compile Include="WebService.asmx.cs">
+      <DependentUpon>WebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1420,6 +1426,9 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

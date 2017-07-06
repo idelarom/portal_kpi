@@ -108,11 +108,17 @@ namespace presentacion
                         String os_vers = hdfosversion.Value.Trim();
                         String browser = hdfbrowser.Value.Trim();
                         String device = hdfdevice.Value.Trim();
+                        String ip = hdfip.Value.Trim();
+                        String lat = hdflatitud.Value.Trim();
+                        String lon = hdflongitud.Value.Trim();
+                        String region = hdfregion.Value.Trim();
+                        String proveedor = hdfproveedor.Value.Trim();
                         Session["os"] =os;
                         Session["os_vers"] = os_vers;
                         Session["browser"] = browser;
                         Session["device"] = device;
-                        DataSet ds = empleados.sp_agregar_usuario_sesiones(username.Trim().ToUpper(), os, os_vers, browser, device);
+                        DataSet ds = empleados.sp_agregar_usuario_sesiones(username.Trim().ToUpper(), os, os_vers, browser, device,
+                            ip,lat,lon,region,proveedor);
                         Session["devices_conectados"] = UpdateDevices(username);
                     }
                     else
@@ -130,6 +136,8 @@ namespace presentacion
         }
 
         #endregion METODOS
+
+
 
         protected void lnkcambiardominio_Click(object sender, EventArgs e)
         {

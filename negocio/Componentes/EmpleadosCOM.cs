@@ -52,7 +52,8 @@ namespace negocio.Componentes
             }
             return ds;
         }
-        public DataSet sp_agregar_usuario_sesiones(string usuario, string os, string os_version, string browser, string device)
+        public DataSet sp_agregar_usuario_sesiones(string usuario, string os, string os_version, string browser, string device,
+            string ip, string lat, string lon, string region, string proveedor)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -62,6 +63,11 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@pos_version", SqlDbType = SqlDbType.Int, Value = os_version });
             listparameters.Add(new SqlParameter() { ParameterName = "@pbrowser", SqlDbType = SqlDbType.Int, Value = browser });
             listparameters.Add(new SqlParameter() { ParameterName = "@pdevice", SqlDbType = SqlDbType.Int, Value = device });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pip", SqlDbType = SqlDbType.Int, Value = ip });
+            listparameters.Add(new SqlParameter() { ParameterName = "@platitud", SqlDbType = SqlDbType.Int, Value = lat });
+            listparameters.Add(new SqlParameter() { ParameterName = "@plongitud", SqlDbType = SqlDbType.Int, Value = lon });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pregion", SqlDbType = SqlDbType.Int, Value = region });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pproveedor", SqlDbType = SqlDbType.Int, Value = proveedor });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
