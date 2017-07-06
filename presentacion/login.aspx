@@ -2,6 +2,8 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script src="dist/js/push_notification.js"></script>
+
     <style type="text/css">
         .login-box, .register-box {
             width: 360px;
@@ -69,12 +71,13 @@
             $('#<%= hdfosversion.ClientID%>').val(osVersion);
             $('#<%= hdfbrowser.ClientID%>').val(browser);
         }
+   
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
-            <div class="form-group has-feedback" id="div_dominio" runat="server" visible="false">
+             <div class="form-group has-feedback" id="div_dominio" runat="server" visible="false">
                 <telerik:RadTextBox ID="rtxtdominio" runat="server" Text="migesa.net" CssClass="form-control" Width="100%" Skin="Bootstrap" placeholder="Dominio"></telerik:RadTextBox>
                 <span class="glyphicon glyphicon-cloud form-control-feedback"></span>
             </div>

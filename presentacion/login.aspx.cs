@@ -84,22 +84,7 @@ namespace presentacion
                             byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
                             imagen = GuardarImagenUsuario(array_img, username + ".png");
                         }
-                        //DataTable dt_atrr = new DataTable();
-                        //dt_atrr.Columns.Add("atributo");
-                        //dt_atrr.Columns.Add("valor");
-                        //foreach (string propName in sResult.Properties.PropertyNames)
-                        //{
-                        //    ResultPropertyValueCollection valueCollection =
-                        //    sResult.Properties[propName];
-                        //    foreach (Object propertyValue in valueCollection)
-                        //    {
-                        //        DataRow row_attr = dt_atrr.NewRow();
-                        //        row_attr["atributo"] = propName;
-                        //        row_attr["valor"] = propertyValue.ToString();
-                        //        dt_atrr.Rows.Add(row_attr);
-                        //    }
-                        //}
-
+                     
                         DataRow row = dt.Rows[0];
                         //recuperamos datos
                         string nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
@@ -127,7 +112,8 @@ namespace presentacion
                         Session["os_vers"] = os_vers;
                         Session["browser"] = browser;
                         Session["device"] = device;
-                        DataSet ds = empleados.sp_agregar_usuario_sesiones(username.Trim().ToUpper(),os,os_vers,browser, device);
+                        DataSet ds = empleados.sp_agregar_usuario_sesiones(username.Trim().ToUpper(), os, os_vers, browser, device);
+                        Session["devices_conectados"] = UpdateDevices(username);
                     }
                     else
                     {
@@ -165,5 +151,23 @@ namespace presentacion
             Image returnImage = Image.FromStream(ms);
             return returnImage;
         }
+
+        protected int UpdateDevices(string usuario)
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                DataTable dt = empleados.sp_usuario_sesiones(usuario).Tables[0];
+               return  dt.Rows.Count;
+               
+
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al actualizar la lista de dispositivos conectados: " + ex.Message, this.Page);
+                return 0;
+            }
+        }
+
     }
 }

@@ -25,6 +25,10 @@ namespace presentacion
             }
             if (!IsPostBack)
             {
+                if (!ExistInSession())
+                {
+                    LinkButton1_Click(null, null);
+                }
                 CargarImagen();
                 CargarMenu();
                 string nombre = Session["nombre"] == null ? "" : Session["nombre"] as string;
@@ -133,6 +137,23 @@ namespace presentacion
             Response.Redirect(url);
         }
 
+        protected bool ExistInSession()
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                DataTable dt = empleados.sp_existe_usuario_sesiones(
+                Session["usuario"] as string, Session["os"] as string, Session["os_vers"] as string,
+                Session["browser"] as string, Session["device"] as string).Tables[0];
+                return Convert.ToBoolean(dt.Rows[0]["existe"]);
+
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al verificar sesion: " + ex.Message, this.Page);
+                return true;
+            }
+        }
         protected void UpdateDevices()
         {
             try
@@ -142,7 +163,14 @@ namespace presentacion
                 lbldispo.Text = dt.Rows.Count.ToString();
                 repeat_devices.DataSource = dt;
                 repeat_devices.DataBind();
-
+                int devices_count = Convert.ToInt32(Session["devices_conectados"]);
+                bool mas_dispositivos = dt.Rows.Count > devices_count;
+                Session["devices_conectados"] = dt.Rows.Count;
+                if (mas_dispositivos)
+                {
+                    ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(),
+                        "ShowNewDevice();", true);
+                }
             }
             catch (Exception ex)
             {
@@ -154,5 +182,45 @@ namespace presentacion
         {
             UpdateDevices();
         }
+
+        protected void lnkdesconectar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int total = 0;
+                foreach (RepeaterItem item in repeat_devices.Items)
+                {
+                    CheckBox cbx = item.FindControl("cbxcheck") as CheckBox;
+                    Label dispositivo = item.FindControl("dispositivo") as Label;
+                    Label os = item.FindControl("os") as Label;
+                    Label os_version = item.FindControl("os_version") as Label;
+                    Label browser = item.FindControl("browser") as Label;
+                    if (cbx.Checked)
+                    {
+                        total++;
+                        EmpleadosCOM empleados = new EmpleadosCOM();
+                        DataSet ds = empleados.sp_eliminar_usuario_sesiones(
+                        Session["usuario"] as string, os.Text, os_version.Text,browser.Text,dispositivo.Text);
+                    }
+                }
+                if (total == 0)
+                {
+                    Toast.Info("Seleccione un dispositivo para desconectar.", "Mensaje del sistema", this.Page);
+                }
+                else
+                {
+                    UpdateDevices();
+                    Toast.Success(total.ToString()+" dispositivos desconectados correctamente.", "Mensaje del sistema", this.Page);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cerrar sesiones: " + ex.Message, this.Page);
+            }
+           
+        }
+
+       
     }
 }

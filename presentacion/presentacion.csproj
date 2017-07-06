@@ -241,8 +241,10 @@
     <Content Include="dist\js\demo.js" />
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />
+    <Content Include="dist\js\push_notification.js" />
     <Content Include="dist\js\sweetalert-dev.js" />
     <Content Include="dist\js\sweetalert.min.js" />
+    <Content Include="files\load.gif" />
     <Content Include="img\load.gif" />
     <Content Include="img\loading.gif" />
     <Content Include="img\loading_2.gif" />
@@ -251,6 +253,7 @@
     <Content Include="img\logo_login.png" />
     <Content Include="img\user.png" />
     <Content Include="img\mant.jpg" />
+    <Content Include="img\users\load.gif" />
     <Content Include="inicio.aspx" />
     <Content Include="login.aspx" />
     <Content Include="mantenimiento.aspx" />
@@ -1417,7 +1420,6 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
-    <Folder Include="img\users\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
