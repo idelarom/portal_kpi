@@ -174,7 +174,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al actualizar la lista de dispositivos conectados: "+ex.Message,this.Page);
+                Toast.Error("Error al actualizar la lista de dispositivo(s) conectado(s): "+ex.Message,this.Page);
             }
         }
 
@@ -210,7 +210,7 @@ namespace presentacion
                 else
                 {
                     UpdateDevices();
-                    Toast.Success(total.ToString()+" dispositivos desconectados correctamente.", "Mensaje del sistema", this.Page);
+                    Toast.Success(total.ToString()+" dispositivo(s) desconectado(s) correctamente.", "Mensaje del sistema", this.Page);
                 }
 
             }
