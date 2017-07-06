@@ -11,7 +11,9 @@ namespace presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string lat = "25.6667";
+          string lon = "-100.3167";
+            ClientScript.RegisterStartupScript(GetType(), "verMapa", "ver('" + lat + "','" + lon + "');", true);
         }
     }
 }
