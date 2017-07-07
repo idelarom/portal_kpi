@@ -74,20 +74,26 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            initGeolocation();
+            if (location.protocol != 'https:') {
+                location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+            } else {
+                getLocation();
+                initGeolocation();
+            }
         });
         function initGeolocation() {
             $.getJSON('https://ipinfo.io', function (response) {
                 var ip = response.ip;
-                var region = response.city + ", " + response.region + ", " + response.country;
+                var region = (response.city == "" ? "" : response.city + ", ") + (response.region == "" ? "" : response.region + ", ") + response.country;
                 var lat = response.loc.split(',')[0];
                 var lon = response.loc.split(',')[1];
                 var proveedor = response.org;
-
+                if ($('#<%= hdflatitud.ClientID%>').val() == "") {
+                    $('#<%= hdflatitud.ClientID%>').val(lat);
+                    $('#<%= hdflongitud.ClientID%>').val(lon);
+                }
                 $('#<%= hdfip.ClientID%>').val(ip);
                 $('#<%= hdfregion.ClientID%>').val(region);
-                $('#<%= hdflatitud.ClientID%>').val(lat);
-                $('#<%= hdflongitud.ClientID%>').val(lon);
                 $('#<%= hdfproveedor.ClientID%>').val(proveedor);
                 console.log(ip);
                 console.log(region);
@@ -95,7 +101,32 @@
                 console.log(lon);
                 console.log(proveedor);
             });
-     }
+        }
+
+        
+        function getLocation() {
+            var options = {
+                enableHighAccuracy: true,
+                timeout: 6000,
+                maximumAge: 0
+            };
+
+            navigator.geolocation.getCurrentPosition(success, error, options);
+
+            function success(position) {
+                var coordenadas = position.coords;
+                var lat = coordenadas.latitude;
+                var lon = coordenadas.longitude;
+                $('#<%= hdflatitud.ClientID%>').val(lat);
+                $('#<%= hdflongitud.ClientID%>').val(lon);
+                console.log("lat: "+lat);
+                console.log("lon: "+lon);
+            };
+
+            function error(error) {
+            };
+           
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
