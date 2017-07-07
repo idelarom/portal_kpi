@@ -74,7 +74,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            if (location.protocol != 'https:') {
+            if (location.protocol != 'https:' && location.hostname != "localhost") {
                 location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
             } else {
                 getLocation();
