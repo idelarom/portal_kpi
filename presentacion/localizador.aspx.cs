@@ -11,15 +11,9 @@ namespace presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //{
-            //}
-
-            //string lat = "25.6667";
-            //string lon = "-100.3167";
-            string lat = Request["lat"];
-            string lon = Request["lon"];
-            string desc = Request["desc"];
+            string lat = funciones.de64aTexto(Request["lat"]);
+            string lon = funciones.de64aTexto(Request["lon"]);
+            string desc = funciones.de64aTexto(Request["desc"]);
             rtxtdesc.Text = desc;
             ClientScript.RegisterStartupScript(GetType(), "verMapa", "ver('" + lat + "','" + lon + "');", true);
         }

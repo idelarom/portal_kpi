@@ -521,8 +521,11 @@
                                                                 <td style="text-align: center">
                                                                     <asp:CheckBox ID="cbxcheck" runat="server" /></td>
                                                                 <td style="text-align:center;">
-                                                                    <a style="cursor:pointer;" id="rutaurl" runat="server" visible='<%# Eval("url").ToString()!="" %>' 
-                                                                        onclick='<%# "window.open("+@""""+Eval("url")+@""""+");" %>'>
+                                                                    <a style="cursor:pointer;" id="rutaurl" runat="server" visible='<%# Eval("latitud").ToString()!="" &&  Eval("longitud").ToString()!=""%>' 
+                                                                        onclick='<%# "window.open("+@""""+"localizador.aspx?lat="+presentacion.funciones.deTextoa64( Eval("latitud").ToString())+
+                                                                            "&lon="+presentacion.funciones.deTextoa64(Eval("longitud").ToString())+
+                                                                            "&desc="+presentacion.funciones.deTextoa64("Ubicación del "+Eval("dispositivo").ToString()+" "+Eval("sistema_operativo").ToString()+
+                                                                            " en "+Eval("region").ToString()+", con la IP: "+Eval("ip").ToString()+" de "+Eval("proveedor").ToString())+@""""+");" %>'>
                                                                         <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
