@@ -30,7 +30,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="mapcanvas" style="width: 100%;"></div>
      <div class="col-lg-12 col-sm-12">
-        <h5><strong><i class="fa fa-desktop" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
-        <telerik:RadTextBox ID="rtxtdesc" Width="100%" runat="server" Skin="Bootstrap" ReadOnly="True" Rows="4"></telerik:RadTextBox>
+        <h5><strong><i class="fa fa-desktop" aria-hidden="true"></i>&nbsp;Descripción</strong></h5>
+        <telerik:RadTextBox ID="rtxtdesc" Width="100%" runat="server" Skin="Bootstrap" ReadOnly="True" Rows="4" TextMode="MultiLine"></telerik:RadTextBox>
     </div>
 </asp:Content>

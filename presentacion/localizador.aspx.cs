@@ -14,6 +14,14 @@ namespace presentacion
             string lat = funciones.de64aTexto(Request["lat"]);
             string lon = funciones.de64aTexto(Request["lon"]);
             string desc = funciones.de64aTexto(Request["desc"]);
+            //string[] description = desc.Split(',');
+            //string descF = "";
+
+            //foreach (string d in description)
+            //{
+            //    descF = descF + d + "\n";
+            //}
+
             rtxtdesc.Text = desc;
             ClientScript.RegisterStartupScript(GetType(), "verMapa", "ver('" + lat + "','" + lon + "');", true);
         }
