@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using negocio.Componentes;
 using System.Data;
+using System.IO;
 
 namespace presentacion
 {
@@ -25,6 +26,7 @@ namespace presentacion
         {
             if (!IsPostBack)
             {
+                CargarPaginas();
                 Cargar_catalogo_menus(0);
             }
         }
@@ -39,7 +41,10 @@ namespace presentacion
                 grid_menus.DataBind();
 
                 DataSet ds1 = menu.sp_catalogo_menus(0);
-                ddlmenupadre.DataSource = ds1;
+                DataTable dt_pp = ds1.Tables[0];
+                DataView dv = dt_pp.DefaultView;
+                dv.RowFilter = "menu = ''";
+                ddlmenupadre.DataSource = dv.ToTable();
                 ddlmenupadre.DataTextField = "name";                            // FieldName of Table in DataBase
                 ddlmenupadre.DataValueField= "id_menu";
                 ddlmenupadre.DataBind();
@@ -52,6 +57,10 @@ namespace presentacion
                     {
                         ddlmenupadre.SelectedValue = dt.Rows[0]["id_menu_padre"].ToString();
                         rtxtUrl.Text = dt.Rows[0]["menu"].ToString();
+                        if (ddlpaginas.Items.FindByValue(rtxtUrl.Text) != null)
+                        {
+                            ddlpaginas.SelectedValue = rtxtUrl.Text;
+                        }
                         Chkmenupadre.Checked = false;
                     }
                     else
@@ -161,7 +170,38 @@ namespace presentacion
             rtxtUrl.Text = "";
             Chkmenupadre.Checked = false;
             cbxmantenimiento.Checked = false;
+            CargarPaginas();
             ModalShow("#myModal");
+        }
+
+        protected void CargarPaginas()
+        {
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~"));
+                String[] Files = Directory.GetFiles(dirInfo.ToString(), "*.aspx", SearchOption.AllDirectories);
+
+                if (Files.Length > 0)
+                {
+                    DataTable dt = new DataTable();
+                    dt.Columns.Add("pagina");
+                    foreach (string value in Files)
+                    {
+                        DataRow row = dt.NewRow();
+                        row["pagina"] = Path.GetFileName(value).ToLower();
+                        dt.Rows.Add(row);
+                    }
+                    ddlpaginas.DataTextField = "pagina";
+                    ddlpaginas.DataValueField = "pagina";
+                    ddlpaginas.DataSource = dt;
+                    ddlpaginas.DataBind();
+                    ddlpaginas.Items.Insert(0, new ListItem("--Seleccione una pagina del proyecto", "0"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar paginas: "+ex.Message,this);
+            }
         }
         protected void lnkguardar_Click(object sender, EventArgs e)
         {
@@ -246,6 +286,18 @@ namespace presentacion
                     //    CargarCatalogo(id_perfil);
                     //    ModalShow("#myModal");
                     //    break;
+            }
+        }
+
+        protected void ddlpaginas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string value = ddlpaginas.SelectedValue;
+            if (value == "0")
+            {
+                Toast.Error("Seleccione una opción valida.",this);
+            }
+            else {
+                rtxtUrl.Text = value;
             }
         }
     }
