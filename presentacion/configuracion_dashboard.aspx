@@ -110,7 +110,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
-    <asp:Button ID="btnview_html" runat="server" Text="Button" OnClick="btnview_html_Click" />
+    <asp:Button ID="btnview_html" runat="server" style="display:none;" Text="Button" OnClick="btnview_html_Click" />
     <asp:HiddenField ID="hdfid_widget" runat="server" />
     <asp:HiddenField ID="hdfusuario" runat="server" />
 </asp:Content>
