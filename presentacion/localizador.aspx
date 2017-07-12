@@ -12,12 +12,12 @@
             
             L.mapbox.accessToken = 'pk.eyJ1IjoicHJvZ3JhbWFkb3IzIiwiYSI6ImNpc2hwN3JoNjAwNXczM3BpZ3ZocmUwamMifQ.Qpennd5geuMVwKlgUBb69w';
             var map = L.mapbox.map('mapcanvas', 'mapbox.streets')
-                .setView([lat, lon], 15);
+                .setView([lat, lon], 15);   
             var marker = L.marker([lat, lon], {
                 icon: L.mapbox.marker.icon({
                     'marker-color': '#f86767'
                 })
-            });
+            });            
             marker.addTo(map);
         }
         function cerrar() {
