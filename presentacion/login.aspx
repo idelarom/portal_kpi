@@ -169,7 +169,6 @@
                 <div class="col-xs-12" runat="server" id="div_portalclientes" visible="false">
                     <br />
                     <p>
-                        ¿No puedes Iniciar Sesión?
                     <asp:LinkButton ID="LinkButton1" runat="server" OnClick="lnkcambiardominio_Click">
                         Puedes Cambiar el Dominio de Inicio
                     </asp:LinkButton>
