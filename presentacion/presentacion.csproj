@@ -229,6 +229,7 @@
     <Content Include="dist\js\client.js" />
     <Content Include="dist\js\client.min.js" />
     <Content Include="dist\js\demo.js" />
+    <Content Include="dist\js\gmap.js" />
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />
     <Content Include="dist\js\push_notification.js" />
