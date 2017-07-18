@@ -144,6 +144,12 @@ namespace presentacion
             div_dominio.Visible = div_dominio.Visible ? false : true;
         }
 
+        /// <summary>
+        /// Guarda un byte[] como imagen en una ruta especificada
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="name_image"></param>
+        /// <returns></returns>
         protected String GuardarImagenUsuario(byte[] array, string name_image)
         {
             Image imagen = byteArrayToImage(array);
@@ -153,6 +159,11 @@ namespace presentacion
             return name_image;
         }
 
+        /// <summary>
+        /// IDELAROM: Convierte un byte en imagen
+        /// </summary>
+        /// <param name="byteArrayIn"></param>
+        /// <returns></returns>
         public Image byteArrayToImage(byte[] byteArrayIn)
         {
             MemoryStream ms = new MemoryStream(byteArrayIn);
