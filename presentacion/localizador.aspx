@@ -14,9 +14,10 @@
             $("#map").height($(window).height() - 250);
             var myLatlng = new google.maps.LatLng(lat, lon);
             var mapOptions = {
-                zoom: 13,
+                zoom: 14,
                 center: myLatlng
             }
+
             var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
             var marker = new google.maps.Marker({
@@ -24,6 +25,7 @@
                 title: "Nuevo Dispositivo Detectado"
             });
 
+            map.setTilt(45);
             marker.setMap(map);
  
         }

@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Global.Master.cs" Inherits="presentacion.Global" %>
+
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <!DOCTYPE html>
@@ -21,17 +22,17 @@
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css" />
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css"/>
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css" />
     <!-- iCheck -->
-    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css"/>
+    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css" />
     <!-- jvectormap -->
-    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css"/>
+    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css" />
     <!-- Date Picker -->
-    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css"/>
+    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css" />
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css" />
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>
+    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" />
 
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css' />
@@ -76,8 +77,8 @@
     <script src="dist/js/demo.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    
-    <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0BQrlm-H4bGcdR6ad6t70roRtTEOvOOE&libraries=geometry,places"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP6o7sCaKP9fkavw-w1AXz-x2sysjcAJY&libraries=geometry,places"></script>
 
     <style type="text/css">
         .skin-blue .main-header .navbar .sidebar-toggle:hover {
@@ -110,11 +111,13 @@
             margin-bottom: 5px;
             margin-left: 5px;
         }
+
         .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
             height: auto;
             padding: 10px;
             text-align: center;
         }
+
         .btn {
             margin-bottom: 5px;
         }
@@ -122,8 +125,15 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <script type="text/javascript">
-        function LoadPage()
-        {            
+        $(document).ready(function () {
+            setInterval(CargarNuevosDispositivos, 2000);
+        });
+
+        function PlaySound(path) {
+            var audio = new Audio(path);
+            audio.play();
+        }
+        function LoadPage() {
             $("#div_load").show();
             $("#div_content").hide();
         }
@@ -172,8 +182,7 @@
 
         function keyPressInteger(sender, args) {
             var text = sender.get_value() + args.get_keyCharacter();
-            if (!text.match('^[0-9]+$'))
-            {
+            if (!text.match('^[0-9]+$')) {
                 args.set_cancel(true);
             }
         }
@@ -196,7 +205,7 @@
             } else {
                 return true;
             }
-        } 
+        }
 
         function ConfirmFotoPerfil(msg) {
             if (confirm(msg)) {
@@ -207,7 +216,7 @@
                 return false;
             }
         }
-           function ConfirmGuardaConfig(msg) {
+        function ConfirmGuardaConfig(msg) {
             if (confirm(msg)) {
                 $("#lnkcargandotermina22").show();
                 $("#lnkguardarconfiguracion22").hide();
@@ -215,45 +224,63 @@
             } else {
                 return false;
             }
-           }
+        }
 
-           function ShowNewDevice()
-           {
-               //swal({
-               //    title: "Nuevo Inicio de Sesión",
-               //    text: "Se detecto un nuevo dispositivo conectado.",
-               //    type: "info",
-               //    showCancelButton: true,
-               //    confirmButtonColor: "#DD6B55",
-               //    confirmButtonText: "Ver Dispositivos Conectados",
-               //    closeOnConfirm: false
-               //},
-               // function () {
-               //     ModalShow("#myModalUserInfo");
-               // });
-               toastr.options = {
-                   "closeButton": true,
-                   "debug": false,
-                   "newestOnTop": true,
-                   "progressBar": true,
-                   "positionClass": "toast-top-full-width",
-                   "preventDuplicates": true,
-                   "showDuration": "300",
-                   "hideDuration": "1000",
-                   "timeOut": "500000",
-                   "extendedTimeOut": "1000",
-                   "showEasing": "swing",
-                   "hideEasing": "linear",
-                   "showMethod": "fadeIn",
-                   "hideMethod": "fadeOut"
-               }
+        function ShowNewDevice() {
+            //swal({
+            //    title: "Nuevo Inicio de Sesión",
+            //    text: "Se detecto un nuevo dispositivo conectado.",
+            //    type: "info",
+            //    showCancelButton: true,
+            //    confirmButtonColor: "#DD6B55",
+            //    confirmButtonText: "Ver Dispositivos Conectados",
+            //    closeOnConfirm: false
+            //},
+            // function () {
+            //     ModalShow("#myModalUserInfo");
+            // });
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-full-width",
+                "preventDuplicates": true,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "500000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
 
-               toastr.options.onclick = function () {
-                   ModalShow("#myModalUserInfo");
-               };
-               Command: toastr["warning"]("Se detecto un nuevo dispositivo conectado. Da clic sobre este mensaje para ver mas opciones.", "Nuevo Inicio de Sesión")
+            toastr.options.onclick = function () {
+                ModalShow("#myModalUserInfo");
+            };
+            Command: toastr["warning"]("Se detecto un nuevo dispositivo conectado. Da clic sobre este mensaje para ver mas opciones.", "Nuevo Inicio de Sesión")
+            PlaySound('dist/sounds/info.mp3');
 
-           }
+        }
+
+        function CargarNuevosDispositivos() {
+            $.ajax({
+                url: 'Service.asmx/checaItem',
+                contentType: "application/json; charset=utf-8",
+                type: "POST",
+                dataType: "json",
+                success: function (response) {
+                    var mensaje = response.d;
+                    if (mensaje != "") {
+                        ShowNewDevice();
+                    }
+                },
+                error: function (result, status, err) {
+                    console.log("error", result.responseText);
+                }
+            });
+        }
     </script>
 </head>
 <body class="hold-transition skin-blue sidebar-collapse  sidebar-mini">
@@ -270,7 +297,6 @@
                     <span class="logo-mini" style="padding-top: 15px">
                         <asp:Image ID="Image2" runat="server" ImageUrl="~/img/logo_bar_sm.png"
                             Style="margin-left: auto; margin-right: auto; display: block;" />
-
                     </span>
                     <span class="logo-lg" style="padding-top: 15px">
 
@@ -336,7 +362,7 @@
                             <p>
                                 <asp:Label ID="lblname2" runat="server" Text="Label"></asp:Label>
                             </p>
-                            <a style="cursor: pointer" onclick="return ModalShow('#myModalUserInfo');"><i class="fa fa-circle text-success"></i>Conectado en 
+                            <a style="cursor: pointer" onclick="return ModalShow('#myModalUserInfo');"><i class="fa fa-circle text-success"></i>Conectado en
                                <asp:Label ID="lbldispo" runat="server" Text="1"></asp:Label>
                                 dispositivo(s).
                             </a>
@@ -450,10 +476,8 @@
                                         </asp:Repeater>
                                     </ul>
                                 </li>
-
                             </ItemTemplate>
                         </asp:Repeater>
-
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -507,14 +531,14 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="text-align: center"></th>
-                                                        <th style="text-align:center;">Mapa</th>
-                                                        <th style="min-width:180px">Dispositivo</th>
-                                                        <th style="min-width:140px">Tiempo Conectado</th>
-                                                        <th style="min-width:130px">Sistema Operativo</th>
-                                                        <th style="min-width:80px">Navegador</th>
-                                                        <th style="min-width:120px">IP</th>
-                                                        <th style="min-width:200px">Región</th>
-                                                        <th style="min-width:180px">Fecha Conexión</th>
+                                                        <th style="text-align: center;">Mapa</th>
+                                                        <th style="min-width: 180px">Dispositivo</th>
+                                                        <th style="min-width: 140px">Tiempo Conectado</th>
+                                                        <th style="min-width: 130px">Sistema Operativo</th>
+                                                        <th style="min-width: 80px">Navegador</th>
+                                                        <th style="min-width: 120px">IP</th>
+                                                        <th style="min-width: 200px">Región</th>
+                                                        <th style="min-width: 180px">Fecha Conexión</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -523,8 +547,8 @@
                                                             <tr>
                                                                 <td style="text-align: center">
                                                                     <asp:CheckBox ID="cbxcheck" runat="server" /></td>
-                                                                <td style="text-align:center;">
-                                                                    <a style="cursor:pointer;" id="rutaurl" runat="server" visible='<%# Eval("latitud").ToString()!="" &&  Eval("longitud").ToString()!=""%>' 
+                                                                <td style="text-align: center;">
+                                                                    <a style="cursor: pointer;" id="rutaurl" runat="server" visible='<%# Eval("latitud").ToString()!="" &&  Eval("longitud").ToString()!=""%>'
                                                                         onclick='<%# "window.open("+@""""+"localizador.aspx?lat="+presentacion.funciones.deTextoa64( Eval("latitud").ToString())+
                                                                             "&lon="+presentacion.funciones.deTextoa64(Eval("longitud").ToString())+
                                                                             "&desc="+presentacion.funciones.deTextoa64("Ubicación del "+Eval("dispositivo").ToString()+" "+Eval("sistema_operativo").ToString()+
@@ -532,7 +556,7 @@
                                                                         <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
                                                                     </a>
                                                                 </td>
-                                                                <td><%# Eval("dispositivo") %></td>
+                                                                <td><%# Eval("name_device") %></td>
                                                                 <td><%# Eval("tiempo_conectado") %></td>
                                                                 <td><%# Eval("sistema_operativo") %></td>
                                                                 <td><%# Eval("navegador") %></td>
@@ -540,13 +564,17 @@
                                                                 <td><%# Eval("region") %></td>
                                                                 <td><%# Eval("fecha_inicio_Sesion") %></td>
                                                             </tr>
+                                                            <asp:Label ID="ip" runat="server" Visible="false" Text='<%# Eval("ip") %>'></asp:Label>
+                                                            <asp:Label ID="fecha" runat="server" Visible="false" Text='<%# Eval("fecha_inicio_sesion_v") %>'></asp:Label>
+                                                              <asp:Label ID="id_usuario_sesion" runat="server" Visible="false" Text='<%# Eval("id_usuario_sesion") %>'></asp:Label>
+
+
                                                             <asp:Label ID="os" runat="server" Visible="false" Text='<%# Eval("os") %>'></asp:Label>
                                                             <asp:Label ID="os_version" runat="server" Visible="false" Text='<%# Eval("os_version") %>'></asp:Label>
                                                             <asp:Label ID="browser" runat="server" Visible="false" Text='<%# Eval("navegador") %>'></asp:Label>
                                                             <asp:Label ID="dispositivo" runat="server" Visible="false" Text='<%# Eval("dispositivo") %>'></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -564,7 +592,6 @@
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-
                             </div>
                         </div>
                     </ContentTemplate>

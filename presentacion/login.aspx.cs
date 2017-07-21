@@ -113,13 +113,27 @@ namespace presentacion
                         String lon = hdflongitud.Value.Trim();
                         String region = hdfregion.Value.Trim();
                         String proveedor = hdfproveedor.Value.Trim();
+                        String modelo = hdfmodel.Value.Trim();
+                        DateTime fecha_inicio_sesion = DateTime.Now;
                         Session["os"] =os;
                         Session["os_vers"] = os_vers;
                         Session["browser"] = browser;
                         Session["device"] = device;
+                        Session["ip"] = ip;
+                        Session["fecha_inicio_sesion"] = fecha_inicio_sesion;
                         DataSet ds = empleados.sp_agregar_usuario_sesiones(username.Trim().ToUpper(), os, os_vers, browser, device,
-                            ip,lat,lon,region,proveedor);
+                            ip,lat,lon,region,proveedor,modelo, fecha_inicio_sesion);
+                        int id_usuario_sesion = ds.Tables[0].Columns.Contains("id_usuario_sesion") ? 
+                            Convert.ToInt32(ds.Tables[0].Rows[0]["id_usuario_sesion"]) : 0;
                         Session["devices_conectados"] = UpdateDevices(username);
+                        if (id_usuario_sesion > 0)
+                        {
+                            Session["id_usuario_sesion"] = id_usuario_sesion;
+                        }
+                        else
+                        {
+                            isValid = false;
+                        }
                     }
                     else
                     {

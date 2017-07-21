@@ -127,10 +127,11 @@ namespace presentacion
         {
             string url = "login.aspx";
             EmpleadosCOM empleados = new EmpleadosCOM();
-            
-            DataSet ds = empleados.sp_eliminar_usuario_sesiones(
-                Session["usuario"] as string, Session["os"] as string, Session["os_vers"] as string,
-                Session["browser"] as string, Session["device"] as string);
+            DataSet ds = empleados.sp_eliminar_usuario_sesiones(Convert.ToInt32(Session["id_usuario_sesion"]));
+            //DataSet ds = empleados.sp_eliminar_usuario_sesiones(
+            //    Session["usuario"] as string, Session["os"] as string, Session["os_vers"] as string,
+            //    Session["browser"] as string, Session["device"] as string,
+            //    Session["ip"] as string, Convert.ToDateTime(Session["fecha_inicio_sesion"]));
             Session.Clear();
             Session.RemoveAll();
             Session.Abandon();
@@ -154,6 +155,32 @@ namespace presentacion
                 return true;
             }
         }
+
+        public String DevicesConecteds()
+        {
+            try
+            {
+                string value = "";
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                DataTable dt = empleados.sp_usuario_sesiones(Session["usuario"] as string).Tables[0];
+                lbldispo.Text = dt.Rows.Count.ToString();
+                repeat_devices.DataSource = dt;
+                repeat_devices.DataBind();
+                int devices_count = Convert.ToInt32(Session["devices_conectados"]);
+                bool mas_dispositivos = dt.Rows.Count > devices_count;
+                Session["devices_conectados"] = dt.Rows.Count;
+                if (mas_dispositivos)
+                {
+                    value = "Se detecto un nuevo dispositivo conectado. Da clic sobre este mensaje para ver mas opciones.";
+                }
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return "Error al actualizar la lista de dispositivo(s) conectado(s): " + ex.Message;
+            }
+        }
+
         protected void UpdateDevices()
         {
             try
@@ -166,17 +193,19 @@ namespace presentacion
                 int devices_count = Convert.ToInt32(Session["devices_conectados"]);
                 bool mas_dispositivos = dt.Rows.Count > devices_count;
                 Session["devices_conectados"] = dt.Rows.Count;
-                if (mas_dispositivos)
-                {
-                    ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(),
-                        "ShowNewDevice();", true);
-                }
+                //if (mas_dispositivos)
+                //{
+                //    ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(),
+                //        "ShowNewDevice();", true);
+                //}
             }
             catch (Exception ex)
             {
                 Toast.Error("Error al actualizar la lista de dispositivo(s) conectado(s): "+ex.Message,this.Page);
             }
         }
+
+     
 
         protected void lnkactualizar_Click(object sender, EventArgs e)
         {
@@ -195,12 +224,17 @@ namespace presentacion
                     Label os = item.FindControl("os") as Label;
                     Label os_version = item.FindControl("os_version") as Label;
                     Label browser = item.FindControl("browser") as Label;
+                    Label ip = item.FindControl("ip") as Label;
+                    Label fecha = item.FindControl("fecha") as Label;
+                    Label id_usuario_sesion = item.FindControl("id_usuario_sesion") as Label;
                     if (cbx.Checked)
                     {
                         total++;
                         EmpleadosCOM empleados = new EmpleadosCOM();
-                        DataSet ds = empleados.sp_eliminar_usuario_sesiones(
-                        Session["usuario"] as string, os.Text, os_version.Text,browser.Text,dispositivo.Text);
+                        DataSet ds = empleados.sp_eliminar_usuario_sesiones(Convert.ToInt32(id_usuario_sesion.Text));
+                        //DataSet ds = empleados.sp_eliminar_usuario_sesiones(
+                        //Session["usuario"] as string, os.Text, os_version.Text,browser.Text,dispositivo.Text,
+                        //ip.Text,Convert.ToDateTime(fecha.Text));
                     }
                 }
                 if (total == 0)

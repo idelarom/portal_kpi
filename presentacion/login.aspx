@@ -40,6 +40,7 @@
             var isIphone = client.isIphone(); // Check For iPhone
             var isIpad = client.isIpad(); // Check For iPad
             var isIpod = client.isIpod(); // Check For iPod
+            var deviceVendor = client.getDeviceVendor(); // Get Device Vendor
 
             var device = "";
             if (isMobile) {
@@ -65,6 +66,8 @@
             console.log("Navegador: " + browser);
             console.log("OS: " + OS);
             console.log("OS_Version: " + osVersion);
+            
+            $('#<%= hdfmodel.ClientID%>').val(deviceVendor);
             $('#<%= hdfdevice.ClientID%>').val(device);
             $('#<%= hdfos.ClientID%>').val(OS);
             $('#<%= hdfosversion.ClientID%>').val(osVersion);
@@ -192,6 +195,7 @@
             <asp:HiddenField ID="hdfdevice" runat="server" />
             <asp:HiddenField ID="hdfos" runat="server" />
             <asp:HiddenField ID="hdfosversion" runat="server" />
+            <asp:HiddenField ID="hdfmodel" runat="server" />
             <asp:HiddenField ID="hdfbrowser" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>

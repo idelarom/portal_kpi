@@ -53,7 +53,7 @@ namespace negocio.Componentes
             return ds;
         }
         public DataSet sp_agregar_usuario_sesiones(string usuario, string os, string os_version, string browser, string device,
-            string ip, string lat, string lon, string region, string proveedor)
+            string ip, string lat, string lon, string region, string proveedor, string modelo, DateTime fecha_inicio_sesion)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -68,6 +68,8 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@plongitud", SqlDbType = SqlDbType.Int, Value = lon });
             listparameters.Add(new SqlParameter() { ParameterName = "@pregion", SqlDbType = SqlDbType.Int, Value = region });
             listparameters.Add(new SqlParameter() { ParameterName = "@pproveedor", SqlDbType = SqlDbType.Int, Value = proveedor });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pmodel", SqlDbType = SqlDbType.Int, Value = modelo });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pfecha_inicio_sesion", SqlDbType = SqlDbType.Int, Value = fecha_inicio_sesion });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
@@ -80,16 +82,23 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_eliminar_usuario_sesiones(string usuario, string os, string os_version, string browser, string device)
+        public DataSet sp_eliminar_usuario_sesiones(int id_usuario_sesion)
         {
+            //string usuario, string os, string os_version, string browser, string device,
+            //string ip, DateTime fecha_inicio_sesion
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
-            listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pos", SqlDbType = SqlDbType.Int, Value = os });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pos_version", SqlDbType = SqlDbType.Int, Value = os_version });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pbrowser", SqlDbType = SqlDbType.Int, Value = browser });
-            listparameters.Add(new SqlParameter() { ParameterName = "@pdevice", SqlDbType = SqlDbType.Int, Value = device });
+
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_usuario_sesion", SqlDbType = SqlDbType.Int, Value = id_usuario_sesion });
+            //listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            //listparameters.Add(new SqlParameter() { ParameterName = "@pos", SqlDbType = SqlDbType.Int, Value = os });
+            //listparameters.Add(new SqlParameter() { ParameterName = "@pos_version", SqlDbType = SqlDbType.Int, Value = os_version });
+            //listparameters.Add(new SqlParameter() { ParameterName = "@pbrowser", SqlDbType = SqlDbType.Int, Value = browser });
+            //listparameters.Add(new SqlParameter() { ParameterName = "@pdevice", SqlDbType = SqlDbType.Int, Value = device });
+            //listparameters.Add(new SqlParameter() { ParameterName = "@pip", SqlDbType = SqlDbType.Int, Value = ip });
+            //listparameters.Add(new SqlParameter() { ParameterName = "@pfecha_inicio_sesion", SqlDbType = SqlDbType.Int, Value = fecha_inicio_sesion });
+
             try
             {
                 //ds = data.datos_Clientes(listparameters);
