@@ -11,6 +11,24 @@ namespace negocio.Componentes
 {
     public class MenusCOM
     {
+        public DataSet sp_menus_breadcumbs(string menu)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pmenu", SqlDbType = SqlDbType.Int, Value = menu });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_menus_breadcumbs", listparameters, false, 1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+        
         public DataSet sp_editar_menus(int id_menu, int id_menu_padre, string menu, string url, string icono, string usuario, bool en_mantenimiento)
         {
             DataSet ds = new DataSet();

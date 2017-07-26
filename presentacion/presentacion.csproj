@@ -63,6 +63,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.11.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.11\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net40\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -155,6 +159,7 @@
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="catalogo_menus.aspx" />
     <Content Include="catalogo_perfiles.aspx" />
+    <Content Include="catalogo_sesiones_usuario.aspx" />
     <Content Include="catalogo_widgets.aspx" />
     <Content Include="configuracion_dashboard.aspx" />
     <Content Include="Default.aspx" />
@@ -168,6 +173,7 @@
     <Content Include="dist\css\alt\AdminLTE-select2.min.css" />
     <Content Include="dist\css\alt\AdminLTE-without-plugins.css" />
     <Content Include="dist\css\alt\AdminLTE-without-plugins.min.css" />
+    <Content Include="dist\css\pages\master_page.css" />
     <Content Include="dist\css\skins\skin-black-light.css" />
     <Content Include="dist\css\skins\skin-black-light.min.css" />
     <Content Include="dist\css\skins\skin-black.css" />
@@ -232,6 +238,7 @@
     <Content Include="dist\js\gmap.js" />
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />
+    <Content Include="dist\js\pages\master_page.js" />
     <Content Include="dist\js\push_notification.js" />
     <Content Include="dist\js\sweetalert-dev.js" />
     <Content Include="dist\js\sweetalert.min.js" />
@@ -1175,6 +1182,7 @@
     <Content Include="primitive\js\touch\jquery.ui.touch-punch.js" />
     <Content Include="primitive\primitives.latest.css" />
     <Content Include="primitive\primitives.min.js" />
+    <Content Include="reporte_dashboard_bonos_kpi.aspx" />
     <Content Include="Service.asmx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1195,6 +1203,13 @@
     </Compile>
     <Compile Include="catalogo_perfiles.aspx.designer.cs">
       <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="catalogo_sesiones_usuario.aspx.cs">
+      <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalogo_sesiones_usuario.aspx.designer.cs">
+      <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="catalogo_widgets.aspx.cs">
       <DependentUpon>catalogo_widgets.aspx</DependentUpon>
@@ -1217,6 +1232,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Export.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="funciones.cs" />
     <Compile Include="Global.Master.cs">
@@ -1262,6 +1278,13 @@
       <DependentUpon>mantenimiento.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reporte_dashboard_bonos_kpi.aspx.cs">
+      <DependentUpon>reporte_dashboard_bonos_kpi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reporte_dashboard_bonos_kpi.aspx.designer.cs">
+      <DependentUpon>reporte_dashboard_bonos_kpi.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Service.asmx.cs">
       <DependentUpon>Service.asmx</DependentUpon>
       <SubType>Component</SubType>

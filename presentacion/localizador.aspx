@@ -11,6 +11,7 @@
     <script type="text/javascript">
 
         function ver(lat, lon) {
+            console.log("error",lat+lon);
             $("#map").height($(window).height() - 250);
             var myLatlng = new google.maps.LatLng(lat, lon);
             var mapOptions = {

@@ -41,26 +41,27 @@
             var isIpad = client.isIpad(); // Check For iPad
             var isIpod = client.isIpod(); // Check For iPod
             var deviceVendor = client.getDeviceVendor(); // Get Device Vendor
+            var fingerprint = client.getFingerprint(); // Get Client's Fingerprint
 
             var device = "";
             if (isMobile) {
                 if (isMobileAndroid) {
-                    device = "Dispositivo Android";
+                    device = "Movil";
                 } else if (isMobileWindows) {
-                    device = "Dispositivo Windows Phone";
+                    device = "Windows Phone";
                 } else if (isMobileBlackBerry) {
-                    device = "Dispositivo Black Berry";
+                    device = "Black Berry";
                 } else if (isMobileIOS) {
                     if (isIphone) {
-                        device = "Dispositivo iPhone";
+                        device = "iPhone";
                     } else if (isIpod) {
-                        device = "Dispositivo iPod";
+                        device = "iPod";
                     } else if (isIpad) {
-                        device = "Dispositivo iPad";
+                        device = "iPad";
                     }
                 }
             } else {
-                device = "Dispositivo de Computo";
+                device = "Computadora";
             }
             console.log("Dispositivo: " + device);
             console.log("Navegador: " + browser);
@@ -68,6 +69,7 @@
             console.log("OS_Version: " + osVersion);
             
             $('#<%= hdfmodel.ClientID%>').val(deviceVendor);
+            $('#<%= hdffinger.ClientID%>').val(fingerprint);
             $('#<%= hdfdevice.ClientID%>').val(device);
             $('#<%= hdfos.ClientID%>').val(OS);
             $('#<%= hdfosversion.ClientID%>').val(osVersion);
@@ -77,12 +79,12 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            if (location.protocol != 'https:' && location.hostname != "localhost") {
-                location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-            } else {
+            //if (location.protocol != 'https:' && location.hostname != "localhost") {
+            //    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+            //} else {
                 getLocation();
                 initGeolocation();
-            }
+           // }
         });
         function initGeolocation() {
             $.getJSON('https://ipinfo.io', function (response) {
@@ -197,6 +199,7 @@
             <asp:HiddenField ID="hdfosversion" runat="server" />
             <asp:HiddenField ID="hdfmodel" runat="server" />
             <asp:HiddenField ID="hdfbrowser" runat="server" />
+            <asp:HiddenField ID="hdffinger" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

@@ -13,12 +13,31 @@ namespace negocio.Componentes
 
     public class EmpleadosCOM
     {
-        public DataSet sp_usuario_sesiones(string usuario)
+        
+        public DataSet sp_desbloquear_dispositivo(int id_usuario_sesion)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pid_usuario_sesion", SqlDbType = SqlDbType.Int, Value = id_usuario_sesion });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_desbloquear_dispositivo", listparameters, false, 1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+        public DataSet sp_usuario_sesiones(string usuario, bool ver_todos)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@ver_Todos", SqlDbType = SqlDbType.Int, Value = ver_todos });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
@@ -30,7 +49,6 @@ namespace negocio.Componentes
             }
             return ds;
         }
-
         public DataSet sp_existe_usuario_sesiones(string usuario, string os, string os_version, string browser, string device)
         {
             DataSet ds = new DataSet();
@@ -53,7 +71,8 @@ namespace negocio.Componentes
             return ds;
         }
         public DataSet sp_agregar_usuario_sesiones(string usuario, string os, string os_version, string browser, string device,
-            string ip, string lat, string lon, string region, string proveedor, string modelo, DateTime fecha_inicio_sesion)
+            string ip, string lat, string lon, string region, string proveedor, string modelo, DateTime fecha_inicio_sesion,
+            string device_fingerprint)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -69,6 +88,8 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@pregion", SqlDbType = SqlDbType.Int, Value = region });
             listparameters.Add(new SqlParameter() { ParameterName = "@pproveedor", SqlDbType = SqlDbType.Int, Value = proveedor });
             listparameters.Add(new SqlParameter() { ParameterName = "@pmodel", SqlDbType = SqlDbType.Int, Value = modelo });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pdevice_fingerprint", SqlDbType = SqlDbType.Int, Value = device_fingerprint });
+            
             listparameters.Add(new SqlParameter() { ParameterName = "@pfecha_inicio_sesion", SqlDbType = SqlDbType.Int, Value = fecha_inicio_sesion });
             try
             {
@@ -82,7 +103,7 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_eliminar_usuario_sesiones(int id_usuario_sesion)
+        public DataSet sp_eliminar_usuario_sesiones(int id_usuario_sesion, Boolean bloquear)
         {
             //string usuario, string os, string os_version, string browser, string device,
             //string ip, DateTime fecha_inicio_sesion
@@ -91,7 +112,7 @@ namespace negocio.Componentes
             Datos data = new Datos();
 
             listparameters.Add(new SqlParameter() { ParameterName = "@pid_usuario_sesion", SqlDbType = SqlDbType.Int, Value = id_usuario_sesion });
-            //listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pbloquear", SqlDbType = SqlDbType.Int, Value = bloquear });
             //listparameters.Add(new SqlParameter() { ParameterName = "@pos", SqlDbType = SqlDbType.Int, Value = os });
             //listparameters.Add(new SqlParameter() { ParameterName = "@pos_version", SqlDbType = SqlDbType.Int, Value = os_version });
             //listparameters.Add(new SqlParameter() { ParameterName = "@pbrowser", SqlDbType = SqlDbType.Int, Value = browser });
@@ -290,11 +311,6 @@ namespace negocio.Componentes
                                 })
                                 .OrderBy(u => u.First_Name);
                 dt = To.DataTable(query.ToList());
-                //dt.Columns.Add("nombre_completo");
-                //foreach (DataRow row in dt.Rows)
-                //{
-                //    row["nombre_completo"] = row["First_Name"].ToString().Trim() + " " + row["Last_Name"].ToString().Trim();
-                //}
                 return dt;
             }
             catch (Exception ex)
@@ -303,13 +319,14 @@ namespace negocio.Componentes
             }
         }
 
-        public DataTable GetLogin(string usuario)
+        public DataTable GetLogin(string usuario, string fingerprint)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
             Datos data = new Datos();
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pfinger_print", SqlDbType = SqlDbType.Int, Value = fingerprint });
             try
             {
                 //ds = data.datos_Clientes(listparameters);

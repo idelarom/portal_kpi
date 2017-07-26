@@ -1,8 +1,11 @@
 ﻿using negocio.Componentes;
+using presentacion;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,6 +17,43 @@ namespace presentacion
     /// </summary>
     public class funciones
     {
+        public static List<DateTime> RangoFechasTrimestre(DateTime date)
+        {
+            List<DateTime> list = new List<DateTime>();
+            try
+            {
+                int month = date.Month;
+                int year = date.Year;                
+                if (Enumerable.Range(3, 5).Contains(month))
+                {
+                    list.Add(Convert.ToDateTime(year.ToString()+"-03-01"));
+                    list.Add(Convert.ToDateTime(year.ToString() + "-05-31"));
+                }
+                else if (Enumerable.Range(6, 8).Contains(month))
+                {
+                    list.Add(Convert.ToDateTime(year.ToString() + "-06-01"));
+                    list.Add(Convert.ToDateTime(year.ToString() + "-08-31"));
+                }
+                else if (Enumerable.Range(9, 11).Contains(month))
+                {
+                    list.Add(Convert.ToDateTime(year.ToString() + "-09-01"));
+                    list.Add(Convert.ToDateTime(year.ToString() + "-11-30"));
+                }
+                else
+                {
+                    list.Add(Convert.ToDateTime(year.ToString() + "-12-01"));
+                    list.Add(Convert.ToDateTime((year+1).ToString() + "-02-28"));
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return list;
+            }
+
+        }
+
+   
         public static String SplitLastIndex(string value, char separator)
         {
             if (value.Split(' ').Length > 1)

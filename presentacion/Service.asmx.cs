@@ -24,13 +24,17 @@ namespace presentacion
             {
                 string value = "";
                 EmpleadosCOM empleados = new EmpleadosCOM();
-                DataTable dt = empleados.sp_usuario_sesiones(Session["usuario"] as string).Tables[0];
-                int devices_count = Convert.ToInt32(Session["devices_conectados"]);
-                bool mas_dispositivos = dt.Rows.Count > devices_count;
-                Session["devices_conectados"] = dt.Rows.Count;
-                if (mas_dispositivos)
+                string session = Session["usuario"] as string;
+                if (session != "")
                 {
-                    value = "Se detecto un nuevo dispositivo conectado. Da clic sobre este mensaje para ver mas opciones.";
+                    DataTable dt = empleados.sp_usuario_sesiones(session, false).Tables[0];
+                    int devices_count = Convert.ToInt32(Session["devices_conectados"]);
+                    bool mas_dispositivos = dt.Rows.Count > devices_count;
+                    Session["devices_conectados"] = dt.Rows.Count;
+                    if (mas_dispositivos)
+                    {
+                        value = "Se detecto un nuevo dispositivo conectado. Da clic sobre este mensaje para ver mas opciones.";
+                    }
                 }
                 return value;
             }

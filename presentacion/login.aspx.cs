@@ -43,7 +43,6 @@ namespace presentacion
                 }
                 else if (!LoginActive(usuario, password, rtxtdominio.Text.Trim()))
                 {
-                    Toast.Error("Credenciales Invalidas", this);
                     retur = false;
                 }
                 return retur;
@@ -69,41 +68,12 @@ namespace presentacion
                     Employee entidad = new Employee();
                     entidad.Usuario_Red = username.Trim();
                     EmpleadosCOM empleados = new EmpleadosCOM();
-                    DataTable dt = empleados.GetLogin(username);
-                    if (isValid && dt.Rows.Count > 0)
+                    string finger_print = hdffinger.Value.Trim();
+                    DataTable dt = empleados.GetLogin(username, finger_print);
+                    string vmensaje = "";
+                    if (isValid && dt.Rows.Count > 0 && finger_print != "")
                     {
-                        DirectoryEntry directoryEntry = new DirectoryEntry("LDAP://" + dominio, username, password);
-                        //Create a searcher on your DirectoryEntry
-                        DirectorySearcher adSearch = new DirectorySearcher(directoryEntry);
-                        adSearch.SearchScope = SearchScope.Subtree;    //Look into all subtree during the search
-                        adSearch.Filter = "(&(ObjectClass=user)(sAMAccountName=" + username + "))";    //Filter information, here i'm looking at a user with given username
-                        SearchResult sResult = adSearch.FindOne();       //username is unique, so I want to find only one
-                        string imagen = "";
-                        if (sResult.Properties["thumbnailPhoto"].Count > 0)
-                        {
-                            byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
-                            imagen = GuardarImagenUsuario(array_img, username + ".png");
-                        }
-                     
                         DataRow row = dt.Rows[0];
-                        //recuperamos datos
-                        string nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
-                                    funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' '));
-                        string puesto = (row["puesto"].ToString().Trim());
-                        string perfil = row["perfil"].ToString().Trim().ToLower();
-                        //pasamos aminusculas
-                        nombre = nombre.ToLower();
-                        puesto = puesto.ToLower();
-                        //pasamos a estilos title
-                        Session["imagen"] = imagen;
-                        Session["usuario"] = username;
-                        Session["password"] = password;
-                        Session["contraseña"] = password;
-                        Session["nombre"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
-                        Session["correo"] = row["Company_E_Mail"].ToString().Trim().ToLower();
-                        Session["puesto"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto);
-                        Session["perfil"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil); 
-                        Session["id_perfil"] = Convert.ToInt32(row["id_perfil"]);
                         String os = hdfos.Value.Trim();
                         String os_vers = hdfosversion.Value.Trim();
                         String browser = hdfbrowser.Value.Trim();
@@ -114,29 +84,77 @@ namespace presentacion
                         String region = hdfregion.Value.Trim();
                         String proveedor = hdfproveedor.Value.Trim();
                         String modelo = hdfmodel.Value.Trim();
-                        DateTime fecha_inicio_sesion = DateTime.Now;
-                        Session["os"] =os;
-                        Session["os_vers"] = os_vers;
-                        Session["browser"] = browser;
-                        Session["device"] = device;
-                        Session["ip"] = ip;
-                        Session["fecha_inicio_sesion"] = fecha_inicio_sesion;
-                        DataSet ds = empleados.sp_agregar_usuario_sesiones(username.Trim().ToUpper(), os, os_vers, browser, device,
-                            ip,lat,lon,region,proveedor,modelo, fecha_inicio_sesion);
-                        int id_usuario_sesion = ds.Tables[0].Columns.Contains("id_usuario_sesion") ? 
-                            Convert.ToInt32(ds.Tables[0].Rows[0]["id_usuario_sesion"]) : 0;
-                        Session["devices_conectados"] = UpdateDevices(username);
-                        if (id_usuario_sesion > 0)
+                        bool bloqueado = Convert.ToBoolean(row["dispositivo_bloqueado"]);
+                        if (bloqueado)
                         {
-                            Session["id_usuario_sesion"] = id_usuario_sesion;
+                            vmensaje = "Este dispostivo(" + device + " " + modelo + " " + os + " " + os_vers + ") fue bloqueado para el inicio de sesión. Si usted no realizo esta configuración, comuniquese al departamento de sistemas.";
+                            isValid = false;
                         }
                         else
                         {
-                            isValid = false;
+                            DirectoryEntry directoryEntry = new DirectoryEntry("LDAP://" + dominio, username, password);
+                            //Create a searcher on your DirectoryEntry
+                            DirectorySearcher adSearch = new DirectorySearcher(directoryEntry);
+                            adSearch.SearchScope = SearchScope.Subtree;    //Look into all subtree during the search
+                            adSearch.Filter = "(&(ObjectClass=user)(sAMAccountName=" + username + "))";    //Filter information, here i'm looking at a user with given username
+                            SearchResult sResult = adSearch.FindOne();       //username is unique, so I want to find only one
+                            string imagen = "";
+                            if (sResult.Properties["thumbnailPhoto"].Count > 0)
+                            {
+                                byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
+                                imagen = GuardarImagenUsuario(array_img, username + ".png");
+                            }
+
+                            //recuperamos datos
+                            string nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
+                                        funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' '));
+                            string puesto = (row["puesto"].ToString().Trim());
+                            string perfil = row["perfil"].ToString().Trim().ToLower();
+                            //pasamos aminusculas
+                            nombre = nombre.ToLower();
+                            puesto = puesto.ToLower();
+                            //pasamos a estilos title
+                            Session["imagen"] = imagen;
+                            Session["usuario"] = username;
+                            Session["password"] = password;
+                            Session["contraseña"] = password;
+                            Session["nombre"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
+                            Session["correo"] = row["Company_E_Mail"].ToString().Trim().ToLower();
+                            Session["puesto"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto);
+                            Session["perfil"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil);
+                            Session["id_perfil"] = Convert.ToInt32(row["id_perfil"]);
+
+                            DateTime fecha_inicio_sesion = DateTime.Now;
+                            Session["os"] = os;
+                            Session["os_vers"] = os_vers;
+                            Session["browser"] = browser;
+                            Session["device"] = device;
+                            Session["ip"] = ip;
+                            Session["fecha_inicio_sesion"] = fecha_inicio_sesion;
+                            DataSet ds = empleados.sp_agregar_usuario_sesiones(username.Trim().ToUpper(), os, os_vers, browser, device,
+                                ip, lat, lon, region, proveedor, modelo, fecha_inicio_sesion, finger_print);
+                            int id_usuario_sesion = ds.Tables[0].Columns.Contains("id_usuario_sesion") ?
+                                Convert.ToInt32(ds.Tables[0].Rows[0]["id_usuario_sesion"]) : 0;
+                            Session["devices_conectados"] = UpdateDevices(username);
+                            if (id_usuario_sesion > 0)
+                            {
+                                Session["id_usuario_sesion"] = id_usuario_sesion;
+                            }
+                            else
+                            {
+                                vmensaje = "No se pudo registrar el inicio de sesión en el servidor. Intentelo nuevamente.";
+                                isValid = false;
+                            }
                         }
                     }
                     else
                     {
+                        vmensaje = "Credenciales invalidas";
+                    }
+
+                    if (vmensaje != "")
+                    {
+                        Toast.Error(vmensaje, this);
                         isValid = false;
                     }
                     return isValid;
@@ -150,8 +168,6 @@ namespace presentacion
         }
 
         #endregion METODOS
-
-
 
         protected void lnkcambiardominio_Click(object sender, EventArgs e)
         {
@@ -190,10 +206,8 @@ namespace presentacion
             try
             {
                 EmpleadosCOM empleados = new EmpleadosCOM();
-                DataTable dt = empleados.sp_usuario_sesiones(usuario).Tables[0];
-               return  dt.Rows.Count;
-               
-
+                DataTable dt = empleados.sp_usuario_sesiones(usuario,false).Tables[0];
+                return dt.Rows.Count;
             }
             catch (Exception ex)
             {
@@ -201,6 +215,5 @@ namespace presentacion
                 return 0;
             }
         }
-
     }
 }
