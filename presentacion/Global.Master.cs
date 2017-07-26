@@ -43,6 +43,26 @@ namespace presentacion
                 {
                     Toast.Info("El usuario en uso: "+Convert.ToString(Session["usuario"]).ToUpper()+", no cuenta con un perfil asignado. Por favor, comuniquese con su administrador.","Mensaje del sistema",this.Page);
                 }
+               // CargarBreadCumb();
+            }
+        }
+
+        private void CargarBreadCumb()
+        {
+            try
+            {
+                string pageName = this.ContentPlaceHolder1.Page.GetType().FullName;
+                pageName=  pageName.Replace("ASP.", "").Replace("_aspx", ".aspx");
+                MenusCOM menus = new MenusCOM();
+                DataSet ds = menus.sp_menus_breadcumbs(pageName);
+                DataTable dt = ds.Tables[0];
+                //repeat_breads.DataSource = dt;
+                //repeat_breads.DataBind();
+                //breadcum.Visible = dt.Rows.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar el breadcumbs: " + ex.Message, this.Page);
             }
         }
         private void CargarImagen()
@@ -127,10 +147,7 @@ namespace presentacion
         {
             string url = "login.aspx";
             EmpleadosCOM empleados = new EmpleadosCOM();
-            
-            DataSet ds = empleados.sp_eliminar_usuario_sesiones(
-                Session["usuario"] as string, Session["os"] as string, Session["os_vers"] as string,
-                Session["browser"] as string, Session["device"] as string);
+            DataSet ds = empleados.sp_eliminar_usuario_sesiones(Convert.ToInt32(Session["id_usuario_sesion"]),false);
             Session.Clear();
             Session.RemoveAll();
             Session.Abandon();
@@ -154,29 +171,61 @@ namespace presentacion
                 return true;
             }
         }
-        protected void UpdateDevices()
+
+        public String DevicesConecteds()
         {
             try
             {
+                string value = "";
                 EmpleadosCOM empleados = new EmpleadosCOM();
-                DataTable dt = empleados.sp_usuario_sesiones(Session["usuario"] as string).Tables[0];
+                DataTable dt = empleados.sp_usuario_sesiones(Session["usuario"] as string,false).Tables[0];
                 lbldispo.Text = dt.Rows.Count.ToString();
                 repeat_devices.DataSource = dt;
                 repeat_devices.DataBind();
+                repeat_devices2.DataSource = dt;
+                repeat_devices2.DataBind();
                 int devices_count = Convert.ToInt32(Session["devices_conectados"]);
                 bool mas_dispositivos = dt.Rows.Count > devices_count;
                 Session["devices_conectados"] = dt.Rows.Count;
                 if (mas_dispositivos)
                 {
-                    ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(),
-                        "ShowNewDevice();", true);
+                    value = "Se detecto un nuevo dispositivo conectado. Da clic sobre este mensaje para ver mas opciones.";
                 }
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return "Error al actualizar la lista de dispositivo(s) conectado(s): " + ex.Message;
+            }
+        }
+
+        protected void UpdateDevices()
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                DataTable dt = empleados.sp_usuario_sesiones(Session["usuario"] as string,false).Tables[0];
+                lbldispo.Text = dt.Rows.Count.ToString();
+                repeat_devices.DataSource = dt;
+                repeat_devices.DataBind();
+                repeat_devices2.DataSource = dt;
+                repeat_devices2.DataBind();
+                int devices_count = Convert.ToInt32(Session["devices_conectados"]);
+                bool mas_dispositivos = dt.Rows.Count > devices_count;
+                Session["devices_conectados"] = dt.Rows.Count;
+                //if (mas_dispositivos)
+                //{
+                //    ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(),
+                //        "ShowNewDevice();", true);
+                //}
             }
             catch (Exception ex)
             {
                 Toast.Error("Error al actualizar la lista de dispositivo(s) conectado(s): "+ex.Message,this.Page);
             }
         }
+
+     
 
         protected void lnkactualizar_Click(object sender, EventArgs e)
         {
@@ -195,12 +244,17 @@ namespace presentacion
                     Label os = item.FindControl("os") as Label;
                     Label os_version = item.FindControl("os_version") as Label;
                     Label browser = item.FindControl("browser") as Label;
+                    Label ip = item.FindControl("ip") as Label;
+                    Label fecha = item.FindControl("fecha") as Label;
+                    Label id_usuario_sesion = item.FindControl("id_usuario_sesion") as Label;
                     if (cbx.Checked)
                     {
                         total++;
                         EmpleadosCOM empleados = new EmpleadosCOM();
-                        DataSet ds = empleados.sp_eliminar_usuario_sesiones(
-                        Session["usuario"] as string, os.Text, os_version.Text,browser.Text,dispositivo.Text);
+                        DataSet ds = empleados.sp_eliminar_usuario_sesiones(Convert.ToInt32(id_usuario_sesion.Text),false);
+                        //DataSet ds = empleados.sp_eliminar_usuario_sesiones(
+                        //Session["usuario"] as string, os.Text, os_version.Text,browser.Text,dispositivo.Text,
+                        //ip.Text,Convert.ToDateTime(fecha.Text));
                     }
                 }
                 if (total == 0)
@@ -221,6 +275,25 @@ namespace presentacion
            
         }
 
-       
+        protected void btncerrarsesion_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string command = hdfcommand.Value;
+                int idc_usuario_sesion = Convert.ToInt32(hdfid_usuario_sesion.Value);
+                bool bloquear = command.Trim() == "bloquear";
+                if (idc_usuario_sesion > 0)
+                {
+                    EmpleadosCOM empleados = new EmpleadosCOM();
+                    DataSet ds = empleados.sp_eliminar_usuario_sesiones(idc_usuario_sesion,bloquear);
+                    UpdateDevices();
+                    Toast.Success("Dispositivo desconectado correctamente.", "Mensaje del sistema", this.Page);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cerrar sesiones: " + ex.Message, this.Page);
+            }
+        }
     }
 }

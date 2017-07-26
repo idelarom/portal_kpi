@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+using negocio.Componentes;
+using System;
+using System.Data;
 
 namespace presentacion
 {
@@ -8,5 +11,7 @@ namespace presentacion
         {
             Response.Redirect("~/login.aspx");
         }
+       
+
     }
 }

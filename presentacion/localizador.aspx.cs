@@ -11,18 +11,18 @@ namespace presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string lat = funciones.de64aTexto(Request["lat"]);
-            string lon = funciones.de64aTexto(Request["lon"]);
-            string desc = funciones.de64aTexto(Request["desc"]);
+            string lat = funciones.de64aTexto(Request.QueryString["lat"]);
+            string lon = funciones.de64aTexto(Request.QueryString["lon"]);
+            string desc = funciones.de64aTexto(Request.QueryString["desc"]);
             //string[] description = desc.Split(',');
             //string descF = "";
 
             //foreach (string d in description)
             //{
             //    descF = descF + d + "\n";
-            //}
+        //}
 
-            rtxtdesc.Text = desc;
+        rtxtdesc.Text = desc;
             ClientScript.RegisterStartupScript(GetType(), "verMapa", "ver('" + lat + "','" + lon + "');", true);
         }
     }

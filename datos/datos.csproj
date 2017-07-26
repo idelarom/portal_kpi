@@ -53,6 +53,16 @@
   <ItemGroup>
     <Compile Include="conexion.cs" />
     <Compile Include="Datos.cs" />
+    <Compile Include="Model\menus.cs" />
+    <Compile Include="Model\menus_perfiles.cs" />
+    <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\perfiles.cs" />
+    <Compile Include="Model\sysdiagrams.cs" />
+    <Compile Include="Model\usuarios_perfiles.cs" />
+    <Compile Include="Model\usuarios_sesiones.cs" />
+    <Compile Include="Model\usuarios_widgets.cs" />
+    <Compile Include="Model\widgets.cs" />
+    <Compile Include="Model\widgets_perfiles.cs" />
     <Compile Include="NAVISION\Employee.cs" />
     <Compile Include="NAVISION\NAVISION.cs" />
     <Compile Include="OPTRACKER\ModelOPT.cs" />

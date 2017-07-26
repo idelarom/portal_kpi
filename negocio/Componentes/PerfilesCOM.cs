@@ -1,11 +1,8 @@
-﻿using datos.NAVISION;
-using datos;
+﻿using datos;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.Validation;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace negocio.Componentes
 {
@@ -39,8 +36,8 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_agregar_perfiles(string perfil, string usuario, 
-            string cadena_usuarios, int total_cadena_usuarios, 
+        public DataSet sp_agregar_perfiles(string perfil, string usuario,
+            string cadena_usuarios, int total_cadena_usuarios,
             string cadena_widgets, int total_cadena_widgets,
             string cadena_menus, int total_cadena_menus)
         {
@@ -66,8 +63,8 @@ namespace negocio.Componentes
             }
             return ds;
         }
-        
-         public DataSet sp_borrar_perfiles(int pid_perfil, string usuario, string comentarios)
+
+        public DataSet sp_borrar_perfiles(int pid_perfil, string usuario, string comentarios)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -86,6 +83,7 @@ namespace negocio.Componentes
             }
             return ds;
         }
+
         public DataSet sp_catalogo_perfiles(int pid_perfil)
         {
             DataSet ds = new DataSet();
@@ -103,7 +101,7 @@ namespace negocio.Componentes
             }
             return ds;
         }
-        
+
         public DataSet sp_widgets_perfiles(int pid_perfil)
         {
             DataSet ds = new DataSet();
@@ -121,7 +119,7 @@ namespace negocio.Componentes
             }
             return ds;
         }
-        
+
         public DataSet sp_usuarios_perfiles(int pid_perfil)
         {
             DataSet ds = new DataSet();
@@ -157,5 +155,6 @@ namespace negocio.Componentes
             }
             return ds;
         }
+        
     }
 }

@@ -184,6 +184,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.HiddenField hdfosversion;
         
         /// <summary>
+        /// Control hdfmodel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfmodel;
+        
+        /// <summary>
         /// Control hdfbrowser.
         /// </summary>
         /// <remarks>
@@ -191,5 +200,14 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfbrowser;
+        
+        /// <summary>
+        /// Control hdffinger.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdffinger;
     }
 }

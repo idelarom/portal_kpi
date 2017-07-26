@@ -20,7 +20,8 @@ namespace presentacion
                 + "'showEasing': 'swing',"
                 + "'hideEasing': 'linear',"
                 + "'showMethod': 'fadeIn',"
-                + "'hideMethod': 'fadeOut'"
+                + "'hideMethod': 'fadeOut',"
+                + "'tapToDismiss': false"
                 + "};";
         public static void Success(String Mensaje, String Titulo, Page mypage)
         {

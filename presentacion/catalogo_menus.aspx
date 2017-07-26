@@ -180,9 +180,17 @@
                                     <telerik:RadTextBox ID="rtxticono" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
                                 <div id="Datossubmenu">
-                                    <div class="col-lg-12 col-sm-12">
+                                    <div class="col-lg-12">
+                                        
                                         <h5><strong><i class="fa fa-internet-explorer" aria-hidden="true"></i>&nbsp;Url</strong></h5>
-                                        <telerik:RadTextBox ID="rtxtUrl" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                                    </div>
+                                     <div class="col-lg-6 col-md-6 col-sm-12">
+                                         <telerik:RadTextBox ID="rtxtUrl" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                                        
+                                    </div>
+                                    <div class="col-lg-6 col-md-6  col-sm-12">
+                                        <asp:DropDownList ID="ddlpaginas" AutoPostBack="true" 
+                                            OnSelectedIndexChanged="ddlpaginas_SelectedIndexChanged" CssClass=" form-control" runat="server"></asp:DropDownList>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Menu principal</strong></h5>
