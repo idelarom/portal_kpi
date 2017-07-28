@@ -10,7 +10,7 @@ namespace negocio.Componentes
     {
         public DataSet sp_editar_perfiles(int id_perfil, string perfil, string usuario, string cadena_usuarios,
             int total_cadena_usuarios, string cadena_widgets, int total_cadena_widgets,
-            string cadena_menus, int total_cadena_menus)
+            string cadena_menus, int total_cadena_menus, bool ver_todos_empleados)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -24,6 +24,7 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@ptotal_cadena_widgets", SqlDbType = SqlDbType.Int, Value = total_cadena_widgets });
             listparameters.Add(new SqlParameter() { ParameterName = "@pcadena_menus", SqlDbType = SqlDbType.Int, Value = cadena_menus });
             listparameters.Add(new SqlParameter() { ParameterName = "@ptotal_cadena_menus", SqlDbType = SqlDbType.Int, Value = total_cadena_menus });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pver_todos_los_empleados", SqlDbType = SqlDbType.Int, Value = ver_todos_empleados });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
@@ -39,7 +40,7 @@ namespace negocio.Componentes
         public DataSet sp_agregar_perfiles(string perfil, string usuario,
             string cadena_usuarios, int total_cadena_usuarios,
             string cadena_widgets, int total_cadena_widgets,
-            string cadena_menus, int total_cadena_menus)
+            string cadena_menus, int total_cadena_menus, bool ver_todos_empleados)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -52,6 +53,7 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@ptotal_cadena_widgets", SqlDbType = SqlDbType.Int, Value = total_cadena_widgets });
             listparameters.Add(new SqlParameter() { ParameterName = "@pcadena_menus", SqlDbType = SqlDbType.Int, Value = cadena_menus });
             listparameters.Add(new SqlParameter() { ParameterName = "@ptotal_cadena_menus", SqlDbType = SqlDbType.Int, Value = total_cadena_menus });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pver_todos_los_empleados", SqlDbType = SqlDbType.Int, Value = ver_todos_empleados });
             try
             {
                 //ds = data.datos_Clientes(listparameters);

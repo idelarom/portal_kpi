@@ -523,6 +523,7 @@ namespace presentacion
                 if (id_perfil > 0)
                 {
                     rtxtperfil.Text = dt.Rows[0]["perfil"].ToString();
+                    cbxvertodosempleados.Checked = Convert.ToBoolean(dt.Rows[0]["ver_todos_empleados"]);
                     txtid_perfil.Text = id_perfil.ToString();
                     DataTable dt_usuarios_original = perfiles.sp_usuarios_perfiles(id_perfil).Tables[0];
                     if (dt_usuarios_original.Rows.Count > 0)
@@ -572,8 +573,9 @@ namespace presentacion
             {
                 PerfilesCOM perfiles = new PerfilesCOM();
                 string usuario = Session["usuario"] as string;
+                bool ver_todos_empleados = cbxvertodosempleados.Checked;
                 DataSet ds = perfiles.sp_agregar_perfiles(perfil, usuario, cadena_usuarios, total_cadena_usuarios,
-                    cadena_widgets, total_cadena_widgets, cadena_menus, total_cadena_menus);
+                    cadena_widgets, total_cadena_widgets, cadena_menus, total_cadena_menus,ver_todos_empleados);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al guardar perfil. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -600,8 +602,9 @@ namespace presentacion
             {
                 PerfilesCOM perfiles = new PerfilesCOM();
                 string usuario = Session["usuario"] as string;
+                bool ver_todos_empleados = cbxvertodosempleados.Checked;
                 DataSet ds = perfiles.sp_editar_perfiles(idperfil, perfil, usuario, cadena_usuarios, total_cadena_usuarios,
-                    cadena_widgets, total_cadena_widgets, cadena_menus, total_cadena_menus);
+                    cadena_widgets, total_cadena_widgets, cadena_menus, total_cadena_menus,ver_todos_empleados);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al editar perfil. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")

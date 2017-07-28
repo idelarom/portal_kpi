@@ -112,6 +112,10 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
@@ -236,6 +240,7 @@
     <Content Include="dist\js\client.min.js" />
     <Content Include="dist\js\demo.js" />
     <Content Include="dist\js\gmap.js" />
+    <Content Include="dist\js\loading.js" />
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />
     <Content Include="dist\js\pages\master_page.js" />
@@ -253,6 +258,7 @@
     <Content Include="img\user.png" />
     <Content Include="img\mant.jpg" />
     <Content Include="img\users\load.gif" />
+    <Content Include="img\user_mini.png" />
     <Content Include="inicio.aspx" />
     <Content Include="localizador.aspx" />
     <Content Include="login.aspx" />

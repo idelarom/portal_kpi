@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="DashBoard Bonos" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="reporte_dashboard_bonos_kpi.aspx.cs" Inherits="presentacion.reporte_dashboard_bonos_kpi" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
@@ -9,7 +12,7 @@
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
-                "ordering": false,
+                "ordering": true,
                 "info": true,
                 "autoWidth": true,
                 "language": {
@@ -39,9 +42,16 @@
             });
         }
 
-          function ConfirmwidgetProyectoModal() {            
+        function ConfirmwidgetProyectoModal() {
+            
+              $("#<%= div_modalbodyfiltros.ClientID%>").hide();
               $("#<%= lnkcargando.ClientID%>").show();
               $("#<%= lnkguardar.ClientID%>").hide();
+              return true;
+          }
+          function Carganodfiltros() {            
+              $("#<%= nkcargandofiltros.ClientID%>").show();
+              $("#<%= lnkfiltros.ClientID%>").hide();
               return true;
           }
     </script>
@@ -52,7 +62,12 @@
             <h3 class="page-header">Dashboard Bonos</h3>
         </div>
         <div class="col-lg-12">
-            <asp:LinkButton ID="lnkfiltros" CssClass="btn btn-primary btn-flat" OnClick="lnkfiltros_Click" runat="server">
+                <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>&nbsp;Cargando filtros
+                            </asp:LinkButton>
+            <asp:LinkButton ID="lnkfiltros" CssClass="btn btn-primary btn-flat" OnClick="lnkfiltros_Click" runat="server"
+                OnClientClick="return Carganodfiltros();" >
                <i class="fa fa-filter" aria-hidden="true"></i>&nbsp;Filtros
             </asp:LinkButton>
         </div>
@@ -65,10 +80,18 @@
                 <!-- /.box-header -->
                 <div class="box-header">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
+                        <h4 class="box-title"><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial:</strong>
+                            &nbsp;<asp:Label ID="lblfechaini" runat="server" Text="Label"></asp:Label>
+                            &nbsp;<strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final:</strong>
+                            &nbsp;<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                        </h4>
+                        
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
+                        <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final:</strong>
+                            &nbsp;<asp:Label ID="lblfechafin" runat="server" Text="Label"></asp:Label>
+                        </h5>
+                        
                     </div>
                 </div>
                 <div class="box-body">
@@ -90,23 +113,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <asp:Repeater ID="repeater_bonos" runat="server">
-                                    <ItemTemplate>
-                                        <tr style="font-size: 11px">
-                                            <td><%# Eval("nombre") %></td>
-                                            <td><%# Eval("CC") %></td>
-                                            <td style="text-align: center;"><%# Convert.ToDecimal(Eval("amount")).ToString("C") %></td>
-                                            <td style="text-align: center;"><%# Convert.ToDecimal(Eval("kpiind")).ToString("P2")  %></td>
-                                            <td style="text-align: center;"><%# Convert.ToDecimal(Eval("kpigroup")).ToString("P2")  %></td>
-                                            <td style="text-align: center;"><%# Convert.ToDecimal(Eval("porcind")).ToString("P0")  %></td>
-                                            <td style="text-align: center;"><%# Convert.ToDecimal(Eval("porcgrupal")).ToString("P0")  %></td>
-                                            <td style="text-align: center;"><%# Convert.ToDecimal(Eval("resultadototal")).ToString("C") %></td>
-                                            <td style="text-align: center;"><%# (Convert.ToInt32(Eval("cumplimiento_compromisos")) * 100).ToString() %>&nbsp;%</td>
-                                            <td style="text-align: center;"><%# Convert.ToDecimal(Eval("resultadototal")).ToString("C") %></td>
-                                            <td style="text-align: center;"><%# (Convert.ToInt32(Eval("totalpor100")) * 100).ToString() %>&nbsp;%</td>
-                                        </tr>
-                                    </ItemTemplate>
-                                </asp:Repeater>
+                               
+                                        <asp:Repeater ID="repeater_bonos" runat="server">
+                                            <ItemTemplate>
+                                                <tr style="font-size: 11px">
+                                                    <td><%# Eval("Nombre") %></td>
+                                                    <td><%# Eval("CC") %></td>
+                                                    <td style="text-align: center;"><%# Eval("Monto Bono") %></td>
+                                                    <td style="text-align: center;"><%# Eval("KPI Individual") %></td>
+                                                    <td style="text-align: center;"><%# Eval("KPI Grupo") %></td>
+                                                    <td style="text-align: center;"><%# Eval("% Individual") %></td>
+                                                    <td style="text-align: center;"><%# Eval("% Grupal") %></td>
+                                                    <td style="text-align: center;"><%# Eval("Bono") %></td>
+                                                    <td style="text-align: center;"><%# Eval("% Cump") %></td>
+                                                    <td style="text-align: center;"><%# Eval("Total Final") %></td>
+                                                    <td style="text-align: center;"><%# Eval("% Total Final") %></td>
+                                                </tr>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
                             </tbody>
                         </table>
                     </div>
@@ -130,7 +154,6 @@
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Always">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="lnkfiltros" EventName="Click" />
                     <asp:PostBackTrigger ControlID="lnkguardar" />
                 </Triggers>
                 <ContentTemplate>
@@ -140,31 +163,85 @@
                                 <span aria-hidden="true">×</span></button>
                             <h4 class="modal-title">Filtros</h4>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="div_modalbodyfiltros" runat="server">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <h6><strong><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Tipo de Filtro</strong></h6>
+                                    <h6 ><strong><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Tipo de Filtro</strong></h6>
                                     <asp:DropDownList ID="ddltipofiltro" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddltipofiltro_SelectedIndexChanged" runat="server">
                                         <asp:ListItem Value="1" Text="-Seleccion por Trimestre" Selected="True"></asp:ListItem>
                                         <asp:ListItem Value="2" Text="-Selección libre"></asp:ListItem>
                                     </asp:DropDownList>
-                                    <h5 style="color: #e53935"><strong>
-                                        <asp:Label ID="lblinfotipofiltro" runat="server" Text="Permite seleccionar solo por rangos de trimestres."></asp:Label></strong></h5>
+                                    <h6 style="color: #e53935"><strong>
+                                        <asp:Label ID="lblinfotipofiltro" runat="server" Text="Permite seleccionar solo por rangos de trimestres."></asp:Label></strong></h6>
 
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
-                                    <asp:TextBox ID="txtfechainicio" AutoPostBack="true"
+                                    <asp:DropDownList  Visible="true" ID="ddltrimestres" CssClass="form-control"
+                                         AutoPostBack="true" OnSelectedIndexChanged="ddltrimestres_SelectedIndexChanged" runat="server"></asp:DropDownList>
+                                    <asp:TextBox ID="txtfechainicio" Visible="false" AutoPostBack="true"
                                         OnTextChanged="txtfechainicio_TextChanged" ReadOnly="false" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"  style="font-size:10px;">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
                                     <asp:TextBox ID="txtfechafinal" ReadOnly="true" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="col-lg-12 col-xs-12">
+                                    <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Seleccione el empleado a consultar</strong>
+                                        &nbsp;  <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
+                                    </h6>
+                                    <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control"
+                                        AutoPostBack="true" OnSelectedIndexChanged="ddlempleado_a_consultar_SelectedIndexChanged" runat="server">
+                                    </asp:DropDownList>
+                                  
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <br />
+                                    <asp:LinkButton ID="lnkagregarseleccion" OnClick="lnkagregarseleccion_Click" 
+                                        CssClass="btn btn-primary btn-flat btn-sm" runat="server">
+                                        Agregar selección&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                                    </asp:LinkButton>                                   
+                                    <asp:LinkButton ID="lnkagregartodos" OnClick="lnkagregartodos_Click" 
+                                        CssClass="btn btn-primary btn-flat btn-sm" runat="server">
+                                        Todos&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                                    </asp:LinkButton>
+                                     <div style="max-height: 130px; height: 130px; overflow: scroll;">
+                                        <telerik:RadTreeView RenderMode="Lightweight" ID="rtvListEmpleado" runat="server" Width="100%"
+                                            Style="background-color: white; font-size: 10px;" Skin="Bootstrap">
+                                            <DataBindings>
+                                                <telerik:RadTreeNodeBinding Expanded="False"></telerik:RadTreeNodeBinding>
+                                            </DataBindings>
+                                        </telerik:RadTreeView>
+                                    </div>
+                                    
+                                    <label>
+                                        <asp:Label ID="lblcountlistempleados" runat="server" Text="0"></asp:Label></label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <br />                                
+                                    <asp:LinkButton ID="lnklimpiar" OnClick="lnklimpiar_Click" 
+                                        CssClass="btn btn-danger btn-flat btn-sm" runat="server">
+                                        Limpiar lista&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
+                                    </asp:LinkButton>                      
+                                    <asp:LinkButton ID="lnkeliminarselecion" OnClick="lnkeliminarselecion_Click"
+                                        CssClass="btn btn-danger btn-flat btn-sm" runat="server">
+                                        Eliminar seleccion&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
+                                    </asp:LinkButton>
+                                    <div style="max-height: 130px; height: 130px; overflow: scroll;">
+                                        <telerik:RadListBox RenderMode="Lightweight" runat="server" ID="rdtselecteds" Width="100%"
+                                            Style="font-size: 10px" Skin="Bootstrap" SelectionMode="Multiple" Sort="Ascending">
+                                        </telerik:RadListBox>
+                                    </div>
+                                    <label>
+                                        <asp:Label ID="lblcountselecteds" runat="server" Text="0"></asp:Label></label>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer ">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>

@@ -23,6 +23,8 @@ namespace presentacion
             if (!IsPostBack)
             {
                 string usuario = Session["usuario"] as string;
+
+                hdf_usuario.Value = usuario.ToUpper().ToString();
                 CargarDivs();
             }
         }

@@ -13,7 +13,26 @@ namespace negocio.Componentes
 
     public class EmpleadosCOM
     {
-        
+        public DataSet sp_listado_empleados(int num_empleado, bool ver_Todos_Empleados, bool no_activos)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pno_activos", SqlDbType = SqlDbType.Int, Value = no_activos });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pnum_jefe", SqlDbType = SqlDbType.Int, Value = num_empleado });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pver_todos_empleados", SqlDbType = SqlDbType.Int, Value = ver_Todos_Empleados });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_listado_empleados", listparameters, false, 1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
         public DataSet sp_desbloquear_dispositivo(int id_usuario_sesion)
         {
             DataSet ds = new DataSet();

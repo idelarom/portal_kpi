@@ -201,6 +201,9 @@
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Nombre del Perfil</strong></h5>
                                     <telerik:RadTextBox ID="rtxtperfil" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
+                                <div class="col-lg-12 col-sm-12">
+                                    <asp:CheckBox ID="cbxvertodosempleados" Text="Ver todos los empleados." runat="server" />
+                                </div>
                             </div>
                             <br />
                             <div class="row">

@@ -123,7 +123,9 @@ namespace presentacion
                             Session["puesto"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto);
                             Session["perfil"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil);
                             Session["id_perfil"] = Convert.ToInt32(row["id_perfil"]);
-
+                            Session["NumJefe"] = Convert.ToInt32(row["NumJefe"]);
+                            Session["num_empleado"] = Convert.ToInt32(row["num_empleado"]);
+                            Session["ver_Todos_los_empleados"] = Convert.ToBoolean(row["ver_todos_empleados"]);
                             DateTime fecha_inicio_sesion = DateTime.Now;
                             Session["os"] = os;
                             Session["os_vers"] = os_vers;

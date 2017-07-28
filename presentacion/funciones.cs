@@ -17,6 +17,11 @@ namespace presentacion
     /// </summary>
     public class funciones
     {
+        /// <summary>
+        /// Devuelve el rango de fecha del trimestre de la fecha que se asigne.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public static List<DateTime> RangoFechasTrimestre(DateTime date)
         {
             List<DateTime> list = new List<DateTime>();
@@ -24,17 +29,17 @@ namespace presentacion
             {
                 int month = date.Month;
                 int year = date.Year;                
-                if (Enumerable.Range(3, 5).Contains(month))
+                if (month >= 3 && month <= 5)
                 {
                     list.Add(Convert.ToDateTime(year.ToString()+"-03-01"));
                     list.Add(Convert.ToDateTime(year.ToString() + "-05-31"));
                 }
-                else if (Enumerable.Range(6, 8).Contains(month))
+                else if (month >= 6 && month <= 8)
                 {
                     list.Add(Convert.ToDateTime(year.ToString() + "-06-01"));
                     list.Add(Convert.ToDateTime(year.ToString() + "-08-31"));
                 }
-                else if (Enumerable.Range(9, 11).Contains(month))
+                else if (month >= 9 && month <= 11)
                 {
                     list.Add(Convert.ToDateTime(year.ToString() + "-09-01"));
                     list.Add(Convert.ToDateTime(year.ToString() + "-11-30"));
@@ -53,6 +58,43 @@ namespace presentacion
 
         }
 
+        /// <summary>
+        /// Devuelve una tabla con los trimestres del 2014 al 2020
+        /// </summary>
+        /// <returns></returns>
+        public static DataTable tabla_trimestres()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                dt.Columns.Add("trimestre");
+                dt.Columns.Add("fecha");
+                for (int year = 2014; year < 2020; year++)
+                {
+                    DataRow nrow1 = dt.NewRow();
+                    DataRow nrow2 = dt.NewRow();
+                    DataRow nrow3 = dt.NewRow();
+                    DataRow nrow4 = dt.NewRow();
+                    nrow1["trimestre"] = "Marzo " + year.ToString();
+                    nrow1["fecha"] = Convert.ToDateTime(year.ToString() + "-03-01");
+                    nrow2["trimestre"] = "Junio " + year.ToString();
+                    nrow2["fecha"] = Convert.ToDateTime(year.ToString() + "-06-01");
+                    nrow3["trimestre"] = "Septiembre " + year.ToString();
+                    nrow3["fecha"] = Convert.ToDateTime(year.ToString() + "-09-01");
+                    nrow4["trimestre"] = "Diciembre " + year.ToString();
+                    nrow4["fecha"] = Convert.ToDateTime(year.ToString() + "-12-01");
+                    dt.Rows.Add(nrow1);
+                    dt.Rows.Add(nrow2);
+                    dt.Rows.Add(nrow3);
+                    dt.Rows.Add(nrow4);
+                }
+                return dt;
+            }
+            catch (Exception)
+            {
+                return dt;
+            }
+        }
    
         public static String SplitLastIndex(string value, char separator)
         {

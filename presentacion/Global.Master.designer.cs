@@ -265,6 +265,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Label lblerrormodal;
         
         /// <summary>
+        /// Control hdf_usuario_master.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdf_usuario_master;
+        
+        /// <summary>
         /// Control hdfid_usuario_sesion.
         /// </summary>
         /// <remarks>

@@ -456,6 +456,7 @@
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
+                <asp:HiddenField ID="hdf_usuario_master" runat="server" />
                 <asp:HiddenField ID="hdfid_usuario_sesion" runat="server" />
                 <asp:HiddenField ID="hdfcommand" runat="server" />
                 <asp:Button ID="btncerrarsesion" OnClick="btncerrarsesion_Click" runat="server" Text="Button" style="display:none" />
