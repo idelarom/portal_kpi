@@ -178,11 +178,14 @@
                         <div class="modal-body">
                             <div class="row" id="div_widget"  runat="server">
                                 <div class="col-lg-12 col-sm-12">
+                                       <asp:CheckBox ID="cbxwindividual" runat="server"  Text="Es widget individual" />
+                                    </div>
+                                <div class="col-lg-12 col-sm-12">
                                     <h5><strong><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Nombre del widget</strong></h5>
                                     <telerik:RadTextBox ID="rtxtwidget" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
                                 <div class="col-lg-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;ID del widget para HTML</strong></h5>
+                                    <h5><strong><i class="fa fa-file" aria-hidden="true"></i>&nbsp;ID del widget para HTML</strong></h5>
                                     <telerik:RadTextBox ID="rtxtnombrecodigo" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
                                  <div class="col-lg-12 col-sm-12">
