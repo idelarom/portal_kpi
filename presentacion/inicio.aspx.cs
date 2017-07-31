@@ -1,6 +1,7 @@
 ﻿using datos.NAVISION;
 using negocio.Componentes;
 using negocio.Entidades;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,17 +24,55 @@ namespace presentacion
             if (!IsPostBack)
             {
                 string usuario = Session["usuario"] as string;
-
                 hdf_usuario.Value = usuario.ToUpper().ToString();
-                CargarDivs();
+                CargarOrdenDivs();
             }
         }
 
-        private void CargarDivs()
+       
+
+        [System.Web.Services.WebMethod]
+        public static String getDivs(string usuario)
+        {
+            try
+            {
+                UsuariosCOM usuarios = new UsuariosCOM();
+                DataTable dt = usuarios.sp_usuario_widgets(usuario).Tables[0];
+                string value = JsonConvert.SerializeObject(dt);
+                return value;
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+        private void CargarOrdenDivs()
         {
             try
             {
                 EmpleadosCOM componente = new EmpleadosCOM();
+                //UsuariosCOM usuarios = new UsuariosCOM();
+                //DataTable dt = usuarios.sp_usuario_widgets(Convert.ToString(Session["usuario"])).Tables[0];
+                //foreach (DataRow row in dt.Rows)
+                //{
+                //    string div = row["nombre_codigo"].ToString().Trim().ToLower();
+                //    if (div == "dashboard_kpi_ind")
+                //    {
+                //        dashboard_kpi_ind.Visible = true;
+                //    }else if (div == "dashboard_kpi")
+                //    {
+                //        dashboard_kpi.Visible = true;
+                //    }
+                //    else if (div == "div1")
+                //    {
+                //        Div1.Visible = true;
+                //    }
+                //    else if (div == "div2")
+                //    {
+                //        Div2.Visible = true;
+                //    }
+
+                //}
                 DataSet ds = componente.sp_order_widgets(Convert.ToString(Session["usuario"]));
                 DataTable dt = ds.Tables[0];
                 string value = dt.Rows[0]["order"].ToString().Trim();
@@ -43,7 +82,8 @@ namespace presentacion
                     sb.Append("<script type='text/javascript'>");
                     sb.Append("$(document).ready(function () {");
                     sb.Append(value);
-                    sb.Append("});</script>");
+                    sb.Append("});");
+                    sb.Append("</script>");
                     ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), sb.ToString(), false);
                 }
             }

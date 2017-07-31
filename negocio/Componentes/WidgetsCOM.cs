@@ -12,7 +12,7 @@ namespace negocio.Componentes
 {
     public class WidgetsCOM
     {
-        public DataSet sp_editar_widgets(int id_widget, string widget, string icono, string ejemplo_html, string usuario)
+        public DataSet sp_editar_widgets(int id_widget, string widget, string icono, string ejemplo_html, string usuario,string nombre_codigo)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -22,6 +22,7 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@picono", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pejemplo_html", SqlDbType = SqlDbType.Int, Value = ejemplo_html });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pnombre_codigo", SqlDbType = SqlDbType.Int, Value = nombre_codigo });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
@@ -34,7 +35,7 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataSet sp_agregar_widgets(string widget, string icono, string ejemplo_html, string usuario)
+        public DataSet sp_agregar_widgets(string widget, string icono, string ejemplo_html, string usuario, string nombre_codigo)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -43,6 +44,7 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@picono", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pejemplo_html", SqlDbType = SqlDbType.Int, Value = ejemplo_html });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pnombre_codigo", SqlDbType = SqlDbType.Int, Value = nombre_codigo });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
