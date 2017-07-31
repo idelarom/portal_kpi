@@ -38,7 +38,7 @@ namespace presentacion
 
 
         [System.Web.Services.WebMethod]
-        public static String GetDashboardBonosValues(string lista_usuarios, string usuario)
+        public static String GetDashboardBonosValues_Individual(string lista_usuarios, string usuario)
         {
             DataTable dt = GetDashboardBonos(null,null, lista_usuarios, usuario);
             foreach (DataColumn column in dt.Columns)
@@ -50,6 +50,28 @@ namespace presentacion
             return value;
         }
 
+        [System.Web.Services.WebMethod]
+        public static String GetDashboardbonosValues(int num_empleado, string usuario)
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, false, true);
+                DataTable dt_list_empleados = ds.Tables[1];
+                string value = "";
+                if (dt_list_empleados.Rows.Count > 0)
+                {
+                    string lista_empleados = dt_list_empleados.Rows[0]["lista_empleados"].ToString();
+                    lista_empleados = lista_empleados.Remove(lista_empleados.Length - 1);
+                    value = GetDashboardBonosValues_Individual(lista_empleados,usuario);
+                }
+                return value;
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
         public static DataTable GetDashboardBonos(DateTime? fecha_ini, DateTime? fecha_fin, string pLstEmpleados,string Usr)
         {
             DataTable dt = new DataTable();

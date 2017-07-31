@@ -25,6 +25,7 @@ namespace presentacion
             {
                 string usuario = Session["usuario"] as string;
                 hdf_usuario.Value = usuario.ToUpper().ToString();
+                hdf_numempleado.Value = Session["num_empleado"] as string;
                 CargarOrdenDivs();
             }
         }
@@ -46,6 +47,8 @@ namespace presentacion
                 return "";
             }
         }
+
+
         private void CargarOrdenDivs()
         {
             try

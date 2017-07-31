@@ -113,24 +113,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
-                                        <asp:Repeater ID="repeater_bonos" runat="server">
-                                            <ItemTemplate>
-                                                <tr style="font-size: 11px">
-                                                    <td><%# Eval("Nombre") %></td>
-                                                    <td><%# Eval("CC") %></td>
-                                                    <td style="text-align: center;"><%# Eval("Monto Bono") %></td>
-                                                    <td style="text-align: center;"><%# Eval("KPI Individual") %></td>
-                                                    <td style="text-align: center;"><%# Eval("KPI Grupo") %></td>
-                                                    <td style="text-align: center;"><%# Eval("% Individual") %></td>
-                                                    <td style="text-align: center;"><%# Eval("% Grupal") %></td>
-                                                    <td style="text-align: center;"><%# Eval("Bono") %></td>
-                                                    <td style="text-align: center;"><%# Eval("% Cump") %></td>
-                                                    <td style="text-align: center;"><%# Eval("Total Final") %></td>
-                                                    <td style="text-align: center;"><%# Eval("% Total Final") %></td>
-                                                </tr>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
+                                <asp:Repeater ID="repeater_bonos" runat="server">
+                                    <ItemTemplate>
+                                        <tr style="font-size: 11px">
+                                            <td><%# Eval("Nombre") %></td>
+                                            <td><%# Eval("CC") %></td>
+                                            <td style="text-align: center;"><%# Eval("Monto Bono") %></td>
+                                            <td style="text-align: center;"><%# Eval("KPI Individual") %></td>
+                                            <td style="text-align: center;"><%# Eval("KPI Grupo") %></td>
+                                            <td style="text-align: center;"><%# Eval("% Individual") %></td>
+                                            <td style="text-align: center;"><%# Eval("% Grupal") %></td>
+                                            <td style="text-align: center;"><%# Eval("Bono") %></td>
+                                            <td style="text-align: center;"><%# Eval("% Cump") %></td>
+                                            <td style="text-align: center;"><%# Eval("Total Final") %></td>
+                                            <td style="text-align: center;"><%# Eval("% Total Final") %></td>
+                                        </tr>
+                                    </ItemTemplate>
+                                </asp:Repeater>
                             </tbody>
                         </table>
                     </div>

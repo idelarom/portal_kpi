@@ -243,6 +243,7 @@
     <Content Include="dist\js\loading.js" />
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />
+    <Content Include="dist\js\pages\inicio.js" />
     <Content Include="dist\js\pages\master_page.js" />
     <Content Include="dist\js\push_notification.js" />
     <Content Include="dist\js\sweetalert-dev.js" />
