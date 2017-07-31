@@ -45,6 +45,14 @@ namespace presentacion
                     rtxtejemplo_html.Text = dt.Rows[0]["ejemplo_html"].ToString();
                     rtxtnombrecodigo.Text = dt.Rows[0]["nombre_codigo"].ToString();
                     txtid_widget.Text = id_widget.ToString();
+                    if (Convert.ToBoolean(dt.Rows[0]["individual"].ToString())==true)
+                    {
+                        cbxwindividual.Checked = true;
+                    }
+                    else
+                    {
+                        cbxwindividual.Checked = false;
+                    }
                 }
                 }
             catch (Exception ex)
@@ -53,7 +61,7 @@ namespace presentacion
                 Toast.Error("Error al cargar el catalogo de widgets: " + ex.Message,this);
             }
         }
-        private void Agregarwidget(string widget,string nombre_codigo, string icono, string ejemplo_html)
+        private void Agregarwidget(string widget,string nombre_codigo, string icono, string ejemplo_html, string individual)
         {
             div_error.Visible = false;
             try
@@ -61,7 +69,7 @@ namespace presentacion
 
                 WidgetsCOM Widget = new WidgetsCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = Widget.sp_agregar_widgets(widget, icono, ejemplo_html, usuario, nombre_codigo);
+                DataSet ds = Widget.sp_agregar_widgets(widget, icono, ejemplo_html, usuario, nombre_codigo , individual);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al guardar Widget. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -82,7 +90,7 @@ namespace presentacion
             }
         }
 
-        private void Editarwidget(int id_widget, string nombre_codigo, string widget, string icono, string ejemplo_html)
+        private void Editarwidget(int id_widget, string nombre_codigo, string widget, string icono, string ejemplo_html, string individual)
         {
             div_error.Visible = false;
             try
@@ -90,7 +98,7 @@ namespace presentacion
 
                 WidgetsCOM Widget = new WidgetsCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = Widget.sp_editar_widgets(id_widget,widget, icono, ejemplo_html, usuario, nombre_codigo);
+                DataSet ds = Widget.sp_editar_widgets(id_widget,widget, icono, ejemplo_html, usuario, nombre_codigo, individual);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al editar perfil. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -143,6 +151,8 @@ namespace presentacion
             rtxtwidget.Text = "";
             rtxticono.Text = "";
             rtxtejemplo_html.Text = "";
+            rtxtnombrecodigo.Text = "";
+            cbxwindividual.Checked = false;
             ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "CaracteresRestantes();", true);
             ModalShow("#myModal");
         }
@@ -157,13 +167,22 @@ namespace presentacion
                     string icono = rtxticono.Text.Trim();
                     string ejemplo_html = rtxtejemplo_html.Text.Trim();
                     string nombre_codigo = rtxtnombrecodigo.Text.Trim();
+                    string individual = "";
+                    if (cbxwindividual.Checked== true)
+                    {
+                        individual = "true";
+                    }
+                    else
+                    { 
+                        individual = "false";
+                    }
                     if (txtid_widget.Text == "")
                     {
-                        Agregarwidget(widget, nombre_codigo, icono, ejemplo_html);
+                        Agregarwidget(widget, nombre_codigo, icono, ejemplo_html, individual);
                     }
                     else
                     {
-                        Editarwidget(Convert.ToInt32(txtid_widget.Text), nombre_codigo, widget, icono, ejemplo_html);
+                        Editarwidget(Convert.ToInt32(txtid_widget.Text), nombre_codigo, widget, icono, ejemplo_html, individual);
                     }
                 }
                 else
