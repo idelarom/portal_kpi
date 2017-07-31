@@ -2,6 +2,7 @@
 $(document).ready(function () {
     IniciarWidgets();
 });
+//variables globales
 
 //declaramos los objetos de tipo load desde el inicio
 var opts = {
@@ -122,7 +123,10 @@ function CargarDashboardbonosIndividual() {
     //load de dashboard bonos
     var target = document.getElementById('dashboard_kpi_ind');
     var spinner = new Spinner(opts).spin(target);
-    var usuario = "SGAYTANS";// $('#<%= hdf_usuario.ClientID%>').val();
+
+    var usuario = $('#ContentPlaceHolder1_hdf_usuario').val();
+    var num_empleado = $('#ContentPlaceHolder1_hdf_numempleado').val();
+    var ver_Todos_empleados = $('#ContentPlaceHolder1_hdf_ver_Todos_empleados').val();
     $.ajax({
         url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues_Individual',
         contentType: "application/json; charset=utf-8",
@@ -131,11 +135,14 @@ function CargarDashboardbonosIndividual() {
         data: "{lista_usuarios:'" + usuario + "',usuario:'" + usuario + "'}",
         success: function (response) {
             var bono = JSON.parse(response.d);
-            console.log("bono", bono[0].Total_Final);
-            var bono_porcentaje = bono[0]._Total_Final.replace(' %', '');
-            $("#bono_trimestral").text(bono[0].Total_Final);
-            $("#progress_bar_bono_kpi_ind").css("width", Math.round(bono_porcentaje) + "%");
-            $("#progress_bono_kpi_ind").text(bono_porcentaje + " % alcanzado");
+            if (bono.length > 0)
+            {
+                console.log("bono", bono[0].Total_Final);
+                var bono_porcentaje = bono[0]._Total_Final.replace(' %', '');
+                $("#bono_trimestral").text(bono[0].Total_Final);
+                $("#progress_bar_bono_kpi_ind").css("width", Math.round(bono_porcentaje) + "%");
+                $("#progress_bono_kpi_ind").text(bono_porcentaje + " % alcanzado");
+            }
             spinner.stop();
         },
         error: function (result, status, err) {
@@ -150,14 +157,18 @@ function CargarDashboardbonos() {
     //load de dashboard bonos
     var target = document.getElementById('dashboard_kpi');
     var spinner = new Spinner(opts2).spin(target);
-    var usuario = "SGAYTANS";// $('#ContentPlaceHolder1_hdf_usuario').val();
-    var num_empleado = 6434;//$('#ContentPlaceHolder1_hdf_usuario').val();
+
+
+    var usuario = $('#ContentPlaceHolder1_hdf_usuario').val();
+    var num_empleado = $('#ContentPlaceHolder1_hdf_numempleado').val();
+    var ver_Todos_empleados = $('#ContentPlaceHolder1_hdf_ver_Todos_empleados').val();
+    console.log("nem", num_empleado);
     $.ajax({
         url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
-        data: "{num_empleado:'" + num_empleado + "',usuario:'" + usuario + "'}",
+        data: "{num_empleado:'" + num_empleado + "',usuario:'" + usuario + "', ver_todos_empleados:'" + ver_Todos_empleados + "'}",
         success: function (response) {
             var bono = JSON.parse(response.d);
             if (bono.length > 0)

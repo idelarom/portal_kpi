@@ -40,23 +40,31 @@ namespace presentacion
         [System.Web.Services.WebMethod]
         public static String GetDashboardBonosValues_Individual(string lista_usuarios, string usuario)
         {
-            DataTable dt = GetDashboardBonos(null,null, lista_usuarios, usuario);
-            foreach (DataColumn column in dt.Columns)
+            try
             {
-                column.ColumnName = column.ColumnName.Replace("%", "");
-                column.ColumnName = column.ColumnName.Replace(" ","_");
+                DataTable dt = GetDashboardBonos(null, null, lista_usuarios, usuario);
+                foreach (DataColumn column in dt.Columns)
+                {
+                    column.ColumnName = column.ColumnName.Replace("%", "");
+                    column.ColumnName = column.ColumnName.Replace(" ", "_");
+                }
+                string value = JsonConvert.SerializeObject(dt);
+                return value;
             }
-            string value = JsonConvert.SerializeObject(dt);
-            return value;
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
 
         [System.Web.Services.WebMethod]
-        public static String GetDashboardbonosValues(int num_empleado, string usuario)
+        public static String GetDashboardbonosValues(int num_empleado, string usuario, string ver_todos_empleados)
         {
             try
             {
                 EmpleadosCOM empleados = new EmpleadosCOM();
-                DataSet ds = empleados.sp_listado_empleados(num_empleado, false, true);
+                bool ver_Todos = Convert.ToBoolean(ver_todos_empleados);
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos , !ver_Todos);
                 DataTable dt_list_empleados = ds.Tables[1];
                 string value = "";
                 if (dt_list_empleados.Rows.Count > 0)
@@ -67,7 +75,7 @@ namespace presentacion
                 }
                 return value;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return "";
             }
@@ -83,7 +91,7 @@ namespace presentacion
                 dt = ds.Tables[0];
                 return dt;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return dt;
             }

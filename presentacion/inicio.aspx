@@ -102,4 +102,5 @@
 
     <asp:HiddenField ID="hdf_usuario" runat="server" />
     <asp:HiddenField ID="hdf_numempleado" runat="server" />
+    <asp:HiddenField ID="hdf_ver_Todos_empleados" runat="server" />
 </asp:Content>
