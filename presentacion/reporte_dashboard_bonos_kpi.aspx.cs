@@ -64,14 +64,25 @@ namespace presentacion
             {
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool ver_Todos = Convert.ToBoolean(ver_todos_empleados);
-                DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos , !ver_Todos);
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos, !ver_Todos);
                 DataTable dt_list_empleados = ds.Tables[1];
-                string value = "";
-                if (dt_list_empleados.Rows.Count > 0)
+                string value = JsonConvert.SerializeObject("");
+                if (dt_list_empleados.Rows.Count == 1)
+                {
+                    DataRow row = ds.Tables[0].Rows[0];
+                    string userinrow = row["usuario"].ToString().Trim().ToUpper();
+                    if (userinrow != usuario)
+                    {
+                        string lista_empleados = dt_list_empleados.Rows[0]["lista_empleados"].ToString();
+                        lista_empleados = lista_empleados.Remove(lista_empleados.Length - 1);
+                        value = GetDashboardBonosValues_Individual(lista_empleados, usuario);
+                    }
+                }
+                else if (dt_list_empleados.Rows.Count > 1)
                 {
                     string lista_empleados = dt_list_empleados.Rows[0]["lista_empleados"].ToString();
                     lista_empleados = lista_empleados.Remove(lista_empleados.Length - 1);
-                    value = GetDashboardBonosValues_Individual(lista_empleados,usuario);
+                    value = GetDashboardBonosValues_Individual(lista_empleados, usuario);
                 }
                 return value;
             }

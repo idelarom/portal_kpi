@@ -91,7 +91,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
-                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_dashboard_kpi" ">Ver Reporte
+                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_dashboard_kpi"  onclick="CloseAjax('reporte_dashboard_bonos_kpi.aspx');">Ver Reporte
                     </a>
                 </div>
                 <!-- /.box-footer -->
