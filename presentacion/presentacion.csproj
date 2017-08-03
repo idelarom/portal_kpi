@@ -1190,6 +1190,7 @@
     <Content Include="primitive\primitives.latest.css" />
     <Content Include="primitive\primitives.min.js" />
     <Content Include="reporte_dashboard_bonos_kpi.aspx" />
+    <Content Include="reporte_performance_ingenieria_netdiario.aspx" />
     <Content Include="Service.asmx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1292,6 +1293,13 @@
     <Compile Include="reporte_dashboard_bonos_kpi.aspx.designer.cs">
       <DependentUpon>reporte_dashboard_bonos_kpi.aspx</DependentUpon>
     </Compile>
+    <Compile Include="reporte_performance_ingenieria_netdiario.aspx.cs">
+      <DependentUpon>reporte_performance_ingenieria_netdiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reporte_performance_ingenieria_netdiario.aspx.designer.cs">
+      <DependentUpon>reporte_performance_ingenieria_netdiario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Service.asmx.cs">
       <DependentUpon>Service.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -1369,6 +1377,9 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
