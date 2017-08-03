@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
@@ -32,7 +33,7 @@ namespace presentacion
             {
                 hdfsessionid.Value = Guid.NewGuid().ToString();
                 ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
-                CargarDatosFiltros();
+                CargarDatosFiltros("");
             }
         }
 
@@ -64,7 +65,7 @@ namespace presentacion
             {
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool ver_Todos = Convert.ToBoolean(ver_todos_empleados);
-                DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos, !ver_Todos);
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, false, false);
                 DataTable dt_list_empleados = ds.Tables[1];
                 string value = JsonConvert.SerializeObject("");
                 if (dt_list_empleados.Rows.Count == 1)
@@ -113,7 +114,7 @@ namespace presentacion
         {
             if (div_reporte.Visible)
             {
-                CargarDatosFiltros();
+                CargarDatosFiltros("");
             }
             ModalShow("#myModal");
         }
@@ -160,7 +161,6 @@ namespace presentacion
                     }
                     else
                     {
-                        ModalShow("#myModal");
                         Toast.Info("El filtro no arrojo ningun resultado, puede intentarlo nuevamente.", "Ningun resultado encontrado", this);
                     }
                 }
@@ -177,7 +177,7 @@ namespace presentacion
             }
         }
 
-        protected void CargarDatosFiltros()
+        protected void CargarDatosFiltros(string filtro)
         {
             try
             {
@@ -197,16 +197,26 @@ namespace presentacion
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool no_activos = cbxnoactivo.Checked;
                 DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
+                DataTable dt_empleados = new DataTable();
+                if (filtro != "")
+                {
+                    DataView dv_empleados = ds.Tables[0].DefaultView;
+                    dv_empleados.RowFilter = "nombre like '%"+filtro+"%'";
+                    dt_empleados = dv_empleados.ToTable();
+                }
+                else {
+                    dt_empleados = ds.Tables[0];
+                }
                 ddlempleado_a_consultar.DataValueField = "num_empleado";
                 ddlempleado_a_consultar.DataTextField = "nombre";
-                ddlempleado_a_consultar.DataSource = ds.Tables[0];
+                ddlempleado_a_consultar.DataSource = dt_empleados;
                 ddlempleado_a_consultar.DataBind();
-                if (!ver_Todos_los_empleados)
+                if (!ver_Todos_los_empleados || dt_empleados.Rows.Count == 1)
                 {
-                    ddlempleado_a_consultar.Enabled = false;
                     CargarListadoEmpleado(num_empleado, false);
                 }
 
+                ddlempleado_a_consultar.Enabled = ver_Todos_los_empleados;
             }
             catch (Exception ex)
             {
@@ -500,6 +510,60 @@ namespace presentacion
             }
 
             lblcountselecteds.Text = rdtselecteds.Items.Count.ToString();
+        }
+
+        protected void lnksearch_Click(object sender, EventArgs e)
+        {
+            string filter = txtfilterempleado.Text;
+            try
+            {
+                if (filter.Length == 0 || filter.Length > 3)
+                {
+                    CargarDatosFiltros(filter);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al filtrar empleados: " + ex.Message, this);
+            }
+            finally {
+                imgloadempleado.Style["display"] = "none";
+                lblbemp.Style["display"] = "none";
+            }
+        }
+
+        protected void txtfilterempleado_TextChanged(object sender, EventArgs e)
+        {
+            lnksearch_Click(null,null);
+        }
+
+        protected void btnverempleadodetalles_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));
+                string imagen = hdfuserselected.Value.ToUpper();
+                if (imagen != "" && File.Exists(dirInfo.ToString().Trim() + imagen))
+                {
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    img_employee.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                }
+                lblnombre.Text = hdfnombre.Value;
+                lblpuesto.Text = hdfpuesto.Value;
+                lblprev.Text = hdfpreventa.Value;
+                lblimple.Text = hdfimplementacion.Value;
+                lblsopo.Text = hdfsoporte.Value;
+                lblcompro.Text = hdfocompro.Value;
+                ModalShow("#ModalEmpleado");
+            }
+            catch (Exception ex)
+            {
+                Alert.ShowAlertError(ex.ToString(), this.Page);
+            }
         }
     }
 }

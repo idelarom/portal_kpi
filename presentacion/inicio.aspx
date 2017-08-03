@@ -27,7 +27,9 @@
         .rcbCheckAllItems label {
             font-size: 11px;
         }
-       
+       .products-list .bono-info {
+            margin-left: 6px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -59,6 +61,73 @@
         <!-- ./col -->
     </div>
     <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12" id="desglo_dashboard_kpi_ind">
+            <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Valor Ganado</h3>
+
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" type="button" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body">
+              <ul class="products-list product-list-in-box">
+                <li class="item">
+                    <div class="bono-info">
+                        <a class="product-title" href="javascript:void(0)">Preventa                          
+                                <span class="label label-primary pull-right" style="width:55px" id="dashboard_bonos_preventa">0 %</span>          
+                                <span class="pull-right">&nbsp;</span>            
+                                <span class="label label-primary pull-right" id="dashboard_bonos_totalpreventa"  style="width:70px">$ 0.00</span> 
+                        </a>
+
+                    </div>
+                </li>
+                    <li class="item">
+                        <div class="bono-info">
+                            <a class="product-title" href="javascript:void(0)">Implementación                    
+                                <span class="label label-primary pull-right" style="width:55px" id="dashboard_bonos_imp">0 %</span>    
+                                <span class="pull-right">&nbsp;</span>                  
+                                <span class="label label-primary pull-right" id="dashboard_bonos_totalimp"  style="width:70px">$ 0.00</span> 
+                            </a>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bono-info">
+                            <a class="product-title" href="javascript:void(0)">Soporte                    
+                                <span class="label label-primary pull-right" style="width:55px"  id="dashboard_bonos_soporte">0 %</span>        
+                                <span class="pull-right">&nbsp;</span>              
+                                <span class="label label-primary pull-right"  id="dashboard_bonos_totalsoporte"  style="width:70px">$ 0.00</span> 
+                            </a>
+                          
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bono-info">
+                            <a class="product-title" href="javascript:void(0)">Cump. Compromisos                         
+                                <span class="label label-primary pull-right" style="width:55px" id="dashboard_bonos_compromisos">0 %</span>
+                            </a>                         
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bono-info">
+                            <a class="product-title" href="javascript:void(0)">KPI Individual                    
+                                <span class="label label-primary pull-right"  style="width:55px" id="dashboard_bonos_kpi">0 %</span> 
+                            </a>                        
+                        </div>
+                    </li>
+                    <li class="item" style="display:none;">
+                        <div class="bono-info">
+                            <a class="product-title" href="javascript:void(0)">KPI Grupal                    
+                                <span class="label label-primary pull-right" style="width:55px"  id="dashboard_bonos_kpig">0 %</span>   
+                            </a>                         
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
         <div class="col-lg-6 col-md-6 col-sm-12" id="dashboard_kpi"  style="display:none;" >
             <div class="box box-danger">
                 <div class="box-header with-border">
