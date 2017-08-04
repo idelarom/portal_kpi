@@ -82,20 +82,20 @@
                         <h4 class="box-title"><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial:</strong>
                             &nbsp;<asp:Label ID="lblfechaini" runat="server" Text="Label"></asp:Label>
                             &nbsp;<strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final:</strong>
-                            &nbsp;<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                            &nbsp;<asp:Label ID="lblfechafin" runat="server" Text="Label"></asp:Label>
                         </h4>
                         
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <%--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final:</strong>
                             &nbsp;<asp:Label ID="lblfechafin" runat="server" Text="Label"></asp:Label>
                         </h5>
                         
-                    </div>
+                    </div>--%>
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">
-         <telerik:RadGrid ID="gridPerformance" AllowSorting="True"   runat="server" DataKeyNames="id_request_bond"
+         <telerik:RadGrid ID="gridPerformance" AllowSorting="True"   runat="server" DataKeyNames="Login"
             HeaderStyle-ForeColor="#000000" HeaderStyle-Font-Bold="false" SortingSettings-SortToolTip="Ordenar Listado" 
             AutoGenerateColumns="False" HierarchySettings-CollapseTooltip="Ocultar Detalle"  
             HierarchySettings-ExpandTooltip="Ver Detalle" GroupPanelPosition="Top" 
@@ -112,15 +112,15 @@
              <Selecting AllowRowSelect="True" /> 
                 <ClientEvents OnRowSelected = "CancelarEditar" />
             </ClientSettings>
-            <MasterTableView ShowFooter="false" TableLayout="Fixed" ItemStyle-Height="28px" AlternatingItemStyle-Height="28px" DataKeyNames="id_request_bond"   EnableNoRecordsTemplate="true" ClientDataKeyNames="id_request_bond,Estatus,bond_name,Monto,Ocurrencias,OcurrenciasPend,CC_Cargo"   
+            <MasterTableView ShowFooter="false" TableLayout="Fixed" ItemStyle-Height="28px" AlternatingItemStyle-Height="28px" DataKeyNames="Login"   EnableNoRecordsTemplate="true" ClientDataKeyNames="Login"   
             ShowHeadersWhenNoRecords="true"   
             NoDetailRecordsText="No se han encontrado registros..." NoMasterRecordsText="No se han encontrado registros..." 
              FooterStyle-Font-Bold="true"    >
             <DetailTables>
             <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true" 
-            DataKeyNames="Login" Width="100%" runat="server" >
+            DataKeyNames="Login" Width="100%" runat="server" DataMember="Dashboard_Preventa_Ingenieria">
             <ParentTableRelation>
-                <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="id_request_bond"></telerik:GridRelationFields>
+                <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
             </ParentTableRelation>
              <Columns>
                 <telerik:GridBoundColumn SortExpression="Folio_OP" HeaderText="Folio OP" HeaderButtonType="TextButton" DataField="Folio_OP" UniqueName="Folio_OP"></telerik:GridBoundColumn>
@@ -138,9 +138,9 @@
             </telerik:GridTableView>
 
                  <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true" 
-            DataKeyNames="Login" Width="100%" runat="server" >
+            DataKeyNames="Login" Width="100%" runat="server" DataMember="Performance_Ingenieria" >
             <ParentTableRelation>
-                <telerik:GridRelationFields DetailKeyField="id_request_bond" MasterKeyField="id_request_bond"></telerik:GridRelationFields>
+                <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
             </ParentTableRelation>
              <Columns>
                 <telerik:GridBoundColumn SortExpression="Folio_Proyecto" HeaderText="Folio Proyecto" HeaderButtonType="TextButton" DataField="Folio_Proyecto" UniqueName="Folio_Proyecto"></telerik:GridBoundColumn>
@@ -156,9 +156,9 @@
             </telerik:GridTableView>
 
                  <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true" 
-            DataKeyNames="Login" Width="100%" runat="server" >
+            DataKeyNames="Login" Width="100%" runat="server" DataMember="Sailine">
             <ParentTableRelation>
-                <telerik:GridRelationFields DetailKeyField="id_request_bond" MasterKeyField="id_request_bond"></telerik:GridRelationFields>
+                <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
             </ParentTableRelation>
              <Columns>
                 <telerik:GridBoundColumn SortExpression="Incidente" HeaderText="Incidente" HeaderButtonType="TextButton" DataField="Incidente" UniqueName="Incidente"></telerik:GridBoundColumn>
@@ -301,7 +301,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
-                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" CssClass =" form-control"></telerik:RadDatePicker>
+                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" CssClass =" form-control"></telerik:RadDatePicker>                                     
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"  style="font-size:10px;">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>

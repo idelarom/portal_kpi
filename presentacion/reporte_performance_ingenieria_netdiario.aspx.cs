@@ -10,6 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
+
 namespace presentacion
 {
     public partial class reporte_performance_ingenieria_netdiario : System.Web.UI.Page
@@ -166,9 +167,18 @@ namespace presentacion
                 }
                 else
                 {
+                    string Usr = Session["usuario"] as string;
                     lblfechaini.Text = Convert.ToDateTime(rdpfechainicial.SelectedDate).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
                     lblfechafin.Text = Convert.ToDateTime(rdpfechafinal.SelectedDate).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
-
+                    DateTime fechaInicial = rdpfechainicial.SelectedDate.Value.Date;
+                    DateTime fechaFinal = rdpfechafinal.SelectedDate.Value.Date;
+                    DataSet ds = new DataSet();
+                    PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
+                    ds = PerformanceIngenieria.spq_Ingenieros_Performance(fechaInicial, fechaFinal, pLstEmpleados, Usr);
+                    gridPerformance.DataSource = ds;
+                    gridPerformance.DataBind();
+                    div_reporte.Visible = true;
+                    ModalClose("#myModal");
                 }
                 //if (txtfechafinal.Text == "" || txtfechainicio.Text == "" && ddltipofiltro.SelectedValue == "2")
                 //{
@@ -282,7 +292,32 @@ namespace presentacion
 
         protected void gridPerformance_DetailTableDataBind(object sender, GridDetailTableDataBindEventArgs e)
         {
+            DateTime fechaInicial = rdpfechainicial.SelectedDate.Value.Date;
+            DateTime fechaFinal = rdpfechafinal.SelectedDate.Value.Date;
+            PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
 
+            GridDataItem dataItem = ((GridDataItem)e.DetailTableView.ParentItem);
+            string Login = dataItem.GetDataKeyValue("Login").ToString();
+            if (dataItem.Edit)
+            {
+                return;
+            }
+            if (e.DetailTableView.DataMember == "Dashboard_Preventa_Ingenieria")
+            {
+                DataSet ds = (DataSet)e.DetailTableView.DataSource;
+                e.DetailTableView.DataSource = ds.Tables["OrderDetails"].Select("CustomerID = '" + parentItem["CustomerID"].Text + "'");
+            }
+            else if (e.DetailTableView.DataMember == "Performance_Ingenieria")
+            {
+                DataSet ds = (DataSet)e.DetailTableView.DataSource;
+                e.DetailTableView.DataSource = ds.Tables["OrderDetails"].Select("CustomerID = '" + parentItem["CustomerID"].Text + "'");
+            }
+            else if (e.DetailTableView.DataMember == "Sailine")
+            {
+                DataSet ds = (DataSet)e.DetailTableView.DataSource;
+                e.DetailTableView.DataSource = ds.Tables["OrderDetails"].Select("CustomerID = '" + parentItem["CustomerID"].Text + "'");
+            }
+            e.DetailTableView.DataSource = PerformanceIngenieria.spq_Dashboard_Preventa_Ingenieria(fechaInicial, fechaFinal, Login);
         }
 
         protected void gridPerformance_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

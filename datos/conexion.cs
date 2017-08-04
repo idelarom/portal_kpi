@@ -104,6 +104,9 @@ namespace datos
                     case 4:
                         cadena = System.Configuration.ConfigurationManager.ConnectionStrings["ModelSICOEM"].ToString();
                         break;
+                    case 5:
+                        cadena = System.Configuration.ConfigurationManager.ConnectionStrings["Sailine"].ToString();
+                        break;
                 }
             }
             catch (Exception ex)
