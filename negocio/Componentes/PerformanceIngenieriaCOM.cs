@@ -62,7 +62,7 @@ namespace negocio.Componentes
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("spq_Performance_Ingenieria", listparameters, false, 3);
+                ds = data.enviar("spq_Performance_Ingenieria", listparameters, false, 6);
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace negocio.Componentes
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("spq_Performance_Ingenieria", listparameters, false, 3);
+                ds = data.enviar("spq_Performance_Ingenieria", listparameters, false, 5);
             }
             catch (Exception ex)
             {

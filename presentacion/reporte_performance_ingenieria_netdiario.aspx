@@ -110,7 +110,7 @@
 
             <ClientSettings>
              <Selecting AllowRowSelect="True" /> 
-                <ClientEvents OnRowSelected = "CancelarEditar" />
+                
             </ClientSettings>
             <MasterTableView ShowFooter="false" TableLayout="Fixed" ItemStyle-Height="28px" AlternatingItemStyle-Height="28px" DataKeyNames="Login"   EnableNoRecordsTemplate="true" ClientDataKeyNames="Login"   
             ShowHeadersWhenNoRecords="true"   
@@ -118,7 +118,7 @@
              FooterStyle-Font-Bold="true"    >
             <DetailTables>
             <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true" 
-            DataKeyNames="Login" Width="100%" runat="server" DataMember="Dashboard_Preventa_Ingenieria">
+            DataKeyNames="Login" Width="100%" runat="server">
             <ParentTableRelation>
                 <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
             </ParentTableRelation>
@@ -138,7 +138,7 @@
             </telerik:GridTableView>
 
                  <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true" 
-            DataKeyNames="Login" Width="100%" runat="server" DataMember="Performance_Ingenieria" >
+            DataKeyNames="Login" Width="100%" runat="server">
             <ParentTableRelation>
                 <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
             </ParentTableRelation>
@@ -156,7 +156,7 @@
             </telerik:GridTableView>
 
                  <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true" 
-            DataKeyNames="Login" Width="100%" runat="server" DataMember="Sailine">
+            DataKeyNames="Login" Width="100%" runat="server">
             <ParentTableRelation>
                 <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
             </ParentTableRelation>

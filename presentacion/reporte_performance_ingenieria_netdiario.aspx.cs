@@ -292,32 +292,36 @@ namespace presentacion
 
         protected void gridPerformance_DetailTableDataBind(object sender, GridDetailTableDataBindEventArgs e)
         {
+            
             DateTime fechaInicial = rdpfechainicial.SelectedDate.Value.Date;
             DateTime fechaFinal = rdpfechafinal.SelectedDate.Value.Date;
             PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
 
             GridDataItem dataItem = ((GridDataItem)e.DetailTableView.ParentItem);
             string Login = dataItem.GetDataKeyValue("Login").ToString();
+            //GridTableView nestedTableView = (RadGrid1.MasterTableView.Items[0] as GridDataItem).ChildItem.NestedTableViews[0];
             if (dataItem.Edit)
             {
                 return;
             }
-            if (e.DetailTableView.DataMember == "Dashboard_Preventa_Ingenieria")
+            if (e.DetailTableView.DetailTableIndex == 0)
             {
-                DataSet ds = (DataSet)e.DetailTableView.DataSource;
-                e.DetailTableView.DataSource = ds.Tables["OrderDetails"].Select("CustomerID = '" + parentItem["CustomerID"].Text + "'");
+                //DataSet ds = (DataSet)e.DetailTableView.DataSource;
+                //e.DetailTableView.DataSource = ds.Tables["Dashboard_Preventa_Ingenieria"].Select("Login = '" + dataItem["Login"].Text + "'");
+                e.DetailTableView.DataSource = PerformanceIngenieria.spq_Dashboard_Preventa_Ingenieria(fechaInicial, fechaFinal, Login);
             }
-            else if (e.DetailTableView.DataMember == "Performance_Ingenieria")
+            else if (e.DetailTableView.DetailTableIndex == 1)
             {
-                DataSet ds = (DataSet)e.DetailTableView.DataSource;
-                e.DetailTableView.DataSource = ds.Tables["OrderDetails"].Select("CustomerID = '" + parentItem["CustomerID"].Text + "'");
+                //DataSet ds = (DataSet)e.DetailTableView.DataSource;
+                //e.DetailTableView.DataSource = ds.Tables["Performance_Ingenieria"].Select("Login = '" + dataItem["Login"].Text + "'");
+                e.DetailTableView.DataSource = PerformanceIngenieria.spq_Performance_Ingenieria(fechaInicial, fechaFinal, Login);
             }
-            else if (e.DetailTableView.DataMember == "Sailine")
+            else if (e.DetailTableView.DetailTableIndex == 2)
             {
-                DataSet ds = (DataSet)e.DetailTableView.DataSource;
-                e.DetailTableView.DataSource = ds.Tables["OrderDetails"].Select("CustomerID = '" + parentItem["CustomerID"].Text + "'");
-            }
-            e.DetailTableView.DataSource = PerformanceIngenieria.spq_Dashboard_Preventa_Ingenieria(fechaInicial, fechaFinal, Login);
+                //DataSet ds = (DataSet)e.DetailTableView.DataSource;
+                //e.DetailTableView.DataSource = ds.Tables["Sailine"].Select("Login = '" + dataItem["Login"].Text + "'");
+                e.DetailTableView.DataSource = PerformanceIngenieria.spq_Performance_Ingenieria_sailine(fechaInicial, fechaFinal, Login);
+            }            
         }
 
         protected void gridPerformance_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
