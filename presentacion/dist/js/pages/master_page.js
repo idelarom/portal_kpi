@@ -6,14 +6,17 @@ function PlaySound(path) {
     var audio = new Audio(path);
     audio.play();
 }
+
 function LoadPage() {
     $("#div_load").show();
     $("#div_content").hide();
 }
+
 function LoadPageHide() {
     $("#div_load").hide();
     $("#div_content").show();
 }
+
 function keyPressInteger(sender, args) {
     var text = sender.get_value() + args.get_keyCharacter();
     if (!text.match('^[0-9]+$'))
@@ -41,9 +44,11 @@ function ModalShow(modal) {
     $(modal).modal('show');
     return true;
 }
+
 function ModalCloseGlobal(modal) {
     $(modal).modal('hide');
 }
+
 //VALIDA QUE SOLO SEAN NUMEROS ENTEROS REALES
 function validarEnteros(e) {
     k = (document.all) ? e.keyCode : e.which;
@@ -69,6 +74,7 @@ function validarEmail(Object) {
     alert("La dirección de email " + valor + " es incorrecta.")
     return (false)
 }
+
 function ValidateUF(Object, size_max) {
     var size = (Object.files[0].size) / 1000000;
     if (size > size_max) {
@@ -89,6 +95,7 @@ function ConfirmFotoPerfil(msg) {
         return false;
     }
 }
+
 function ConfirmGuardaConfig(msg) {
     if (confirm(msg)) {
         $("#lnkcargandotermina22").show();

@@ -166,6 +166,7 @@
     <Content Include="catalogo_sesiones_usuario.aspx" />
     <Content Include="catalogo_widgets.aspx" />
     <Content Include="configuracion_dashboard.aspx" />
+    <Content Include="configuracion_portal.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="dist\css\AdminLTE.css" />
     <Content Include="dist\css\AdminLTE.min.css" />
@@ -1232,6 +1233,13 @@
     </Compile>
     <Compile Include="configuracion_dashboard.aspx.designer.cs">
       <DependentUpon>configuracion_dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="configuracion_portal.aspx.cs">
+      <DependentUpon>configuracion_portal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="configuracion_portal.aspx.designer.cs">
+      <DependentUpon>configuracion_portal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

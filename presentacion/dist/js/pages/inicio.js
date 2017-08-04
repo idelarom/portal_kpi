@@ -3,54 +3,6 @@ $(document).ready(function () {
     IniciarWidgets();
 });
 
-//declaramos los objetos de tipo load desde el inicio
-var opts = {
-    lines: 13 // The number of lines to draw
-   , length: 28 // The length of each line
-   , width: 14 // The line thickness
-   , radius: 42 // The radius of the inner circle
-   , scale: .45 // Scales overall size of the spinner
-   , corners: 1 // Corner roundness (0..1)
-   , color: '#fff' // #rgb or #rrggbb or array of colors
-   , opacity: 0.5 // Opacity of the lines
-   , rotate: 0 // The rotation offset
-   , direction: 1 // 1: clockwise, -1: counterclockwise
-   , speed: 1 // Rounds per second
-   , trail: 60 // Afterglow percentage
-   , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-   , zIndex: 2e9 // The z-index (defaults to 2000000000)
-   , className: 'spinner' // The CSS class to assign to the spinner
-   , top: '45%' // Top position relative to parent
-   , left: '50%' // Left position relative to parent
-   , shadow: false // Whether to render a shadow
-   , hwaccel: false // Whether to use hardware acceleration
-   , position: 'absolute' // Element positioning
-};
-
-//declaramos los objetos de tipo load desde el inicio (load oscuro)
-var opts2 = {
-    lines: 13 // The number of lines to draw
-   , length: 28 // The length of each line
-   , width: 14 // The line thickness
-   , radius: 42 // The radius of the inner circle
-   , scale: .45 // Scales overall size of the spinner
-   , corners: 1 // Corner roundness (0..1)
-   , color: '#000' // #rgb or #rrggbb or array of colors
-   , opacity: 0.5 // Opacity of the lines
-   , rotate: 0 // The rotation offset
-   , direction: 1 // 1: clockwise, -1: counterclockwise
-   , speed: 1 // Rounds per second
-   , trail: 60 // Afterglow percentage
-   , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-   , zIndex: 2e9 // The z-index (defaults to 2000000000)
-   , className: 'spinner' // The CSS class to assign to the spinner
-   , top: '45%' // Top position relative to parent
-   , left: '50%' // Left position relative to parent
-   , shadow: false // Whether to render a shadow
-   , hwaccel: false // Whether to use hardware acceleration
-   , position: 'absolute' // Element positioning
-};
-
 function ModalClose() {
     $('#myModalExcel').modal('hide');
 }
@@ -90,10 +42,92 @@ function Init(table) {
     });
 }
 
+//VARIABLES GLOBALES
+
+//Regresa el usuario en sesion
+function User()
+{
+    return "RVILLAVB";// $('#ContentPlaceHolder1_hdf_usuario').val();
+}
+
+//Regresa el numero de empleado del usuario en sesion
+function NumEmpleado() {
+    return $('#ContentPlaceHolder1_hdf_numempleado').val();;
+}
+
+//Regresa si el usuario en sesion puede ver todos los empleados(permiso)
+function VerTodosEmpleados() {
+    return $('#ContentPlaceHolder1_hdf_ver_Todos_empleados').val();
+}
+
+//array que contiene las ejecuciones ajax
+var xhrRequests = [];
+
+//declaramos los objetos de tipo load desde el inicio
+var opts = {
+    lines: 13 // The number of lines to draw
+   , length: 28 // The length of each line
+   , width: 14 // The line thickness
+   , radius: 42 // The radius of the inner circle
+   , scale: .45 // Scales overall size of the spinner
+   , corners: 1 // Corner roundness (0..1)
+   , color: '#fff' // #rgb or #rrggbb or array of colors
+   , opacity: 0.5 // Opacity of the lines
+   , rotate: 0 // The rotation offset
+   , direction: 1 // 1: clockwise, -1: counterclockwise
+   , speed: 1 // Rounds per second
+   , trail: 60 // Afterglow percentage
+   , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+   , zIndex: 2e9 // The z-index (defaults to 2000000000)
+   , className: 'spinner' // The CSS class to assign to the spinner
+   , top: '45%' // Top position relative to parent
+   , left: '50%' // Left position relative to parent
+   , shadow: true // Whether to render a shadow
+   , hwaccel: true // Whether to use hardware acceleration
+   , position: 'absolute' // Element positioning
+};
+
+//declaramos los objetos de tipo load desde el inicio (load oscuro)
+var opts2 = {
+    lines: 13 // The number of lines to draw
+   , length: 28 // The length of each line
+   , width: 14 // The line thickness
+   , radius: 42 // The radius of the inner circle
+   , scale: .45 // Scales overall size of the spinner
+   , corners: 1 // Corner roundness (0..1)
+   , color: '#000' // #rgb or #rrggbb or array of colors
+   , opacity: 0.1 // Opacity of the lines
+   , rotate: 0 // The rotation offset
+   , direction: 1 // 1: clockwise, -1: counterclockwise
+   , speed: 1 // Rounds per second
+   , trail: 60 // Afterglow percentage
+   , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+   , zIndex: 2e9 // The z-index (defaults to 2000000000)
+   , className: 'spinner' // The CSS class to assign to the spinner
+   , top: '45%' // Top position relative to parent
+   , left: '50%' // Left position relative to parent
+   , shadow: true // Whether to render a shadow
+   , hwaccel: true // Whether to use hardware acceleration
+   , position: 'absolute' // Element positioning
+};
+
+//funcion que termina todas las ejecuciones ajax guardadas en un array
+function CloseAjax(url) {
+    $.each(xhrRequests, function (idx, jqXHR) {
+        console.log("remove ajax each");
+        jqXHR.abort();
+        jqXHR = null;
+    });
+    window.location.href = url;
+}
+
+//FUNCION QUE VERIFICA QUE WIDGETS ESTAN LIGADOS AL USUARIO E INICIALIZA LAS FUNCIONES
 function IniciarWidgets() {
     ////verificamos si los divs estan en la lista, si estan cargamos su informacion mediante ajax
     var usuario = $('#ContentPlaceHolder1_hdf_usuario').val();
-    $.ajax({
+    //guardamos esta ejecucion en un array
+    var ajax_ejecutados = [];
+    var call = $.ajax({
         url: 'inicio.aspx/getDivs',
         contentType: "application/json; charset=utf-8",
         type: "POST",
@@ -103,27 +137,34 @@ function IniciarWidgets() {
             var bono = JSON.parse(response.d);
             for (indice = 0; indice < bono.length; indice++) {
                 var div = bono[indice].nombre_codigo;
-                if (div == "dashboard_kpi_ind") {
+                if ((div == "dashboard_kpi_ind" || div == "desglo_dashboard_kpi_ind") && jQuery.inArray("CargarDashboardbonosIndividual", ajax_ejecutados) == -1) {
+                    
+                    ajax_ejecutados.push("CargarDashboardbonosIndividual");
                     CargarDashboardbonosIndividual();
-                } else if (div == "dashboard_kpi") {
+                } else if (div == "dashboard_kpi" && jQuery.inArray("CargarDashboardbonos", ajax_ejecutados) == -1) {
+                    ajax_ejecutados.push("CargarDashboardbonos");
                     CargarDashboardbonos();
                 }
             }
-            //spinner.stop();
         },
         error: function (result, status, err) {
             console.log("error", result.responseText);
-            //spinner.stop();
         }
     });
+    xhrRequests.push(call);
 }
+
 //WIDGET DE DAHSBOARD BONOS INDIVIDUAL
 function CargarDashboardbonosIndividual() {
     //load de dashboard bonos
     var target = document.getElementById('dashboard_kpi_ind');
     var spinner = new Spinner(opts).spin(target);
-    var usuario = "SGAYTANS";// $('#<%= hdf_usuario.ClientID%>').val();
-    $.ajax({
+    var target2 = document.getElementById('desglo_dashboard_kpi_ind');
+    var spinner2 = new Spinner(opts2).spin(target2);
+
+    var usuario = User();// $('#ContentPlaceHolder1_hdf_usuario').val();
+    //guardamos esta ejecucion en un array
+    var call = $.ajax({
         url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues_Individual',
         contentType: "application/json; charset=utf-8",
         type: "POST",
@@ -131,18 +172,40 @@ function CargarDashboardbonosIndividual() {
         data: "{lista_usuarios:'" + usuario + "',usuario:'" + usuario + "'}",
         success: function (response) {
             var bono = JSON.parse(response.d);
-            console.log("bono", bono[0].Total_Final);
-            var bono_porcentaje = bono[0]._Total_Final.replace(' %', '');
-            $("#bono_trimestral").text(bono[0].Total_Final);
-            $("#progress_bar_bono_kpi_ind").css("width", Math.round(bono_porcentaje) + "%");
-            $("#progress_bono_kpi_ind").text(bono_porcentaje + " % alcanzado");
+            if (bono.length > 0) {
+                var bono_porcentaje = bono[0]._Total_Final.replace(' %', '');
+                var preventa = bono[0]._Preventa;
+                var implementacion = bono[0]._Implementación;
+                var soporte = bono[0]._Soporte;
+                var kpi = bono[0].KPI_Individual;
+                var kpig = bono[0].KPI_Grupo;
+                var compromisos = bono[0]._Cump;
+                var total_preventa = bono[0].Preventa;
+                var total_implemetacion = bono[0].Implementacion;
+                var total_soporte = bono[0].Soporte;
+                $("#bono_trimestral").text(bono[0].Total_Final);
+                $("#dashboard_bonos_totalpreventa").text(total_preventa);
+                $("#dashboard_bonos_totalimp").text(total_implemetacion);
+                $("#dashboard_bonos_totalsoporte").text(total_soporte);
+                $("#dashboard_bonos_preventa").text(preventa);
+                $("#dashboard_bonos_imp").text(implementacion);
+                $("#dashboard_bonos_soporte").text(soporte);
+                $("#dashboard_bonos_kpi").text(kpi);
+                $("#dashboard_bonos_kpig").text(kpig);
+                $("#dashboard_bonos_compromisos").text(compromisos);
+                $("#progress_bar_bono_kpi_ind").css("width", Math.round(bono_porcentaje  > 100 ? 100: bono_porcentaje) + "%");
+                $("#progress_bono_kpi_ind").text(bono_porcentaje + " % alcanzado");
+            }
             spinner.stop();
+            spinner2.stop();
         },
         error: function (result, status, err) {
             console.log("error", result.responseText);
             spinner.stop();
+            spinner2.stop();
         }
     });
+    xhrRequests.push(call);
 }
 
 //WIDGET DE DASHBOARD BONOS GRUPAL
@@ -150,22 +213,22 @@ function CargarDashboardbonos() {
     //load de dashboard bonos
     var target = document.getElementById('dashboard_kpi');
     var spinner = new Spinner(opts2).spin(target);
-    var usuario = "SGAYTANS";// $('#ContentPlaceHolder1_hdf_usuario').val();
-    var num_empleado = 6434;//$('#ContentPlaceHolder1_hdf_usuario').val();
-    $.ajax({
+    var usuario = User();
+    var num_empleado = NumEmpleado();
+    var ver_Todos_empleados = VerTodosEmpleados(); //$('#ContentPlaceHolder1_hdf_ver_Todos_empleados').val();
+    //guardamos esta ejecucion en un array
+    var call = $.ajax({
         url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
-        data: "{num_empleado:'" + num_empleado + "',usuario:'" + usuario + "'}",
+        data: "{num_empleado:'" + num_empleado + "',usuario:'" + usuario + "', ver_todos_empleados:'" + ver_Todos_empleados + "'}",
         success: function (response) {
             var bono = JSON.parse(response.d);
-            if (bono.length > 0)
-            {
+            if (bono.length > 0) {
                 var cadena = '';
-                for (indice = 0; indice < bono.length; indice++)
-                {
-                    cadena =cadena + bono[indice].Login+",";
+                for (indice = 0; indice < bono.length; indice++) {
+                    cadena = cadena + bono[indice].Login + ",";
                     $('#table_dashboard_kpi').find('tbody').append('' + '<tr><td>' +
                         bono[indice].Nombre + '</td><td style="text-align: center;">' +
                         bono[indice].Monto_Bono + '</td><td style="text-align: center;">' +
@@ -180,7 +243,9 @@ function CargarDashboardbonos() {
                     $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx?list=' + cadena)
                 }
                 Init('#table_dashboard_kpi');
-            }                
+            } else {
+                $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx');
+            }
             spinner.stop();
         },
         error: function (result, status, err) {
@@ -188,4 +253,5 @@ function CargarDashboardbonos() {
             spinner.stop();
         }
     });
+    xhrRequests.push(call);
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
@@ -32,7 +33,7 @@ namespace presentacion
             {
                 hdfsessionid.Value = Guid.NewGuid().ToString();
                 ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
-                CargarDatosFiltros();
+                CargarDatosFiltros("");
             }
         }
 
@@ -40,34 +41,53 @@ namespace presentacion
         [System.Web.Services.WebMethod]
         public static String GetDashboardBonosValues_Individual(string lista_usuarios, string usuario)
         {
-            DataTable dt = GetDashboardBonos(null,null, lista_usuarios, usuario);
-            foreach (DataColumn column in dt.Columns)
+            try
             {
-                column.ColumnName = column.ColumnName.Replace("%", "");
-                column.ColumnName = column.ColumnName.Replace(" ","_");
+                DataTable dt = GetDashboardBonos(null, null, lista_usuarios, usuario);
+                foreach (DataColumn column in dt.Columns)
+                {
+                    column.ColumnName = column.ColumnName.Replace("%", "");
+                    column.ColumnName = column.ColumnName.Replace(" ", "_");
+                }
+                string value = JsonConvert.SerializeObject(dt);
+                return value;
             }
-            string value = JsonConvert.SerializeObject(dt);
-            return value;
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
 
         [System.Web.Services.WebMethod]
-        public static String GetDashboardbonosValues(int num_empleado, string usuario)
+        public static String GetDashboardbonosValues(int num_empleado, string usuario, string ver_todos_empleados)
         {
             try
             {
                 EmpleadosCOM empleados = new EmpleadosCOM();
-                DataSet ds = empleados.sp_listado_empleados(num_empleado, false, true);
+                bool ver_Todos = Convert.ToBoolean(ver_todos_empleados);
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, false, false);
                 DataTable dt_list_empleados = ds.Tables[1];
-                string value = "";
-                if (dt_list_empleados.Rows.Count > 0)
+                string value = JsonConvert.SerializeObject("");
+                if (dt_list_empleados.Rows.Count == 1)
+                {
+                    DataRow row = ds.Tables[0].Rows[0];
+                    string userinrow = row["usuario"].ToString().Trim().ToUpper();
+                    if (userinrow != usuario)
+                    {
+                        string lista_empleados = dt_list_empleados.Rows[0]["lista_empleados"].ToString();
+                        lista_empleados = lista_empleados.Remove(lista_empleados.Length - 1);
+                        value = GetDashboardBonosValues_Individual(lista_empleados, usuario);
+                    }
+                }
+                else if (dt_list_empleados.Rows.Count > 1)
                 {
                     string lista_empleados = dt_list_empleados.Rows[0]["lista_empleados"].ToString();
                     lista_empleados = lista_empleados.Remove(lista_empleados.Length - 1);
-                    value = GetDashboardBonosValues_Individual(lista_empleados,usuario);
+                    value = GetDashboardBonosValues_Individual(lista_empleados, usuario);
                 }
                 return value;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return "";
             }
@@ -83,7 +103,7 @@ namespace presentacion
                 dt = ds.Tables[0];
                 return dt;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return dt;
             }
@@ -94,7 +114,7 @@ namespace presentacion
         {
             if (div_reporte.Visible)
             {
-                CargarDatosFiltros();
+                CargarDatosFiltros("");
             }
             ModalShow("#myModal");
         }
@@ -141,7 +161,6 @@ namespace presentacion
                     }
                     else
                     {
-                        ModalShow("#myModal");
                         Toast.Info("El filtro no arrojo ningun resultado, puede intentarlo nuevamente.", "Ningun resultado encontrado", this);
                     }
                 }
@@ -158,7 +177,7 @@ namespace presentacion
             }
         }
 
-        protected void CargarDatosFiltros()
+        protected void CargarDatosFiltros(string filtro)
         {
             try
             {
@@ -178,16 +197,26 @@ namespace presentacion
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool no_activos = cbxnoactivo.Checked;
                 DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
+                DataTable dt_empleados = new DataTable();
+                if (filtro != "")
+                {
+                    DataView dv_empleados = ds.Tables[0].DefaultView;
+                    dv_empleados.RowFilter = "nombre like '%"+filtro+"%'";
+                    dt_empleados = dv_empleados.ToTable();
+                }
+                else {
+                    dt_empleados = ds.Tables[0];
+                }
                 ddlempleado_a_consultar.DataValueField = "num_empleado";
                 ddlempleado_a_consultar.DataTextField = "nombre";
-                ddlempleado_a_consultar.DataSource = ds.Tables[0];
+                ddlempleado_a_consultar.DataSource = dt_empleados;
                 ddlempleado_a_consultar.DataBind();
-                if (!ver_Todos_los_empleados)
+                if (!ver_Todos_los_empleados || dt_empleados.Rows.Count == 1)
                 {
-                    ddlempleado_a_consultar.Enabled = false;
                     CargarListadoEmpleado(num_empleado, false);
                 }
 
+                ddlempleado_a_consultar.Enabled = ver_Todos_los_empleados;
             }
             catch (Exception ex)
             {
@@ -481,6 +510,60 @@ namespace presentacion
             }
 
             lblcountselecteds.Text = rdtselecteds.Items.Count.ToString();
+        }
+
+        protected void lnksearch_Click(object sender, EventArgs e)
+        {
+            string filter = txtfilterempleado.Text;
+            try
+            {
+                if (filter.Length == 0 || filter.Length > 3)
+                {
+                    CargarDatosFiltros(filter);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al filtrar empleados: " + ex.Message, this);
+            }
+            finally {
+                imgloadempleado.Style["display"] = "none";
+                lblbemp.Style["display"] = "none";
+            }
+        }
+
+        protected void txtfilterempleado_TextChanged(object sender, EventArgs e)
+        {
+            lnksearch_Click(null,null);
+        }
+
+        protected void btnverempleadodetalles_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));
+                string imagen = hdfuserselected.Value.ToUpper();
+                if (imagen != "" && File.Exists(dirInfo.ToString().Trim() + imagen))
+                {
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    img_employee.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                }
+                lblnombre.Text = hdfnombre.Value;
+                lblpuesto.Text = hdfpuesto.Value;
+                lblprev.Text = hdfpreventa.Value;
+                lblimple.Text = hdfimplementacion.Value;
+                lblsopo.Text = hdfsoporte.Value;
+                lblcompro.Text = hdfocompro.Value;
+                ModalShow("#ModalEmpleado");
+            }
+            catch (Exception ex)
+            {
+                Alert.ShowAlertError(ex.ToString(), this.Page);
+            }
         }
     }
 }

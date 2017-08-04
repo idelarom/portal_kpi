@@ -125,7 +125,8 @@ namespace presentacion
                             Session["id_perfil"] = Convert.ToInt32(row["id_perfil"]);
                             Session["NumJefe"] = Convert.ToInt32(row["NumJefe"]);
                             Session["num_empleado"] = Convert.ToInt32(row["num_empleado"]);
-                            Session["ver_Todos_los_empleados"] = Convert.ToBoolean(row["ver_todos_empleados"]);
+                            bool ver_Todos = Convert.ToBoolean(row["ver_todos_empleados"]);
+                            Session["ver_Todos_los_empleados"] = ver_Todos;
                             DateTime fecha_inicio_sesion = DateTime.Now;
                             Session["os"] = os;
                             Session["os_vers"] = os_vers;

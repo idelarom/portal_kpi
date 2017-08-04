@@ -25,7 +25,8 @@ namespace presentacion
             {
                 string usuario = Session["usuario"] as string;
                 hdf_usuario.Value = usuario.ToUpper().ToString();
-                hdf_numempleado.Value = Session["num_empleado"] as string;
+                hdf_numempleado.Value = Convert.ToInt32(Session["num_empleado"]).ToString();
+                hdf_ver_Todos_empleados.Value = Convert.ToBoolean(Session["ver_Todos_los_empleados"]).ToString();
                 CargarOrdenDivs();
             }
         }

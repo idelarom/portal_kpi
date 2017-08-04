@@ -324,7 +324,7 @@
                                             OnClientClick="return confirm('¿Esta seguro de cerrar sesión en estos dispositivos, es posible que se pierda información no guardada?');" runat="server">
                                        <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Desconectar Dispositivos
                                         </asp:LinkButton>
-                                        <asp:LinkButton ID="lnkactualizar" CssClass="btn btn-primary btn-flat pull-right"
+                                        <asp:LinkButton ID="lnkactualizar" CssClass="btn btn-primary btn-flat"
                                             OnClick="lnkactualizar_Click" runat="server">
                                          <i class="fa fa-refresh" aria-hidden="true"></i>
                                         </asp:LinkButton>

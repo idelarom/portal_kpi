@@ -45,7 +45,7 @@
             <h4 class="page-header">Sesiones por Usuario</h4>
         </div>
         <div class="col-lg-12">
-            <asp:LinkButton ID="lnkactualizar2" CssClass="btn btn-primary btn-flat pull-right"
+            <asp:LinkButton ID="lnkactualizar2" CssClass="btn btn-primary btn-flat"
                 OnClick="lnkactualizar2_Click" runat="server">
                                          <i class="fa fa-refresh" aria-hidden="true"></i>
             </asp:LinkButton>
