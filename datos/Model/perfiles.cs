@@ -23,6 +23,8 @@ namespace datos.Model
         [StringLength(250)]
         public string perfil { get; set; }
 
+        public bool? ver_todos_empleados { get; set; }
+
         public DateTime fecha { get; set; }
 
         [Required]

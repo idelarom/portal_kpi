@@ -22,6 +22,12 @@ namespace datos.Model
         [StringLength(250)]
         public string widget { get; set; }
 
+        [Required]
+        [StringLength(250)]
+        public string nombre_codigo { get; set; }
+
+        public bool? individual { get; set; }
+
         [StringLength(250)]
         public string icono { get; set; }
 

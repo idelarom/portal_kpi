@@ -1190,6 +1190,7 @@
     <Content Include="primitive\js\touch\jquery.ui.touch-punch.js" />
     <Content Include="primitive\primitives.latest.css" />
     <Content Include="primitive\primitives.min.js" />
+    <Content Include="recordatorios.aspx" />
     <Content Include="reporte_dashboard_bonos_kpi.aspx" />
     <Content Include="reporte_performance_ingenieria_netdiario.aspx" />
     <Content Include="Service.asmx" />
@@ -1294,6 +1295,13 @@
       <DependentUpon>mantenimiento.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="recordatorios.aspx.cs">
+      <DependentUpon>recordatorios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="recordatorios.aspx.designer.cs">
+      <DependentUpon>recordatorios.aspx</DependentUpon>
+    </Compile>
     <Compile Include="reporte_dashboard_bonos_kpi.aspx.cs">
       <DependentUpon>reporte_dashboard_bonos_kpi.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
