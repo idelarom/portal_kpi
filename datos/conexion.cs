@@ -107,6 +107,9 @@ namespace datos
                     case 5:
                         cadena = System.Configuration.ConfigurationManager.ConnectionStrings["Sailine"].ToString();
                         break;
+                    case 6:
+                        cadena = System.Configuration.ConfigurationManager.ConnectionStrings["PMTracker"].ToString();
+                        break;
                 }
             }
             catch (Exception ex)
