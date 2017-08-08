@@ -317,11 +317,11 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
-                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" CssClass =" form-control"></telerik:RadDatePicker>                                     
+                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>                                     
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"  style="font-size:10px;">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
-                                    <telerik:RadDatePicker ID="rdpfechafinal" runat="server" CssClass =" form-control"></telerik:RadDatePicker>
+                                    <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap" ></telerik:RadDatePicker>
                                 </div>
                             </div>
                             <div class="row">

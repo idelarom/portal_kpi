@@ -40,8 +40,8 @@ namespace presentacion
         {
             try
             {
-                //rdpfechainicial.SelectedDate = DateTime.Now;
-                //rdpfechafinal.SelectedDate = DateTime.Now;
+                rdpfechainicial.SelectedDate = DateTime.Now;
+                rdpfechafinal.SelectedDate = DateTime.Now;
                 int NumJefe = Convert.ToInt32(Session["NumJefe"]);
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
                 Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
