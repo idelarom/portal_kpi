@@ -53,6 +53,22 @@
               $("#<%= lnkfiltros.ClientID%>").hide();
               return true;
           }
+
+         function ChanegdTextLoad()
+        {
+            var filter = $("#<%= txtfilterempleado.ClientID%>").val();
+            if (filter.length == 0 || filter.length > 3) {
+                return ChangedTextLoad2();
+            } else {
+                return true;
+            }
+        }
+
+          function ChangedTextLoad2() {
+              $("#<%= imgloadempleado.ClientID%>").show();
+              $("#<%= lblbemp.ClientID%>").show();
+             return true;
+          }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -201,12 +217,12 @@
 
                 <ItemStyle Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Preventa" HeaderText="Preventa" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Preventa" HeaderText="Preventa" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Desarrollo_Negocio" HeaderText="Desarrollo de Negocio" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Desarrollo_Negocio" HeaderText="Desarrollo de Negocio" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
@@ -216,47 +232,47 @@
 
                 <ItemStyle Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Administrativas" HeaderText="Administrativas" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Administrativas" HeaderText="Administrativas" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Incapacidad" HeaderText="Incapacidad" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Incapacidad" HeaderText="Incapacidad" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Uptime" HeaderText="Uptime" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Uptime" HeaderText="Uptime" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Proyectos_Internos_Facturables" HeaderText="Proyectos Internos Facturables" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Proyectos_Internos_Facturables" HeaderText="Proyectos Internos Facturables" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Proyectos_Internos_No_Facturables" HeaderText="Proyectos_Internos_No_Facturables" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Proyectos_Internos_No_Facturables" HeaderText="Proyectos_Internos_No_Facturables" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Proyectos" HeaderText="Proyectos" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Proyectos" HeaderText="Proyectos" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Tiempo_Personal" HeaderText="Tiempo_Personal" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Tiempo_Personal" HeaderText="Tiempo_Personal" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Usabilidad" HeaderText="Usabilidad" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Usabilidad" HeaderText="Usabilidad" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>                                                        
-                <telerik:GridBoundColumn DataField="Total_Horas" HeaderText="Total Horas" DataFormatString="{0:C}" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                <telerik:GridBoundColumn DataField="Total_Horas" HeaderText="Total Horas" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
                 <HeaderStyle Width="60px"></HeaderStyle>
 
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
@@ -271,14 +287,14 @@
                 </div>
                 <div class=" box-footer">
                     
-                   <%-- <asp:LinkButton ID="lnkgenerarpdf" CssClass="btn btn-danger btn-flat" 
+                    <asp:LinkButton ID="lnkgenerarpdf" CssClass="btn btn-danger btn-flat" 
                         OnClick="lnkgenerarpdf_Click" runat="server">
                         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Exportar a PDF
                     </asp:LinkButton>
                     <asp:LinkButton ID="lnkgenerarexcel" CssClass="btn btn-success btn-flat" 
                         OnClick="lnkgenerarexcel_Click" runat="server">
                         <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Exportar a Excel
-                    </asp:LinkButton>--%>
+                    </asp:LinkButton>
                 </div>
             </div>
 
@@ -309,14 +325,27 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-12 col-xs-12">
+                                 <div class="col-lg-12 col-xs-12">
                                     <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Seleccione el empleado a consultar</strong>
-                                        &nbsp;  <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
+                                        &nbsp; 
+                                        <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
                                     </h6>
+                                    <div class="input-group input-group-sm">
+                                        <asp:TextBox
+                                             onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control" 
+                                            placeholder="Ingrese un filtro" runat="server" OnTextChanged="txtfilterempleado_TextChanged"></asp:TextBox>
+                                        <span class="input-group-btn">
+                                            <asp:LinkButton ID="lnksearch" CssClass="btn btn-primary btn-flat" 
+                                                 OnClientClick="return ChangedTextLoad2();" OnClick="lnksearch_Click" runat="server">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                            </asp:LinkButton>
+                                        </span>
+                                    </div>
+                                    <asp:Image ID="imgloadempleado" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                    <label id="lblbemp" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
                                     <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control"
                                         AutoPostBack="true" OnSelectedIndexChanged="ddlempleado_a_consultar_SelectedIndexChanged" runat="server">
                                     </asp:DropDownList>
-                                  
                                 </div>
                             </div>
                             <div class="row">
