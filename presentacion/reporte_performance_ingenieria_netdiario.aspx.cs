@@ -10,7 +10,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
-
 namespace presentacion
 {
     public partial class reporte_performance_ingenieria_netdiario : System.Web.UI.Page
@@ -33,22 +32,33 @@ namespace presentacion
             {
                 hdfsessionid.Value = Guid.NewGuid().ToString();
                 ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
-                CargarDatosFiltros();
+                CargarDatosFiltros("");
             }
         }
 
-        protected void CargarDatosFiltros()
+        protected void CargarDatosFiltros(string filtro)
         {
             try
             {
-                rdpfechainicial.SelectedDate = DateTime.Now;
-                rdpfechafinal.SelectedDate = DateTime.Now;
+                //rdpfechainicial.SelectedDate = DateTime.Now;
+                //rdpfechafinal.SelectedDate = DateTime.Now;
                 int NumJefe = Convert.ToInt32(Session["NumJefe"]);
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
                 Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool no_activos = cbxnoactivo.Checked;
+                DataTable dt_empleados = new DataTable();
                 DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
+                if (filtro != "")
+                {
+                    DataView dv_empleados = ds.Tables[0].DefaultView;
+                    dv_empleados.RowFilter = "nombre like '%" + filtro + "%'";
+                    dt_empleados = dv_empleados.ToTable();
+                }
+                else
+                {
+                    dt_empleados = ds.Tables[0];
+                }
                 ddlempleado_a_consultar.DataValueField = "num_empleado";
                 ddlempleado_a_consultar.DataTextField = "nombre";
                 ddlempleado_a_consultar.DataSource = ds.Tables[0];
@@ -122,7 +132,7 @@ namespace presentacion
         {
             if (div_reporte.Visible)
             {
-                CargarDatosFiltros();
+                CargarDatosFiltros("");
             }
             ModalShow("#myModal");
         }
@@ -170,8 +180,8 @@ namespace presentacion
                     string Usr = Session["usuario"] as string;
                     lblfechaini.Text = Convert.ToDateTime(rdpfechainicial.SelectedDate).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
                     lblfechafin.Text = Convert.ToDateTime(rdpfechafinal.SelectedDate).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
-                    DateTime fechaInicial = rdpfechainicial.SelectedDate.Value.Date;
-                    DateTime fechaFinal = rdpfechafinal.SelectedDate.Value.Date;
+                    DateTime fechaInicial = rdpfechainicial.SelectedDate.Value;
+                    DateTime fechaFinal = rdpfechafinal.SelectedDate.Value;
                     DataSet ds = new DataSet();
                     PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
                     ds = PerformanceIngenieria.spq_Ingenieros_Performance(fechaInicial, fechaFinal, pLstEmpleados, Usr);
@@ -328,5 +338,201 @@ namespace presentacion
         {
 
         }
+
+        protected void txtfilterempleado_TextChanged(object sender, EventArgs e)
+        {
+            lnksearch_Click(null, null);
+        }
+
+        protected void lnksearch_Click(object sender, EventArgs e)
+        {
+            string filter = txtfilterempleado.Text;
+            try
+            {
+                if (filter.Length == 0 || filter.Length > 3)
+                {
+                    CargarDatosFiltros(filter);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al filtrar empleados: " + ex.Message, this);
+            }
+            finally
+            {
+                imgloadempleado.Style["display"] = "none";
+                lblbemp.Style["display"] = "none";
+            }
+        }
+
+        protected void lnkgenerarpdf_Click(object sender, EventArgs e)
+        {
+            //gridPerformance.ExportSettings.ExportOnlyData = true;
+            //gridPerformance.ExportSettings.IgnorePaging = true;
+            //gridPerformance.ExportSettings.OpenInNewWindow = true;
+            //gridPerformance.ExportSettings.FileName = "Reporte_Performance_Ingenieria";
+            //gridPerformance.MasterTableView.ExportToPdf();
+
+            try
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Login");
+                dt.Columns.Add("Ingeniero");
+                dt.Columns.Add("Soporte");
+                dt.Columns.Add("Preventa");
+                dt.Columns.Add("Desarrollo_Negocio");
+                dt.Columns.Add("Capacitacion");
+                dt.Columns.Add("Administrativas");
+                //dt.Columns.Add("Logistica_Traslados");
+                dt.Columns.Add("Incapacidad");
+                dt.Columns.Add("Uptime");
+                dt.Columns.Add("Proyectos_Internos_Facturables");
+                dt.Columns.Add("Proyectos_Internos_No_Facturables");
+                dt.Columns.Add("Proyectos");
+                dt.Columns.Add("Tiempo_Personal");
+                dt.Columns.Add("Usabilidad");
+                dt.Columns.Add("Total_Horas");
+
+
+
+                //dt = ViewState[hdfsessionid.Value + "-dt_reporte"] as DataTable;
+
+                foreach (GridDataItem row in gridPerformance.Items)
+                {
+                    DataRow dtrow = dt.NewRow();
+                    dtrow["Login"] = row["Login"].Text;
+                    dtrow["Ingeniero"] = row["Ingeniero"].Text;
+                    dtrow["Soporte"] = row["Soporte"].Text;
+                    dtrow["Preventa"] = row["Preventa"].Text;
+                    dtrow["Desarrollo_Negocio"] = row["Desarrollo_Negocio"].Text;
+                    dtrow["Capacitacion"] = row["Capacitacion"].Text;
+                    dtrow["Administrativas"] = row["Administrativas"].Text;
+                    //dtrow["Logistica_Traslados"] = row["Logistica_Traslados"].Text;
+                    dtrow["Incapacidad"] = row["Incapacidad"].Text;
+                    dtrow["Uptime"] = row["Uptime"].Text;
+                    dtrow["Proyectos_Internos_Facturables"] = row["Proyectos_Internos_Facturables"].Text;
+                    dtrow["Proyectos_Internos_No_Facturables"] = row["Proyectos_Internos_No_Facturables"].Text;
+                    dtrow["Proyectos"] = row["Proyectos"].Text;
+                    dtrow["Tiempo_Personal"] = row["Tiempo_Personal"].Text;
+                    dtrow["Usabilidad"] = row["Usabilidad"].Text;
+                    dtrow["Total_Horas"] = row["Total_Horas"].Text;
+                    dt.Rows.Add(dtrow);
+                }
+
+
+                if (dt.Rows.Count > 0)
+                {
+                    Export Export = new Export();
+                    //array de DataTables
+                    List<DataTable> ListaTables = new List<DataTable>();
+                    ListaTables.Add(dt);
+                    //array de nombre de sheets
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(".", "_");
+                    date = date.Replace(" ", "_");
+                    string[] Nombres = new string[] { "Reporte Preventa Ingenieria" };
+                    string mensaje = Export.ToPdf("Reporte_Preventa_Ingenieria_" + date, ListaTables, 1, Nombres, Page.Response);
+                    if (mensaje != "")
+                    {
+                        Toast.Error("Error al exportar el reporte a PDF: " + mensaje, this);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al exportar el reporte a excel: " + ex.Message, this);
+            }
+        }
+
+        protected void lnkgenerarexcel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                //gridPerformance.ExportSettings.ExportOnlyData = true;
+                //gridPerformance.ExportSettings.IgnorePaging = true;
+                //gridPerformance.ExportSettings.OpenInNewWindow = true;
+                //gridPerformance.ExportSettings.FileName = "Reporte_Performance_Ingenieria";
+                //gridPerformance.MasterTableView.ExportToExcel();
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Login");
+                dt.Columns.Add("Ingeniero");
+                dt.Columns.Add("Soporte");
+                dt.Columns.Add("Preventa");
+                dt.Columns.Add("Desarrollo_Negocio");
+                dt.Columns.Add("Capacitacion");
+                dt.Columns.Add("Administrativas");
+                //dt.Columns.Add("Logistica_Traslados");
+                dt.Columns.Add("Incapacidad");
+                dt.Columns.Add("Uptime");
+                dt.Columns.Add("Proyectos_Internos_Facturables");
+                dt.Columns.Add("Proyectos_Internos_No_Facturables");
+                dt.Columns.Add("Proyectos");
+                dt.Columns.Add("Tiempo_Personal");
+                dt.Columns.Add("Usabilidad");
+                dt.Columns.Add("Total_Horas");
+                              
+
+
+                //dt = ViewState[hdfsessionid.Value + "-dt_reporte"] as DataTable;
+
+                foreach (GridDataItem row in gridPerformance.Items)
+                {
+                    DataRow dtrow = dt.NewRow();
+                    dtrow["Login"] = row["Login"].Text;
+                    dtrow["Ingeniero"] = row["Ingeniero"].Text;
+                    dtrow["Soporte"] = row["Soporte"].Text;
+                    dtrow["Preventa"] = row["Preventa"].Text;
+                    dtrow["Desarrollo_Negocio"] = row["Desarrollo_Negocio"].Text;
+                    dtrow["Capacitacion"] = row["Capacitacion"].Text;
+                    dtrow["Administrativas"] = row["Administrativas"].Text;
+                    //dtrow["Logistica_Traslados"] = row["Logistica_Traslados"].Text;
+                    dtrow["Incapacidad"] = row["Incapacidad"].Text;
+                    dtrow["Uptime"] = row["Uptime"].Text;
+                    dtrow["Proyectos_Internos_Facturables"] = row["Proyectos_Internos_Facturables"].Text;
+                    dtrow["Proyectos_Internos_No_Facturables"] = row["Proyectos_Internos_No_Facturables"].Text;
+                    dtrow["Proyectos"] = row["Proyectos"].Text;
+                    dtrow["Tiempo_Personal"] = row["Tiempo_Personal"].Text;
+                    dtrow["Usabilidad"] = row["Usabilidad"].Text;
+                    dtrow["Total_Horas"] = row["Total_Horas"].Text;
+                    dt.Rows.Add(dtrow);
+                }
+
+
+                if (dt.Rows.Count > 0)
+                {
+                    Export Export = new Export();
+                    //array de DataTables
+                    List<DataTable> ListaTables = new List<DataTable>();
+                    ListaTables.Add(dt);
+                    //array de nombre de sheets
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(".", "_");
+                    date = date.Replace(" ", "_");
+                    string[] Nombres = new string[] { "Reporte Preventa Ingenieria" };
+                    string mensaje = Export.toExcel("Reporte Preventa Ingenieria", XLColor.White, XLColor.Black, 18, true, DateTime.Now.ToString(), XLColor.White,
+                                           XLColor.Black, 10, ListaTables, XLColor.CelestialBlue, XLColor.White, Nombres, 1,
+                                           "Reporte_Preventa_Ingenieria_" + date + ".xlsx", Page.Response);
+                    if (mensaje != "")
+                    {
+                        Toast.Error("Error al exportar el reporte a excel: " + mensaje, this);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al exportar el reporte a excel: " + ex.Message, this);
+            }
+        }
+
     }
 }
