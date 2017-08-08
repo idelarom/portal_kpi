@@ -218,7 +218,7 @@ namespace presentacion
                     {
                         if (id_menu == "")
                         {
-                            Agregarmenu(menu, icono, 0, "", en_mantenimiento);
+                            Agregarmenu(menu, icono, 0, url, en_mantenimiento);
                         }
                         else
                         {

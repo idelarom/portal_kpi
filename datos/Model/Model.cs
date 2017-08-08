@@ -124,11 +124,27 @@ namespace datos.Model
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<recordatorios>()
+                .Property(e => e.key_appointment_exchanged)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<recordatorios>()
+                .Property(e => e.organizer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<recordatorios>()
+                .Property(e => e.organizer_address)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<recordatorios>()
                 .Property(e => e.titulo)
                 .IsUnicode(false);
 
             modelBuilder.Entity<recordatorios>()
                 .Property(e => e.descripcion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<recordatorios>()
+                .Property(e => e.location)
                 .IsUnicode(false);
 
             modelBuilder.Entity<recordatorios>()
@@ -153,7 +169,7 @@ namespace datos.Model
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<recordatorios_usuarios_adicionales>()
-                .Property(e => e.usuario)
+                .Property(e => e.nombre)
                 .IsUnicode(false);
 
             modelBuilder.Entity<usuarios_perfiles>()

@@ -138,6 +138,7 @@
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
             <div class="form-group has-feedback" id="div_dominio" runat="server" visible="false">
+                 
                 <telerik:RadTextBox ID="rtxtdominio" runat="server" Text="migesa.net" CssClass="form-control" Width="100%" Skin="Bootstrap" placeholder="Dominio"></telerik:RadTextBox>
                 <span class="glyphicon glyphicon-cloud form-control-feedback"></span>
             </div>
@@ -157,7 +158,7 @@
                     <asp:LinkButton ID="lnkiniciandosession" CssClass="btn btn-danger btn-block" runat="server" OnClientClick="return false;" Style="display: none;">
                           <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Iniciando Sesión</asp:LinkButton>
-                    <asp:Button ID="btniniciar" runat="server" Text="Iniciar Sesión" CssClass="btn btn-danger" 
+                    <asp:Button ID="btniniciar" runat="server" Text="Iniciar Sesión" CssClass="btn btn-danger"
                         OnClick="btniniciar_Click" OnClientClick="return ConfirmMinutaModal();" />
                 </div>
 
@@ -174,9 +175,9 @@
                 <div class="col-xs-12" runat="server" id="div_portalclientes" visible="false">
                     <br />
                     <p>
-                    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="lnkcambiardominio_Click">
+                        <asp:LinkButton ID="LinkButton1" runat="server" OnClick="lnkcambiardominio_Click">
                         Puedes Cambiar el Dominio de Inicio
-                    </asp:LinkButton>
+                        </asp:LinkButton>
                     </p>
                 </div>
                 <!-- /.col -->

@@ -100,6 +100,14 @@
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net40\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Exchange.WebServices.Auth, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Exchange.WebServices.2.2\lib\40\Microsoft.Exchange.WebServices.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
@@ -246,6 +254,7 @@
     <Content Include="dist\js\pages\dashboard2.js" />
     <Content Include="dist\js\pages\inicio.js" />
     <Content Include="dist\js\pages\master_page.js" />
+    <Content Include="dist\js\pages\recordatorios.js" />
     <Content Include="dist\js\push_notification.js" />
     <Content Include="dist\js\sweetalert-dev.js" />
     <Content Include="dist\js\sweetalert.min.js" />
@@ -855,11 +864,13 @@
     <Content Include="plugins\flot\jquery.flot.threshold.min.js" />
     <Content Include="plugins\flot\jquery.flot.time.js" />
     <Content Include="plugins\flot\jquery.flot.time.min.js" />
+    <Content Include="plugins\fullcalendar\es.js" />
     <Content Include="plugins\fullcalendar\fullcalendar.css" />
     <Content Include="plugins\fullcalendar\fullcalendar.js" />
     <Content Include="plugins\fullcalendar\fullcalendar.min.css" />
     <Content Include="plugins\fullcalendar\fullcalendar.min.js" />
-    <Content Include="plugins\fullcalendar\fullcalendar.print.css" />
+    <Content Include="plugins\fullcalendar\locale-all.js" />
+    <Content Include="plugins\fullcalendar\moment.min.js" />
     <Content Include="plugins\iCheck\all.css" />
     <Content Include="plugins\iCheck\flat\aero%402x.png" />
     <Content Include="plugins\iCheck\flat\aero.css" />
@@ -1249,6 +1260,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EWSHelper.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="funciones.cs" />
@@ -1393,6 +1405,9 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,6 +1,7 @@
 ﻿using datos.NAVISION;
 using negocio.Componentes;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
@@ -104,7 +105,7 @@ namespace presentacion
                                 byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
                                 imagen = GuardarImagenUsuario(array_img, username + ".png");
                             }
-
+                            string adress = sResult.Properties["mail"][0].ToString();
                             //recuperamos datos
                             string nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
                                         funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' '));
@@ -114,6 +115,7 @@ namespace presentacion
                             nombre = nombre.ToLower();
                             puesto = puesto.ToLower();
                             //pasamos a estilos title
+                            Session["mail"] = adress;
                             Session["imagen"] = imagen;
                             Session["usuario"] = username;
                             Session["password"] = password;
@@ -139,6 +141,12 @@ namespace presentacion
                             int id_usuario_sesion = ds.Tables[0].Columns.Contains("id_usuario_sesion") ?
                                 Convert.ToInt32(ds.Tables[0].Rows[0]["id_usuario_sesion"]) : 0;
                             Session["devices_conectados"] = UpdateDevices(username);
+                            string mail = Session["mail"] as string;
+                            string mail_user = username + mail.Replace(mail.Split('@')[0], "");
+                            EWSHelper calendar = new EWSHelper();
+                            calendar.GetAllCalendar(mail_user, password);
+                          
+
                             if (id_usuario_sesion > 0)
                             {
                                 Session["id_usuario_sesion"] = id_usuario_sesion;

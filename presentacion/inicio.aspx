@@ -3,6 +3,11 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="dist/js/loading.js"></script>
+    <!-- fullCalendar 2.2.5 -->
+    <link href="plugins/fullcalendar/fullcalendar.css" rel="stylesheet" />
+    <script src="plugins/fullcalendar/moment.min.js"></script>
+    <script src="plugins/fullcalendar/fullcalendar.js"></script>
+    <script src="plugins/fullcalendar/locale-all.js"></script>
     <script src="dist/js/pages/inicio.js"></script>
     <script type="text/javascript">
       
@@ -30,6 +35,23 @@
        .products-list .bono-info {
             margin-left: 6px;
         }
+       .box-body {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            padding: 10px;
+            min-height:270px;
+        }
+       .fc-toolbar.fc-header-toolbar {
+            margin-bottom: 1em;
+            font-size: 11px;
+        }.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    font-size: 10px;
+}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -39,7 +61,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" id="dashboard_kpi_ind" style="display:none;">
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" id="dashboard_kpi_ind" style="display: none;">
             <div class="info-box bg-red">
                 <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
 
@@ -58,86 +80,87 @@
             </div>
             <!-- /.info-box -->
         </div>
-        <!-- ./col -->
     </div>
     <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-12" id="desglo_dashboard_kpi_ind">
+
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="calendario">
             <div class="box box-danger">
-            <div class="box-header with-border">
-              <h3 class="box-title">Valor Ganado</h3>
+                <div class="box-header with-border">
+                    <h3 class="box-title">Calendario</h3>
 
-              <div class="box-tools pull-right">
-                <button class="btn btn-box-tool" type="button" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
+                </div>
+                <div class="box-body">
+                    <div id="calendar"></div>
+                </div>
             </div>
-            <div class="box-body">
-              <ul class="products-list product-list-in-box">
-                <li class="item">
-                    <div class="bono-info">
-                        <a class="product-title" href="javascript:void(0)">Preventa                          
-                                <span class="label label-primary pull-right" style="width:55px" id="dashboard_bonos_preventa">0 %</span>          
-                                <span class="pull-right">&nbsp;</span>            
-                                <span class="label label-primary pull-right" id="dashboard_bonos_totalpreventa"  style="width:70px">$ 0.00</span> 
-                        </a>
-
-                    </div>
-                </li>
-                    <li class="item">
-                        <div class="bono-info">
-                            <a class="product-title" href="javascript:void(0)">Implementación                    
-                                <span class="label label-primary pull-right" style="width:55px" id="dashboard_bonos_imp">0 %</span>    
-                                <span class="pull-right">&nbsp;</span>                  
-                                <span class="label label-primary pull-right" id="dashboard_bonos_totalimp"  style="width:70px">$ 0.00</span> 
-                            </a>
-                        </div>
-                    </li>
-                    <li class="item">
-                        <div class="bono-info">
-                            <a class="product-title" href="javascript:void(0)">Soporte                    
-                                <span class="label label-primary pull-right" style="width:55px"  id="dashboard_bonos_soporte">0 %</span>        
-                                <span class="pull-right">&nbsp;</span>              
-                                <span class="label label-primary pull-right"  id="dashboard_bonos_totalsoporte"  style="width:70px">$ 0.00</span> 
-                            </a>
-                          
-                        </div>
-                    </li>
-                    <li class="item">
-                        <div class="bono-info">
-                            <a class="product-title" href="javascript:void(0)">Cump. Compromisos                         
-                                <span class="label label-primary pull-right" style="width:55px" id="dashboard_bonos_compromisos">0 %</span>
-                            </a>                         
-                        </div>
-                    </li>
-                    <li class="item">
-                        <div class="bono-info">
-                            <a class="product-title" href="javascript:void(0)">KPI Individual                    
-                                <span class="label label-primary pull-right"  style="width:55px" id="dashboard_bonos_kpi">0 %</span> 
-                            </a>                        
-                        </div>
-                    </li>
-                    <li class="item" style="display:none;">
-                        <div class="bono-info">
-                            <a class="product-title" href="javascript:void(0)">KPI Grupal                    
-                                <span class="label label-primary pull-right" style="width:55px"  id="dashboard_bonos_kpig">0 %</span>   
-                            </a>                         
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.box-body -->
-          </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12" id="dashboard_kpi"  style="display:none;" >
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="desglo_dashboard_kpi_ind">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Valor Ganado</h3>
+
+                </div>
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item">
+                            <div class="bono-info">
+                                <a class="product-title" href="javascript:void(0)">Preventa                          
+                                <span class="label label-primary pull-right" style="width: 55px" id="dashboard_bonos_preventa">0 %</span>
+                                    <span class="pull-right">&nbsp;</span>
+                                    <span class="label label-primary pull-right" id="dashboard_bonos_totalpreventa" style="width: 70px">$ 0.00</span>
+                                </a>
+
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="bono-info">
+                                <a class="product-title" href="javascript:void(0)">Implementación                    
+                                <span class="label label-primary pull-right" style="width: 55px" id="dashboard_bonos_imp">0 %</span>
+                                    <span class="pull-right">&nbsp;</span>
+                                    <span class="label label-primary pull-right" id="dashboard_bonos_totalimp" style="width: 70px">$ 0.00</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="bono-info">
+                                <a class="product-title" href="javascript:void(0)">Soporte                    
+                                <span class="label label-primary pull-right" style="width: 55px" id="dashboard_bonos_soporte">0 %</span>
+                                    <span class="pull-right">&nbsp;</span>
+                                    <span class="label label-primary pull-right" id="dashboard_bonos_totalsoporte" style="width: 70px">$ 0.00</span>
+                                </a>
+
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="bono-info">
+                                <a class="product-title" href="javascript:void(0)">Cump. Compromisos                         
+                                <span class="label label-primary pull-right" style="width: 55px" id="dashboard_bonos_compromisos">0 %</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="bono-info">
+                                <a class="product-title" href="javascript:void(0)">KPI Individual                    
+                                <span class="label label-primary pull-right" style="width: 55px" id="dashboard_bonos_kpi">0 %</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="item" style="display: none;">
+                            <div class="bono-info">
+                                <a class="product-title" href="javascript:void(0)">KPI Grupal                    
+                                <span class="label label-primary pull-right" style="width: 55px" id="dashboard_bonos_kpig">0 %</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12" id="dashboard_kpi" style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Dashboard Bonos</h3>
-
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" type="button" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -152,7 +175,7 @@
                                 </tr>
                             </thead>
                             <tbody id="tbody_table_dashboard_kpi"
-                                 style="font-size: 11px;">
+                                style="font-size: 11px;">
                             </tbody>
                         </table>
                     </div>
@@ -160,15 +183,35 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
-                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_dashboard_kpi"  onclick="CloseAjax('reporte_dashboard_bonos_kpi.aspx');">Ver Reporte
+                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_dashboard_kpi" onclick="CloseAjax('reporte_dashboard_bonos_kpi.aspx');">Ver Reporte
                     </a>
                 </div>
                 <!-- /.box-footer -->
             </div>
         </div>
-        
-    </div>
 
+    </div>
+      <div class="modal modal-info fade" id="modal_evento"  data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Info Modal</h4>
+              </div>
+              <div class="modal-body">
+                <p>One fine body&hellip;</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline">Save changes</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
     <asp:HiddenField ID="hdf_usuario" runat="server" />
     <asp:HiddenField ID="hdf_numempleado" runat="server" />
     <asp:HiddenField ID="hdf_ver_Todos_empleados" runat="server" />

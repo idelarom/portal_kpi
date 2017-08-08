@@ -77,7 +77,6 @@
     <script src="dist/js/demo.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP6o7sCaKP9fkavw-w1AXz-x2sysjcAJY&libraries=geometry,places"></script>
     <link href="dist/css/pages/master_page.css" rel="stylesheet" />
     <script src="dist/js/pages/master_page.js"></script>
@@ -175,8 +174,8 @@
                         <li><a href="inicio.aspx"><i class="fa fa-dashboard"></i><span>DashBoard</span></a></li>
                         <asp:Repeater ID="repeat_menu" runat="server" OnItemDataBound="repeat_menu_ItemDataBound">
                             <ItemTemplate>
-                                <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"?"#": Eval("menu").ToString() %>'>
-                                    <i class='<%# Eval("icon_ad") %>'></i><%# Eval("name") %></a></li>
+                                <li id="ml" runat="server"><a href='<%# Eval("id_menu_padre").ToString()=="0"&& Eval("menu").ToString() == "" ?"#": Eval("menu").ToString() %>'>
+                                    <i class='<%# Eval("icon_ad") %>'></i><span><%# Eval("name") %></span></a></li>
 
                                 <li class="treeview" id="mml" runat="server">
                                     <a href="#">

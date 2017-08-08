@@ -17,6 +17,15 @@ namespace datos.Model
         [Key]
         public int id_recordatorio { get; set; }
 
+        [StringLength(8000)]
+        public string key_appointment_exchanged { get; set; }
+
+        [StringLength(250)]
+        public string organizer { get; set; }
+
+        [StringLength(250)]
+        public string organizer_address { get; set; }
+
         [Required]
         [StringLength(250)]
         public string titulo { get; set; }
@@ -25,6 +34,11 @@ namespace datos.Model
         public string descripcion { get; set; }
 
         public DateTime fecha { get; set; }
+
+        public DateTime? fecha_end { get; set; }
+
+        [StringLength(500)]
+        public string location { get; set; }
 
         [Required]
         [StringLength(50)]

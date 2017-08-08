@@ -14,8 +14,8 @@ namespace datos.Model
         public int id_recordatorio { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string usuario { get; set; }
+        [StringLength(500)]
+        public string nombre { get; set; }
 
         public bool activo { get; set; }
 

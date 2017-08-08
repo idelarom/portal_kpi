@@ -1,7 +1,34 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
+    initCalendar();
     IniciarWidgets();
 });
+
+function initCalendar() {
+    $('#calendar').fullCalendar({
+        locale: 'es',
+        height: 250,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        buttonText: {
+            today: 'Hoy',
+            month: 'Mes',
+            week: 'Sem',
+            day: 'Dia'
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+
+            ModalShow("#modal_evento");
+
+        },
+        events: [],
+        editable: false,
+        droppable: false
+    });
+    $('#calendar').fullCalendar('gotoDate', '2017-08-08');
+}
 
 function ModalClose() {
     $('#myModalExcel').modal('hide');
@@ -47,7 +74,7 @@ function Init(table) {
 //Regresa el usuario en sesion
 function User()
 {
-    return "RVILLAVB";// $('#ContentPlaceHolder1_hdf_usuario').val();
+    return "IDELAROM";// $('#ContentPlaceHolder1_hdf_usuario').val();
 }
 
 //Regresa el numero de empleado del usuario en sesion
@@ -93,7 +120,7 @@ var opts2 = {
    , length: 28 // The length of each line
    , width: 14 // The line thickness
    , radius: 42 // The radius of the inner circle
-   , scale: .45 // Scales overall size of the spinner
+   , scale: .8 // Scales overall size of the spinner
    , corners: 1 // Corner roundness (0..1)
    , color: '#000' // #rgb or #rrggbb or array of colors
    , opacity: 0.1 // Opacity of the lines
@@ -144,6 +171,9 @@ function IniciarWidgets() {
                 } else if (div == "dashboard_kpi" && jQuery.inArray("CargarDashboardbonos", ajax_ejecutados) == -1) {
                     ajax_ejecutados.push("CargarDashboardbonos");
                     CargarDashboardbonos();
+                } else if (div == "calendario" && jQuery.inArray("calendario", ajax_ejecutados) == -1) {
+                    ajax_ejecutados.push("calendario");
+                    GetRecords();
                 }
             }
         },
@@ -254,4 +284,45 @@ function CargarDashboardbonos() {
         }
     });
     xhrRequests.push(call);
+}
+
+//WIDGET DE CLANEDARIO
+function GetRecords() {
+    var usuario = User();
+    var target = document.getElementById('calendario');
+    var spinner = new Spinner(opts2).spin(target);
+    var call = $.ajax({
+        url: 'recordatorios.aspx/GetRecords',
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        dataType: "json",
+        data: "{user:'" + usuario + "'}",
+        success: function (response) {
+            var recordatorios = JSON.parse(response.d);
+            console.log("recordatorios", recordatorios);
+            if (recordatorios.length > 0) {
+                for (indice = 0; indice < recordatorios.length; indice++) {
+                    var newEvent = new Object();
+                    newEvent.title = recordatorios[indice].Title;
+                    newEvent.start = recordatorios[indice].Start;
+                    newEvent.end = recordatorios[indice].End;
+                    newEvent.backgroundColor = recordatorios[indice].BackgroundColor;
+                    newEvent.orderColor = recordatorios[indice].BorderColor;
+                    newEvent.allDay = false;
+                    newEvent.descripcion = recordatorios[indice].Descripcion;
+                    newEvent.organizador = recordatorios[indice].Organizador;
+                    newEvent.organizador_mail = recordatorios[indice].Organizador_mail;
+                    newEvent.ubicacion = recordatorios[indice].Ubicacion;
+
+
+                    $('#calendar').fullCalendar( 'renderEvent', newEvent ,true);
+                };
+            }
+            spinner.stop();
+        },
+        error: function (result, status, err) {
+            spinner.stop();
+            console.log("error", result.responseText);
+        }
+    });
 }
