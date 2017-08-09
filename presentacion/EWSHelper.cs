@@ -279,7 +279,7 @@ namespace presentacion
                 cView.PropertySet = new PropertySet(AppointmentSchema.Subject, AppointmentSchema.Start, AppointmentSchema.End);
 
                 // Retrieve a collection of appointments by using the calendar view.
-                FindItemsResults<Microsoft.Exchange.WebServices.Data.Appointment> appointments = calendar.FindAppointments(cView);    
+                FindItemsResults<Microsoft.Exchange.WebServices.Data.Appointment> appointments = calendar.FindAppointments(cView);
                 string username = (userId.Split('@')[0]);
                 PropertySet itempropertyset = new PropertySet(BasePropertySet.FirstClassProperties);
                 itempropertyset.RequestedBodyType = BodyType.Text;
@@ -289,18 +289,18 @@ namespace presentacion
                 {
                     foreach (Microsoft.Exchange.WebServices.Data.Appointment a in appointments)
                     {
-                        RecordatoriosCOM recordatorios = new RecordatoriosCOM();
                         a.Load(itempropertyset);
+                        DateTime fecha_inicio = a.Start;
+                        DateTime fecha_fin = a.End;
+                        string subject = a.Subject == null ? "" : a.Subject.ToString();
+                        string organizer = a.Organizer.Name == null ? "" : a.Organizer.Name.ToString();
+                        RecordatoriosCOM recordatorios = new RecordatoriosCOM();
                         string id = a.Id.ToString();
-                        if (!recordatorios.ExistAppointment(username, id))
+                        if (!a.IsCancelled)
                         {
                             List<recordatorios_usuarios_adicionales> list_Ad = new List<recordatorios_usuarios_adicionales>();
                             string nbody = a.Body.Text == null ? "" : a.Body.Text.ToString();
                             datos.Model.recordatorios e = new datos.Model.recordatorios();
-                            DateTime fecha_inicio = a.Start;
-                            DateTime fecha_fin = a.End;
-                            string subject = a.Subject == null ? "" : a.Subject.ToString();
-                            string organizer = a.Organizer.Name == null ? "" : a.Organizer.Name.ToString();
                             string organizer_address = a.Organizer.Address == null ? "" : a.Organizer.Address.ToString();
                             string body = a.Body.Text == null ? "" : a.Body.Text.ToString();
                             string participantes = a.DisplayTo == null ? "" : a.DisplayTo.ToString();
@@ -331,12 +331,14 @@ namespace presentacion
                             e.descripcion = body;
                             e.usuario_creacion = username;
                             e.location = lugar;
-                            recordatorios.Agregar(e, list_Ad);
+                            string vmensaje = !recordatorios.ExistAppointment(username, id, organizer, subject, fecha_inicio, fecha_fin) ?
+                                recordatorios.Agregar(e, list_Ad) :
+                                reco.Editar(e,list_Ad); 
                         }
                     }
 
                 }
-              
+
             }
             catch (Microsoft.Exchange.WebServices.Data.ServiceObjectPropertyException obj)
             {

@@ -2,7 +2,6 @@
 using System;
 using System.Data;
 using System.IO;
-using System.Text;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -27,7 +26,7 @@ namespace presentacion
             {
                 if (!ExistInSession())
                 {
-                    LinkButton1_Click(null, null);
+                    lnkcerrarsession_Click(null, null);
                 }
                 CargarImagen();
                 CargarMenu();
@@ -39,32 +38,14 @@ namespace presentacion
                 lblperfil.Text = Session["perfil"] as string;
                 CargarImagen();
                 UpdateDevices();
+                GetRecordsToday();
                 if (Convert.ToInt32(Session["id_perfil"]) == 0)
                 {
-                    Toast.Info("El usuario en uso: "+Convert.ToString(Session["usuario"]).ToUpper()+", no cuenta con un perfil asignado. Por favor, comuniquese con su administrador.","Mensaje del sistema",this.Page);
+                    Toast.Info("El usuario en uso: " + Convert.ToString(Session["usuario"]).ToUpper() + ", no cuenta con un perfil asignado. Por favor, comuniquese con su administrador.", "Mensaje del sistema", this.Page);
                 }
-               // CargarBreadCumb();
             }
         }
 
-        private void CargarBreadCumb()
-        {
-            try
-            {
-                string pageName = this.ContentPlaceHolder1.Page.GetType().FullName;
-                pageName=  pageName.Replace("ASP.", "").Replace("_aspx", ".aspx");
-                MenusCOM menus = new MenusCOM();
-                DataSet ds = menus.sp_menus_breadcumbs(pageName);
-                DataTable dt = ds.Tables[0];
-                //repeat_breads.DataSource = dt;
-                //repeat_breads.DataBind();
-                //breadcum.Visible = dt.Rows.Count > 0;
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al cargar el breadcumbs: " + ex.Message, this.Page);
-            }
-        }
         private void CargarImagen()
         {
             try
@@ -88,6 +69,7 @@ namespace presentacion
                 Alert.ShowAlertError(ex.ToString(), this.Page);
             }
         }
+
         private DataTable TableMenu(int id_menu_padre)
         {
             try
@@ -95,14 +77,14 @@ namespace presentacion
                 EmpleadosCOM componente = new EmpleadosCOM();
                 DataSet ds = componente.sp_menu(id_menu_padre, Convert.ToString(Session["usuario"]));
                 return ds.Tables[0];
-
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar el menu: "+ex.Message,this.Page);
+                Toast.Error("Error al cargar el menu: " + ex.Message, this.Page);
                 return null;
             }
         }
+
         protected void repeat_menu_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
         {
             DataRowView dbr = (DataRowView)e.Item.DataItem;
@@ -126,7 +108,6 @@ namespace presentacion
                     Toast.Error("Error al cargar menus. " + ex.Message, this.Page);
                 }
             }
-
         }
 
         private void CargarMenu()
@@ -139,15 +120,15 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar menus. "+ex.Message, this.Page);
+                Toast.Error("Error al cargar menus. " + ex.Message, this.Page);
             }
         }
 
-        protected void LinkButton1_Click(object sender, EventArgs e)
+        protected void lnkcerrarsession_Click(object sender, EventArgs e)
         {
             string url = "login.aspx";
             EmpleadosCOM empleados = new EmpleadosCOM();
-            DataSet ds = empleados.sp_eliminar_usuario_sesiones(Convert.ToInt32(Session["id_usuario_sesion"]),false);
+            DataSet ds = empleados.sp_eliminar_usuario_sesiones(Convert.ToInt32(Session["id_usuario_sesion"]), false);
             Session.Clear();
             Session.RemoveAll();
             Session.Abandon();
@@ -163,7 +144,6 @@ namespace presentacion
                 Session["usuario"] as string, Session["os"] as string, Session["os_vers"] as string,
                 Session["browser"] as string, Session["device"] as string).Tables[0];
                 return Convert.ToBoolean(dt.Rows[0]["existe"]);
-
             }
             catch (Exception ex)
             {
@@ -178,7 +158,7 @@ namespace presentacion
             {
                 string value = "";
                 EmpleadosCOM empleados = new EmpleadosCOM();
-                DataTable dt = empleados.sp_usuario_sesiones(Session["usuario"] as string,false).Tables[0];
+                DataTable dt = empleados.sp_usuario_sesiones(Session["usuario"] as string, false).Tables[0];
                 lbldispo.Text = dt.Rows.Count.ToString();
                 repeat_devices.DataSource = dt;
                 repeat_devices.DataBind();
@@ -204,7 +184,7 @@ namespace presentacion
             try
             {
                 EmpleadosCOM empleados = new EmpleadosCOM();
-                DataTable dt = empleados.sp_usuario_sesiones(Session["usuario"] as string,false).Tables[0];
+                DataTable dt = empleados.sp_usuario_sesiones(Session["usuario"] as string, false).Tables[0];
                 lbldispo.Text = dt.Rows.Count.ToString();
                 repeat_devices.DataSource = dt;
                 repeat_devices.DataBind();
@@ -213,19 +193,12 @@ namespace presentacion
                 int devices_count = Convert.ToInt32(Session["devices_conectados"]);
                 bool mas_dispositivos = dt.Rows.Count > devices_count;
                 Session["devices_conectados"] = dt.Rows.Count;
-                //if (mas_dispositivos)
-                //{
-                //    ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(),
-                //        "ShowNewDevice();", true);
-                //}
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al actualizar la lista de dispositivo(s) conectado(s): "+ex.Message,this.Page);
+                Toast.Error("Error al actualizar la lista de dispositivo(s) conectado(s): " + ex.Message, this.Page);
             }
         }
-
-     
 
         protected void lnkactualizar_Click(object sender, EventArgs e)
         {
@@ -251,10 +224,7 @@ namespace presentacion
                     {
                         total++;
                         EmpleadosCOM empleados = new EmpleadosCOM();
-                        DataSet ds = empleados.sp_eliminar_usuario_sesiones(Convert.ToInt32(id_usuario_sesion.Text),false);
-                        //DataSet ds = empleados.sp_eliminar_usuario_sesiones(
-                        //Session["usuario"] as string, os.Text, os_version.Text,browser.Text,dispositivo.Text,
-                        //ip.Text,Convert.ToDateTime(fecha.Text));
+                        DataSet ds = empleados.sp_eliminar_usuario_sesiones(Convert.ToInt32(id_usuario_sesion.Text), false);
                     }
                 }
                 if (total == 0)
@@ -264,15 +234,13 @@ namespace presentacion
                 else
                 {
                     UpdateDevices();
-                    Toast.Success(total.ToString()+" dispositivo(s) desconectado(s) correctamente.", "Mensaje del sistema", this.Page);
+                    Toast.Success(total.ToString() + " dispositivo(s) desconectado(s) correctamente.", "Mensaje del sistema", this.Page);
                 }
-
             }
             catch (Exception ex)
             {
                 Toast.Error("Error al cerrar sesiones: " + ex.Message, this.Page);
             }
-           
         }
 
         protected void btncerrarsesion_Click(object sender, EventArgs e)
@@ -285,7 +253,7 @@ namespace presentacion
                 if (idc_usuario_sesion > 0)
                 {
                     EmpleadosCOM empleados = new EmpleadosCOM();
-                    DataSet ds = empleados.sp_eliminar_usuario_sesiones(idc_usuario_sesion,bloquear);
+                    DataSet ds = empleados.sp_eliminar_usuario_sesiones(idc_usuario_sesion, bloquear);
                     UpdateDevices();
                     Toast.Success("Dispositivo desconectado correctamente.", "Mensaje del sistema", this.Page);
                 }
@@ -293,6 +261,114 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al cerrar sesiones: " + ex.Message, this.Page);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene los recordatorios de hiy, si existe alguno lanza el modal con recordatorios
+        /// </summary>
+        protected void GetRecordsToday()
+        {
+            try
+            {
+                DataTable dt = GetRecordsToday(Session["usuario"] as string);
+                if (dt.Rows.Count > 0)
+                {
+                    ViewState["dt_records_today"] = dt;
+                    lnkcommand.OnClientClick = "return confirm('¿Desea descartar los "+dt.Rows.Count.ToString()+" recordatorios?');";
+                    repeater_tab_recs.DataSource = dt;
+                    repeater_tab_recs.DataBind();
+                    repeater_recs.DataSource = dt;
+                    repeater_recs.DataBind();
+                    ModalShow("#modal_recordatorios_mp");
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al comprobar pendientes del calendario: "+ex.Message,this.Page);
+            }
+        }
+
+        private DataTable GetRecordsToday(string user)
+        {
+            RecordatoriosCOM recordatorios = new RecordatoriosCOM();
+            DataTable dt = recordatorios.SelectToday(user);
+            return dt;
+        }
+        private void ModalShow(string modalname)
+        {
+            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                             "ModalShow('" + modalname + "');", true);
+        }
+        private void ModalClose(string modalname)
+        {
+            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                             "ModalCloseGlobal('" + modalname + "');", true);
+        }
+
+        protected void lnkcommand_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LinkButton lnk = sender as LinkButton;
+                string command = lnk.CommandName.ToLower();
+                int id_recordatorio = Convert.ToInt32(lnk.CommandArgument);
+                RecordatoriosCOM recordatorios = new RecordatoriosCOM();
+                string usuario = Session["usuario"] as string;
+                string mensaje = "";
+                switch (command)
+                {
+                    case "todo":
+                        DataTable dt_all_records =ViewState["dt_records_today"] as DataTable;
+                        foreach (DataRow row in dt_all_records.Rows)
+                        {
+                            id_recordatorio  = Convert.ToInt32(row["id_recordatorio"]);
+                            recordatorios.Descartar(id_recordatorio, usuario);
+                        }
+                        break;
+                    case "descartar":
+                        recordatorios.Descartar(id_recordatorio, usuario);
+                        break;
+                    case "posponer":
+                        int minutos = 15;
+                        recordatorios.Posponer(id_recordatorio, minutos);
+                        break;
+                }
+                string url = Request.Url.AbsoluteUri;
+                if (mensaje == "")
+                {
+                    System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                                     "AlertGO('Solicitud realizada correctamente','"+ url + "');", true);
+                }
+                else
+                {
+                    Toast.Error("Error al procesar recordatorio con id("+id_recordatorio+"),: " + mensaje, this.Page);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al procesar recodatorio: " + ex.Message, this.Page);
+            }
+        }
+
+        protected void lnksincronizar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string username = Session["usuario"] as string;
+                string password = Session["contraseña"] as string;
+                string mail = Session["mail"] as string;
+                string mail_user = username + mail.Replace(mail.Split('@')[0], "");
+                EWSHelper calendar = new EWSHelper();
+                calendar.GetAllCalendar(mail_user, password);
+                Toast.Success("Sincronización realizada correctamente.", "Mensaje del sistema", this.Page);
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al sincornizar con el servidor: " + ex.Message, this.Page);
+            }
+            finally {
+
             }
         }
     }

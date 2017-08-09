@@ -140,12 +140,7 @@ namespace presentacion
                                 ip, lat, lon, region, proveedor, modelo, fecha_inicio_sesion, finger_print);
                             int id_usuario_sesion = ds.Tables[0].Columns.Contains("id_usuario_sesion") ?
                                 Convert.ToInt32(ds.Tables[0].Rows[0]["id_usuario_sesion"]) : 0;
-                            Session["devices_conectados"] = UpdateDevices(username);
-                            string mail = Session["mail"] as string;
-                            string mail_user = username + mail.Replace(mail.Split('@')[0], "");
-                            EWSHelper calendar = new EWSHelper();
-                            calendar.GetAllCalendar(mail_user, password);
-                          
+                            Session["devices_conectados"] = UpdateDevices(username);                          
 
                             if (id_usuario_sesion > 0)
                             {

@@ -164,3 +164,11 @@ function CloseDeviceMP(id_usuario_sesion, command) {
 
     return false;
 }
+
+function LoadSinc(msg) {
+    if (confirm(msg)) {
+        return true;
+    } else {
+        return false;
+    }
+}
