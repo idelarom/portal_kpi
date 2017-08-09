@@ -40,8 +40,8 @@ namespace presentacion
         {
             try
             {
-                rdpfechainicial.SelectedDate = DateTime.Now;
-                rdpfechafinal.SelectedDate = DateTime.Now;
+                rdpfechainicial.SelectedDate = DateTime.Today;
+                rdpfechafinal.SelectedDate = DateTime.Today;
                 int NumJefe = Convert.ToInt32(Session["NumJefe"]);
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
                 Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
@@ -160,12 +160,16 @@ namespace presentacion
             try
             {
                 string pLstEmpleados = CadenaUsuariosFiltro();
-                if (rdpfechainicial.SelectedDate.Value > rdpfechafinal.SelectedDate.Value)
+                DateTime fechaInicial = Convert.ToDateTime(rdpfechainicial.SelectedDate);
+                DateTime fechaFinal = Convert.ToDateTime(rdpfechafinal.SelectedDate);
+
+
+                if (fechaInicial > fechaFinal)
                 {
                     ModalShow("#myModal");
                     Toast.Error("La fecha inicial no puede ser mayor a la fecha final seleccionada.", this);
                 }
-                else if (rdpfechafinal.SelectedDate.Value > DateTime.Now)
+                else if (fechaFinal > DateTime.Now)
                 {
                     ModalShow("#myModal");
                     Toast.Error("la fecha final no puede ser mayor a la fecha actual", this);
@@ -177,11 +181,9 @@ namespace presentacion
                 }
                 else
                 {
-                    string Usr = Session["usuario"] as string;
-                    lblfechaini.Text = Convert.ToDateTime(rdpfechainicial.SelectedDate).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
-                    lblfechafin.Text = Convert.ToDateTime(rdpfechafinal.SelectedDate).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
-                    DateTime fechaInicial = rdpfechainicial.SelectedDate.Value;
-                    DateTime fechaFinal = rdpfechafinal.SelectedDate.Value;
+                    string Usr = Session["usuario"] as string;                   
+                    lblfechaini.Text = Convert.ToDateTime(fechaInicial).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
+                    lblfechafin.Text = Convert.ToDateTime(fechaInicial).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();                    
                     DataSet ds = new DataSet();
                     PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
                     ds = PerformanceIngenieria.spq_Ingenieros_Performance(fechaInicial, fechaFinal, pLstEmpleados, Usr);
@@ -302,9 +304,9 @@ namespace presentacion
 
         protected void gridPerformance_DetailTableDataBind(object sender, GridDetailTableDataBindEventArgs e)
         {
-            
-            DateTime fechaInicial = rdpfechainicial.SelectedDate.Value.Date;
-            DateTime fechaFinal = rdpfechafinal.SelectedDate.Value.Date;
+
+            DateTime fechaInicial = Convert.ToDateTime(hdffechainicial.Value);
+            DateTime fechaFinal = Convert.ToDateTime(hdffechafinal.Value);
             PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
 
             GridDataItem dataItem = ((GridDataItem)e.DetailTableView.ParentItem);

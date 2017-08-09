@@ -102,12 +102,6 @@
                         </h4>
                         
                     </div>
-                    <%--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final:</strong>
-                            &nbsp;<asp:Label ID="lblfechafin" runat="server" Text="Label"></asp:Label>
-                        </h5>
-                        
-                    </div>--%>
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">
@@ -313,17 +307,7 @@
                                 <span aria-hidden="true">×</span></button>
                             <h4 class="modal-title">Filtros</h4>
                         </div>
-                        <div class="modal-body" id="div_modalbodyfiltros" runat="server">                           
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
-                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>                                     
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"  style="font-size:10px;">
-                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
-                                    <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap" ></telerik:RadDatePicker>
-                                </div>
-                            </div>
+                        <div class="modal-body" id="div_modalbodyfiltros" runat="server">   
                             <div class="row">
                                  <div class="col-lg-12 col-xs-12">
                                     <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Seleccione el empleado a consultar</strong>
@@ -346,6 +330,16 @@
                                     <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control"
                                         AutoPostBack="true" OnSelectedIndexChanged="ddlempleado_a_consultar_SelectedIndexChanged" runat="server">
                                     </asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
+                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>                                     
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"  style="font-size:10px;">
+                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
+                                    <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
                             </div>
                             <div class="row">
@@ -409,4 +403,6 @@
         </div>
     </div>
     <asp:HiddenField ID="hdfsessionid" runat="server" />
+     <asp:HiddenField ID="hdffechainicial" runat="server" />
+     <asp:HiddenField ID="hdffechafinal" runat="server" />
 </asp:Content>
