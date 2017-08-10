@@ -62,3 +62,12 @@
     background-color: #C42C2C !important; 
     color: white;
 }
+.sidebar-mini.sidebar-collapse .sidebar-menu>li:hover>a>.pull-right-container {
+
+    left: 220px !important;
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu>li:hover>a>span:not(.pull-right), .sidebar-mini.sidebar-collapse .sidebar-menu>li:hover>.treeview-menu {
+
+    width: 220px;
+}

@@ -525,6 +525,7 @@ namespace presentacion
                         string id = row["key"].ToString();
                         EWSHelper appointments = new EWSHelper();
                         vmensaje = comand == "aceptar" ? appointments.AcceptAppointment(mail_user, password, id) : appointments.DeclineAppointment(mail_user, password, id, motivo);
+                        if (comand == "rechazar" && vmensaje == "") { vmensaje = recordatorio.Eliminar(entidad);  }
                     }
                 }
                 if (vmensaje == "")
@@ -544,6 +545,9 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al responder recordatorio: " + ex.Message, this);
+            }
+            finally {
+                load_items.Style["display"] = "none";
             }
         }
     }

@@ -30,9 +30,7 @@ namespace presentacion
                 CargarOrdenDivs();
                 IniciarCalendario();
             }
-        }
-
-       
+        }       
 
         [System.Web.Services.WebMethod]
         public static String getDivs(string usuario)
@@ -49,7 +47,6 @@ namespace presentacion
                 return "";
             }
         }
-
 
         private void CargarOrdenDivs()
         {
@@ -75,6 +72,7 @@ namespace presentacion
                 Toast.Error(ex.Message,this);
             }
         }
+
         public StringBuilder InicializarCalendario()
         {
             try
@@ -175,9 +173,11 @@ namespace presentacion
                 return new StringBuilder();
             }
         }
+
         private void IniciarCalendario()
         {
             ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), InicializarCalendario().ToString(), false);
+            load_calendar.Visible = false;
         }
 
         private void ModalShow(string modalname)

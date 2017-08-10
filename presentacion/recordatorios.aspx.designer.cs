@@ -58,6 +58,24 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Repeater repeat_list_rec;
         
         /// <summary>
+        /// Control load_items.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load_items;
+        
+        /// <summary>
+        /// Control load_calendar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load_calendar;
+        
+        /// <summary>
         /// Control UpdatePanel1.
         /// </summary>
         /// <remarks>

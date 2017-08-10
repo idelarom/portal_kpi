@@ -93,20 +93,24 @@ namespace presentacion
                         }
                         else
                         {
+                            DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));//path local
                             DirectoryEntry directoryEntry = new DirectoryEntry("LDAP://" + dominio, username, password);
                             //Create a searcher on your DirectoryEntry
                             DirectorySearcher adSearch = new DirectorySearcher(directoryEntry);
                             adSearch.SearchScope = SearchScope.Subtree;    //Look into all subtree during the search
                             adSearch.Filter = "(&(ObjectClass=user)(sAMAccountName=" + username + "))";    //Filter information, here i'm looking at a user with given username
                             SearchResult sResult = adSearch.FindOne();       //username is unique, so I want to find only one
-                            string imagen = "";
-                            if (sResult.Properties["thumbnailPhoto"].Count > 0)
+                            string name = dirInfo.ToString() + username + ".png";
+                            if (!File.Exists(name))
                             {
-                                byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
-                                imagen = GuardarImagenUsuario(array_img, username + ".png");
+                                string imagen = "";
+                                if (sResult.Properties["thumbnailPhoto"].Count > 0)
+                                {
+                                    byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
+                                    imagen = GuardarImagenUsuario(array_img, username + ".png");
+                                }
                             }
                             string adress = sResult.Properties["mail"][0].ToString();
-                            //recuperamos datos
                             string nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
                                         funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' '));
                             string puesto = (row["puesto"].ToString().Trim());
@@ -116,17 +120,20 @@ namespace presentacion
                             puesto = puesto.ToLower();
                             //pasamos a estilos title
                             Session["mail"] = adress;
-                            Session["imagen"] = imagen;
+                            Session["imagen"] = username + ".png";
                             Session["usuario"] = username;
                             Session["password"] = password;
                             Session["contraseña"] = password;
-                            Session["nombre"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
+                            string nombre_pro = row["nombre_provicional"].ToString();
+                            Session["nombre"] = nombre_pro != "" ? nombre_pro:CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
                             Session["correo"] = row["Company_E_Mail"].ToString().Trim().ToLower();
                             Session["puesto"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto);
                             Session["perfil"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil);
                             Session["id_perfil"] = Convert.ToInt32(row["id_perfil"]);
                             Session["NumJefe"] = Convert.ToInt32(row["NumJefe"]);
                             Session["num_empleado"] = Convert.ToInt32(row["num_empleado"]);
+                            Session["mostrar_recordatorios"] = Convert.ToBoolean(row["mostrar_recordatorios"]);
+                            Session["alerta_inicio_sesion"] = Convert.ToBoolean(row["alerta_inicio_sesion"]);
                             bool ver_Todos = Convert.ToBoolean(row["ver_todos_empleados"]);
                             Session["ver_Todos_los_empleados"] = ver_Todos;
                             DateTime fecha_inicio_sesion = DateTime.Now;
@@ -141,10 +148,6 @@ namespace presentacion
                             int id_usuario_sesion = ds.Tables[0].Columns.Contains("id_usuario_sesion") ?
                                 Convert.ToInt32(ds.Tables[0].Rows[0]["id_usuario_sesion"]) : 0;
                             Session["devices_conectados"] = UpdateDevices(username);
-                            //string mail = Session["mail"] as string;
-                            //string mail_user = username + mail.Replace(mail.Split('@')[0], "");
-                            //EWSHelper calendar = new EWSHelper();
-                            //calendar.GetAllCalendar(mail_user, password);
                             if (id_usuario_sesion > 0)
                             {
                                 Session["id_usuario_sesion"] = id_usuario_sesion;

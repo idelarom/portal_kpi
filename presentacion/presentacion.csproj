@@ -173,6 +173,7 @@
     <Content Include="catalogo_perfiles.aspx" />
     <Content Include="catalogo_sesiones_usuario.aspx" />
     <Content Include="catalogo_widgets.aspx" />
+    <Content Include="configuracion.aspx" />
     <Content Include="configuracion_dashboard.aspx" />
     <Content Include="configuracion_portal.aspx" />
     <Content Include="Default.aspx" />
@@ -1238,6 +1239,13 @@
     </Compile>
     <Compile Include="catalogo_widgets.aspx.designer.cs">
       <DependentUpon>catalogo_widgets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="configuracion.aspx.cs">
+      <DependentUpon>configuracion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="configuracion.aspx.designer.cs">
+      <DependentUpon>configuracion.aspx</DependentUpon>
     </Compile>
     <Compile Include="configuracion_dashboard.aspx.cs">
       <DependentUpon>configuracion_dashboard.aspx</DependentUpon>
