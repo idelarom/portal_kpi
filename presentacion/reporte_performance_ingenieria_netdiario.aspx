@@ -2,6 +2,11 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style type="text/css">
+        .RadGrid_Default .rgRow a, .RadGrid_Default .rgAltRow a, .RadGrid_Default .rgEditRow a{
+            color:#72afd2;
+        }
+    </style>
     <script type="text/javascript">
         $(document).ready(function () {
             Init();
@@ -69,6 +74,26 @@
               $("#<%= lblbemp.ClientID%>").show();
              return true;
           }
+
+        function ViewEmpleado(name,usr,usuario,prev,imple,sop,comp)
+        {
+            var nombre = document.getElementById('<%= hdfnombre.ClientID %>');
+            var vusr = document.getElementById('<%= hdfusr.ClientID %>');
+            var commando = document.getElementById('<%= hdfuserselected.ClientID %>');
+            var vpreventa = document.getElementById('<%= hdfpreventa.ClientID %>');
+            var vimple = document.getElementById('<%= hdfimplementacion.ClientID %>');
+            var vsoporte = document.getElementById('<%= hdfsoporte.ClientID %>');
+            var vcompro = document.getElementById('<%= hdfocompro.ClientID %>');
+            nombre.value = name;
+            vpuesto.value = usr;
+            commando.value = usuario;
+            vpreventa.value = prev;
+            vimple.value = imple;
+            vsoporte.value = sop;
+            vcompro.value = comp;
+            document.getElementById('<%= btnverempleadodetalles.ClientID%>').click();
+            return true;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -109,7 +134,7 @@
             HeaderStyle-ForeColor="#000000" HeaderStyle-Font-Bold="false" SortingSettings-SortToolTip="Ordenar Listado" 
             AutoGenerateColumns="False" HierarchySettings-CollapseTooltip="Ocultar Detalle"  
             HierarchySettings-ExpandTooltip="Ver Detalle" GroupPanelPosition="Top" 
-            ResolvedRenderMode="Classic" Skin="Default" OnDetailTableDataBind="gridPerformance_DetailTableDataBind" OnNeedDataSource="gridPerformance_NeedDataSource"  >
+            ResolvedRenderMode="Classic" Skin="Bootstrap" OnDetailTableDataBind="gridPerformance_DetailTableDataBind" OnNeedDataSource="gridPerformance_NeedDataSource"  >
   
             <HeaderStyle HorizontalAlign="Center" />
             <GroupingSettings CollapseAllTooltip="Collapse all groups"></GroupingSettings>
@@ -125,7 +150,7 @@
             <MasterTableView ShowFooter="false" TableLayout="Fixed" ItemStyle-Height="28px" AlternatingItemStyle-Height="28px" DataKeyNames="Login"   EnableNoRecordsTemplate="true" ClientDataKeyNames="Login"   
             ShowHeadersWhenNoRecords="true"   
             NoDetailRecordsText="No se han encontrado registros..." NoMasterRecordsText="No se han encontrado registros..." 
-             FooterStyle-Font-Bold="true"    >
+             FooterStyle-Font-Bold="true" CssClass="dvv table table-responsive table-condensed">
             <DetailTables>
             <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true" 
             DataKeyNames="Login" Width="100%" runat="server">
@@ -196,82 +221,90 @@
                 <ExpandCollapseColumn Created="True">
                 </ExpandCollapseColumn> 
           <Columns> 
-                <telerik:GridBoundColumn DataField="Login" HeaderText="Login" HeaderStyle-Width="100px" ItemStyle-Wrap="false">
+                <telerik:GridBoundColumn DataField="Login" HeaderText="Login" HeaderStyle-Width="100px" ItemStyle-Wrap="false" Visible="false">
                 <HeaderStyle Width="100px"></HeaderStyle>
 
                 <ItemStyle Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Ingeniero" HeaderText="Ingeniero" HeaderStyle-Width="160px" ItemStyle-Wrap="false">
+               <telerik:GridTemplateColumn ItemStyle-Wrap="false" UniqueName="" HeaderText="Ingeniero">
+                 <ItemTemplate>                    
+                    <%-- <asp:Literal ID="lbtUsr" runat="server" Text="<a href='#' onclick='Open();'></a>"></asp:Literal>--%>
+                     <asp:HyperLink runat="server" CssClass="btn btn-link"  ID="lnkUsuario" Text='<%#Eval("Ingeniero") %>' Style=""  NavigateUrl="#" onclick=""></asp:HyperLink>
+                 </ItemTemplate>
+                 <HeaderStyle Width="300px"></HeaderStyle>
+                <ItemStyle Wrap="False"></ItemStyle>
+               </telerik:GridTemplateColumn>
+               <%-- <telerik:GridBoundColumn DataField="Ingeniero" HeaderText="Ingeniero" HeaderStyle-Width="160px" ItemStyle-Wrap="false">
                 <HeaderStyle Width="160px"></HeaderStyle>
 
                 <ItemStyle Wrap="False"></ItemStyle>
-                </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Soporte" HeaderText="Soporte" HeaderStyle-Width="60px" ItemStyle-Wrap="false">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                </telerik:GridBoundColumn>--%>
+                <telerik:GridBoundColumn DataField="Soporte" HeaderText="Soporte" ItemStyle-Wrap="false">
+                
+                 <HeaderStyle Width="70px"></HeaderStyle>
                 <ItemStyle Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Preventa" HeaderText="Preventa" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Preventa" HeaderText="Preventa" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                
+                    <HeaderStyle Width="70px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Desarrollo_Negocio" HeaderText="Desarrollo de Negocio" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Desarrollo_Negocio" HeaderText="Desarrollo de Negocio" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+               
+                 <HeaderStyle Width="200px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Capacitacion" HeaderText="Capacitación" HeaderStyle-Width="60px" ItemStyle-Wrap="false">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Capacitacion" HeaderText="Capacitación" ItemStyle-Wrap="false">
+                
+                  <HeaderStyle Width="95px"></HeaderStyle>
                 <ItemStyle Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Administrativas" HeaderText="Administrativas" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Administrativas" HeaderText="Administrativas" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">               
+                   
+                    <HeaderStyle Width="105px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Incapacidad" HeaderText="Incapacidad" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Incapacidad" HeaderText="Incapacidad" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                
+                  <HeaderStyle Width="95px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Uptime" HeaderText="Uptime" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Uptime" HeaderText="Uptime" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                
+                 <HeaderStyle Width="65px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Proyectos_Internos_Facturables" HeaderText="Proyectos Internos Facturables" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Proyectos_Internos_Facturables" HeaderText="Proyectos Internos Facturables" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                
+                 <HeaderStyle Width="250px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Proyectos_Internos_No_Facturables" HeaderText="Proyectos_Internos_No_Facturables" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Proyectos_Internos_No_Facturables" HeaderText="Proyectos Internos No Facturables" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                
+                 <HeaderStyle Width="250px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Proyectos" HeaderText="Proyectos" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Proyectos" HeaderText="Proyectos" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+               
+                 <HeaderStyle Width="85px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Tiempo_Personal" HeaderText="Tiempo_Personal" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Tiempo_Personal" HeaderText="Tiempo Personal" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                
+                   <HeaderStyle Width="150px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>
-                <telerik:GridBoundColumn DataField="Usabilidad" HeaderText="Usabilidad" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Usabilidad" HeaderText="Usabilidad" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                
+                <HeaderStyle Width="80px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn>                                                        
-                <telerik:GridBoundColumn DataField="Total_Horas" HeaderText="Total Horas" HeaderStyle-Width="60px" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-                <HeaderStyle Width="60px"></HeaderStyle>
-
+                <telerik:GridBoundColumn DataField="Total_Horas" HeaderText="Total Horas" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+                
+               <HeaderStyle Width="95px"></HeaderStyle>
                 <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
                 </telerik:GridBoundColumn> 
-         </Columns>         
+         </Columns>       
                <NoRecordsTemplate>
               <div style="height:30px" >No se han encontrado registros...</div>
                </NoRecordsTemplate>
@@ -402,7 +435,89 @@
             </asp:UpdatePanel>
         </div>
     </div>
+       <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <asp:UpdatePanel ID="UpdatePanel15" runat="server">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnverempleadodetalles" EventName="Click" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Detalles del empleado</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="box box-widget widget-user">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <div class="widget-user-header bg-aqua-active">
+                                            <h3 class="widget-user-username"> <asp:Label ID="lblnombre" runat="server" Text=""></asp:Label></h3>
+                                            <h5 class="widget-user-desc">
+                                                <asp:Label ID="lblpuesto" runat="server" Text=""></asp:Label></h5>
+                                        </div>
+                                        <div class="widget-user-image">
+                                          <asp:Image ID="img_employee" runat="server" ImageUrl="~/img/user.png"
+                                                CssClass="img-responsive img-circle" />
+                                        </div>
+                                        <div class="box-footer">
+                                            <div class="row">
+                                                <div class="col-sm-3 border-right">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><asp:Label ID="lblprev" runat="server" Text=""></asp:Label></h5>
+                                                        <span class="description-text">Preventa</span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-sm-3 border-right">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><asp:Label ID="lblimple" runat="server" Text=""></asp:Label></h5>
+                                                        <span class="description-text">Implementación</span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-sm-3">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><asp:Label ID="lblsopo" runat="server" Text=""></asp:Label></h5>
+                                                        <span class="description-text">Soporte</span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header"><asp:Label ID="lblcompro" runat="server" Text=""></asp:Label></h5>
+                                                        <span class="description-text">Administracion</span>
+                                                    </div>
+                                                    <!-- /.description-block -->
+                                                </div>
+                                                <!-- /.col -->
+                                            </div>
+                                            <!-- /.row -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <asp:Button ID="btnverempleadodetalles" runat="server" style="display:none;" Text="Button" OnClick="btnverempleadodetalles_Click" />
     <asp:HiddenField ID="hdfsessionid" runat="server" />
-     <asp:HiddenField ID="hdffechainicial" runat="server" />
-     <asp:HiddenField ID="hdffechafinal" runat="server" />
+        <asp:HiddenField ID="hdfuserselected" runat="server" />
+    <asp:HiddenField ID="hdfnombre" runat="server" />
+    <asp:HiddenField ID="hdfusr" runat="server" />
+    <asp:HiddenField ID="hdfpreventa" runat="server" />
+    <asp:HiddenField ID="hdfimplementacion" runat="server" />
+    <asp:HiddenField ID="hdfsoporte" runat="server" />
+    <asp:HiddenField ID="hdfocompro" runat="server" />
 </asp:Content>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
@@ -163,7 +164,6 @@ namespace presentacion
                 DateTime fechaInicial = Convert.ToDateTime(rdpfechainicial.SelectedDate);
                 DateTime fechaFinal = Convert.ToDateTime(rdpfechafinal.SelectedDate);
 
-
                 if (fechaInicial > fechaFinal)
                 {
                     ModalShow("#myModal");
@@ -183,7 +183,7 @@ namespace presentacion
                 {
                     string Usr = Session["usuario"] as string;                   
                     lblfechaini.Text = Convert.ToDateTime(fechaInicial).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
-                    lblfechafin.Text = Convert.ToDateTime(fechaInicial).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();                    
+                    lblfechafin.Text = Convert.ToDateTime(fechaFinal).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();                    
                     DataSet ds = new DataSet();
                     PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
                     ds = PerformanceIngenieria.spq_Ingenieros_Performance(fechaInicial, fechaFinal, pLstEmpleados, Usr);
@@ -305,8 +305,8 @@ namespace presentacion
         protected void gridPerformance_DetailTableDataBind(object sender, GridDetailTableDataBindEventArgs e)
         {
 
-            DateTime fechaInicial = Convert.ToDateTime(hdffechainicial.Value);
-            DateTime fechaFinal = Convert.ToDateTime(hdffechafinal.Value);
+            DateTime fechaInicial = Convert.ToDateTime(rdpfechainicial.SelectedDate);
+            DateTime fechaFinal = Convert.ToDateTime(rdpfechafinal.SelectedDate);
             PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
 
             GridDataItem dataItem = ((GridDataItem)e.DetailTableView.ParentItem);
@@ -536,5 +536,33 @@ namespace presentacion
             }
         }
 
+        protected void btnverempleadodetalles_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));
+                string imagen = hdfuserselected.Value.ToUpper();
+                if (imagen != "" && File.Exists(dirInfo.ToString().Trim() + imagen))
+                {
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    img_employee.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                }
+                lblnombre.Text = hdfnombre.Value;
+                lblpuesto.Text = hdfusr.Value;
+                lblprev.Text = hdfpreventa.Value;
+                lblimple.Text = hdfimplementacion.Value;
+                lblsopo.Text = hdfsoporte.Value;
+                lblcompro.Text = hdfocompro.Value;
+                ModalShow("#ModalEmpleado");
+            }
+            catch (Exception ex)
+            {
+                Alert.ShowAlertError(ex.ToString(), this.Page);
+            }
+        }
     }
 }
