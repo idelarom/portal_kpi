@@ -77,6 +77,7 @@
                 </div>
                 <!-- /.info-box-content -->
             </div>
+            
             <!-- /.info-box -->
         </div>
     </div>
@@ -90,6 +91,11 @@
                 </div>
                 <div class="box-body no-padding">
                     <div id="calendar"></div>
+                </div>
+                
+                <!-- Loading (remove the following to stop the loading)-->
+                <div class="overlay" id="load_calendar" runat="server">
+                    <i class="fa fa-refresh fa-spin"></i>
                 </div>
             </div>
         </div>
@@ -153,7 +159,6 @@
                         </li>
                     </ul>
                 </div>
-                <!-- /.box-body -->
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12" id="dashboard_kpi" style="display: none;">
@@ -180,7 +185,7 @@
                     </div>
                     <!-- /.table-responsive -->
                 </div>
-                <!-- /.box-body -->
+
                 <div class="box-footer clearfix">
                     <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_dashboard_kpi" onclick="CloseAjax('reporte_dashboard_bonos_kpi.aspx');">Ver Reporte
                     </a>

@@ -19,6 +19,7 @@ namespace datos.Model
         public virtual DbSet<recordatorios> recordatorios { get; set; }
         public virtual DbSet<recordatorios_usuarios_adicionales> recordatorios_usuarios_adicionales { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<usuarios_configuraciones> usuarios_configuraciones { get; set; }
         public virtual DbSet<usuarios_perfiles> usuarios_perfiles { get; set; }
         public virtual DbSet<usuarios_sesiones> usuarios_sesiones { get; set; }
         public virtual DbSet<usuarios_widgets> usuarios_widgets { get; set; }
@@ -169,6 +170,14 @@ namespace datos.Model
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<recordatorios_usuarios_adicionales>()
+                .Property(e => e.nombre)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios_configuraciones>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios_configuraciones>()
                 .Property(e => e.nombre)
                 .IsUnicode(false);
 

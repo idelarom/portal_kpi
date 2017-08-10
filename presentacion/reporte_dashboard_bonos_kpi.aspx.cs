@@ -116,6 +116,8 @@ namespace presentacion
             {
                 CargarDatosFiltros("");
             }
+            lnkfiltros.Visible = true;
+            nkcargandofiltros.Style["display"] = "none";
             ModalShow("#myModal");
         }
 

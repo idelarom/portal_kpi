@@ -271,16 +271,20 @@ namespace presentacion
         {
             try
             {
-                DataTable dt = GetRecordsToday(Session["usuario"] as string);
-                if (dt.Rows.Count > 0)
+
+                if (Convert.ToBoolean(Session["mostrar_recordatorios"]))
                 {
-                    ViewState["dt_records_today"] = dt;
-                    lnkcommand.OnClientClick = "return confirm('¿Desea descartar los "+dt.Rows.Count.ToString()+" recordatorios?');";
-                    repeater_tab_recs.DataSource = dt;
-                    repeater_tab_recs.DataBind();
-                    repeater_recs.DataSource = dt;
-                    repeater_recs.DataBind();
-                    ModalShow("#modal_recordatorios_mp");
+                    DataTable dt = GetRecordsToday(Session["usuario"] as string);
+                    if (dt.Rows.Count > 0)
+                    {
+                        ViewState["dt_records_today"] = dt;
+                        lnkcommand.OnClientClick = "return confirm('¿Desea descartar los " + dt.Rows.Count.ToString() + " recordatorios?');";
+                        repeater_tab_recs.DataSource = dt;
+                        repeater_tab_recs.DataBind();
+                        repeater_recs.DataSource = dt;
+                        repeater_recs.DataBind();
+                        ModalShow("#modal_recordatorios_mp");
+                    }
                 }
             }
             catch (Exception ex)

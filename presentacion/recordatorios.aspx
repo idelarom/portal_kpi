@@ -13,8 +13,6 @@
     <style type="text/css">
         .day-style {
             background-color: #ef5350;
-            /*background-image: url("../Images/gplus.png") !important;*/
-            /*background-repeat: no-repeat;*/
         }
 
         .products-list .product-info {
@@ -34,11 +32,11 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
-                        <Triggers>
-                            <asp:AsyncPostBackTrigger ControlID="btnedit" EventName="Click" />
-                            <asp:AsyncPostBackTrigger ControlID="btncalendar" EventName="Click" />
-                            <asp:AsyncPostBackTrigger ControlID="lnkaddrecordatorio" EventName="Click" />
-                        </Triggers>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnedit" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="btncalendar" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="lnkaddrecordatorio" EventName="Click" />
+                </Triggers>
                 <ContentTemplate>
                     <div class="box box-danger">
                         <div class="box-header with-border">
@@ -81,14 +79,14 @@
                                                                          <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Cancelar
                                                                     </asp:LinkButton>
                                                                 </li>
-                                                                <li style="cursor: pointer;" id="li1" runat="server" >
+                                                                <li style="cursor: pointer;" id="li1" runat="server">
                                                                     <asp:LinkButton ID="lnkcommandevent" Visible="true" runat="server" CommandName="Aceptar"
-                                                                        OnClientClick="return confirm('¿Desea aceptar este meeting?')" OnClick="lnkcommandevent_Click"
+                                                                        OnClientClick="return sconfirm('¿Desea aceptar este meeting?')" OnClick="lnkcommandevent_Click"
                                                                         CommandArgument='<%# DataBinder.Eval(Container.DataItem, "id_recordatorio").ToString() %>'>
                                                                          <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Aceptar
                                                                     </asp:LinkButton>
                                                                 </li>
-                                                                <li style="cursor: pointer;" id="li2" runat="server" >
+                                                                <li style="cursor: pointer;" id="li2" runat="server">
                                                                     <asp:LinkButton ID="LinkButton2" Visible="true" runat="server" CommandName="Rechazar"
                                                                         OnClientClick="return ConfirmEntregableDelete('¿Desea rechazar este meeting?')" OnClick="lnkcommandevent_Click"
                                                                         CommandArgument='<%# DataBinder.Eval(Container.DataItem, "id_recordatorio").ToString() %>'>
@@ -112,15 +110,22 @@
 
                             </ul>
                         </div>
+
+                        <div class="overlay" id="load_items" runat="server" style="display: none;">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
                     </div>
 
                 </ContentTemplate>
-                    </asp:UpdatePanel>
+            </asp:UpdatePanel>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="box box-danger">
                 <div class="box-body no-padding">
                     <div id="calendar"></div>
+                </div>
+                <div class="overlay" id="load_calendar" runat="server" style="display: none;">
+                    <i class="fa fa-refresh fa-spin"></i>
                 </div>
             </div>
         </div>

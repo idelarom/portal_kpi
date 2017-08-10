@@ -57,8 +57,11 @@ function ConfirmwidgetProyectoModal(msg) {
 
 function ConfirmEntregableDelete(msg) {
     if (confirm(msg)) {
+        $("#ContentPlaceHolder1_load_items").show();
         return ReturnPrompMsg(msg);
     } else {
+
+        $("#ContentPlaceHolder1_load_items").hide();
         return false;
     }
 }
@@ -72,7 +75,6 @@ function ReturnPrompMsg() {
             return true;
         } else {
             alert('ES NECESARIO EL MOTIVO DE LA ELIMINACIÓN.');
-
             ReturnPrompMsg();
             return false;
         }
@@ -86,4 +88,13 @@ function EditRecordatorios(id_rec) {
     myHidden.value = id_rec;
     document.getElementById('ContentPlaceHolder1_btnedit').click();
     return true;
+}
+
+function sconfirm(msg) {
+    if (confirm(msg)) {
+        $("#ContentPlaceHolder1_load_items").show();
+        return true;
+    } else {
+        return false;
+    }
 }

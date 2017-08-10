@@ -10,105 +10,114 @@
 namespace presentacion {
     
     
-    public partial class inicio {
+    public partial class configuracion {
         
         /// <summary>
-        /// Control load_calendar.
+        /// Control txtnombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load_calendar;
+        protected global::System.Web.UI.WebControls.TextBox txtnombre;
         
         /// <summary>
-        /// Control txtfechainicio.
+        /// Control lnkcargandoguardarnombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtfechainicio;
+        protected global::System.Web.UI.WebControls.LinkButton lnkcargandoguardarnombre;
         
         /// <summary>
-        /// Control txtfechafin.
+        /// Control lnkguardarnombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtfechafin;
+        protected global::System.Web.UI.WebControls.LinkButton lnkguardarnombre;
         
         /// <summary>
-        /// Control rtxttitulo.
+        /// Control fupfotoperfil.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox rtxttitulo;
+        protected global::System.Web.UI.WebControls.FileUpload fupfotoperfil;
         
         /// <summary>
-        /// Control rtxtlugar.
+        /// Control lnkloadimagen.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox rtxtlugar;
+        protected global::System.Web.UI.WebControls.LinkButton lnkloadimagen;
         
         /// <summary>
-        /// Control rtxtorganizador.
+        /// Control lnksubirimagen.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox rtxtorganizador;
+        protected global::System.Web.UI.WebControls.LinkButton lnksubirimagen;
         
         /// <summary>
-        /// Control rtxtcorreorganizador.
+        /// Control up_seguridad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox rtxtcorreorganizador;
+        protected global::System.Web.UI.UpdatePanel up_seguridad;
         
         /// <summary>
-        /// Control rtxtdescripcion.
+        /// Control cbxalerta_inicio_sesion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox rtxtdescripcion;
+        protected global::System.Web.UI.WebControls.CheckBox cbxalerta_inicio_sesion;
         
         /// <summary>
-        /// Control hdf_usuario.
+        /// Control up_sinc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdf_usuario;
+        protected global::System.Web.UI.UpdatePanel up_sinc;
         
         /// <summary>
-        /// Control hdf_numempleado.
+        /// Control lnkloadsinc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdf_numempleado;
+        protected global::System.Web.UI.WebControls.LinkButton lnkloadsinc;
         
         /// <summary>
-        /// Control hdf_ver_Todos_empleados.
+        /// Control lnksincronizar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdf_ver_Todos_empleados;
+        protected global::System.Web.UI.WebControls.LinkButton lnksincronizar;
+        
+        /// <summary>
+        /// Control cbxrecordatorios.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxrecordatorios;
     }
 }
