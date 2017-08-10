@@ -46,3 +46,19 @@
     background-color: #f5f5f5;
     border-radius: 4px;
 }
+.nav-tabs-custom>.tab-content {
+    background: #fff;
+    padding: 0px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a {
+    color: #fff;
+    background: #1e282c;
+    border-left-color: #DE3230;
+}
+.modal-header {
+    border-bottom-color: #f4f4f4;
+    background-color: #C42C2C !important; 
+    color: white;
+}

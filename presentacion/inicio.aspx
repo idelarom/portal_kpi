@@ -2,7 +2,6 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="dist/js/loading.js"></script>
     <!-- fullCalendar 2.2.5 -->
     <link href="plugins/fullcalendar/fullcalendar.css" rel="stylesheet" />
     <script src="plugins/fullcalendar/moment.min.js"></script>
@@ -57,11 +56,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-            <h4 class="page-header">DashBoard</h4>
+            <h4 class="page-header">Dashboard</h4>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" id="dashboard_kpi_ind" style="display: none;">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="dashboard_kpi_ind" style="display: none;">
             <div class="info-box bg-red">
                 <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
 
@@ -89,12 +88,12 @@
                     <h3 class="box-title">Calendario</h3>
 
                 </div>
-                <div class="box-body">
+                <div class="box-body no-padding">
                     <div id="calendar"></div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="desglo_dashboard_kpi_ind">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="desglo_dashboard_kpi_ind">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Valor Ganado</h3>
@@ -191,20 +190,57 @@
         </div>
 
     </div>
-      <div class="modal modal-info fade" id="modal_evento"  data-backdrop="static" data-keyboard="false">
-          <div class="modal-dialog">
+      <div class="modal fade  bs-example-modal-lg" id="modal_evento"  data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog  modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Info Modal</h4>
+                <h4 class="modal-title">Recordatorio</h4>
               </div>
-              <div class="modal-body">
-                <p>One fine body&hellip;</p>
-              </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-xs-6">
+                            <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha y hora</strong></h5>
+                            <telerik:RadTextBox ID="txtfechainicio" ReadOnly="true" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                        </div>
+                        <div class="col-lg-6 col-xs-6" id="div_fecha_fin">
+                            <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha y hora fin</strong></h5>
+                            <telerik:RadTextBox ID="txtfechafin" ReadOnly="true" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12">
+                            <h5><strong><i class="fa fa-outdent" aria-hidden="true"></i>&nbsp;Titulo</strong></h5>
+                            <telerik:RadTextBox ID="rtxttitulo" ReadOnly="true" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                        </div>
+                    </div>
+                    <div class="row" id="div_organizador">
+                        <div class="col-lg-12 col-sm-12">
+                            <h5><strong><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Lugar</strong></h5>
+                            <telerik:RadTextBox ID="rtxtlugar" ReadOnly="true" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Organizador</strong></h5>
+                            <telerik:RadTextBox ID="rtxtorganizador" ReadOnly="true" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Correo del organizador</strong></h5>
+                            <telerik:RadTextBox ID="rtxtcorreorganizador" ReadOnly="true" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12">
+                            <h5><strong><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;Descripción</strong></h5>
+                            <telerik:RadTextBox Style="font-size: 12px;"  ReadOnly="true" ID="rtxtdescripcion" TextMode="MultiLine" Rows="4" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+
+                        </div>
+                    </div>
+                </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline">Save changes</button>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
             <!-- /.modal-content -->

@@ -78,14 +78,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP6o7sCaKP9fkavw-w1AXz-x2sysjcAJY&libraries=geometry,places"></script>
-    <link href="dist/css/pages/master_page.css" rel="stylesheet" />
+   
+    <script src="dist/js/loading.js"></script>
+    
+     <link href="dist/css/pages/master_page.css" rel="stylesheet" />
     <script src="dist/js/pages/master_page.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body class="hold-transition skin-blue sidebar-collapse  sidebar-mini">
+<body class="hold-transition skin-blue sidebar-collapse  sidebar-mini" id="body_mp">
 
     <form id="form1" runat="server">
+        <telerik:RadScriptManager ID="RadScriptManager1" runat="server"></telerik:RadScriptManager>
         <div class="wrapper">
 
             <header class="main-header">
@@ -136,10 +140,22 @@
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
+                                            <asp:UpdatePanel ID="mp_up" runat="server">
+                                                <ContentTemplate>
+
+                                                    <asp:LinkButton ID="lnkloadsinc_mp" runat="server" CssClass="btn btn-default btn-flat"
+                                                        OnClientClick="return false;" Style="display: none;">
+                                               <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>&nbsp;Sincronizando</asp:LinkButton>
+                                                    <asp:LinkButton ID="lnksincronizar_mp" runat="server" CssClass="btn btn-default btn-flat"
+                                                        OnClientClick="return LoadSinc('¿Desea sincronizar con el servidor Exchange de Migesa?');" OnClick="lnksincronizar_Click">
+                                                <i class="fa fa-refresh"></i>&nbsp;Sincronizar </asp:LinkButton>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
                                         </div>
                                         <div class="pull-right">
-                                            <asp:LinkButton ID="LinkButton1" runat="server" CssClass="btn btn-default btn-flat"
-                                                OnClientClick="return confirm('¿Desea Cerrar Sesión?');" OnClick="LinkButton1_Click">
+                                            <asp:LinkButton ID="lnkcerrarsession" runat="server" CssClass="btn btn-default btn-flat"
+                                                OnClientClick="return confirm('¿Desea Cerrar Sesión?');" OnClick="lnkcerrarsession_Click">
                                                 <i class="fa fa-sign-out" aria-hidden="true"></i>Cerrar Sesión</asp:LinkButton>
                                         </div>
                                     </li>
@@ -284,7 +300,6 @@
             </aside>
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                <telerik:RadScriptManager ID="RadScriptManager1" runat="server"></telerik:RadScriptManager>
 
                 <div id="div_load" runat="server" style="display: none; position: fixed; left: 0px; top: 30%; width: 100%; height: 100%; z-index: 9999;">
                     <asp:Image ID="idid" Style="display: block; margin: 0 auto;" Width="100px"
@@ -305,7 +320,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <asp:UpdatePanel ID="mpupdate_panel" runat="server">
                     <Triggers>
-                        <asp:PostBackTrigger ControlID="lnkvermas"/>
+                        <asp:PostBackTrigger ControlID="lnkvermas" />
                         <asp:AsyncPostBackTrigger ControlID="btncerrarsesion" EventName="Click" />
                     </Triggers>
                     <ContentTemplate>
@@ -458,8 +473,119 @@
                 <asp:HiddenField ID="hdf_usuario_master" runat="server" />
                 <asp:HiddenField ID="hdfid_usuario_sesion" runat="server" />
                 <asp:HiddenField ID="hdfcommand" runat="server" />
-                <asp:Button ID="btncerrarsesion" OnClick="btncerrarsesion_Click" runat="server" Text="Button" style="display:none" />
+                <asp:Button ID="btncerrarsesion" OnClick="btncerrarsesion_Click" runat="server" Text="Button" Style="display: none" />
             </div>
+        </div>
+        <div class="modal fade  bs-example-modal-lg" id="modal_recordatorios_mp" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog   modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #C42C2C !important; color: white;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Recordatorios</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- Custom Tabs -->
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <asp:Repeater ID="repeater_tab_recs" runat="server">
+                                            <ItemTemplate>
+                                                <li class='<%# (Container.ItemIndex + 1) == 1 ? "active":"" %>'>
+                                                    <a href='<%#"#tab"+Eval("id_recordatorio").ToString() %>' data-toggle="tab" aria-expanded="false">
+                                                        <%#"Recordatorio "+(Container.ItemIndex + 1).ToString() %>
+                                                    </a>
+                                                </li>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <asp:Repeater ID="repeater_recs" runat="server">
+                                            <ItemTemplate>
+                                                <div class='<%# (Container.ItemIndex + 1) == 1 ? "tab-pane active":"tab-pane" %>' id='<%#"tab"+Eval("id_recordatorio").ToString() %>'>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-12">
+                                                            <h6><strong><i class="fa fa-outdent" aria-hidden="true"></i>&nbsp;Titulo</strong></h6>
+                                                            <asp:TextBox CssClass=" form-control input-sm" ID="rtxttitulo_mp" Text='<%#Eval("titulo").ToString() %>'
+                                                                 ReadOnly="true" Width="100%" runat="server"></asp:TextBox>
+                                                        </div>
+                                                        <div class="col-lg-6 col-xs-12">
+                                                            <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha y hora</strong></h6>
+                                                            <asp:TextBox CssClass=" form-control input-sm" ID="txtfechainicio_mp" Text='<%# Convert.ToDateTime(Eval("fecha")).ToString("dddd dd MMMM, yyyy hh:mm tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %>'
+                                                                ReadOnly="true" Width="100%" runat="server">
+                                                            </asp:TextBox>
+                                                        </div>
+                                                        <div class="col-lg-6 col-xs-12" style="<%# "display:" + (Convert.ToBoolean(Eval("appointment")) ? "block": "none")%>">
+                                                            <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha y hora fin</strong></h6>
+                                                            <asp:TextBox CssClass=" form-control input-sm" ID="txtfechafin_mp" ReadOnly="true" Width="100%" runat="server"
+                                                                Text='<%# Convert.ToDateTime(Eval("fecha_end") == DBNull.Value ? DateTime.Now:Eval("fecha_end") ).ToString("dddd dd MMMM, yyyy hh:mm tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %>'>
+                                                            </asp:TextBox>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row" style="<%# "display:" + (Convert.ToBoolean(Eval("appointment")) ? "block": "none")%>">
+                                                        <div class="col-lg-12 col-sm-12">
+                                                            <h6><strong><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Lugar</strong></h6>
+                                                            <asp:TextBox CssClass=" form-control input-sm" ID="rtxtlugar_mp" Text='<%#Eval("location").ToString() %>' ReadOnly="true" Width="100%" runat="server"
+                                                                >
+                                                            </asp:TextBox>
+                                                        </div>
+                                                        <div class="col-lg-6 col-sm-12">
+                                                            <h6><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Organizador</strong></h6>
+                                                            <asp:TextBox CssClass=" form-control input-sm" ID="rtxtorganizador_mp" Text='<%#Eval("organizer").ToString() %>' ReadOnly="true" Width="100%" runat="server"
+                                                                >
+                                                            </asp:TextBox>
+                                                        </div>
+                                                        <div class="col-lg-6 col-sm-12">
+                                                            <h6><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Correo del organizador</strong></h6>
+                                                            <asp:TextBox CssClass=" form-control input-sm" ID="rtxtcorreorganizador_mp" Text='<%#Eval("organizer_address").ToString() %>' ReadOnly="true" Width="100%"
+                                                                runat="server">
+                                                            </asp:TextBox>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-12">
+                                                            <h6><strong><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;Descripción</strong></h6>
+                                                            <asp:TextBox CssClass=" form-control input-sm" Style="font-size: 11px;" Text='<%#Eval("descripcion").ToString() %>' ReadOnly="true" ID="rtxtdescripcion_mp"
+                                                                TextMode="MultiLine" Rows="3" Width="100%" runat="server" Skin="Bootstrap">
+                                                            </asp:TextBox>
+
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <asp:LinkButton ID="lnkdescartartodo" CssClass="btn btn-primary btn-flat" runat="server"
+                                                        CommandName="Descartar" OnClick="lnkcommand_Click"  CommandArgument='<%#Eval("id_recordatorio").ToString() %>'
+                                                        OnClientClick="return confirm('¿Desea descartar el recordatorio?');">
+                                                        <i class="fa fa-share" aria-hidden="true"></i>&nbsp;Descartar
+                                                    </asp:LinkButton>
+                                                    <asp:LinkButton ID="lnkposponer" CssClass="btn btn-primary btn-flat" runat="server"
+                                                        CommandName="Posponer" OnClick="lnkcommand_Click"  CommandArgument='<%#Eval("id_recordatorio").ToString() %>'
+                                                        OnClientClick="return confirm('¿Desea posponer el recordatorio?');">
+                                                        <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;Posponer 15 min.
+                                                    </asp:LinkButton>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+
+                                    </div>
+                                    <!-- /.tab-content -->
+                                </div>
+                                <asp:LinkButton ID="lnkcommand" OnClick="lnkcommand_Click" CssClass="btn btn-danger btn-flat pull-right" runat="server"
+                                    CommandName="Todo" CommandArgument="0">
+                                    <i class="fa fa-share" aria-hidden="true"></i>&nbsp;Descartar todo
+                                </asp:LinkButton>
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
         </div>
     </form>
 </body>

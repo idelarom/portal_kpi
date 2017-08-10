@@ -32,7 +32,7 @@
         <div class="col-lg-12">
             <h4 class="page-header">Mis Recordatorios y Reuniones</h4>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
                         <Triggers>
                             <asp:AsyncPostBackTrigger ControlID="btnedit" EventName="Click" />
@@ -117,7 +117,7 @@
                 </ContentTemplate>
                     </asp:UpdatePanel>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="box box-danger">
                 <div class="box-body no-padding">
                     <div id="calendar"></div>
@@ -181,7 +181,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-sm-12">
                                     <h5><strong><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;Descripción</strong></h5>
-                                    <telerik:RadTextBox  style="font-size:11px;" ID="rtxtdescripcion" TextMode="MultiLine" Rows="6" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                                    <telerik:RadTextBox  style="font-size:12px;" ID="rtxtdescripcion" TextMode="MultiLine" Rows="4" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                    
                                 </div>
                             </div>

@@ -77,7 +77,7 @@ namespace negocio.Componentes
                 recordatorio.organizer = entidad.organizer;
                 recordatorio.organizer_address = entidad.organizer_address;
                 recordatorio.fecha_end = entidad.fecha_end;                
-                ICollection<recordatorios_usuarios_adicionales> lstusuarios_ad = recordatorio.recordatorios_usuarios_adicionales;
+                //ICollection<recordatorios_usuarios_adicionales> lstusuarios_ad = recordatorio.recordatorios_usuarios_adicionales;
                 //foreach (recordatorios_usuarios_adicionales usuario_adicional in lstusuarios_ad)
                 //{
                 //    context.recordatorios_usuarios_adicionales.Remove(usuario_adicional);
@@ -88,6 +88,64 @@ namespace negocio.Componentes
                 //    usu_ad.activo = true;
                 //    context.recordatorios_usuarios_adicionales.Add(usu_ad);
                 //}
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Edita un recordatorio
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <param name="usuarios_adicionales"></param>
+        /// <returns></returns>
+        public string Descartar(int id_recordatorio,string usuario)
+        {
+            try
+            {
+                Model context = new Model();
+                recordatorios recordatorio = context.recordatorios
+                                .First(i => i.id_recordatorio == id_recordatorio);
+                recordatorio.activo = false;
+                recordatorio.usuario_borrado = usuario;
+                recordatorio.fecha_borrado = DateTime.Now;
+                recordatorio.comentarios_borrado = "Descartado por el usuario: "+usuario;
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Edita un recordatorio
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <param name="usuarios_adicionales"></param>
+        /// <returns></returns>
+        public string Posponer(int id_recordatorio, int minutes)
+        {
+            try
+            {
+                Model context = new Model();
+                recordatorios recordatorio = context.recordatorios
+                                .First(i => i.id_recordatorio == id_recordatorio);
+                recordatorio.fecha = recordatorio.fecha.AddMinutes(minutes);
+                recordatorio.fecha_end =Convert.ToDateTime(recordatorio.fecha_end).AddMinutes(minutes);
                 context.SaveChanges();
                 return "";
             }
@@ -201,7 +259,7 @@ namespace negocio.Componentes
             }
         }
 
-        public bool ExistAppointment(string usuario, string key)
+        public bool ExistAppointment(string usuario, string key, string organizer, string subjetc, DateTime start, DateTime end)
         {
             DataTable dt = new DataTable();
             try
@@ -209,7 +267,8 @@ namespace negocio.Componentes
                 Model context = new Model();
                 var query = context.recordatorios
                                 .Where(s => s.usuario == usuario && s.activo &&
-                                s.key_appointment_exchanged == key)
+                                s.key_appointment_exchanged == key && s.organizer == organizer && s.titulo == subjetc
+                                && s.fecha == start && s.fecha_end == end)
                                 .Select(u => new
                                 {
                                     u.id_recordatorio,
@@ -240,7 +299,7 @@ namespace negocio.Componentes
             {
                 Model context = new Model();
                 DateTime fecha_inicio = DateTime.Now.AddMinutes(-15);
-                DateTime fecha_fin = DateTime.Now.AddMinutes(5);
+                DateTime fecha_fin = DateTime.Now.AddMinutes(15);
                 var query = context.recordatorios
                                 .Where(s => s.usuario == usuario && s.activo &&
                                 s.fecha >= fecha_inicio && s.fecha <= fecha_fin)

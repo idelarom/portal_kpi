@@ -6,9 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -39,31 +37,37 @@ namespace presentacion
             {
                 RecordatoriosCOM recordatorios = new RecordatoriosCOM();
                 DataTable dt = recordatorios.Get(user);
-                List<Event> eventos = new List<Event>(); 
+                List<Event> eventos = new List<Event>();
                 foreach (DataRow row in dt.Rows)
                 {
+                    row["fecha_end"] = row["fecha_end"] == DBNull.Value ? Convert.ToDateTime(row["fecha"]).AddMinutes(30) : row["fecha_end"];
                     string color = Convert.ToBoolean(row["appointment"]) ? "#1565c0 " : "#f56954";
                     string day_ = Convert.ToDateTime(row["fecha"]).Day.ToString();
                     string month_ = (Convert.ToDateTime(row["fecha"]).Month).ToString();
                     string year_ = Convert.ToDateTime(row["fecha"]).Year.ToString();
                     string minutes_ = (Convert.ToDateTime(row["fecha"]).Minute).ToString();
-                    string minutes_finish = (Convert.ToDateTime(row["fecha"]).Minute + 30).ToString();
+                    string minutes_finish = (Convert.ToDateTime(row["fecha_end"]).Minute).ToString();
                     string hours = Convert.ToDateTime(row["fecha"]).Hour.ToString();
+                    string hours_ = Convert.ToDateTime(row["fecha_end"]).Hour.ToString();
                     month_ = month_.Length == 1 ? "0" + month_ : month_;
                     day_ = day_.Length == 1 ? "0" + day_ : day_;
                     hours = hours.Length == 1 ? "0" + hours : hours;
                     minutes_ = minutes_.Length == 1 ? "0" + minutes_ : minutes_;
                     minutes_finish = minutes_finish.Length == 1 ? "0" + minutes_finish : minutes_finish;
                     eventos.Add(new Event(
-                        row["titulo"].ToString(), 
+                        row["titulo"].ToString(),
                         year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_ + ":00",
-                        year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_finish + ":00",
+                        year_ + "-" + month_ + "-" + day_ + "T" + hours_ + ":" + minutes_finish + ":00",
                         color,
                         color,
-                        row["organizer"] == null ?"": row["organizer"].ToString(),
+                        row["organizer"] == null ? "" : row["organizer"].ToString(),
                         row["location"] == null ? "" : row["location"].ToString(),
                         row["descripcion"] == null ? "" : row["descripcion"].ToString(),
-                        row["organizer_address"] == null ? "" : row["organizer_address"].ToString()));
+                        row["organizer_address"] == null ? "" : row["organizer_address"].ToString(),
+                        Convert.ToBoolean(row["appointment"]),
+                        Convert.ToDateTime(row["fecha"]).ToString("dddd dd MMMM, yyyy hh:mm tt", CultureInfo.CreateSpecificCulture("es-MX")),
+                        Convert.ToDateTime(row["fecha_end"]).ToString("dddd dd MMMM, yyyy hh:mm tt", CultureInfo.CreateSpecificCulture("es-MX"))
+                        ));
                 }
                 string ret = JsonConvert.SerializeObject(eventos);
                 return ret;
@@ -73,11 +77,11 @@ namespace presentacion
                 return JsonConvert.SerializeObject("");
             }
         }
+
         public StringBuilder InicializarCalendario()
         {
             try
             {
-
                 string usuario = Session["usuario"] as string;
                 DateTime fecha = Convert.ToDateTime(txtfecha.Text);
                 RecordatoriosCOM recordatorios = new RecordatoriosCOM();
@@ -85,28 +89,30 @@ namespace presentacion
                 string eventos = "";
                 foreach (DataRow row in dt.Rows)
                 {
+                    row["fecha_end"] = row["fecha_end"] == DBNull.Value ? Convert.ToDateTime(row["fecha"]).AddMinutes(30) : row["fecha_end"];
                     string color = Convert.ToBoolean(row["appointment"]) ? "#1565c0 " : "#f56954";
                     string day_ = Convert.ToDateTime(row["fecha"]).Day.ToString();
                     string month_ = (Convert.ToDateTime(row["fecha"]).Month).ToString();
                     string year_ = Convert.ToDateTime(row["fecha"]).Year.ToString();
                     string minutes_ = (Convert.ToDateTime(row["fecha"]).Minute).ToString();
-                    string minutes_finish = (Convert.ToDateTime(row["fecha"]).Minute + 30).ToString();
+                    string minutes_finish = (Convert.ToDateTime(row["fecha_end"]).Minute).ToString();
                     string hours = Convert.ToDateTime(row["fecha"]).Hour.ToString();
+                    string hours_ = Convert.ToDateTime(row["fecha_end"]).Hour.ToString();
                     month_ = month_.Length == 1 ? "0" + month_ : month_;
                     day_ = day_.Length == 1 ? "0" + day_ : day_;
                     hours = hours.Length == 1 ? "0" + hours : hours;
                     minutes_ = minutes_.Length == 1 ? "0" + minutes_ : minutes_;
                     minutes_finish = minutes_finish.Length == 1 ? "0" + minutes_finish : minutes_finish;
-                    eventos =eventos + "  {title: '"+ row["titulo"] .ToString()+ "'," +
-                                "start: '"+year_+"-"+month_+"-"+day_+"T"+hours+":"+minutes_+":00'," +
+                    eventos = eventos + "  {title: '" + row["titulo"].ToString() + "'," +
+                                "start: '" + year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_ + ":00'," +
                                 "end:'" + year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_finish + ":00'," +
                                 "backgroundColor:'" + color + "'," +
-                                "borderColor: '"+ color + "',"+
-                                "allday:false,"+
-                                "id:"+row["id_recordatorio"].ToString()+
+                                "borderColor: '" + color + "'," +
+                                "allday:false," +
+                                "id:" + row["id_recordatorio"].ToString() +
                                 "},";
                 }
-                eventos = eventos.Substring(0, eventos.Length-1);
+                eventos = eventos.Substring(0, eventos.Length - 1);
                 string day = fecha.Day.ToString();
                 string month = fecha.Month.ToString();
                 string year = fecha.Year.ToString();
@@ -119,8 +125,8 @@ namespace presentacion
                                     " $('#calendar').fullCalendar({" +
                                     "     locale: 'es'," +
                                     "     dayClick: function(date, jsEvent, view) {" +
-                                    "         $('#"+ hdffecha.ClientID+"').val(date.format());" +
-                                    "         document.getElementById('"+btncalendar.ClientID+"').click();" +
+                                    "         $('#" + hdffecha.ClientID + "').val(date.format());" +
+                                    "         document.getElementById('" + btncalendar.ClientID + "').click();" +
                                     "     }," +
                                     "     eventClick: function(calEvent, jsEvent, view) {" +
                                     "         $('#" + hdffecha.ClientID + "').val(calEvent.start.format());" +
@@ -138,16 +144,16 @@ namespace presentacion
                                     "     }," +
                                     "     events: [" + eventos + "]," +
                                     "     editable: false," +
-                                    "     droppable: false" +                                   
+                                    "     droppable: false" +
                                     " });" +
-                                    " $('#calendar').fullCalendar('gotoDate', '"+year+"-"+month+"-"+day+"');"+
+                                    " $('#calendar').fullCalendar('gotoDate', '" + year + "-" + month + "-" + day + "');" +
                                 " });");
                 sb.Append("</script>");
                 return sb;
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al generar calendario: "+ex.Message,this);
+                Toast.Error("Error al generar calendario: " + ex.Message, this);
                 return new StringBuilder();
             }
         }
@@ -169,7 +175,7 @@ namespace presentacion
             if (!IsPostBack)
             {
                 string usuario = Session["usuario"] as string;
-               // SincronizarCalendario();
+                // SincronizarCalendario();
                 ListaRecordatorios(usuario, DateTime.Now.AddHours(1));
                 IniciarCalendario();
             }
@@ -194,15 +200,17 @@ namespace presentacion
                 Toast.Error("Error al sincroniizar calendario: " + ex.Message, this);
             }
         }
+
         private void IniciarCalendario()
         {
-            ScriptManager.RegisterClientScriptBlock(this,GetType(),Guid.NewGuid().ToString(),InicializarCalendario().ToString(),false);
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), InicializarCalendario().ToString(), false);
         }
+
         private void ListaRecordatorios(string usuario, DateTime fecha)
         {
             try
             {
-                hdffecha.Value = fecha.ToString("yyyy-MM-dd"); 
+                hdffecha.Value = fecha.ToString("yyyy-MM-dd");
                 txtfecha.Text = fecha.ToString("yyyy-MM-dd");
                 txtfecharec.SelectedDate = fecha;
                 txtfechafin.SelectedDate = fecha;
@@ -214,23 +222,23 @@ namespace presentacion
                 String fcha = Convert.ToDateTime(fecha).ToString("dddd dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToLower();
                 String fecha_r = fcha.ToLower();
                 lblfechaselected.Text = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(fcha);
-
             }
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar los recordatorios en el calendario: " + ex.Message, this);
             }
-        }       
-       
+        }
+
         private void LimpiarControles()
         {
             rtxtcorreorganizador.Text = "";
             rtxtorganizador.Text = "";
-            
+
             txtid_recordatorio.Text = "";
             rtxtdescripcion.Text = "";
             rtxttitulo.Text = "";
         }
+
         protected void btncalendar_Click(object sender, EventArgs e)
         {
             string f = hdffecha.Value;
@@ -258,6 +266,7 @@ namespace presentacion
                 ModalShow("#myModal");
             }
         }
+
         protected void lnkaddrecordatorio_Click(object sender, EventArgs e)
         {
             string f = hdffecha.Value;
@@ -297,7 +306,7 @@ namespace presentacion
                 {
                     Guardar(titulo, descripcion, fecha, usuario);
                 }
-                else { Editar(Convert.ToInt32(txtid_recordatorio.Text), titulo, descripcion, fecha, usuario,orga,orga_mail,fechaf); }
+                else { Editar(Convert.ToInt32(txtid_recordatorio.Text), titulo, descripcion, fecha, usuario, orga, orga_mail, fechaf); }
             }
         }
 
@@ -338,7 +347,7 @@ namespace presentacion
             }
         }
 
-        private void Editar(int id_recordatorio, string titulo, string descripcion, DateTime fecha, string usuario,  
+        private void Editar(int id_recordatorio, string titulo, string descripcion, DateTime fecha, string usuario,
             string organ, string organ_mail, DateTime fecha_end)
         {
             try
@@ -405,7 +414,7 @@ namespace presentacion
                         string mail_user = username + mail.Replace(mail.Split('@')[0], "");
                         string id = row["key"].ToString();
                         EWSHelper appointments = new EWSHelper();
-                        vmensaje = appointments.CancelAppointment(mail_user,password,id,motivo);
+                        vmensaje = appointments.CancelAppointment(mail_user, password, id, motivo);
                     }
                 }
                 if (vmensaje == "")
@@ -459,7 +468,7 @@ namespace presentacion
                 {
                     DataRow row = dv.ToTable().Rows[0];
                     rtxttitulo.Text = row["titulo"].ToString();
-                    rtxtdescripcion.Text = row["descripcion"].ToString();
+                    rtxtdescripcion.Text = row["descripcion"].ToString().Replace(Environment.NewLine, " ");
                     txtfecharec.SelectedDate = Convert.ToDateTime(row["fecha"]);
                     IniciarCalendario();
                     Boolean isAppointment = Convert.ToBoolean(row["appointment"]);
@@ -472,7 +481,7 @@ namespace presentacion
                         rtxtorganizador.Text = row["organizer"].ToString();
                         rtxtcorreorganizador.Text = row["organizer_address"].ToString();
                     }
-                    ModalShow("#myModal");                   
+                    ModalShow("#myModal");
                 }
                 else
                 {
@@ -515,7 +524,7 @@ namespace presentacion
                         string mail_user = username + mail.Replace(mail.Split('@')[0], "");
                         string id = row["key"].ToString();
                         EWSHelper appointments = new EWSHelper();
-                        vmensaje = comand == "aceptar" ? appointments.AcceptAppointment(mail_user, password, id): appointments.DeclineAppointment(mail_user, password, id,motivo);
+                        vmensaje = comand == "aceptar" ? appointments.AcceptAppointment(mail_user, password, id) : appointments.DeclineAppointment(mail_user, password, id, motivo);
                     }
                 }
                 if (vmensaje == "")
@@ -537,6 +546,5 @@ namespace presentacion
                 Toast.Error("Error al responder recordatorio: " + ex.Message, this);
             }
         }
-
     }
 }
