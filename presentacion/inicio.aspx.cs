@@ -1,19 +1,10 @@
-﻿using datos.NAVISION;
-using negocio.Componentes;
-using negocio.Entidades;
+﻿using negocio.Componentes;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using Telerik.Web.UI;
 
 namespace presentacion
 {
@@ -30,7 +21,7 @@ namespace presentacion
                 CargarOrdenDivs();
                 IniciarCalendario();
             }
-        }       
+        }
 
         [System.Web.Services.WebMethod]
         public static String getDivs(string usuario)
@@ -69,7 +60,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error(ex.Message,this);
+                Toast.Error(ex.Message, this);
             }
         }
 
@@ -77,7 +68,6 @@ namespace presentacion
         {
             try
             {
-
                 string usuario = Session["usuario"] as string;
                 DateTime fecha = Convert.ToDateTime(DateTime.Now);
                 RecordatoriosCOM recordatorios = new RecordatoriosCOM();
@@ -99,15 +89,15 @@ namespace presentacion
                     hours = hours.Length == 1 ? "0" + hours : hours;
                     minutes_ = minutes_.Length == 1 ? "0" + minutes_ : minutes_;
                     minutes_finish = minutes_finish.Length == 1 ? "0" + minutes_finish : minutes_finish;
-                    eventos = eventos + 
+                    eventos = eventos +
                                 "{title: '" + row["titulo"].ToString() + "'," +
                                 "start: '" + year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_ + ":00'," +
                                 "end:'" + year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_finish + ":00'," +
                                 "backgroundColor:'" + color + "'," +
                                 "borderColor: '" + color + "'," +
                                 "allday:false," +
-                                "id:" + row["id_recordatorio"].ToString() +","+
-                                "organizador:'" + (row["organizer"] == null ? "" : row["organizer"].ToString()) +"',"+
+                                "id:" + row["id_recordatorio"].ToString() + "," +
+                                "organizador:'" + (row["organizer"] == null ? "" : row["organizer"].ToString()) + "'," +
                                 "ubicacion:'" + (row["location"] == null ? "" : row["location"].ToString()) + "'," +
                                 "descripcion:'" + (row["descripcion"] == null ? "" : row["descripcion"].ToString().Replace(Environment.NewLine, " ")) + "'," +
                                 "organizador_mail:'" + (row["organizer_address"] == null ? "" : row["organizer_address"].ToString()) + "'," +
@@ -184,7 +174,5 @@ namespace presentacion
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
                              "ModalShow('" + modalname + "');", true);
         }
-
-        
     }
 }

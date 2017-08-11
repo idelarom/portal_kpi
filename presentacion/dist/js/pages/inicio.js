@@ -52,7 +52,7 @@ function Init(table) {
 //Regresa el usuario en sesion
 function User()
 {
-    return "IDELAROM";// $('#ContentPlaceHolder1_hdf_usuario').val();
+    return $('#ContentPlaceHolder1_hdf_usuario').val();
 }
 
 //Regresa el numero de empleado del usuario en sesion
