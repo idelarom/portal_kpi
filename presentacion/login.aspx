@@ -162,7 +162,7 @@
                         OnClick="btniniciar_Click" OnClientClick="return ConfirmMinutaModal();" />
                 </div>
 
-                <div class="col-xs-12" runat="server" id="div_cambiodomiinio" visible="true">
+                <div class="col-xs-12" runat="server" id="div_cambiodomiinio" visible="true" style="font-size:12px">
                     <br />
                     <p>
                         ¿No puedes Iniciar Sesión?

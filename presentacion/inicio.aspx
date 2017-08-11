@@ -46,11 +46,11 @@
             margin-bottom: 1em;
             font-size: 11px;
         }.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    font-size: 10px;
-}
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+            font-size: 10px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -59,6 +59,7 @@
             <h4 class="page-header">Dashboard</h4>
         </div>
     </div>
+    <!-- /Widgets individuales -->
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="dashboard_kpi_ind" style="display: none;">
             <div class="info-box bg-red">
@@ -75,31 +76,26 @@
                     <span id="progress_bono_kpi_ind" class="progress-description">0 % porcentaje alcanzado.
                   </span>
                 </div>
-                <!-- /.info-box-content -->
             </div>
             
             <!-- /.info-box -->
         </div>
     </div>
+    
+    <!-- /Widgets Grupales -->
     <div class="row">
-
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="calendario">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="calendario" style="display:none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Calendario</h3>
 
                 </div>
-                <div class="box-body no-padding">
+                <div class="box-body no-padding" style="height:325px">
                     <div id="calendar"></div>
-                </div>
-                
-                <!-- Loading (remove the following to stop the loading)-->
-                <div class="overlay" id="load_calendar" runat="server">
-                    <i class="fa fa-refresh fa-spin"></i>
-                </div>
+                </div>                
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="desglo_dashboard_kpi_ind">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="desglo_dashboard_kpi_ind"  style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Valor Ganado</h3>
@@ -159,9 +155,14 @@
                         </li>
                     </ul>
                 </div>
+
+                <div class="box-footer clearfix">
+                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_desgdashboard_kpi" onclick="CloseAjax('reporte_dashboard_bonos_kpi.aspx');">Ver Reporte
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12" id="dashboard_kpi" style="display: none;">
+        <div class="col-lg-4 col-md-4 col-sm-12" id="dashboard_kpi" style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Dashboard Bonos</h3>
@@ -173,9 +174,9 @@
                             <thead>
                                 <tr style="font-size: 11px;">
                                     <th style="min-width: 210px; text-align: left;" scope="col">Empleado</th>
-                                    <th style="min-width: 80px; text-align: center;" scope="col">Monto Bono</th>
-                                    <th style="min-width: 65px; text-align: center;" scope="col">Total Final</th>
-                                    <th style="min-width: 65px; text-align: center;" scope="col">% Total Final</th>
+                                    <th style="min-width: 60px; text-align: center;" scope="col">Monto Bono</th>
+                                    <th style="min-width: 55px; text-align: center;" scope="col">Total Final</th>
+                                    <th style="min-width: 55px; text-align: center;" scope="col">% Total Final</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_table_dashboard_kpi"

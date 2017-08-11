@@ -128,7 +128,7 @@ namespace presentacion
                 sb.Append(""
                             + " $(function () {" +
                                     " $('#calendar').fullCalendar({" +
-                                    "     locale: 'es',height: 250," +
+                                    "     locale: 'es',height: 300," +
                                     "     header: {" +
                                     "         left: 'prev,next today'," +
                                     "         center: 'title'," +
@@ -176,8 +176,7 @@ namespace presentacion
 
         private void IniciarCalendario()
         {
-            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), InicializarCalendario().ToString(), false);
-            load_calendar.Visible = false;
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), InicializarCalendario().ToString(), false);
         }
 
         private void ModalShow(string modalname)

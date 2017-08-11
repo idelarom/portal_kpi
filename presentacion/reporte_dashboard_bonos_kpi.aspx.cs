@@ -544,7 +544,7 @@ namespace presentacion
             try
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));
-                string imagen = hdfuserselected.Value.ToUpper();
+                string imagen = hdfuserselected.Value.ToUpper() + ".png" ;
                 if (imagen != "" && File.Exists(dirInfo.ToString().Trim() + imagen))
                 {
                     DateTime localDate = DateTime.Now;

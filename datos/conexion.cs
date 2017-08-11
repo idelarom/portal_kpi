@@ -92,7 +92,8 @@ namespace datos
                 switch (ValueCadCon)
                 {
                     case 1:
-                        cadena = System.Configuration.ConfigurationManager.ConnectionStrings["DB_PORTAL"].ToString();
+                        cadena = System.Configuration.ConfigurationManager.ConnectionStrings["DB_PORTAL"] ==  null ? "Data Source=mts-appslab01;Initial Catalog=portal_connext;User ID=sa;Password=asytlab01;MultipleActiveResultSets=True;App=EntityFramework":
+                            System.Configuration.ConfigurationManager.ConnectionStrings["DB_PORTAL"].ToString();
                         break;
                     case 2:
                         cadena = System.Configuration.ConfigurationManager.ConnectionStrings["NAVISION"].ToString();

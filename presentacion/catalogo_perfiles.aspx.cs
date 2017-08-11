@@ -635,7 +635,7 @@ namespace presentacion
                 if (vmensaje == "")
                 {
                     System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
-                  "AlertGO('Perfil Guardado Correctamente', 'catalogo_perfiles.aspx');", true);
+                  "AlertGO('Perfil eliminado Correctamente', 'catalogo_perfiles.aspx');", true);
                 }
                 else
                 {

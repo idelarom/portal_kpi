@@ -34,10 +34,6 @@ namespace presentacion
                 foreach (DataRow row in dt_empleados.Rows)
                 {
                     string usuario = row["usuario"].ToString().Trim().ToUpper();
-                    if (usuario == "EMIRELES")
-                    {
-                        usuario = usuario.ToUpper();
-                    }
                     //Create a searcher on your DirectoryEntry
                     DirectorySearcher adSearch = new DirectorySearcher(directoryEntry);
                     adSearch.SearchScope = SearchScope.Subtree;    //Look into all subtree during the search
