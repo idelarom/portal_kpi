@@ -2,12 +2,7 @@
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
-        .RadGrid_Default .rgRow a, .RadGrid_Default .rgAltRow a, .RadGrid_Default .rgEditRow a{
-            color:#72afd2;
-        }
-    </style>
-    <script type="text/javascript">
+     <script type="text/javascript">
         $(document).ready(function () {
             Init();
         });
@@ -85,8 +80,8 @@
             var vsoporte = document.getElementById('<%= hdfsoporte.ClientID %>');
             var vcompro = document.getElementById('<%= hdfocompro.ClientID %>');
             nombre.value = name;
-            vpuesto.value = usr;
-            commando.value = usuario;
+            vusr.value = usr.trim();
+            commando.value = usuario.trim();
             vpreventa.value = prev;
             vimple.value = imple;
             vsoporte.value = sop;
@@ -229,7 +224,8 @@
                <telerik:GridTemplateColumn ItemStyle-Wrap="false" UniqueName="" HeaderText="Ingeniero">
                  <ItemTemplate>                    
                     <%-- <asp:Literal ID="lbtUsr" runat="server" Text="<a href='#' onclick='Open();'></a>"></asp:Literal>--%>
-                     <asp:HyperLink runat="server" CssClass="btn btn-link"  ID="lnkUsuario" Text='<%#Eval("Ingeniero") %>' Style=""  NavigateUrl="#" onclick=""></asp:HyperLink>
+                     <asp:HyperLink runat="server" CssClass="btn btn-link"  ID="lnkUsuario" Text='<%#Eval("Ingeniero") %>' Style=""  NavigateUrl="#" onclick='<%# "return ViewEmpleado("+@"""" + Eval("Ingeniero")+@""""+@",""" + Eval("Login")+@""""+@",""" + Eval("Login")+@""""+
+                                                        @",""" + Eval("Preventa")+@""""+@",""" + Eval("Proyectos")+@""""+@",""" + Eval("Soporte")+@""""+@",""" + Eval("Administrativas")+@""""+");" %>'></asp:HyperLink>
                  </ItemTemplate>
                  <HeaderStyle Width="300px"></HeaderStyle>
                 <ItemStyle Wrap="False"></ItemStyle>
