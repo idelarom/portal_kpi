@@ -129,7 +129,7 @@
             HeaderStyle-ForeColor="#000000" HeaderStyle-Font-Bold="false" SortingSettings-SortToolTip="Ordenar Listado" 
             AutoGenerateColumns="False" HierarchySettings-CollapseTooltip="Ocultar Detalle"  
             HierarchySettings-ExpandTooltip="Ver Detalle" GroupPanelPosition="Top" 
-            ResolvedRenderMode="Classic" Skin="Bootstrap" OnDetailTableDataBind="gridPerformance_DetailTableDataBind" OnNeedDataSource="gridPerformance_NeedDataSource"  >
+            ResolvedRenderMode="Classic" Skin="Bootstrap" OnDetailTableDataBind="gridPerformance_DetailTableDataBind" OnNeedDataSource="gridPerformance_NeedDataSource" Width="1038px"  >
   
             <HeaderStyle HorizontalAlign="Center" />
             <GroupingSettings CollapseAllTooltip="Collapse all groups"></GroupingSettings>
@@ -225,7 +225,7 @@
                  <ItemTemplate>                    
                     <%-- <asp:Literal ID="lbtUsr" runat="server" Text="<a href='#' onclick='Open();'></a>"></asp:Literal>--%>
                      <asp:HyperLink runat="server" CssClass="btn btn-link"  ID="lnkUsuario" Text='<%#Eval("Ingeniero") %>' Style=""  NavigateUrl="#" onclick='<%# "return ViewEmpleado("+@"""" + Eval("Ingeniero")+@""""+@",""" + Eval("Login")+@""""+@",""" + Eval("Login")+@""""+
-                                                        @",""" + Eval("Preventa")+@""""+@",""" + Eval("Proyectos")+@""""+@",""" + Eval("Soporte")+@""""+@",""" + Eval("Administrativas")+@""""+");" %>'></asp:HyperLink>
+                                                        @",""" + Eval("Preventa")+@""""+@",""" + Eval("Proyectos_Internos_Facturables")+@""""+@",""" + Eval("Soporte")+@""""+@",""" + Eval("Administrativas")+@""""+");" %>'></asp:HyperLink>
                  </ItemTemplate>
                  <HeaderStyle Width="300px"></HeaderStyle>
                 <ItemStyle Wrap="False"></ItemStyle>
@@ -346,7 +346,7 @@
                                     <div class="input-group input-group-sm">
                                         <asp:TextBox
                                              onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control" 
-                                            placeholder="Ingrese un filtro" runat="server" OnTextChanged="txtfilterempleado_TextChanged"></asp:TextBox>
+                                            placeholder="Ingrese un filtro(ejemplo:Nombre)" runat="server" OnTextChanged="txtfilterempleado_TextChanged"></asp:TextBox>
                                         <span class="input-group-btn">
                                             <asp:LinkButton ID="lnksearch" CssClass="btn btn-primary btn-flat" 
                                                  OnClientClick="return ChangedTextLoad2();" OnClick="lnksearch_Click" runat="server">

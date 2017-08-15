@@ -215,10 +215,10 @@
                         </li>
                         <li class="item">
                             <div class="bono-info">
-                                <a class="product-title" href="javascript:void(0)">Preventa                    
-                                <span class="label label-primary pull-right" style="width: 55px" id="performance_ingenieria_prev">0 %</span>
+                                <a class="product-title" href="javascript:void(0)">Implementacion           
+                                <span class="label label-primary pull-right" style="width: 55px" id="performance_ingenieria_imp">0 %</span>
                                     <span class="pull-right">&nbsp;</span>
-                                    <span class="label label-primary pull-right" id="performance_ingenieria_totalprev" style="width: 70px">$ 0.00</span>
+                                    <span class="label label-primary pull-right" id="performance_ingenieria_totalimp" style="width: 70px">$ 0.00</span>
                                 </a>
                             </div>
                         </li>
@@ -263,9 +263,7 @@
                             <thead>
                                 <tr style="font-size: 11px;">
                                     <th style="min-width: 210px; text-align: left;" scope="col">Empleado</th>
-                                    <th style="min-width: 60px; text-align: center;" scope="col">Monto Bono</th>
-                                    <th style="min-width: 55px; text-align: center;" scope="col">Total Final</th>
-                                    <th style="min-width: 55px; text-align: center;" scope="col">% Total Final</th>
+                                    <th style="min-width: 55px; text-align: center;" scope="col">% Total horas</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_table_performance_ing"

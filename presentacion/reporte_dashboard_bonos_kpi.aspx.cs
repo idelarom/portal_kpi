@@ -205,6 +205,11 @@ namespace presentacion
                     DataView dv_empleados = ds.Tables[0].DefaultView;
                     dv_empleados.RowFilter = "nombre like '%"+filtro+"%'";
                     dt_empleados = dv_empleados.ToTable();
+                    if (dt_empleados.Rows.Count == 1)
+                    {
+                        int num_jefe = Convert.ToInt32(ddlempleado_a_consultar.SelectedValue);
+                        CargarListadoEmpleado(num_jefe, false);
+                    }
                 }
                 else {
                     dt_empleados = ds.Tables[0];
@@ -553,6 +558,16 @@ namespace presentacion
                     date = date.Replace(":", "_");
                     date = date.Replace(" ", "");
                     img_employee.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                }
+                else
+                {
+                    imagen = "user.png";
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    img_employee.ImageUrl = "~/img/" + imagen + "?date=" + date;
                 }
                 lblnombre.Text = hdfnombre.Value;
                 lblpuesto.Text = hdfpuesto.Value;

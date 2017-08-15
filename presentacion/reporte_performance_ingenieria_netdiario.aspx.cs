@@ -55,6 +55,11 @@ namespace presentacion
                     DataView dv_empleados = ds.Tables[0].DefaultView;
                     dv_empleados.RowFilter = "nombre like '%" + filtro + "%'";
                     dt_empleados = dv_empleados.ToTable();
+                    if (dt_empleados.Rows.Count==1)
+                    {
+                        int num_jefe = Convert.ToInt32(ddlempleado_a_consultar.SelectedValue);
+                        CargarListadoEmpleado(num_jefe, false);
+                    }
                 }
                 else
                 {
@@ -69,6 +74,7 @@ namespace presentacion
                     ddlempleado_a_consultar.Enabled = false;
                     CargarListadoEmpleado(num_empleado, false);
                 }
+               
             }
             catch (Exception ex)
             {
@@ -154,7 +160,6 @@ namespace presentacion
                 Toast.Error("Error al agregar seleccion de empleados: " + ex.Message, this);
             }
         }
-
 
         protected void lnkguardar_Click(object sender, EventArgs e)
         {
@@ -413,14 +418,13 @@ namespace presentacion
                     dtrow["Incapacidad"] = row["Incapacidad"].Text;
                     dtrow["Uptime"] = row["Uptime"].Text;
                     dtrow["Proyectos_Internos_Facturables"] = row["Proyectos_Internos_Facturables"].Text;
-                    dtrow["Proyectos_Internos_No_Facturables"] = row["Proyectos_Internos_No_Facturables"].Text;
+                    dtrow["Proyectos_Internos_No_Facturables"] = row["Proyectos Internos No Facturables"].Text;
                     dtrow["Proyectos"] = row["Proyectos"].Text;
                     dtrow["Tiempo_Personal"] = row["Tiempo_Personal"].Text;
                     dtrow["Usabilidad"] = row["Usabilidad"].Text;
                     dtrow["Total_Horas"] = row["Total_Horas"].Text;
                     dt.Rows.Add(dtrow);
                 }
-
 
                 if (dt.Rows.Count > 0)
                 {
@@ -550,6 +554,16 @@ namespace presentacion
                     date = date.Replace(":", "_");
                     date = date.Replace(" ", "");
                     img_employee.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                }
+                else
+                {
+                    imagen = "user.png";
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    img_employee.ImageUrl = "~/img/" + imagen + "?date=" + date;
                 }
                 lblnombre.Text = hdfnombre.Value;
                 lblpuesto.Text = hdfusr.Value;

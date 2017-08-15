@@ -260,3 +260,106 @@ function CargarDashboardbonos() {
     });
     xhrRequests.push(call);
 }
+
+
+//WIDGET DE PERFORMANCE INGENIERIA INDIVIDUAL
+function CargarPerformanceIngenieriaIndividual() {
+    //load de dashboard bonos
+    var target = document.getElementById('dashboard_kpi_ind');
+    var spinner = new Spinner(opts).spin(target);
+    var target2 = document.getElementById('desglo_performance_ing_ind');
+    var spinner2 = new Spinner(opts2).spin(target2);
+
+    var usuario = User();// $('#ContentPlaceHolder1_hdf_usuario').val();
+    //guardamos esta ejecucion en un array
+    var call = $.ajax({
+        url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues_Individual',
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        dataType: "json",
+        data: "{lista_usuarios:'" + usuario + "',usuario:'" + usuario + "'}",
+        success: function (response) {
+            var bono = JSON.parse(response.d);
+            if (bono.length > 0) {
+                var bono_porcentaje = bono[0]._Total_Final.replace(' %', '');
+                var preventa = bono[0]._Preventa;
+                var implementacion = bono[0]._Implementación;
+                var soporte = bono[0]._Soporte;
+                var kpi = bono[0].KPI_Individual;
+                var kpig = bono[0].KPI_Grupo;
+                var compromisos = bono[0]._Cump;
+                var total_preventa = bono[0].Preventa;
+                var total_implemetacion = bono[0].Implementacion;
+                var total_soporte = bono[0].Soporte;
+                $("#bono_trimestral").text(bono[0].Total_Final);
+                $("#dashboard_bonos_totalpreventa").text(total_preventa);
+                $("#dashboard_bonos_totalimp").text(total_implemetacion);
+                $("#dashboard_bonos_totalsoporte").text(total_soporte);
+                $("#dashboard_bonos_preventa").text(preventa);
+                $("#dashboard_bonos_imp").text(implementacion);
+                $("#dashboard_bonos_soporte").text(soporte);
+                $("#dashboard_bonos_kpi").text(kpi);
+                $("#dashboard_bonos_kpig").text(kpig);
+                $("#dashboard_bonos_compromisos").text(compromisos);
+                $("#progress_bar_bono_kpi_ind").css("width", Math.round(bono_porcentaje > 100 ? 100 : bono_porcentaje) + "%");
+                $("#progress_bono_kpi_ind").text(bono_porcentaje + " % alcanzado");
+            }
+            spinner.stop();
+            spinner2.stop();
+        },
+        error: function (result, status, err) {
+            console.log("error", result.responseText);
+            spinner.stop();
+            spinner2.stop();
+        }
+    });
+    xhrRequests.push(call);
+}
+
+//WIDGET DE PERFORMANCE INGENIERIA GRUPAL
+function CargarPerformanceIngenieria() {
+    //load de dashboard bonos
+    var target = document.getElementById('dashboard_kpi');
+    var spinner = new Spinner(opts2).spin(target);
+    var usuario = User();
+    var num_empleado = NumEmpleado();
+    var ver_Todos_empleados = VerTodosEmpleados(); //$('#ContentPlaceHolder1_hdf_ver_Todos_empleados').val();
+    //guardamos esta ejecucion en un array
+    var call = $.ajax({
+        url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues',
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        dataType: "json",
+        data: "{num_empleado:'" + num_empleado + "',usuario:'" + usuario + "', ver_todos_empleados:'" + ver_Todos_empleados + "'}",
+        success: function (response) {
+            var bono = JSON.parse(response.d);
+            if (bono.length > 0) {
+                var cadena = '';
+                for (indice = 0; indice < bono.length; indice++) {
+                    cadena = cadena + bono[indice].Login + ",";
+                    $('#table_dashboard_kpi').find('tbody').append('' + '<tr><td>' +
+                        bono[indice].Nombre + '</td><td style="text-align: center;">' +
+                        bono[indice].Monto_Bono + '</td><td style="text-align: center;">' +
+                        bono[indice].Total_Final + '</td><td style="text-align: center;">' +
+                        bono[indice]._Total_Final + '</td></tr>');
+                }
+                if (cadena.length > 1) {
+                    cadena = cadena.substring(0, cadena.length - 1);
+                    cadena = btoa(cadena);
+                    $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx?list=' + cadena)
+                } else {
+                    $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx?list=' + cadena)
+                }
+                Init('#table_dashboard_kpi');
+            } else {
+                $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx');
+            }
+            spinner.stop();
+        },
+        error: function (result, status, err) {
+            console.log("error", result.responseText);
+            spinner.stop();
+        }
+    });
+    xhrRequests.push(call);
+}
