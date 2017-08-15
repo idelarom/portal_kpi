@@ -53,5 +53,10 @@ namespace presentacion
             string value = DevicesConecteds();
             return value;
         }
+
+
+       
+
+
     }
 }
