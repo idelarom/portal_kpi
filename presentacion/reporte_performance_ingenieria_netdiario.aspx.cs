@@ -135,6 +135,77 @@ namespace presentacion
             return cadena;
         }
 
+        [System.Web.Services.WebMethod]
+        public static String GetPerformanceIngenieria_Individual(string lista_usuarios, string usuario)
+        {
+            try
+            {
+                DataTable dt = GetDashboardBonos(null, null, lista_usuarios, usuario);
+                //foreach (DataColumn column in dt.Columns)
+                //{
+                //    column.ColumnName = column.ColumnName.Replace("%", "");
+                //    column.ColumnName = column.ColumnName.Replace(" ", "_");
+                //}
+                string value = JsonConvert.SerializeObject(dt);
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+        [System.Web.Services.WebMethod]
+        public static String GetPerformanceIngenieriaValues(int num_empleado, string usuario, string ver_todos_empleados)
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                bool ver_Todos = Convert.ToBoolean(ver_todos_empleados);
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, false, false);
+                DataTable dt_list_empleados = ds.Tables[1];
+                string value = JsonConvert.SerializeObject("");
+                if (dt_list_empleados.Rows.Count == 1)
+                {
+                    DataRow row = ds.Tables[0].Rows[0];
+                    string userinrow = row["usuario"].ToString().Trim().ToUpper();
+                    if (userinrow != usuario)
+                    {
+                        string lista_empleados = dt_list_empleados.Rows[0]["lista_empleados"].ToString();
+                        lista_empleados = lista_empleados.Remove(lista_empleados.Length - 1);
+                        value = GetPerformanceIngenieria_Individual(lista_empleados, usuario);
+                    }
+                }
+                else if (dt_list_empleados.Rows.Count > 1)
+                {
+                    string lista_empleados = dt_list_empleados.Rows[0]["lista_empleados"].ToString();
+                    lista_empleados = lista_empleados.Remove(lista_empleados.Length - 1);
+                    value = GetPerformanceIngenieria_Individual(lista_empleados, usuario);
+                }
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+        public static DataTable GetDashboardBonos(DateTime? fecha_ini, DateTime? fecha_fin, string pLstEmpleados, string Usr)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
+                DataSet ds = PerformanceIngenieria.spq_Ingenieros_Performance(fecha_ini, fecha_fin, pLstEmpleados, Usr);
+                dt = ds.Tables[0];
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                return dt;
+            }
+        }
+
         protected void lnkfiltros_Click(object sender, EventArgs e)
         {
             if (div_reporte.Visible)
@@ -578,5 +649,7 @@ namespace presentacion
                 Alert.ShowAlertError(ex.ToString(), this.Page);
             }
         }
+
+
     }
 }
