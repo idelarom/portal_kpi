@@ -223,7 +223,7 @@
 
                                         <ItemStyle Wrap="False"></ItemStyle>
                                     </telerik:GridBoundColumn>
-                                    <telerik:GridTemplateColumn ItemStyle-Wrap="false" UniqueName="" HeaderText="Ingeniero">
+                                    <telerik:GridTemplateColumn ItemStyle-Wrap="false" DataField="Ingeniero" UniqueName="Ingeniero" HeaderText="Ingeniero">
                                         <ItemTemplate>
                                             <%-- <asp:Literal ID="lbtUsr" runat="server" Text="<a href='#' onclick='Open();'></a>"></asp:Literal>--%>
                                             <asp:HyperLink runat="server"  ID="lnkUsuario" Text='<%#Eval("Ingeniero") %>' Style="" NavigateUrl="#" onclick='<%# "return ViewEmpleado("+@"""" + Eval("Ingeniero")+@""""+@",""" + Eval("Login")+@""""+@",""" + Eval("Login")+@""""+

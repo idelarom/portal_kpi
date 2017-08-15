@@ -257,16 +257,29 @@ namespace presentacion
                 }
                 else
                 {
-                    string Usr = Session["usuario"] as string;                   
-                    lblfechaini.Text = Convert.ToDateTime(fechaInicial).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
-                    lblfechafin.Text = Convert.ToDateTime(fechaFinal).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();                    
+                    
+                    string Usr = Session["usuario"] as string;    
                     DataSet ds = new DataSet();
+                    DataTable dt = new DataTable();
                     PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
                     ds = PerformanceIngenieria.spq_Ingenieros_Performance(fechaInicial, fechaFinal, pLstEmpleados, Usr);
-                    gridPerformance.DataSource = ds;
-                    gridPerformance.DataBind();
-                    div_reporte.Visible = true;
-                    ModalClose("#myModal");
+                    dt = ds.Tables[0];
+                    ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
+                    if (dt.Rows.Count > 0)
+                    {
+                        lblfechaini.Text = Convert.ToDateTime(fechaInicial).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
+                        lblfechafin.Text = Convert.ToDateTime(fechaFinal).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
+                        ViewState[hdfsessionid.Value + "-dt_reporte"] = dt;
+                        gridPerformance.DataSource = dt;
+                        gridPerformance.DataBind();
+                        div_reporte.Visible = true;
+                        ModalClose("#myModal");
+                    }
+                    else
+                    {
+                        ModalShow("#myModal");
+                        Toast.Info("El filtro no arrojo ningun resultado, puede intentarlo nuevamente.", "Ningun resultado encontrado", this);
+                    }
                 }
                 //if (txtfechafinal.Text == "" || txtfechainicio.Text == "" && ddltipofiltro.SelectedValue == "2")
                 //{
@@ -445,58 +458,10 @@ namespace presentacion
 
         protected void lnkgenerarpdf_Click(object sender, EventArgs e)
         {
-            //gridPerformance.ExportSettings.ExportOnlyData = true;
-            //gridPerformance.ExportSettings.IgnorePaging = true;
-            //gridPerformance.ExportSettings.OpenInNewWindow = true;
-            //gridPerformance.ExportSettings.FileName = "Reporte_Performance_Ingenieria";
-            //gridPerformance.MasterTableView.ExportToPdf();
-
             try
             {
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Login");
-                dt.Columns.Add("Ingeniero");
-                dt.Columns.Add("Soporte");
-                dt.Columns.Add("Preventa");
-                dt.Columns.Add("Desarrollo_Negocio");
-                dt.Columns.Add("Capacitacion");
-                dt.Columns.Add("Administrativas");
-                //dt.Columns.Add("Logistica_Traslados");
-                dt.Columns.Add("Incapacidad");
-                dt.Columns.Add("Uptime");
-                dt.Columns.Add("Proyectos_Internos_Facturables");
-                dt.Columns.Add("Proyectos_Internos_No_Facturables");
-                dt.Columns.Add("Proyectos");
-                dt.Columns.Add("Tiempo_Personal");
-                dt.Columns.Add("Usabilidad");
-                dt.Columns.Add("Total_Horas");
-
-
-
-                //dt = ViewState[hdfsessionid.Value + "-dt_reporte"] as DataTable;
-
-                foreach (GridDataItem row in gridPerformance.Items)
-                {
-                    DataRow dtrow = dt.NewRow();
-                    dtrow["Login"] = row["Login"].Text;
-                    dtrow["Ingeniero"] = row["Ingeniero"].Text;
-                    dtrow["Soporte"] = row["Soporte"].Text;
-                    dtrow["Preventa"] = row["Preventa"].Text;
-                    dtrow["Desarrollo_Negocio"] = row["Desarrollo_Negocio"].Text;
-                    dtrow["Capacitacion"] = row["Capacitacion"].Text;
-                    dtrow["Administrativas"] = row["Administrativas"].Text;
-                    //dtrow["Logistica_Traslados"] = row["Logistica_Traslados"].Text;
-                    dtrow["Incapacidad"] = row["Incapacidad"].Text;
-                    dtrow["Uptime"] = row["Uptime"].Text;
-                    dtrow["Proyectos_Internos_Facturables"] = row["Proyectos_Internos_Facturables"].Text;
-                    dtrow["Proyectos_Internos_No_Facturables"] = row["Proyectos Internos No Facturables"].Text;
-                    dtrow["Proyectos"] = row["Proyectos"].Text;
-                    dtrow["Tiempo_Personal"] = row["Tiempo_Personal"].Text;
-                    dtrow["Usabilidad"] = row["Usabilidad"].Text;
-                    dtrow["Total_Horas"] = row["Total_Horas"].Text;
-                    dt.Rows.Add(dtrow);
-                }
-
+                dt = ViewState[hdfsessionid.Value + "-dt_reporte"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
                     Export Export = new Export();
@@ -530,57 +495,8 @@ namespace presentacion
             try
             {
 
-                //gridPerformance.ExportSettings.ExportOnlyData = true;
-                //gridPerformance.ExportSettings.IgnorePaging = true;
-                //gridPerformance.ExportSettings.OpenInNewWindow = true;
-                //gridPerformance.ExportSettings.FileName = "Reporte_Performance_Ingenieria";
-                //gridPerformance.MasterTableView.ExportToExcel();
-
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Login");
-                dt.Columns.Add("Ingeniero");
-                dt.Columns.Add("Soporte");
-                dt.Columns.Add("Preventa");
-                dt.Columns.Add("Desarrollo_Negocio");
-                dt.Columns.Add("Capacitacion");
-                dt.Columns.Add("Administrativas");
-                //dt.Columns.Add("Logistica_Traslados");
-                dt.Columns.Add("Incapacidad");
-                dt.Columns.Add("Uptime");
-                dt.Columns.Add("Proyectos_Internos_Facturables");
-                dt.Columns.Add("Proyectos_Internos_No_Facturables");
-                dt.Columns.Add("Proyectos");
-                dt.Columns.Add("Tiempo_Personal");
-                dt.Columns.Add("Usabilidad");
-                dt.Columns.Add("Total_Horas");
-                              
-
-
-                //dt = ViewState[hdfsessionid.Value + "-dt_reporte"] as DataTable;
-
-                foreach (GridDataItem row in gridPerformance.Items)
-                {
-                    DataRow dtrow = dt.NewRow();
-                    dtrow["Login"] = row["Login"].Text;
-                    dtrow["Ingeniero"] = row["Ingeniero"].Text;
-                    dtrow["Soporte"] = row["Soporte"].Text;
-                    dtrow["Preventa"] = row["Preventa"].Text;
-                    dtrow["Desarrollo_Negocio"] = row["Desarrollo_Negocio"].Text;
-                    dtrow["Capacitacion"] = row["Capacitacion"].Text;
-                    dtrow["Administrativas"] = row["Administrativas"].Text;
-                    //dtrow["Logistica_Traslados"] = row["Logistica_Traslados"].Text;
-                    dtrow["Incapacidad"] = row["Incapacidad"].Text;
-                    dtrow["Uptime"] = row["Uptime"].Text;
-                    dtrow["Proyectos_Internos_Facturables"] = row["Proyectos_Internos_Facturables"].Text;
-                    dtrow["Proyectos_Internos_No_Facturables"] = row["Proyectos_Internos_No_Facturables"].Text;
-                    dtrow["Proyectos"] = row["Proyectos"].Text;
-                    dtrow["Tiempo_Personal"] = row["Tiempo_Personal"].Text;
-                    dtrow["Usabilidad"] = row["Usabilidad"].Text;
-                    dtrow["Total_Horas"] = row["Total_Horas"].Text;
-                    dt.Rows.Add(dtrow);
-                }
-
-
+                dt = ViewState[hdfsessionid.Value + "-dt_reporte"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
                     Export Export = new Export();
@@ -603,7 +519,6 @@ namespace presentacion
                         Toast.Error("Error al exportar el reporte a excel: " + mensaje, this);
                     }
                 }
-
             }
             catch (Exception ex)
             {
