@@ -19,6 +19,7 @@ namespace datos.Model
         public virtual DbSet<recordatorios> recordatorios { get; set; }
         public virtual DbSet<recordatorios_usuarios_adicionales> recordatorios_usuarios_adicionales { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<usuarios_chat> usuarios_chat { get; set; }
         public virtual DbSet<usuarios_configuraciones> usuarios_configuraciones { get; set; }
         public virtual DbSet<usuarios_perfiles> usuarios_perfiles { get; set; }
         public virtual DbSet<usuarios_sesiones> usuarios_sesiones { get; set; }
@@ -171,6 +172,18 @@ namespace datos.Model
 
             modelBuilder.Entity<recordatorios_usuarios_adicionales>()
                 .Property(e => e.nombre)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios_chat>()
+                .Property(e => e.mensaje)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios_chat>()
+                .Property(e => e.usuario_envia)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios_chat>()
+                .Property(e => e.usuario_recibe)
                 .IsUnicode(false);
 
             modelBuilder.Entity<usuarios_configuraciones>()
