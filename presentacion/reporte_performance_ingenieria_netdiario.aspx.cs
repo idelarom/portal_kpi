@@ -281,47 +281,6 @@ namespace presentacion
                         Toast.Info("El filtro no arrojo ningun resultado, puede intentarlo nuevamente.", "Ningun resultado encontrado", this);
                     }
                 }
-                //if (txtfechafinal.Text == "" || txtfechainicio.Text == "" && ddltipofiltro.SelectedValue == "2")
-                //{
-                //    ModalShow("#myModal");
-                //    Toast.Error("Ingrese ambas fechas para generar el reporte.", this);
-                //}
-                //else if (txtfechafinal.Text == "" || txtfechainicio.Text == "" && ddltipofiltro.SelectedValue == "1")
-                //{
-                //    ModalShow("#myModal");
-                //    Toast.Error("Seleccione un trimestre para generar el reporte.", this);
-                //}
-                //else if (pLstEmpleados == "")
-                //{
-                //    ModalShow("#myModal");
-                //    Toast.Error("Seleccione un empleado para generar el reporte.", this);
-                //}
-                //else
-                //{
-                //    DateTime? fecha_ini = Convert.ToDateTime(txtfechainicio.Text.ToString());
-                //    DateTime? fecha_fin = Convert.ToDateTime(txtfechafinal.Text.ToString());
-
-
-                //    string Usr = Session["usuario"] as string;
-                //    DataTable dt = GetDashboardBonos(fecha_ini, fecha_fin, pLstEmpleados, Usr);
-                //    div_reporte.Visible = false;
-                //    ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
-                //    if (dt.Rows.Count > 0)
-                //    {
-                //        lblfechaini.Text = Convert.ToDateTime(fecha_ini).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
-                //        lblfechafin.Text = Convert.ToDateTime(fecha_fin).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
-                //        ViewState[hdfsessionid.Value + "-dt_reporte"] = dt;
-                //        div_reporte.Visible = true;
-                //        repeater_bonos.DataSource = dt;
-                //        repeater_bonos.DataBind();
-                //        ModalClose("#myModal");
-                //    }
-                //    else
-                //    {
-                //        ModalShow("#myModal");
-                //        Toast.Info("El filtro no arrojo ningun resultado, puede intentarlo nuevamente.", "Ningun resultado encontrado", this);
-                //    }
-                //}
             }
             catch (Exception ex)
             {

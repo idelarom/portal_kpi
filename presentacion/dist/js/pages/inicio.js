@@ -273,25 +273,25 @@ function CargarPerformanceIngenieriaIndividual() {
     var usuario = User();// $('#ContentPlaceHolder1_hdf_usuario').val();
     //guardamos esta ejecucion en un array
     var call = $.ajax({
-        url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues_Individual',
+        url: 'reporte_performance_ingenieria_netdiario.aspx/GetPerformanceIngenieria_Individual',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
         data: "{lista_usuarios:'" + usuario + "',usuario:'" + usuario + "'}",
         success: function (response) {
-            var bono = JSON.parse(response.d);
-            if (bono.length > 0) {
-                var bono_porcentaje = bono[0]._Total_Final.replace(' %', '');
-                var preventa = bono[0]._Preventa;
-                var implementacion = bono[0]._Implementación;
-                var soporte = bono[0]._Soporte;
-                var kpi = bono[0].KPI_Individual;
-                var kpig = bono[0].KPI_Grupo;
-                var compromisos = bono[0]._Cump;
-                var total_preventa = bono[0].Preventa;
-                var total_implemetacion = bono[0].Implementacion;
-                var total_soporte = bono[0].Soporte;
-                $("#bono_trimestral").text(bono[0].Total_Final);
+            var Performance = JSON.parse(response.d);
+            if (Performance.length > 0) {
+                var Performance_totalhoras = Performance[0]._Total_Final.replace(' %', '');
+                var preventa = Performance[0]._Preventa;
+                var implementacion = Performance[0]._Implementación;
+                var soporte = Performance[0]._Soporte;
+                var admin = Performance[0].KPI_Individual;
+                var kpig = Performance[0].KPI_Grupo;
+                var compromisos = Performance[0]._Cump;
+                var total_preventa = Performance[0].Preventa;
+                var total_implemetacion = Performance[0].Implementacion;
+                var total_soporte = Performance[0].Soporte;
+                $("#bono_trimestral").text(Performance[0].Total_Final);
                 $("#dashboard_bonos_totalpreventa").text(total_preventa);
                 $("#dashboard_bonos_totalimp").text(total_implemetacion);
                 $("#dashboard_bonos_totalsoporte").text(total_soporte);
@@ -326,7 +326,7 @@ function CargarPerformanceIngenieria() {
     var ver_Todos_empleados = VerTodosEmpleados(); //$('#ContentPlaceHolder1_hdf_ver_Todos_empleados').val();
     //guardamos esta ejecucion en un array
     var call = $.ajax({
-        url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues',
+        url: 'reporte_performance_ingenieria_netdiario.aspx/GetPerformanceIngenieriaValues',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
