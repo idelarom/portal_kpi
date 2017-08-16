@@ -218,7 +218,7 @@ namespace presentacion
                 ddlempleado_a_consultar.DataTextField = "nombre";
                 ddlempleado_a_consultar.DataSource = dt_empleados;
                 ddlempleado_a_consultar.DataBind();
-                if (!ver_Todos_los_empleados || dt_empleados.Rows.Count == 1)
+                if (!ver_Todos_los_empleados)
                 {
                     CargarListadoEmpleado(num_empleado, false);
                 }
