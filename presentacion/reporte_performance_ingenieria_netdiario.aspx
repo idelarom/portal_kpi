@@ -505,7 +505,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
-    <asp:Button ID="btnverempleadodetalles" runat="server" style="display:none;" Text="Button" OnClick="btnverempleadodetalles_Click" />
+    <asp:Button ID="btnverempleadodetalles" runat="server" visible="false" Text="Button" OnClick="btnverempleadodetalles_Click" />
     <asp:HiddenField ID="hdfsessionid" runat="server" />
         <asp:HiddenField ID="hdfuserselected" runat="server" />
     <asp:HiddenField ID="hdfnombre" runat="server" />
