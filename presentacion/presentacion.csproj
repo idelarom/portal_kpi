@@ -264,6 +264,7 @@
     <Content Include="img\load.gif" />
     <Content Include="img\loading.gif" />
     <Content Include="img\loading_2.gif" />
+    <Content Include="img\local.png" />
     <Content Include="img\logo_bar.png" />
     <Content Include="img\logo_bar_sm.png" />
     <Content Include="img\logo_login.png" />
@@ -1414,6 +1415,9 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

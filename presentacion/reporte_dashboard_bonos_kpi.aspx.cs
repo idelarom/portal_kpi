@@ -172,8 +172,8 @@ namespace presentacion
                 ModalShow("#myModal");
                 Toast.Error("Error al generar el reporte: " + ex.Message, this);
             }
-            finally { 
-                lnkguardar.Visible = true;
+            finally {
+                lnkguardar.Visible = true; ;
                 lnkcargando.Style["display"] = "none";
                 div_modalbodyfiltros.Visible = true;
             }
@@ -207,7 +207,7 @@ namespace presentacion
                     dt_empleados = dv_empleados.ToTable();
                     if (dt_empleados.Rows.Count == 1)
                     {
-                        int num_jefe = Convert.ToInt32(ddlempleado_a_consultar.SelectedValue);
+                        int num_jefe = Convert.ToInt32(dt_empleados.Rows[0]["num_empleado"].ToString());
                         CargarListadoEmpleado(num_jefe, false);
                     }
                 }
@@ -582,5 +582,6 @@ namespace presentacion
                 Alert.ShowAlertError(ex.ToString(), this.Page);
             }
         }
+        
     }
 }

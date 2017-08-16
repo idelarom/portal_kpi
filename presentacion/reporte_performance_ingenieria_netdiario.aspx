@@ -3,6 +3,29 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <script type="text/javascript">
+         //declaramos los objetos de tipo load desde el inicio (load oscuro)
+         var opts2 = {
+             lines: 13 // The number of lines to draw
+            , length: 28 // The length of each line
+            , width: 14 // The line thickness
+            , radius: 42 // The radius of the inner circle
+            , scale: 1 // Scales overall size of the spinner
+            , corners: 1 // Corner roundness (0..1)
+            , color: '#000' // #rgb or #rrggbb or array of colors
+            , opacity: 0.1 // Opacity of the lines
+            , rotate: 0 // The rotation offset
+            , direction: 1 // 1: clockwise, -1: counterclockwise
+            , speed: 1 // Rounds per second
+            , trail: 60 // Afterglow percentage
+            , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+            , zIndex: 2000000000 // The z-index (defaults to 2000000000)
+            , className: 'spinner' // The CSS class to assign to the spinner
+            , top: '45%' // Top position relative to parent
+            , left: '50%' // Left position relative to parent
+            , shadow: true // Whether to render a shadow
+            , hwaccel: true // Whether to use hardware acceleration
+            , position: 'absolute' // Element positioning
+         };
         $(document).ready(function () {
             Init();
         });
@@ -42,7 +65,8 @@
         }
 
         function ConfirmwidgetProyectoModal() {
-            
+            var target2 = document.getElementById('div_body_reportedashboard');
+            var spinner2 = new Spinner(opts2).spin(target2);
               $("#<%= div_modalbodyfiltros.ClientID%>").hide();
               $("#<%= lnkcargando.ClientID%>").show();
               $("#<%= lnkguardar.ClientID%>").hide();
@@ -92,426 +116,434 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
- <div class="row">
-        <div class="col-lg-12">
-            <h3 class="page-header">Performance Ingenieria</h3>
-        </div>
-        <div class="col-lg-12">
+    <div id="div_body_reportedashboard">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Performance Ingenieria</h3>
+            </div>
+            <div class="col-lg-12">
                 <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                     <i class="fa fa-refresh fa-spin fa-fw"></i>
                     <span class="sr-only">Loading...</span>&nbsp;Cargando filtros
                 </asp:LinkButton>
-            <asp:LinkButton ID="lnkfiltros" CssClass="btn btn-primary btn-flat" OnClick="lnkfiltros_Click" runat="server"
-                OnClientClick="return Carganodfiltros();" >
+                <asp:LinkButton ID="lnkfiltros" CssClass="btn btn-primary btn-flat" OnClick="lnkfiltros_Click" runat="server"
+                    OnClientClick="return Carganodfiltros();">
                <i class="fa fa-filter" aria-hidden="true"></i>&nbsp;Filtros
-            </asp:LinkButton>
-        </div>
-    </div>
-    <div class="row" id="div_reporte" runat="server" visible="false">
-
-        <div class="col-lg-12">
-            <br />
-            <div class="box box-primary">
-                <!-- /.box-header -->
-                <div class="box-header">
-                    <div class="col-lg-12">
-                        <h4 class="box-title"><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial:</strong>
-                            &nbsp;<asp:Label ID="lblfechaini" runat="server" Text="Label"></asp:Label>
-                            &nbsp;<strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final:</strong>
-                            &nbsp;<asp:Label ID="lblfechafin" runat="server" Text="Label"></asp:Label>
-                        </h4>
-
-                    </div>
-                </div>
-                <div class="box-body">
-                    <div class="table table-responsive">
-                        <telerik:RadGrid ID="gridPerformance" AllowSorting="True" runat="server" DataKeyNames="Login"
-                            HeaderStyle-ForeColor="#000000" HeaderStyle-Font-Bold="false" SortingSettings-SortToolTip="Ordenar Listado"
-                            AutoGenerateColumns="False" HierarchySettings-CollapseTooltip="Ocultar Detalle"
-                            HierarchySettings-ExpandTooltip="Ver Detalle" GroupPanelPosition="Top"
-                            ResolvedRenderMode="Classic" Skin="Bootstrap" OnDetailTableDataBind="gridPerformance_DetailTableDataBind" 
-                            OnNeedDataSource="gridPerformance_NeedDataSource">
-
-                            <HeaderStyle HorizontalAlign="Center" />
-                            <GroupingSettings CollapseAllTooltip="Collapse all groups"></GroupingSettings>
-
-                            <SortingSettings SortToolTip="Ordenar Listado"></SortingSettings>
-
-                            <HierarchySettings ExpandTooltip="Ver Detalle" CollapseTooltip="Ocultar Detalle"></HierarchySettings>
-
-                            <ClientSettings>
-                                <Selecting AllowRowSelect="True" />
-
-                            </ClientSettings>
-                            <MasterTableView   style="font-size:11px" ShowFooter="false" TableLayout="Fixed" ItemStyle-Height="20px" AlternatingItemStyle-Height="28px" 
-                                DataKeyNames="Login" EnableNoRecordsTemplate="true" ClientDataKeyNames="Login"
-                                ShowHeadersWhenNoRecords="true"
-                                NoDetailRecordsText="No se han encontrado registros..." NoMasterRecordsText="No se han encontrado registros..."
-                                FooterStyle-Font-Bold="true" CssClass="dvv table table-responsive table-condensed">
-                                <DetailTables>
-                                    <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true"
-                                        DataKeyNames="Login" Width="100%" runat="server">
-                                        <ParentTableRelation>
-                                            <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
-                                        </ParentTableRelation>
-                                        <Columns>
-                                            <telerik:GridBoundColumn SortExpression="Folio_OP" HeaderText="Folio OP" HeaderButtonType="TextButton" DataField="Folio_OP" UniqueName="Folio_OP"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Folio_Proyecto" HeaderText="Folio_Proyecto" HeaderButtonType="TextButton" DataField="Folio_Proyecto" UniqueName="Folio_Proyecto"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Cliente" HeaderText="Cliente" HeaderButtonType="TextButton" DataField="Cliente" UniqueName="Cliente"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Monto_OP" HeaderText="Monto OP" HeaderButtonType="TextButton" DataField="Monto_OP" UniqueName="Monto_OP"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Margen_OP" HeaderText="Margen OP" HeaderButtonType="TextButton" DataField="Margen_OP" UniqueName="Margen_OP"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Total_Hrs_OP" HeaderText="Total Hrs OP" HeaderButtonType="TextButton" DataField="Total_Hrs_OP" UniqueName="Total_Hrs_OP"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Total_Hrs_Ing" HeaderText="Total Hrs Ing" HeaderButtonType="TextButton" DataField="Total_Hrs_Ing" UniqueName="Total_Hrs_Ing"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Costo" HeaderText="Costo Total Ing" HeaderButtonType="TextButton" DataField="Costo" UniqueName="Costo"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Viaticos_Total_OP" HeaderText="Viaticos Total OP" HeaderButtonType="TextButton" DataField="Viaticos_Total_OP" UniqueName="Viaticos_Total_OP"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Viaticos_Total_Ing" HeaderText="Viaticos Total Ing" HeaderButtonType="TextButton" DataField="Viaticos_Total_Ing" UniqueName="Viaticos_Total_Ing"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Estatus" HeaderText="Estatus" HeaderButtonType="TextButton" DataField="Estatus" UniqueName="Estatus"></telerik:GridBoundColumn>
-                                        </Columns>
-                                    </telerik:GridTableView>
-
-                                    <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true"
-                                        DataKeyNames="Login" Width="100%" runat="server">
-                                        <ParentTableRelation>
-                                            <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
-                                        </ParentTableRelation>
-                                        <Columns>
-                                            <telerik:GridBoundColumn SortExpression="Folio_Proyecto" HeaderText="Folio Proyecto" HeaderButtonType="TextButton" DataField="Folio_Proyecto" UniqueName="Folio_Proyecto"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Folio_OP" HeaderText="Folio OP" HeaderButtonType="TextButton" DataField="Folio_OP" UniqueName="Folio_OP"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Nombre_Cliente" HeaderText="Cliente" HeaderButtonType="TextButton" DataField="Nombre_Cliente" UniqueName="Nombre_Cliente"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Total_Hrs_Proyecto" HeaderText="Total_Hrs_Proyecto" HeaderButtonType="TextButton" DataField="Total_Hrs_Proyecto" UniqueName="Total_Hrs_Proyecto"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Total_Hrs_Ing" HeaderText="Total_Hrs_Ing" HeaderButtonType="TextButton" DataField="Total_Hrs_Ing" UniqueName="Total_Hrs_Ing"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Costo_Ing" HeaderText="Costo_Ing" HeaderButtonType="TextButton" DataField="Costo_Ing" UniqueName="Costo_Ing"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Viaticos_Total_Proyecto" HeaderText="Viaticos_Total_Proyecto" HeaderButtonType="TextButton" DataField="Viaticos_Total_Proyecto" UniqueName="Viaticos_Total_Proyecto"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Viaticos_Total_Ing" HeaderText="Viaticos_Total_Ing" HeaderButtonType="TextButton" DataField="Viaticos_Total_Ing" UniqueName="Viaticos_Total_Ing"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Estatus" HeaderText="Estatus" HeaderButtonType="TextButton" DataField="Estatus" UniqueName="Estatus"></telerik:GridBoundColumn>
-                                        </Columns>
-                                    </telerik:GridTableView>
-
-                                    <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true"
-                                        DataKeyNames="Login" Width="100%" runat="server">
-                                        <ParentTableRelation>
-                                            <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
-                                        </ParentTableRelation>
-                                        <Columns>
-                                            <telerik:GridBoundColumn SortExpression="Incidente" HeaderText="Incidente" HeaderButtonType="TextButton" DataField="Incidente" UniqueName="Incidente"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Cliente" HeaderText="Cliente" HeaderButtonType="TextButton" DataField="Cliente" UniqueName="Cliente"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Contrato" HeaderText="Contrato" HeaderButtonType="TextButton" DataField="Contrato" UniqueName="Contrato"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Prioridad" HeaderText="Prioridad" HeaderButtonType="TextButton" DataField="Prioridad" UniqueName="Prioridad"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="SLAs_Atencion" HeaderText="SLAs_Atencion" HeaderButtonType="TextButton" DataField="SLAs_Atencion" UniqueName="SLAs_Atencion"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="SLAs_Solucion" HeaderText="SLAs_Solucion" HeaderButtonType="TextButton" DataField="SLAs_Solucion" UniqueName="SLAs_Solucion"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Tipo_Servicio" HeaderText="Tipo_Servicio" HeaderButtonType="TextButton" DataField="Tipo_Servicio" UniqueName="Tipo_Servicio"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Total_Hrs_Incidente" HeaderText="Total_Hrs_Incidente" HeaderButtonType="TextButton" DataField="Total_Hrs_Incidente" UniqueName="Total_Hrs_Incidente"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Costo" HeaderText="Costo" HeaderButtonType="TextButton" DataField="Costo" UniqueName="Costo"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Viaticos_Total_Incidente" HeaderText="Viaticos_Total_Incidente" HeaderButtonType="TextButton" DataField="Viaticos_Total_Incidente" UniqueName="Viaticos_Total_Incidente"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Viaticos_Total_Ing" HeaderText="Viaticos_Total_Ing" HeaderButtonType="TextButton" DataField="Viaticos_Total_Ing" UniqueName="Viaticos_Total_Ing"></telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="Estatus" HeaderText="Estatus" HeaderButtonType="TextButton" DataField="Estatus" UniqueName="Estatus"></telerik:GridBoundColumn>
-                                        </Columns>
-                                    </telerik:GridTableView>
-                                </DetailTables>
-
-                                <ItemStyle Height="28px"></ItemStyle>
-
-                                <AlternatingItemStyle Height="28px"></AlternatingItemStyle>
-                                <FooterStyle Font-Bold="true" />
-                                <RowIndicatorColumn Visible="False">
-                                </RowIndicatorColumn>
-                                <ExpandCollapseColumn Created="True">
-                                </ExpandCollapseColumn>
-                                <Columns>
-                                    <telerik:GridBoundColumn DataField="Login" HeaderText="Login" HeaderStyle-Width="100px" ItemStyle-Wrap="false" Visible="false">
-                                        <HeaderStyle Width="100px"></HeaderStyle>
-
-                                        <ItemStyle Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridTemplateColumn ItemStyle-Wrap="false" DataField="Ingeniero" UniqueName="Ingeniero" HeaderText="Ingeniero">
-                                        <ItemTemplate>
-                                            <%-- <asp:Literal ID="lbtUsr" runat="server" Text="<a href='#' onclick='Open();'></a>"></asp:Literal>--%>
-                                            <asp:HyperLink runat="server"  ID="lnkUsuario" Text='<%#Eval("Ingeniero") %>' Style="" NavigateUrl="#" onclick='<%# "return ViewEmpleado("+@"""" + Eval("Ingeniero")+@""""+@",""" + Eval("Login")+@""""+@",""" + Eval("Login")+@""""+
-                                                        @",""" + Eval("Preventa")+@""""+@",""" + Eval("Proyectos_Internos_Facturables")+@""""+@",""" + Eval("Soporte")+@""""+@",""" + Eval("Administrativas")+@""""+");" %>'></asp:HyperLink>
-                                        </ItemTemplate>
-                                        <HeaderStyle Width="230px"></HeaderStyle>
-                                        <ItemStyle Wrap="False"></ItemStyle>
-                                    </telerik:GridTemplateColumn>
-                                    <telerik:GridBoundColumn DataField="Soporte" HeaderText="Soporte" ItemStyle-Wrap="false">
-
-                                        <HeaderStyle Width="60px"></HeaderStyle>
-                                        <ItemStyle Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Preventa" HeaderText="Preventa" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="60px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Desarrollo_Negocio" HeaderText="D. Negocio" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="80px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Capacitacion" HeaderText="Capacitación" ItemStyle-Wrap="false">
-
-                                        <HeaderStyle Width="80px"></HeaderStyle>
-                                        <ItemStyle Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Administrativas" HeaderText="Administrativas" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="90px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Incapacidad" HeaderText="Incapacidad" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="70px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Uptime" HeaderText="Uptime" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="60px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Proyectos_Internos_Facturables" HeaderText="Proyectos IF" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="90px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Proyectos_Internos_No_Facturables" HeaderText="Proyectos INF" ItemStyle-Wrap="false" 
-                                        ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="90px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Proyectos" HeaderText="Proyectos" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="60px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Tiempo_Personal" HeaderText="T. Personal" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="80px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Usabilidad" HeaderText="Usabilidad" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="65px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn DataField="Total_Horas" HeaderText="Total Horas" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
-
-                                        <HeaderStyle Width="80px"></HeaderStyle>
-                                        <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
-                                    </telerik:GridBoundColumn>
-                                </Columns>
-                                <NoRecordsTemplate>
-                                    <div style="height: 30px">No se han encontrado registros...</div>
-                                </NoRecordsTemplate>
-                            </MasterTableView>
-                        </telerik:RadGrid>
-                    </div>
-                </div>
-                <div class=" box-footer">
-
-                    <asp:LinkButton ID="lnkgenerarpdf" CssClass="btn btn-danger btn-flat"
-                        OnClick="lnkgenerarpdf_Click" runat="server">
-                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Exportar a PDF
-                    </asp:LinkButton>
-                    <asp:LinkButton ID="lnkgenerarexcel" CssClass="btn btn-success btn-flat"
-                        OnClick="lnkgenerarexcel_Click" runat="server">
-                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Exportar a Excel
-                    </asp:LinkButton>
-                </div>
+                </asp:LinkButton>
             </div>
-
         </div>
-    </div>
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Always">
-                <Triggers>
-                    <asp:PostBackTrigger ControlID="lnkguardar" />
-                </Triggers>
-                <ContentTemplate>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Filtros</h4>
+        <div class="row" id="div_reporte" runat="server" visible="false">
+
+            <div class="col-lg-12">
+                <br />
+                <div class="box box-primary">
+                    <!-- /.box-header -->
+                    <div class="box-header">
+                        <div class="col-lg-12">
+                            <h4 class="box-title"><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial:</strong>
+                                &nbsp;<asp:Label ID="lblfechaini" runat="server" Text="Label"></asp:Label>
+                                &nbsp;<strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final:</strong>
+                                &nbsp;<asp:Label ID="lblfechafin" runat="server" Text="Label"></asp:Label>
+                            </h4>
+
                         </div>
-                        <div class="modal-body" id="div_modalbodyfiltros" runat="server">   
-                            <div class="row">
-                                 <div class="col-lg-12 col-xs-12">
-                                    <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Seleccione el empleado a consultar</strong>
-                                        &nbsp; 
+                    </div>
+                    <div class="box-body">
+                        <div class="table table-responsive">
+                            <telerik:RadGrid ID="gridPerformance" AllowSorting="True" runat="server" DataKeyNames="Login"
+                                HeaderStyle-ForeColor="#000000" HeaderStyle-Font-Bold="false" SortingSettings-SortToolTip="Ordenar Listado"
+                                AutoGenerateColumns="False" HierarchySettings-CollapseTooltip="Ocultar Detalle"
+                                HierarchySettings-ExpandTooltip="Ver Detalle" GroupPanelPosition="Top"
+                                ResolvedRenderMode="Classic" Skin="Bootstrap" OnDetailTableDataBind="gridPerformance_DetailTableDataBind"
+                                OnNeedDataSource="gridPerformance_NeedDataSource">
+
+                                <HeaderStyle HorizontalAlign="Center" />
+                                <GroupingSettings CollapseAllTooltip="Collapse all groups"></GroupingSettings>
+
+                                <SortingSettings SortToolTip="Ordenar Listado"></SortingSettings>
+
+                                <HierarchySettings ExpandTooltip="Ver Detalle" CollapseTooltip="Ocultar Detalle"></HierarchySettings>
+
+                                <ClientSettings>
+                                    <Selecting AllowRowSelect="True" />
+
+                                </ClientSettings>
+                                <MasterTableView Style="font-size: 11px" ShowFooter="false" TableLayout="Fixed" ItemStyle-Height="20px" AlternatingItemStyle-Height="28px"
+                                    DataKeyNames="Login" EnableNoRecordsTemplate="true" ClientDataKeyNames="Login"
+                                    ShowHeadersWhenNoRecords="true"
+                                    NoDetailRecordsText="No se han encontrado registros..." NoMasterRecordsText="No se han encontrado registros..."
+                                    FooterStyle-Font-Bold="true" CssClass="dvv table table-responsive table-condensed">
+                                    <DetailTables>
+                                        <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true"
+                                            DataKeyNames="Login" Width="100%" runat="server">
+                                            <ParentTableRelation>
+                                                <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
+                                            </ParentTableRelation>
+                                            <Columns>
+                                                <telerik:GridBoundColumn SortExpression="Folio_OP" HeaderText="Folio OP" HeaderButtonType="TextButton" DataField="Folio_OP" UniqueName="Folio_OP"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Folio_Proyecto" HeaderText="Folio_Proyecto" HeaderButtonType="TextButton" DataField="Folio_Proyecto" UniqueName="Folio_Proyecto"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Cliente" HeaderText="Cliente" HeaderButtonType="TextButton" DataField="Cliente" UniqueName="Cliente"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Monto_OP" HeaderText="Monto OP" HeaderButtonType="TextButton" DataField="Monto_OP" UniqueName="Monto_OP"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Margen_OP" HeaderText="Margen OP" HeaderButtonType="TextButton" DataField="Margen_OP" UniqueName="Margen_OP"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Total_Hrs_OP" HeaderText="Total Hrs OP" HeaderButtonType="TextButton" DataField="Total_Hrs_OP" UniqueName="Total_Hrs_OP"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Total_Hrs_Ing" HeaderText="Total Hrs Ing" HeaderButtonType="TextButton" DataField="Total_Hrs_Ing" UniqueName="Total_Hrs_Ing"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Costo" HeaderText="Costo Total Ing" HeaderButtonType="TextButton" DataField="Costo" UniqueName="Costo"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Viaticos_Total_OP" HeaderText="Viaticos Total OP" HeaderButtonType="TextButton" DataField="Viaticos_Total_OP" UniqueName="Viaticos_Total_OP"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Viaticos_Total_Ing" HeaderText="Viaticos Total Ing" HeaderButtonType="TextButton" DataField="Viaticos_Total_Ing" UniqueName="Viaticos_Total_Ing"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Estatus" HeaderText="Estatus" HeaderButtonType="TextButton" DataField="Estatus" UniqueName="Estatus"></telerik:GridBoundColumn>
+                                            </Columns>
+                                        </telerik:GridTableView>
+
+                                        <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true"
+                                            DataKeyNames="Login" Width="100%" runat="server">
+                                            <ParentTableRelation>
+                                                <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
+                                            </ParentTableRelation>
+                                            <Columns>
+                                                <telerik:GridBoundColumn SortExpression="Folio_Proyecto" HeaderText="Folio Proyecto" HeaderButtonType="TextButton" DataField="Folio_Proyecto" UniqueName="Folio_Proyecto"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Folio_OP" HeaderText="Folio OP" HeaderButtonType="TextButton" DataField="Folio_OP" UniqueName="Folio_OP"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Nombre_Cliente" HeaderText="Cliente" HeaderButtonType="TextButton" DataField="Nombre_Cliente" UniqueName="Nombre_Cliente"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Total_Hrs_Proyecto" HeaderText="Total_Hrs_Proyecto" HeaderButtonType="TextButton" DataField="Total_Hrs_Proyecto" UniqueName="Total_Hrs_Proyecto"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Total_Hrs_Ing" HeaderText="Total_Hrs_Ing" HeaderButtonType="TextButton" DataField="Total_Hrs_Ing" UniqueName="Total_Hrs_Ing"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Costo_Ing" HeaderText="Costo_Ing" HeaderButtonType="TextButton" DataField="Costo_Ing" UniqueName="Costo_Ing"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Viaticos_Total_Proyecto" HeaderText="Viaticos_Total_Proyecto" HeaderButtonType="TextButton" DataField="Viaticos_Total_Proyecto" UniqueName="Viaticos_Total_Proyecto"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Viaticos_Total_Ing" HeaderText="Viaticos_Total_Ing" HeaderButtonType="TextButton" DataField="Viaticos_Total_Ing" UniqueName="Viaticos_Total_Ing"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Estatus" HeaderText="Estatus" HeaderButtonType="TextButton" DataField="Estatus" UniqueName="Estatus"></telerik:GridBoundColumn>
+                                            </Columns>
+                                        </telerik:GridTableView>
+
+                                        <telerik:GridTableView NoDetailRecordsText="No se han encontrado registros" HierarchyLoadMode="ServerOnDemand" HierarchyDefaultExpanded="false" EnableHierarchyExpandAll="true"
+                                            DataKeyNames="Login" Width="100%" runat="server">
+                                            <ParentTableRelation>
+                                                <telerik:GridRelationFields DetailKeyField="Login" MasterKeyField="Login"></telerik:GridRelationFields>
+                                            </ParentTableRelation>
+                                            <Columns>
+                                                <telerik:GridBoundColumn SortExpression="Incidente" HeaderText="Incidente" HeaderButtonType="TextButton" DataField="Incidente" UniqueName="Incidente"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Cliente" HeaderText="Cliente" HeaderButtonType="TextButton" DataField="Cliente" UniqueName="Cliente"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Contrato" HeaderText="Contrato" HeaderButtonType="TextButton" DataField="Contrato" UniqueName="Contrato"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Prioridad" HeaderText="Prioridad" HeaderButtonType="TextButton" DataField="Prioridad" UniqueName="Prioridad"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="SLAs_Atencion" HeaderText="SLAs_Atencion" HeaderButtonType="TextButton" DataField="SLAs_Atencion" UniqueName="SLAs_Atencion"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="SLAs_Solucion" HeaderText="SLAs_Solucion" HeaderButtonType="TextButton" DataField="SLAs_Solucion" UniqueName="SLAs_Solucion"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Tipo_Servicio" HeaderText="Tipo_Servicio" HeaderButtonType="TextButton" DataField="Tipo_Servicio" UniqueName="Tipo_Servicio"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Total_Hrs_Incidente" HeaderText="Total_Hrs_Incidente" HeaderButtonType="TextButton" DataField="Total_Hrs_Incidente" UniqueName="Total_Hrs_Incidente"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Costo" HeaderText="Costo" HeaderButtonType="TextButton" DataField="Costo" UniqueName="Costo"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Viaticos_Total_Incidente" HeaderText="Viaticos_Total_Incidente" HeaderButtonType="TextButton" DataField="Viaticos_Total_Incidente" UniqueName="Viaticos_Total_Incidente"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Viaticos_Total_Ing" HeaderText="Viaticos_Total_Ing" HeaderButtonType="TextButton" DataField="Viaticos_Total_Ing" UniqueName="Viaticos_Total_Ing"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn SortExpression="Estatus" HeaderText="Estatus" HeaderButtonType="TextButton" DataField="Estatus" UniqueName="Estatus"></telerik:GridBoundColumn>
+                                            </Columns>
+                                        </telerik:GridTableView>
+                                    </DetailTables>
+
+                                    <ItemStyle Height="28px"></ItemStyle>
+
+                                    <AlternatingItemStyle Height="28px"></AlternatingItemStyle>
+                                    <FooterStyle Font-Bold="true" />
+                                    <RowIndicatorColumn Visible="False">
+                                    </RowIndicatorColumn>
+                                    <ExpandCollapseColumn Created="True">
+                                    </ExpandCollapseColumn>
+                                    <Columns>
+                                        <telerik:GridBoundColumn DataField="Login" HeaderText="Login" HeaderStyle-Width="100px" ItemStyle-Wrap="false" Visible="false">
+                                            <HeaderStyle Width="100px"></HeaderStyle>
+
+                                            <ItemStyle Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridTemplateColumn ItemStyle-Wrap="false" DataField="Ingeniero" UniqueName="Ingeniero" HeaderText="Ingeniero">
+                                            <ItemTemplate>
+                                                <%-- <asp:Literal ID="lbtUsr" runat="server" Text="<a href='#' onclick='Open();'></a>"></asp:Literal>--%>
+                                                <asp:HyperLink runat="server" ID="lnkUsuario" Text='<%#Eval("Ingeniero") %>' Style="" NavigateUrl="#" onclick='<%# "return ViewEmpleado("+@"""" + Eval("Ingeniero")+@""""+@",""" + Eval("Login")+@""""+@",""" + Eval("Login")+@""""+
+                                                        @",""" + Eval("Preventa")+@""""+@",""" + Eval("Proyectos_Internos_Facturables")+@""""+@",""" + Eval("Soporte")+@""""+@",""" + Eval("Administrativas")+@""""+");" %>'></asp:HyperLink>
+                                            </ItemTemplate>
+                                            <HeaderStyle Width="230px"></HeaderStyle>
+                                            <ItemStyle Wrap="False"></ItemStyle>
+                                        </telerik:GridTemplateColumn>
+                                        <telerik:GridBoundColumn DataField="Soporte" HeaderText="Soporte" ItemStyle-Wrap="false">
+
+                                            <HeaderStyle Width="60px"></HeaderStyle>
+                                            <ItemStyle Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Preventa" HeaderText="Preventa" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="60px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Desarrollo_Negocio" HeaderText="D. Negocio" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="80px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Capacitacion" HeaderText="Capacitación" ItemStyle-Wrap="false">
+
+                                            <HeaderStyle Width="80px"></HeaderStyle>
+                                            <ItemStyle Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Administrativas" HeaderText="Administrativas" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="90px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Incapacidad" HeaderText="Incapacidad" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="70px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Uptime" HeaderText="Uptime" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="60px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Proyectos_Internos_Facturables" HeaderText="Proyectos IF" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="90px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Proyectos_Internos_No_Facturables" HeaderText="Proyectos INF" ItemStyle-Wrap="false"
+                                            ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="90px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Proyectos" HeaderText="Proyectos" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="60px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Tiempo_Personal" HeaderText="T. Personal" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="80px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Usabilidad" HeaderText="Usabilidad" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="65px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn DataField="Total_Horas" HeaderText="Total Horas" ItemStyle-Wrap="false" ItemStyle-HorizontalAlign="Right">
+
+                                            <HeaderStyle Width="80px"></HeaderStyle>
+                                            <ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+                                        </telerik:GridBoundColumn>
+                                    </Columns>
+                                    <NoRecordsTemplate>
+                                        <div style="height: 30px">No se han encontrado registros...</div>
+                                    </NoRecordsTemplate>
+                                </MasterTableView>
+                            </telerik:RadGrid>
+                        </div>
+                    </div>
+                    <div class=" box-footer">
+
+                        <asp:LinkButton ID="lnkgenerarpdf" CssClass="btn btn-danger btn-flat"
+                            OnClick="lnkgenerarpdf_Click" runat="server">
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Exportar a PDF
+                        </asp:LinkButton>
+                        <asp:LinkButton ID="lnkgenerarexcel" CssClass="btn btn-success btn-flat"
+                            OnClick="lnkgenerarexcel_Click" runat="server">
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Exportar a Excel
+                        </asp:LinkButton>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Always">
+                    <Triggers>
+                        <asp:PostBackTrigger ControlID="lnkguardar" />
+                    </Triggers>
+                    <ContentTemplate>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span></button>
+                                <h4 class="modal-title">Filtros</h4>
+                            </div>
+                            <div class="modal-body" id="div_modalbodyfiltros" runat="server">
+                                <div class="row">
+                                    <div class="col-lg-12 col-xs-12">
+                                        <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Seleccione el empleado a consultar</strong>
+                                            &nbsp; 
                                         <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
-                                    </h6>
-                                    <div class="input-group input-group-sm">
-                                        <asp:TextBox
-                                             onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control" 
-                                            placeholder="Ingrese un filtro(ejemplo:Nombre)" runat="server" OnTextChanged="txtfilterempleado_TextChanged"></asp:TextBox>
-                                        <span class="input-group-btn">
-                                            <asp:LinkButton ID="lnksearch" CssClass="btn btn-primary btn-flat" 
-                                                 OnClientClick="return ChangedTextLoad2();" OnClick="lnksearch_Click" runat="server">
+                                        </h6>
+                                        <div class="input-group input-group-sm">
+                                            <asp:TextBox
+                                                onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
+                                                placeholder="Ingrese un filtro(ejemplo:Nombre)" runat="server" OnTextChanged="txtfilterempleado_TextChanged"></asp:TextBox>
+                                            <span class="input-group-btn">
+                                                <asp:LinkButton ID="lnksearch" CssClass="btn btn-primary btn-flat"
+                                                    OnClientClick="return ChangedTextLoad2();" OnClick="lnksearch_Click" runat="server">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
-                                            </asp:LinkButton>
-                                        </span>
+                                                </asp:LinkButton>
+                                            </span>
+                                        </div>
+                                        <asp:Image ID="imgloadempleado" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                        <label id="lblbemp" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
+                                        <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control"
+                                            AutoPostBack="true" OnSelectedIndexChanged="ddlempleado_a_consultar_SelectedIndexChanged" runat="server">
+                                        </asp:DropDownList>
                                     </div>
-                                    <asp:Image ID="imgloadempleado" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
-                                    <label id="lblbemp" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
-                                    <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control"
-                                        AutoPostBack="true" OnSelectedIndexChanged="ddlempleado_a_consultar_SelectedIndexChanged" runat="server">
-                                    </asp:DropDownList>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
-                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>                                     
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
+                                        <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="font-size: 10px;">
+                                        <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
+                                        <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
+                                    </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"  style="font-size:10px;">
-                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
-                                    <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <br />
-                                    <asp:LinkButton ID="lnkagregarseleccion" OnClick="lnkagregarseleccion_Click" 
-                                        CssClass="btn btn-primary btn-flat btn-xs" runat="server">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <br />
+                                        <asp:LinkButton ID="lnkagregarseleccion" OnClick="lnkagregarseleccion_Click"
+                                            CssClass="btn btn-primary btn-flat btn-xs" runat="server">
                                         Selección&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
-                                    </asp:LinkButton>                                   
-                                    <asp:LinkButton ID="lnkagregartodos" OnClick="lnkagregartodos_Click" 
-                                        CssClass="btn btn-primary btn-flat btn-xs" runat="server">
+                                        </asp:LinkButton>
+                                        <asp:LinkButton ID="lnkagregartodos" OnClick="lnkagregartodos_Click"
+                                            CssClass="btn btn-primary btn-flat btn-xs" runat="server">
                                         Todos&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
-                                    </asp:LinkButton>
-                                     <div style="max-height: 130px; height: 130px; overflow: scroll;">
-                                        <telerik:RadTreeView RenderMode="Lightweight" ID="rtvListEmpleado" runat="server" Width="100%"
-                                            Style="background-color: white; font-size: 9px;" Skin="Bootstrap">
-                                            <DataBindings>
-                                                <telerik:RadTreeNodeBinding Expanded="False"></telerik:RadTreeNodeBinding>
-                                            </DataBindings>
-                                        </telerik:RadTreeView>
+                                        </asp:LinkButton>
+                                        <div style="max-height: 130px; height: 130px; overflow: scroll;">
+                                            <telerik:RadTreeView RenderMode="Lightweight" ID="rtvListEmpleado" runat="server" Width="100%"
+                                                Style="background-color: white; font-size: 9px;" Skin="Bootstrap">
+                                                <DataBindings>
+                                                    <telerik:RadTreeNodeBinding Expanded="False"></telerik:RadTreeNodeBinding>
+                                                </DataBindings>
+                                            </telerik:RadTreeView>
+                                        </div>
+
+                                        <label>
+                                            <asp:Label ID="lblcountlistempleados" runat="server" Text="0"></asp:Label></label>
                                     </div>
-                                    
-                                    <label>
-                                        <asp:Label ID="lblcountlistempleados" runat="server" Text="0"></asp:Label></label>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <br />                                
-                                    <asp:LinkButton ID="lnklimpiar" OnClick="lnklimpiar_Click" 
-                                        CssClass="btn btn-danger btn-flat btn-xs" runat="server">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <br />
+                                        <asp:LinkButton ID="lnklimpiar" OnClick="lnklimpiar_Click"
+                                            CssClass="btn btn-danger btn-flat btn-xs" runat="server">
                                         Limpiar lista&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
-                                    </asp:LinkButton>                      
-                                    <asp:LinkButton ID="lnkeliminarselecion" OnClick="lnkeliminarselecion_Click"
-                                        CssClass="btn btn-danger btn-flat btn-xs" runat="server">
+                                        </asp:LinkButton>
+                                        <asp:LinkButton ID="lnkeliminarselecion" OnClick="lnkeliminarselecion_Click"
+                                            CssClass="btn btn-danger btn-flat btn-xs" runat="server">
                                         Seleccion&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
-                                    </asp:LinkButton>
-                                    <div style="max-height: 130px; height: 130px; overflow: scroll;">
-                                        <telerik:RadListBox RenderMode="Lightweight" runat="server" ID="rdtselecteds" Width="100%"
-                                            Style="font-size: 9px" Skin="Bootstrap" SelectionMode="Multiple" Sort="Ascending">
-                                        </telerik:RadListBox>
+                                        </asp:LinkButton>
+                                        <div style="max-height: 130px; height: 130px; overflow: scroll;">
+                                            <telerik:RadListBox RenderMode="Lightweight" runat="server" ID="rdtselecteds" Width="100%"
+                                                Style="font-size: 9px" Skin="Bootstrap" SelectionMode="Multiple" Sort="Ascending">
+                                            </telerik:RadListBox>
+                                        </div>
+                                        <label>
+                                            <asp:Label ID="lblcountselecteds" runat="server" Text="0"></asp:Label></label>
                                     </div>
-                                    <label>
-                                        <asp:Label ID="lblcountselecteds" runat="server" Text="0"></asp:Label></label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                            <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                            <div class="modal-footer ">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Generando Reporte
-                            </asp:LinkButton>
-                            <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
-                                OnClientClick="return ConfirmwidgetProyectoModal();" runat="server">
+                                </asp:LinkButton>
+                                <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
+                                    OnClientClick="return ConfirmwidgetProyectoModal();" runat="server">
                                             <i class="fa fa-database" aria-hidden="true"></i>&nbsp;Generar Reporte
-                            </asp:LinkButton>
+                                </asp:LinkButton>
+                            </div>
                         </div>
-                    </div>
 
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
         </div>
-    </div>
-       <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">
-            <asp:UpdatePanel ID="UpdatePanel15" runat="server">
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="btnverempleadodetalles" EventName="Click" />
-                </Triggers>
-                <ContentTemplate>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Detalles del empleado</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="box box-widget widget-user">
-                                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                                        <div class="widget-user-header bg-aqua-active">
-                                            <h3 class="widget-user-username"> <asp:Label ID="lblnombre" runat="server" Text=""></asp:Label></h3>
-                                            <h5 class="widget-user-desc">
-                                                <asp:Label ID="lblpuesto" runat="server" Text=""></asp:Label></h5>
-                                        </div>
-                                        <div class="widget-user-image">
-                                          <asp:Image ID="img_employee" runat="server" ImageUrl="~/img/user.png"
-                                                CssClass="img-responsive img-circle" />
-                                        </div>
-                                        <div class="box-footer">
-                                            <div class="row">
-                                                <div class="col-sm-3 border-right">
-                                                    <div class="description-block">
-                                                        <h5 class="description-header"><asp:Label ID="lblprev" runat="server" Text=""></asp:Label></h5>
-                                                        <span class="description-text">Preventa</span>
-                                                    </div>
-                                                    <!-- /.description-block -->
-                                                </div>
-                                                <!-- /.col -->
-                                                <div class="col-sm-3 border-right">
-                                                    <div class="description-block">
-                                                        <h5 class="description-header"><asp:Label ID="lblimple" runat="server" Text=""></asp:Label></h5>
-                                                        <span class="description-text">Implementación</span>
-                                                    </div>
-                                                    <!-- /.description-block -->
-                                                </div>
-                                                <!-- /.col -->
-                                                <div class="col-sm-3">
-                                                    <div class="description-block">
-                                                        <h5 class="description-header"><asp:Label ID="lblsopo" runat="server" Text=""></asp:Label></h5>
-                                                        <span class="description-text">Soporte</span>
-                                                    </div>
-                                                    <!-- /.description-block -->
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="description-block">
-                                                        <h5 class="description-header"><asp:Label ID="lblcompro" runat="server" Text=""></asp:Label></h5>
-                                                        <span class="description-text">Administracion</span>
-                                                    </div>
-                                                    <!-- /.description-block -->
-                                                </div>
-                                                <!-- /.col -->
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <asp:UpdatePanel ID="UpdatePanel15" runat="server">
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="btnverempleadodetalles" EventName="Click" />
+                    </Triggers>
+                    <ContentTemplate>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span></button>
+                                <h4 class="modal-title">Detalles del empleado</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="box box-widget widget-user">
+                                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                                            <div class="widget-user-header bg-aqua-active">
+                                                <h3 class="widget-user-username">
+                                                    <asp:Label ID="lblnombre" runat="server" Text=""></asp:Label></h3>
+                                                <h5 class="widget-user-desc">
+                                                    <asp:Label ID="lblpuesto" runat="server" Text=""></asp:Label></h5>
                                             </div>
-                                            <!-- /.row -->
+                                            <div class="widget-user-image">
+                                                <asp:Image ID="img_employee" runat="server" ImageUrl="~/img/user.png"
+                                                    CssClass="img-responsive img-circle" />
+                                            </div>
+                                            <div class="box-footer">
+                                                <div class="row">
+                                                    <div class="col-sm-3 border-right">
+                                                        <div class="description-block">
+                                                            <h5 class="description-header">
+                                                                <asp:Label ID="lblprev" runat="server" Text=""></asp:Label></h5>
+                                                            <span class="description-text">Preventa</span>
+                                                        </div>
+                                                        <!-- /.description-block -->
+                                                    </div>
+                                                    <!-- /.col -->
+                                                    <div class="col-sm-3 border-right">
+                                                        <div class="description-block">
+                                                            <h5 class="description-header">
+                                                                <asp:Label ID="lblimple" runat="server" Text=""></asp:Label></h5>
+                                                            <span class="description-text">Implementación</span>
+                                                        </div>
+                                                        <!-- /.description-block -->
+                                                    </div>
+                                                    <!-- /.col -->
+                                                    <div class="col-sm-3">
+                                                        <div class="description-block">
+                                                            <h5 class="description-header">
+                                                                <asp:Label ID="lblsopo" runat="server" Text=""></asp:Label></h5>
+                                                            <span class="description-text">Soporte</span>
+                                                        </div>
+                                                        <!-- /.description-block -->
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="description-block">
+                                                            <h5 class="description-header">
+                                                                <asp:Label ID="lblcompro" runat="server" Text=""></asp:Label></h5>
+                                                            <span class="description-text">Administracion</span>
+                                                        </div>
+                                                        <!-- /.description-block -->
+                                                    </div>
+                                                    <!-- /.col -->
+                                                </div>
+                                                <!-- /.row -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
-                            
+                            <div class="modal-footer ">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            </div>
                         </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
         </div>
-    </div>
-    <asp:Button ID="btnverempleadodetalles" runat="server" style="display:none;" Text="Button" OnClick="btnverempleadodetalles_Click" />
-    <asp:HiddenField ID="hdfsessionid" runat="server" />
+        <asp:Button ID="btnverempleadodetalles" runat="server" Style="display: none;" Text="Button" OnClick="btnverempleadodetalles_Click" />
+        <asp:HiddenField ID="hdfsessionid" runat="server" />
         <asp:HiddenField ID="hdfuserselected" runat="server" />
-    <asp:HiddenField ID="hdfnombre" runat="server" />
-    <asp:HiddenField ID="hdfusr" runat="server" />
-    <asp:HiddenField ID="hdfpreventa" runat="server" />
-    <asp:HiddenField ID="hdfimplementacion" runat="server" />
-    <asp:HiddenField ID="hdfsoporte" runat="server" />
-    <asp:HiddenField ID="hdfocompro" runat="server" />
+        <asp:HiddenField ID="hdfnombre" runat="server" />
+        <asp:HiddenField ID="hdfusr" runat="server" />
+        <asp:HiddenField ID="hdfpreventa" runat="server" />
+        <asp:HiddenField ID="hdfimplementacion" runat="server" />
+        <asp:HiddenField ID="hdfsoporte" runat="server" />
+        <asp:HiddenField ID="hdfocompro" runat="server" />
+
+    </div>
 </asp:Content>
