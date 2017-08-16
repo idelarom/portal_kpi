@@ -249,19 +249,19 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <br />
                                     <asp:LinkButton ID="lnkagregarseleccion" OnClick="lnkagregarseleccion_Click"
-                                        CssClass="btn btn-primary btn-flat btn-sm" runat="server">
-                                        Agregar selección&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                                        CssClass="btn btn-primary btn-flat btn-xs" runat="server">
+                                        Selección&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
                                     </asp:LinkButton>
                                     <asp:LinkButton ID="lnkagregartodos" OnClick="lnkagregartodos_Click"
-                                        CssClass="btn btn-primary btn-flat btn-sm" runat="server">
+                                        CssClass="btn btn-primary btn-flat btn-xs" runat="server">
                                         Todos&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
                                     </asp:LinkButton>
                                     <div style="max-height: 130px; height: 130px; overflow: scroll;">
                                         <telerik:RadTreeView RenderMode="Lightweight" ID="rtvListEmpleado" runat="server" Width="100%"
-                                            Style="background-color: white; font-size: 10px;" Skin="Bootstrap">
+                                            Style="background-color: white; font-size: 9px;" Skin="Bootstrap">
                                             <DataBindings>
                                                 <telerik:RadTreeNodeBinding Expanded="False"></telerik:RadTreeNodeBinding>
                                             </DataBindings>
@@ -271,19 +271,19 @@
                                     <label>
                                         <asp:Label ID="lblcountlistempleados" runat="server" Text="0"></asp:Label></label>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <br />
                                     <asp:LinkButton ID="lnklimpiar" OnClick="lnklimpiar_Click"
-                                        CssClass="btn btn-danger btn-flat btn-sm" runat="server">
-                                        Limpiar lista&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
+                                        CssClass="btn btn-danger btn-flat btn-xs" runat="server">
+                                        Limpiar&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
                                     </asp:LinkButton>
                                     <asp:LinkButton ID="lnkeliminarselecion" OnClick="lnkeliminarselecion_Click"
-                                        CssClass="btn btn-danger btn-flat btn-sm" runat="server">
-                                        Eliminar seleccion&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
+                                        CssClass="btn btn-danger btn-flat btn-xs" runat="server">
+                                        Seleccion&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
                                     </asp:LinkButton>
                                     <div style="max-height: 130px; height: 130px; overflow: scroll;">
                                         <telerik:RadListBox RenderMode="Lightweight" runat="server" ID="rdtselecteds" Width="100%"
-                                            Style="font-size: 10px" Skin="Bootstrap" SelectionMode="Multiple" Sort="Ascending">
+                                            Style="font-size: 9px" Skin="Bootstrap" SelectionMode="Multiple" Sort="Ascending">
                                         </telerik:RadListBox>
                                     </div>
                                     <label>
