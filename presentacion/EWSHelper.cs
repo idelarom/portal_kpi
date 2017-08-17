@@ -331,14 +331,15 @@ namespace presentacion
                             e.descripcion = body;
                             e.usuario_creacion = username;
                             e.location = lugar;
-                            string vmensaje = !recordatorios.ExistAppointment(username, id, organizer, subject, fecha_inicio, fecha_fin) ?
+                            int id_recordatorio = recordatorios.ExistAppointmentID(username, id, organizer, subject, fecha_inicio, fecha_fin);
+                            e.id_recordatorio = id_recordatorio;
+                            string vmensaje = id_recordatorio == 0 ?
                                 recordatorios.Agregar(e, list_Ad) :
-                                reco.Editar(e,list_Ad); 
+                                reco.Editar(e, list_Ad);
                         }
                     }
 
                 }
-
             }
             catch (Microsoft.Exchange.WebServices.Data.ServiceObjectPropertyException obj)
             {

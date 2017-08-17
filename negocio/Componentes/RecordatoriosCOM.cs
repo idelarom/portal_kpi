@@ -292,6 +292,38 @@ namespace negocio.Componentes
             }
         }
 
+        public int ExistAppointmentID(string usuario, string key, string organizer, string subjetc, DateTime start, DateTime end)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Model context = new Model();
+                var query = context.recordatorios
+                                .Where(s => s.usuario == usuario && s.activo &&
+                                s.key_appointment_exchanged == key && s.organizer == organizer && s.titulo == subjetc
+                                && s.fecha == start && s.fecha_end == end)
+                                .Select(u => new
+                                {
+                                    u.id_recordatorio,
+                                    u.titulo,
+                                    u.descripcion,
+                                    descripcion_corta = (u.descripcion.Length > 30 ? u.descripcion.Substring(0, 30) + "..." : u.descripcion),
+                                    titulo_corta = (u.titulo.Length > 65 ? u.titulo.Substring(0, 65) + "..." : u.titulo),
+                                    u.fecha
+                                })
+                                .OrderBy(u => u.fecha);
+                dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["id_recordatorio"]):0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return 0;
+            }
+        }
         public DataTable SelectToday(string usuario)
         {
             DataTable dt = new DataTable();

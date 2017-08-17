@@ -129,25 +129,29 @@
             };
 
             function error(error) {
-                swal({
-                    title: "No podemos verte :(",
-                    text: "Acabas de negar el acceso a tu localización de manera nativa.\n" +
-                        "Utilizamos esta información para características especiales en el portal, si niegas el acceso:" +
-                        " NO PODRAS UTILIZAR LAS HERRAMIENTAS QUE SE OFRECEN.\nPara asignar permisos actualiza esta página",
+                var code = error.code;
+                if (code > 1) {
 
-                    imageUrl: "img/local.png",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Actualizar",
-                    cancelButtonText: "Por ahora no",
-                    closeOnConfirm: false,
-                    closeOnCancel: true
-                },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        location.reload();
-                    }
-                });
+                    swal({
+                        title: "No podemos verte :(",
+                        text: "Acabas de negar el acceso a tu localización de manera nativa.\n" +
+                            "Utilizamos esta información para características especiales en el portal, si niegas el acceso:" +
+                            " NO PODRAS UTILIZAR LAS HERRAMIENTAS QUE SE OFRECEN.\nPara asignar permisos actualiza esta página",
+
+                        imageUrl: "img/local.png",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Actualizar",
+                        cancelButtonText: "Por ahora no",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            location.reload();
+                        }
+                    });
+                }
             };
         }
     </script>

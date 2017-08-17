@@ -531,13 +531,13 @@
                                                                 >
                                                             </asp:TextBox>
                                                         </div>
-                                                        <div class="col-lg-6 col-sm-12">
+                                                        <div class="col-lg-6 col-sm-6  col-xs-12">
                                                             <h6><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Organizador</strong></h6>
                                                             <asp:TextBox CssClass=" form-control input-sm" ID="rtxtorganizador_mp" Text='<%#Eval("organizer").ToString() %>' ReadOnly="true" Width="100%" runat="server"
                                                                 >
                                                             </asp:TextBox>
                                                         </div>
-                                                        <div class="col-lg-6 col-sm-12">
+                                                        <div class="col-lg-6 col-sm-6  col-xs-12">
                                                             <h6><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Correo del organizador</strong></h6>
                                                             <asp:TextBox CssClass=" form-control input-sm" ID="rtxtcorreorganizador_mp" Text='<%#Eval("organizer_address").ToString() %>' ReadOnly="true" Width="100%"
                                                                 runat="server">
