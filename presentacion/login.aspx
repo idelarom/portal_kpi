@@ -135,8 +135,7 @@
                     swal({
                         title: "No podemos verte :(",
                         text: "Acabas de negar el acceso a tu localización de manera nativa.\n" +
-                            "Utilizamos esta información para características especiales en el portal, si niegas el acceso:" +
-                            " NO PODRAS UTILIZAR LAS HERRAMIENTAS QUE SE OFRECEN.\nPara asignar permisos actualiza esta página",
+                            "NO PODRAS UTILIZAR LAS HERRAMIENTAS QUE SE OFRECEN.\nPara asignar permisos actualiza esta página",
 
                         imageUrl: "img/local.png",
                         showCancelButton: true,

@@ -302,7 +302,7 @@
                                             <span class="sr-only">Loading...</span>&nbsp;Generando Reporte
                                 </asp:LinkButton>                              
                                 <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat"
-                                    OnClientClick="return ConfirmwidgetProyectoModal();" runat="server">
+                                    OnClientClick="return ConfirmwidgetProyectoModal();" OnClick="lnkguardar_Click" runat="server">
                                             <i class="fa fa-database" aria-hidden="true"></i>&nbsp;Generar Reporte
                                 </asp:LinkButton>
                             </div>
@@ -393,7 +393,7 @@
                 </asp:UpdatePanel>
             </div>
         </div>
-        <asp:Button ID="btnverempleadodetalles" runat="server" Text="Button" Visible="false" OnClick="btnverempleadodetalles_Click" />
+        <asp:Button ID="btnverempleadodetalles" runat="server" Text="Button"  style="display:none" OnClick="btnverempleadodetalles_Click" />
         <asp:HiddenField ID="hdfsessionid" runat="server" />
         <asp:HiddenField ID="hdfuserselected" runat="server" />
         <asp:HiddenField ID="hdfnombre" runat="server" />
