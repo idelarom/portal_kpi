@@ -8,6 +8,14 @@ function ViewEvent()
 }
 
 
+
+function ModalWidget(title, body) {
+    $('#lblwidgettitle').text(title);
+    $('#divbodywidget').html(body);
+    $('#modal_widget').modal('show');
+    return false;
+}
+
 function ModalClose() {
     $('#myModalExcel').modal('hide');
 }

@@ -13,6 +13,33 @@ namespace presentacion {
     public partial class configuracion_dashboard {
         
         /// <summary>
+        /// Control UpdatePanel1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
+        /// <summary>
+        /// Control repeat_widgets_ind.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeat_widgets_ind;
+        
+        /// <summary>
+        /// Control repeat_widgets.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeat_widgets;
+        
+        /// <summary>
         /// Control UPDA.
         /// </summary>
         /// <remarks>
@@ -58,13 +85,13 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnkguardar;
         
         /// <summary>
-        /// Control UpdatePanel15.
+        /// Control lblwidgetname.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel15;
+        protected global::System.Web.UI.WebControls.Label lblwidgetname;
         
         /// <summary>
         /// Control PlaceHolder1.

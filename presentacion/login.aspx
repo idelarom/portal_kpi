@@ -6,7 +6,8 @@
 
     <style type="text/css">
         .login-box, .register-box {
-            width: 360px;
+            width:100%;
+            max-width:360px;
             margin: 10px auto;
         }
 
@@ -63,10 +64,10 @@
             } else {
                 device = "Computadora";
             }
-            console.log("Dispositivo: " + device);
-            console.log("Navegador: " + browser);
-            console.log("OS: " + OS);
-            console.log("OS_Version: " + osVersion);
+            //console.log("Dispositivo: " + device);
+            //console.log("Navegador: " + browser);
+            //console.log("OS: " + OS);
+            //console.log("OS_Version: " + osVersion);
             
             $('#<%= hdfmodel.ClientID%>').val(deviceVendor);
             $('#<%= hdffinger.ClientID%>').val(fingerprint);
@@ -100,11 +101,11 @@
                 $('#<%= hdfip.ClientID%>').val(ip);
                 $('#<%= hdfregion.ClientID%>').val(region);
                 $('#<%= hdfproveedor.ClientID%>').val(proveedor);
-                console.log(ip);
-                console.log(region);
-                console.log(lat);
-                console.log(lon);
-                console.log(proveedor);
+                //console.log(ip);
+                //console.log(region);
+                //console.log(lat);
+                //console.log(lon);
+                //console.log(proveedor);
             });
         }
 
@@ -124,21 +125,18 @@
                 var lon = coordenadas.longitude;
                 $('#<%= hdflatitud.ClientID%>').val(lat);
                 $('#<%= hdflongitud.ClientID%>').val(lon);
-                console.log("lat: "+lat);
-                console.log("lon: "+lon);
+                //console.log("lat: "+lat);
+                //console.log("lon: "+lon);
             };
 
             function error(error) {
-                var code = error.code;
-                if (code > 1) {
-
+                if (location.protocol == 'https:' && location.hostname != "localhost") {
                     swal({
-                        title: "No podemos verte :(",
-                        text: "Acabas de negar el acceso a tu localización de manera nativa.\n" +
-                            "NO PODRAS UTILIZAR LAS HERRAMIENTAS QUE SE OFRECEN.\nPara asignar permisos actualiza esta página",
+                        title: "No sabemos donde estas :(",
+                        text: "Para utilizar todas las herramientas del portal, debes permitir detectar tu ubicación.",
 
                         imageUrl: "img/local.png",
-                        showCancelButton: true,
+                        showCancelButton: false,
                         confirmButtonColor: "#DD6B55",
                         confirmButtonText: "Actualizar",
                         cancelButtonText: "Por ahora no",
@@ -150,7 +148,8 @@
                             location.reload();
                         }
                     });
-                }
+                } 
+               
             };
         }
     </script>

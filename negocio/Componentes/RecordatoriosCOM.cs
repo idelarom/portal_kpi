@@ -30,7 +30,7 @@ namespace negocio.Componentes
                     titulo = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(entidad.titulo.ToLower()),
                     descripcion = entidad.descripcion,
                     fecha = entidad.fecha,
-                    activo = true,
+                    activo = entidad.activo,
                     usuario = entidad.usuario.ToUpper(),
                     usuario_creacion = entidad.usuario_creacion.ToUpper(),
                     fecha_creacion = DateTime.Now
@@ -76,7 +76,8 @@ namespace negocio.Componentes
                 recordatorio.location = entidad.location;
                 recordatorio.organizer = entidad.organizer;
                 recordatorio.organizer_address = entidad.organizer_address;
-                recordatorio.fecha_end = entidad.fecha_end;                
+                recordatorio.fecha_end = entidad.fecha_end;
+                recordatorio.activo = entidad.activo;       
                 //ICollection<recordatorios_usuarios_adicionales> lstusuarios_ad = recordatorio.recordatorios_usuarios_adicionales;
                 //foreach (recordatorios_usuarios_adicionales usuario_adicional in lstusuarios_ad)
                 //{
@@ -300,8 +301,7 @@ namespace negocio.Componentes
                 Model context = new Model();
                 var query = context.recordatorios
                                 .Where(s => s.usuario == usuario && s.activo &&
-                                s.key_appointment_exchanged == key && s.organizer == organizer && s.titulo == subjetc
-                                && s.fecha == start && s.fecha_end == end)
+                                s.key_appointment_exchanged == key && s.organizer == organizer && s.fecha == start && s.fecha_end == end)
                                 .Select(u => new
                                 {
                                     u.id_recordatorio,

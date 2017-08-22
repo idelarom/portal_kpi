@@ -194,6 +194,11 @@
                                     <telerik:RadTextBox ID="rtxticono" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
                                 <div class="col-lg-12 col-sm-12">
+                                    <h5><strong><i class="fa fa-html5" aria-hidden="true"></i>&nbsp;Texto de ayuda</strong></h5>
+                                    <telerik:RadTextBox ID="rtxtayuda" Width="100%" runat="server" Skin="Bootstrap" TextMode="MultiLine" Rows="3" MaxLength="8000" onKeyDown="CaracteresRestantes();" onKeyUp="CaracteresRestantes();"></telerik:RadTextBox>
+                                    <asp:Label ID="Label1" runat="server" Text="" class="label label-danger"></asp:Label>
+                                </div>
+                                <div class="col-lg-12 col-sm-12">
                                     <h5><strong><i class="fa fa-html5" aria-hidden="true"></i>&nbsp;Codigo html de ejemplo para el widget</strong></h5>
                                     <telerik:RadTextBox ID="rtxtejemplo_html" Width="100%" runat="server" Skin="Bootstrap" TextMode="MultiLine" Rows="3" MaxLength="8000" onKeyDown="CaracteresRestantes();" onKeyUp="CaracteresRestantes();"></telerik:RadTextBox>
                                     <asp:Label ID="lblcarcteresres" runat="server" Text="" class="label label-danger"></asp:Label>

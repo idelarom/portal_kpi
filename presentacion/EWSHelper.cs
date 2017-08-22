@@ -287,58 +287,62 @@ namespace presentacion
                 int total_actual = reco.GetRecords(username);
                 if (total_actual != appointments.Items.Count)
                 {
-                    foreach (Microsoft.Exchange.WebServices.Data.Appointment a in appointments)
+
+                }
+
+                foreach (Microsoft.Exchange.WebServices.Data.Appointment a in appointments)
+                {
+                    a.Load(itempropertyset);
+                    DateTime fecha_inicio = a.Start;
+                    DateTime fecha_fin = a.End;
+                    string subject = a.Subject == null ? "" : a.Subject.ToString();
+                    string organizer = a.Organizer.Name == null ? "" : a.Organizer.Name.ToString();
+                    RecordatoriosCOM recordatorios = new RecordatoriosCOM();
+                    string id = a.Id.ToString();
+                    List<recordatorios_usuarios_adicionales> list_Ad = new List<recordatorios_usuarios_adicionales>();
+                    string nbody = a.Body.Text == null ? "" : a.Body.Text.ToString();
+                    datos.Model.recordatorios e = new datos.Model.recordatorios();
+                    string organizer_address = a.Organizer.Address == null ? "" : a.Organizer.Address.ToString();
+                    string body = a.Body.Text == null ? "" : a.Body.Text.ToString();
+                    string participantes = a.DisplayTo == null ? "" : a.DisplayTo.ToString();
+                    string lugar = a.Location == null ? "" : a.Location.ToString();
+                    if (participantes != "")
                     {
-                        a.Load(itempropertyset);
-                        DateTime fecha_inicio = a.Start;
-                        DateTime fecha_fin = a.End;
-                        string subject = a.Subject == null ? "" : a.Subject.ToString();
-                        string organizer = a.Organizer.Name == null ? "" : a.Organizer.Name.ToString();
-                        RecordatoriosCOM recordatorios = new RecordatoriosCOM();
-                        string id = a.Id.ToString();
-                        if (!a.IsCancelled)
+                        string[] participantes_array = participantes.Split(';');
+                        foreach (string part in participantes_array)
                         {
-                            List<recordatorios_usuarios_adicionales> list_Ad = new List<recordatorios_usuarios_adicionales>();
-                            string nbody = a.Body.Text == null ? "" : a.Body.Text.ToString();
-                            datos.Model.recordatorios e = new datos.Model.recordatorios();
-                            string organizer_address = a.Organizer.Address == null ? "" : a.Organizer.Address.ToString();
-                            string body = a.Body.Text == null ? "" : a.Body.Text.ToString();
-                            string participantes = a.DisplayTo == null ? "" : a.DisplayTo.ToString();
-                            string lugar = a.Location == null ? "" : a.Location.ToString();
-                            if (participantes != "")
+                            if (part.ToUpper() != organizer.ToUpper())
                             {
-                                string[] participantes_array = participantes.Split(';');
-                                foreach (string part in participantes_array)
+                                recordatorios_usuarios_adicionales rec = new recordatorios_usuarios_adicionales
                                 {
-                                    if (part.ToUpper() != organizer.ToUpper())
-                                    {
-                                        recordatorios_usuarios_adicionales rec = new recordatorios_usuarios_adicionales
-                                        {
-                                            nombre = part,
-                                            activo = true
-                                        };
-                                        list_Ad.Add(rec);
-                                    }
-                                }
+                                    nombre = part,
+                                    activo = true
+                                };
+                                list_Ad.Add(rec);
                             }
-                            e.organizer = organizer;
-                            e.organizer_address = organizer_address;
-                            e.key_appointment_exchanged = id;
-                            e.fecha = fecha_inicio;
-                            e.fecha_end = fecha_fin;
-                            e.titulo = subject;
-                            e.usuario = username;
-                            e.descripcion = body;
-                            e.usuario_creacion = username;
-                            e.location = lugar;
-                            int id_recordatorio = recordatorios.ExistAppointmentID(username, id, organizer, subject, fecha_inicio, fecha_fin);
-                            e.id_recordatorio = id_recordatorio;
-                            string vmensaje = id_recordatorio == 0 ?
-                                recordatorios.Agregar(e, list_Ad) :
-                                reco.Editar(e, list_Ad);
                         }
                     }
-
+                    e.organizer = organizer;
+                    e.organizer_address = organizer_address;
+                    e.key_appointment_exchanged = id;
+                    e.fecha = fecha_inicio;
+                    e.fecha_end = fecha_fin;
+                    e.titulo = subject;
+                    e.usuario = username;
+                    e.descripcion = body;
+                    e.usuario_creacion = username;
+                    e.location = lugar;
+                    bool caneled = e.titulo.Contains("Cancelada:") || a.IsCancelled;
+                    e.activo = !caneled;
+                    if (e.descripcion.Contains("https://connext.webex.com/join/sergio_gaytan"))
+                    {
+                        e.activo = e.activo;
+                    }
+                    int id_recordatorio = recordatorios.ExistAppointmentID(username, id, organizer, subject, fecha_inicio, fecha_fin);
+                    e.id_recordatorio = id_recordatorio;
+                    string vmensaje = id_recordatorio == 0 ?
+                        recordatorios.Agregar(e, list_Ad) :
+                        reco.Editar(e, list_Ad);
                 }
             }
             catch (Microsoft.Exchange.WebServices.Data.ServiceObjectPropertyException obj)
