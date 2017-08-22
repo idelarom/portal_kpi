@@ -81,20 +81,20 @@
             <!-- /.info-box -->
         </div>
 
-         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="Preventa_ing_ind" style="display: none;">
+         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="Performance_ing_ind" style="display: none;">
             <div class="info-box bg-red">
                 <span class="small-box bg-aqua"><i class="ion-person"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Horas Ingeniero</span>
                     <span class="info-box-number">
-                        <label id="horas_trimestral">0.00</label></span>
+                        <label id="horas_Semanal">0.00 hrs</label></span>
 
-                    <%--<div class="progress">
-                        <div id="progress_bar_bono_kpi_ind" class="progress-bar" style="width: 0%"></div>
+                    <div class="progress">
+                        <div id="progress_bar_performance_ing_ind" class="progress-bar" style="width: 0%"></div>
                     </div>
-                    <span id="progress_bono_kpi_ind" class="progress-description">0 % porcentaje alcanzado.
-                  </span>--%>
+                    <span id="progress_performance_ing_ind"" class="progress-description">0 % porcentaje alcanzado.
+                  </span>
                 </div>
             </div>
             
@@ -104,18 +104,18 @@
     
     <!-- /Widgets Grupales -->
     <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="calendario" style="display:none;">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="calendario" style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Calendario</h3>
 
                 </div>
-                <div class="box-body no-padding" style="height:325px">
+                <div class="box-body no-padding" style="height: 325px">
                     <div id="calendar"></div>
-                </div>                
+                </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="desglo_dashboard_kpi_ind"  style="display: none;">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="desglo_dashboard_kpi_ind" style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Valor Ganado</h3>
@@ -215,10 +215,10 @@
             </div>
         </div>
 
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="desglo_performance_ing_ind"  style="display: none;">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="desglo_performance_ing_ind" style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Ocupación</h3>
+                    <h3 class="box-title">Ocupación tiempo ingeniero</h3>
 
                 </div>
                 <div class="box-body">
@@ -226,9 +226,9 @@
                         <li class="item">
                             <div class="bono-info">
                                 <a class="product-title" href="javascript:void(0)">Preventa                          
-                                <span class="label label-primary pull-right" style="width: 55px" id="performance_ingenieria">0 %</span>
+                                <span class="label label-primary pull-right" style="width: 55px" id="performance_ing_preventa">0 %</span>
                                     <span class="pull-right">&nbsp;</span>
-                                    <span class="label label-primary pull-right" id="performance_ingenieria_totalperformance" style="width: 70px">$ 0.00</span>
+                                    <span class="label label-primary pull-right" id="performance_ing_totalpreventa" style="width: 70px">0.00  hrs</span>
                                 </a>
 
                             </div>
@@ -238,30 +238,38 @@
                                 <a class="product-title" href="javascript:void(0)">Implementacion           
                                 <span class="label label-primary pull-right" style="width: 55px" id="performance_ingenieria_imp">0 %</span>
                                     <span class="pull-right">&nbsp;</span>
-                                    <span class="label label-primary pull-right" id="performance_ingenieria_totalimp" style="width: 70px">$ 0.00</span>
+                                    <span class="label label-primary pull-right" id="performance_ingenieria_totalimp" style="width: 70px">0.00 hrs</span>
                                 </a>
                             </div>
                         </li>
-                       <li class="item">
+                        <li class="item">
                             <div class="bono-info">
                                 <a class="product-title" href="javascript:void(0)">Soporte                    
                                 <span class="label label-primary pull-right" style="width: 55px" id="performance_ingenieria_sop">0 %</span>
                                     <span class="pull-right">&nbsp;</span>
-                                    <span class="label label-primary pull-right" id="performance_ingenieria_totalsop" style="width: 70px">$ 0.00</span>
+                                    <span class="label label-primary pull-right" id="performance_ingenieria_totalsop" style="width: 70px">0.00 hrs</span>
                                 </a>
                             </div>
                         </li>
-                       <li class="item">
+                        <li class="item">
                             <div class="bono-info">
                                 <a class="product-title" href="javascript:void(0)">Adminitrativas                    
-                                <span class="label label-primary pull-right" style="width: 55px" id="performance_ingenieria_admon">0 %</span>
+                                <span class="label label-primary pull-right" style="width: 55px" id="performance_ingenieria_admin">0 %</span>
                                     <span class="pull-right">&nbsp;</span>
-                                    <span class="label label-primary pull-right" id="performance_ingenieria_totaladmon" style="width: 70px">$ 0.00</span>
+                                    <span class="label label-primary pull-right" id="performance_ingenieria_totaladmin" style="width: 70px">0.00 hrs</span>
                                 </a>
                             </div>
                         </li>
-                        
-                        
+                         <li class="item">
+                            <div class="bono-info">
+                                <a class="product-title" href="javascript:void(0)">Total horas                    
+                                <span class="label label-primary pull-right" style="width: 55px" id="performance_ingenieria_th">0 %</span>
+                                    <span class="pull-right">&nbsp;</span>
+                                    <span class="label label-primary pull-right" id="performance_ingenieria_totaladhr" style="width: 70px">0.00 hrs</span>
+                                </a>
+                            </div>
+                        </li>
+
                     </ul>
                 </div>
 
@@ -271,7 +279,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12" id="performance_ing" style="display: none;">
+        <div class="col-lg-8 col-md-8 col-sm-12" id="performance_ing" style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Performance Ingenieria</h3>
@@ -283,7 +291,10 @@
                             <thead>
                                 <tr style="font-size: 11px;">
                                     <th style="min-width: 210px; text-align: left;" scope="col">Empleado</th>
-                                    <th style="min-width: 55px; text-align: center;" scope="col">% Total horas</th>
+                                    <th style="min-width: 55px; text-align: center;" scope="col">Soporte</th>
+                                    <th style="min-width: 55px; text-align: center;" scope="col">Preventa</th>
+                                    <th style="min-width: 55px; text-align: center;" scope="col">Administrativas</th>
+                                    <th style="min-width: 55px; text-align: center;" scope="col">Implementacion</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_table_performance_ing"

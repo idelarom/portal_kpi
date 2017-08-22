@@ -150,6 +150,14 @@ function IniciarWidgets() {
                     ajax_ejecutados.push("CargarDashboardbonos");
                     CargarDashboardbonos();
                 }
+                else if ((div == "Performance_ing_ind" || div == "desglo_performance_ing_ind") && jQuery.inArray("CargarPerformanceIngenieriaIndividual", ajax_ejecutados) == -1) {
+                    ajax_ejecutados.push("CargarPerformanceIngenieriaIndividual");
+                    CargarPerformanceIngenieriaIndividual();
+                }
+                else if (div == "performance_ing" && jQuery.inArray("CargarPerformanceIngenieria", ajax_ejecutados) == -1) {
+                    ajax_ejecutados.push("CargarPerformanceIngenieria");
+                    CargarPerformanceIngenieria();
+                }
             }
         },
         error: function (result, status, err) {
@@ -265,7 +273,7 @@ function CargarDashboardbonos() {
 //WIDGET DE PERFORMANCE INGENIERIA INDIVIDUAL
 function CargarPerformanceIngenieriaIndividual() {
     //load de dashboard bonos
-    var target = document.getElementById('dashboard_kpi_ind');
+    var target = document.getElementById('Performance_ing_ind');
     var spinner = new Spinner(opts).spin(target);
     var target2 = document.getElementById('desglo_performance_ing_ind');
     var spinner2 = new Spinner(opts2).spin(target2);
@@ -281,28 +289,31 @@ function CargarPerformanceIngenieriaIndividual() {
         success: function (response) {
             var Performance = JSON.parse(response.d);
             if (Performance.length > 0) {
-                var Performance_totalhoras = Performance[0]._Total_Final.replace(' %', '');
-                var preventa = Performance[0]._Preventa;
-                var implementacion = Performance[0]._Implementación;
-                var soporte = Performance[0]._Soporte;
-                var admin = Performance[0].KPI_Individual;
-                var kpig = Performance[0].KPI_Grupo;
-                var compromisos = Performance[0]._Cump;
-                var total_preventa = Performance[0].Preventa;
-                var total_implemetacion = Performance[0].Implementacion;
-                var total_soporte = Performance[0].Soporte;
-                $("#bono_trimestral").text(Performance[0].Total_Final);
-                $("#dashboard_bonos_totalpreventa").text(total_preventa);
-                $("#dashboard_bonos_totalimp").text(total_implemetacion);
-                $("#dashboard_bonos_totalsoporte").text(total_soporte);
-                $("#dashboard_bonos_preventa").text(preventa);
-                $("#dashboard_bonos_imp").text(implementacion);
-                $("#dashboard_bonos_soporte").text(soporte);
-                $("#dashboard_bonos_kpi").text(kpi);
-                $("#dashboard_bonos_kpig").text(kpig);
-                $("#dashboard_bonos_compromisos").text(compromisos);
-                $("#progress_bar_bono_kpi_ind").css("width", Math.round(bono_porcentaje > 100 ? 100 : bono_porcentaje) + "%");
-                $("#progress_bono_kpi_ind").text(bono_porcentaje + " % alcanzado");
+
+                var Soporte = Performance[0].Soporte;
+                var Porcentaje_Soporte = Performance[0]._Soporte;
+                var Preventa = Performance[0].Preventa;
+                var Porcentaje_Preventa = Performance[0]._Preventa;
+                var Administrativas = Performance[0].Administrativas;
+                var Porcentaje_Administrativas = Performance[0]._Administrativas;
+                var Implementacion = Performance[0].Implementacion;
+                var Porcentaje_Implementacion = Performance[0]._Implementacion;
+                var Total_Horas = Performance[0].Total_Horas;
+                var Porcentaje_Total_Horas = Performance[0]._Total_Horas;
+
+                $("#horas_Semanal").text(Total_Horas);
+                $("#performance_ing_preventa").text(Porcentaje_Preventa + " %");
+                $("#performance_ing_totalpreventa").text(Preventa + " hrs");
+                $("#performance_ingenieria_imp").text(Porcentaje_Implementacion + " %");
+                $("#performance_ingenieria_totalimp").text(Implementacion + " hrs");
+                $("#performance_ingenieria_sop").text(Porcentaje_Soporte + " %");
+                $("#performance_ingenieria_totalsop").text(Soporte + " hrs");
+                $("#performance_ingenieria_admin").text(Porcentaje_Administrativas + " %");
+                $("#performance_ingenieria_totaladmin").text(Administrativas + " hrs");
+                $("#performance_ingenieria_th").text(Porcentaje_Total_Horas + " %");
+                $("#performance_ingenieria_totaladhr").text(Total_Horas + " hrs");
+                $("#progress_bar_performance_ing_ind").css("width", Math.round(Porcentaje_Total_Horas > 100 ? 100 : Porcentaje_Total_Horas) + "%");
+                $("#progress_performance_ing_ind").text(Porcentaje_Total_Horas + " % alcanzado");
             }
             spinner.stop();
             spinner2.stop();
@@ -319,7 +330,7 @@ function CargarPerformanceIngenieriaIndividual() {
 //WIDGET DE PERFORMANCE INGENIERIA GRUPAL
 function CargarPerformanceIngenieria() {
     //load de dashboard bonos
-    var target = document.getElementById('dashboard_kpi');
+    var target = document.getElementById('performance_ing');
     var spinner = new Spinner(opts2).spin(target);
     var usuario = User();
     var num_empleado = NumEmpleado();
@@ -332,27 +343,28 @@ function CargarPerformanceIngenieria() {
         dataType: "json",
         data: "{num_empleado:'" + num_empleado + "',usuario:'" + usuario + "', ver_todos_empleados:'" + ver_Todos_empleados + "'}",
         success: function (response) {
-            var bono = JSON.parse(response.d);
-            if (bono.length > 0) {
+            var performance = JSON.parse(response.d);
+            if (performance.length > 0) {
                 var cadena = '';
-                for (indice = 0; indice < bono.length; indice++) {
-                    cadena = cadena + bono[indice].Login + ",";
-                    $('#table_dashboard_kpi').find('tbody').append('' + '<tr><td>' +
-                        bono[indice].Nombre + '</td><td style="text-align: center;">' +
-                        bono[indice].Monto_Bono + '</td><td style="text-align: center;">' +
-                        bono[indice].Total_Final + '</td><td style="text-align: center;">' +
-                        bono[indice]._Total_Final + '</td></tr>');
+                for (indice = 0; indice < performance.length; indice++) {
+                    cadena = cadena + performance[indice].Login + ",";
+                    $('#table_performance_ing').find('tbody').append('' + '<tr><td>' +
+                        performance[indice].Empleado + '</td><td style="text-align: center;">' +
+                        performance[indice].Soporte + " hrs/" + performance[indice]._Soporte + " %" + '</td><td style="text-align: center;">' +
+                        performance[indice].Preventa + " hrs/" + performance[indice]._Preventa + " %" + '</td><td style="text-align: center;">' +
+                        performance[indice].Administrativas + " hrs/" + performance[indice]._Administrativas + " %" + '</td><td style="text-align: center;">' +
+                        performance[indice].Implementacion + " hrs/" + performance[indice]._Implementacion + " %" + '</td></tr>');
                 }
                 if (cadena.length > 1) {
                     cadena = cadena.substring(0, cadena.length - 1);
                     cadena = btoa(cadena);
-                    $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx?list=' + cadena)
+                    $('#link_dashboard_kpi').attr('href', 'reporte_performance_ingenieria_netdiario.aspx?list=' + cadena)
                 } else {
-                    $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx?list=' + cadena)
+                    $('#link_dashboard_kpi').attr('href', 'reporte_performance_ingenieria_netdiario.aspx?list=' + cadena)
                 }
                 Init('#table_dashboard_kpi');
             } else {
-                $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx');
+                $('#link_dashboard_kpi').attr('href', 'reporte_performance_ingenieria_netdiario.aspx');
             }
             spinner.stop();
         },

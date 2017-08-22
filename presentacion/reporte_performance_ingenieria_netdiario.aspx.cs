@@ -141,11 +141,11 @@ namespace presentacion
             try
             {
                 DataTable dt = GetDashboardBonos(null, null, lista_usuarios, usuario);
-                //foreach (DataColumn column in dt.Columns)
-                //{
-                //    column.ColumnName = column.ColumnName.Replace("%", "");
-                //    column.ColumnName = column.ColumnName.Replace(" ", "_");
-                //}
+                foreach (DataColumn column in dt.Columns)
+                {
+                    column.ColumnName = column.ColumnName.Replace("%", "_");
+                    //.ColumnName = column.ColumnName.Replace(" ", "_");
+                }
                 string value = JsonConvert.SerializeObject(dt);
                 return value;
             }
@@ -196,7 +196,7 @@ namespace presentacion
             try
             {
                 PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
-                DataSet ds = PerformanceIngenieria.spq_Ingenieros_Performance(fecha_ini, fecha_fin, pLstEmpleados, Usr);
+                DataSet ds = PerformanceIngenieria.spq_Ingenieros_Performance(fecha_ini, fecha_fin, pLstEmpleados, Usr,1);
                 dt = ds.Tables[0];
                 return dt;
             }
@@ -240,6 +240,9 @@ namespace presentacion
                 DateTime fechaInicial = Convert.ToDateTime(rdpfechainicial.SelectedDate);
                 DateTime fechaFinal = Convert.ToDateTime(rdpfechafinal.SelectedDate);
 
+                hdfFechaInicial.Value = fechaInicial.ToString();
+                hdfFechaFinal.Value = fechaFinal.ToString();
+
                 if (fechaInicial > fechaFinal)
                 {
                     ModalShow("#myModal");
@@ -262,7 +265,7 @@ namespace presentacion
                     DataSet ds = new DataSet();
                     DataTable dt = new DataTable();
                     PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
-                    ds = PerformanceIngenieria.spq_Ingenieros_Performance(fechaInicial, fechaFinal, pLstEmpleados, Usr);
+                    ds = PerformanceIngenieria.spq_Ingenieros_Performance(fechaInicial, fechaFinal, pLstEmpleados, Usr,0);
                     dt = ds.Tables[0];
                     ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
                     if (dt.Rows.Count > 0)
@@ -353,8 +356,8 @@ namespace presentacion
         protected void gridPerformance_DetailTableDataBind(object sender, GridDetailTableDataBindEventArgs e)
         {
 
-            DateTime fechaInicial = Convert.ToDateTime(rdpfechainicial.SelectedDate);
-            DateTime fechaFinal = Convert.ToDateTime(rdpfechafinal.SelectedDate);
+            DateTime fechaInicial = Convert.ToDateTime(hdfFechaInicial.Value);
+            DateTime fechaFinal = Convert.ToDateTime(hdfFechaFinal.Value);
             PerformanceIngenieriaCOM PerformanceIngenieria = new PerformanceIngenieriaCOM();
 
             GridDataItem dataItem = ((GridDataItem)e.DetailTableView.ParentItem);

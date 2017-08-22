@@ -11,7 +11,7 @@ namespace negocio.Componentes
 {
     public class PerformanceIngenieriaCOM
     {
-        public DataSet spq_Ingenieros_Performance(DateTime? fecha_ini, DateTime? fecha_fin, string pLstEmpleados, string Usr)
+        public DataSet spq_Ingenieros_Performance(DateTime? fecha_ini, DateTime? fecha_fin, string pLstEmpleados, string Usr, int Tipo)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -20,10 +20,11 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@fecha_final", SqlDbType = SqlDbType.Int, Value = fecha_fin });
             listparameters.Add(new SqlParameter() { ParameterName = "@ingenieros", SqlDbType = SqlDbType.Int, Value = pLstEmpleados });
             listparameters.Add(new SqlParameter() { ParameterName = "@login", SqlDbType = SqlDbType.Int, Value = Usr });
+            listparameters.Add(new SqlParameter() { ParameterName = "@Tipo", SqlDbType = SqlDbType.Int, Value = Tipo });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
-                ds = data.enviar("spq_Ingenieros_Performance", listparameters, false, 3);
+                ds = data.enviar("spq_Ingenieros_Performance_test", listparameters, false, 3);
             }
             catch (Exception ex)
             {
