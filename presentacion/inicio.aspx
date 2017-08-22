@@ -108,7 +108,11 @@
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Calendario</h3>
-
+                    <div class="box-tools pull-right">
+                        <a id="btnayuda_calendario">
+                            <i class="material-icons">info</i>
+                        </a>
+                    </div>
                 </div>
                 <div class="box-body no-padding" style="height: 325px">
                     <div id="calendar"></div>
@@ -119,7 +123,11 @@
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Valor Ganado</h3>
-
+                    <div class="box-tools pull-right">
+                        <a id="btnayuda_desglo_dashboard_kpi_ind">
+                            <i class="material-icons">info</i>
+                        </a>
+                    </div>
                 </div>
                 <div class="box-body">
                     <ul class="products-list product-list-in-box">
@@ -313,15 +321,39 @@
             </div>
         </div>
 
-    </div>
-      <div class="modal fade  bs-example-modal-lg" id="modal_evento"  data-backdrop="static" data-keyboard="false">
-          <div class="modal-dialog  modal-lg">
+    </div>    
+    <div class="modal fade  bs-example-modal-lg" id="modal_widget" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg">
             <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Recordatorio</h4>
-              </div>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><label id="lblwidgettitle"></label></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12" id="divbodywidget">
+                        </div>
+
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade  bs-example-modal-lg" id="modal_evento" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Recordatorio</h4>
+                </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-6 col-xs-6">
@@ -358,19 +390,19 @@
                     <div class="row">
                         <div class="col-lg-12 col-sm-12">
                             <h5><strong><i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;Descripción</strong></h5>
-                            <telerik:RadTextBox Style="font-size: 12px;"  ReadOnly="true" ID="rtxtdescripcion" TextMode="MultiLine" Rows="4" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                            <telerik:RadTextBox Style="font-size: 12px;" ReadOnly="true" ID="rtxtdescripcion" TextMode="MultiLine" Rows="4" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
 
                         </div>
                     </div>
                 </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-              </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
             <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
         </div>
+        <!-- /.modal-dialog -->
+    </div>
         <!-- /.modal -->
     <asp:HiddenField ID="hdf_usuario" runat="server" />
     <asp:HiddenField ID="hdf_numempleado" runat="server" />

@@ -41,6 +41,7 @@ namespace presentacion
                 if (id_widget > 0)
                 {
                     rtxtwidget.Text = dt.Rows[0]["widget"].ToString();
+                    rtxtayuda.Text = dt.Rows[0]["texto_ayuda"].ToString();
                     rtxticono.Text = dt.Rows[0]["icono"].ToString();
                     rtxtejemplo_html.Text = dt.Rows[0]["ejemplo_html"].ToString();
                     rtxtnombrecodigo.Text = dt.Rows[0]["nombre_codigo"].ToString();
@@ -61,7 +62,7 @@ namespace presentacion
                 Toast.Error("Error al cargar el catalogo de widgets: " + ex.Message,this);
             }
         }
-        private void Agregarwidget(string widget,string nombre_codigo, string icono, string ejemplo_html, string individual)
+        private void Agregarwidget(string widget,string nombre_codigo, string icono, string ejemplo_html, string individual, string ayuda)
         {
             div_error.Visible = false;
             try
@@ -69,7 +70,7 @@ namespace presentacion
 
                 WidgetsCOM Widget = new WidgetsCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = Widget.sp_agregar_widgets(widget, icono, ejemplo_html, usuario, nombre_codigo , individual);
+                DataSet ds = Widget.sp_agregar_widgets(widget, icono, ejemplo_html, usuario, nombre_codigo , individual, ayuda);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al guardar Widget. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -90,7 +91,7 @@ namespace presentacion
             }
         }
 
-        private void Editarwidget(int id_widget, string nombre_codigo, string widget, string icono, string ejemplo_html, string individual)
+        private void Editarwidget(int id_widget, string nombre_codigo, string widget, string icono, string ejemplo_html, string individual, string ayuda)
         {
             div_error.Visible = false;
             try
@@ -98,7 +99,7 @@ namespace presentacion
 
                 WidgetsCOM Widget = new WidgetsCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = Widget.sp_editar_widgets(id_widget,widget, icono, ejemplo_html, usuario, nombre_codigo, individual);
+                DataSet ds = Widget.sp_editar_widgets(id_widget,widget, icono, ejemplo_html, usuario, nombre_codigo, individual, ayuda);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al editar perfil. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -168,6 +169,7 @@ namespace presentacion
                     string ejemplo_html = rtxtejemplo_html.Text.Trim();
                     string nombre_codigo = rtxtnombrecodigo.Text.Trim();
                     string individual = "";
+                    string ayuda = rtxtayuda.Text.Trim();
                     if (cbxwindividual.Checked== true)
                     {
                         individual = "true";
@@ -178,11 +180,11 @@ namespace presentacion
                     }
                     if (txtid_widget.Text == "")
                     {
-                        Agregarwidget(widget, nombre_codigo, icono, ejemplo_html, individual);
+                        Agregarwidget(widget, nombre_codigo, icono, ejemplo_html, individual, ayuda);
                     }
                     else
                     {
-                        Editarwidget(Convert.ToInt32(txtid_widget.Text), nombre_codigo, widget, icono, ejemplo_html, individual);
+                        Editarwidget(Convert.ToInt32(txtid_widget.Text), nombre_codigo, widget, icono, ejemplo_html, individual, ayuda);
                     }
                 }
                 else

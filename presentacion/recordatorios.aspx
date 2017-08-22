@@ -173,11 +173,11 @@
                                     <h5><strong><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Lugar</strong></h5>
                                     <telerik:RadTextBox ID="rtxtlugar" ReadOnly="true" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
-                                <div class="col-lg-6 col-sm-12">
+                                <div class="col-lg-6  col-sm-6  col-xs-12 ">
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Organizador</strong></h5>
                                     <telerik:RadTextBox ID="rtxtorganizador" ReadOnly="true" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
-                                <div class="col-lg-6 col-sm-12">
+                                <div class="col-lg-6 col-sm-6  col-xs-12">
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Correo del organizador</strong></h5>
                                     <telerik:RadTextBox ID="rtxtcorreorganizador" ReadOnly="true" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>

@@ -320,6 +320,7 @@ namespace presentacion
                 entidad.fecha = fecha;
                 entidad.usuario = usuario;
                 entidad.usuario_creacion = usuario;
+                entidad.activo = true;
                 RecordatoriosCOM recordatorio = new RecordatoriosCOM();
                 string vmensaje = recordatorio.Agregar(entidad, new List<recordatorios_usuarios_adicionales>());
                 if (vmensaje == "")

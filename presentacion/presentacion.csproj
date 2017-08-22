@@ -172,6 +172,7 @@
     <Content Include="catalogo_menus.aspx" />
     <Content Include="catalogo_perfiles.aspx" />
     <Content Include="catalogo_sesiones_usuario.aspx" />
+    <Content Include="catalogo_usuarios.aspx" />
     <Content Include="catalogo_widgets.aspx" />
     <Content Include="configuracion.aspx" />
     <Content Include="configuracion_dashboard.aspx" />
@@ -264,6 +265,7 @@
     <Content Include="img\load.gif" />
     <Content Include="img\loading.gif" />
     <Content Include="img\loading_2.gif" />
+    <Content Include="img\local.png" />
     <Content Include="img\logo_bar.png" />
     <Content Include="img\logo_bar_sm.png" />
     <Content Include="img\logo_login.png" />
@@ -1233,6 +1235,13 @@
     <Compile Include="catalogo_sesiones_usuario.aspx.designer.cs">
       <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>
     </Compile>
+    <Compile Include="catalogo_usuarios.aspx.cs">
+      <DependentUpon>catalogo_usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalogo_usuarios.aspx.designer.cs">
+      <DependentUpon>catalogo_usuarios.aspx</DependentUpon>
+    </Compile>
     <Compile Include="catalogo_widgets.aspx.cs">
       <DependentUpon>catalogo_widgets.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1414,6 +1423,9 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

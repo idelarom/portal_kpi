@@ -80,7 +80,8 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP6o7sCaKP9fkavw-w1AXz-x2sysjcAJY&libraries=geometry,places"></script>
    
     <script src="dist/js/loading.js"></script>
-    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet" />
      <link href="dist/css/pages/master_page.css" rel="stylesheet" />
     <script src="dist/js/pages/master_page.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -531,13 +532,13 @@
                                                                 >
                                                             </asp:TextBox>
                                                         </div>
-                                                        <div class="col-lg-6 col-sm-12">
+                                                        <div class="col-lg-6 col-sm-6  col-xs-12">
                                                             <h6><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Organizador</strong></h6>
                                                             <asp:TextBox CssClass=" form-control input-sm" ID="rtxtorganizador_mp" Text='<%#Eval("organizer").ToString() %>' ReadOnly="true" Width="100%" runat="server"
                                                                 >
                                                             </asp:TextBox>
                                                         </div>
-                                                        <div class="col-lg-6 col-sm-12">
+                                                        <div class="col-lg-6 col-sm-6  col-xs-12">
                                                             <h6><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Correo del organizador</strong></h6>
                                                             <asp:TextBox CssClass=" form-control input-sm" ID="rtxtcorreorganizador_mp" Text='<%#Eval("organizer_address").ToString() %>' ReadOnly="true" Width="100%"
                                                                 runat="server">
