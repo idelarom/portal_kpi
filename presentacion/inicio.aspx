@@ -190,44 +190,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12" id="dashboard_kpi" style="display: none;">
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Dashboard Bonos</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <div class="table-responsive">
-                        <table id="table_dashboard_kpi" class="dvv table no-margin table-condensed">
-                            <thead>
-                                <tr style="font-size: 11px;">
-                                    <th style="min-width: 210px; text-align: left;" scope="col">Empleado</th>
-                                    <th style="min-width: 60px; text-align: center;" scope="col">Monto Bono</th>
-                                    <th style="min-width: 55px; text-align: center;" scope="col">Total Final</th>
-                                    <th style="min-width: 55px; text-align: center;" scope="col">% Total Final</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_table_dashboard_kpi"
-                                style="font-size: 11px;">
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.table-responsive -->
-                </div>
-
-                <div class="box-footer clearfix">
-                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_dashboard_kpi" onclick="CloseAjax('reporte_dashboard_bonos_kpi.aspx');">Ver Reporte
-                    </a>
-                </div>
-                <!-- /.box-footer -->
-            </div>
-        </div>
 
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="desglo_performance_ing_ind" style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Ocupación tiempo ingeniero</h3>
-
+                    
+                    <div class="box-tools pull-right">
+                        <a id="btnayuda_desglo_performance_ing_ind">
+                            <i class="material-icons">info</i>
+                        </a>
+                    </div>
                 </div>
                 <div class="box-body">
                     <ul class="products-list product-list-in-box">
@@ -291,6 +264,11 @@
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Performance Ingenieria</h3>
+                    <div class="box-tools pull-right">
+                        <a id="btnayuda_performance_ing">
+                            <i class="material-icons">info</i>
+                        </a>
+                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
