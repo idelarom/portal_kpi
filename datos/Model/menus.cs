@@ -12,6 +12,7 @@ namespace datos.Model
         public menus()
         {
             menus_perfiles = new HashSet<menus_perfiles>();
+            menus_usuarios = new HashSet<menus_usuarios>();
         }
 
         [Key]
@@ -55,5 +56,8 @@ namespace datos.Model
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<menus_perfiles> menus_perfiles { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<menus_usuarios> menus_usuarios { get; set; }
     }
 }

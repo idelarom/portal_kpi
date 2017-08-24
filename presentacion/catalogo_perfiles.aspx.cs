@@ -841,7 +841,7 @@ namespace presentacion
         {
             if (txtbuscarmenu.Text.Trim().Length > 2 || txtbuscarmenu.Text.Trim().Length == 0)
             {
-                CargarListadoMenus(txtbuscarwidget.Text.Trim());
+                CargarListadoMenus(txtbuscarmenu.Text.Trim());
                 imgmenu.Style["display"] = "none";
                 lblmenu.Style["display"] = "none";
             }

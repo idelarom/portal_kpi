@@ -1,13 +1,73 @@
 ﻿using datos;
+using datos.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace negocio.Componentes
 {
     public class PerfilesCOM
     {
+        /// <summary>
+        /// Agrega un usuario a un perfil
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <param name="id_menu"></param>
+        /// <returns></returns>
+        public string Agregar(string usuario, int id_perfil, string creador)
+        {
+            try
+            {
+                usuarios_perfiles uperfil = new usuarios_perfiles
+                {
+                    id_perfil= id_perfil,
+                    usuario = usuario,
+                    fecha = DateTime.Now,
+                    usuario_creador = creador
+                };
+                Model context = new Model();
+                context.usuarios_perfiles.Add(uperfil);
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+        public bool ExistUsuarioPerfil(string usuario, int id_perfil)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Model context = new Model();
+                var query = context.usuarios_perfiles
+                                .Where(s => s.usuario == usuario && s.usuario_borrado == null &&
+                                s.id_perfil == id_perfil)
+                                .Select(u => new
+                                {
+                                    u.id_usuariop
+                                });
+                dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
+        }
+
         public DataSet sp_editar_perfiles(int id_perfil, string perfil, string usuario, string cadena_usuarios,
             int total_cadena_usuarios, string cadena_widgets, int total_cadena_widgets,
             string cadena_menus, int total_cadena_menus, bool ver_todos_empleados)

@@ -6,11 +6,83 @@ using System.Data;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
+using datos.Model;
 
 namespace negocio.Componentes
 {
     public class MenusCOM
     {
+        /// <summary>
+        /// Agrega un menua un usuario
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <param name="usuarios_adicionales"></param>
+        /// <returns></returns>
+        public string Agregar(string usuario, int id_menu)
+        {
+            try
+            {
+                menus_usuarios menu = new menus_usuarios
+                {
+                    id_menu=id_menu,
+                    usuario = usuario,
+                    activo=true
+                };
+                Model context = new Model();
+                context.menus_usuarios.Add(menu);
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+        public bool ExistMenuUsuario(string usuario)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Model context = new Model();
+                var query = context.menus_usuarios
+                                .Where(s => s.usuario == usuario && s.activo)
+                                .Select(u => new
+                                {
+                                    u.id_menuu
+                                });
+                dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
+        }
+        public DataSet sp_menus_usuarios(string usuario)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_menus_usuarios", listparameters, false, 1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
         public DataSet sp_menus_breadcumbs(string menu)
         {
             DataSet ds = new DataSet();
@@ -27,9 +99,9 @@ namespace negocio.Componentes
                 throw ex;
             }
             return ds;
-        }
-        
-        public DataSet sp_editar_menus(int id_menu, int id_menu_padre, string menu, string url, string icono, string usuario, bool en_mantenimiento)
+        }        
+        public DataSet sp_editar_menus(int id_menu, int id_menu_padre, string menu, string url, string icono, string usuario, 
+            bool en_mantenimiento)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -52,7 +124,6 @@ namespace negocio.Componentes
             }
             return ds;
         }
-
         public DataSet sp_agregar_menus(int id_menu_padre, string menu, string url, string icono, string usuario, bool en_mantenimiento)
         {
             DataSet ds = new DataSet();
@@ -75,7 +146,6 @@ namespace negocio.Componentes
             }
             return ds;
         }
-
         public DataSet sp_borrar_menus(int id_menu, string usuario, string comentarios)
         {
             DataSet ds = new DataSet();
@@ -95,7 +165,6 @@ namespace negocio.Componentes
             }
             return ds;
         }
-
         public DataSet sp_catalogo_menus(int id_menu)
         {
             DataSet ds = new DataSet();

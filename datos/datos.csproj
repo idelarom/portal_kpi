@@ -56,12 +56,12 @@
     <Compile Include="Model\dispositivos_bloqueados.cs" />
     <Compile Include="Model\menus.cs" />
     <Compile Include="Model\menus_perfiles.cs" />
+    <Compile Include="Model\menus_usuarios.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\perfiles.cs" />
     <Compile Include="Model\recordatorios.cs" />
     <Compile Include="Model\recordatorios_usuarios_adicionales.cs" />
     <Compile Include="Model\sysdiagrams.cs" />
-    <Compile Include="Model\usuarios_chat.cs" />
     <Compile Include="Model\usuarios_configuraciones.cs" />
     <Compile Include="Model\usuarios_perfiles.cs" />
     <Compile Include="Model\usuarios_sesiones.cs" />

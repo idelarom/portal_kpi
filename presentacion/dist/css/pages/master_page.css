@@ -71,3 +71,7 @@
 
     width: 220px;
 }
+
+.bg-aqua-active, .modal-info .modal-header, .modal-info .modal-footer {
+      background-color: #C42C2C !important; 
+}

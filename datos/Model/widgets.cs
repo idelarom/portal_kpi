@@ -26,6 +26,9 @@ namespace datos.Model
         [StringLength(250)]
         public string nombre_codigo { get; set; }
 
+        [StringLength(8000)]
+        public string texto_ayuda { get; set; }
+
         public bool? individual { get; set; }
 
         [StringLength(250)]
