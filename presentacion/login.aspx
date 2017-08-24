@@ -6,8 +6,8 @@
 
     <style type="text/css">
         .login-box, .register-box {
-            width:100%;
-            max-width:360px;
+            width: 100%;
+            max-width: 360px;
             margin: 10px auto;
         }
 
@@ -17,6 +17,46 @@
             margin-bottom: 25px;
             font-weight: 300;
             padding-left: 5px;
+        }
+
+        .sweet-alert p {
+            color: #797979;
+            font-size: 16px;
+            text-align: center;
+            font-weight: 300;
+            position: relative;
+            text-align: inherit;
+            float: none;
+            margin: 0;
+            padding: 0;
+            line-height: normal;
+        }
+
+        .sweet-alert h2 {
+            color: #575757;
+            font-size: 28px;
+            text-align: center;
+            font-weight: 600;
+            text-transform: none;
+            position: relative;
+            margin: 25px 0;
+            padding: 0;
+            line-height: 40px;
+            display: block;
+        }
+
+        .sweet-alert button {
+            background-color: #8CD4F5;
+            color: white;
+            border: none;
+            box-shadow: none;
+            font-size: 17px;
+            font-weight: 500;
+            -webkit-border-radius: 4px;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 20px 5px 0 5px;
+            cursor: pointer;
         }
     </style>
     <script type="text/javascript">
@@ -130,17 +170,17 @@
             };
 
             function error(error) {
-                if (location.protocol == 'https:' && location.hostname != "localhost") {
-                    swal({
+            	console.log("error html5 "+ error.code);
+               swal({
                         title: "No sabemos donde estas :(",
                         text: "Para utilizar todas las herramientas del portal, debes permitir detectar tu ubicación.",
 
                         imageUrl: "img/local.png",
-                        showCancelButton: false,
+                        showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Actualizar",
-                        cancelButtonText: "Por ahora no",
-                        closeOnConfirm: false,
+                        confirmButtonText: "Recargar",
+                        cancelButtonText: "Cerrar",
+                        closeOnConfirm: true,
                         closeOnCancel: true
                     },
                     function (isConfirm) {
@@ -148,7 +188,6 @@
                             location.reload();
                         }
                     });
-                } 
                
             };
         }
