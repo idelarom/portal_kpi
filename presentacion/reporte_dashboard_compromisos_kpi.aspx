@@ -1,4 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="reporte_dashboard__compromisos_kpi.aspx.cs" Inherits="presentacion.reporte_dashboard__compromisos_kpi" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="reporte_dashboard_compromisos_kpi.aspx.cs" Inherits="presentacion.reporte_dashboard_compromisos_kpi" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <script type="text/javascript">
        
@@ -77,22 +79,12 @@
              return true;
           }
 
-        function ViewEmpleado(name,puesto,usuario,prev,imple,sop,comp)
+        function ViewEmpleado(name,login)
         {
             var nombre = document.getElementById('<%= hdfnombre.ClientID %>');
-            var vpuesto = document.getElementById('<%= hdfpuesto.ClientID %>');
-            var commando = document.getElementById('<%= hdfuserselected.ClientID %>');
-            var vpreventa = document.getElementById('<%= hdfpreventa.ClientID %>');
-            var vimple = document.getElementById('<%= hdfimplementacion.ClientID %>');
-            var vsoporte = document.getElementById('<%= hdfsoporte.ClientID %>');
-            var vcompro = document.getElementById('<%= hdfocompro.ClientID %>');
+            var vlogin = document.getElementById('<%= hdfuserselected.ClientID %>');
             nombre.value = name;
-            vpuesto.value = puesto;
-            commando.value = usuario;
-            vpreventa.value = prev;
-            vimple.value = imple;
-            vsoporte.value = sop;
-            vcompro.value = comp;
+            vlogin.value = login;
             document.getElementById('<%= btnverempleadodetalles.ClientID%>').click();
             return true;
         }
@@ -103,7 +95,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Dashboard Bonos</h3>
+                <h3 class="page-header">Dashboard Compromisos</h3>
             </div>
             <div class="col-lg-12">
                 <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
@@ -130,26 +122,26 @@
                             <table class="dvv table table-responsive table-condensed">
                                 <thead>
                                     <tr style="font-size: 11px;">
-                                        <th style="min-width: 210px; text-align: left;" scope="col">Nombre</th>
-                                        <th style="min-width: 70px; text-align: left;" scope="col">Total de Compromisos</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">Cumplidos</th>
-                                        <th style="min-width: 65px; text-align: center;" scope="col">No Cumplidos</th>
+                                        <th style="min-width: 100px; text-align: left;" scope="col">Nombre</th>
+                                        <th style="min-width: 55px; text-align: center;" scope="col">Total de Compromisos</th>
+                                        <th style="min-width: 55px; text-align: center;" scope="col">Cumplidos</th>
+                                        <th style="min-width: 55px; text-align: center;" scope="col">No Cumplidos</th>
                                         <th style="min-width: 55px; text-align: center;" scope="col">% Cump. Compromisos</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <asp:Repeater ID="repeater_bonos" runat="server">
+                                    <asp:Repeater ID="repeater_compromisos" runat="server">
                                         <ItemTemplate>
                                             <tr style="font-size: 11px">
                                                 <td>
-                                                    <a style="cursor: pointer;" onclick='<%# "return ViewEmpleado("+@"""" + Eval("Nombre") + ");" %>'>
+                                                    <a style="cursor: pointer;" onclick='<%# "return ViewEmpleado("+@"""" + Eval("Nombre")+@""""+@",""" + Eval("Login") + @"""" + ");" %>'>
                                                         <%# Eval("Nombre") %>
                                                     </a>
                                                 </td>
-                                                <td style="text-align: center;"><%# Eval("Total de Compromisos") %></td>
+                                                <td style="text-align: center;"><%# Eval("Total_Compromisos") %></td>
                                                 <td style="text-align: center;"><%# Eval("Cumplidos") %></td>
-                                                <td style="text-align: center;"><%# Eval("No Cumplidos") %></td>
-                                                <td style="text-align: center;"><%# Eval("% Cump. Compromisos") %></td>
+                                                <td style="text-align: center;"><%# Eval("No_Cumplidos") %></td>
+                                                <td style="text-align: center;"><%# Eval("Cumplimiento_Compromisos") %></td>
                                             </tr>
                                         </ItemTemplate>
                                     </asp:Repeater>
@@ -324,43 +316,55 @@
                                                 <asp:Image ID="img_employee" runat="server" ImageUrl="~/img/user.png"
                                                     CssClass="img-responsive img-circle" />
                                             </div>
+                                            <br /><br />
                                             <div class="box-footer">
                                                 <div class="row">
-                                                    <div class="col-sm-3 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">
-                                                                <asp:Label ID="lblprev" runat="server" Text=""></asp:Label></h5>
-                                                            <span class="description-text">Preventa</span>
-                                                        </div>
-                                                        <!-- /.description-block -->
+                                                      <div class=" table table-responsive" style="width:100%; height:115px; overflow: scroll;">
+                                                        <table class="table table-responsive table-condensed">
+                                                            <thead>
+                                                                <tr style="font-size: 11px;">
+                                                                    <th style="min-width: 50px; text-align: center;" scope="col">#Oport.</th>
+                                                                    <th style="min-width: 50px; text-align: center;" scope="col">#Comp.</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Cliente</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Creado Por</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Compromiso</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">T.Compromiso</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Asignado</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Estatus</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Creacion</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Inicio</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Asignado</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Inicial</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Final</th>
+                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Terminado</th>
+                                                                    <th style="min-width: 50px; text-align: center;" scope="col">Cumplido</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <asp:Repeater ID="repeater_compromisos_detalle" runat="server">
+                                                                    <ItemTemplate>
+                                                                        <tr style="font-size: 11px">
+                                                                             <td style="text-align: center;"><%# Eval("NumOport") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("NumComp") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("Cliente") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("CreadorPor") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("Compromiso") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("TipoCompromiso") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("Asignado") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("Estatus") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("FechaCreacion") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("FechaInicio") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("FechaAsignado") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("FechaCompInicial") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("FechaCompFinal") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("FechaTerminado") %></td>
+                                                                             <td style="text-align: center;"><%# Eval("Cumplido") %></td>
+                                                                        </tr>
+                                                                    </ItemTemplate>
+                                                                </asp:Repeater>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                    <!-- /.col -->
-                                                    <div class="col-sm-3 border-right">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">
-                                                                <asp:Label ID="lblimple" runat="server" Text=""></asp:Label></h5>
-                                                            <span class="description-text">Implementación</span>
-                                                        </div>
-                                                        <!-- /.description-block -->
-                                                    </div>
-                                                    <!-- /.col -->
-                                                    <div class="col-sm-3">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">
-                                                                <asp:Label ID="lblsopo" runat="server" Text=""></asp:Label></h5>
-                                                            <span class="description-text">Soporte</span>
-                                                        </div>
-                                                        <!-- /.description-block -->
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="description-block">
-                                                            <h5 class="description-header">
-                                                                <asp:Label ID="lblcompro" runat="server" Text=""></asp:Label></h5>
-                                                            <span class="description-text">Cump. Compromisos</span>
-                                                        </div>
-                                                        <!-- /.description-block -->
-                                                    </div>
-                                                    <!-- /.col -->
                                                 </div>
                                                 <!-- /.row -->
                                             </div>
@@ -381,10 +385,7 @@
         <asp:HiddenField ID="hdfsessionid" runat="server" />
         <asp:HiddenField ID="hdfuserselected" runat="server" />
         <asp:HiddenField ID="hdfnombre" runat="server" />
-        <asp:HiddenField ID="hdfpuesto" runat="server" />
-        <asp:HiddenField ID="hdfpreventa" runat="server" />
-        <asp:HiddenField ID="hdfimplementacion" runat="server" />
-        <asp:HiddenField ID="hdfsoporte" runat="server" />
-        <asp:HiddenField ID="hdfocompro" runat="server" />
+        <asp:HiddenField ID="hdffechainicio" runat="server" />
+        <asp:HiddenField ID="hdffechafin" runat="server" />
     </div>
 </asp:Content>

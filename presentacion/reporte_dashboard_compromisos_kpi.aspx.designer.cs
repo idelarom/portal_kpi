@@ -10,7 +10,7 @@
 namespace presentacion {
     
     
-    public partial class reporte_dashboard__compromisos_kpi {
+    public partial class reporte_dashboard_compromisos_kpi {
         
         /// <summary>
         /// nkcargandofiltros control.
@@ -58,13 +58,13 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Label lblfechafin;
         
         /// <summary>
-        /// repeater_bonos control.
+        /// repeater_compromisos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeater_bonos;
+        protected global::System.Web.UI.WebControls.Repeater repeater_compromisos;
         
         /// <summary>
         /// lnkgenerarpdf control.
@@ -220,6 +220,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnkagregartodos;
         
         /// <summary>
+        /// rtvListEmpleado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTreeView rtvListEmpleado;
+        
+        /// <summary>
         /// lblcountlistempleados control.
         /// </summary>
         /// <remarks>
@@ -245,6 +254,15 @@ namespace presentacion {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkeliminarselecion;
+        
+        /// <summary>
+        /// rdtselecteds control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadListBox rdtselecteds;
         
         /// <summary>
         /// lblcountselecteds control.
@@ -310,40 +328,13 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Image img_employee;
         
         /// <summary>
-        /// lblprev control.
+        /// repeater_compromisos_detalle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblprev;
-        
-        /// <summary>
-        /// lblimple control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblimple;
-        
-        /// <summary>
-        /// lblsopo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblsopo;
-        
-        /// <summary>
-        /// lblcompro control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblcompro;
+        protected global::System.Web.UI.WebControls.Repeater repeater_compromisos_detalle;
         
         /// <summary>
         /// btnverempleadodetalles control.
@@ -382,48 +373,21 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.HiddenField hdfnombre;
         
         /// <summary>
-        /// hdfpuesto control.
+        /// hdffechainicio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfpuesto;
+        protected global::System.Web.UI.WebControls.HiddenField hdffechainicio;
         
         /// <summary>
-        /// hdfpreventa control.
+        /// hdffechafin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfpreventa;
-        
-        /// <summary>
-        /// hdfimplementacion control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfimplementacion;
-        
-        /// <summary>
-        /// hdfsoporte control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfsoporte;
-        
-        /// <summary>
-        /// hdfocompro control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfocompro;
+        protected global::System.Web.UI.WebControls.HiddenField hdffechafin;
     }
 }

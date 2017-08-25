@@ -309,7 +309,7 @@ function CargarPerformanceIngenieriaIndividual() {
                 var Total_Horas = Performance[0].Total_Horas;
                 var Porcentaje_Total_Horas = Performance[0]._Total_Horas;
 
-                $("#horas_Semanal").text(Total_Horas);
+                $("#horas_Semanal").text(Total_Horas + " hrs");
                 $("#performance_ing_preventa").text(Porcentaje_Preventa + " %");
                 $("#performance_ing_totalpreventa").text(Preventa + " hrs");
                 $("#performance_ingenieria_imp").text(Porcentaje_Implementacion + " %");
@@ -321,7 +321,7 @@ function CargarPerformanceIngenieriaIndividual() {
                 $("#performance_ingenieria_th").text(Porcentaje_Total_Horas + " %");
                 $("#performance_ingenieria_totaladhr").text(Total_Horas + " hrs");
                 $("#progress_bar_performance_ing_ind").css("width", Math.round(Porcentaje_Total_Horas > 100 ? 100 : Porcentaje_Total_Horas) + "%");
-                $("#progress_performance_ing_ind").text(Porcentaje_Total_Horas + " % alcanzado");
+                $("#progress_performance_ing_ind").text(Porcentaje_Total_Horas + " % porcentaje alcanzado");
             }
             spinner.stop();
             spinner2.stop();
