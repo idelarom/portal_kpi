@@ -483,7 +483,8 @@ namespace presentacion
                 dt = ds.Tables[0];
                 repeater_compromisos_detalle.DataSource = dt;
                 repeater_compromisos_detalle.DataBind();
-                ModalShow("#ModalEmpleado");
+                modal_bdy.Visible = true;
+               // ModalShow("#ModalEmpleado");
             }
             catch (Exception ex)
             {

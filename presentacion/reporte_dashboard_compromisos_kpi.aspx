@@ -3,7 +3,29 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <script type="text/javascript">
-       
+         //declaramos los objetos de tipo load desde el inicio (load oscuro)
+         var opts2 = {
+             lines: 13 // The number of lines to draw
+            , length: 28 // The length of each line
+            , width: 14 // The line thickness
+            , radius: 42 // The radius of the inner circle
+            , scale: .8 // Scales overall size of the spinner
+            , corners: 1 // Corner roundness (0..1)
+            , color: '#000' // #rgb or #rrggbb or array of colors
+            , opacity: 0.1 // Opacity of the lines
+            , rotate: 0 // The rotation offset
+            , direction: 1 // 1: clockwise, -1: counterclockwise
+            , speed: 1 // Rounds per second
+            , trail: 60 // Afterglow percentage
+            , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+            , zIndex: 10 // The z-index (defaults to 2000000000)
+            , className: 'spinner' // The CSS class to assign to the spinner
+            , top: '45%' // Top position relative to parent
+            , left: '50%' // Left position relative to parent
+            , shadow: true // Whether to render a shadow
+            , hwaccel: true // Whether to use hardware acceleration
+            , position: 'absolute' // Element positioning
+         };
         $(document).ready(function () {
             Init();
             
@@ -85,7 +107,13 @@
             var vlogin = document.getElementById('<%= hdfuserselected.ClientID %>');
             nombre.value = name;
             vlogin.value = login;
+            $('<%= modal_bdy.ClientID%>').hide();
+            ModalShow('#ModalEmpleado');
+            var target2 = document.getElementById('modal_cn');
+            var spinner2 = new Spinner(opts2).spin(target2);
+
             document.getElementById('<%= btnverempleadodetalles.ClientID%>').click();
+            spinerr2.stop();
             return true;
         }
     </script>
@@ -295,14 +323,14 @@
                         <asp:AsyncPostBackTrigger ControlID="btnverempleadodetalles" EventName="Click" />
                     </Triggers>
                     <ContentTemplate>
-                        <div class="modal-content">
+                        <div class="modal-content" id="modal_cn">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span></button>
                                 <h4 class="modal-title">Detalles del empleado</h4>
                             </div>
                             <div class="modal-body">
-                                <div class="row">
+                                <div class="row" id="modal_bdy" runat="server">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="box box-widget widget-user">
                                             <!-- Add the bg color to the header using any of the bg-* classes -->
