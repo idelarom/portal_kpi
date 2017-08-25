@@ -309,7 +309,17 @@ namespace presentacion
                 PerfilesCOM perfil = new PerfilesCOM();
                 string usuario = hdfusuario.Value.ToUpper();
                 string id_perfil = ddlperfiles.SelectedValue;
-                string vmensaje = perfil.Agregar(usuario.ToUpper(), Convert.ToInt32(id_perfil), Session["usuario"] as string);
+                string vmensaje = "";
+                if (perfil.ExistUsuarioPerfil(usuario))
+                {
+                    perfil.Eliminar(usuario);
+                }
+
+                if (vmensaje == "")
+                {
+                    vmensaje = perfil.Agregar(usuario.ToUpper(), Convert.ToInt32(id_perfil), Session["usuario"] as string);
+                }
+
                 if (vmensaje != "")
                 {
                     Toast.Error("Error al asignar perfil: " + vmensaje, this);

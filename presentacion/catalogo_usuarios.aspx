@@ -72,11 +72,12 @@
                         <table class="dvv table no-margin table-condensed">
                             <thead>
                                 <tr style="font-size: 11px;">
-                                    <th style="min-width: 30px; text-align: center;" scope="col"></th>
+                                    <th style="min-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 60px; text-align: left;" scope="col">Usuario</th>
                                     <th style="min-width: 60px; text-align: left;" scope="col">No. Empleado</th>
                                     <th style="min-width: 200px; text-align: left;" scope="col">Nombre</th>
                                     <th style="min-width: 200px; text-align: left;" scope="col">Puesto</th>
+                                    <th style="min-width: 150px; text-align: left;" scope="col">Correo</th>
                                     <th style="min-width: 200px; text-align: left;" scope="col">Perfil</th>
                                 </tr>
                             </thead>
@@ -94,6 +95,7 @@
                                             <td style="text-align: left;"><%# Eval("num_empleado") %></td>
                                             <td style="text-align: left;"><%# Eval("Nombre") %></td>
                                             <td style="text-align: left;"><%# Eval("Puesto") %></td>
+                                            <td style="text-align: left;"><%# Eval("correo") %></td>
                                             <td style="text-align: left;"><%# Eval("Perfil") %></td>
                                         </tr>
                                     </ItemTemplate>

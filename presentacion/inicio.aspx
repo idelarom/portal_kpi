@@ -272,8 +272,8 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <table id="table_performance_ing" class="dvv table no-margin table-condensed">
+                    <div class="table table-responsive">
+                        <table id="table_performance_ing" class="dvv table table-responsive table-condensed">
                             <thead>
                                 <tr style="font-size: 11px;">
                                     <th style="min-width: 210px; text-align: left;" scope="col">Empleado</th>

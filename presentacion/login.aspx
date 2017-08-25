@@ -170,7 +170,9 @@
             };
 
             function error(error) {
-            	console.log("error html5 "+ error.code);
+                if (location.protocol != 'https:' && location.hostname != "localhost") {
+                    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+              
                swal({
                         title: "No sabemos donde estas :(",
                         text: "Para utilizar todas las herramientas del portal, debes permitir detectar tu ubicación.",
@@ -188,7 +190,7 @@
                             location.reload();
                         }
                     });
-               
+                 }
             };
         }
     </script>

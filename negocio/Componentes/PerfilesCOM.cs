@@ -42,15 +42,14 @@ namespace negocio.Componentes
                 return fullErrorMessage.ToString();
             }
         }
-        public bool ExistUsuarioPerfil(string usuario, int id_perfil)
+        public bool ExistUsuarioPerfil(string usuario)
         {
             DataTable dt = new DataTable();
             try
             {
                 Model context = new Model();
                 var query = context.usuarios_perfiles
-                                .Where(s => s.usuario == usuario && s.usuario_borrado == null &&
-                                s.id_perfil == id_perfil)
+                                .Where(s => s.usuario == usuario && s.usuario_borrado == null)
                                 .Select(u => new
                                 {
                                     u.id_usuariop
@@ -67,7 +66,28 @@ namespace negocio.Componentes
                 return false;
             }
         }
-
+        public string Eliminar(string usuario)
+        {
+            try
+            {
+                Model context = new Model();
+                usuarios_perfiles recordatorio = context.usuarios_perfiles
+                                .First(s => s.usuario == usuario);
+                recordatorio.usuario_borrado =usuario;
+                recordatorio.fecha_borrado = DateTime.Now;
+                recordatorio.comentarios_borrado ="BORRADO POR ACTUALIZACION";
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
         public DataSet sp_editar_perfiles(int id_perfil, string perfil, string usuario, string cadena_usuarios,
             int total_cadena_usuarios, string cadena_widgets, int total_cadena_widgets,
             string cadena_menus, int total_cadena_menus, bool ver_todos_empleados)
