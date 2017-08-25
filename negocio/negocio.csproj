@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Componentes\ConfiguracionDashboardCOM.cs" />
     <Compile Include="Componentes\DashboardBonosCOM.cs" />
+    <Compile Include="Componentes\DashboardCompromisosCOM.cs" />
     <Compile Include="Componentes\EmpleadosCOM.cs" />
     <Compile Include="Componentes\MenusCOM.cs" />
     <Compile Include="Componentes\PerfilesCOM.cs" />
