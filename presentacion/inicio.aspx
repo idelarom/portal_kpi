@@ -82,8 +82,8 @@
         </div>
 
          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="Performance_ing_ind" style="display: none;">
-            <div class="info-box bg-red">
-                <span class="small-box bg-aqua"><i class="ion-person"></i></span>
+            <div class="info-box bg-blue">
+                <span class="info-box-icon"><i class="fa fa-user"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Horas Ingeniero</span>
