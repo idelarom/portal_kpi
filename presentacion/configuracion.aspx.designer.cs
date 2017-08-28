@@ -112,6 +112,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnksincronizar;
         
         /// <summary>
+        /// Control cbxsincronizacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxsincronizacion;
+        
+        /// <summary>
         /// Control cbxrecordatorios.
         /// </summary>
         /// <remarks>

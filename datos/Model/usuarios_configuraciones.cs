@@ -18,6 +18,8 @@ namespace datos.Model
         [StringLength(500)]
         public string nombre { get; set; }
 
+        public bool? sincronizacion_automatica { get; set; }
+
         public bool? mostrar_recordatorios { get; set; }
 
         public bool? alerta_inicio_sesion { get; set; }

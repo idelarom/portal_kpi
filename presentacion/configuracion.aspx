@@ -153,8 +153,11 @@
                                                     <asp:LinkButton ID="lnksincronizar" runat="server" CssClass="btn btn-primary btn-flat"
                                                         OnClientClick="return LoadSincronizacion('¿Desea sincronizar con el servidor Exchange de Migesa?');" OnClick="lnksincronizar_Click">
                                                             <i class="fa fa-refresh"></i>&nbsp;Sincronizar con Exchange </asp:LinkButton>
+                                                 <br />
+                                                           <asp:CheckBox AutoPostBack="true" OnCheckedChanged="cbxsincronizacion_CheckedChanged" ID="cbxsincronizacion" 
+                                                               Text="Sincronizar al iniciar sesión" runat="server" />
+                                                     <p class="text-red">Activar esta opción podria hacer que el inicio de sesión se demore unos segundos más.</p>
                                                 </div>
-                                                
                                                <div class="col-lg-12">
                                                    <blockquote>
                                                        <p><i class="fa fa-bell" aria-hidden="true"></i>&nbsp;Recibir alertas sobre reuninones y recordatorios.</p>
