@@ -277,6 +277,7 @@
     <Content Include="localizador.aspx" />
     <Content Include="login.aspx" />
     <Content Include="mantenimiento.aspx" />
+    <Content Include="Pages\Common\login.aspx" />
     <Content Include="plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="plugins\bootstrap-slider\slider.css" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1325,6 +1326,20 @@
     <Compile Include="mantenimiento.aspx.designer.cs">
       <DependentUpon>mantenimiento.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Common\login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Common\login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Masters\Login.Master.cs">
+      <DependentUpon>Login.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Masters\Login.Master.designer.cs">
+      <DependentUpon>Login.Master</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="recordatorios.aspx.cs">
       <DependentUpon>recordatorios.aspx</DependentUpon>
@@ -1407,6 +1422,7 @@
     <Content Include="Global.Master" />
     <Content Include="Login.Master" />
     <Content Include="primitive\codemirror\LICENSE" />
+    <Content Include="Pages\Masters\Login.Master" />
     <None Include="Properties\PublishProfiles\portal.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1431,6 +1447,8 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
+    <Folder Include="Pages\Catalogs\" />
+    <Folder Include="Pages\Utilities\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
