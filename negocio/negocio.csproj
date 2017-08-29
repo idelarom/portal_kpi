@@ -61,6 +61,7 @@
     <Compile Include="Componentes\To.cs" />
     <Compile Include="Componentes\UsuariosCOM.cs" />
     <Compile Include="Componentes\UsuariosConfiguracionesCOM.cs" />
+    <Compile Include="Componentes\UsuariosSesionesCOM.cs" />
     <Compile Include="Componentes\WidgetsCOM.cs" />
     <Compile Include="Entidades\Appointment.cs" />
     <Compile Include="Entidades\ArbolInvolucrados.cs" />

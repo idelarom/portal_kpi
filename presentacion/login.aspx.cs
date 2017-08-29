@@ -1,4 +1,5 @@
-﻿using datos.NAVISION;
+﻿using datos.Model;
+using datos.NAVISION;
 using negocio.Componentes;
 using System;
 using System.Collections.Generic;
@@ -101,14 +102,11 @@ namespace presentacion
                             adSearch.Filter = "(&(ObjectClass=user)(sAMAccountName=" + username + "))";    //Filter information, here i'm looking at a user with given username
                             SearchResult sResult = adSearch.FindOne();       //username is unique, so I want to find only one
                             string name = dirInfo.ToString() + username + ".png";
-                            if (!File.Exists(name))
+                            string imagen = "";
+                            if (sResult.Properties["thumbnailPhoto"].Count > 0)
                             {
-                                string imagen = "";
-                                if (sResult.Properties["thumbnailPhoto"].Count > 0)
-                                {
-                                    byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
-                                    imagen = GuardarImagenUsuario(array_img, username + ".png");
-                                }
+                                byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
+                                imagen = GuardarImagenUsuario(array_img, username + ".png");
                             }
                             string adress = sResult.Properties["mail"][0].ToString();
                             string nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
@@ -125,7 +123,7 @@ namespace presentacion
                             Session["password"] = password;
                             Session["contraseña"] = password;
                             string nombre_pro = row["nombre_provicional"].ToString();
-                            Session["nombre"] = nombre_pro != "" ? nombre_pro:CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
+                            Session["nombre"] = nombre_pro != "" ? nombre_pro : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
                             Session["correo"] = row["Company_E_Mail"].ToString().Trim().ToLower();
                             Session["puesto"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto);
                             Session["perfil"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil);
@@ -143,13 +141,33 @@ namespace presentacion
                             Session["device"] = device;
                             Session["ip"] = ip;
                             Session["fecha_inicio_sesion"] = fecha_inicio_sesion;
-                            DataSet ds = empleados.sp_agregar_usuario_sesiones(username.Trim().ToUpper(), os, os_vers, browser, device,
-                                ip, lat, lon, region, proveedor, modelo, fecha_inicio_sesion, finger_print);
-                            int id_usuario_sesion = ds.Tables[0].Columns.Contains("id_usuario_sesion") ?
-                                Convert.ToInt32(ds.Tables[0].Rows[0]["id_usuario_sesion"]) : 0;
-                            Session["devices_conectados"] = UpdateDevices(username);
+                            usuarios_sesiones e = new usuarios_sesiones();
+                            UsuariosSesionesCOM sesion = new UsuariosSesionesCOM();
+                            e.usuario = username.Trim().ToUpper();
+                            e.os =os;
+                            e.os_version = os_vers;
+                            e.navegador = browser;
+                            e.fecha_inicio_sesion = DateTime.Now;
+                            e.ip = ip;
+                            e.device = device;
+                            e.latitud = lat;
+                            e.longitud =lon;
+                            e.region =region;
+                            e.proveedor = proveedor;
+                            e.model =modelo;
+                            e.activo = true;
+                            e.device_fingerprint = finger_print;
+                            int id_usuario_sesion = sesion.Exist(e.usuario, e.device_fingerprint) ? sesion.Editar(e):sesion.Agregar(e);
                             if (id_usuario_sesion > 0)
                             {
+                                if (Convert.ToBoolean(row["sincronizacion_automatica"]))
+                                {
+                                    string mail = Session["mail"] as string;
+                                    string mail_user = username + mail.Replace(mail.Split('@')[0], "");
+                                    EWSHelper calendar = new EWSHelper();
+                                    calendar.GetAllCalendar(mail_user, password);
+                                }
+                                Session["devices_conectados"] = UpdateDevices(username);
                                 Session["id_usuario_sesion"] = id_usuario_sesion;
                             }
                             else

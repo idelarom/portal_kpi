@@ -65,10 +65,12 @@ namespace presentacion
                     DataRow row = dt.Rows[0];
                     bool alerta_inicio_sesion = row["alerta_inicio_sesion"] == DBNull.Value ? true : Convert.ToBoolean(row["alerta_inicio_sesion"]);
                     bool mostrar_recordatorios = row["mostrar_recordatorios"] == DBNull.Value ? true : Convert.ToBoolean(row["mostrar_recordatorios"]);
+                    bool sincronizacion_automatica = row["sincronizacion_automatica"] == DBNull.Value ? false : Convert.ToBoolean(row["sincronizacion_automatica"]);
                     string nombre = row["nombre"] == DBNull.Value ? "" : Convert.ToString(row["nombre"]);
                     cbxalerta_inicio_sesion.Checked = alerta_inicio_sesion;
                     txtnombre.Text = nombre;
                     cbxrecordatorios.Checked = mostrar_recordatorios;
+                    cbxsincronizacion.Checked = sincronizacion_automatica;
                 }
             }
             catch (Exception ex)
@@ -219,6 +221,28 @@ namespace presentacion
                 lnksubirimagen.Visible = true;
                 lnkloadimagen.Style["display"] = "none";
             }
+        }
+
+        protected void cbxsincronizacion_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string usuario = Session["usuario"] as string;
+                UsuariosConfiguracionesCOM usuarios_config = new UsuariosConfiguracionesCOM();
+                usuarios_configuraciones entidad = new usuarios_configuraciones();
+                entidad.usuario = usuario;
+                entidad.sincronizacion_automatica = cbxsincronizacion.Checked;
+                string vmensaje = usuarios_config.EditarSincronizacionAutomatica(entidad);
+                if (vmensaje != "")
+                {
+                    Toast.Error("Error al cambiar configuracion de sincronización: " + vmensaje, this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cambiar configuracion de sincronización: " + ex.Message, this);
+            }
+
         }
     }
 }
