@@ -140,7 +140,7 @@ namespace presentacion
         {
             try
             {
-                DataTable dt = GetDashboardBonos(null, null, lista_usuarios, usuario);
+                DataTable dt = GetPerformanceIngenieria(null, null, lista_usuarios, usuario);
                 foreach (DataColumn column in dt.Columns)
                 {
                     column.ColumnName = column.ColumnName.Replace("%", "_");
@@ -190,7 +190,7 @@ namespace presentacion
             }
         }
 
-        public static DataTable GetDashboardBonos(DateTime? fecha_ini, DateTime? fecha_fin, string pLstEmpleados, string Usr)
+        public static DataTable GetPerformanceIngenieria(DateTime? fecha_ini, DateTime? fecha_fin, string pLstEmpleados, string Usr)
         {
             DataTable dt = new DataTable();
             try

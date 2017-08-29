@@ -127,6 +127,78 @@ namespace presentacion
             }
         }
 
+        [System.Web.Services.WebMethod]
+        public static String GetDashboardCompromisos_Individual(string lista_usuarios, string usuario)
+        {
+            try
+            {
+                DataTable dt = GetDashboardCompromisos(null, null, lista_usuarios);
+                foreach (DataColumn column in dt.Columns)
+                {
+                    column.ColumnName = column.ColumnName.Replace("%", "_");
+                    //.ColumnName = column.ColumnName.Replace(" ", "_");
+                }
+                string value = JsonConvert.SerializeObject(dt);
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+        [System.Web.Services.WebMethod]
+        public static String GetDashboardCompromisosValues(int num_empleado, string usuario, string ver_todos_empleados)
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                bool ver_Todos = Convert.ToBoolean(ver_todos_empleados);
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, false, false);
+                DataTable dt_list_empleados = ds.Tables[1];
+                string value = JsonConvert.SerializeObject("");
+                if (dt_list_empleados.Rows.Count == 1)
+                {
+                    DataRow row = ds.Tables[0].Rows[0];
+                    string userinrow = row["usuario"].ToString().Trim().ToUpper();
+                    if (userinrow != usuario)
+                    {
+                        string lista_empleados = dt_list_empleados.Rows[0]["lista_empleados"].ToString();
+                        lista_empleados = lista_empleados.Remove(lista_empleados.Length - 1);
+                        value = GetDashboardCompromisos_Individual(lista_empleados, usuario);
+                    }
+                }
+                else if (dt_list_empleados.Rows.Count > 1)
+                {
+                    string lista_empleados = dt_list_empleados.Rows[0]["lista_empleados"].ToString();
+                    lista_empleados = lista_empleados.Remove(lista_empleados.Length - 1);
+                    value = GetDashboardCompromisos_Individual(lista_empleados, usuario);
+                }
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+
+        
+        public static DataTable GetDashboardCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string pLstEmpleados)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+
+                DashboardCompromisosCOM Compromisos = new DashboardCompromisosCOM();
+                DataSet ds = Compromisos.Sps_DashBoardCompromisos(fecha_ini, fecha_fin, pLstEmpleados);
+                dt = ds.Tables[0];
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                return dt;
+            }
+        }
         protected void lnkfiltros_Click(object sender, EventArgs e)
         {
             if (div_reporte.Visible)
@@ -213,22 +285,7 @@ namespace presentacion
             return cadena;
         }
 
-        public static DataTable GetDashboardCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string pLstEmpleados)
-        {
-            DataTable dt = new DataTable();
-            try
-            {
-
-                DashboardCompromisosCOM Compromisos = new DashboardCompromisosCOM();
-                DataSet ds = Compromisos.Sps_DashBoardCompromisos(fecha_ini, fecha_fin, pLstEmpleados);
-                dt = ds.Tables[0];
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                return dt;
-            }
-        }
+       
         private void AgregarItemSleccionado(IList<RadTreeNode> collection)
         {
             try
