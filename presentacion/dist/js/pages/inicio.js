@@ -280,7 +280,7 @@ function CargarDashboardbonos() {
 
 //WIDGET DE PERFORMANCE INGENIERIA INDIVIDUAL
 function CargarPerformanceIngenieriaIndividual() {
-    //load de dashboard bonos
+    //load de performance ingenieria
     var target = document.getElementById('Performance_ing_ind');
     var spinner = new Spinner(opts).spin(target);
     var target2 = document.getElementById('desglo_performance_ing_ind');
@@ -337,7 +337,7 @@ function CargarPerformanceIngenieriaIndividual() {
 
 //WIDGET DE PERFORMANCE INGENIERIA GRUPAL
 function CargarPerformanceIngenieria() {
-    //load de dashboard bonos
+    //load de performance ingenieria
     var target = document.getElementById('performance_ing');
     var spinner = new Spinner(opts2).spin(target);
     var usuario = User();
@@ -379,6 +379,62 @@ function CargarPerformanceIngenieria() {
         error: function (result, status, err) {
             console.log("error", result.responseText);
             spinner.stop();
+        }
+    });
+    xhrRequests.push(call);
+}
+
+function CargarDashboardCompromisosIndividual() {
+    //load de performance ingenieria
+    var target = document.getElementById('Performance_ing_ind');
+    var spinner = new Spinner(opts).spin(target);
+    var target2 = document.getElementById('desglo_performance_ing_ind');
+    var spinner2 = new Spinner(opts2).spin(target2);
+
+    var usuario = User();// $('#ContentPlaceHolder1_hdf_usuario').val();
+    //guardamos esta ejecucion en un array
+    var call = $.ajax({
+        url: 'reporte_performance_ingenieria_netdiario.aspx/GetPerformanceIngenieria_Individual',
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        dataType: "json",
+        data: "{lista_usuarios:'" + usuario + "',usuario:'" + usuario + "'}",
+        success: function (response) {
+            var Performance = JSON.parse(response.d);
+            if (Performance.length > 0) {
+
+                var Soporte = Performance[0].Soporte;
+                var Porcentaje_Soporte = Performance[0]._Soporte;
+                var Preventa = Performance[0].Preventa;
+                var Porcentaje_Preventa = Performance[0]._Preventa;
+                var Administrativas = Performance[0].Administrativas;
+                var Porcentaje_Administrativas = Performance[0]._Administrativas;
+                var Implementacion = Performance[0].Implementacion;
+                var Porcentaje_Implementacion = Performance[0]._Implementacion;
+                var Total_Horas = Performance[0].Total_Horas;
+                var Porcentaje_Total_Horas = Performance[0]._Total_Horas;
+
+                $("#horas_Semanal").text(Total_Horas + " hrs");
+                $("#performance_ing_preventa").text(Porcentaje_Preventa + " %");
+                $("#performance_ing_totalpreventa").text(Preventa + " hrs");
+                $("#performance_ingenieria_imp").text(Porcentaje_Implementacion + " %");
+                $("#performance_ingenieria_totalimp").text(Implementacion + " hrs");
+                $("#performance_ingenieria_sop").text(Porcentaje_Soporte + " %");
+                $("#performance_ingenieria_totalsop").text(Soporte + " hrs");
+                $("#performance_ingenieria_admin").text(Porcentaje_Administrativas + " %");
+                $("#performance_ingenieria_totaladmin").text(Administrativas + " hrs");
+                $("#performance_ingenieria_th").text(Porcentaje_Total_Horas + " %");
+                $("#performance_ingenieria_totaladhr").text(Total_Horas + " hrs");
+                $("#progress_bar_performance_ing_ind").css("width", Math.round(Porcentaje_Total_Horas > 100 ? 100 : Porcentaje_Total_Horas) + "%");
+                $("#progress_performance_ing_ind").text(Porcentaje_Total_Horas + " % porcentaje alcanzado");
+            }
+            spinner.stop();
+            spinner2.stop();
+        },
+        error: function (result, status, err) {
+            console.log("error", result.responseText);
+            spinner.stop();
+            spinner2.stop();
         }
     });
     xhrRequests.push(call);
