@@ -36,8 +36,8 @@ namespace negocio.Componentes
                 };
                 Model context = new Model();
                 context.usuarios_sesiones.Add(sesion);
-                int id_entity = sesion.id_usuario_sesion;
                 context.SaveChanges();
+                int id_entity = sesion.id_usuario_sesion;
                 return id_entity;
             }
             catch (DbEntityValidationException ex)
