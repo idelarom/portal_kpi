@@ -100,6 +100,26 @@
             
             <!-- /.info-box -->
         </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="dashboard_compromisos_ind" style="display: none;">
+            <div class="info-box bg-blue">
+                <span class="info-box-icon"><i class="fa fa-user"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Compromisos Trimestral</span>
+                    <span class="info-box-number">
+                        <label id="compromisos_trimestral">0</label></span>
+
+                    <div class="progress">
+                        <div id="progress_bar_Compromisos_kpi_ind" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <span id="progress_Compromisos_kpi_ind"" class="progress-description">0 % porcentaje alcanzado.
+                  </span>
+                </div>
+            </div>
+            
+            <!-- /.info-box -->
+        </div>
     </div>
     
     <!-- /Widgets Grupales -->

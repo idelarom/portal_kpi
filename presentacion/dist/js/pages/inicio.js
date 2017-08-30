@@ -394,39 +394,36 @@ function CargarDashboardCompromisosIndividual() {
     var usuario = User();// $('#ContentPlaceHolder1_hdf_usuario').val();
     //guardamos esta ejecucion en un array
     var call = $.ajax({
-        url: 'reporte_performance_ingenieria_netdiario.aspx/GetPerformanceIngenieria_Individual',
+        url: 'reporte_dashboard_compromisos_kpi.aspx/GetPerformanceIngenieria_Individual',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
         data: "{lista_usuarios:'" + usuario + "',usuario:'" + usuario + "'}",
         success: function (response) {
-            var Performance = JSON.parse(response.d);
-            if (Performance.length > 0) {
+            var Compromisos = JSON.parse(response.d);
+            if (Compromisos.length > 0) {
 
-                var Soporte = Performance[0].Soporte;
-                var Porcentaje_Soporte = Performance[0]._Soporte;
-                var Preventa = Performance[0].Preventa;
-                var Porcentaje_Preventa = Performance[0]._Preventa;
-                var Administrativas = Performance[0].Administrativas;
-                var Porcentaje_Administrativas = Performance[0]._Administrativas;
-                var Implementacion = Performance[0].Implementacion;
-                var Porcentaje_Implementacion = Performance[0]._Implementacion;
-                var Total_Horas = Performance[0].Total_Horas;
-                var Porcentaje_Total_Horas = Performance[0]._Total_Horas;
+                var Login = Compromisos[0].Login;
+                var Nombre = Compromisos[0].Nombre;
+                var Total_Compromisos = Compromisos[0].Total_Compromisos;
+                var Cumplidos = Compromisos[0].Cumplidos;
+                var No_Cumplidos = Compromisos[0].No_Cumplidos;
+                var Cumplimiento_Compromisos = Compromisos[0].Cumplimiento_Compromisos;
 
-                $("#horas_Semanal").text(Total_Horas + " hrs");
-                $("#performance_ing_preventa").text(Porcentaje_Preventa + " %");
-                $("#performance_ing_totalpreventa").text(Preventa + " hrs");
-                $("#performance_ingenieria_imp").text(Porcentaje_Implementacion + " %");
-                $("#performance_ingenieria_totalimp").text(Implementacion + " hrs");
-                $("#performance_ingenieria_sop").text(Porcentaje_Soporte + " %");
-                $("#performance_ingenieria_totalsop").text(Soporte + " hrs");
-                $("#performance_ingenieria_admin").text(Porcentaje_Administrativas + " %");
-                $("#performance_ingenieria_totaladmin").text(Administrativas + " hrs");
-                $("#performance_ingenieria_th").text(Porcentaje_Total_Horas + " %");
-                $("#performance_ingenieria_totaladhr").text(Total_Horas + " hrs");
-                $("#progress_bar_performance_ing_ind").css("width", Math.round(Porcentaje_Total_Horas > 100 ? 100 : Porcentaje_Total_Horas) + "%");
-                $("#progress_performance_ing_ind").text(Porcentaje_Total_Horas + " % porcentaje alcanzado");
+
+                $("#compromisos_trimestral").text(Total_Compromisos);
+                //$("#performance_ing_preventa").text(Porcentaje_Preventa + " %");
+                //$("#performance_ing_totalpreventa").text(Preventa + " hrs");
+                //$("#performance_ingenieria_imp").text(Porcentaje_Implementacion + " %");
+                //$("#performance_ingenieria_totalimp").text(Implementacion + " hrs");
+                //$("#performance_ingenieria_sop").text(Porcentaje_Soporte + " %");
+                //$("#performance_ingenieria_totalsop").text(Soporte + " hrs");
+                //$("#performance_ingenieria_admin").text(Porcentaje_Administrativas + " %");
+                //$("#performance_ingenieria_totaladmin").text(Administrativas + " hrs");
+                //$("#performance_ingenieria_th").text(Porcentaje_Total_Horas + " %");
+                //$("#performance_ingenieria_totaladhr").text(Total_Horas + " hrs");
+                $("#progress_bar_performance_ing_ind").css("width", Math.round(Cumplimiento_Compromisos > 100 ? 100 : Cumplimiento_Compromisos) + "%");
+                $("#progress_performance_ing_ind").text(Cumplimiento_Compromisos + " % porcentaje alcanzado");
             }
             spinner.stop();
             spinner2.stop();
