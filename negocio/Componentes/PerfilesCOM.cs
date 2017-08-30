@@ -71,11 +71,15 @@ namespace negocio.Componentes
             try
             {
                 Model context = new Model();
-                usuarios_perfiles recordatorio = context.usuarios_perfiles
-                                .First(s => s.usuario == usuario);
-                recordatorio.usuario_borrado =usuario;
-                recordatorio.fecha_borrado = DateTime.Now;
-                recordatorio.comentarios_borrado ="BORRADO POR ACTUALIZACION";
+                IEnumerable<usuarios_perfiles> usuarios_perfiles = context.usuarios_perfiles
+                               .Where(s => s.usuario == usuario); 
+                
+                foreach (usuarios_perfiles usuario_perfil in usuarios_perfiles)
+                {
+                    usuario_perfil.usuario_borrado =usuario;
+                    usuario_perfil.fecha_borrado = DateTime.Now;
+                    usuario_perfil.comentarios_borrado ="BORRADO POR ACTUALIZACION";
+                }
                 context.SaveChanges();
                 return "";
             }
