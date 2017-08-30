@@ -171,9 +171,7 @@
 
             function error(error) {
                 if (location.protocol != 'https:' && location.hostname != "localhost") {
-                    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-              
-               swal({
+                     swal({
                         title: "No sabemos donde estas :(",
                         text: "Para utilizar todas las herramientas del portal, debes permitir detectar tu ubicación.",
 
