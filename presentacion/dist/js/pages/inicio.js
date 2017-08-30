@@ -166,6 +166,10 @@ function IniciarWidgets() {
                     ajax_ejecutados.push("CargarPerformanceIngenieria");
                     CargarPerformanceIngenieria();
                 }
+                else if ((div == "dashboard_compromisos_ind") && jQuery.inArray("CargarDashboardCompromisosIndividual", ajax_ejecutados) == -1) {
+                    ajax_ejecutados.push("CargarDashboardCompromisosIndividual");
+                    CargarDashboardCompromisosIndividual();
+                }
             }
         },
         error: function (result, status, err) {
@@ -386,7 +390,7 @@ function CargarPerformanceIngenieria() {
 
 function CargarDashboardCompromisosIndividual() {
     //load de performance ingenieria
-    var target = document.getElementById('Performance_ing_ind');
+    var target = document.getElementById('dashboard_compromisos_ind');
     var spinner = new Spinner(opts).spin(target);
     var target2 = document.getElementById('desglo_performance_ing_ind');
     var spinner2 = new Spinner(opts2).spin(target2);
@@ -394,7 +398,7 @@ function CargarDashboardCompromisosIndividual() {
     var usuario = User();// $('#ContentPlaceHolder1_hdf_usuario').val();
     //guardamos esta ejecucion en un array
     var call = $.ajax({
-        url: 'reporte_dashboard_compromisos_kpi.aspx/GetPerformanceIngenieria_Individual',
+        url: 'reporte_dashboard_compromisos_kpi.aspx/GetDashboardCompromisos_Individual',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
@@ -422,8 +426,8 @@ function CargarDashboardCompromisosIndividual() {
                 //$("#performance_ingenieria_totaladmin").text(Administrativas + " hrs");
                 //$("#performance_ingenieria_th").text(Porcentaje_Total_Horas + " %");
                 //$("#performance_ingenieria_totaladhr").text(Total_Horas + " hrs");
-                $("#progress_bar_performance_ing_ind").css("width", Math.round(Cumplimiento_Compromisos > 100 ? 100 : Cumplimiento_Compromisos) + "%");
-                $("#progress_performance_ing_ind").text(Cumplimiento_Compromisos + " % porcentaje alcanzado");
+                $("#progress_bar_Compromisos_kpi_ind").css("width", Math.round(Cumplimiento_Compromisos > 100 ? 100 : Cumplimiento_Compromisos) + "%");
+                $("#progress_Compromisos_kpi_ind").text(Cumplimiento_Compromisos + " % porcentaje alcanzado");
             }
             spinner.stop();
             spinner2.stop();
