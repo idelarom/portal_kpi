@@ -103,11 +103,15 @@ namespace presentacion
                             SearchResult sResult = adSearch.FindOne();       //username is unique, so I want to find only one
                             string name = dirInfo.ToString() + username + ".png";
                             string imagen = "";
-                            if (sResult.Properties["thumbnailPhoto"].Count > 0)
+                            if (!File.Exists(name))
                             {
-                                byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
-                                imagen = GuardarImagenUsuario(array_img, username + ".png");
+                                if (sResult.Properties["thumbnailPhoto"].Count > 0)
+                                {
+                                    byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
+                                    imagen = GuardarImagenUsuario(array_img, username + ".png");
+                                }
                             }
+                                
                             string adress = sResult.Properties["mail"][0].ToString();
                             string nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
                                         funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' '));
