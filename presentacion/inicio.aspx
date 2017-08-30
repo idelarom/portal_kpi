@@ -102,8 +102,8 @@
         </div>
 
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="dashboard_compromisos_ind" style="display: none;">
-            <div class="info-box bg-blue">
-                <span class="info-box-icon"><i class="fa fa-user"></i></span>
+            <div class="info-box bg-yellow">
+                <span class="info-box-icon"><i class="fa fa-calendar-check-o"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Compromisos Trimestral</span>
