@@ -26,7 +26,7 @@ namespace negocio.Componentes
                     nombre = entidad.nombre,
                     alerta_inicio_sesion=true,
                     mostrar_recordatorios =true,
-                    sincronizacion_automatica = true,
+                    sincronizacion_automatica = false,
                     activo = true
                 };
                 Model context = new Model();

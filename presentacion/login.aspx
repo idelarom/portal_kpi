@@ -34,7 +34,7 @@
 
         .sweet-alert h2 {
             color: #575757;
-            font-size: 28px;
+            font-size: 23px;
             text-align: center;
             font-weight: 600;
             text-transform: none;

@@ -6,7 +6,32 @@
     <script type="text/javascript">
         $(document).ready(function () {
             Init();
+            $('#<%= txtbuscarempleado.ClientID%>').on('keypress', function (e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+            $('#<%= txtbuscarmenu.ClientID%>').on('keypress', function (e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+            $('#<%= txtbuscarwidget.ClientID%>').on('keypress', function (e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    return false;
+                } else {
+                    return true;
+                }
+            });
         });
+
         function Init() {
             $('.dvv').DataTable({
                 "paging": true,
