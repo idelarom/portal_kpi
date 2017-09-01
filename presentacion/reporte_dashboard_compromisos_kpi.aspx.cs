@@ -32,7 +32,18 @@ namespace presentacion
             {
                 hdfsessionid.Value = Guid.NewGuid().ToString();
                 ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
-                CargarDatosFiltros("");
+                CargarDatosFiltros(""); if (Request.QueryString["filter"] != null)
+                {
+                    lnkfiltros_Click(null, null);
+                    string num_empleado = Convert.ToString(Session["num_empleado"]);
+                    ListItem itwm = ddlempleado_a_consultar.Items.FindByValue(num_empleado);
+                    if (Items != null)
+                    {
+                        ddlempleado_a_consultar.SelectedValue = num_empleado;
+                        ddlempleado_a_consultar_SelectedIndexChanged(null, null);
+                        lnkagregartodos_Click(null, null);
+                    }
+                }
             }
         }
 
