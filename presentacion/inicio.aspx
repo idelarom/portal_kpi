@@ -294,7 +294,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table table-responsive">
+                    <div class="table table-responsive" style="width: 100%; max-height:250px; overflow: scroll;">
                         <table id="table_performance_ing" class="dvv table table-responsive table-condensed">
                             <thead>
                                 <tr style="font-size: 11px;">
