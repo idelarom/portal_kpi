@@ -142,7 +142,7 @@
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="desglo_dashboard_kpi_ind" style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Valor Ganado</h3>
+                    <h3 class="box-title">Valor ganado bono trimestral</h3>
                     <div class="box-tools pull-right">
                         <a id="btnayuda_desglo_dashboard_kpi_ind">
                             <i class="material-icons">info</i>
@@ -205,7 +205,8 @@
                 </div>
 
                 <div class="box-footer clearfix">
-                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_desgdashboard_kpi" onclick="CloseAjax('reporte_dashboard_bonos_kpi.aspx');">Ver Reporte
+                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_desgdashboard_kpi"
+                         onclick="CloseAjax('reporte_dashboard_bonos_kpi.aspx?filter=1');">Ver Reporte
                     </a>
                 </div>
             </div>
@@ -275,7 +276,8 @@
                 </div>
 
                 <div class="box-footer clearfix">
-                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_performance_ingenieria" onclick="CloseAjax('reporte_performance_ingenieria_netdiario.aspx');">Ver Reporte
+                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_performance_ingenieria" 
+                        onclick="CloseAjax('reporte_performance_ingenieria_netdiario.aspx?filter=1');">Ver Reporte
                     </a>
                 </div>
             </div>
@@ -312,7 +314,8 @@
                 </div>
 
                 <div class="box-footer clearfix">
-                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_performance_ing" onclick="CloseAjax('reporte_performance_ingenieria_netdiario.aspx');">Ver Reporte
+                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_performance_ing" 
+                        onclick="CloseAjax('reporte_performance_ingenieria_netdiario.aspx?filter=1');">Ver Reporte
                     </a>
                 </div>
                 <!-- /.box-footer -->
