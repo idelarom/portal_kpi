@@ -86,7 +86,7 @@
                 <span class="info-box-icon"><i class="fa fa-user"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Horas Ingeniero</span>
+                    <span class="info-box-text">Horas Ingeniero Mensual</span>
                     <span class="info-box-number">
                         <label id="horas_Semanal">0.00 hrs</label></span>
 

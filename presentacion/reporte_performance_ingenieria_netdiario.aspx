@@ -227,7 +227,7 @@
                                         <ItemTemplate>
                                             <%-- <asp:Literal ID="lbtUsr" runat="server" Text="<a href='#' onclick='Open();'></a>"></asp:Literal>--%>
                                             <asp:HyperLink runat="server"  ID="lnkUsuario" Text='<%#Eval("Ingeniero") %>' Style="" NavigateUrl="#" onclick='<%# "return ViewEmpleado("+@"""" + Eval("Ingeniero")+@""""+@",""" + Eval("Login")+@""""+@",""" + Eval("Login")+@""""+
-                                                        @",""" + Eval("Preventa")+@""""+@",""" + Eval("Proyectos_Internos_Facturables")+@""""+@",""" + Eval("Soporte")+@""""+@",""" + Eval("Administrativas")+@""""+");" %>'></asp:HyperLink>
+                                                        @",""" + Eval("Preventa")+@""""+@",""" + Eval("Proyectos")+@""""+@",""" + Eval("Soporte")+@""""+@",""" + Eval("Administrativas")+@""""+");" %>'></asp:HyperLink>
                                         </ItemTemplate>
                                         <HeaderStyle Width="230px"></HeaderStyle>
                                         <ItemStyle Wrap="False"></ItemStyle>
