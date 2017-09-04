@@ -1208,6 +1208,7 @@
     <Content Include="reporte_dashboard_bonos_kpi.aspx" />
     <Content Include="reporte_dashboard_compromisos_kpi.aspx" />
     <Content Include="reporte_performance_ingenieria_netdiario.aspx" />
+    <Content Include="reporte_performance_preventa.aspx" />
     <Content Include="Service.asmx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1353,6 +1354,13 @@
     </Compile>
     <Compile Include="reporte_performance_ingenieria_netdiario.aspx.designer.cs">
       <DependentUpon>reporte_performance_ingenieria_netdiario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="reporte_performance_preventa.aspx.cs">
+      <DependentUpon>reporte_performance_preventa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reporte_performance_preventa.aspx.designer.cs">
+      <DependentUpon>reporte_performance_preventa.aspx</DependentUpon>
     </Compile>
     <Compile Include="Service.asmx.cs">
       <DependentUpon>Service.asmx</DependentUpon>
