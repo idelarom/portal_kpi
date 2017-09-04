@@ -61,7 +61,7 @@
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body" style="background-color: #ecf0f5;">
-            <p class="login-box-msg" style="font-size: 23px">Iniciar Sesión</p>
+            <p class="login-box-msg" style="font-size: 23px">Iniciar sesión</p>
             <form id="form1" runat="server">
                 <telerik:RadScriptManager ID="RadScriptManager1" runat="server"></telerik:RadScriptManager>
 

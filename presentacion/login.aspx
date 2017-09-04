@@ -21,7 +21,7 @@
 
         .sweet-alert p {
             color: #797979;
-            font-size: 16px;
+            font-size: 14px;
             text-align: center;
             font-weight: 300;
             position: relative;
@@ -34,7 +34,7 @@
 
         .sweet-alert h2 {
             color: #575757;
-            font-size: 23px;
+            font-size: 20px;
             text-align: center;
             font-weight: 600;
             text-transform: none;
@@ -173,7 +173,7 @@
                 if (location.protocol != 'https:' && location.hostname != "localhost") {
                      swal({
                         title: "No sabemos donde estas :(",
-                        text: "Para utilizar todas las herramientas del portal, debes permitir detectar tu ubicación.",
+                        text: "Para utilizar todas las herramientas del portal, debes permitir detectar tu ubicación. Es posible que tu navegador no sea compatible con esta funcionalidad.",
 
                         imageUrl: "img/local.png",
                         showCancelButton: true,
@@ -216,17 +216,17 @@
                 <div class="col-xs-12" style="text-align: right;">
                     <asp:LinkButton ID="lnkiniciandosession" CssClass="btn btn-danger btn-block" runat="server" OnClientClick="return false;" Style="display: none;">
                           <i class="fa fa-refresh fa-spin fa-fw"></i>
-                                            <span class="sr-only">Loading...</span>&nbsp;Iniciando Sesión</asp:LinkButton>
-                    <asp:Button ID="btniniciar" runat="server" Text="Iniciar Sesión" CssClass="btn btn-danger"
+                                            <span class="sr-only">Loading...</span>&nbsp;Iniciando sesión</asp:LinkButton>
+                    <asp:Button ID="btniniciar" runat="server" Text="Iniciar sesión" CssClass="btn btn-danger"
                         OnClick="btniniciar_Click" OnClientClick="return ConfirmMinutaModal();" />
                 </div>
 
                 <div class="col-xs-12" runat="server" id="div_cambiodomiinio" visible="true" style="font-size:12px">
                     <br />
                     <p>
-                        ¿No puedes Iniciar Sesión?
+                        ¿No puedes ingresar?
                     <asp:LinkButton ID="lnkcambiardominio" runat="server" OnClick="lnkcambiardominio_Click">
-                        Puedes Cambiar el Dominio de Inicio
+                        Puedes cambiar el dominio de inicio
                     </asp:LinkButton>
                     </p>
                 </div>
