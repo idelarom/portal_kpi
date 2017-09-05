@@ -191,7 +191,14 @@ namespace presentacion
                     "        series: [{" +
                     "            name: 'Compromisos'," +
                     "            colorByPoint: true," +
-                    "            data: [" + data + "]" +
+                    "            data: [" + data + "]," +
+                    "            point:{" +
+                    "               events: {"+
+                    "                   click: function () {"+
+                    "                       return ViewDetailsCumpCompro('',this.name,1);" +
+                    "                       }"+
+                    "                     }"+
+                    "            }" +
                     "        }]" +
                     "    });";
                     sb.Append(script);

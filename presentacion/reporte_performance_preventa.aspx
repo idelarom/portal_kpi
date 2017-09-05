@@ -73,8 +73,8 @@
              return true;
           }
 
-         function ViewDetailsCumpCompro(ingeniero, num, tipo)
-        {
+         function ViewDetailsCumpCompro(ingeniero, tipo, num)
+         {
             if(num > 0){
                  var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
                 var tipo_ = document.getElementById('<%= hdftipocompromisos.ClientID %>');
@@ -124,7 +124,7 @@
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="table-responsive">
-                                                <table class="dvv table no-margin table-condensed">
+                                                <table class="dvv table table-responsive table-bordered table-condensed">
                                                     <thead>
                                                         <tr style="font-size: 11px;">
                                                             <th style="min-width: 180px; text-align: left;" scope="col">Ingeniero</th>
@@ -139,14 +139,40 @@
                                                     <tbody>
                                                         <asp:Repeater ID="repeater_cumpli_compromisos" runat="server">
                                                             <ItemTemplate>
-                                                                <tr style="font-size: 11px">
+                                                                <tr style="font-size: 12px">
                                                                     <td><%# Eval("Ingeniero") %></td>
-                                                                    <td><%# Eval("Terminados a Tiempo") %></td>
-                                                                    <td><%# Eval("Terminados Fuera de Tiempo") %></td>
-                                                                    <td><%# Eval("No Terminados Dentro de Tiempo") %></td>
-                                                                    <td><%# Eval("No Terminados Fuera de Tiempo") %></td>
-                                                                    <td><%# Eval("Total de compromisos") %></td>
-                                                                    <td><%# Eval("Porcentaje de eficiencia") %></td>
+                                                                    <td style="text-align:center;">
+                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
+                                                                            <%# Eval("Terminados a Tiempo") %>
+                                                                        </a>
+
+                                                                    </td>  
+                                                                    <td style="text-align:center;">
+                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
+                                                                            <%# Eval("Terminados Fuera de Tiempo") %>
+                                                                        </a>
+
+                                                                    </td>
+                                                                    <td style="text-align:center;">
+                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
+                                                                            <%# Eval("No Terminados Dentro de Tiempo") %>
+                                                                        </a>
+
+                                                                    </td>
+                                                                    <td style="text-align:center;">
+                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
+                                                                            <%# Eval("No Terminados Fuera de Tiempo") %>
+                                                                        </a>
+
+                                                                    </td>
+                                                                    <td style="text-align:center;">
+                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+");" %>'>
+                                                                            <%# Eval("Total de compromisos") %>
+                                                                        </a>
+
+                                                                    </td>
+                                                                   
+                                                                    <td style="text-align:center;"><%# Eval("Porcentaje de eficiencia") %></td>
                                                                 </tr>
                                                             </ItemTemplate>
                                                         </asp:Repeater>
@@ -279,108 +305,100 @@
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName ="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName="Click" />
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Filtros</h4>
+                            <h4 class="modal-title">Compromisos</h4>
                         </div>
                         <div class="modal-body" id="div1" runat="server">
                             <div class="row">
                                 <div class="col-lg-12 col-xs-12">
-                                    <div class="table-responsive">
-                                                <table class="dvv table no-margin table-condensed">
-                                                    <thead>
-                                                        <tr style="font-size: 11px;">
-                                                            <td>Num Oport</td>
-                                                            <td>Cliente</td>
-                                                            <td>Creado Por</td>
-                                                            <td>Desc Comp</td>
-                                                            <td>Tipo Comp</td>
-                                                            <td>Tecnologia</td>
-                                                            <td>Clasificador</td>
-                                                            <td>Asignado A</td>
-                                                            <td>Estatus</td>
-                                                            <td>Horas</td>
-                                                            <td>Prioridad</td>
-                                                            <td>F Creacion</td>
-                                                            <td>F Inicio</td>
-                                                            <td>F Asignado</td>
-                                                            <td>F Comp Ini</td>
-                                                            <td>F Comp Final</td>
-                                                            <td>F Terminado</td>
-                                                            <td>En Asignar</td>
-                                                            <td>Diferencia</td>
-                                                            <td>Iniciar</td>
-                                                            <td>Semana</td>
-                                                            <td>Usuario Cierra</td>
-                                                            <td>Fecha Cierre</td>
-                                                            <td>Calificacion</td>
-                                                            <td>Re Apertura</td>
-                                                            <td>Re Open</td>
-                                                            <td>cumple</td>
-                                                            <td>Dif Dias Venta</td>
-                                                            <td>Dif Dias Practica</td>
-                                                            <td>Dif Dias Asignacion</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <asp:Repeater ID="repeater_cumpli_compromisos_detalles" runat="server">
-                                                            <ItemTemplate>
-                                                                <tr style="font-size: 11px">
-                                                                    <td><%# Eval("NumOport") %></td>
-                                                                    <td><%# Eval("Cliente") %></td>
-                                                                    <td><%# Eval("NomCreadoPor") %></td>
-                                                                    <td><%# Eval("DescComp") %></td>
-                                                                    <td><%# Eval("TipoComp") %></td>
-                                                                    <td><%# Eval("DescTecnologia") %></td>
-                                                                    <td><%# Eval("DescClasificador") %></td>
-                                                                    <td><%# Eval("NomAsignadoA") %></td>
-                                                                    <td><%# Eval("DescEstatus") %></td>
-                                                                    <td><%# Eval("Horas") %></td>
-                                                                    <td><%# Eval("DescPrioridad") %></td>
-                                                                    <td><%# Eval("FechaCreacion") %></td>
-                                                                    <td><%# Eval("FechaInicio") %></td>
-                                                                    <td><%# Eval("FechaAsignado") %></td>
-                                                                    <td><%# Eval("FechaCompIni") %></td>
-                                                                    <td><%# Eval("FechaCompFinal") %></td>
-                                                                    <td><%# Eval("FechaTerminado") %></td>
-                                                                    <td><%# Eval("EnAsignar") %></td>
-                                                                    <td><%# Eval("Diferencia") %></td>
-                                                                    <td><%# Eval("Iniciar") %></td>
-                                                                    <td><%# Eval("Semana") %></td>
-                                                                    <td><%# Eval("UsuarioCierra") %></td>
-                                                                    <td><%# Eval("FechaCierre") %></td>
-                                                                    <td><%# Eval("Calificacion") %></td>
-                                                                    <td><%# Eval("ReApertura") %></td>
-                                                                    <td><%# Eval("ReOpen") %></td>
-                                                                    <td><%# Eval("cumple") %></td>
-                                                                    <td><%# Eval("DifDiasVenta") %></td>
-                                                                    <td><%# Eval("DifDiasPractica") %></td>
-                                                                    <td><%# Eval("DifDiasAsignacion") %></td>
+                                    <div class="table-responsive" style="max-height: 420px; overflow: scroll;">
+                                        <table class="table table-resposive table-bordered table-condensed">
+                                            <thead>
+                                                <tr style="font-size: 11px;">
+                                                    <td>Num Oport</td>
+                                                    <td>Cliente</td>
+                                                    <td>Creado Por</td>
+                                                    <td>Desc Comp</td>
+                                                    <td>Tipo Comp</td>
+                                                    <td>Tecnologia</td>
+                                                    <td>Clasificador</td>
+                                                    <td>Asignado A</td>
+                                                    <td>Estatus</td>
+                                                    <td>Horas</td>
+                                                    <td>Prioridad</td>
+                                                    <td>F Creacion</td>
+                                                    <td>F Inicio</td>
+                                                    <td>F Asignado</td>
+                                                    <td>F Comp Ini</td>
+                                                    <td>F Comp Final</td>
+                                                    <td>F Terminado</td>
+                                                    <td>En Asignar</td>
+                                                    <td>Diferencia</td>
+                                                    <td>Iniciar</td>
+                                                    <td>Semana</td>
+                                                    <td>Usuario Cierra</td>
+                                                    <td>Fecha Cierre</td>
+                                                    <td>Calificacion</td>
+                                                    <td>Re Apertura</td>
+                                                    <td>Re Open</td>
+                                                    <td>cumple</td>
+                                                    <td>Dif Dias Venta</td>
+                                                    <td>Dif Dias Practica</td>
+                                                    <td>Dif Dias Asignacion</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="repeater_cumpli_compromisos_detalles" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr style="font-size: 11px">
+                                                            <td><%# Eval("NumOport") %></td>
+                                                            <td><%# Eval("Cliente") %></td>
+                                                            <td><%# Eval("NomCreadoPor") %></td>
+                                                            <td><%# Eval("DescComp") %></td>
+                                                            <td><%# Eval("TipoComp") %></td>
+                                                            <td><%# Eval("DescTecnologia") %></td>
+                                                            <td><%# Eval("DescClasificador") %></td>
+                                                            <td><%# Eval("NomAsignadoA") %></td>
+                                                            <td><%# Eval("DescEstatus") %></td>
+                                                            <td><%# Eval("Horas") %></td>
+                                                            <td><%# Eval("DescPrioridad") %></td>
+                                                            <td><%# Eval("FechaCreacion") %></td>
+                                                            <td><%# Eval("FechaInicio") %></td>
+                                                            <td><%# Eval("FechaAsignado") %></td>
+                                                            <td><%# Eval("FechaCompIni") %></td>
+                                                            <td><%# Eval("FechaCompFinal") %></td>
+                                                            <td><%# Eval("FechaTerminado") %></td>
+                                                            <td><%# Eval("EnAsignar") %></td>
+                                                            <td><%# Eval("Diferencia") %></td>
+                                                            <td><%# Eval("Iniciar") %></td>
+                                                            <td><%# Eval("Semana") %></td>
+                                                            <td><%# Eval("UsuarioCierra") %></td>
+                                                            <td><%# Eval("FechaCierre") %></td>
+                                                            <td><%# Eval("Calificacion") %></td>
+                                                            <td><%# Eval("ReApertura") %></td>
+                                                            <td><%# Eval("ReOpen") %></td>
+                                                            <td><%# Eval("cumple") %></td>
+                                                            <td><%# Eval("DifDiasVenta") %></td>
+                                                            <td><%# Eval("DifDiasPractica") %></td>
+                                                            <td><%# Eval("DifDiasAsignacion") %></td>
 
-                                                                </tr>
-                                                            </ItemTemplate>
-                                                        </asp:Repeater>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                   </div>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer ">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                            <asp:LinkButton OnClientClick="return false;" ID="LinkButton6" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
-                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
-                                            <span class="sr-only">Loading...</span>&nbsp;Generando Reporte
-                            </asp:LinkButton>
-                            <asp:LinkButton ID="LinkButton7" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
-                                OnClientClick="return ConfirmwidgetProyectoModal();" runat="server">
-                                            <i class="fa fa-database" aria-hidden="true"></i>&nbsp;Generar Reporte
-                            </asp:LinkButton>
                         </div>
                     </div>
 
