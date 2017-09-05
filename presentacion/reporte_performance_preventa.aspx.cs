@@ -14,7 +14,17 @@ namespace presentacion
 {
     public partial class reporte_performance_preventa : System.Web.UI.Page
     {
-        
+        private void ModalShow(string modalname)
+        {
+            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                             "ModalShow('" + modalname + "');", true);
+        }
+
+        private void ModalClose(string modalname)
+        {
+            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                             "ModalCloseGlobal('" + modalname + "');", true);
+        }
 
         protected void CargarDatosFiltros(string filtro)
         {
@@ -118,63 +128,79 @@ namespace presentacion
         {
             if (!IsPostBack)
             {
-                GenerarGraficaCumplimientoCompromisos();
+                GenerarGraficaCumplimientoCompromisos(DateTime.Now.AddDays(-30), DateTime.Now, "","",1);
             }
         }
 
-        private void GenerarGraficaCumplimientoCompromisos()
+        private DataSet CumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta)
+        {
+            PerformancePreventaCOM preventa = new PerformancePreventaCOM();
+            return preventa.sp_Preventa_Ingenieria_reportecompromisos_detalle_test(fecha_ini,fecha_fin,ingeniero,tipo,tipo_consulta);
+
+        }
+        private void GenerarGraficaCumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta)
         {
             try
             {
-                string data = 
-                "               {name: 'Terminados a tiempo'," +
-                "                y: 56.33,color:'#00897b'" +
-                "            }, {" +
-                "                name: 'Terminados fuera de tiempo'," +
-                "                y: 24.03,color:'#ffc400 '" +
-                "            }, {" +
-                "                name: 'No terminados dentro de tiempo'," +
-                "                y: 10.38,color:'#1e88e5'" +
-                "            }, {" +
-                "                name: 'No terminados fuera de tiempo'," +
-                "                y: 4.77,color:'#e53935'" +
-                "            }";
-                StringBuilder sb = new StringBuilder();
-                sb.Append("<script type='text/javascript'>");
-                string script = 
-                "   Highcharts.chart('cumpli_compromisos', {" +
-                "        chart: {" +
-                "            plotBackgroundColor: null," +
-                "            plotBorderWidth: null," +
-                "            plotShadow: false," +
-                "            type: 'pie'" +
-                "        }," +
-                "        title: {" +
-                "            text: 'Cumplimiento compromisos'" +
-                "        }," +
-                "        tooltip: {" +
-                "            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'" +
-                "        }," +
-                "        plotOptions: {" +
-                "            pie: {" +
-                "                allowPointSelect: true," +
-                "                cursor: 'pointer'," +
-                "                dataLabels: {" +
-                "                    enabled: false" +
-                "                }," +
-                "                showInLegend: true" +
-                "            }" +
-                "        }," +
-                "        series: [{" +
-                "            name: 'Compromisos'," +
-                "            colorByPoint: true," +
-                "            data: ["+ data + "]" +
-                "        }]" +
-                "    });";
-                sb.Append(script);
-                sb.Append("</script>");
-                ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
-                load_cumpli_compromisos.Style["display"] = "none";
+                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta);
+                DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
+                if (dt_grid_cumpli_compromisos.Rows.Count > 0)
+                {
+                    repeater_cumpli_compromisos.DataSource = dt_grid_cumpli_compromisos;
+                    repeater_cumpli_compromisos.DataBind();
+                    DataRow row_graph_cumpli_compromisos = ds.Tables[1].Rows[0];
+                    string data =
+                  "               {name: 'Terminados a tiempo'," +
+                  "                y: "+row_graph_cumpli_compromisos["value_terminados_a_tiempo"].ToString()+",color:'#00897b'" +
+                  "            }, {" +
+                  "                name: 'Terminados fuera de tiempo'," +
+                  "                y: " + row_graph_cumpli_compromisos["value_terminados_fuera_de_tiempo"].ToString() + ",color:'#ffc400 '" +
+                  "            }, {" +
+                  "                name: 'No terminados dentro de tiempo'," +
+                  "                y: " + row_graph_cumpli_compromisos["value_no_terminados_dentro_de_tiempo"].ToString() + ",color:'#1e88e5'" +
+                  "            }, {" +
+                  "                name: 'No terminados fuera de tiempo'," +
+                  "                y:" + row_graph_cumpli_compromisos["value_no_terminados_fuera_de_tiempo"].ToString() + ",color:'#e53935'" +
+                  "            }";
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<script type='text/javascript'>");
+                    string script =
+                    "   Highcharts.chart('cumpli_compromisos', {" +
+                    "        chart: {" +
+                    "            plotBackgroundColor: null," +
+                    "            plotBorderWidth: null," +
+                    "            plotShadow: false," +
+                    "            type: 'pie'" +
+                    "        }," +
+                    "        title: {" +
+                    "            text: 'Cumplimiento compromisos'" +
+                    "        }," +
+                    "        tooltip: {" +
+                    "            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'" +
+                    "        }," +
+                    "        plotOptions: {" +
+                    "            pie: {" +
+                    "                allowPointSelect: true," +
+                    "                cursor: 'pointer'," +
+                    "                dataLabels: {" +
+                    "                    enabled: false" +
+                    "                }," +
+                    "                showInLegend: true" +
+                    "            }" +
+                    "        }," +
+                    "        series: [{" +
+                    "            name: 'Compromisos'," +
+                    "            colorByPoint: true," +
+                    "            data: [" + data + "]" +
+                    "        }]" +
+                    "    });";
+                    sb.Append(script);
+                    sb.Append("</script>");
+                    ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
+                    load_cumpli_compromisos.Style["display"] = "none";
+
+                }
+               
             }
             catch (Exception ex)
             {
@@ -182,13 +208,37 @@ namespace presentacion
             }
         }
 
+
+        protected void btnfiltrocumcompro_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string ingeniero = hdfingeniero.Value;
+                string tipo_compro = hdftipocompromisos.Value;
+                DataSet ds = CumplimientoCompromisos(DateTime.Now.AddDays(-30), DateTime.Now, ingeniero, tipo_compro, 2);
+                DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
+                if (dt_grid_cumpli_compromisos.Rows.Count > 0)
+                {
+                    repeater_cumpli_compromisos_detalles.DataSource = dt_grid_cumpli_compromisos;
+                    repeater_cumpli_compromisos_detalles.DataBind();
+                    ModalShow("#modal_cumpl_compromisos");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al generar modal detalles cumplimiento compromisos: " + ex.Message, this);
+            }
+        }
+
+
         protected void lnkfiltros_Click(object sender, EventArgs e)
         {
-            //if (div_reporte.Visible)
-            //{
-            //    CargarDatosFiltros("");
-            //}
-            //ModalShow("#myModal");
+            if (div_reporte.Visible)
+            {
+                CargarDatosFiltros("");
+            }
+            ModalShow("#myModal");
         }
 
         protected void lnkagregarseleccion_Click(object sender, EventArgs e)
@@ -215,5 +265,22 @@ namespace presentacion
         {
 
         }
+
+        protected void txtfilterempleado_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void lnksearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ddlempleado_a_consultar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+   
     }
 }
