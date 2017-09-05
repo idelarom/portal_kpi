@@ -148,25 +148,25 @@
                                                                 <tr style="font-size: 11px;height:10px;">
                                                                     <td><%# Eval("Ingeniero") %></td>
                                                                     <td style="text-align:center;">
-                                                                        <a class="btn btn-success btn-xs btn-flat" style="cursor:pointer;  min-width:70px;  margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
+                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor:pointer;  min-width:70px;  margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
                                                                             <%# Eval("Terminados a Tiempo") %>
                                                                         </a>
 
                                                                     </td>  
                                                                     <td style="text-align:center;">
-                                                                        <a class="btn btn-warning btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
                                                                             <%# Eval("Terminados Fuera de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align:center;">
-                                                                        <a class="btn btn-primary btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
                                                                             <%# Eval("No Terminados Dentro de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align:center;">
-                                                                        <a class="btn btn-danger btn-xs btn-flat" style="cursor:pointer;min-width:70px;    margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor:pointer;min-width:70px;    margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
                                                                             <%# Eval("No Terminados Fuera de Tiempo") %>
                                                                         </a>
 
