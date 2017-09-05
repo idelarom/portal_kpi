@@ -239,6 +239,8 @@ namespace presentacion
                 if (!ver_Todos_los_empleados)
                 {
                     CargarListadoEmpleado(num_empleado, false);
+                    ddlempleado_a_consultar.SelectedValue = num_empleado.ToString();
+                    lnkagregartodos_Click(null, null);
                 }
 
                 ddlempleado_a_consultar.Enabled = ver_Todos_los_empleados;

@@ -4,7 +4,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
     <script type="text/javascript">
         $(document).ready(function () {
             Init();
@@ -98,7 +97,7 @@
                             <i class="fa fa-filter" aria-hidden="true"></i>&nbsp;Filtros
             </asp:LinkButton>
         </div>
-        <div class="col-lg-12" id="div_reporte" runat="server">
+        <div class="col-lg-12" id="div_reporte" runat="server" visible="false">
             <div class="box box-danger box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Compromisos</h3>
@@ -120,6 +119,13 @@
                                         <div class="col-lg-12">
                                             <div id="cumpli_compromisos" style="min-width: 200px; height: 400px; max-width: 600px; margin: 0 auto">
                                             </div>
+                                           
+                                            <ul class="chart-legend clearfix" style="text-align:center;">
+                                                <li><i class="fa fa-circle-o text-green"></i>&nbsp;Terminados a tiempo:&nbsp;<strong><asp:Label ID="lbltt" runat="server" Text="0"></asp:Label></strong></li>
+                                                <li><i class="fa fa-circle-o text-yellow"></i>&nbsp;Terminados fuera de tiempo:&nbsp;<strong><asp:Label ID="lbltft" runat="server" Text="0"></asp:Label></strong></li>
+                                                <li><i class="fa fa-circle-o text-blue"></i>&nbsp;No terminados dentro de tiempo:&nbsp;<strong><asp:Label ID="lblndt" runat="server" Text="0"></asp:Label></strong></li>
+                                                <li><i class="fa fa-circle-o text-red"></i>&nbsp;No terminados fuera de tiempo:&nbsp;<strong><asp:Label ID="lblnft" runat="server" Text="0"></asp:Label></strong></li>
+                                            </ul>
 
                                         </div>
                                         <div class="col-lg-12">
@@ -127,46 +133,46 @@
                                                 <table class="dvv table table-responsive table-bordered table-condensed">
                                                     <thead>
                                                         <tr style="font-size: 11px;">
-                                                            <th style="min-width: 180px; text-align: left;" scope="col">Ingeniero</th>
-                                                            <th style="min-width: 80px; text-align: center;" scope="col">Terminados a tiempo</th>
-                                                            <th style="min-width: 80px; text-align: center;" scope="col">Terminados fuera de tiempo</th>
-                                                            <th style="min-width: 80px; text-align: center;" scope="col">No terminados dentro de tiempo</th>
-                                                            <th style="min-width: 80px; text-align: center;" scope="col">No terminados fuera de tiempo</th>
-                                                            <th style="min-width: 80px; text-align: center;" scope="col">Total de compromisos</th>
+                                                            <th style="min-width: 200px; text-align: left;" scope="col">Ingeniero</th>
+                                                            <th style="min-width: 100px; text-align: center;" scope="col">Terminados a tiempo</th>
+                                                            <th style="min-width: 100px; text-align: center;" scope="col">Terminados fuera de tiempo</th>
+                                                            <th style="min-width: 100px; text-align: center;" scope="col">No terminados dentro de tiempo</th>
+                                                            <th style="min-width: 100px; text-align: center;" scope="col">No terminados fuera de tiempo</th>
+                                                            <th style="min-width: 100px; text-align: center;" scope="col">Total de compromisos</th>
                                                             <th style="min-width: 60px; text-align: center;" scope="col">% Eficiencia</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <asp:Repeater ID="repeater_cumpli_compromisos" runat="server">
                                                             <ItemTemplate>
-                                                                <tr style="font-size: 12px">
+                                                                <tr style="font-size: 11px;height:10px;">
                                                                     <td><%# Eval("Ingeniero") %></td>
                                                                     <td style="text-align:center;">
-                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
+                                                                        <a class="btn btn-success btn-xs btn-flat" style="cursor:pointer;  min-width:70px;  margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
                                                                             <%# Eval("Terminados a Tiempo") %>
                                                                         </a>
 
                                                                     </td>  
                                                                     <td style="text-align:center;">
-                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-warning btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
                                                                             <%# Eval("Terminados Fuera de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align:center;">
-                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-primary btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
                                                                             <%# Eval("No Terminados Dentro de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align:center;">
-                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-danger btn-xs btn-flat" style="cursor:pointer;min-width:70px;    margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
                                                                             <%# Eval("No Terminados Fuera de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align:center;">
-                                                                        <a style="cursor:pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+");" %>'>
+                                                                        <a  class="btn btn-default btn-xs btn-flat" style="cursor:pointer;min-width:70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+");" %>'>
                                                                             <%# Eval("Total de compromisos") %>
                                                                         </a>
 
@@ -320,37 +326,37 @@
                                     <div class="table-responsive" style="max-height: 420px; overflow: scroll;">
                                         <table class="table table-resposive table-bordered table-condensed">
                                             <thead>
-                                                <tr style="font-size: 11px;">
-                                                    <td>Num Oport</td>
-                                                    <td>Cliente</td>
-                                                    <td>Creado Por</td>
-                                                    <td>Desc Comp</td>
-                                                    <td>Tipo Comp</td>
-                                                    <td>Tecnologia</td>
-                                                    <td>Clasificador</td>
-                                                    <td>Asignado A</td>
-                                                    <td>Estatus</td>
-                                                    <td>Horas</td>
-                                                    <td>Prioridad</td>
-                                                    <td>F Creacion</td>
-                                                    <td>F Inicio</td>
-                                                    <td>F Asignado</td>
-                                                    <td>F Comp Ini</td>
-                                                    <td>F Comp Final</td>
-                                                    <td>F Terminado</td>
-                                                    <td>En Asignar</td>
-                                                    <td>Diferencia</td>
-                                                    <td>Iniciar</td>
-                                                    <td>Semana</td>
-                                                    <td>Usuario Cierra</td>
-                                                    <td>Fecha Cierre</td>
-                                                    <td>Calificacion</td>
-                                                    <td>Re Apertura</td>
-                                                    <td>Re Open</td>
-                                                    <td>cumple</td>
-                                                    <td>Dif Dias Venta</td>
-                                                    <td>Dif Dias Practica</td>
-                                                    <td>Dif Dias Asignacion</td>
+                                                <tr style="font-size: 11px; color:white; background-color:#C42C2C">
+                                                    <td style="min-width: 80px;">Num Oport</td>
+                                                    <td style="min-width: 240px;">Cliente</td>
+                                                    <td style="min-width: 220px;">Creado Por</td>
+                                                    <td style="min-width: 400px;">Desc Comp</td>
+                                                    <td style="min-width: 140px;">Tipo Comp</td>
+                                                    <td style="min-width: 220px;">Tecnologia</td>
+                                                    <td style="min-width: 140px;">Clasificador</td>
+                                                    <td style="min-width: 220px;">Asignado A</td>
+                                                    <td style="min-width: 140px;">Estatus</td>
+                                                    <td style="min-width: 60px;">Horas</td>
+                                                    <td style="min-width: 120px;">Prioridad</td>
+                                                    <td style="min-width: 140px;">F Creacion</td>
+                                                    <td style="min-width: 140px;">F Inicio</td>
+                                                    <td style="min-width: 140px;">F Asignado</td>
+                                                    <td style="min-width: 140px;">F Comp Ini</td>
+                                                    <td style="min-width: 140px;">F Comp Final</td>
+                                                    <td style="min-width: 140px;">F Terminado</td>
+                                                    <td style="min-width: 80px;">En Asignar</td>
+                                                    <td style="min-width: 80px;">Diferencia</td>
+                                                    <td style="min-width: 140px;">Iniciar</td>
+                                                    <td style="min-width: 100px;">Semana</td>
+                                                    <td style="min-width: 140px;">Usuario Cierra</td>
+                                                    <td style="min-width: 140px;">Fecha Cierre</td>
+                                                    <td style="min-width: 140px;">Calificacion</td>
+                                                    <td style="min-width: 80px;">Re Apertura</td>
+                                                    <td style="min-width: 80px;">Re Open</td>
+                                                    <td style="min-width: 200px;">Cumple</td>
+                                                    <td style="min-width: 100px;">Dif Dias Venta</td>
+                                                    <td style="min-width: 100px;">Dif Dias Practica</td>
+                                                    <td style="min-width: 100px;">Dif Dias Asignacion</td>
                                                 </tr>
                                             </thead>
                                             <tbody>

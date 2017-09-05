@@ -25,16 +25,30 @@ namespace presentacion
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
                              "ModalCloseGlobal('" + modalname + "');", true);
         }
-
+        private void AgregarItemSleccionado(IList<RadTreeNode> collection)
+        {
+            try
+            {
+                lblcountselecteds.Text = collection.Count.ToString();
+                foreach (RadTreeNode node in collection)
+                {
+                    RadListBoxItem item = new RadListBoxItem(node.Text, node.Value);
+                    rdtselecteds.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al agregar seleccion de empleados: " + ex.Message, this);
+            }
+        }
         protected void CargarDatosFiltros(string filtro)
         {
             try
             {
                 rdpfechainicial.SelectedDate = DateTime.Today;
                 rdpfechafinal.SelectedDate = DateTime.Today;
-                int NumJefe = Convert.ToInt32(Session["NumJefe"]);
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
-                Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
+                Boolean ver_Todos_los_empleados =  Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool no_activos = cbxnoactivo.Checked;
                 DataTable dt_empleados = new DataTable();
@@ -62,6 +76,8 @@ namespace presentacion
                 {
                     ddlempleado_a_consultar.Enabled = false;
                     CargarListadoEmpleado(num_empleado, false);
+                    ddlempleado_a_consultar.SelectedValue = num_empleado.ToString();
+                    lnkagregartodos_Click(null,null);
                 }
 
             }
@@ -76,7 +92,7 @@ namespace presentacion
                 nkcargandofiltros.Style["display"] = "none";
             }
         }
-
+ 
         protected void CargarListadoEmpleado(int num_jefe, Boolean ver_Todos_los_empleados)
         {
             try
@@ -124,13 +140,6 @@ namespace presentacion
             return cadena;
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                GenerarGraficaCumplimientoCompromisos(DateTime.Now.AddDays(-30), DateTime.Now, "","",1);
-            }
-        }
 
         private DataSet CumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta)
         {
@@ -149,6 +158,10 @@ namespace presentacion
                     repeater_cumpli_compromisos.DataSource = dt_grid_cumpli_compromisos;
                     repeater_cumpli_compromisos.DataBind();
                     DataRow row_graph_cumpli_compromisos = ds.Tables[1].Rows[0];
+                    lbltt.Text = row_graph_cumpli_compromisos["terminados_a_tiempo"].ToString();
+                    lbltft.Text = row_graph_cumpli_compromisos["terminados_fuera_de_tiempo"].ToString();
+                    lblndt.Text = row_graph_cumpli_compromisos["no_terminados_dentro_de_tiempo"].ToString();
+                    lblnft.Text = row_graph_cumpli_compromisos["no_terminados_fuera_de_tiempo"].ToString();
                     string data =
                   "               {name: 'Terminados a tiempo'," +
                   "                y: "+row_graph_cumpli_compromisos["value_terminados_a_tiempo"].ToString()+",color:'#00897b'" +
@@ -185,7 +198,7 @@ namespace presentacion
                     "                dataLabels: {" +
                     "                    enabled: false" +
                     "                }," +
-                    "                showInLegend: true" +
+                    "                showInLegend: false" +
                     "            }" +
                     "        }," +
                     "        series: [{" +
@@ -216,13 +229,23 @@ namespace presentacion
         }
 
 
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                CargarDatosFiltros("");
+            }
+        }
+
         protected void btnfiltrocumcompro_Click(object sender, EventArgs e)
         {
             try
             {
                 string ingeniero = hdfingeniero.Value;
                 string tipo_compro = hdftipocompromisos.Value;
-                DataSet ds = CumplimientoCompromisos(DateTime.Now.AddDays(-30), DateTime.Now, ingeniero, tipo_compro, 2);
+                DateTime fi = rdpfechainicial.SelectedDate.Value == null ? DateTime.Now.AddDays(-30) : Convert.ToDateTime(rdpfechainicial.SelectedDate);
+                DateTime ff = rdpfechafinal.SelectedDate.Value == null ? DateTime.Now: Convert.ToDateTime(rdpfechafinal.SelectedDate);
+                DataSet ds = CumplimientoCompromisos(fi,ff, ingeniero, tipo_compro, 2);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
@@ -247,47 +270,112 @@ namespace presentacion
             }
             ModalShow("#myModal");
         }
-
+   
         protected void lnkagregarseleccion_Click(object sender, EventArgs e)
         {
-
+            IList<RadTreeNode> collection = rtvListEmpleado.SelectedNodes;
+            IList<RadTreeNode> collection_validate = rtvListEmpleado.SelectedNodes;
+            foreach (RadTreeNode node in collection_validate)
+            {
+                IList<RadTreeNode> child_node = node.GetAllNodes();
+                if (child_node.Count > 0)
+                {
+                    foreach (RadTreeNode node_c in child_node)
+                    {
+                        collection.Add(node_c);
+                    }
+                }
+            }
+            AgregarItemSleccionado(collection);
         }
 
         protected void lnkagregartodos_Click(object sender, EventArgs e)
         {
+            IList<RadTreeNode> collection = rtvListEmpleado.GetAllNodes();
+            AgregarItemSleccionado(collection);
 
         }
 
         protected void lnklimpiar_Click(object sender, EventArgs e)
         {
-
+            rdtselecteds.Items.Clear();
+            lblcountselecteds.Text = "0";
         }
 
         protected void lnkeliminarselecion_Click(object sender, EventArgs e)
         {
+            IList<RadListBoxItem> collection = rdtselecteds.SelectedItems;
+            foreach (RadListBoxItem node in collection)
+            {
+                RadListBoxItem item = rdtselecteds.FindItemByValue(node.Value);
+                item.Remove();
+            }
 
+            lblcountselecteds.Text = rdtselecteds.Items.Count.ToString();
         }
 
-        protected void lnkguardar_Click(object sender, EventArgs e)
-        {
-
-        }
+  
 
         protected void txtfilterempleado_TextChanged(object sender, EventArgs e)
         {
-
+            lnksearch_Click(null, null);
         }
 
         protected void lnksearch_Click(object sender, EventArgs e)
         {
+            string filter = txtfilterempleado.Text;
+            try
+            {
+                if (filter.Length == 0 || filter.Length > 3)
+                {
+                    CargarDatosFiltros(filter);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al filtrar empleados: " + ex.Message, this);
+            }
+            finally
+            {
+                imgloadempleado.Style["display"] = "none";
+                lblbemp.Style["display"] = "none";
+            }
 
         }
 
         protected void ddlempleado_a_consultar_SelectedIndexChanged(object sender, EventArgs e)
         {
+            try
+            {
+                int num_jefe = Convert.ToInt32(ddlempleado_a_consultar.SelectedValue);
+                CargarListadoEmpleado(num_jefe, false);
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar lista de empleados: " + ex.Message, this);
+            }
 
         }
 
-   
+        protected void lnkguardar_Click(object sender, EventArgs e)
+        {
+            string cadena = CadenaUsuariosFiltro();
+            if (!rdpfechainicial.SelectedDate.HasValue || !rdpfechafinal.SelectedDate.HasValue)
+            {
+                Toast.Error("Seleccione un rango de fechas para generar el reporte.", this);
+            }
+            else if (cadena == "")
+            {
+
+                Toast.Error("Seleccione un empleado para generar el reporte.", this);
+            }
+            else
+            {
+                DateTime fi = rdpfechainicial.SelectedDate.Value == null ? DateTime.Now.AddDays(-30) : Convert.ToDateTime(rdpfechainicial.SelectedDate);
+                DateTime ff = rdpfechafinal.SelectedDate.Value == null ? DateTime.Now : Convert.ToDateTime(rdpfechafinal.SelectedDate);
+                GenerarGraficaCumplimientoCompromisos(fi, ff, "", "", 1);
+                div_reporte.Visible = true;
+            }
+        }
     }
 }

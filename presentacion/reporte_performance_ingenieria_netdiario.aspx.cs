@@ -84,6 +84,8 @@ namespace presentacion
                 {
                     ddlempleado_a_consultar.Enabled = false;
                     CargarListadoEmpleado(num_empleado, false);
+                    ddlempleado_a_consultar.SelectedValue = num_empleado.ToString();
+                    lnkagregartodos_Click(null, null);
                 }
                
             }
