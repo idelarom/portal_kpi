@@ -111,6 +111,9 @@ namespace datos
                     case 6:
                         cadena = System.Configuration.ConfigurationManager.ConnectionStrings["PMTracker"].ToString();
                         break;
+                    case 7:
+                        cadena = System.Configuration.ConfigurationManager.ConnectionStrings["Bonos"].ToString();
+                        break;
                 }
             }
             catch (Exception ex)

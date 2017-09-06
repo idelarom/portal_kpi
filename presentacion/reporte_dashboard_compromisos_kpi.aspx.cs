@@ -66,19 +66,7 @@ namespace presentacion
         {
             try
             {
-                List<DateTime> list_dates = funciones.RangoFechasTrimestre(DateTime.Now);
-                txtfechainicio.Text = list_dates[0].ToString("yyyy-MM-dd");
-                txtfechafinal.Text = list_dates[1].ToString("yyyy-MM-dd");
-                if (filtro == "")
-                {
-                    ddltrimestres.DataValueField = "fecha";
-                    ddltrimestres.DataTextField = "trimestre";
-                    DataTable dt = funciones.tabla_trimestres();
-                    ddltrimestres.DataSource = dt;
-                    ddltrimestres.DataBind();
-                    ddltrimestres.Items.Insert(0, new ListItem("--Seleccione un trimestre", "0"));
-                    ddltrimestres.SelectedValue = list_dates[0].ToString();
-                }
+
                 int NumJefe = Convert.ToInt32(Session["NumJefe"]);
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
                 Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);

@@ -11,6 +11,22 @@ namespace negocio.Componentes
 {
     public class UsuariosCOM
     {
+        public DataSet sp_prueba_files()
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_prueba_files", listparameters, false, 7);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
         public DataSet sp_usuario_widgets(string usuario)
         {
             DataSet ds = new DataSet();

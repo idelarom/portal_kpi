@@ -75,6 +75,14 @@
             if (num > 0) {
                 var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
                 var tipo_ = document.getElementById('<%= hdftipocompromisos.ClientID %>');
+                var tiempo_ = document.getElementById('<%= hdftiempo.ClientID %>');
+                var tipo_tiempo_ = document.getElementById('<%= hdftipo_tiempo.ClientID %>');
+                var año_ = document.getElementById('<%= hdfaño.ClientID %>');
+                var mes_ = document.getElementById('<%= hdfmes.ClientID %>');
+                año_.value = 0;
+                mes_.value = 0;
+                tiempo_.value = 0;
+                tipo_tiempo_.value = 0;
                 nombre.value = ingeniero;
                 tipo_.value = tipo;
                 document.getElementById('<%= btnfiltrocumcompro.ClientID%>').click();
@@ -82,8 +90,16 @@
             return true;
         }
         function ViewDetailsTiemposCompromisos(tiempo, tipo_tiempo) {
+            var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
+            var tipo_ = document.getElementById('<%= hdftipocompromisos.ClientID %>');
             var tiempo_ = document.getElementById('<%= hdftiempo.ClientID %>');
             var tipo_tiempo_ = document.getElementById('<%= hdftipo_tiempo.ClientID %>');
+            var año_ = document.getElementById('<%= hdfaño.ClientID %>');
+            var mes_ = document.getElementById('<%= hdfmes.ClientID %>');
+            año_.value = 0;
+            mes_.value = 0;
+            tipo_.value = "";
+            nombre.value = "";
             if (tipo_tiempo.toLowerCase() == "asignación ingenieria") {
                 tipo_tiempo_.value = 1;
             } else if (tipo_tiempo.toLowerCase() == "ventas") {
@@ -101,6 +117,48 @@
                 tiempo_.value = 4;
             } else if (tiempo.toLowerCase() == "mismo dia") {
                 tiempo_.value = 5;
+            }
+            document.getElementById('<%= btnfiltrocumcompro.ClientID%>').click();
+            return true;
+        }
+        
+        function ViewDetailsBacklogCompromisos(año, mes) {
+            var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
+            var tipo_ = document.getElementById('<%= hdftipocompromisos.ClientID %>');
+            var tiempo_ = document.getElementById('<%= hdftiempo.ClientID %>');
+            var tipo_tiempo_ = document.getElementById('<%= hdftipo_tiempo.ClientID %>');
+            var año_ = document.getElementById('<%= hdfaño.ClientID %>');
+            var mes_ = document.getElementById('<%= hdfmes.ClientID %>');
+            año_.value = año;
+            mes = mes.toLowerCase();
+            tipo_.value = "";
+            nombre.value = "";
+            tiempo_.value = 0;
+            tipo_tiempo_.value = 0;
+            if (mes == "enero") {
+                mes_.value = 1;
+            } else if (mes == "febrero") {
+                mes_.value = 2;
+            } else if (mes == "marzo") {
+                mes_.value = 3;
+            } else if (mes == "abril") {
+                mes_.value = 4;
+            } else if (mes == "mayo") {
+                mes_.value = 5;
+            } else if (mes == "junio") {
+                mes_.value = 6;
+            } else if (mes == "julio") {
+                mes_.value = 7;
+            } else if (mes == "agosto") {
+                mes_.value = 8;
+            } else if (mes == "septiembre") {
+                mes_.value = 9;
+            } else if (mes == "octubre") {
+                mes_.value = 10;
+            } else if (mes == "noviembre") {
+                mes_.value = 11;
+            } else if (mes == "diciembre") {
+                mes_.value = 12;
             }
             document.getElementById('<%= btnfiltrocumcompro.ClientID%>').click();
             return true;
@@ -499,6 +557,29 @@
                                 </div>
                             </div>
                         </div>
+                         <div class="col-lg-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Backlog compromisos</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                                            <asp:GridView ID="grid_backlog_compromisos_anterior" Style="display: none" runat="server"></asp:GridView>
+                                            <div id="backlog_compromisos_anterior" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                                            <asp:GridView ID="grid_backlog_compromisos_actual" Style="display: none" runat="server"></asp:GridView>
+                                            <div id="backlog_compromisos_actual" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                             </div>
                     </div>
                 </div>
             </div>
@@ -722,4 +803,6 @@
     <asp:HiddenField ID="hdftipocompromisos" runat="server" />
     <asp:HiddenField ID="hdftiempo" runat="server" />
     <asp:HiddenField ID="hdftipo_tiempo" runat="server" />
+    <asp:HiddenField ID="hdfaño" runat="server" />
+    <asp:HiddenField ID="hdfmes" runat="server" />
 </asp:Content>

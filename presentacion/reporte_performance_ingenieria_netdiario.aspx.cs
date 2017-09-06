@@ -31,6 +31,8 @@ namespace presentacion
         {
             if (!IsPostBack)
             {
+                rdpfechainicial.SelectedDate = DateTime.Today;
+                rdpfechafinal.SelectedDate = DateTime.Today;
                 hdfsessionid.Value = Guid.NewGuid().ToString();
                 ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
                 CargarDatosFiltros(""); if (Request.QueryString["filter"] != null)
@@ -52,8 +54,6 @@ namespace presentacion
         {
             try
             {
-                rdpfechainicial.SelectedDate = DateTime.Today;
-                rdpfechafinal.SelectedDate = DateTime.Today;
                 int NumJefe = Convert.ToInt32(Session["NumJefe"]);
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
                 Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
