@@ -215,7 +215,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
                                         <asp:DropDownList Visible="true" ID="ddltrimestres" CssClass="form-control"
                                             AutoPostBack="true" OnSelectedIndexChanged="ddltrimestres_SelectedIndexChanged" runat="server">
@@ -223,7 +223,7 @@
                                         <asp:TextBox ID="txtfechainicio" Visible="false" AutoPostBack="true"
                                             OnTextChanged="txtfechainicio_TextChanged" ReadOnly="false" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="font-size: 10px;">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="font-size: 10px;">
                                         <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
                                         <asp:TextBox ID="txtfechafinal" ReadOnly="true" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                                     </div>

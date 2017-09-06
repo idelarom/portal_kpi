@@ -3,6 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -44,20 +45,18 @@
         }
         
         function ConfirmwidgetProyectoModal() {
-            
-              $("#<%= div_modalbodyfiltros.ClientID%>").hide();
-              $("#<%= lnkcargando.ClientID%>").show();
-              $("#<%= lnkguardar.ClientID%>").hide();
-              return true;
-          }
-          function Carganodfiltros() {            
-              $("#<%= nkcargandofiltros.ClientID%>").show();
-              $("#<%= lnkfiltros.ClientID%>").hide();
-              return true;
-          }
+            $("#<%= div_modalbodyfiltros.ClientID%>").hide();
+            $("#<%= lnkcargando.ClientID%>").show();
+            $("#<%= lnkguardar.ClientID%>").hide();
+            return true;
+        }
+        function Carganodfiltros() {
+            $("#<%= nkcargandofiltros.ClientID%>").show();
+            $("#<%= lnkfiltros.ClientID%>").hide();
+            return true;
+        }
 
-         function ChanegdTextLoad()
-        {
+        function ChanegdTextLoad() {
             var filter = $("#<%= txtfilterempleado.ClientID%>").val();
             if (filter.length == 0 || filter.length > 3) {
                 return ChangedTextLoad2();
@@ -66,21 +65,44 @@
             }
         }
 
-          function ChangedTextLoad2() {
-              $("#<%= imgloadempleado.ClientID%>").show();
-              $("#<%= lblbemp.ClientID%>").show();
-             return true;
-          }
+        function ChangedTextLoad2() {
+            $("#<%= imgloadempleado.ClientID%>").show();
+            $("#<%= lblbemp.ClientID%>").show();
+            return true;
+        }
 
-         function ViewDetailsCumpCompro(ingeniero, tipo, num)
-         {
-            if(num > 0){
-                 var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
+        function ViewDetailsCumpCompro(ingeniero, tipo, num) {
+            if (num > 0) {
+                var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
                 var tipo_ = document.getElementById('<%= hdftipocompromisos.ClientID %>');
                 nombre.value = ingeniero;
                 tipo_.value = tipo;
                 document.getElementById('<%= btnfiltrocumcompro.ClientID%>').click();
             }
+            return true;
+        }
+        function ViewDetailsTiemposCompromisos(tiempo, tipo_tiempo) {
+            var tiempo_ = document.getElementById('<%= hdftiempo.ClientID %>');
+            var tipo_tiempo_ = document.getElementById('<%= hdftipo_tiempo.ClientID %>');
+            if (tipo_tiempo.toLowerCase() == "asignación ingenieria") {
+                tipo_tiempo_.value = 1;
+            } else if (tipo_tiempo.toLowerCase() == "ventas") {
+                tipo_tiempo_.value = 2;
+            } else if (tipo_tiempo.toLowerCase() == "aplazamiento de ingenieria") {
+                tipo_tiempo_.value = 3;
+            }
+            if (tiempo.toLowerCase() == "1 dia") {
+                tiempo_.value = 1;
+            } else if (tiempo.toLowerCase() == "2 dias") {
+                tiempo_.value = 2;
+            } else if (tiempo.toLowerCase() == "3 dias") {
+                tiempo_.value = 3;
+            } else if (tiempo.toLowerCase() == "mayor a 3 dias") {
+                tiempo_.value = 4;
+            } else if (tiempo.toLowerCase() == "mismo dia") {
+                tiempo_.value = 5;
+            }
+            document.getElementById('<%= btnfiltrocumcompro.ClientID%>').click();
             return true;
         }
     </script>
@@ -148,25 +170,25 @@
                                                                 <tr style="font-size: 11px;height:10px;">
                                                                     <td><%# Eval("Ingeniero") %></td>
                                                                     <td style="text-align:center;">
-                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor:pointer;  min-width:70px;  margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
+                                                                        <a class="btn btn-success btn-xs btn-flat" style="cursor:pointer;  min-width:70px;  margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
                                                                             <%# Eval("Terminados a Tiempo") %>
                                                                         </a>
 
                                                                     </td>  
                                                                     <td style="text-align:center;">
-                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-warning btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
                                                                             <%# Eval("Terminados Fuera de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align:center;">
-                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-primary btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
                                                                             <%# Eval("No Terminados Dentro de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align:center;">
-                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor:pointer;min-width:70px;    margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-danger btn-xs btn-flat" style="cursor:pointer;min-width:70px;    margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
                                                                             <%# Eval("No Terminados Fuera de Tiempo") %>
                                                                         </a>
 
@@ -191,6 +213,289 @@
 
                                 <div class="overlay" id="load_cumpli_compromisos" runat="server">
                                     <i class="fa fa-refresh fa-spin"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Tiempo de compromisos</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+                                            <asp:GridView ID="grid_tiempo_compromisos" Style="display:none;" runat="server"></asp:GridView>
+                                            <div id="tiempo_compromisos" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="box box-danger">
+                                                <div class="box-header with-border">
+                                                    <h5 class="box-title">Informacion adicional</h5>
+                                                    <div class="box-tools pull-right">
+                                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="box-body">
+                                                    <table style="width: 100%">
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <asp:Label ID="Label33" runat="server" Text="Asignación Ingenieria:" Font-Size="Small"
+                                                                    Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 34%">
+                                                                <asp:Label ID="Label34" runat="server" Text="Clasificación" Font-Size="X-Small"
+                                                                    Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                            <td style="width: 33%">
+                                                                <asp:Label ID="Label35" runat="server" Text="No. Compr" Font-Size="X-Small"
+                                                                    Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                            <td style="width: 33%">
+                                                                <asp:Label ID="Label36" runat="server" Text="%" Font-Size="X-Small" Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label3" runat="server" Text="Mismo día: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAsignadaMismoDia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_AsignadaMismoDia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label6" runat="server" Text="1 día: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAsignada1Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_Asignada1Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label9" runat="server" Text="2 días: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAsignada2Dia" runat="server" Text="0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_Asignada2Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label12" runat="server" Text="3 días: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAsignada3Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_Asignada3Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label15" runat="server" Text="Mayor a 3 días: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAsignadaMayor3Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_AsignadaMayor3Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="lblNoAsignados" runat="server" Text="No Asignados: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtNoAsignados" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_NoAsignados" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <br />
+                                                    <table style="width: 100%">
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <asp:Label ID="Label37" runat="server" Text="Ventas:" Font-Size="Small" Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 34%">
+                                                                <asp:Label ID="Label38" runat="server" Text="Clasificación" Font-Size="X-Small"
+                                                                    Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                            <td style="width: 33%">
+                                                                <asp:Label ID="Label39" runat="server" Text="No. Compr" Font-Size="X-Small"
+                                                                    Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                            <td style="width: 33%">
+                                                                <asp:Label ID="Label40" runat="server" Text="%" Font-Size="X-Small" Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="lblVentaMismoDia" runat="server" Text="Mismo día: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtVentaMismoDia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_VentaMismoDia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="lblVenta1Dia" runat="server" Text="1 día: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtVenta1Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_Venta1Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="lblVenta2Dia" runat="server" Text="2 días: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtVenta2Dia" runat="server" Text="0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_Venta2Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="lblVenta3Dia" runat="server" Text="3 días: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtVenta3Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_Venta3Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="lblVentaMayor3Dia" runat="server" Text="Mayor a 3 días: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtVentaMayor3Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_VentaMayor3Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <br />
+                                                    <table style="width: 100%">
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <asp:Label ID="Label41" runat="server" Text="Aplazamiento Ingenieria:" Font-Size="Small"
+                                                                    Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 34%">
+                                                                <asp:Label ID="Label42" runat="server" Text="Clasificación" Font-Size="X-Small"
+                                                                    Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                            <td style="width: 33%">
+                                                                <asp:Label ID="Label43" runat="server" Text="No. Compr" Font-Size="X-Small"
+                                                                    Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                            <td style="width: 33%">
+                                                                <asp:Label ID="Label44" runat="server" Text="%" Font-Size="X-Small" Font-Bold="true"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label18" runat="server" Text="Mismo día: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAplazadasMismoDia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_AplazadasMismoDia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label21" runat="server" Text="1 día: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAplazadas1Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_Aplazadas1Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label24" runat="server" Text="2 días: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAplazadas2Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_Aplazadas2Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label27" runat="server" Text="3 días: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAplazadas3Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_Aplazadas3Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="Label30" runat="server" Text="Mayor a 3 días: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtAplazadasMayor3Dia" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_AplazadasMayor3Dia" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Label ID="lblNoAsignados2" runat="server" Text="No Asignados: " Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtNoAsignados2" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                            <td>
+                                                                <asp:Label ID="txtPerc_NoAsignados2" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                           
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -238,11 +543,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
                                     <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="font-size: 10px;">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="font-size: 10px;">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
                                     <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
@@ -274,7 +579,7 @@
                                     <br />
                                     <asp:LinkButton ID="lnklimpiar" OnClick="lnklimpiar_Click"
                                         CssClass="btn btn-danger btn-flat btn-xs" runat="server">
-                                        Limpiar lista&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
+                                        Limpiar&nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
                                     </asp:LinkButton>
                                     <asp:LinkButton ID="lnkeliminarselecion" OnClick="lnkeliminarselecion_Click"
                                         CssClass="btn btn-danger btn-flat btn-xs" runat="server">
@@ -415,4 +720,6 @@
     <asp:Button ID="btnfiltrocumcompro" OnClick="btnfiltrocumcompro_Click" style="display:none" runat="server" Text="Button" />
     <asp:HiddenField ID="hdfingeniero" runat="server" />
     <asp:HiddenField ID="hdftipocompromisos" runat="server" />
+    <asp:HiddenField ID="hdftiempo" runat="server" />
+    <asp:HiddenField ID="hdftipo_tiempo" runat="server" />
 </asp:Content>

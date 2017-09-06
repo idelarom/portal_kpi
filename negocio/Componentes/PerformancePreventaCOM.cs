@@ -11,7 +11,8 @@ namespace negocio.Componentes
 {
     public class PerformancePreventaCOM
     {
-        public DataSet sp_Preventa_Ingenieria_reportecompromisos_detalle_test(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta)
+        public DataSet sp_Preventa_Ingenieria_reportecompromisos_detalle_test(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, 
+            int tipo_consulta, int tipo_tiempo, int tiempo)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -21,6 +22,8 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@TipoConsulta", SqlDbType = SqlDbType.Int, Value = tipo_consulta });
             listparameters.Add(new SqlParameter() { ParameterName = "@IngPreventa", SqlDbType = SqlDbType.Int, Value = ingeniero });
             listparameters.Add(new SqlParameter() { ParameterName = "@TipoCompromiso", SqlDbType = SqlDbType.Int, Value = tipo });
+            listparameters.Add(new SqlParameter() { ParameterName = "@ptipo_tiempo", SqlDbType = SqlDbType.Int, Value = tipo_tiempo });
+            listparameters.Add(new SqlParameter() { ParameterName = "@ptiempo", SqlDbType = SqlDbType.Int, Value = tiempo });
             try
             {
                 //ds = data.datos_Clientes(listparameters);

@@ -141,17 +141,28 @@ namespace presentacion
         }
 
 
-        private DataSet CumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta)
+        /// <summary>
+        /// tipo_tiempo int = 0 --1 = ASIGNACION, 2 = VENTAS, 3 = APLAZAMIENTO, tiempo int  = 0  1= 1 DIA, 2 = 2 DIAS, 3 = 3 DIAS, 4 = MAYOR 3 DIAS, 5 = MISMO DIA
+        /// </summary>
+        /// <param name="fecha_ini"></param>
+        /// <param name="fecha_fin"></param>
+        /// <param name="ingeniero"></param>
+        /// <param name="tipo"></param>
+        /// <param name="tipo_consulta"></param>
+        /// <param name="tipo_tiempo"></param>
+        /// <param name="tiempo"></param>
+        /// <returns></returns>
+        private DataSet CumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta, int tipo_tiempo, int tiempo)
         {
             PerformancePreventaCOM preventa = new PerformancePreventaCOM();
-            return preventa.sp_Preventa_Ingenieria_reportecompromisos_detalle_test(fecha_ini,fecha_fin,ingeniero,tipo,tipo_consulta);
+            return preventa.sp_Preventa_Ingenieria_reportecompromisos_detalle_test(fecha_ini,fecha_fin,ingeniero,tipo,tipo_consulta,tipo_tiempo,tiempo);
 
         }
         private void GenerarGraficaCumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta)
         {
             try
             {
-                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta);
+                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta,0,0);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
@@ -228,6 +239,203 @@ namespace presentacion
             }
         }
 
+        private void GenerarGraficaTiemposCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta)
+        {
+            try
+            {
+                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta,0,0);
+                DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
+                if (dt_grid_cumpli_compromisos.Rows.Count > 0)
+                {
+                    DataTable dt_grafica_barras_tiempos_compromisos = ds.Tables[1];
+                    DataRow row_graph_cumpli_compromisos = ds.Tables[1].Rows[0];
+                    //llenamos el grid para llenar la grafica de barras
+                    DataTable dt_tiempos_compro = new DataTable();
+                    dt_tiempos_compro.Columns.Add("Name");
+                    dt_tiempos_compro.Columns.Add("Asignación ingenieria");
+                    dt_tiempos_compro.Columns.Add("Ventas");
+                    dt_tiempos_compro.Columns.Add("Aplazamiento de ingenieria");
+
+                    DataRow row = dt_tiempos_compro.NewRow();
+                    row["Name"] = "Mismo dia";
+                    row["Asignación ingenieria"] = row_graph_cumpli_compromisos["AsignadaMismoDia"].ToString();
+                    row["Ventas"] = row_graph_cumpli_compromisos["VentaMismoDia"].ToString();
+                    row["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["AplazadasMismoDia"].ToString();
+                    dt_tiempos_compro.Rows.Add(row);
+
+                    DataRow row2 = dt_tiempos_compro.NewRow();
+                    row2["Name"] = "1 dia";
+                    row2["Asignación ingenieria"] = row_graph_cumpli_compromisos["Asignada1Dia"].ToString();
+                    row2["Ventas"] = row_graph_cumpli_compromisos["Venta1Dia"].ToString();
+                    row2["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["Aplazadas1Dia"].ToString();
+                    dt_tiempos_compro.Rows.Add(row2);
+
+                    DataRow row3 = dt_tiempos_compro.NewRow();
+                    row3["Name"] = "2 dias";
+                    row3["Asignación ingenieria"] = row_graph_cumpli_compromisos["Asignada2Dia"].ToString();
+                    row3["Ventas"] = row_graph_cumpli_compromisos["Venta2Dia"].ToString();
+                    row3["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["Aplazadas2Dia"].ToString();
+                    dt_tiempos_compro.Rows.Add(row3);
+
+                    DataRow row4 = dt_tiempos_compro.NewRow();
+                    row4["Name"] = "3 dias";
+                    row4["Asignación ingenieria"] = row_graph_cumpli_compromisos["Asignada3Dia"].ToString();
+                    row4["Ventas"] = row_graph_cumpli_compromisos["Venta3Dia"].ToString();
+                    row4["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["Aplazadas3Dia"].ToString();
+                    dt_tiempos_compro.Rows.Add(row4);
+
+                    DataRow row5 = dt_tiempos_compro.NewRow();
+                    row5["Name"] = "Mayor a 3 dias";
+                    row5["Asignación ingenieria"] = row_graph_cumpli_compromisos["AsignadaMayor3Dia"].ToString();
+                    row5["Ventas"] = row_graph_cumpli_compromisos["VentaMayor3Dia"].ToString();
+                    row5["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["AplazadasMayor3Dia"].ToString();
+                    dt_tiempos_compro.Rows.Add(row5);
+                    grid_tiempo_compromisos.Columns.Clear();
+                    grid_tiempo_compromisos.DataSource = dt_tiempos_compro;
+                    grid_tiempo_compromisos.DataBind();
+
+                    //LLENAMOS TABLA DE INFORMACION ADICIONL
+                    string Cumple = "0";
+                    string NoCumple = "0";
+                    string NoTerminadosPorCumplir = "0";
+                    string NoTerminadosSinCumplir = "0";
+
+                    string VentaMismoDia = "0";
+                    string Venta1Dia = "0";
+                    string Venta2Dia = "0";
+                    string Venta3Dia = "0";
+                    string VentaMayor3Dia = "0";
+
+                    string AsignadaMismoDia = "0";
+                    string Asignada1Dia = "0";
+                    string Asignada2Dia = "0";
+                    string Asignada3Dia = "0";
+                    string AsignadaMayor3Dia = "0";
+
+                    string AplazadasMismoDia = "0";
+                    string Aplazadas1Dia = "0";
+                    string Aplazadas2Dia = "0";
+                    string Aplazadas3Dia = "0";
+                    string AplazadasMayor3Dia = "0";
+                    Cumple = ds.Tables[1].Rows[0]["Perc_Cumple"].ToString();
+                    NoCumple = ds.Tables[1].Rows[0]["Perc_NoCumple"].ToString();
+                    NoTerminadosPorCumplir = ds.Tables[1].Rows[0]["Perc_NoTerminadosPorCumplir"].ToString();
+                    NoTerminadosSinCumplir = ds.Tables[1].Rows[0]["Perc_NoTerminadosSinCumplir"].ToString();
+                    //ventas
+                    VentaMismoDia = ds.Tables[1].Rows[0]["VentaMismoDia"].ToString();
+                    Venta1Dia = ds.Tables[1].Rows[0]["Venta1Dia"].ToString();
+                    Venta2Dia = ds.Tables[1].Rows[0]["Venta2Dia"].ToString();
+                    Venta3Dia = ds.Tables[1].Rows[0]["Venta3Dia"].ToString();
+                    VentaMayor3Dia = ds.Tables[1].Rows[0]["VentaMayor3Dia"].ToString();
+                    //Aplazamiento
+                    AplazadasMismoDia = ds.Tables[1].Rows[0]["AplazadasMismoDia"].ToString();
+                    Aplazadas1Dia = ds.Tables[1].Rows[0]["Aplazadas1Dia"].ToString();
+                    Aplazadas2Dia = ds.Tables[1].Rows[0]["Aplazadas2Dia"].ToString();
+                    Aplazadas3Dia = ds.Tables[1].Rows[0]["Aplazadas3Dia"].ToString();
+                    AplazadasMayor3Dia = ds.Tables[1].Rows[0]["AplazadasMayor3Dia"].ToString();
+                    //Asignacion
+                    AsignadaMismoDia = ds.Tables[1].Rows[0]["AsignadaMismoDia"].ToString();
+                    Asignada1Dia = ds.Tables[1].Rows[0]["Asignada1Dia"].ToString();
+                    Asignada2Dia = ds.Tables[1].Rows[0]["Asignada2Dia"].ToString();
+                    Asignada3Dia = ds.Tables[1].Rows[0]["Asignada3Dia"].ToString();
+                    AsignadaMayor3Dia = ds.Tables[1].Rows[0]["AsignadaMayor3Dia"].ToString();
+
+                    //Asignar texto a labels
+                    //Asignacion
+                    txtAsignadaMismoDia.Text = AsignadaMismoDia;
+                    txtPerc_AsignadaMismoDia.Text = ds.Tables[1].Rows[0]["Perc_AsignadaMismoDia"].ToString() + " %";
+                    txtAsignada1Dia.Text = Asignada1Dia;
+                    txtPerc_Asignada1Dia.Text = ds.Tables[1].Rows[0]["Perc_Asignada1Dia"].ToString() + " %";
+                    txtAsignada2Dia.Text = Asignada2Dia;
+                    txtPerc_Asignada2Dia.Text = ds.Tables[1].Rows[0]["Perc_Asignada2Dia"].ToString() + " %";
+                    txtAsignada3Dia.Text = Asignada3Dia;
+                    txtPerc_Asignada3Dia.Text = ds.Tables[1].Rows[0]["Perc_Asignada3Dia"].ToString() + " %";
+                    txtAsignadaMayor3Dia.Text = AsignadaMayor3Dia;
+                    txtPerc_AsignadaMayor3Dia.Text = ds.Tables[1].Rows[0]["Perc_AsignadaMayor3Dia"].ToString() + " %";
+                    //ventas
+                    txtVentaMismoDia.Text = VentaMismoDia;
+                    txtPerc_VentaMismoDia.Text = ds.Tables[1].Rows[0]["Perc_VentaMismoDia"].ToString() + " %";
+                    txtVenta1Dia.Text = Venta1Dia;
+                    txtPerc_Venta1Dia.Text = ds.Tables[1].Rows[0]["Perc_Venta1Dia"].ToString() + " %";
+                    txtVenta2Dia.Text = Venta2Dia;
+                    txtPerc_Venta2Dia.Text = ds.Tables[1].Rows[0]["Perc_Venta2Dia"].ToString() + " %";
+                    txtVenta3Dia.Text = Venta3Dia;
+                    txtPerc_Venta3Dia.Text = ds.Tables[1].Rows[0]["Perc_Venta3Dia"].ToString() + " %";
+                    txtVentaMayor3Dia.Text = VentaMayor3Dia;
+                    txtPerc_VentaMayor3Dia.Text = ds.Tables[1].Rows[0]["Perc_VentaMayor3Dia"].ToString() + " %";
+                    //Aplazamiento
+                    txtAplazadasMismoDia.Text = AplazadasMismoDia;
+                    txtPerc_AplazadasMismoDia.Text = ds.Tables[1].Rows[0]["Perc_AplazadasMismoDia"].ToString() + " %";
+                    txtAplazadas1Dia.Text = Aplazadas1Dia;
+                    txtPerc_Aplazadas1Dia.Text = ds.Tables[1].Rows[0]["Perc_Aplazadas1Dia"].ToString() + " %";
+                    txtAplazadas2Dia.Text = Aplazadas2Dia;
+                    txtPerc_Aplazadas2Dia.Text = ds.Tables[1].Rows[0]["Perc_Aplazadas2Dia"].ToString() + " %";
+                    txtAplazadas3Dia.Text = Aplazadas3Dia;
+                    txtPerc_Aplazadas3Dia.Text = ds.Tables[1].Rows[0]["Perc_Aplazadas3Dia"].ToString() + " %";
+                    txtAplazadasMayor3Dia.Text = AplazadasMayor3Dia;
+                    txtPerc_AplazadasMayor3Dia.Text = ds.Tables[1].Rows[0]["Perc_AplazadasMayor3Dia"].ToString() + " %";
+
+                    txtNoAsignados.Text = " " + ds.Tables[1].Rows[0]["NoAsignado"].ToString();
+                    txtPerc_NoAsignados.Text = " " + ds.Tables[1].Rows[0]["Perc_NoAsignado"].ToString() + "%";
+                    txtNoAsignados2.Text = " " + ds.Tables[1].Rows[0]["NoAsignado"].ToString();
+                    txtPerc_NoAsignados2.Text = " " + ds.Tables[1].Rows[0]["Perc_NoAsignado"].ToString() + "%";
+
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<script type='text/javascript'>");
+                    string script = "Highcharts.chart('tiempo_compromisos', {"
+                           // + "colors: ['#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5'],"
+                            + "data: {"
+                            + "table: 'ContentPlaceHolder1_grid_tiempo_compromisos'"
+                            + "},"
+                            + "chart: {"
+                            + "type: 'column'"
+                            + " },"
+                            + " title: {"
+                            + "     text: ''"
+                            + " },"
+                            + "  yAxis: {"
+                            + "      allowDecimals: false,"
+                            + "      title: {"
+                            + "          text: 'Tiempos compromisos'"
+                            + "      }"
+                            + " },"
+                            + "  tooltip: {"
+                            + "      formatter: function () {"
+                            + "          return '<b>' + this.series.name + '</b><br />' +"
+                            + "              this.point.y + ' compromiso(s) ' + this.point.name;"
+                            + "       }"
+                            + "   },"
+                            + "  plotOptions: {"
+                            + "      column: {"
+                            + "          colorByPoint: false"
+                            + "      },"
+                            + "      series: {"
+                            + "          cursor: 'name',"
+                            + "          point: {"
+                            + "              events: {"
+                            + "                   click: function () {"
+                             + "                         return ViewDetailsTiemposCompromisos(this.name,this.series.name);"
+                            + "                       }"
+                            + "                     }"
+                            + "                  }"
+                            + "               }"
+                            + "             }"
+                            + "          });";
+                    sb.Append(script);
+                    sb.Append("</script>");
+                    ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
+                    load_cumpli_compromisos.Style["display"] = "none";
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al generar grafica tiempos compromisos: " + ex.Message, this);
+            }
+        }
+
+
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -243,9 +451,11 @@ namespace presentacion
             {
                 string ingeniero = hdfingeniero.Value;
                 string tipo_compro = hdftipocompromisos.Value;
+                int tipo_tiempo = hdftipo_tiempo.Value == "" ? 0:Convert.ToInt32(hdftipo_tiempo.Value);
+                int tiempo = hdftiempo.Value == "" ? 0 : Convert.ToInt32(hdftiempo.Value);
                 DateTime fi = rdpfechainicial.SelectedDate.Value == null ? DateTime.Now.AddDays(-30) : Convert.ToDateTime(rdpfechainicial.SelectedDate);
                 DateTime ff = rdpfechafinal.SelectedDate.Value == null ? DateTime.Now: Convert.ToDateTime(rdpfechafinal.SelectedDate);
-                DataSet ds = CumplimientoCompromisos(fi,ff, ingeniero, tipo_compro, 2);
+                DataSet ds = CumplimientoCompromisos(fi,ff, ingeniero, tipo_compro, 2,tipo_tiempo,tiempo);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
@@ -374,6 +584,7 @@ namespace presentacion
                 DateTime fi = rdpfechainicial.SelectedDate.Value == null ? DateTime.Now.AddDays(-30) : Convert.ToDateTime(rdpfechainicial.SelectedDate);
                 DateTime ff = rdpfechafinal.SelectedDate.Value == null ? DateTime.Now : Convert.ToDateTime(rdpfechafinal.SelectedDate);
                 GenerarGraficaCumplimientoCompromisos(fi, ff, "", "", 1);
+                GenerarGraficaTiemposCompromisos(fi,ff,"","",2);
                 div_reporte.Visible = true;
             }
         }
