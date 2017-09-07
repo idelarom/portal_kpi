@@ -55,6 +55,7 @@ namespace negocio.Componentes
         {
             try
             {
+                entidad.nombre = entidad.nombre.Replace("  ", " ");
                 Model context = new Model();
                 usuarios_configuraciones usuario = context.usuarios_configuraciones
                                 .First(i => i.usuario == entidad.usuario);

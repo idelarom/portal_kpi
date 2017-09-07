@@ -120,6 +120,7 @@ namespace presentacion
                             //pasamos aminusculas
                             nombre = nombre.ToLower();
                             puesto = puesto.ToLower();
+                            nombre = nombre.Replace("  "," ");
                             //pasamos a estilos title
                             Session["mail"] = adress;
                             Session["imagen"] = username + ".png";

@@ -19,7 +19,6 @@ namespace datos.Model
         public virtual DbSet<perfiles> perfiles { get; set; }
         public virtual DbSet<recordatorios> recordatorios { get; set; }
         public virtual DbSet<recordatorios_usuarios_adicionales> recordatorios_usuarios_adicionales { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<usuarios_configuraciones> usuarios_configuraciones { get; set; }
         public virtual DbSet<usuarios_perfiles> usuarios_perfiles { get; set; }
         public virtual DbSet<usuarios_sesiones> usuarios_sesiones { get; set; }

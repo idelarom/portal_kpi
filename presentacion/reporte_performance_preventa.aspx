@@ -565,16 +565,353 @@
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
-                                            <asp:GridView ID="grid_backlog_compromisos_anterior" Style="display: none" runat="server"></asp:GridView>
-                                            <div id="backlog_compromisos_anterior" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
+                                            <asp:GridView ID="grid_backlog_compromisos_actual" Style="display: none" runat="server"></asp:GridView>
+                                            <div id="backlog_compromisos_actual" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
                                             </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <table style="width: 100%">
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <asp:Label ID="Label4" runat="server" Text="Distribucion:" Font-Size="Small" Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 34%">
+                                                        <asp:Label ID="Label5" runat="server" Text="Clasificación" Font-Size="X-Small" Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                    <td style="width: 33%">
+                                                        <asp:Label ID="Label7" runat="server" Text="No. Compr" Font-Size="X-Small"
+                                                            Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                    <td style="width: 33%">
+                                                        <asp:Label ID="Label8" runat="server" Text="%" Font-Size="X-Small" Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblEnero" runat="server" Text="Enero: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtEnero" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Enero" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblFebrero" runat="server" Text="Febrero: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtFebrero" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Febrero" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblMarzo" runat="server" Text="Marzo: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtMarzo" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Marzo" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblAbril" runat="server" Text="Abril: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtAbril" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Abril" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblMayo" runat="server" Text="Mayo: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtMayo" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Mayo" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblJunio" runat="server" Text="Junio: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtJunio" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Junio" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblJulio" runat="server" Text="Julio: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtJulio" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Julio" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblAgosto" runat="server" Text="Agosto: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtAgosto" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Agosto" runat="server" Text=" 0%" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblSeptiembre" runat="server" Text="Septiembre: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtSeptiembre" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Septiembre" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblOctubre" runat="server" Text="Octubre: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtOctubre" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Octubre" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblNoviembre" runat="server" Text="Noviembre: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtNoviembre" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Noviembre" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblDiciembre" runat="server" Text="Diciembre: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtDiciembre" runat="server" Text=" 5" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_Diciembre" runat="server" Text=" 8.34%" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" style="border-bottom: ridge"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblTotal" runat="server" Text="Total: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtTotal" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtperc_Total" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
-                                            <asp:GridView ID="grid_backlog_compromisos_actual" Style="display: none" runat="server"></asp:GridView>
-                                            <div id="backlog_compromisos_actual" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
+                                            <asp:GridView ID="grid_backlog_compromisos_anterior" Style="display: none" runat="server"></asp:GridView>
+                                            <div id="backlog_compromisos_anterior" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
                                             </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <table style="width: 100%">
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <asp:Label ID="Label14" runat="server" Text="Distribucion:" Font-Size="Small" Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 34%">
+                                                        <asp:Label ID="Label16" runat="server" Text="Clasificación" Font-Size="X-Small"
+                                                            Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                    <td style="width: 33%">
+                                                        <asp:Label ID="Label17" runat="server" Text="No. Compr" Font-Size="X-Small"
+                                                            Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                    <td style="width: 33%">
+                                                        <asp:Label ID="Label19" runat="server" Text="%" Font-Size="X-Small" Font-Bold="true"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblEneroAnt" runat="server" Text="Enero: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtEneroAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_EneroAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblFebreroAnt" runat="server" Text="Febrero: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtFebreroAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_FebreroAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblMarzoAnt" runat="server" Text="Marzo: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtMarzoAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_MarzoAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblAbrilAnt" runat="server" Text="Abril: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtAbrilAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_AbrilAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblMayoAnt" runat="server" Text="Mayo: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtMayoAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_MayoAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblJunioAnt" runat="server" Text="Junio: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtJunioAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_JunioAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblJulioAnt" runat="server" Text="Julio: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtJulioAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_JulioAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblAgostoAnt" runat="server" Text="Agosto: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtAgostoAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_AgostoAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblSeptiembreAnt" runat="server" Text="Septiembre: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtSeptiembreAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_SeptiembreAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblOctubreAnt" runat="server" Text="Octubre: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtOctubreAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_OctubreAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblNoviembreAnt" runat="server" Text="Noviembre: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtNoviembreAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_NoviembreAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblDiciembreAnt" runat="server" Text="Diciembre: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtDiciembreAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtPerc_DiciembreAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" style="border-bottom: groove"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <asp:Label ID="lblTotalAnt" runat="server" Text="Total: " Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtTotalAnt" runat="server" Text=" 0" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                    <td>
+                                                        <asp:Label ID="txtperc_TotalAnt" runat="server" Text=" 0 %" Font-Size="X-Small"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
                                         </div>
                                     </div>
                                 </div>

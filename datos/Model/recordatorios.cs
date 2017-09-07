@@ -20,14 +20,14 @@ namespace datos.Model
         [StringLength(8000)]
         public string key_appointment_exchanged { get; set; }
 
-        [StringLength(250)]
+        [StringLength(8000)]
         public string organizer { get; set; }
 
-        [StringLength(250)]
+        [StringLength(8000)]
         public string organizer_address { get; set; }
 
         [Required]
-        [StringLength(250)]
+        [StringLength(8000)]
         public string titulo { get; set; }
 
         [StringLength(8000)]
@@ -37,7 +37,7 @@ namespace datos.Model
 
         public DateTime? fecha_end { get; set; }
 
-        [StringLength(500)]
+        [StringLength(8000)]
         public string location { get; set; }
 
         [Required]
@@ -57,7 +57,7 @@ namespace datos.Model
 
         public DateTime? fecha_borrado { get; set; }
 
-        [StringLength(250)]
+        [StringLength(8000)]
         public string comentarios_borrado { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

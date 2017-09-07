@@ -451,49 +451,6 @@ namespace presentacion
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
-                    //DataTable dt_grafica_barras_tiempos_compromisos = ds.Tables[1];
-                    //DataRow row_graph_cumpli_compromisos = ds.Tables[1].Rows[0];
-                    ////llenamos el grid para llenar la grafica de barras
-                    //DataTable dt_tiempos_compro = new DataTable();
-                    //dt_tiempos_compro.Columns.Add("Name");
-                    //dt_tiempos_compro.Columns.Add("Asignación ingenieria");
-                    //dt_tiempos_compro.Columns.Add("Ventas");
-                    //dt_tiempos_compro.Columns.Add("Aplazamiento de ingenieria");
-
-                    //DataRow row = dt_tiempos_compro.NewRow();
-                    //row["Name"] = "Mismo dia";
-                    //row["Asignación ingenieria"] = row_graph_cumpli_compromisos["AsignadaMismoDia"].ToString();
-                    //row["Ventas"] = row_graph_cumpli_compromisos["VentaMismoDia"].ToString();
-                    //row["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["AplazadasMismoDia"].ToString();
-                    //dt_tiempos_compro.Rows.Add(row);
-
-                    //DataRow row2 = dt_tiempos_compro.NewRow();
-                    //row2["Name"] = "1 dia";
-                    //row2["Asignación ingenieria"] = row_graph_cumpli_compromisos["Asignada1Dia"].ToString();
-                    //row2["Ventas"] = row_graph_cumpli_compromisos["Venta1Dia"].ToString();
-                    //row2["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["Aplazadas1Dia"].ToString();
-                    //dt_tiempos_compro.Rows.Add(row2);
-
-                    //DataRow row3 = dt_tiempos_compro.NewRow();
-                    //row3["Name"] = "2 dias";
-                    //row3["Asignación ingenieria"] = row_graph_cumpli_compromisos["Asignada2Dia"].ToString();
-                    //row3["Ventas"] = row_graph_cumpli_compromisos["Venta2Dia"].ToString();
-                    //row3["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["Aplazadas2Dia"].ToString();
-                    //dt_tiempos_compro.Rows.Add(row3);
-
-                    //DataRow row4 = dt_tiempos_compro.NewRow();
-                    //row4["Name"] = "3 dias";
-                    //row4["Asignación ingenieria"] = row_graph_cumpli_compromisos["Asignada3Dia"].ToString();
-                    //row4["Ventas"] = row_graph_cumpli_compromisos["Venta3Dia"].ToString();
-                    //row4["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["Aplazadas3Dia"].ToString();
-                    //dt_tiempos_compro.Rows.Add(row4);
-
-                    //DataRow row5 = dt_tiempos_compro.NewRow();
-                    //row5["Name"] = "Mayor a 3 dias";
-                    //row5["Asignación ingenieria"] = row_graph_cumpli_compromisos["AsignadaMayor3Dia"].ToString();
-                    //row5["Ventas"] = row_graph_cumpli_compromisos["VentaMayor3Dia"].ToString();
-                    //row5["Aplazamiento de ingenieria"] = row_graph_cumpli_compromisos["AplazadasMayor3Dia"].ToString();
-                    //dt_tiempos_compro.Rows.Add(row5);
                     int año_actual = fecha_ini.Value.Year;
                     int año_anterior = (fecha_ini.Value.Year)-1;
 
@@ -514,91 +471,73 @@ namespace presentacion
                     grid_backlog_compromisos_actual.DataBind();
 
                     ////LLENAMOS TABLA DE INFORMACION ADICIONAL
-                    //string Cumple = "0";
-                    //string NoCumple = "0";
-                    //string NoTerminadosPorCumplir = "0";
-                    //string NoTerminadosSinCumplir = "0";
+                    txtEnero.Text = ds.Tables[0].Rows[1]["Enero"].ToString();
+                    txtPerc_Enero.Text = ds.Tables[1].Rows[1]["Perc_Enero"].ToString() + " %";
+                    txtEneroAnt.Text = ds.Tables[0].Rows[0]["Enero"].ToString();
+                    txtPerc_EneroAnt.Text = ds.Tables[1].Rows[0]["Perc_Enero"].ToString() + " %";
 
-                    //string VentaMismoDia = "0";
-                    //string Venta1Dia = "0";
-                    //string Venta2Dia = "0";
-                    //string Venta3Dia = "0";
-                    //string VentaMayor3Dia = "0";
+                    
+                    txtFebrero.Text = ds.Tables[0].Rows[1]["Febrero"].ToString();
+                    txtPerc_Febrero.Text = ds.Tables[1].Rows[1]["Perc_Febrero"].ToString() + " %";
+                    txtFebreroAnt.Text = ds.Tables[0].Rows[0]["Febrero"].ToString();
+                    txtPerc_FebreroAnt.Text = ds.Tables[1].Rows[0]["Perc_Febrero"].ToString() + " %";
 
-                    //string AsignadaMismoDia = "0";
-                    //string Asignada1Dia = "0";
-                    //string Asignada2Dia = "0";
-                    //string Asignada3Dia = "0";
-                    //string AsignadaMayor3Dia = "0";
+                    
+                    txtMarzo.Text = ds.Tables[0].Rows[1]["Marzo"].ToString();
+                    txtPerc_Marzo.Text = ds.Tables[1].Rows[1]["Perc_Marzo"].ToString() + " %";
+                    txtMarzoAnt.Text = ds.Tables[0].Rows[0]["Marzo"].ToString();
+                    txtPerc_MarzoAnt.Text = ds.Tables[1].Rows[0]["Perc_Marzo"].ToString() + " %";
+                    
+                    txtAbril.Text = ds.Tables[0].Rows[1]["Abril"].ToString();
+                    txtPerc_Abril.Text = ds.Tables[1].Rows[1]["Perc_Abril"].ToString() + " %";
+                    txtAbrilAnt.Text = ds.Tables[0].Rows[0]["Abril"].ToString();
+                    txtPerc_AbrilAnt.Text = ds.Tables[1].Rows[0]["Perc_Abril"].ToString() + " %";
+                    
+                    txtMayo.Text = ds.Tables[0].Rows[1]["Mayo"].ToString();
+                    txtPerc_Mayo.Text = ds.Tables[1].Rows[1]["Perc_Mayo"].ToString() + " %";
+                    txtMayoAnt.Text = ds.Tables[0].Rows[0]["Mayo"].ToString();
+                    txtPerc_MayoAnt.Text = ds.Tables[1].Rows[0]["Perc_Mayo"].ToString() + " %";
+                    
+                    txtJunio.Text = ds.Tables[0].Rows[1]["Junio"].ToString();
+                    txtPerc_Junio.Text = ds.Tables[1].Rows[1]["Perc_Junio"].ToString() + " %";
+                    txtJunioAnt.Text = ds.Tables[0].Rows[0]["Junio"].ToString();
+                    txtPerc_JunioAnt.Text = ds.Tables[1].Rows[0]["Perc_Junio"].ToString() + " %";
+                    
+                    txtJulio.Text = ds.Tables[0].Rows[1]["Julio"].ToString();
+                    txtPerc_Julio.Text = ds.Tables[1].Rows[1]["Perc_Julio"].ToString() + " %";
+                    txtJulioAnt.Text = ds.Tables[0].Rows[0]["Julio"].ToString();
+                    txtPerc_JulioAnt.Text = ds.Tables[1].Rows[0]["Perc_Julio"].ToString() + " %";
+                    
+                    txtAgosto.Text = ds.Tables[0].Rows[1]["Agosto"].ToString();
+                    txtPerc_Agosto.Text = ds.Tables[1].Rows[1]["Perc_Agosto"].ToString() + " %";
+                    txtAgostoAnt.Text = ds.Tables[0].Rows[0]["Agosto"].ToString();
+                    txtPerc_AgostoAnt.Text = ds.Tables[1].Rows[0]["Perc_Agosto"].ToString() + " %";
+                    
+                    txtSeptiembre.Text = ds.Tables[0].Rows[1]["Septiembre"].ToString();
+                    txtPerc_Septiembre.Text = ds.Tables[1].Rows[1]["Perc_Septiembre"].ToString() + " %";
+                    txtSeptiembreAnt.Text = ds.Tables[0].Rows[0]["Septiembre"].ToString();
+                    txtPerc_SeptiembreAnt.Text = ds.Tables[1].Rows[0]["Perc_Septiembre"].ToString() + " %";
+                    
+                    txtOctubre.Text = ds.Tables[0].Rows[1]["Octubre"].ToString();
+                    txtPerc_Octubre.Text = ds.Tables[1].Rows[1]["Perc_Octubre"].ToString() + " %";
+                    txtOctubreAnt.Text = ds.Tables[0].Rows[0]["Octubre"].ToString();
+                    txtPerc_OctubreAnt.Text = ds.Tables[1].Rows[0]["Perc_Octubre"].ToString() + " %";
+                    
+                    txtNoviembre.Text = ds.Tables[0].Rows[1]["Noviembre"].ToString();
+                    txtPerc_Noviembre.Text = ds.Tables[1].Rows[1]["Perc_Noviembre"].ToString() + " %";
+                    txtNoviembreAnt.Text = ds.Tables[0].Rows[0]["Noviembre"].ToString();
+                    txtPerc_NoviembreAnt.Text = ds.Tables[1].Rows[0]["Perc_Noviembre"].ToString() + " %";
+                    
+                    txtDiciembre.Text = ds.Tables[0].Rows[1]["Diciembre"].ToString();
+                    txtPerc_Diciembre.Text = ds.Tables[1].Rows[1]["Perc_Diciembre"].ToString() + " %";
+                    
+                    txtDiciembreAnt.Text = ds.Tables[0].Rows[0]["Diciembre"].ToString();
+                    txtPerc_DiciembreAnt.Text = ds.Tables[1].Rows[0]["Perc_Diciembre"].ToString() + " %";
 
-                    //string AplazadasMismoDia = "0";
-                    //string Aplazadas1Dia = "0";
-                    //string Aplazadas2Dia = "0";
-                    //string Aplazadas3Dia = "0";
-                    //string AplazadasMayor3Dia = "0";
-                    //Cumple = ds.Tables[1].Rows[0]["Perc_Cumple"].ToString();
-                    //NoCumple = ds.Tables[1].Rows[0]["Perc_NoCumple"].ToString();
-                    //NoTerminadosPorCumplir = ds.Tables[1].Rows[0]["Perc_NoTerminadosPorCumplir"].ToString();
-                    //NoTerminadosSinCumplir = ds.Tables[1].Rows[0]["Perc_NoTerminadosSinCumplir"].ToString();
-                    ////ventas
-                    //VentaMismoDia = ds.Tables[1].Rows[0]["VentaMismoDia"].ToString();
-                    //Venta1Dia = ds.Tables[1].Rows[0]["Venta1Dia"].ToString();
-                    //Venta2Dia = ds.Tables[1].Rows[0]["Venta2Dia"].ToString();
-                    //Venta3Dia = ds.Tables[1].Rows[0]["Venta3Dia"].ToString();
-                    //VentaMayor3Dia = ds.Tables[1].Rows[0]["VentaMayor3Dia"].ToString();
-                    ////Aplazamiento
-                    //AplazadasMismoDia = ds.Tables[1].Rows[0]["AplazadasMismoDia"].ToString();
-                    //Aplazadas1Dia = ds.Tables[1].Rows[0]["Aplazadas1Dia"].ToString();
-                    //Aplazadas2Dia = ds.Tables[1].Rows[0]["Aplazadas2Dia"].ToString();
-                    //Aplazadas3Dia = ds.Tables[1].Rows[0]["Aplazadas3Dia"].ToString();
-                    //AplazadasMayor3Dia = ds.Tables[1].Rows[0]["AplazadasMayor3Dia"].ToString();
-                    ////Asignacion
-                    //AsignadaMismoDia = ds.Tables[1].Rows[0]["AsignadaMismoDia"].ToString();
-                    //Asignada1Dia = ds.Tables[1].Rows[0]["Asignada1Dia"].ToString();
-                    //Asignada2Dia = ds.Tables[1].Rows[0]["Asignada2Dia"].ToString();
-                    //Asignada3Dia = ds.Tables[1].Rows[0]["Asignada3Dia"].ToString();
-                    //AsignadaMayor3Dia = ds.Tables[1].Rows[0]["AsignadaMayor3Dia"].ToString();
-
-                    ////Asignar texto a labels
-                    ////Asignacion
-                    //txtAsignadaMismoDia.Text = AsignadaMismoDia;
-                    //txtPerc_AsignadaMismoDia.Text = ds.Tables[1].Rows[0]["Perc_AsignadaMismoDia"].ToString() + " %";
-                    //txtAsignada1Dia.Text = Asignada1Dia;
-                    //txtPerc_Asignada1Dia.Text = ds.Tables[1].Rows[0]["Perc_Asignada1Dia"].ToString() + " %";
-                    //txtAsignada2Dia.Text = Asignada2Dia;
-                    //txtPerc_Asignada2Dia.Text = ds.Tables[1].Rows[0]["Perc_Asignada2Dia"].ToString() + " %";
-                    //txtAsignada3Dia.Text = Asignada3Dia;
-                    //txtPerc_Asignada3Dia.Text = ds.Tables[1].Rows[0]["Perc_Asignada3Dia"].ToString() + " %";
-                    //txtAsignadaMayor3Dia.Text = AsignadaMayor3Dia;
-                    //txtPerc_AsignadaMayor3Dia.Text = ds.Tables[1].Rows[0]["Perc_AsignadaMayor3Dia"].ToString() + " %";
-                    ////ventas
-                    //txtVentaMismoDia.Text = VentaMismoDia;
-                    //txtPerc_VentaMismoDia.Text = ds.Tables[1].Rows[0]["Perc_VentaMismoDia"].ToString() + " %";
-                    //txtVenta1Dia.Text = Venta1Dia;
-                    //txtPerc_Venta1Dia.Text = ds.Tables[1].Rows[0]["Perc_Venta1Dia"].ToString() + " %";
-                    //txtVenta2Dia.Text = Venta2Dia;
-                    //txtPerc_Venta2Dia.Text = ds.Tables[1].Rows[0]["Perc_Venta2Dia"].ToString() + " %";
-                    //txtVenta3Dia.Text = Venta3Dia;
-                    //txtPerc_Venta3Dia.Text = ds.Tables[1].Rows[0]["Perc_Venta3Dia"].ToString() + " %";
-                    //txtVentaMayor3Dia.Text = VentaMayor3Dia;
-                    //txtPerc_VentaMayor3Dia.Text = ds.Tables[1].Rows[0]["Perc_VentaMayor3Dia"].ToString() + " %";
-                    ////Aplazamiento
-                    //txtAplazadasMismoDia.Text = AplazadasMismoDia;
-                    //txtPerc_AplazadasMismoDia.Text = ds.Tables[1].Rows[0]["Perc_AplazadasMismoDia"].ToString() + " %";
-                    //txtAplazadas1Dia.Text = Aplazadas1Dia;
-                    //txtPerc_Aplazadas1Dia.Text = ds.Tables[1].Rows[0]["Perc_Aplazadas1Dia"].ToString() + " %";
-                    //txtAplazadas2Dia.Text = Aplazadas2Dia;
-                    //txtPerc_Aplazadas2Dia.Text = ds.Tables[1].Rows[0]["Perc_Aplazadas2Dia"].ToString() + " %";
-                    //txtAplazadas3Dia.Text = Aplazadas3Dia;
-                    //txtPerc_Aplazadas3Dia.Text = ds.Tables[1].Rows[0]["Perc_Aplazadas3Dia"].ToString() + " %";
-                    //txtAplazadasMayor3Dia.Text = AplazadasMayor3Dia;
-                    //txtPerc_AplazadasMayor3Dia.Text = ds.Tables[1].Rows[0]["Perc_AplazadasMayor3Dia"].ToString() + " %";
-
-                    //txtNoAsignados.Text = " " + ds.Tables[1].Rows[0]["NoAsignado"].ToString();
-                    //txtPerc_NoAsignados.Text = " " + ds.Tables[1].Rows[0]["Perc_NoAsignado"].ToString() + "%";
-                    //txtNoAsignados2.Text = " " + ds.Tables[1].Rows[0]["NoAsignado"].ToString();
-                    //txtPerc_NoAsignados2.Text = " " + ds.Tables[1].Rows[0]["Perc_NoAsignado"].ToString() + "%";
-
+                    txtTotal.Text = ds.Tables[1].Rows[1]["Total_Compromisos"].ToString();
+                    txtperc_Total.Text = ds.Tables[1].Rows[1]["perc_Total"].ToString() + " %";
+                    txtTotalAnt.Text = ds.Tables[1].Rows[0]["Total_Compromisos"].ToString();
+                    txtperc_TotalAnt.Text = ds.Tables[1].Rows[0]["perc_Total"].ToString() + " %";
 
                     StringBuilder sb = new StringBuilder();
                     sb.Append("<script type='text/javascript'>");
@@ -693,7 +632,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al generar grafica tiempos compromisos: " + ex.Message, this);
+                Toast.Error("Error al generar grafica backlog compromisos: " + ex.Message, this);
             }
         }
 
@@ -861,7 +800,7 @@ namespace presentacion
                 DateTime ff = rdpfechafinal.SelectedDate.Value == null ? DateTime.Now : Convert.ToDateTime(rdpfechafinal.SelectedDate);
                 GenerarGraficaCumplimientoCompromisos(fi, ff, "", "", 1);
                 GenerarGraficaTiemposCompromisos(fi,ff,"","",2);
-                GenerarGraficaBackLogCompromisos(fi);
+                GenerarGraficaBackLogCompromisos(ff.AddDays(-7));
                 div_reporte.Visible = true;
             }
         }

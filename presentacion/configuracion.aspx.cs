@@ -37,6 +37,7 @@ namespace presentacion
                 usuarios_configuraciones entidad = new usuarios_configuraciones();
                 entidad.usuario = usuario;
                 entidad.nombre = Session["nombre"] as string;
+                entidad.nombre = entidad.nombre.Replace("  "," ");
                 if (!usuarios_config.Exist(usuario))
                 {
                     string vmensaje = usuarios_config.Agregar(entidad);
