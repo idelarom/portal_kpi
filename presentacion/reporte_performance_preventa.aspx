@@ -289,7 +289,7 @@
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                             <div class="box box-danger">
                                                 <div class="box-header with-border">
-                                                    <h5 class="box-title">Informacion adicional</h5>
+                                                    <h5 class="box-title"></h5>
                                                     <div class="box-tools pull-right">
                                                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                                             <i class="fa fa-minus"></i>
