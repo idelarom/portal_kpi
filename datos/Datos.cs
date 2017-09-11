@@ -33,29 +33,7 @@ namespace datos
             DataSet ds = new DataSet();
             try
             {
-                string vmensaje;
-                int intentos, contador;
-                bool vabortado;
-                contador = 0;
-                intentos = 10;
-                while (contador++ < intentos)
-                {
-                    ds = datos.conexion.execute_sp(query, ListParameters, TipoCadena);
-                    if (transaccion == true)
-                    {
-                        vmensaje = Convert.ToString(ds.Tables[0].Rows[0]["mensaje"]);
-                        vabortado = Convert.ToBoolean(ds.Tables[0].Rows[0]["abortado"]);
-                        if (vabortado == true | vmensaje == "")
-                        {                            //intentos = 0;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        //intentos = 0;
-                        break; // se salga a la primera ya que es de consulta, y no intente en 10
-                    }
-                }
+                ds = datos.conexion.execute_sp(query, ListParameters, TipoCadena);
             }
             catch (Exception ex)
             {

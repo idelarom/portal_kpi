@@ -121,6 +121,22 @@ namespace presentacion
                 return dt;
             }
         }
+        public static DataTable GetDashboardBonos_ajax(DateTime? fecha_ini, DateTime? fecha_fin, string pLstEmpleados, string Usr)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                DashboardBonosCOM bonos = new DashboardBonosCOM();
+                DataSet ds = bonos.Sps_DashBoardReport_Bonos(fecha_ini, fecha_fin, pLstEmpleados,
+                "", Usr, 0);
+                dt = ds.Tables[0];
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                return dt;
+            }
+        }
 
 
         protected void lnkfiltros_Click(object sender, EventArgs e)
