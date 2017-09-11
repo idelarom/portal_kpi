@@ -128,15 +128,22 @@ namespace presentacion
         private String CadenaUsuariosFiltro()
         {
             string cadena = "";
-            IList<RadListBoxItem> collection = rdtselecteds.Items;
-            foreach (RadListBoxItem node in collection)
+            try
             {
-                if (node.Value != "")
+                IList<RadListBoxItem> collection = rdtselecteds.Items;
+                foreach (RadListBoxItem node in collection)
                 {
-                    cadena = cadena + node.Value.ToUpper().Trim() + ",";
+                    if (node.Value != "")
+                    {
+                        cadena = cadena + node.Value.ToUpper().Trim() + ",";
+                    }
                 }
+                cadena = cadena.Remove(cadena.Length - 1);
             }
-            cadena = cadena.Remove(cadena.Length - 1);
+            catch (Exception)
+            {
+                cadena = "";
+            }
             return cadena;
         }
 
@@ -153,24 +160,26 @@ namespace presentacion
         /// <param name="tiempo"></param>
         /// <returns></returns>
         private DataSet CumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta, int tipo_tiempo, 
-            int tiempo, int mes)
+            int tiempo, int mes, string lista_empleados)
         {
             PerformancePreventaCOM preventa = new PerformancePreventaCOM();
-            return preventa.sp_Preventa_Ingenieria_reportecompromisos_detalle_test(fecha_ini,fecha_fin,ingeniero,tipo,tipo_consulta,tipo_tiempo,tiempo, mes);
+            return preventa.sp_Preventa_Ingenieria_reportecompromisos_detalle_test(fecha_ini,fecha_fin,ingeniero,tipo,tipo_consulta,tipo_tiempo,tiempo, mes
+                , lista_empleados);
 
         }
 
-        private DataSet CompromisosBackLog(DateTime? fecha_ini)
+        private DataSet CompromisosBackLog(DateTime? fecha_ini, string listado_empleados)
         {
             PerformancePreventaCOM preventa = new PerformancePreventaCOM();
-            return preventa.sps_backlogCompromisos(fecha_ini);
+            return preventa.sps_backlogCompromisos(fecha_ini,listado_empleados);
 
         }
-        private void GenerarGraficaCumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta)
+        private void GenerarGraficaCumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta
+            , string lista_empleados)
         {
             try
             {
-                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta,0,0,0);
+                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta,0,0,0,lista_empleados);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
@@ -247,11 +256,12 @@ namespace presentacion
             }
         }
 
-        private void GenerarGraficaTiemposCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta)
+        private void GenerarGraficaTiemposCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta, 
+            string lista_empleados)
         {
             try
             {
-                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta,0,0,0);
+                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta,0,0,0,  lista_empleados);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
@@ -443,13 +453,13 @@ namespace presentacion
         }
 
 
-        private void GenerarGraficaBackLogCompromisos(DateTime? fecha_ini)
+        private void GenerarGraficaBackLogCompromisos(DateTime? fecha_ini, string listado_empleados)
         {
             try
             {
-                DataSet ds = CompromisosBackLog(fecha_ini);
+                DataSet ds = CompromisosBackLog(fecha_ini, listado_empleados);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
-                if (dt_grid_cumpli_compromisos.Rows.Count > 0)
+                if (dt_grid_cumpli_compromisos.Rows.Count > -1)
                 {
                     int año_actual = fecha_ini.Value.Year;
                     int año_anterior = (fecha_ini.Value.Year)-1;
@@ -664,7 +674,7 @@ namespace presentacion
                     fi = firstDayOfMonth;
                     ff = lastDayOfMonth;
                 }
-                DataSet ds = CumplimientoCompromisos(fi,ff, ingeniero, tipo_compro, 2,tipo_tiempo,tiempo,mes);
+                DataSet ds = CumplimientoCompromisos(fi,ff, ingeniero, tipo_compro, 2,tipo_tiempo,tiempo,mes,ingeniero);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
@@ -784,23 +794,19 @@ namespace presentacion
 
         protected void lnkguardar_Click(object sender, EventArgs e)
         {
-            string cadena = CadenaUsuariosFiltro();
+           
             if (!rdpfechainicial.SelectedDate.HasValue || !rdpfechafinal.SelectedDate.HasValue)
             {
                 Toast.Error("Seleccione un rango de fechas para generar el reporte.", this);
             }
-            else if (cadena == "")
-            {
-
-                Toast.Error("Seleccione un empleado para generar el reporte.", this);
-            }
             else
             {
+                string lista_empleados = CadenaUsuariosFiltro();
                 DateTime fi = rdpfechainicial.SelectedDate.Value == null ? DateTime.Now.AddDays(-30) : Convert.ToDateTime(rdpfechainicial.SelectedDate);
                 DateTime ff = rdpfechafinal.SelectedDate.Value == null ? DateTime.Now : Convert.ToDateTime(rdpfechafinal.SelectedDate);
-                GenerarGraficaCumplimientoCompromisos(fi, ff, "", "", 1);
-                GenerarGraficaTiemposCompromisos(fi,ff,"","",2);
-                GenerarGraficaBackLogCompromisos(ff.AddDays(-7));
+                GenerarGraficaCumplimientoCompromisos(fi, ff, "", "", 1,lista_empleados);
+                GenerarGraficaTiemposCompromisos(fi,ff,"","",2,lista_empleados);
+                GenerarGraficaBackLogCompromisos(ff.AddDays(-7),lista_empleados);
                 div_reporte.Visible = true;
             }
         }
