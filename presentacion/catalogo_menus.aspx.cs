@@ -53,6 +53,15 @@ namespace presentacion
                     rtxtmenu.Text = dt.Rows[0]["name"].ToString();
                     rtxticono.Text = dt.Rows[0]["icon_ad"].ToString();
                     cbxmantenimiento.Checked = Convert.ToBoolean(dt.Rows[0]["en_mantenimiento"]);
+                    if (Convert.ToBoolean(dt.Rows[0]["en_mantenimiento"])==true)
+                    {
+                        rdtpFechaInicial.SelectedDate = Convert.ToDateTime(dt.Rows[0]["fecha_inicio_mtto"].ToString());
+                        rdtpFechaFinal.SelectedDate = Convert.ToDateTime(dt.Rows[0]["fecha_fin_mtto"].ToString());
+                    }
+                    else
+                    {
+                        rdtpFechaInicial.SelectedDate = DateTime.Now;
+                    }                   
                     if (!String.IsNullOrEmpty(dt.Rows[0]["id_menu_padre"].ToString()))
                     {
                         ddlmenupadre.SelectedValue = dt.Rows[0]["id_menu_padre"].ToString();
@@ -68,6 +77,7 @@ namespace presentacion
                         Chkmenupadre.Checked = true;
                     }
                     ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "showContentSubmenu();", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "showContentFix();", true);
 
                     txtid_menu.Text = id_menu.ToString();
                 }
@@ -107,7 +117,7 @@ namespace presentacion
                 lblerror.Text = "Error al guardar menu: " + ex.Message;
             }
         }
-        private void EditarMenu(int id_menu , string menu, string icono, int id_menu_padre, string url, bool en_mantenimiento)
+        private void EditarMenu(int id_menu , string menu, string icono, int id_menu_padre, string url, bool en_mantenimiento, DateTime? fecha_inicio_mtto, DateTime? fecha_fin_mtto)
         {
             div_error.Visible = false;
             try
@@ -115,7 +125,7 @@ namespace presentacion
 
                 MenusCOM menus = new MenusCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = menus.sp_editar_menus(id_menu, id_menu_padre, menu, url, icono, usuario, en_mantenimiento);
+                DataSet ds = menus.sp_editar_menus(id_menu, id_menu_padre, menu, url, icono, usuario, en_mantenimiento, fecha_inicio_mtto, fecha_fin_mtto);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al editar menú . Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -212,6 +222,8 @@ namespace presentacion
                 string icono = rtxticono.Text.Trim();
                 string url = rtxtUrl.Text.Trim();
                 bool en_mantenimiento = cbxmantenimiento.Checked;
+                DateTime fecha_inicio_mtto = rdtpFechaInicial.SelectedDate.Value;
+                DateTime fecha_fin_mtto = rdtpFechaInicial.SelectedDate.Value;
                 if (Chkmenupadre.Checked)
                 {
                     if (rtxtmenu.Text != "" && rtxticono.Text != "")
@@ -222,7 +234,14 @@ namespace presentacion
                         }
                         else
                         {
-                            EditarMenu(Convert.ToInt32(id_menu), menu, icono, 0, "", en_mantenimiento);
+                            if (cbxmantenimiento.Checked)
+                            {
+                                EditarMenu(Convert.ToInt32(id_menu), menu, icono, 0, "", en_mantenimiento, fecha_inicio_mtto, fecha_fin_mtto);
+                            }
+                            else
+                            {
+                                EditarMenu(Convert.ToInt32(id_menu), menu, icono, 0, "", en_mantenimiento, null, null);
+                            }                            
                         }
                     }
                     else
@@ -242,7 +261,14 @@ namespace presentacion
                         }
                         else
                         {
-                            EditarMenu(Convert.ToInt32(id_menu), menu, icono, id_menu_padre, url, en_mantenimiento);
+                            if (cbxmantenimiento.Checked)
+                            {
+                                EditarMenu(Convert.ToInt32(id_menu), menu, icono, id_menu_padre, url, en_mantenimiento, fecha_inicio_mtto, fecha_fin_mtto);
+                            }
+                            else
+                            {
+                                EditarMenu(Convert.ToInt32(id_menu), menu, icono, id_menu_padre, url, en_mantenimiento, null, null);
+                            }
                         }
                     }
                     else

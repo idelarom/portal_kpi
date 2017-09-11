@@ -11,6 +11,17 @@ namespace presentacion
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                string FixTime = funciones.de64aTexto(Request.QueryString["FixTime"]);
+                //string[] Tiempo = FixTime.Split('*');
+                //hdfDias.Value = Tiempo[0].ToString().Trim();
+                //hdfHoras.Value = Tiempo[1].ToString().Trim();
+                //hdfMinutos.Value = Tiempo[2].ToString().Trim();
+                //hdfSegundos.Value = Tiempo[3].ToString().Trim();
+
+                hdfFixTime.Value = FixTime;
+            }
 
         }
     }

@@ -99,6 +99,16 @@
                   element.style.display = 'block';
               }
           }
+          function showContentFix() {
+              element = document.getElementById("DatosFix");
+              check = document.getElementById('<%= cbxmantenimiento.ClientID%>');
+              if (check.checked) {                  
+                  element.style.display = 'block';
+              }
+              else {
+                  element.style.display = 'none';
+              }
+          }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -197,8 +207,18 @@
                                         <asp:DropDownList ID="ddlmenupadre" CssClass="form-control" runat="server"></asp:DropDownList>
                                     </div>
                                     <div class="col-lg-12 col-sm-12">
-                                       <asp:CheckBox ID="cbxmantenimiento" runat="server"  Text="En mantenimiento" />
+                                       <asp:CheckBox ID="cbxmantenimiento" runat="server" onchange="showContentFix()" Text="En mantenimiento" />
                                     </div>
+                                     <div id="DatosFix">                                         
+                                        <div class="col-lg-6 col-md-6  col-sm-12">
+                                            <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha y hora inicial</strong></h5>
+                                              <telerik:RadDateTimePicker ID="rdtpFechaInicial" runat="server" Width="100%" Skin="Bootstrap" Enabled="False"></telerik:RadDateTimePicker>                                             
+                                        </div>
+                                        <div class="col-lg-6 col-md-6  col-sm-12">
+                                            <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha y hora final</strong></h5>
+                                              <telerik:RadDateTimePicker ID="rdtpFechaFinal"  runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDateTimePicker>  
+                                        </div>
+                                     </div>
                                 </div> 
                             </div>
                             
