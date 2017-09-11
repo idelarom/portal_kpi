@@ -101,7 +101,7 @@ namespace negocio.Componentes
             return ds;
         }        
         public DataSet sp_editar_menus(int id_menu, int id_menu_padre, string menu, string url, string icono, string usuario, 
-            bool en_mantenimiento)
+            bool en_mantenimiento, DateTime? fecha_inicio_mtto, DateTime? fecha_fin_mtto) 
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -113,6 +113,8 @@ namespace negocio.Componentes
             listparameters.Add(new SqlParameter() { ParameterName = "@picon_ad", SqlDbType = SqlDbType.Int, Value = icono });
             listparameters.Add(new SqlParameter() { ParameterName = "@pusuario", SqlDbType = SqlDbType.Int, Value = usuario });
             listparameters.Add(new SqlParameter() { ParameterName = "@en_mantenimiento", SqlDbType = SqlDbType.Int, Value = en_mantenimiento });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pfecha_inicio_mtto", SqlDbType = SqlDbType.Int, Value = fecha_inicio_mtto });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pfecha_fin_mtto", SqlDbType = SqlDbType.Int, Value = fecha_fin_mtto });
             try
             {
                 //ds = data.datos_Clientes(listparameters);
