@@ -29,7 +29,7 @@ namespace datos
                     connection.Open();
                     command = new SqlCommand(query, connection);
                     command.CommandType = CommandType.StoredProcedure;
-                    command.CommandTimeout = 120000;
+                    //command.CommandTimeout = 120000;
                     foreach (SqlParameter item in ListParameters)
                     {
                         command.Parameters.AddWithValue(item.ParameterName, item.SqlDbType).Value = item.Value;

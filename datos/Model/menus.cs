@@ -30,10 +30,15 @@ namespace datos.Model
         [StringLength(250)]
         public string color_menu { get; set; }
 
+        [Required]
         [StringLength(250)]
         public string icon_ad { get; set; }
 
         public bool en_mantenimiento { get; set; }
+
+        public DateTime? fecha_inicio_mtto { get; set; }
+
+        public DateTime? fecha_fin_mtto { get; set; }
 
         [Required]
         [StringLength(50)]
