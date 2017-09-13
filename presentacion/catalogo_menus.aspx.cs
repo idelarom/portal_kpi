@@ -61,6 +61,7 @@ namespace presentacion
                     else
                     {
                         rdtpFechaInicial.SelectedDate = DateTime.Now;
+                        rdtpFechaFinal.SelectedDate = null;
                     }                   
                     if (!String.IsNullOrEmpty(dt.Rows[0]["id_menu_padre"].ToString()))
                     {
@@ -224,6 +225,11 @@ namespace presentacion
                 bool en_mantenimiento = cbxmantenimiento.Checked;
                 DateTime fecha_inicio_mtto = rdtpFechaInicial.SelectedDate.Value;
                 DateTime fecha_fin_mtto = rdtpFechaInicial.SelectedDate.Value;
+                if (fecha_inicio_mtto>= fecha_fin_mtto && en_mantenimiento == true)
+                {
+                    Toast.Info("la fecha inicial del mantenimiento no puede ser mayor o igual a la fecha final", "Fecha y hora mantenimiento", this);
+                    goto Fin;
+                }
                 if (Chkmenupadre.Checked)
                 {
                     if (rtxtmenu.Text != "" && rtxticono.Text != "")
@@ -276,6 +282,7 @@ namespace presentacion
                         Toast.Info("favor de llenar los campos", "DATOS REQUERIDOS", this);
                     }
                 }
+                Fin:;
             }
             catch (Exception ex)
             {
