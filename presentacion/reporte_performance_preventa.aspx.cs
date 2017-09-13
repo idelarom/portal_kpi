@@ -1202,7 +1202,6 @@ namespace presentacion
                         hdfmonto_max.Value = monto_max;
                         hdfvalor_ganado.Value = valor_ganado;
                         hdfestatus.Value = estatus;
-                        ModalShow("#modal_valor_ganado");
                         //GenerarGraficaValorGanado(ingeniero,estatus,valor_ganado,monto_max);
                     }
                 }

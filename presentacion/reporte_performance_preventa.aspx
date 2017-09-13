@@ -210,8 +210,7 @@
         function BindGrpahDetailsVG(ingeniero, fecha_inicial, fecha_final) {
             var estatus_array =  [];
             var montos = [];
-            var target = document.getElementById('div_valor_ganado');
-            var spinner = new Spinner(opts).spin(target);
+            
             var call = $.ajax({
                 url: 'reporte_performance_preventa.aspx/GetGenerarValorGanado',
                 contentType: "application/json; charset=utf-8",
@@ -268,15 +267,14 @@
                                 },
                             }]
                         });
+                        ModalShow('#modal_valor_ganado');
                     }
-                    spinner.stop();
                 },
                 error: function (result, status, err) {
                     console.log("error", result.responseText);
-                    spinner.stop();
+                  
                 }
             });
-            spinner.stop();
         }
     </script>
 </asp:Content>
@@ -1508,15 +1506,15 @@
                                 <span aria-hidden="true">×</span></button>
                             <h4 class="modal-title">Detalles valor ganado</h4>
                         </div>
-                        <div class="modal-body" id="div3" runat="server">
+                        <div class="modal-body" id="div_valor_ganado">
                             <div class="row">
-                                <div class="col-lg-12 col-md-|1 col-sm-12" id="div_valor_ganado">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div id="valor_ganados" style="min-width: 200px; height: 300px; max-width: 1200px; margin: 0 auto">
                                     </div>
                                 </div>
                                 <br />
                                 <div class=" col-lg-12 col-md-12 col-sm-12" id="div_Detalles_vg" runat="server" visible="false">
-                                     <div class="table-responsive" style="max-height: 170px; overflow: scroll;">
+                                    <div class="table-responsive" style="max-height: 170px; overflow: scroll;">
                                         <table class="table table-responsive table-bordered table-condensed">
                                             <thead>
                                                 <tr style="font-size: 11px;">
@@ -1547,22 +1545,22 @@
                                                                 <%# Eval("cliente") %>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <%# Eval("horas") %>
+                                                                <%# Convert.ToDecimal(Eval("horas")) %>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <%# Eval("porchoras") %>
+                                                                <%# Eval("porchoras").ToString() + " %" %>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <%# Eval("margenbruto") %>
+                                                                <%# Convert.ToDecimal(Eval("margenbruto")).ToString("C") %>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <%# Eval("margen10") %>
+                                                                <%# Convert.ToDecimal(Eval("margen10")).ToString("C") %>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <%# Eval("montoing") %>
+                                                                <%# Convert.ToDecimal(Eval("montoing")).ToString("C") %>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <%# Eval("montoingnew") %>
+                                                                <%# Convert.ToDecimal(Eval("montoingnew")).ToString("C") %>
                                                             </td>
                                                             <td style="text-align: center;">
                                                                 <%# Eval("estatus") %>
