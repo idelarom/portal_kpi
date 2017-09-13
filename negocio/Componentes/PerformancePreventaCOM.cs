@@ -58,5 +58,45 @@ namespace negocio.Componentes
             }
             return ds;
         }
+        public DataSet sp_Preventa_Ingenieria_Graficas_Opordunidades_test(DateTime? fecha_ini, DateTime? fecha_fin, string listado_empleados)
+        {
+
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pfechainicial", SqlDbType = SqlDbType.Int, Value = fecha_ini });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pfechafinal", SqlDbType = SqlDbType.Int, Value = fecha_fin });
+            listparameters.Add(new SqlParameter() { ParameterName = "@plistado_empleados", SqlDbType = SqlDbType.Int, Value = listado_empleados });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_Preventa_Ingenieria_Graficas_Opordunidades_test", listparameters, false, 3);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+        public DataSet sp_PreventaIngenieriaValorGanado_test(DateTime? fecha_ini, DateTime? fecha_fin, string listado_empleados)
+        {
+
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pfechainicial", SqlDbType = SqlDbType.Int, Value = fecha_ini });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pfechafinal", SqlDbType = SqlDbType.Int, Value = fecha_fin });
+            listparameters.Add(new SqlParameter() { ParameterName = "@plistado_empleados", SqlDbType = SqlDbType.Int, Value = listado_empleados });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_PreventaIngenieriaValorGanado_test", listparameters, false, 3);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
     }
 }

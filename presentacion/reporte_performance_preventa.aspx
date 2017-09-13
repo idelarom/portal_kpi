@@ -163,6 +163,121 @@
             document.getElementById('<%= btnfiltrocumcompro.ClientID%>').click();
             return true;
         }
+        
+        function ViewDetailsOportunidades(ingeniero, tipo_Filtro) {
+            var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
+            nombre.value = ingeniero;
+            var tipo_filtro_ = document.getElementById('<%= hdftipofiltro_oportunidades.ClientID%>');
+            tipo_filtro_.value = tipo_Filtro;
+            document.getElementById('<%= btnfiltrooportunidades.ClientID%>').click();
+
+            return true;
+        }
+        //declaramos los objetos de tipo load desde el inicio (load oscuro)
+        var opts = {
+            lines: 13 // The number of lines to draw
+           , length: 28 // The length of each line
+           , width: 14 // The line thickness
+           , radius: 42 // The radius of the inner circle
+           , scale: .8 // Scales overall size of the spinner
+           , corners: 1 // Corner roundness (0..1)
+           , color: '#000' // #rgb or #rrggbb or array of colors
+           , opacity: 0.1 // Opacity of the lines
+           , rotate: 0 // The rotation offset
+           , direction: 1 // 1: clockwise, -1: counterclockwise
+           , speed: 1 // Rounds per second
+           , trail: 60 // Afterglow percentage
+           , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+           , zIndex: 10 // The z-index (defaults to 2000000000)
+           , className: 'spinner' // The CSS class to assign to the spinner
+           , top: '45%' // Top position relative to parent
+           , left: '50%' // Left position relative to parent
+           , shadow: true // Whether to render a shadow
+           , hwaccel: true // Whether to use hardware acceleration
+           , position: 'absolute' // Element positioning
+        };
+
+        function ViewDetailsValorGanado(ingeniero) {
+            var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
+            nombre.value = ingeniero;
+            document.getElementById('<%= btnviewvalor_ganado.ClientID%>').click();
+            var fecha_inicial = document.getElementById('<%= rdpfechainicial.ClientID %>').value;
+            var fecha_final = document.getElementById('<%= rdpfechafinal.ClientID %>').value;
+            BindGrpahDetailsVG(ingeniero, fecha_inicial, fecha_final);
+            return true;
+        }
+
+        function BindGrpahDetailsVG(ingeniero, fecha_inicial, fecha_final) {
+            var estatus_array =  [];
+            var montos = [];
+            var target = document.getElementById('div_valor_ganado');
+            var spinner = new Spinner(opts).spin(target);
+            var call = $.ajax({
+                url: 'reporte_performance_preventa.aspx/GetGenerarValorGanado',
+                contentType: "application/json; charset=utf-8",
+                type: "POST",
+                dataType: "json",
+                data: "{fecha_ini:'" + fecha_inicial + "',fecha_fin:'" + fecha_final + "',listado_empleados:'" + ingeniero + "'}",
+                success: function (response) {
+                    var bono = JSON.parse(response.d);
+                    if (bono.length > 0) {
+                        for (indice = 0; indice < bono.length; indice++) {
+                            montos.push(bono[indice].ValorGanado);
+                            estatus_array.push(bono[indice].Estatus);
+                        }
+                        var monto_maximo = bono[0].amount;
+                        var chart = new Highcharts.Chart({
+                            chart: {
+                                renderTo: 'valor_ganados',
+                                type: 'column'
+                            },
+                            title: {
+                                text: 'Valor ganado'
+                            },
+                            xAxis: {
+                                categories: estatus_array
+                            },
+                            yAxis: {
+                                plotLines: [{
+                                    value: monto_maximo,
+                                    color: '#ff0000',
+                                    width: 2,
+                                    zIndex: 4,
+                                    label: { text: 'Monto maximo' }
+                                }],
+                                title: { text: 'Bono de desempeño' }
+                            },
+
+                            tooltip: {
+                                pointFormat: 'Valor ganado: $ <b>{point.y:.1f}</b>'
+                            },
+                            series: [{
+                                name: 'Valor ganado',
+                                colorByPoint: true,
+                                data: montos
+                            },
+                            {
+                                name: 'Bono maximo',
+                                type: 'scatter',
+                                marker: {
+                                    enabled: false
+                                },
+                                data: [monto_maximo],
+                                tooltip: {
+                                    pointFormat: 'Monto maximo del bono trimestral: $ <b>{point.y:.1f}</b>'
+                                },
+                            }]
+                        });
+                    }
+                    spinner.stop();
+                },
+                error: function (result, status, err) {
+                    console.log("error", result.responseText);
+                    spinner.stop();
+                }
+            });
+            spinner.stop();
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -177,7 +292,10 @@
                             <i class="fa fa-filter" aria-hidden="true"></i>&nbsp;Filtros
             </asp:LinkButton>
         </div>
-        <div class="col-lg-12" id="div_reporte" runat="server" visible="false">
+    </div>
+
+    <div class="row" id="div_reporte" runat="server" visible="false">
+        <div class="col-lg-12">
             <div class="box box-danger box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Compromisos</h3>
@@ -205,8 +323,8 @@
                                         <div class="col-lg-12">
                                             <div id="cumpli_compromisos" style="min-width: 200px; height: 400px; max-width: 600px; margin: 0 auto">
                                             </div>
-                                           
-                                            <ul class="chart-legend clearfix" style="text-align:center;">
+
+                                            <ul class="chart-legend clearfix" style="text-align: center;">
                                                 <li><i class="fa fa-circle-o text-green"></i>&nbsp;Terminados a tiempo:&nbsp;<strong><asp:Label ID="lbltt" runat="server" Text="0"></asp:Label></strong></li>
                                                 <li><i class="fa fa-circle-o text-yellow"></i>&nbsp;Terminados fuera de tiempo:&nbsp;<strong><asp:Label ID="lbltft" runat="server" Text="0"></asp:Label></strong></li>
                                                 <li><i class="fa fa-circle-o text-blue"></i>&nbsp;No terminados dentro de tiempo:&nbsp;<strong><asp:Label ID="lblndt" runat="server" Text="0"></asp:Label></strong></li>
@@ -231,40 +349,40 @@
                                                     <tbody>
                                                         <asp:Repeater ID="repeater_cumpli_compromisos" runat="server">
                                                             <ItemTemplate>
-                                                                <tr style="font-size: 11px;height:10px;">
+                                                                <tr style="font-size: 11px; height: 10px;">
                                                                     <td><%# Eval("Ingeniero") %></td>
-                                                                    <td style="text-align:center;">
-                                                                        <a class="btn btn-success btn-xs btn-flat" style="cursor:pointer;  min-width:70px;  margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
+                                                                    <td style="text-align: center;">
+                                                                        <a class="btn btn-success btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
                                                                             <%# Eval("Terminados a Tiempo") %>
                                                                         </a>
 
-                                                                    </td>  
-                                                                    <td style="text-align:center;">
-                                                                        <a class="btn btn-warning btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <a class="btn btn-warning btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
                                                                             <%# Eval("Terminados Fuera de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
-                                                                    <td style="text-align:center;">
-                                                                        <a class="btn btn-primary btn-xs btn-flat" style="cursor:pointer; min-width:70px;   margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
+                                                                    <td style="text-align: center;">
+                                                                        <a class="btn btn-primary btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
                                                                             <%# Eval("No Terminados Dentro de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
-                                                                    <td style="text-align:center;">
-                                                                        <a class="btn btn-danger btn-xs btn-flat" style="cursor:pointer;min-width:70px;    margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
+                                                                    <td style="text-align: center;">
+                                                                        <a class="btn btn-danger btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
                                                                             <%# Eval("No Terminados Fuera de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
-                                                                    <td style="text-align:center;">
-                                                                        <a  class="btn btn-default btn-xs btn-flat" style="cursor:pointer;min-width:70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+");" %>'>
+                                                                    <td style="text-align: center;">
+                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+");" %>'>
                                                                             <%# Eval("Total de compromisos") %>
                                                                         </a>
 
                                                                     </td>
-                                                                   
-                                                                    <td style="text-align:center;"><%# Eval("Porcentaje de eficiencia") %></td>
+
+                                                                    <td style="text-align: center;"><%# Eval("Porcentaje de eficiencia") %></td>
                                                                 </tr>
                                                             </ItemTemplate>
                                                         </asp:Repeater>
@@ -280,7 +398,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12" style="display:none;">
+                        <div class="col-lg-12">
                             <div class="box box-danger">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Tiempo de compromisos</h3>
@@ -568,7 +686,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12" style="display:none;">
+                        <div class="col-lg-12">
                             <div class="box box-danger">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Backlog compromisos</h3>
@@ -937,6 +1055,162 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-12">
+            <div class="box box-danger box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Oportunidades</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Horas trabajadas por folio de oportunidad respecto al vendedor </h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class=" col-lg-12">
+                                            <asp:GridView ID="grid_horas_trabajadas_oportunidades" Style="display: none;" runat="server"></asp:GridView>
+                                            <div id="horas_trabajadas_oportunidades" style="min-width: 200px; height: 400px; max-width: 1200px; margin: 0 auto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Horas trabajadas por folio de oportunidad respecto al vendedor </h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class=" col-lg-12">
+                                            <div id="estatus_oportunidades" style="min-width: 200px; height: 400px; max-width: 600px; margin: 0 auto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Grafica por horas de Ingenieros de preventa </h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class=" col-lg-12">
+                                            <asp:GridView ID="grid_horas_trabajadas_oportunidades_ingeniero" Style="display: none;" runat="server"></asp:GridView>
+                                            <div id="horas_trabajadas_oportunidades_ingeniero" style="min-width: 200px; height: 400px; max-width: 1200px; margin: 0 auto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Valor ganado por ingeniero de preventa</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+
+                                        <div class=" col-lg-12">
+                                            <div class="table-responsive">
+                                                <table class="dvv table table-responsive table-bordered table-condensed">
+                                                    <thead>
+                                                        <tr style="font-size: 11px;">
+                                                            <th style="min-width: 200px; text-align: left;" scope="col">Ingeniero</th>
+                                                            <th style="min-width: 40px; text-align: center;" scope="col">Ganadas</th>
+                                                            <th style="min-width: 40px; text-align: center;" scope="col">Cancealadas</th>
+                                                            <th style="min-width: 40px; text-align: center;" scope="col">Perdidas</th>
+                                                            <th style="min-width: 40px; text-align: center;" scope="col">Abandonadas</th>
+                                                            <th style="min-width: 40px; text-align: center;" scope="col">Abiertas</th>
+                                                            <th style="min-width: 40px; text-align: center;" scope="col">Seguimiento</th>
+                                                            <th style="min-width: 40px; text-align: center;" scope="col">En Espera</th>
+                                                            <th style="min-width: 40px; text-align: center;" scope="col">Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <asp:Repeater ID="repeater_valor_ganado" runat="server">
+                                                            <ItemTemplate>
+                                                                <tr style="font-size: 11px; height: 10px;">
+                                                                    <td>
+                                                                        <a style="cursor: pointer;"
+                                                                            onclick='<%# "return ViewDetailsValorGanado("+@"""" + Eval("Login")+@""""+@");" %>'>
+                                                                            <%# Eval("Nombre") %>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <%# Eval("Ganada") %>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <%# Eval("Cancelada") %>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <%# Eval("Perdida") %>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <%# Eval("Abandonada") %>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <%# Eval("Abierta") %>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <%# Eval("Seguimiento") %>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <%# Eval("En espera") %>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <%# Eval("Total de compromisos") %>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                       
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
@@ -1000,9 +1274,9 @@
                                     <div style="max-height: 130px; height: 130px; overflow: scroll;">
                                         <telerik:RadTreeView RenderMode="Lightweight" ID="rtvListEmpleado" runat="server" Width="100%"
                                             Style="background-color: white; font-size: 9px;" Skin="Bootstrap">
-                                            <databindings>
+                                            <DataBindings>
                                                 <telerik:RadTreeNodeBinding Expanded="False"></telerik:RadTreeNodeBinding>
-                                            </databindings>
+                                            </DataBindings>
                                         </telerik:RadTreeView>
                                     </div>
 
@@ -1046,7 +1320,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
-      <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_cumpl_compromisos" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_cumpl_compromisos" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
                 <Triggers>
@@ -1065,7 +1339,7 @@
                                     <div class="table-responsive" style="max-height: 420px; overflow: scroll;">
                                         <table class="table table-resposive table-bordered table-condensed">
                                             <thead>
-                                                <tr style="font-size: 11px; color:white; background-color:#C42C2C">
+                                                <tr style="font-size: 11px; color: white; background-color: #C42C2C">
                                                     <td style="min-width: 80px;">Num Oport</td>
                                                     <td style="min-width: 240px;">Cliente</td>
                                                     <td style="min-width: 220px;">Creado Por</td>
@@ -1151,11 +1425,178 @@
             </asp:UpdatePanel>
         </div>
     </div>
-    <asp:Button ID="btnfiltrocumcompro" OnClick="btnfiltrocumcompro_Click" style="display:none" runat="server" Text="Button" />
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_cumpl_oportunidades" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Always">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnfiltrooportunidades" EventName="Click" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Oportunidades</h4>
+                        </div>
+                        <div class="modal-body" id="div2" runat="server">
+                            <div class="row">
+                                <div class="col-lg-12 col-xs-12">
+                                    <div class="table-responsive" style="max-height: 420px; overflow: scroll;">
+                                        <table class="table table-resposive table-bordered table-condensed">
+                                            <thead>
+                                                <tr style="font-size: 11px; color: white; background-color: #C42C2C">
+
+                                                    <th style="min-width: 80px;" scope="col">Folio OP</th>
+                                                    <th style="min-width: 300px;" scope="col">Cliente</th>
+                                                    <th style="min-width: 80px;" scope="col">Total Horas</th>
+                                                    <th style="min-width: 120px;" scope="col">Monto</th>
+                                                    <th style="min-width: 120px;" scope="col">Margen</th>
+                                                    <th style="min-width: 200px;" scope="col">Fecha Auto.</th>
+                                                    <th style="min-width: 100px;" scope="col">Usuario Agente</th>
+                                                    <th style="min-width: 240px;" scope="col">Agente</th>
+                                                    <th style="min-width: 100px;" scope="col">Login INg</th>
+                                                    <th style="min-width: 240px;" scope="col">Ingeniero</th>
+                                                    <th style="min-width: 120px;" scope="col">Total Horas Ing.</th>
+                                                    <th style="min-width: 120px;" scope="col">Estatus</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="repeat_oportunidades" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr style="font-size: 11px">
+                                                            <td><%# Eval("FOLIO_OP") %></td>
+                                                            <td><%# Eval("Cliente") %></td>
+                                                            <td><%# Eval("TOTAL_HORAS_OP") %></td>
+                                                            <td><%# Convert.ToDecimal(Eval("MONTO_OP")).ToString("C") %></td>
+                                                            <td><%# Convert.ToDecimal(Eval("MARGEN_OP")).ToString("C") %></td>
+                                                            <td><%# Convert.ToDateTime(Eval("FECHA_AUTORIZACION")).ToString("dddd dd MMMM, yyyy hh:mm:ss", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")).ToUpper() %></td>
+                                                            <td><%# Eval("LOGIN_AGENTE_VENTA") %></td>
+                                                            <td><%# Eval("AGENTE_VENTA") %></td>
+                                                            <td><%# Eval("LOGIN_ING_PREVENTA") %></td>
+                                                            <td><%# Eval("ING_PREVENTA") %></td>
+                                                            <td><%# Eval("TOTAL_HORAS_ING_PREVENTA") %></td>
+                                                            <td><%# Eval("ESTATUS") %></td>
+
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_valor_ganado" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Always">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnviewvalor_ganado" EventName="Click" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Detalles valor ganado</h4>
+                        </div>
+                        <div class="modal-body" id="div3" runat="server">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-|1 col-sm-12" id="div_valor_ganado">
+                                    <div id="valor_ganados" style="min-width: 200px; height: 300px; max-width: 1200px; margin: 0 auto">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class=" col-lg-12 col-md-12 col-sm-12" id="div_Detalles_vg" runat="server" visible="false">
+                                     <div class="table-responsive" style="max-height: 170px; overflow: scroll;">
+                                        <table class="table table-responsive table-bordered table-condensed">
+                                            <thead>
+                                                <tr style="font-size: 11px;">
+                                                    <th style="min-width: 80px; text-align: left;" scope="col">Cve Opor</th>
+                                                    <th style="min-width: 80px; text-align: center;" scope="col">Folio Op</th>
+                                                    <th style="min-width: 300px; text-align: center;" scope="col">Cliente</th>
+                                                    <th style="min-width: 100px; text-align: center;" scope="col">Horas</th>
+                                                    <th style="min-width: 100px; text-align: center;" scope="col">% Horas</th>
+                                                    <th style="min-width: 100px; text-align: center;" scope="col">Margen Bruto</th>
+                                                    <th style="min-width: 100px; text-align: center;" scope="col">Margen 10</th>
+                                                    <th style="min-width: 100px; text-align: center;" scope="col">Monto Ing.</th>
+                                                    <th style="min-width: 120px; text-align: center;" scope="col">Monto Ing new</th>
+                                                    <th style="min-width: 100px; text-align: center;" scope="col">Estatus</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="repeater_detalles_vg" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr style="font-size: 11px; height: 10px;">
+
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("cveoport") %>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("folioop") %>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("cliente") %>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("horas") %>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("porchoras") %>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("margenbruto") %>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("margen10") %>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("montoing") %>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("montoingnew") %>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <%# Eval("estatus") %>
+                                                            </td>
+
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <asp:Button ID="btnfiltrocumcompro" OnClick="btnfiltrocumcompro_Click" Style="display: none" runat="server" Text="Button" />
+    <asp:Button ID="btnfiltrooportunidades" OnClick="btnfiltrooportunidades_Click" Style="display: none" runat="server" Text="Button" />
+    <asp:Button ID="btnviewvalor_ganado" OnClick="btnviewvalor_ganado_Click" Style="display: none" runat="server" Text="Button" />
     <asp:HiddenField ID="hdfingeniero" runat="server" />
     <asp:HiddenField ID="hdftipocompromisos" runat="server" />
     <asp:HiddenField ID="hdftiempo" runat="server" />
     <asp:HiddenField ID="hdftipo_tiempo" runat="server" />
     <asp:HiddenField ID="hdfaño" runat="server" />
     <asp:HiddenField ID="hdfmes" runat="server" />
+    <asp:HiddenField ID="hdftipofiltro_oportunidades" runat="server" />
+    <asp:HiddenField ID="hdfestatus" runat="server" />
+    <asp:HiddenField ID="hdfvalor_ganado" runat="server" />
+    <asp:HiddenField ID="hdfmonto_max" runat="server" />
 </asp:Content>

@@ -51,8 +51,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bonds_log.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bonds_types.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bons_automatic_types.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="closing_dates.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="comments_types_payments.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
     <Compile Include="conexion.cs" />
     <Compile Include="Datos.cs" />
+    <Compile Include="employees_compensations.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="files_requests_bonds.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="group_leader.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\dispositivos_bloqueados.cs" />
     <Compile Include="Model\menus.cs" />
     <Compile Include="Model\menus_perfiles.cs" />
@@ -70,14 +94,81 @@
     <Compile Include="NAVISION\Employee.cs" />
     <Compile Include="NAVISION\NAVISION.cs" />
     <Compile Include="OPTRACKER\ModelOPT.cs" />
+    <Compile Include="payment_history.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="periodicity.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="periodicity_ranges.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="permissions_users_bonds_types.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="requests_automatic_status.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="requests_bonds.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="requests_bonds_Automatic.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="requests_status.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SICOEM.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SICOEM.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SICOEM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SICOEM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SICOEM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Sps_DashBoardReport_Bonos_test_Result.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tab_reporte_bonos.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ReplaceBoss.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EntityDeploy Include="SICOEM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SICOEM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="SICOEM.edmx.diagram">
+      <DependentUpon>SICOEM.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SICOEM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SICOEM.edmx</DependentUpon>
+      <LastGenOutput>SICOEM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SICOEM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SICOEM.edmx</DependentUpon>
+      <LastGenOutput>SICOEM.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

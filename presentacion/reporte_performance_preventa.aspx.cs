@@ -1,13 +1,10 @@
 ﻿using negocio.Componentes;
+using negocio.Entidades;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
-using negocio.Entidades;
+using System.Text;
 using Telerik.Web.UI;
 
 namespace presentacion
@@ -25,6 +22,7 @@ namespace presentacion
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
                              "ModalCloseGlobal('" + modalname + "');", true);
         }
+
         private void AgregarItemSleccionado(IList<RadTreeNode> collection)
         {
             try
@@ -41,6 +39,7 @@ namespace presentacion
                 Toast.Error("Error al agregar seleccion de empleados: " + ex.Message, this);
             }
         }
+
         protected void CargarDatosFiltros(string filtro)
         {
             try
@@ -48,7 +47,7 @@ namespace presentacion
                 rdpfechainicial.SelectedDate = DateTime.Today.AddDays(-7);
                 rdpfechafinal.SelectedDate = DateTime.Today;
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
-                Boolean ver_Todos_los_empleados =  Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
+                Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool no_activos = cbxnoactivo.Checked;
                 DataTable dt_empleados = new DataTable();
@@ -77,9 +76,8 @@ namespace presentacion
                     ddlempleado_a_consultar.Enabled = false;
                     CargarListadoEmpleado(num_empleado, false);
                     ddlempleado_a_consultar.SelectedValue = num_empleado.ToString();
-                    lnkagregartodos_Click(null,null);
+                    lnkagregartodos_Click(null, null);
                 }
-
             }
             catch (Exception ex)
             {
@@ -87,12 +85,11 @@ namespace presentacion
             }
             finally
             {
-
                 lnkfiltros.Visible = true;
                 nkcargandofiltros.Style["display"] = "none";
             }
         }
- 
+
         protected void CargarListadoEmpleado(int num_jefe, Boolean ver_Todos_los_empleados)
         {
             try
@@ -147,7 +144,6 @@ namespace presentacion
             return cadena;
         }
 
-
         /// <summary>
         /// tipo_tiempo int = 0 --1 = ASIGNACION, 2 = VENTAS, 3 = APLAZAMIENTO, tiempo int  = 0  1= 1 DIA, 2 = 2 DIAS, 3 = 3 DIAS, 4 = MAYOR 3 DIAS, 5 = MISMO DIA
         /// </summary>
@@ -159,27 +155,39 @@ namespace presentacion
         /// <param name="tipo_tiempo"></param>
         /// <param name="tiempo"></param>
         /// <returns></returns>
-        private DataSet CumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta, int tipo_tiempo, 
+        private DataSet CumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta, int tipo_tiempo,
             int tiempo, int mes, string lista_empleados)
         {
             PerformancePreventaCOM preventa = new PerformancePreventaCOM();
-            return preventa.sp_Preventa_Ingenieria_reportecompromisos_detalle_test(fecha_ini,fecha_fin,ingeniero,tipo,tipo_consulta,tipo_tiempo,tiempo, mes
+            return preventa.sp_Preventa_Ingenieria_reportecompromisos_detalle_test(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta, tipo_tiempo, tiempo, mes
                 , lista_empleados);
-
         }
 
         private DataSet CompromisosBackLog(DateTime? fecha_ini, string listado_empleados)
         {
             PerformancePreventaCOM preventa = new PerformancePreventaCOM();
-            return preventa.sps_backlogCompromisos(fecha_ini,listado_empleados);
-
+            return preventa.sps_backlogCompromisos(fecha_ini, listado_empleados);
         }
+
+        private DataSet HorasTrabajadas(DateTime? fecha_ini, DateTime? fecha_fin, string listado_empleados)
+        {
+            PerformancePreventaCOM preventa = new PerformancePreventaCOM();
+            return preventa.sp_Preventa_Ingenieria_Graficas_Opordunidades_test(fecha_ini, fecha_fin, listado_empleados);
+        }
+
+        public static DataSet ValorGanado(DateTime? fecha_ini, DateTime? fecha_fin, string listado_empleados)
+        {
+            PerformancePreventaCOM preventa = new PerformancePreventaCOM();
+            return preventa.sp_PreventaIngenieriaValorGanado_test(fecha_ini, fecha_fin, listado_empleados);
+        }
+
+
         private void GenerarGraficaCumplimientoCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta
             , string lista_empleados)
         {
             try
             {
-                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta,0,0,0,lista_empleados);
+                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta, 0, 0, 0, lista_empleados);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
@@ -192,7 +200,7 @@ namespace presentacion
                     lblnft.Text = row_graph_cumpli_compromisos["no_terminados_fuera_de_tiempo"].ToString();
                     string data =
                   "               {name: 'Terminados a tiempo'," +
-                  "                y: "+row_graph_cumpli_compromisos["value_terminados_a_tiempo"].ToString()+",color:'#00897b'" +
+                  "                y: " + row_graph_cumpli_compromisos["value_terminados_a_tiempo"].ToString() + ",color:'#00897b'" +
                   "            }, {" +
                   "                name: 'Terminados fuera de tiempo'," +
                   "                y: " + row_graph_cumpli_compromisos["value_terminados_fuera_de_tiempo"].ToString() + ",color:'#ffc400 '" +
@@ -234,11 +242,11 @@ namespace presentacion
                     "            colorByPoint: true," +
                     "            data: [" + data + "]," +
                     "            point:{" +
-                    "               events: {"+
-                    "                   click: function () {"+
+                    "               events: {" +
+                    "                   click: function () {" +
                     "                       return ViewDetailsCumpCompro('',this.name,1);" +
-                    "                       }"+
-                    "                     }"+
+                    "                       }" +
+                    "                     }" +
                     "            }" +
                     "        }]" +
                     "    });";
@@ -246,22 +254,20 @@ namespace presentacion
                     sb.Append("</script>");
                     ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
                     load_cumpli_compromisos.Style["display"] = "none";
-
                 }
-               
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al generar grafica cumplimiento compromisos: "+ex.Message,this);
+                Toast.Error("Error al generar grafica cumplimiento compromisos: " + ex.Message, this);
             }
         }
 
-        private void GenerarGraficaTiemposCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta, 
+        private void GenerarGraficaTiemposCompromisos(DateTime? fecha_ini, DateTime? fecha_fin, string ingeniero, string tipo, int tipo_consulta,
             string lista_empleados)
         {
             try
             {
-                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta,0,0,0,  lista_empleados);
+                DataSet ds = CumplimientoCompromisos(fecha_ini, fecha_fin, ingeniero, tipo, tipo_consulta, 0, 0, 0, lista_empleados);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
@@ -398,11 +404,10 @@ namespace presentacion
                     txtNoAsignados2.Text = " " + ds.Tables[1].Rows[0]["NoAsignado"].ToString();
                     txtPerc_NoAsignados2.Text = " " + ds.Tables[1].Rows[0]["Perc_NoAsignado"].ToString() + "%";
 
-
                     StringBuilder sb = new StringBuilder();
                     sb.Append("<script type='text/javascript'>");
                     string script = "Highcharts.chart('tiempo_compromisos', {"
-                           // + "colors: ['#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5'],"
+                            // + "colors: ['#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5'],"
                             + "data: {"
                             + "table: 'ContentPlaceHolder1_grid_tiempo_compromisos'"
                             + "},"
@@ -452,7 +457,6 @@ namespace presentacion
             }
         }
 
-
         private void GenerarGraficaBackLogCompromisos(DateTime? fecha_ini, string listado_empleados)
         {
             try
@@ -462,11 +466,11 @@ namespace presentacion
                 if (dt_grid_cumpli_compromisos.Rows.Count > -1)
                 {
                     int año_actual = fecha_ini.Value.Year;
-                    int año_anterior = (fecha_ini.Value.Year)-1;
+                    int año_anterior = (fecha_ini.Value.Year) - 1;
 
-                    DataTable dt_graph = ds.Tables[0];                   
+                    DataTable dt_graph = ds.Tables[0];
                     DataView dv_aant = dt_graph.DefaultView;
-                    dv_aant.RowFilter = "idYear = "+año_anterior.ToString()+"";
+                    dv_aant.RowFilter = "idYear = " + año_anterior.ToString() + "";
                     DataTable dt_anterior = dv_aant.ToTable();
                     grid_backlog_compromisos_anterior.Columns.Clear();
                     grid_backlog_compromisos_anterior.DataSource = dt_anterior;
@@ -486,61 +490,59 @@ namespace presentacion
                     txtEneroAnt.Text = ds.Tables[0].Rows[0]["Enero"].ToString();
                     txtPerc_EneroAnt.Text = ds.Tables[1].Rows[0]["Perc_Enero"].ToString() + " %";
 
-                    
                     txtFebrero.Text = ds.Tables[0].Rows[1]["Febrero"].ToString();
                     txtPerc_Febrero.Text = ds.Tables[1].Rows[1]["Perc_Febrero"].ToString() + " %";
                     txtFebreroAnt.Text = ds.Tables[0].Rows[0]["Febrero"].ToString();
                     txtPerc_FebreroAnt.Text = ds.Tables[1].Rows[0]["Perc_Febrero"].ToString() + " %";
 
-                    
                     txtMarzo.Text = ds.Tables[0].Rows[1]["Marzo"].ToString();
                     txtPerc_Marzo.Text = ds.Tables[1].Rows[1]["Perc_Marzo"].ToString() + " %";
                     txtMarzoAnt.Text = ds.Tables[0].Rows[0]["Marzo"].ToString();
                     txtPerc_MarzoAnt.Text = ds.Tables[1].Rows[0]["Perc_Marzo"].ToString() + " %";
-                    
+
                     txtAbril.Text = ds.Tables[0].Rows[1]["Abril"].ToString();
                     txtPerc_Abril.Text = ds.Tables[1].Rows[1]["Perc_Abril"].ToString() + " %";
                     txtAbrilAnt.Text = ds.Tables[0].Rows[0]["Abril"].ToString();
                     txtPerc_AbrilAnt.Text = ds.Tables[1].Rows[0]["Perc_Abril"].ToString() + " %";
-                    
+
                     txtMayo.Text = ds.Tables[0].Rows[1]["Mayo"].ToString();
                     txtPerc_Mayo.Text = ds.Tables[1].Rows[1]["Perc_Mayo"].ToString() + " %";
                     txtMayoAnt.Text = ds.Tables[0].Rows[0]["Mayo"].ToString();
                     txtPerc_MayoAnt.Text = ds.Tables[1].Rows[0]["Perc_Mayo"].ToString() + " %";
-                    
+
                     txtJunio.Text = ds.Tables[0].Rows[1]["Junio"].ToString();
                     txtPerc_Junio.Text = ds.Tables[1].Rows[1]["Perc_Junio"].ToString() + " %";
                     txtJunioAnt.Text = ds.Tables[0].Rows[0]["Junio"].ToString();
                     txtPerc_JunioAnt.Text = ds.Tables[1].Rows[0]["Perc_Junio"].ToString() + " %";
-                    
+
                     txtJulio.Text = ds.Tables[0].Rows[1]["Julio"].ToString();
                     txtPerc_Julio.Text = ds.Tables[1].Rows[1]["Perc_Julio"].ToString() + " %";
                     txtJulioAnt.Text = ds.Tables[0].Rows[0]["Julio"].ToString();
                     txtPerc_JulioAnt.Text = ds.Tables[1].Rows[0]["Perc_Julio"].ToString() + " %";
-                    
+
                     txtAgosto.Text = ds.Tables[0].Rows[1]["Agosto"].ToString();
                     txtPerc_Agosto.Text = ds.Tables[1].Rows[1]["Perc_Agosto"].ToString() + " %";
                     txtAgostoAnt.Text = ds.Tables[0].Rows[0]["Agosto"].ToString();
                     txtPerc_AgostoAnt.Text = ds.Tables[1].Rows[0]["Perc_Agosto"].ToString() + " %";
-                    
+
                     txtSeptiembre.Text = ds.Tables[0].Rows[1]["Septiembre"].ToString();
                     txtPerc_Septiembre.Text = ds.Tables[1].Rows[1]["Perc_Septiembre"].ToString() + " %";
                     txtSeptiembreAnt.Text = ds.Tables[0].Rows[0]["Septiembre"].ToString();
                     txtPerc_SeptiembreAnt.Text = ds.Tables[1].Rows[0]["Perc_Septiembre"].ToString() + " %";
-                    
+
                     txtOctubre.Text = ds.Tables[0].Rows[1]["Octubre"].ToString();
                     txtPerc_Octubre.Text = ds.Tables[1].Rows[1]["Perc_Octubre"].ToString() + " %";
                     txtOctubreAnt.Text = ds.Tables[0].Rows[0]["Octubre"].ToString();
                     txtPerc_OctubreAnt.Text = ds.Tables[1].Rows[0]["Perc_Octubre"].ToString() + " %";
-                    
+
                     txtNoviembre.Text = ds.Tables[0].Rows[1]["Noviembre"].ToString();
                     txtPerc_Noviembre.Text = ds.Tables[1].Rows[1]["Perc_Noviembre"].ToString() + " %";
                     txtNoviembreAnt.Text = ds.Tables[0].Rows[0]["Noviembre"].ToString();
                     txtPerc_NoviembreAnt.Text = ds.Tables[1].Rows[0]["Perc_Noviembre"].ToString() + " %";
-                    
+
                     txtDiciembre.Text = ds.Tables[0].Rows[1]["Diciembre"].ToString();
                     txtPerc_Diciembre.Text = ds.Tables[1].Rows[1]["Perc_Diciembre"].ToString() + " %";
-                    
+
                     txtDiciembreAnt.Text = ds.Tables[0].Rows[0]["Diciembre"].ToString();
                     txtPerc_DiciembreAnt.Text = ds.Tables[1].Rows[0]["Perc_Diciembre"].ToString() + " %";
 
@@ -571,7 +573,7 @@ namespace presentacion
                             + "  tooltip: {"
                             + "      formatter: function () {"
                             + "          return '<b>' + this.series.name + '</b><br />' +"
-                            + "              this.point.y + ' compromiso(s) en "+año_anterior.ToString()+"';"
+                            + "              this.point.y + ' compromiso(s) en " + año_anterior.ToString() + "';"
                             + "       }"
                             + "   },"
                             + "  plotOptions: {"
@@ -646,6 +648,333 @@ namespace presentacion
             }
         }
 
+        private DataTable details_oportunidades_from_login(string login, string column_filter)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                if (ViewState["dt_detalles_oportunidades"] != null)
+                {
+                    DataTable dtv = ViewState["dt_detalles_oportunidades"] as DataTable;
+                    DataView dv = dtv.DefaultView;
+                    dv.RowFilter = "" + column_filter + " = '" + login + "'";
+                    dt = dv.ToTable();
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar detalles de oportunidades: " + ex.Message, this);
+            }
+            return dt;
+        }
+
+        private void GenerarGraficaHorasTrabajadasOportunidades(DateTime? fecha_ini, DateTime? fecha_fin, string listado_empleados)
+        {
+            try
+            {
+                DataSet ds = HorasTrabajadas(fecha_ini, fecha_fin, listado_empleados);
+                DataTable dt_horas_trabajadas_oport = ds.Tables[0];
+                ViewState["dt_detalles_oportunidades"] = null;
+                if (dt_horas_trabajadas_oport.Rows.Count > -1)
+                {
+                    ViewState["dt_detalles_oportunidades"] = ds.Tables[3];
+                    dt_horas_trabajadas_oport.Columns.RemoveAt(1);
+                    dt_horas_trabajadas_oport.Columns["Total_hrs_op"].ColumnName = "Total Horas Oportunidad";
+                    grid_horas_trabajadas_oportunidades.Columns.Clear();
+                    grid_horas_trabajadas_oportunidades.DataSource = dt_horas_trabajadas_oport;
+                    grid_horas_trabajadas_oportunidades.DataBind();
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<script type='text/javascript'>");
+                    string script = "Highcharts.chart('horas_trabajadas_oportunidades', {"
+                            // + "colors: ['#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5'],"
+                            + "data: {"
+                            + "table: 'ContentPlaceHolder1_grid_horas_trabajadas_oportunidades'"
+                            + "},"
+                            + "chart: {"
+                            + "type: 'column'"
+                            + " },"
+                            + " title: {"
+                            + "     text: 'Horas trabajadas por oportunidad - Agente de ventas'"
+                            + " },"
+                            + "  yAxis: {"
+                            + "      allowDecimals: false,"
+                            + "      title: {"
+                            + "          text: 'Horas trabajadas'"
+                            + "      }"
+                            + " },"
+                            + "  tooltip: {"
+                            + "      formatter: function () {"
+                            + "          return '<b>' + this.series.name + '</b><br />' +"
+                            + "              this.point.y + ' hora(s) trabajada(s)';"
+                            + "       }"
+                            + "   },"
+                            + "  plotOptions: {"
+                            + "      column: {"
+                            + "          colorByPoint: false"
+                            + "      },"
+                            + "      series: {"
+                            + "          cursor: 'name',"
+                            + "          point: {"
+                            + "              events: {"
+                            + "                   click: function () {"
+                            + "                         return ViewDetailsOportunidades(this.name,'login_agente_venta');"
+                            + "                       }"
+                            + "                     }"
+                            + "                  }"
+                            + "               }"
+                            + "             }"
+                            + "          });";
+                    sb.Append(script);
+                    sb.Append("</script>");
+
+                    ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al generar grafica horas trabajadas oportunidades: " + ex.Message, this);
+            }
+        }
+
+        private void GenerarGraficaHorasTrabajadasOportunidadesIngeniero(DateTime? fecha_ini, DateTime? fecha_fin, string listado_empleados)
+        {
+            try
+            {
+                DataSet ds = HorasTrabajadas(fecha_ini, fecha_fin, listado_empleados);
+                DataTable dt_horas_trabajadas_oport = ds.Tables[2];
+                ViewState["dt_detalles_oportunidades"] = null;
+                if (dt_horas_trabajadas_oport.Rows.Count > -1)
+                {
+                    ViewState["dt_detalles_oportunidades"] = ds.Tables[3];
+                    dt_horas_trabajadas_oport.Columns.RemoveAt(1);
+                    dt_horas_trabajadas_oport.Columns["horas_ingpreventa"].ColumnName = "Horas Ingeniero Preventa";
+                    grid_horas_trabajadas_oportunidades_ingeniero.Columns.Clear();
+                    grid_horas_trabajadas_oportunidades_ingeniero.DataSource = dt_horas_trabajadas_oport;
+                    grid_horas_trabajadas_oportunidades_ingeniero.DataBind();
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<script type='text/javascript'>");
+                    string script = "Highcharts.chart('horas_trabajadas_oportunidades_ingeniero', {"
+                            // + "colors: ['#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5'],"
+                            + "data: {"
+                            + "table: 'ContentPlaceHolder1_grid_horas_trabajadas_oportunidades_ingeniero'"
+                            + "},"
+                            + "chart: {"
+                            + "type: 'column'"
+                            + " },"
+                            + " title: {"
+                            + "     text: 'Horas trabajadas por oportunidad - Ingeniero de preventa'"
+                            + " },"
+                            + "  yAxis: {"
+                            + "      allowDecimals: false,"
+                            + "      title: {"
+                            + "          text: 'Horas trabajadas'"
+                            + "      }"
+                            + " },"
+                            + "  tooltip: {"
+                            + "      formatter: function () {"
+                            + "          return '<b>' + this.series.name + '</b><br />' +"
+                            + "              this.point.y + ' hora(s) trabajada(s)';"
+                            + "       }"
+                            + "   },"
+                            + "  plotOptions: {"
+                            + "      column: {"
+                            + "          colorByPoint: false"
+                            + "      },"
+                            + "      series: {"
+                            + "          cursor: 'name',"
+                            + "          point: {"
+                            + "              events: {"
+                            + "                   click: function () {"
+                            + "                         return ViewDetailsOportunidades(this.name,'login_ing_preventa');"
+                            + "                       }"
+                            + "                     }"
+                            + "                  }"
+                            + "               }"
+                            + "             }"
+                            + "          });";
+                    sb.Append(script);
+                    sb.Append("</script>");
+
+                    ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al generar grafica horas trabajadas oportunidades ingeniero: " + ex.Message, this);
+            }
+        }
+        [System.Web.Services.WebMethod]
+        public static String GetGenerarValorGanado(DateTime? fecha_ini, DateTime? fecha_fin, string listado_empleados)
+        {
+            try
+            {
+                DataSet ds = reporte_performance_preventa.ValorGanado(fecha_ini, fecha_fin, listado_empleados);
+                string value = "";
+                value = JsonConvert.SerializeObject(ds.Tables[1]);
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+      
+
+        private void GenerarValorGanado(DateTime? fecha_ini, DateTime? fecha_fin, string listado_empleados)
+        {
+            try
+            {
+                DataSet ds = ValorGanado(fecha_ini, fecha_fin, listado_empleados);
+                DataTable dt_valores_tablas = ds.Tables[0];
+                ViewState["dt_valores_ganados"] = null;
+                ViewState["dt_valores_ganados_detalles"] = null;
+                if (dt_valores_tablas.Rows.Count > -1)
+                {
+                    ViewState["dt_valores_ganados"] = ds.Tables[1];
+                    ViewState["dt_valores_ganados_detalles"] = ds.Tables[2];
+                    repeater_valor_ganado.DataSource = dt_valores_tablas;
+                    repeater_valor_ganado.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al generar grafica horas trabajadas oportunidades ingeniero: " + ex.Message, this);
+            }
+        }
+
+        private void GenerarGraficaValorGanado(string empleado,string estatus, string montos, string monto_max)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("<script type='text/javascript'>");
+                string script = "Highcharts.chart('valor_ganados', {"
+                       // + "colors: ['#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5','#d81b60','#00897b','#1e88e5'],"
+                       + "           chart: {"
+                        + "               type: 'column'"
+                        + "           },"
+                        + "           title: {"
+                        + "               text: 'Valor Ganado'"
+                        + "           },"
+                        + "           xAxis: {"
+                        + "               categories: ["+estatus+"]"
+                        + "           },"
+                        + "           yAxis: {"
+                        + "                plotLines:[{"
+                        + "                    value:" + monto_max + ","
+                        + "                   color: '#ff0000',"
+                        + "                   width:2,"
+                        + "                   zIndex:4,"
+                        + "                   label:{text:'Maximo monto a alcanzar'}"
+                        + "                }]"
+                        + "            },"
+                        + "            series: [{"
+                        + "                name: '" + empleado + "',"
+                        + "                data: [" + montos + "]"
+                        + "           },"
+                        + "                   {"
+                        + "               name: 'Maximo monto a alcanzar',"
+                        + "                       type: 'scatter',"
+                        + "                       marker: {"
+                        + "                   enabled: false"
+                        + "               },"
+                        + "               data: [" + monto_max + "]"
+                        + "           }]"
+                        + "          });";
+                sb.Append(script);
+                sb.Append("</script>");
+
+                ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al generar grafica valor ganado : " + ex.Message, this);
+            }
+        }
+
+        private void GenerarGraficaEstatusOportunidades(DateTime? fecha_ini, DateTime? fecha_fin, string listado_empleados)
+        {
+            try
+            {
+                DataSet ds = HorasTrabajadas(fecha_ini, fecha_fin, listado_empleados);
+                DataTable dt = ds.Tables[1];
+                ViewState["dt_detalles_oportunidades"] = null;
+                if (dt.Rows.Count > -1)
+                {
+                    ViewState["dt_detalles_oportunidades"] = ds.Tables[3]; ;
+                    string data =
+                                   "               {name: 'Abandonada'," +
+                                   "                y: " + dt.Rows[0]["Cantidad"].ToString() + ",color:'#e53935'" +
+                                   "            }, {" +
+                                   "                name: 'Abierta'," +
+                                   "                y: " + dt.Rows[1]["Cantidad"].ToString() + ",color:'#81d4fa'" +
+                                   "            }, {" +
+                                   "                name: 'Cancelada'," +
+                                   "                y: " + dt.Rows[2]["Cantidad"].ToString() + ",color:'#ff6f00'" +
+                                   "            }, {" +
+                                   "                name: 'En espera'," +
+                                   "                y: " + dt.Rows[3]["Cantidad"].ToString() + ",color:'#fbc02d'" +
+                                   "            }, {" +
+                                   "                name: 'Ganada'," +
+                                   "                y:" + dt.Rows[4]["Cantidad"].ToString() + ",color:'#00897b'" +
+                                   "            }, {" +
+                                   "                name: 'Perdida'," +
+                                   "                y:" + dt.Rows[5]["Cantidad"].ToString() + ",color:'#ffff00'" +
+                                   "            }, { " +
+                                   "                name: 'Seguimiento'," +
+                                   "                y:" + dt.Rows[6]["Cantidad"].ToString() + ",color:'#1e88e5'" +
+                                   "            }";
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<script type='text/javascript'>");
+                    string script =
+                    "   Highcharts.chart('estatus_oportunidades', {" +
+                    "        chart: {" +
+                    "            plotBackgroundColor: null," +
+                    "            plotBorderWidth: null," +
+                    "            plotShadow: false," +
+                    "            type: 'pie'" +
+                    "        }," +
+                    "        title: {" +
+                    "            text: 'Estatus de las oportunidades'" +
+                    "        }," +
+                    "        tooltip: {" +
+                    "            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'" +
+                    "        }," +
+                    "        plotOptions: {" +
+                    "            pie: {" +
+                    "                allowPointSelect: true," +
+                    "                cursor: 'pointer'," +
+                    "                dataLabels: {" +
+                    "                    enabled: false" +
+                    "                }," +
+                    "                showInLegend: true" +
+                    "            }" +
+                    "        }," +
+                    "        series: [{" +
+                    "            name: 'Oportunidades'," +
+                    "            colorByPoint: true," +
+                    "            data: [" + data + "]," +
+                    "            point:{" +
+                    "               events: {" +
+                    "                   click: function () {" +
+                    "                       return ViewDetailsOportunidades(this.name,'estatus');" +
+                    "                       }" +
+                    "                     }" +
+                    "            }" +
+                    "        }]" +
+                    "    });";
+                    sb.Append(script);
+                    sb.Append("</script>");
+                    ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al generar grafica horas trabajadas oportunidades ingeniero: " + ex.Message, this);
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -655,32 +984,59 @@ namespace presentacion
             }
         }
 
+        protected void btnfiltrooportunidades_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string ingeniero = hdfingeniero.Value.ToUpper();
+                string tipo_filtro = hdftipofiltro_oportunidades.Value;
+                DataTable dt_oportunidades = details_oportunidades_from_login(ingeniero, tipo_filtro);
+                if (dt_oportunidades.Rows.Count > 0)
+                {
+                    repeat_oportunidades.DataSource = dt_oportunidades;
+                    repeat_oportunidades.DataBind();
+
+                    ModalShow("#modal_cumpl_oportunidades");
+                }
+                else
+                {
+                    Toast.Info("No se encontraraon oportunidades, puede interntarlo nuevamente.", "0 resultados encontrados.", this);
+                }
+                hdfingeniero.Value = "";
+                hdftipofiltro_oportunidades.Value = "";
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al generar modal detalles de oportunidades: " + ex.Message, this);
+            }
+        }
+
         protected void btnfiltrocumcompro_Click(object sender, EventArgs e)
         {
             try
             {
                 string ingeniero = hdfingeniero.Value;
                 string tipo_compro = hdftipocompromisos.Value;
-                int tipo_tiempo = hdftipo_tiempo.Value == "" ? 0:Convert.ToInt32(hdftipo_tiempo.Value);
+                int tipo_tiempo = hdftipo_tiempo.Value == "" ? 0 : Convert.ToInt32(hdftipo_tiempo.Value);
                 int tiempo = hdftiempo.Value == "" ? 0 : Convert.ToInt32(hdftiempo.Value);
                 int año = hdfaño.Value == "" ? 0 : Convert.ToInt32(hdfaño.Value); ;
                 int mes = hdfmes.Value == "" ? 0 : Convert.ToInt32(hdfmes.Value); ;
                 DateTime fi = rdpfechainicial.SelectedDate.Value == null ? DateTime.Now.AddDays(-30) : Convert.ToDateTime(rdpfechainicial.SelectedDate);
-                DateTime ff = rdpfechafinal.SelectedDate.Value == null ? DateTime.Now: Convert.ToDateTime(rdpfechafinal.SelectedDate);
+                DateTime ff = rdpfechafinal.SelectedDate.Value == null ? DateTime.Now : Convert.ToDateTime(rdpfechafinal.SelectedDate);
                 if (mes > 0)
-                {            
+                {
                     DateTime firstDayOfMonth = new DateTime(año, mes, 1);
                     DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
                     fi = firstDayOfMonth;
                     ff = lastDayOfMonth;
                 }
-                DataSet ds = CumplimientoCompromisos(fi,ff, ingeniero, tipo_compro, 2,tipo_tiempo,tiempo,mes,ingeniero);
+                DataSet ds = CumplimientoCompromisos(fi, ff, ingeniero, tipo_compro, 2, tipo_tiempo, tiempo, mes, ingeniero);
                 DataTable dt_grid_cumpli_compromisos = ds.Tables[0];
                 if (dt_grid_cumpli_compromisos.Rows.Count > 0)
                 {
                     repeater_cumpli_compromisos_detalles.DataSource = dt_grid_cumpli_compromisos;
                     repeater_cumpli_compromisos_detalles.DataBind();
-                   
+
                     ModalShow("#modal_cumpl_compromisos");
                 }
                 hdfingeniero.Value = "";
@@ -696,7 +1052,6 @@ namespace presentacion
             }
         }
 
-
         protected void lnkfiltros_Click(object sender, EventArgs e)
         {
             if (div_reporte.Visible)
@@ -705,7 +1060,7 @@ namespace presentacion
             }
             ModalShow("#myModal");
         }
-   
+
         protected void lnkagregarseleccion_Click(object sender, EventArgs e)
         {
             IList<RadTreeNode> collection = rtvListEmpleado.SelectedNodes;
@@ -728,7 +1083,6 @@ namespace presentacion
         {
             IList<RadTreeNode> collection = rtvListEmpleado.GetAllNodes();
             AgregarItemSleccionado(collection);
-
         }
 
         protected void lnklimpiar_Click(object sender, EventArgs e)
@@ -748,8 +1102,6 @@ namespace presentacion
 
             lblcountselecteds.Text = rdtselecteds.Items.Count.ToString();
         }
-
-  
 
         protected void txtfilterempleado_TextChanged(object sender, EventArgs e)
         {
@@ -775,7 +1127,6 @@ namespace presentacion
                 imgloadempleado.Style["display"] = "none";
                 lblbemp.Style["display"] = "none";
             }
-
         }
 
         protected void ddlempleado_a_consultar_SelectedIndexChanged(object sender, EventArgs e)
@@ -789,12 +1140,10 @@ namespace presentacion
             {
                 Toast.Error("Error al cargar lista de empleados: " + ex.Message, this);
             }
-
         }
 
         protected void lnkguardar_Click(object sender, EventArgs e)
         {
-           
             if (!rdpfechainicial.SelectedDate.HasValue || !rdpfechafinal.SelectedDate.HasValue)
             {
                 Toast.Error("Seleccione un rango de fechas para generar el reporte.", this);
@@ -804,10 +1153,63 @@ namespace presentacion
                 string lista_empleados = CadenaUsuariosFiltro();
                 DateTime fi = rdpfechainicial.SelectedDate.Value == null ? DateTime.Now.AddDays(-30) : Convert.ToDateTime(rdpfechainicial.SelectedDate);
                 DateTime ff = rdpfechafinal.SelectedDate.Value == null ? DateTime.Now : Convert.ToDateTime(rdpfechafinal.SelectedDate);
-                GenerarGraficaCumplimientoCompromisos(fi, ff, "", "", 1,lista_empleados);
-                GenerarGraficaTiemposCompromisos(fi,ff,"","",2,lista_empleados);
-                GenerarGraficaBackLogCompromisos(ff.AddDays(-7),lista_empleados);
+                GenerarGraficaCumplimientoCompromisos(fi, ff, "", "", 1, lista_empleados);
+                GenerarGraficaTiemposCompromisos(fi, ff, "", "", 2, lista_empleados);
+                GenerarGraficaBackLogCompromisos(ff.AddDays(-7), lista_empleados);
+                GenerarGraficaHorasTrabajadasOportunidades(fi, ff, lista_empleados);
+                GenerarGraficaHorasTrabajadasOportunidadesIngeniero(fi, ff, lista_empleados);
+                GenerarGraficaEstatusOportunidades(fi, ff, lista_empleados);
+                GenerarValorGanado(fi, ff, lista_empleados);
                 div_reporte.Visible = true;
+                div_Detalles_vg.Visible = false;
+            }
+        }
+
+        protected void btnviewvalor_ganado_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ViewState["dt_valores_ganados"] != null)
+                {
+                    string ingeniero = hdfingeniero.Value.ToUpper();
+                    DataTable dt_valores_ganados = ViewState["dt_valores_ganados"] as DataTable;
+                    DataTable dt_valores_ganados_detalles = ViewState["dt_valores_ganados_detalles"] as DataTable;
+                    string valor_ganado = string.Empty;
+                    string estatus = string.Empty;
+                    string monto_max = string.Empty;
+
+
+                    DataView dv = dt_valores_ganados.DefaultView;
+                    dv.RowFilter = "login = '"+ingeniero+"'";
+                    DataTable dt_result = dv.ToTable();
+                    DataView dv2 = dt_valores_ganados_detalles.DefaultView;
+                    dv2.RowFilter = "login = '" + ingeniero + "'";
+                    DataTable dt_result2 = dv2.ToTable();
+                    if (dt_result.Rows.Count > 0)
+                    {
+                        monto_max = dt_result.Rows[0]["amount"].ToString();
+                        foreach (DataRow row in dt_result.Rows)
+                        {
+                            valor_ganado = valor_ganado + row["valorganado"].ToString() + ",";
+                            estatus = estatus + "'"+row["estatus"].ToString() + "',";
+                        }
+
+                        valor_ganado = valor_ganado.Substring(0,valor_ganado.Length -1);
+                        estatus = estatus.Substring(0, estatus.Length - 1);
+                        repeater_detalles_vg.DataSource = dt_result2;
+                        repeater_detalles_vg.DataBind();
+                        div_Detalles_vg.Visible = true;
+                        hdfmonto_max.Value = monto_max;
+                        hdfvalor_ganado.Value = valor_ganado;
+                        hdfestatus.Value = estatus;
+                        ModalShow("#modal_valor_ganado");
+                        //GenerarGraficaValorGanado(ingeniero,estatus,valor_ganado,monto_max);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al mostrar valor ganado: " + ex.Message, this);
             }
         }
     }
