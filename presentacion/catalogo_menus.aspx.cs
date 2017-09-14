@@ -181,6 +181,8 @@ namespace presentacion
             rtxtUrl.Text = "";
             Chkmenupadre.Checked = false;
             cbxmantenimiento.Checked = false;
+            rdtpFechaInicial.SelectedDate = DateTime.Now;
+            rdtpFechaFinal.SelectedDate = null;
             CargarPaginas();
             ModalShow("#myModal");
         }
