@@ -60,8 +60,9 @@ namespace presentacion
                     }
                     else
                     {
-                        rdtpFechaInicial.SelectedDate = DateTime.Now;
-                        rdtpFechaFinal.SelectedDate = null;
+                        DateTime FechaActual = DateTime.Now;
+                        rdtpFechaInicial.SelectedDate = FechaActual;
+                        rdtpFechaFinal.SelectedDate = new DateTime(FechaActual.Year, FechaActual.Month, FechaActual.Day, FechaActual.Hour + 1, FechaActual.Minute, FechaActual.Second);
                     }                   
                     if (!String.IsNullOrEmpty(dt.Rows[0]["id_menu_padre"].ToString()))
                     {
@@ -90,7 +91,7 @@ namespace presentacion
             }
         }
 
-        private void Agregarmenu(string menu, string icono, int id_menu_padre, string url, bool en_mantenimiento)
+        private void Agregarmenu(string menu, string icono, int id_menu_padre, string url, bool en_mantenimiento, DateTime? fecha_inicio_mtto, DateTime? fecha_fin_mtto)
         {
             div_error.Visible = false;
             try
@@ -98,7 +99,7 @@ namespace presentacion
 
                 MenusCOM menus = new MenusCOM();
                 string usuario = Session["usuario"] as string;
-                DataSet ds = menus.sp_agregar_menus(id_menu_padre, menu, url, icono, usuario,en_mantenimiento);
+                DataSet ds = menus.sp_agregar_menus(id_menu_padre, menu, url, icono, usuario,en_mantenimiento, fecha_inicio_mtto, fecha_inicio_mtto);
                 DataTable dt = ds.Tables[0];
                 string vmensaje = (dt.Rows.Count == 0 || !dt.Columns.Contains("mensaje")) ? "Error al guardar menú. Intentelo Nuevamente." : dt.Rows[0]["mensaje"].ToString().Trim();
                 if (vmensaje == "")
@@ -181,8 +182,9 @@ namespace presentacion
             rtxtUrl.Text = "";
             Chkmenupadre.Checked = false;
             cbxmantenimiento.Checked = false;
-            rdtpFechaInicial.SelectedDate = DateTime.Now;
-            rdtpFechaFinal.SelectedDate = null;
+            DateTime FechaActual = DateTime.Now;
+            rdtpFechaInicial.SelectedDate = FechaActual;
+            rdtpFechaFinal.SelectedDate = new DateTime(FechaActual.Year, FechaActual.Month, FechaActual.Day, FechaActual.Hour + 1, FechaActual.Minute, FechaActual.Second);
             CargarPaginas();
             ModalShow("#myModal");
         }
@@ -226,7 +228,7 @@ namespace presentacion
                 string url = rtxtUrl.Text.Trim();
                 bool en_mantenimiento = cbxmantenimiento.Checked;
                 DateTime fecha_inicio_mtto = rdtpFechaInicial.SelectedDate.Value;
-                DateTime fecha_fin_mtto = rdtpFechaInicial.SelectedDate.Value;
+                DateTime fecha_fin_mtto = rdtpFechaFinal.SelectedDate.Value;
                 if (fecha_inicio_mtto>= fecha_fin_mtto && en_mantenimiento == true)
                 {
                     Toast.Info("la fecha inicial del mantenimiento no puede ser mayor o igual a la fecha final", "Fecha y hora mantenimiento", this);
@@ -238,7 +240,14 @@ namespace presentacion
                     {
                         if (id_menu == "")
                         {
-                            Agregarmenu(menu, icono, 0, url, en_mantenimiento);
+                            if (cbxmantenimiento.Checked)
+                            {
+                                Agregarmenu(menu, icono, 0, url, en_mantenimiento, fecha_inicio_mtto, fecha_fin_mtto);
+                            }
+                            else
+                            {
+                                Agregarmenu(menu, icono, 0, url, en_mantenimiento, null, null);
+                            }
                         }
                         else
                         {
@@ -265,7 +274,14 @@ namespace presentacion
 
                         if (id_menu == "")
                         {
-                            Agregarmenu(menu, icono, id_menu_padre, url, en_mantenimiento);
+                            if (cbxmantenimiento.Checked)
+                            {
+                                Agregarmenu(menu, icono, 0, url, en_mantenimiento, fecha_inicio_mtto, fecha_fin_mtto);
+                            }
+                            else
+                            {
+                                Agregarmenu(menu, icono, 0, url, en_mantenimiento, null, null);
+                            }
                         }
                         else
                         {
