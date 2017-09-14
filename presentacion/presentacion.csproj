@@ -169,6 +169,7 @@
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\npm.js" />
+    <Content Include="catalogo_ayudas.aspx" />
     <Content Include="catalogo_menus.aspx" />
     <Content Include="catalogo_perfiles.aspx" />
     <Content Include="catalogo_permisos.aspx" />
@@ -1217,6 +1218,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alert.cs" />
+    <Compile Include="catalogo_ayudas.aspx.cs">
+      <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalogo_ayudas.aspx.designer.cs">
+      <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="catalogo_menus.aspx.cs">
       <DependentUpon>catalogo_menus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

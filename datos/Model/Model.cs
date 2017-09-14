@@ -12,6 +12,7 @@ namespace datos.Model
         {
         }
 
+        public virtual DbSet<ayudas> ayudas { get; set; }
         public virtual DbSet<dispositivos_bloqueados> dispositivos_bloqueados { get; set; }
         public virtual DbSet<grupos> grupos { get; set; }
         public virtual DbSet<grupos_permisos> grupos_permisos { get; set; }
@@ -35,6 +36,34 @@ namespace datos.Model
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ayudas>()
+                .Property(e => e.icono)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ayudas>()
+                .Property(e => e.titulo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ayudas>()
+                .Property(e => e.descripcion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ayudas>()
+                .Property(e => e.codigo_html)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ayudas>()
+                .Property(e => e.src)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ayudas>()
+                .Property(e => e.usuario_creacion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ayudas>()
+                .Property(e => e.usuario_edicion)
+                .IsUnicode(false);
+
             modelBuilder.Entity<dispositivos_bloqueados>()
                 .Property(e => e.usuario)
                 .IsUnicode(false);

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Permisos" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_permisos.aspx.cs" Inherits="presentacion.catalogo_permisos" %>
+﻿<%@ Page Title="Ayudas" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_ayudas.aspx.cs" Inherits="presentacion.catalogo_ayudas" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
@@ -66,18 +66,18 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="row">
+     <div class="row">
         <div class="col-lg-12">
             <div class="col-lg-12">
-                <h4 class="page-header">Catálogo permisos</h4>
+                <h4 class="page-header">Catálogo ayudas</h4>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="box box-danger">
-                <div class="box-body"><asp:LinkButton ID="lnknuevomenu" OnClick="lnknuevomenu_Click" CssClass="btn btn-primary btn-flat" runat="server">
-                Nuevo permiso&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                <div class="box-body"><asp:LinkButton ID="lnknuevaayuda" OnClick="lnknuevaayuda_Click" CssClass="btn btn-primary btn-flat" runat="server">
+                Nuevo modulo de ayudas&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
             </asp:LinkButton>
                     <div class="table-responsive">
                         <table class="dvv table no-margin table-condensed">
@@ -85,34 +85,28 @@
                                 <tr style="font-size: 11px;">
                                     <th style="min-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 20px; text-align: center;" scope="col"></th>
-                                    <th style="min-width: 300px; text-align: left;" scope="col">Permiso</th>
-                                    <th style="min-width: 60px; text-align: left;" scope="col">Creado por</th>
-                                    <th style="min-width: 60px; text-align: center;" scope="col">Usuarios</th>
-                                    <th style="min-width: 60px; text-align: center;" scope="col">Grupos</th>
-                                    <th style="min-width: 60px; text-align: center;" scope="col">Perfiles </th>
+                                    <th style="min-width: 250px; text-align: left;" scope="col">Titulo</th>
+                                    <th style="min-width: 400px; text-align: left;" scope="col">Descripción</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <asp:Repeater ID="repeat_permisos" runat="server">
+                                <asp:Repeater ID="repeat_ayudas" runat="server">
                                     <ItemTemplate>
                                         <tr style="font-size: 11px">
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return EditarClick("+Eval("id_permiso")+");" %>'>
+                                                    onclick='<%# "return EditarClick("+Eval("id_ayuda")+");" %>'>
                                                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_permiso")+");" %>'>
+                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_ayuda")+");" %>'>
                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
-                                            <td style="text-align: left;"><%# Eval("permiso") %></td>
-                                            <td style="text-align: left;"><%# Eval("usuario_creacion") %></td>
-                                            <td style="text-align: center;"><%# Eval("usuarios_permisos") %></td>
-                                            <td style="text-align: center;"><%# Eval("grupos_permisos") %></td>
-                                            <td style="text-align: center;"><%# Eval("perfiles_permisos") %></td>
+                                            <td style="text-align: left;"><%# Eval("titulo") %></td>
+                                            <td style="text-align: left;"><%# Eval("descripcion") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -124,11 +118,11 @@
 
         </div>
     </div>
-       <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalPermisos" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+       <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalAyudas" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="lnknuevomenu" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="lnknuevaayuda" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btneventgrid" EventName="Click" />
                     <asp:PostBackTrigger ControlID="lnkguardar" />
                 </Triggers>
@@ -137,17 +131,13 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Detalles del permiso</h4>
+                            <h4 class="modal-title">Detalles de la ayuda</h4>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Permiso</strong></h5>
-                                    <asp:TextBox ID="txtpermiso"  CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Descripción</strong></h5>
-                                    <asp:TextBox ID="txtdescripcion" Rows="3" TextMode="MultiLine" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Titulo</strong></h5>
+                                    <asp:TextBox ID="txttitulo" Rows="2" TextMode="MultiLine" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                             </div>
                             
@@ -160,7 +150,7 @@
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando...
                             </asp:LinkButton>
                             <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
-                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este permiso?');" runat="server">
+                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este modulo de ayuda?');" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                             </asp:LinkButton>
                         </div>
@@ -172,5 +162,4 @@
     <asp:Button ID="btneliminarpermiso" OnClick="btneliminarpermiso_Click" runat="server" Text="Button" Style="display: none;" />
      <asp:HiddenField ID="hdfcommand" runat="server" />
      <asp:HiddenField ID="txtid_permiso" runat="server" />
-    
 </asp:Content>

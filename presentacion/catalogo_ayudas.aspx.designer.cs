@@ -10,25 +10,25 @@
 namespace presentacion {
     
     
-    public partial class catalogo_permisos {
+    public partial class catalogo_ayudas {
         
         /// <summary>
-        /// Control lnknuevomenu.
+        /// Control lnknuevaayuda.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnknuevomenu;
+        protected global::System.Web.UI.WebControls.LinkButton lnknuevaayuda;
         
         /// <summary>
-        /// Control repeat_permisos.
+        /// Control repeat_ayudas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeat_permisos;
+        protected global::System.Web.UI.WebControls.Repeater repeat_ayudas;
         
         /// <summary>
         /// Control UpdatePanel15.
@@ -40,22 +40,13 @@ namespace presentacion {
         protected global::System.Web.UI.UpdatePanel UpdatePanel15;
         
         /// <summary>
-        /// Control txtpermiso.
+        /// Control txttitulo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtpermiso;
-        
-        /// <summary>
-        /// Control txtdescripcion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtdescripcion;
+        protected global::System.Web.UI.WebControls.TextBox txttitulo;
         
         /// <summary>
         /// Control lnkcargando.

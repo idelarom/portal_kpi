@@ -109,6 +109,7 @@ namespace presentacion
                 CargarListadoPermisos("");
             }
         }
+
         protected void btnver_Click(object sender, EventArgs e)
         {
             try
@@ -150,7 +151,6 @@ namespace presentacion
         {
             try
             {
-
                 UsuariosCOM usuarios = new UsuariosCOM();
                 DataTable dt = usuarios.GetUsuariosPermisos(usuario);
                 repeater_permisos.DataSource = dt;
@@ -162,6 +162,7 @@ namespace presentacion
                 Toast.Error("Error al cargar usuario: " + ex.Message, this);
             }
         }
+
         protected void lnkaddperfil_Click(object sender, EventArgs e)
         {
             div_addperfil.Visible = true;
@@ -203,7 +204,7 @@ namespace presentacion
                 Toast.Info("Ingrese un minimo de 3 caracteres para realizar la busqueda.", "Mensaje del Sistema", this);
             }
         }
-       
+               
         private void CargarListadoPerfiles(string filtro)
         {
             try
@@ -242,6 +243,7 @@ namespace presentacion
                 Toast.Error("Error al cargar lista de menus. " + ex.Message, this);
             }
         }
+
         private void CargarListadoMenus(string filtro)
         {
             try

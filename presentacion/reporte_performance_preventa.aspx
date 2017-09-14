@@ -283,10 +283,10 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="row"> 
+    <div class="row">
         <div class="col-lg-12">
-                <h3 class="page-header">Performance Preventa</h3>
-            </div>
+            <h3 class="page-header">Performance Preventa</h3>
+        </div>
         <div class="col-lg-12">
             <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                 <i class="fa fa-refresh fa-spin fa-fw"></i>
@@ -355,7 +355,7 @@
                                                         <asp:Repeater ID="repeater_cumpli_compromisos" runat="server">
                                                             <ItemTemplate>
                                                                 <tr style="font-size: 11px; height: 10px;">
-                                                                    <td><a style="cursor:pointer"  onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+@",""" + Eval("ingeniero")+@""""+");" %>'><%# Eval("Ingeniero") %></a></td>
+                                                                    <td><a style="cursor: pointer" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+@",""" + Eval("ingeniero")+@""""+");" %>'><%# Eval("Ingeniero") %></a></td>
                                                                     <td style="text-align: center;">
                                                                         <a class="btn btn-success btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+@",""" + Eval("ingeniero")+@""""+");" %>'>
                                                                             <%# Eval("Terminados a Tiempo") %>
@@ -1205,8 +1205,8 @@
                                                 </table>
                                             </div>
                                         </div>
-                                       
-                                       
+
+
                                     </div>
                                 </div>
                             </div>
@@ -1351,9 +1351,9 @@
                                             <asp:Image ID="imgempleado2" runat="server" ImageUrl="~/img/user.png"
                                                 CssClass="img-responsive img-circle" />
                                         </div>
-                                          <div class="box-footer">
-                                              </div>
+                                        <div class="box-footer">
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -1556,7 +1556,7 @@
                                     <div class="table table-responsive" style="max-height: 170px; overflow: scroll;">
                                         <table class="table table-responsive table-bordered table-condensed" id="table_valor_ganado">
                                             <thead>
-                                                <tr style="font-size: 11px;color: white; background-color: #C42C2C">
+                                                <tr style="font-size: 11px; color: white; background-color: #C42C2C">
                                                     <th style="min-width: 80px; text-align: left;" scope="col">Cve Opor</th>
                                                     <th style="min-width: 80px; text-align: center;" scope="col">Folio Op</th>
                                                     <th style="min-width: 300px;" scope="col">Cliente</th>
@@ -1572,7 +1572,7 @@
                                             <tbody>
                                                 <asp:Repeater ID="repeater_detalles_vg" runat="server">
                                                     <ItemTemplate>
-                                                        <tr style="font-size: 11px; height: 10px; ">
+                                                        <tr style="font-size: 11px; height: 10px;">
 
                                                             <td style="">
                                                                 <%# Eval("cveoport") %>
