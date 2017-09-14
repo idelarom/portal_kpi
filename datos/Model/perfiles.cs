@@ -12,6 +12,7 @@ namespace datos.Model
         public perfiles()
         {
             menus_perfiles = new HashSet<menus_perfiles>();
+            perfiles_permisos = new HashSet<perfiles_permisos>();
             usuarios_perfiles = new HashSet<usuarios_perfiles>();
             widgets_perfiles = new HashSet<widgets_perfiles>();
         }
@@ -46,6 +47,9 @@ namespace datos.Model
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<menus_perfiles> menus_perfiles { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<perfiles_permisos> perfiles_permisos { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usuarios_perfiles> usuarios_perfiles { get; set; }

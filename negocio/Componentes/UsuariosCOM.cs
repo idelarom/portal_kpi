@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
+using datos.Model;
 
 namespace negocio.Componentes
 {
@@ -43,6 +44,100 @@ namespace negocio.Componentes
                 throw ex;
             }
             return ds;
+        }
+
+        public DataTable GetUsuariosPermisos(string usuario)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Model db = new Model();
+
+                var results = from p in db.permisos
+                              join up in db.usuarios_permisos on p.id_permiso equals up.id_permiso                             
+                              where (up.usuario.ToUpper() == usuario.ToUpper())
+                              select new {  p.id_permiso, p.permiso };
+                dt = To.DataTable(results.ToList());
+                return dt;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return new DataTable();
+            }
+        }
+
+        /// <summary>
+        /// Agrega un permiso a un usuario
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <returns></returns>
+        public string AgregarPermiso(usuarios_permisos entidad)
+        {
+            try
+            {
+                string mess = "";
+                if (Exist(entidad.usuario, entidad.id_permiso))
+                {
+                    mess = "El usuario ya tiene este permiso.";
+                }
+                else
+                {
+                    usuarios_permisos permiso = new usuarios_permisos
+                    {
+                        id_permiso = entidad.id_permiso,
+                        activo = true,
+                        usuario = entidad.usuario.ToUpper()
+                    };
+                    Model context = new Model();
+                    context.usuarios_permisos.Add(permiso);
+                    context.SaveChanges();
+                }
+                return mess;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Devuelve un valor booleano si el usuario tiene un permiso especificado
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <param name="id_permiso"></param>
+        /// <returns></returns>
+        public bool Exist(string usuario, int id_permiso)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Model context = new Model();
+                var query = context.usuarios_permisos
+                                .Where(s => s.usuario.ToUpper() == usuario.ToUpper() && s.activo && s.id_permiso == id_permiso)
+                                .Select(u => new
+                                {
+                                    u.id_permiso
+                                })
+                                .OrderBy(u => u.id_permiso);
+                dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Text;
 using Telerik.Web.UI;
 
@@ -1039,6 +1040,30 @@ namespace presentacion
 
                     ModalShow("#modal_cumpl_compromisos");
                 }
+                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));
+                string imagen = hdfingeniero.Value.ToUpper() + ".png";
+                lblnombre2.Text = hdfempleado.Value;
+                if (imagen != "" && File.Exists(dirInfo.ToString().Trim() + imagen))
+                {
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    imgempleado2.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                }
+                else
+                {
+                    imagen = "user.png";
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    imgempleado2.ImageUrl = "~/img/" + imagen + "?date=" + date;
+                }
+                div_img_empleado2.Visible = ingeniero != "";
+                hdfempleado.Value = "";
                 hdfingeniero.Value = "";
                 hdftipocompromisos.Value = "";
                 hdftipo_tiempo.Value = "";
@@ -1202,6 +1227,28 @@ namespace presentacion
                         hdfmonto_max.Value = monto_max;
                         hdfvalor_ganado.Value = valor_ganado;
                         hdfestatus.Value = estatus;
+                        DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));
+                        string imagen = hdfingeniero.Value.ToUpper() + ".png";
+                        lblnombre.Text = hdfempleado.Value;
+                        if (imagen != "" && File.Exists(dirInfo.ToString().Trim() + imagen))
+                        {
+                            DateTime localDate = DateTime.Now;
+                            string date = localDate.ToString();
+                            date = date.Replace("/", "_");
+                            date = date.Replace(":", "_");
+                            date = date.Replace(" ", "");
+                            img_employee.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                        }
+                        else
+                        {
+                            imagen = "user.png";
+                            DateTime localDate = DateTime.Now;
+                            string date = localDate.ToString();
+                            date = date.Replace("/", "_");
+                            date = date.Replace(":", "_");
+                            date = date.Replace(" ", "");
+                            img_employee.ImageUrl = "~/img/" + imagen + "?date=" + date;
+                        }
                         //GenerarGraficaValorGanado(ingeniero,estatus,valor_ganado,monto_max);
                     }
                 }

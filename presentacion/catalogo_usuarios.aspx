@@ -56,12 +56,20 @@
             $("#<%= lblperfilb.ClientID%>").show();
             return true;
         }
+        function ChangedTextLoad4()
+        {
+            $("#<%= imgpermiso.ClientID%>").show();
+            $("#<%= lblpermiso.ClientID%>").show();
+            return true;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-            
+              <div class="col-lg-12">
+            <h4 class="page-header">Catálogo usuarios</h4>
+        </div>
         </div>
     </div>
     <div class="row">
@@ -138,7 +146,7 @@
                                         </div>
                                         <div class="box-footer">
                                             <div class="row">
-                                                <div class="col-sm-4 border-right">
+                                                <div class="col-sm-3 border-right">
                                                     <div class="description-block">
                                                         <h5 class="description-header">Puesto</h5>
                                                         <span class="description-text">
@@ -147,7 +155,7 @@
                                                     <!-- /.description-block -->
                                                 </div>
                                                 <!-- /.col -->
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <div class="description-block">
                                                         <h5 class="description-header">Perfil</h5>
                                                         <span class="description-text">
@@ -159,16 +167,67 @@
                                                     </div>
                                                     <!-- /.description-block -->
                                                 </div>
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-3">
                                                     <div class="description-block">
                                                         <h5 class="description-header">Menus</h5>
                                                         <span class="description-text">
-                                                            Menus disponibles para el empleado
+                                                            Menus disponibles
                                                             <br />
                                                             <asp:LinkButton ID="lnkaddmenus" OnClick="lnkaddmenus_Click" CssClass="btn btn-danger  btn-sm"
                                                                 runat="server">Ver menus
                                                             </asp:LinkButton>
                                                         </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="description-block">
+                                                        <h5 class="description-header">Permisos</h5>
+                                                        <span class="description-text">
+                                                            Permisos asignados
+                                                            <br />
+                                                            <asp:LinkButton ID="lnkaddpermisos" OnClick="lnkaddpermisos_Click" CssClass="btn btn-danger  btn-sm"
+                                                                runat="server">Ver permisos
+                                                            </asp:LinkButton>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="div_permiso" runat="server" visible="false">
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                    <h5><strong>Agregar permiso</strong></h5>
+                                                    <div style="text-align: left;" class="input-group input-group-sm">
+                                                        <asp:TextBox ID="txtbuscarpermiso" CssClass="form-control" placeholder="Buscar" runat="server"></asp:TextBox>
+                                                        <span class="input-group-btn">
+                                                            <asp:LinkButton ID="lnkbuscarpermiso" CssClass="btn btn-primary btn-flat" runat="server"
+                                                                OnClientClick="return ChangedTextLoad4();" OnClick="lnkbuscarpermiso_Click">
+                                                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                                            </asp:LinkButton>
+                                                        </span>
+                                                    </div>
+
+                                                    <asp:Image ID="imgpermiso" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                                    <label id="lblpermiso" runat="server" style="display: none; color: #1565c0">Buscando permisos</label>
+
+                                                    <asp:DropDownList ID="ddlpermiso" CssClass="form-control" runat="server"></asp:DropDownList>
+                                                    <br />
+                                                    <div style="text-align: right">
+                                                        <asp:LinkButton ID="lnkaddpermiso" CssClass="btn btn-primary btn-flat btn-sm"
+                                                            OnClick="lnkaddpermiso_Click" OnClientClick="return confirm('¿Desea asignar este permiso al usuario?');"
+                                                            runat="server">Agregar permiso&nbsp;<i class="fa fa-plus-circle" aria-hidden="true"></i></asp:LinkButton>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                    <h5><strong>Permisos disponibles para este usuario</strong></h5>
+                                                    <div style="width: 100%; height: 110px; overflow: scroll;">
+                                                        <ul style="font-size: 10px">
+                                                            <asp:Repeater ID="repeater_permisos" runat="server">
+                                                                <ItemTemplate>
+                                                                    <li>
+                                                                        <%# Eval("permiso") %>
+                                                                    </li>
+                                                                </ItemTemplate>
+                                                            </asp:Repeater>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
