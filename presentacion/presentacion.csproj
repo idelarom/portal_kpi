@@ -171,6 +171,7 @@
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="catalogo_menus.aspx" />
     <Content Include="catalogo_perfiles.aspx" />
+    <Content Include="catalogo_permisos.aspx" />
     <Content Include="catalogo_sesiones_usuario.aspx" />
     <Content Include="catalogo_usuarios.aspx" />
     <Content Include="catalogo_widgets.aspx" />
@@ -1229,6 +1230,13 @@
     </Compile>
     <Compile Include="catalogo_perfiles.aspx.designer.cs">
       <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="catalogo_permisos.aspx.cs">
+      <DependentUpon>catalogo_permisos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalogo_permisos.aspx.designer.cs">
+      <DependentUpon>catalogo_permisos.aspx</DependentUpon>
     </Compile>
     <Compile Include="catalogo_sesiones_usuario.aspx.cs">
       <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>

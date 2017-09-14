@@ -7,10 +7,10 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            Init();
+            Init('.dvv');
         });
-        function Init() {
-            $('.dvv').DataTable({
+        function Init(value) {
+            $(value).DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -71,7 +71,7 @@
             return true;
         }
 
-        function ViewDetailsCumpCompro(ingeniero, tipo, num) {
+        function ViewDetailsCumpCompro(ingeniero, tipo, num, nombre_empleado) {
             if (num > 0) {
                 var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
                 var tipo_ = document.getElementById('<%= hdftipocompromisos.ClientID %>');
@@ -79,6 +79,8 @@
                 var tipo_tiempo_ = document.getElementById('<%= hdftipo_tiempo.ClientID %>');
                 var año_ = document.getElementById('<%= hdfaño.ClientID %>');
                 var mes_ = document.getElementById('<%= hdfmes.ClientID %>');
+                var empleado = document.getElementById('<%= hdfempleado.ClientID %>');
+                empleado.value = nombre_empleado;
                 año_.value = 0;
                 mes_.value = 0;
                 tiempo_.value = 0;
@@ -197,9 +199,11 @@
            , position: 'absolute' // Element positioning
         };
 
-        function ViewDetailsValorGanado(ingeniero) {
+        function ViewDetailsValorGanado(ingeniero,nombre_empleado) {
             var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
             nombre.value = ingeniero;
+            var empleado = document.getElementById('<%= hdfempleado.ClientID %>');
+            empleado.value = nombre_empleado;
             document.getElementById('<%= btnviewvalor_ganado.ClientID%>').click();
             var fecha_inicial = document.getElementById('<%= rdpfechainicial.ClientID %>').value;
             var fecha_final = document.getElementById('<%= rdpfechafinal.ClientID %>').value;
@@ -231,7 +235,7 @@
                                 type: 'column'
                             },
                             title: {
-                                text: 'Valor ganado'
+                                text: ''
                             },
                             xAxis: {
                                 categories: estatus_array
@@ -279,7 +283,10 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="row">
+    <div class="row"> 
+        <div class="col-lg-12">
+                <h3 class="page-header">Performance Preventa</h3>
+            </div>
         <div class="col-lg-12">
             <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                 <i class="fa fa-refresh fa-spin fa-fw"></i>
@@ -348,33 +355,33 @@
                                                         <asp:Repeater ID="repeater_cumpli_compromisos" runat="server">
                                                             <ItemTemplate>
                                                                 <tr style="font-size: 11px; height: 10px;">
-                                                                    <td><%# Eval("Ingeniero") %></td>
+                                                                    <td><a style="cursor:pointer"  onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+@",""" + Eval("ingeniero")+@""""+");" %>'><%# Eval("Ingeniero") %></a></td>
                                                                     <td style="text-align: center;">
-                                                                        <a class="btn btn-success btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+");" %>'>
+                                                                        <a class="btn btn-success btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados a Tiempo"","+ Eval("Terminados a Tiempo")+@",""" + Eval("ingeniero")+@""""+");" %>'>
                                                                             <%# Eval("Terminados a Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align: center;">
-                                                                        <a class="btn btn-warning btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-warning btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""Terminados Fuera de Tiempo"","+ Eval("Terminados Fuera de Tiempo")+@",""" + Eval("ingeniero")+@""""+");" %>'>
                                                                             <%# Eval("Terminados Fuera de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align: center;">
-                                                                        <a class="btn btn-primary btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-primary btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Dentro de Tiempo"","+ Eval("No Terminados Dentro de Tiempo")+@",""" + Eval("ingeniero")+@""""+");" %>'>
                                                                             <%# Eval("No Terminados Dentro de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align: center;">
-                                                                        <a class="btn btn-danger btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+");" %>'>
+                                                                        <a class="btn btn-danger btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@",""No Terminados Fuera de Tiempo"","+ Eval("No Terminados Fuera de Tiempo")+@",""" + Eval("ingeniero")+@""""+");" %>'>
                                                                             <%# Eval("No Terminados Fuera de Tiempo") %>
                                                                         </a>
 
                                                                     </td>
                                                                     <td style="text-align: center;">
-                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+");" %>'>
+                                                                        <a class="btn btn-default btn-xs btn-flat" style="cursor: pointer; min-width: 70px; margin-bottom: 0px;" onclick='<%# "return ViewDetailsCumpCompro("+@"""" + Eval("Login")+@""""+@","""","+ Eval("Total de compromisos")+@",""" + Eval("ingeniero")+@""""+");" %>'>
                                                                             <%# Eval("Total de compromisos") %>
                                                                         </a>
 
@@ -1162,7 +1169,7 @@
                                                                 <tr style="font-size: 11px; height: 10px;">
                                                                     <td>
                                                                         <a style="cursor: pointer;"
-                                                                            onclick='<%# "return ViewDetailsValorGanado("+@"""" + Eval("Login")+@""""+@");" %>'>
+                                                                            onclick='<%# "return ViewDetailsValorGanado("+@"""" + Eval("Login")+@""","+@"""" + Eval("Nombre")+@""""+@");" %>'>
                                                                             <%# Eval("Nombre") %>
                                                                         </a>
                                                                     </td>
@@ -1332,9 +1339,26 @@
                             <h4 class="modal-title">Compromisos</h4>
                         </div>
                         <div class="modal-body" id="div1" runat="server">
+                            <div class="row" id="div_img_empleado2" runat="server" visible="false">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="box box-widget widget-user">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <div class="widget-user-header bg-aqua-active">
+                                            <h3 class="widget-user-username">
+                                                <asp:Label ID="lblnombre2" runat="server" Text=""></asp:Label></h3>
+                                        </div>
+                                        <div class="widget-user-image">
+                                            <asp:Image ID="imgempleado2" runat="server" ImageUrl="~/img/user.png"
+                                                CssClass="img-responsive img-circle" />
+                                        </div>
+                                          <div class="box-footer">
+                                              </div>
+                                        </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-12 col-xs-12">
-                                    <div class="table-responsive" style="max-height: 420px; overflow: scroll;">
+                                    <div class="table-responsive" style="max-height: 240px; overflow: scroll;">
                                         <table class="table table-resposive table-bordered table-condensed">
                                             <thead>
                                                 <tr style="font-size: 11px; color: white; background-color: #C42C2C">
@@ -1507,6 +1531,21 @@
                             <h4 class="modal-title">Detalles valor ganado</h4>
                         </div>
                         <div class="modal-body" id="div_valor_ganado">
+                            <div class="row" id="div_img_empleado" runat="server" visible="true">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="box box-widget widget-user">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <div class="widget-user-header bg-aqua-active">
+                                            <h3 class="widget-user-username">
+                                                <asp:Label ID="lblnombre" runat="server" Text=""></asp:Label></h3>
+                                        </div>
+                                        <div class="widget-user-image">
+                                            <asp:Image ID="img_employee" runat="server" ImageUrl="~/img/user.png"
+                                                CssClass="img-responsive img-circle" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div id="valor_ganados" style="min-width: 200px; height: 300px; max-width: 1200px; margin: 0 auto">
@@ -1514,13 +1553,13 @@
                                 </div>
                                 <br />
                                 <div class=" col-lg-12 col-md-12 col-sm-12" id="div_Detalles_vg" runat="server" visible="false">
-                                    <div class="table-responsive" style="max-height: 170px; overflow: scroll;">
-                                        <table class="table table-responsive table-bordered table-condensed">
+                                    <div class="table table-responsive" style="max-height: 170px; overflow: scroll;">
+                                        <table class="table table-responsive table-bordered table-condensed" id="table_valor_ganado">
                                             <thead>
-                                                <tr style="font-size: 11px;">
+                                                <tr style="font-size: 11px;color: white; background-color: #C42C2C">
                                                     <th style="min-width: 80px; text-align: left;" scope="col">Cve Opor</th>
                                                     <th style="min-width: 80px; text-align: center;" scope="col">Folio Op</th>
-                                                    <th style="min-width: 300px; text-align: center;" scope="col">Cliente</th>
+                                                    <th style="min-width: 300px;" scope="col">Cliente</th>
                                                     <th style="min-width: 100px; text-align: center;" scope="col">Horas</th>
                                                     <th style="min-width: 100px; text-align: center;" scope="col">% Horas</th>
                                                     <th style="min-width: 100px; text-align: center;" scope="col">Margen Bruto</th>
@@ -1533,15 +1572,15 @@
                                             <tbody>
                                                 <asp:Repeater ID="repeater_detalles_vg" runat="server">
                                                     <ItemTemplate>
-                                                        <tr style="font-size: 11px; height: 10px;">
+                                                        <tr style="font-size: 11px; height: 10px; ">
 
-                                                            <td style="text-align: center;">
+                                                            <td style="">
                                                                 <%# Eval("cveoport") %>
                                                             </td>
                                                             <td style="text-align: center;">
                                                                 <%# Eval("folioop") %>
                                                             </td>
-                                                            <td style="text-align: center;">
+                                                            <td style="">
                                                                 <%# Eval("cliente") %>
                                                             </td>
                                                             <td style="text-align: center;">
@@ -1588,6 +1627,7 @@
     <asp:Button ID="btnfiltrooportunidades" OnClick="btnfiltrooportunidades_Click" Style="display: none" runat="server" Text="Button" />
     <asp:Button ID="btnviewvalor_ganado" OnClick="btnviewvalor_ganado_Click" Style="display: none" runat="server" Text="Button" />
     <asp:HiddenField ID="hdfingeniero" runat="server" />
+    <asp:HiddenField ID="hdfempleado" runat="server" />
     <asp:HiddenField ID="hdftipocompromisos" runat="server" />
     <asp:HiddenField ID="hdftiempo" runat="server" />
     <asp:HiddenField ID="hdftipo_tiempo" runat="server" />

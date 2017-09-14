@@ -78,15 +78,22 @@
       <DependentUpon>SICOEM.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\dispositivos_bloqueados.cs" />
+    <Compile Include="Model\grupos.cs" />
+    <Compile Include="Model\grupos_permisos.cs" />
     <Compile Include="Model\menus.cs" />
     <Compile Include="Model\menus_perfiles.cs" />
     <Compile Include="Model\menus_usuarios.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\perfiles.cs" />
+    <Compile Include="Model\perfiles_permisos.cs" />
+    <Compile Include="Model\permisos.cs" />
     <Compile Include="Model\recordatorios.cs" />
     <Compile Include="Model\recordatorios_usuarios_adicionales.cs" />
+    <Compile Include="Model\sysdiagrams.cs" />
     <Compile Include="Model\usuarios_configuraciones.cs" />
+    <Compile Include="Model\usuarios_grupos.cs" />
     <Compile Include="Model\usuarios_perfiles.cs" />
+    <Compile Include="Model\usuarios_permisos.cs" />
     <Compile Include="Model\usuarios_sesiones.cs" />
     <Compile Include="Model\usuarios_widgets.cs" />
     <Compile Include="Model\widgets.cs" />
@@ -170,6 +177,7 @@
       <LastGenOutput>SICOEM.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

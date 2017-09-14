@@ -1,4 +1,5 @@
-﻿using negocio.Componentes;
+﻿using datos.Model;
+using negocio.Componentes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -100,8 +101,12 @@ namespace presentacion
                 //cargos los menus disponibles para el usuario
                 CargarMenus(usuario);
 
+                CargarPermisos(usuario);
+
                 //cargamos los perfiles
                 CargarListadoPerfiles("");
+                //cargamos los permisos
+                CargarListadoPermisos("");
             }
         }
         protected void btnver_Click(object sender, EventArgs e)
@@ -110,6 +115,7 @@ namespace presentacion
             {
                 div_addperfil.Visible = false;
                 div_menus.Visible = false;
+                div_permiso.Visible = false;
                 LlenarInformacionModal();
                 ModalShow("#ModalEmpleado");                
             }
@@ -139,16 +145,35 @@ namespace presentacion
                 Toast.Error("Error al cargar usuario: " + ex.Message, this);
             }
         }
+
+        protected void CargarPermisos(string usuario)
+        {
+            try
+            {
+
+                UsuariosCOM usuarios = new UsuariosCOM();
+                DataTable dt = usuarios.GetUsuariosPermisos(usuario);
+                repeater_permisos.DataSource = dt;
+                repeater_permisos.DataBind();
+                CargarListadoPermisos("");
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar usuario: " + ex.Message, this);
+            }
+        }
         protected void lnkaddperfil_Click(object sender, EventArgs e)
         {
             div_addperfil.Visible = true;
             div_menus.Visible = false;
+            div_permiso.Visible = false;
         }
 
         protected void lnkaddmenus_Click(object sender, EventArgs e)
         {
             div_menus.Visible = true;
             div_addperfil.Visible = false;
+            div_permiso.Visible = false;
         }
 
         protected void lnkbuscarmenu_Click(object sender, EventArgs e)
@@ -257,6 +282,44 @@ namespace presentacion
             }
         }
 
+        private void CargarListadoPermisos(string filtro)
+        {
+            try
+            {
+                PermisosCOM permisos = new PermisosCOM();
+                DataTable dt_original = permisos.SelectAll();
+
+                DataTable dt = new DataTable();
+                if (filtro == "")
+                {
+                    dt = dt_original;
+                }
+                else
+                {
+                    if (dt_original.Select("permiso like '%" + filtro + "%'").Length > 0)
+                    {
+                        dt = filtro == "" ? dt_original : dt_original.Select("permiso like '%" + filtro + "%'").CopyToDataTable();
+                    }
+                }
+
+                if (dt.Rows.Count > 0)
+                {
+                    ddlpermiso.DataTextField = "permiso";
+                    ddlpermiso.DataValueField = "id_permiso";
+                    ddlpermiso.DataSource = dt;
+                    ddlpermiso.DataBind();
+                }
+                else
+                {
+                    Toast.Info("No se encontro ninguna coincidencia. Intentelo nuevamente.", "Mensaje del Sistema", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar lista de permisos. " + ex.Message, this);
+            }
+        }
+
         private bool ExistUsuarioinUsuario(string usuario, int id_menu)
         {
             try
@@ -333,6 +396,55 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al asignar perfil: " + ex.Message, this);
+            }
+        }
+
+        protected void lnkaddpermisos_Click(object sender, EventArgs e)
+        {
+            div_menus.Visible = false;
+            div_addperfil.Visible = false;
+            div_permiso.Visible = true;
+
+        }
+
+        protected void lnkbuscarpermiso_Click(object sender, EventArgs e)
+        {
+            if (txtbuscarpermiso.Text.Trim().Length > 2 || txtbuscarpermiso.Text.Trim().Length == 0)
+            {
+                CargarListadoPermisos(txtbuscarpermiso.Text.Trim());
+                imgpermiso.Style["display"] = "none";
+                lblpermiso.Style["display"] = "none";
+            }
+            else
+            {
+                Toast.Info("Ingrese un minimo de 3 caracteres para realizar la busqueda.", "Mensaje del Sistema", this);
+            }
+        }
+
+        protected void lnkaddpermiso_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                usuarios_permisos permiso = new usuarios_permisos();
+                permiso.id_permiso = Convert.ToInt32(ddlpermiso.SelectedValue);
+                permiso.usuario = hdfusuario.Value.ToUpper();
+                UsuariosCOM usuarios = new UsuariosCOM();
+
+                string vmensaje = usuarios.AgregarPermiso(permiso);
+                if (vmensaje != "")
+                {
+                    Toast.Error("Error al asignar permiso: " + vmensaje, this);
+                }
+                else
+                {
+                    LlenarInformacionModal();
+                    Toast.Success("Permiso asignado al usuario de manera correcta.", "Mensaje del sistema", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al asignar permiso: " + ex.Message, this);
             }
         }
     }

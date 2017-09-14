@@ -13,14 +13,21 @@ namespace datos.Model
         }
 
         public virtual DbSet<dispositivos_bloqueados> dispositivos_bloqueados { get; set; }
+        public virtual DbSet<grupos> grupos { get; set; }
+        public virtual DbSet<grupos_permisos> grupos_permisos { get; set; }
         public virtual DbSet<menus> menus { get; set; }
         public virtual DbSet<menus_perfiles> menus_perfiles { get; set; }
         public virtual DbSet<menus_usuarios> menus_usuarios { get; set; }
         public virtual DbSet<perfiles> perfiles { get; set; }
+        public virtual DbSet<perfiles_permisos> perfiles_permisos { get; set; }
+        public virtual DbSet<permisos> permisos { get; set; }
         public virtual DbSet<recordatorios> recordatorios { get; set; }
         public virtual DbSet<recordatorios_usuarios_adicionales> recordatorios_usuarios_adicionales { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<usuarios_configuraciones> usuarios_configuraciones { get; set; }
+        public virtual DbSet<usuarios_grupos> usuarios_grupos { get; set; }
         public virtual DbSet<usuarios_perfiles> usuarios_perfiles { get; set; }
+        public virtual DbSet<usuarios_permisos> usuarios_permisos { get; set; }
         public virtual DbSet<usuarios_sesiones> usuarios_sesiones { get; set; }
         public virtual DbSet<usuarios_widgets> usuarios_widgets { get; set; }
         public virtual DbSet<widgets> widgets { get; set; }
@@ -39,6 +46,28 @@ namespace datos.Model
             modelBuilder.Entity<dispositivos_bloqueados>()
                 .Property(e => e.ip)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<grupos>()
+                .Property(e => e.grupo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<grupos>()
+                .Property(e => e.usuario_creacion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<grupos>()
+                .Property(e => e.usuario_edicion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<grupos>()
+                .HasMany(e => e.grupos_permisos)
+                .WithRequired(e => e.grupos)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<grupos>()
+                .HasMany(e => e.usuarios_grupos)
+                .WithRequired(e => e.grupos)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<menus>()
                 .Property(e => e.name)
@@ -124,6 +153,11 @@ namespace datos.Model
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<perfiles>()
+                .HasMany(e => e.perfiles_permisos)
+                .WithRequired(e => e.perfiles)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<perfiles>()
                 .HasMany(e => e.usuarios_perfiles)
                 .WithRequired(e => e.perfiles)
                 .WillCascadeOnDelete(false);
@@ -131,6 +165,33 @@ namespace datos.Model
             modelBuilder.Entity<perfiles>()
                 .HasMany(e => e.widgets_perfiles)
                 .WithRequired(e => e.perfiles)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<permisos>()
+                .Property(e => e.permiso)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<permisos>()
+                .Property(e => e.usuario_creacion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<permisos>()
+                .Property(e => e.usuario_edicion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<permisos>()
+                .HasMany(e => e.grupos_permisos)
+                .WithRequired(e => e.permisos)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<permisos>()
+                .HasMany(e => e.perfiles_permisos)
+                .WithRequired(e => e.permisos)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<permisos>()
+                .HasMany(e => e.usuarios_permisos)
+                .WithRequired(e => e.permisos)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<recordatorios>()
@@ -190,6 +251,10 @@ namespace datos.Model
                 .Property(e => e.nombre)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<usuarios_grupos>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
+
             modelBuilder.Entity<usuarios_perfiles>()
                 .Property(e => e.usuario)
                 .IsUnicode(false);
@@ -208,6 +273,10 @@ namespace datos.Model
 
             modelBuilder.Entity<usuarios_perfiles>()
                 .Property(e => e.comentarios_borrado)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios_permisos>()
+                .Property(e => e.usuario)
                 .IsUnicode(false);
 
             modelBuilder.Entity<usuarios_sesiones>()
