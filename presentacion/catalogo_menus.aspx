@@ -209,7 +209,7 @@
                                     <div class="col-lg-12 col-sm-12">
                                        <asp:CheckBox ID="cbxmantenimiento" runat="server" onchange="showContentFix()" Text="En mantenimiento" />
                                     </div>
-                                     <div id="DatosFix">                                         
+                                     <div id="DatosFix" Style="display: none;">                                         
                                         <div class="col-lg-6 col-md-6  col-sm-12">
                                             <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha y hora inicial</strong></h5>
                                               <telerik:RadDateTimePicker ID="rdtpFechaInicial" runat="server" Width="100%" Skin="Bootstrap" Enabled="False"></telerik:RadDateTimePicker>                                             
