@@ -147,16 +147,16 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Telerik.Web.Design">
-      <HintPath>..\..\..\..\..\..\..\Telerik.Web.Design.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\Telerik.Web.Design\Telerik.Web.Design.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.Device.Detection">
-      <HintPath>..\..\..\PROGRAMAS\Telerik\Telerik.Web.Device.Detection.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\Telerik.Web.Design\Telerik.Web.Device.Detection.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI">
-      <HintPath>..\..\..\PROGRAMAS\Telerik\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\Telerik.Web.Design\Telerik.Web.UI.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\..\..\PROGRAMAS\Telerik\Telerik.Web.UI.Skins.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\Telerik.Web.Design\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
