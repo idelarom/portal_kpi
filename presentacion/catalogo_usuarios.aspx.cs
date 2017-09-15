@@ -217,6 +217,13 @@ namespace presentacion
                 if (filtro == "")
                 {
                     dt = dt_original;
+                    if (dt.Rows.Count > 0)
+                    {
+                        ddlperfiles.DataTextField = "perfil";
+                        ddlperfiles.DataValueField = "id_perfil";
+                        ddlperfiles.DataSource = dt;
+                        ddlperfiles.DataBind();
+                    }
                 }
                 else
                 {
@@ -224,19 +231,20 @@ namespace presentacion
                     {
                         dt = filtro == "" ? dt_original : dt_original.Select("perfil like '%" + filtro + "%'").CopyToDataTable();
                     }
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        ddlperfiles.DataTextField = "perfil";
+                        ddlperfiles.DataValueField = "id_perfil";
+                        ddlperfiles.DataSource = dt;
+                        ddlperfiles.DataBind();
+                    }
+                    else
+                    {
+                        Toast.Info("No se encontro ninguna coincidencia. Intentelo nuevamente.", "Mensaje del Sistema", this);
+                    }
                 }
 
-                if (dt.Rows.Count > 0)
-                {                   
-                    ddlperfiles.DataTextField = "perfil";
-                    ddlperfiles.DataValueField = "id_perfil";
-                    ddlperfiles.DataSource = dt;
-                    ddlperfiles.DataBind();
-                }
-                else
-                {
-                    Toast.Info("No se encontro ninguna coincidencia. Intentelo nuevamente.", "Mensaje del Sistema", this);
-                }
             }
             catch (Exception ex)
             {
@@ -255,6 +263,15 @@ namespace presentacion
                 if (filtro == "")
                 {
                     dt = dt_original;
+                    if (dt.Rows.Count > 0)
+                    {
+                        DataView dv_f = dt.DefaultView;
+                        dv_f.RowFilter = "id_menu_padre <> 0";
+                        ddlmenus.DataTextField = "name";
+                        ddlmenus.DataValueField = "id_menu";
+                        ddlmenus.DataSource = dv_f.ToTable();
+                        ddlmenus.DataBind();
+                    }
                 }
                 else
                 {
@@ -262,21 +279,22 @@ namespace presentacion
                     {
                         dt = filtro == "" ? dt_original : dt_original.Select("name like '%" + filtro + "%'").CopyToDataTable();
                     }
+                    if (dt.Rows.Count > 0)
+                    {
+                        DataView dv_f = dt.DefaultView;
+                        dv_f.RowFilter = "id_menu_padre <> 0";
+                        ddlmenus.DataTextField = "name";
+                        ddlmenus.DataValueField = "id_menu";
+                        ddlmenus.DataSource = dv_f.ToTable();
+                        ddlmenus.DataBind();
+                    }
+                    else
+                    {
+                        Toast.Info("No se encontro ninguna coincidencia. Intentelo nuevamente.", "Mensaje del Sistema", this);
+                    }
                 }
 
-                if (dt.Rows.Count > 0)
-                {
-                    DataView dv_f = dt.DefaultView;
-                    dv_f.RowFilter = "id_menu_padre <> 0";
-                    ddlmenus.DataTextField = "name";
-                    ddlmenus.DataValueField = "id_menu";
-                    ddlmenus.DataSource = dv_f.ToTable();
-                    ddlmenus.DataBind();
-                }
-                else
-                {
-                    Toast.Info("No se encontro ninguna coincidencia. Intentelo nuevamente.", "Mensaje del Sistema", this);
-                }
+                
             }
             catch (Exception ex)
             {
@@ -295,6 +313,14 @@ namespace presentacion
                 if (filtro == "")
                 {
                     dt = dt_original;
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        ddlpermiso.DataTextField = "permiso";
+                        ddlpermiso.DataValueField = "id_permiso";
+                        ddlpermiso.DataSource = dt;
+                        ddlpermiso.DataBind();
+                    }
                 }
                 else
                 {
@@ -302,19 +328,20 @@ namespace presentacion
                     {
                         dt = filtro == "" ? dt_original : dt_original.Select("permiso like '%" + filtro + "%'").CopyToDataTable();
                     }
+                    if (dt.Rows.Count > 0)
+                    {
+                        ddlpermiso.DataTextField = "permiso";
+                        ddlpermiso.DataValueField = "id_permiso";
+                        ddlpermiso.DataSource = dt;
+                        ddlpermiso.DataBind();
+                    }
+                    else
+                    {
+                        Toast.Info("No se encontro ninguna coincidencia. Intentelo nuevamente.", "Mensaje del Sistema", this);
+                    }
                 }
 
-                if (dt.Rows.Count > 0)
-                {
-                    ddlpermiso.DataTextField = "permiso";
-                    ddlpermiso.DataValueField = "id_permiso";
-                    ddlpermiso.DataSource = dt;
-                    ddlpermiso.DataBind();
-                }
-                else
-                {
-                    Toast.Info("No se encontro ninguna coincidencia. Intentelo nuevamente.", "Mensaje del Sistema", this);
-                }
+                
             }
             catch (Exception ex)
             {

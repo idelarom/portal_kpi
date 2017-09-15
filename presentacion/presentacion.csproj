@@ -161,6 +161,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ayuda.aspx" />
     <Content Include="bootstrap\css\bootstrap-theme.css" />
     <Content Include="bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="bootstrap\css\bootstrap.css" />
@@ -1218,6 +1219,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alert.cs" />
+    <Compile Include="ayuda.aspx.cs">
+      <DependentUpon>ayuda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ayuda.aspx.designer.cs">
+      <DependentUpon>ayuda.aspx</DependentUpon>
+    </Compile>
     <Compile Include="catalogo_ayudas.aspx.cs">
       <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1455,6 +1463,7 @@
   <ItemGroup>
     <Folder Include="documentation\" />
     <Folder Include="files\users\" />
+    <Folder Include="img\helps\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />

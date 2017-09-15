@@ -143,12 +143,14 @@
                                         <div class="pull-left">
                                             <asp:UpdatePanel ID="mp_up" runat="server">
                                                 <ContentTemplate>
-
+                                                    <a href="configuracion.aspx" class="btn btn-default btn-flat">
+                                                        <i class="fa fa-cogs"></i>&nbsp;Preferencias
+                                                    </a>
                                                     <asp:LinkButton ID="lnkloadsinc_mp" runat="server" CssClass="btn btn-default btn-flat"
                                                         OnClientClick="return false;" Style="display: none;">
                                                <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Sincronizando</asp:LinkButton>
-                                                    <asp:LinkButton ID="lnksincronizar_mp" runat="server" CssClass="btn btn-default btn-flat"
+                                                    <asp:LinkButton  style="display:none"  ID="lnksincronizar_mp" runat="server" CssClass="btn btn-default btn-flat"
                                                         OnClientClick="return LoadSinc('¿Desea sincronizar con el servidor Exchange de Migesa?');" OnClick="lnksincronizar_Click">
                                                 <i class="fa fa-refresh"></i>&nbsp;Sincronizar </asp:LinkButton>
                                                 </ContentTemplate>

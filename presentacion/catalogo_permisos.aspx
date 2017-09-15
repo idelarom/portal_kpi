@@ -83,8 +83,8 @@
                         <table class="dvv table no-margin table-condensed">
                             <thead>
                                 <tr style="font-size: 11px;">
-                                    <th style="min-width: 20px; text-align: center;" scope="col"></th>
-                                    <th style="min-width: 20px; text-align: center;" scope="col"></th>
+                                    <th style="max-width: 20px; text-align: center;" scope="col"></th>
+                                    <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 300px; text-align: left;" scope="col">Permiso</th>
                                     <th style="min-width: 60px; text-align: left;" scope="col">Creado por</th>
                                     <th style="min-width: 60px; text-align: center;" scope="col">Usuarios</th>
@@ -143,11 +143,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Permiso</strong></h5>
-                                    <asp:TextBox ID="txtpermiso"  CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Descripción</strong></h5>
-                                    <asp:TextBox ID="txtdescripcion" Rows="3" TextMode="MultiLine" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtpermiso" Rows="2" TextMode="MultiLine" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                             </div>
                             

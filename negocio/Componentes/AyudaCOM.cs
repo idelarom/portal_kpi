@@ -196,6 +196,10 @@ namespace negocio.Componentes
                                 })
                                 .OrderBy(u => u.titulo);
                 dt = To.DataTable(query.ToList());
+                foreach (DataRow row in dt.Rows)
+                {
+                    row["id_ayuda_padre"]= row["id_ayuda_padre"] == DBNull.Value ? 0 : row["id_ayuda_padre"];
+                }
                 return dt;
             }
             catch (DbEntityValidationException ex)

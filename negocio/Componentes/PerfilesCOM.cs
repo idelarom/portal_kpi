@@ -49,7 +49,7 @@ namespace negocio.Componentes
             {
                 Model context = new Model();
                 var query = context.usuarios_perfiles
-                                .Where(s => s.usuario == usuario && s.usuario_borrado == null)
+                                .Where(s => s.usuario.ToUpper() == usuario.ToUpper() && s.usuario_borrado == null)
                                 .Select(u => new
                                 {
                                     u.id_usuariop

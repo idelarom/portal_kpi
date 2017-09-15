@@ -40,7 +40,7 @@
         }
         function ConfirmEntregableDelete(id_permiso) {
             if (confirm('¿Desea eliminar este permiso?')) {
-                var hdfusuario = document.getElementById('<%= txtid_permiso.ClientID %>');
+                var hdfusuario = document.getElementById('<%= hdfid_ayuda.ClientID %>');
                 hdfusuario.value = id_permiso;
                 document.getElementById('<%= btneliminarpermiso.ClientID%>').click();
                 return true;
@@ -49,7 +49,7 @@
             }
         }
         function EditarClick(id_permiso) {
-            var hdfusuario = document.getElementById('<%= txtid_permiso.ClientID %>');
+            var hdfusuario = document.getElementById('<%= hdfid_ayuda.ClientID %>');
             hdfusuario.value = id_permiso;
             document.getElementById('<%= btneventgrid.ClientID%>').click();
             return false;
@@ -77,14 +77,14 @@
         <div class="col-lg-12">
             <div class="box box-danger">
                 <div class="box-body"><asp:LinkButton ID="lnknuevaayuda" OnClick="lnknuevaayuda_Click" CssClass="btn btn-primary btn-flat" runat="server">
-                Nuevo modulo de ayudas&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                Nuevo módulo de ayudas&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
             </asp:LinkButton>
                     <div class="table-responsive">
                         <table class="dvv table no-margin table-condensed">
                             <thead>
-                                <tr style="font-size: 11px;">
-                                    <th style="min-width: 20px; text-align: center;" scope="col"></th>
-                                    <th style="min-width: 20px; text-align: center;" scope="col"></th>
+                                <tr style="font-size: 12px;">
+                                    <th style="max-width: 20px; text-align: center;" scope="col"></th>
+                                    <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 250px; text-align: left;" scope="col">Titulo</th>
                                     <th style="min-width: 400px; text-align: left;" scope="col">Descripción</th>
                                 </tr>
@@ -92,7 +92,7 @@
                             <tbody>
                                 <asp:Repeater ID="repeat_ayudas" runat="server">
                                     <ItemTemplate>
-                                        <tr style="font-size: 11px">
+                                        <tr style="font-size: 12px">
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
                                                     onclick='<%# "return EditarClick("+Eval("id_ayuda")+");" %>'>
@@ -137,7 +137,37 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Titulo</strong></h5>
-                                    <asp:TextBox ID="txttitulo" Rows="2" TextMode="MultiLine" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txttitulo" Rows="1" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Descripción</strong></h5>
+                                    <asp:TextBox ID="txtdescripcion" Rows="3" TextMode="MultiLine" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <h5><strong><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;Icono</strong></h5>
+                                    <asp:TextBox ID="txticono" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="display:none;">
+                                    <h5><strong><i class="fa fa-edge" aria-hidden="true"></i>&nbsp;Código html</strong></h5>
+                                    <asp:TextBox ID="txtcodigohtml" Rows="3" TextMode="MultiLine" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h5><strong><i class="fa fa-file" aria-hidden="true"></i>&nbsp;Archivo</strong></h5>
+                                    <asp:FileUpload ID="fuparchivo" CssClass=" form-control" runat="server" />
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h5><strong><i class="fa fa-file" aria-hidden="true"></i>&nbsp;Tipo de archivo</strong></h5>
+                                    <asp:DropDownList ID="ddltipoarchivo" CssClass=" form-control" runat="server">
+                                        <asp:ListItem Text="Video" Value="1"></asp:ListItem>
+                                        <asp:ListItem Text="Imagen" Value="0"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <h5><strong><i class="fa fa-folder-open" aria-hidden="true"></i>&nbsp;Módulo padre</strong></h5>
+                                    <asp:DropDownList ID="ddlpadre" CssClass=" form-control" runat="server">
+                                        <asp:ListItem Text="Video" Value="1"></asp:ListItem>
+                                        <asp:ListItem Text="Imagen" Value="0"></asp:ListItem>
+                                    </asp:DropDownList>
                                 </div>
                             </div>
                             
@@ -161,5 +191,5 @@
     <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display: none;" />
     <asp:Button ID="btneliminarpermiso" OnClick="btneliminarpermiso_Click" runat="server" Text="Button" Style="display: none;" />
      <asp:HiddenField ID="hdfcommand" runat="server" />
-     <asp:HiddenField ID="txtid_permiso" runat="server" />
+     <asp:HiddenField ID="hdfid_ayuda" runat="server" />
 </asp:Content>

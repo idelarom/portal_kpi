@@ -312,7 +312,7 @@
                 </asp:UpdatePanel>
             </div>
         </div>
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel"  data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-lg" role="document">
                 <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                     <Triggers>
@@ -383,10 +383,10 @@
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
+                                
                             <div class="modal-footer ">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            </div>
                             </div>
                         </div>
                     </ContentTemplate>

@@ -1325,7 +1325,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_cumpl_compromisos" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_cumpl_compromisos" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
                 <Triggers>
@@ -1358,7 +1358,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 col-xs-12">
-                                    <div class="table-responsive" style="max-height: 240px; overflow: scroll;">
+                                    <div class="table-responsive" style="max-height: 310px; overflow: scroll;">
                                         <table class="table table-resposive table-bordered table-condensed">
                                             <thead>
                                                 <tr style="font-size: 11px; color: white; background-color: #C42C2C">
@@ -1438,16 +1438,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                        </div>
                     </div>
 
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
     </div>
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_cumpl_oportunidades" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_cumpl_oportunidades" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Always">
                 <Triggers>
@@ -1463,7 +1460,7 @@
                         <div class="modal-body" id="div2" runat="server">
                             <div class="row">
                                 <div class="col-lg-12 col-xs-12">
-                                    <div class="table-responsive" style="max-height: 420px; overflow: scroll;">
+                                    <div class="table-responsive" style="max-height: 500px; overflow: scroll;">
                                         <table class="table table-resposive table-bordered table-condensed">
                                             <thead>
                                                 <tr style="font-size: 11px; color: white; background-color: #C42C2C">
@@ -1508,16 +1505,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                        </div>
                     </div>
 
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
     </div>
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_valor_ganado" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_valor_ganado" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Always">
                 <Triggers>
@@ -1553,7 +1547,7 @@
                                 </div>
                                 <br />
                                 <div class=" col-lg-12 col-md-12 col-sm-12" id="div_Detalles_vg" runat="server" visible="false">
-                                    <div class="table table-responsive" style="max-height: 170px; overflow: scroll;">
+                                    <div class="table table-responsive" style="max-height: 260px; overflow: scroll;">
                                         <table class="table table-responsive table-bordered table-condensed" id="table_valor_ganado">
                                             <thead>
                                                 <tr style="font-size: 11px; color: white; background-color: #C42C2C">
@@ -1613,9 +1607,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
 

@@ -145,7 +145,7 @@
                                     <asp:UpdatePanel ID="up_sinc" runat="server">
                                         <ContentTemplate>
                                             <div class="row">
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-12" style="display:none;">
                                                     <asp:LinkButton ID="lnkloadsinc" runat="server" CssClass="btn btn-primary btn-flat"
                                                         OnClientClick="return false;" Style="display: none;">
                                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
