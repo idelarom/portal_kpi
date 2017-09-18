@@ -316,7 +316,7 @@
                 </asp:UpdatePanel>
             </div>
         </div>
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel" >
             <div class="modal-dialog modal-lg" role="document">
                 <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                     <Triggers>
@@ -347,24 +347,24 @@
                                             <br /><br />
                                             <div class="box-footer">
                                                 <div class="row">
-                                                      <div class=" table table-responsive" style="width:100%; height:115px; overflow: scroll;">
+                                                      <div class=" table table-responsive" style="width:100%; height:250px; overflow: scroll;">
                                                         <table class="table table-responsive table-condensed">
                                                             <thead>
                                                                 <tr style="font-size: 11px;">
                                                                     <th style="min-width: 50px; text-align: center;" scope="col">#Oport.</th>
                                                                     <th style="min-width: 50px; text-align: center;" scope="col">#Comp.</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Cliente</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Creado Por</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Compromiso</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">T.Compromiso</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Asignado</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">Estatus</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Creacion</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Inicio</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Asignado</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Inicial</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Final</th>
-                                                                    <th style="min-width: 100px; text-align: center;" scope="col">F.Terminado</th>
+                                                                    <th style="min-width: 400px;" scope="col">Cliente</th>
+                                                                    <th style="min-width: 150px;" scope="col">Creado Por</th>
+                                                                    <th style="min-width: 250px; text-align: center;" scope="col">Compromiso</th>
+                                                                    <th style="min-width: 150px; text-align: center;" scope="col">T.Compromiso</th>
+                                                                    <th style="min-width: 150px; text-align: center;" scope="col">Asignado</th>
+                                                                    <th style="min-width: 150px; text-align: center;" scope="col">Estatus</th>
+                                                                    <th style="min-width: 150px; text-align: center;" scope="col">F.Creacion</th>
+                                                                    <th style="min-width: 150px; text-align: center;" scope="col">F.Inicio</th>
+                                                                    <th style="min-width: 150px; text-align: center;" scope="col">F.Asignado</th>
+                                                                    <th style="min-width: 150px; text-align: center;" scope="col">F.Inicial</th>
+                                                                    <th style="min-width: 150px; text-align: center;" scope="col">F.Final</th>
+                                                                    <th style="min-width: 150px; text-align: center;" scope="col">F.Terminado</th>
                                                                     <th style="min-width: 50px; text-align: center;" scope="col">Cumplido</th>
                                                                 </tr>
                                                             </thead>
@@ -374,8 +374,8 @@
                                                                         <tr style="font-size: 11px">
                                                                              <td style="text-align: center;"><%# Eval("NumOport") %></td>
                                                                              <td style="text-align: center;"><%# Eval("NumComp") %></td>
-                                                                             <td style="text-align: center;"><%# Eval("Cliente") %></td>
-                                                                             <td style="text-align: center;"><%# Eval("CreadorPor") %></td>
+                                                                             <td style=""><%# Eval("Cliente") %></td>
+                                                                             <td ><%# Eval("CreadorPor") %></td>
                                                                              <td style="text-align: center;"><%# Eval("Compromiso") %></td>
                                                                              <td style="text-align: center;"><%# Eval("TipoCompromiso") %></td>
                                                                              <td style="text-align: center;"><%# Eval("Asignado") %></td>
@@ -400,9 +400,6 @@
                                     </div>
                                 </div>
 
-                            </div>
-                            <div class="modal-footer ">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </ContentTemplate>
