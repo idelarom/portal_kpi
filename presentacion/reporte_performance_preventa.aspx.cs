@@ -992,12 +992,37 @@ namespace presentacion
                 string ingeniero = hdfingeniero.Value.ToUpper();
                 string tipo_filtro = hdftipofiltro_oportunidades.Value;
                 DataTable dt_oportunidades = details_oportunidades_from_login(ingeniero, tipo_filtro);
+                div_img_empleado3.Visible = false;
                 if (dt_oportunidades.Rows.Count > 0)
                 {
                     repeat_oportunidades.DataSource = dt_oportunidades;
                     repeat_oportunidades.DataBind();
-
+                    DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));
+                    string imagen = hdfingeniero.Value.ToUpper() + ".png";
+                    imagen = tipo_filtro == "estatus" ? "" : imagen;
+                    lblnombre3.Text = ingeniero;
+                    div_img_empleado3.Visible = imagen != "";
+                    if (imagen != "" && File.Exists(dirInfo.ToString().Trim() + imagen))
+                    {
+                        DateTime localDate = DateTime.Now;
+                        string date = localDate.ToString();
+                        date = date.Replace("/", "_");
+                        date = date.Replace(":", "_");
+                        date = date.Replace(" ", "");
+                        imgempleado3.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                    }
+                    else
+                    {
+                        imagen = "user.png";
+                        DateTime localDate = DateTime.Now;
+                        string date = localDate.ToString();
+                        date = date.Replace("/", "_");
+                        date = date.Replace(":", "_");
+                        date = date.Replace(" ", "");
+                        imgempleado3.ImageUrl = "~/img/" + imagen + "?date=" + date;
+                    }
                     ModalShow("#modal_cumpl_oportunidades");
+
                 }
                 else
                 {

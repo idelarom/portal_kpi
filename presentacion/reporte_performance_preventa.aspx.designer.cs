@@ -1741,6 +1741,33 @@ namespace presentacion {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div2;
         
         /// <summary>
+        /// Control div_img_empleado3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_img_empleado3;
+        
+        /// <summary>
+        /// Control lblnombre3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblnombre3;
+        
+        /// <summary>
+        /// Control imgempleado3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgempleado3;
+        
+        /// <summary>
         /// Control repeat_oportunidades.
         /// </summary>
         /// <remarks>

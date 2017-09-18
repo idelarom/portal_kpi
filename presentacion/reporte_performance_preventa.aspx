@@ -1458,9 +1458,26 @@
                             <h4 class="modal-title">Oportunidades</h4>
                         </div>
                         <div class="modal-body" id="div2" runat="server">
+                              <div class="row" id="div_img_empleado3" runat="server" visible="false">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="box box-widget widget-user">
+                                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                                        <div class="widget-user-header bg-aqua-active">
+                                            <h3 class="widget-user-username">
+                                                <asp:Label ID="lblnombre3" runat="server" Text=""></asp:Label></h3>
+                                        </div>
+                                        <div class="widget-user-image">
+                                            <asp:Image ID="imgempleado3" runat="server" ImageUrl="~/img/user.png"
+                                                CssClass="img-responsive img-circle" />
+                                        </div>
+                                        <div class="box-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-12 col-xs-12">
-                                    <div class="table-responsive" style="max-height: 500px; overflow: scroll;">
+                                    <div class="table-responsive" style="max-height: 400px; overflow: scroll;">
                                         <table class="table table-resposive table-bordered table-condensed">
                                             <thead>
                                                 <tr style="font-size: 11px; color: white; background-color: #C42C2C">
