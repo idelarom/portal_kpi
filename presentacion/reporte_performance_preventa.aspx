@@ -6,6 +6,30 @@
 <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script type="text/javascript">
+        //declaramos los objetos de tipo load desde el inicio (load oscuro)
+        var opts = {
+            lines: 13 // The number of lines to draw
+           , length: 28 // The length of each line
+           , width: 14 // The line thickness
+           , radius: 42 // The radius of the inner circle
+           , scale: .8 // Scales overall size of the spinner
+           , corners: 1 // Corner roundness (0..1)
+           , color: '#000' // #rgb or #rrggbb or array of colors
+           , opacity: 0.1 // Opacity of the lines
+           , rotate: 0 // The rotation offset
+           , direction: 1 // 1: clockwise, -1: counterclockwise
+           , speed: 1 // Rounds per second
+           , trail: 60 // Afterglow percentage
+           , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+           , zIndex: 10 // The z-index (defaults to 2000000000)
+           , className: 'spinner' // The CSS class to assign to the spinner
+           , top: '45%' // Top position relative to parent
+           , left: '50%' // Left position relative to parent
+           , shadow: true // Whether to render a shadow
+           , hwaccel: true // Whether to use hardware acceleration
+           , position: 'absolute' // Element positioning
+        };
+
         $(document).ready(function () {
             Init('.dvv');
         });
@@ -87,6 +111,13 @@
                 tipo_tiempo_.value = 0;
                 nombre.value = ingeniero;
                 tipo_.value = tipo;
+                $("#<%= load_cumpli_compromisos.ClientID%>").show();
+                $("#<%= load_cumpli_compromisos_tabla.ClientID%>").show();
+                var target = document.getElementById('<%= load_cumpli_compromisos.ClientID %>');
+                var spinner = new Spinner(opts).spin(target);
+                var target2 = document.getElementById('<%= load_cumpli_compromisos_tabla.ClientID %>');
+                var spinner2 = new Spinner(opts).spin(target2);
+
                 document.getElementById('<%= btnfiltrocumcompro.ClientID%>').click();
             }
             return true;
@@ -120,6 +151,10 @@
             } else if (tiempo.toLowerCase() == "mismo dia") {
                 tiempo_.value = 5;
             }
+
+            $("#<%= load_tiempo_compromisos.ClientID%>").show();
+            var target3 = document.getElementById('<%= load_tiempo_compromisos.ClientID %>');
+            var spinner3 = new Spinner(opts).spin(target3);
             document.getElementById('<%= btnfiltrocumcompro.ClientID%>').click();
             return true;
         }
@@ -162,6 +197,10 @@
             } else if (mes == "diciembre") {
                 mes_.value = 12;
             }
+            $("#<%= load_backlogcompro.ClientID%>").show();
+            var target3 = document.getElementById('<%= load_backlogcompro.ClientID %>');
+            var spinner3 = new Spinner(opts).spin(target3);
+            
             document.getElementById('<%= btnfiltrocumcompro.ClientID%>').click();
             return true;
         }
@@ -170,34 +209,26 @@
             var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
             nombre.value = ingeniero;
             var tipo_filtro_ = document.getElementById('<%= hdftipofiltro_oportunidades.ClientID%>');
-            tipo_filtro_.value = tipo_Filtro;
-            document.getElementById('<%= btnfiltrooportunidades.ClientID%>').click();
+            tipo_filtro_.value = tipo_Filtro;        
+            
+            $("#<%= load_horas_trabajadas.ClientID%>").show();
+            var target3 = document.getElementById('<%= load_horas_trabajadas.ClientID %>');
+            var spinner3 = new Spinner(opts).spin(target3);
 
+            $("#<%= load_estatus_oportunidades.ClientID%>").show();
+            var target = document.getElementById('<%= load_estatus_oportunidades.ClientID %>');
+            var spinner = new Spinner(opts).spin(target);          
+            
+            $("#<%= load_horas_trabajadas_oportunidades_ingeniero.ClientID%>").show();
+            var target2 = document.getElementById('<%= load_horas_trabajadas_oportunidades_ingeniero.ClientID %>');
+            var spinner2 = new Spinner(opts).spin(target2);
+
+            
+            
+            document.getElementById('<%= btnfiltrooportunidades.ClientID%>').click();
             return true;
         }
-        //declaramos los objetos de tipo load desde el inicio (load oscuro)
-        var opts = {
-            lines: 13 // The number of lines to draw
-           , length: 28 // The length of each line
-           , width: 14 // The line thickness
-           , radius: 42 // The radius of the inner circle
-           , scale: .8 // Scales overall size of the spinner
-           , corners: 1 // Corner roundness (0..1)
-           , color: '#000' // #rgb or #rrggbb or array of colors
-           , opacity: 0.1 // Opacity of the lines
-           , rotate: 0 // The rotation offset
-           , direction: 1 // 1: clockwise, -1: counterclockwise
-           , speed: 1 // Rounds per second
-           , trail: 60 // Afterglow percentage
-           , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-           , zIndex: 10 // The z-index (defaults to 2000000000)
-           , className: 'spinner' // The CSS class to assign to the spinner
-           , top: '45%' // Top position relative to parent
-           , left: '50%' // Left position relative to parent
-           , shadow: true // Whether to render a shadow
-           , hwaccel: true // Whether to use hardware acceleration
-           , position: 'absolute' // Element positioning
-        };
+
 
         function ViewDetailsValorGanado(ingeniero,nombre_empleado) {
             var nombre = document.getElementById('<%= hdfingeniero.ClientID %>');
@@ -206,15 +237,18 @@
             empleado.value = nombre_empleado;
             document.getElementById('<%= btnviewvalor_ganado.ClientID%>').click();
             var fecha_inicial = document.getElementById('<%= rdpfechainicial.ClientID %>').value;
-            var fecha_final = document.getElementById('<%= rdpfechafinal.ClientID %>').value;
+            var fecha_final = document.getElementById('<%= rdpfechafinal.ClientID %>').value;            
+            $("#<%= load_valor_ganado.ClientID%>").show();
+            var target4 = document.getElementById('<%= load_valor_ganado.ClientID %>');
+            var spinner4 = new Spinner(opts).spin(target4);
             BindGrpahDetailsVG(ingeniero, fecha_inicial, fecha_final);
             return true;
         }
 
         function BindGrpahDetailsVG(ingeniero, fecha_inicial, fecha_final) {
-            var estatus_array =  [];
+            var estatus_array = [];
             var montos = [];
-            
+
             var call = $.ajax({
                 url: 'reporte_performance_preventa.aspx/GetGenerarValorGanado',
                 contentType: "application/json; charset=utf-8",
@@ -271,23 +305,24 @@
                                 },
                             }]
                         });
+
                         ModalShow('#modal_valor_ganado');
+                        $("#<%= load_valor_ganado.ClientID%>").hide();
                     }
                 },
                 error: function (result, status, err) {
                     console.log("error", result.responseText);
-                  
+                    $("#<%= load_valor_ganado.ClientID%>").hide();
                 }
             });
+
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-            <h3 class="page-header">Performance Preventa</h3>
-        </div>
-        <div class="col-lg-12">
+            <h3>Performance Preventa</h3>
             <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                 <i class="fa fa-refresh fa-spin fa-fw"></i>
                                 <span class="sr-only">Loading...</span>&nbsp;Cargando filtros
@@ -326,6 +361,16 @@
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-lg-12">
+
+                                            <asp:UpdatePanel ID="UpdatePanel6" runat="server" UpdateMode="Always">
+                                                <Triggers>
+                                                    <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName="Click" />
+                                                </Triggers>
+                                                <ContentTemplate>
+                                                    <div id="load_cumpli_compromisos" runat="server" style="display: none;">
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
                                             <div id="cumpli_compromisos" style="min-width: 200px; height: 400px; max-width: 600px; margin: 0 auto">
                                             </div>
 
@@ -338,6 +383,16 @@
 
                                         </div>
                                         <div class="col-lg-12">
+
+                                            <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Always">
+                                                <Triggers>
+                                                    <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName="Click" />
+                                                </Triggers>
+                                                <ContentTemplate>
+                                                    <div id="load_cumpli_compromisos_tabla" runat="server" style="display: none;">
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
                                             <div class="table-responsive">
                                                 <table class="dvv table table-responsive table-bordered table-condensed">
                                                     <thead>
@@ -397,10 +452,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="overlay" id="load_cumpli_compromisos" runat="server">
-                                    <i class="fa fa-refresh fa-spin"></i>
-                                </div>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -414,7 +465,17 @@
                                     </div>
                                 </div>
                                 <div class="box-body">
-                                    <div class="row">
+                                    <div class="row">                                       
+
+                                            <asp:UpdatePanel ID="UpdatePanel7" runat="server" UpdateMode="Always">
+                                                <Triggers>
+                                                    <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName="Click" />
+                                                </Triggers>
+                                                <ContentTemplate>
+                                                    <div id="load_tiempo_compromisos" runat="server" style="display: none;">
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
                                         <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
                                             <asp:GridView ID="grid_tiempo_compromisos" Style="display: none;" runat="server"></asp:GridView>
                                             <div id="tiempo_compromisos" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
@@ -703,6 +764,16 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
+
+                                        <asp:UpdatePanel ID="UpdatePanel8" runat="server" UpdateMode="Always">
+                                            <Triggers>
+                                                <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName="Click" />
+                                            </Triggers>
+                                            <ContentTemplate>
+                                                <div id="load_backlogcompro" runat="server" style="display: none;">
+                                                </div>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
                                         <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
                                             <asp:GridView ID="grid_backlog_compromisos_actual" Style="display: none" runat="server"></asp:GridView>
                                             <div id="backlog_compromisos_actual" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
@@ -1085,6 +1156,16 @@
                                 <div class="box-body">
                                     <div class="row">
                                         <div class=" col-lg-12">
+
+                                            <asp:UpdatePanel ID="UpdatePanel9" runat="server" UpdateMode="Always">
+                                                <Triggers>
+                                                    <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName="Click" />
+                                                </Triggers>
+                                                <ContentTemplate>
+                                                    <div id="load_horas_trabajadas" runat="server" style="display: none;">
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
                                             <asp:GridView ID="grid_horas_trabajadas_oportunidades" Style="display: none;" runat="server"></asp:GridView>
                                             <div id="horas_trabajadas_oportunidades" style="min-width: 200px; height: 400px; max-width: 1200px; margin: 0 auto">
                                             </div>
@@ -1106,6 +1187,17 @@
                                 <div class="box-body">
                                     <div class="row">
                                         <div class=" col-lg-12">
+                                            
+
+                                            <asp:UpdatePanel ID="UpdatePanel10" runat="server" UpdateMode="Always">
+                                                <Triggers>
+                                                    <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName="Click" />
+                                                </Triggers>
+                                                <ContentTemplate>
+                                                    <div id="load_estatus_oportunidades" runat="server" style="display: none;">
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
                                             <div id="estatus_oportunidades" style="min-width: 200px; height: 400px; max-width: 600px; margin: 0 auto">
                                             </div>
                                         </div>
@@ -1126,6 +1218,16 @@
                                 <div class="box-body">
                                     <div class="row">
                                         <div class=" col-lg-12">
+                                            
+                                            <asp:UpdatePanel ID="UpdatePanel11" runat="server" UpdateMode="Always">
+                                                <Triggers>
+                                                    <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName="Click" />
+                                                </Triggers>
+                                                <ContentTemplate>
+                                                    <div id="load_horas_trabajadas_oportunidades_ingeniero" runat="server" style="display: none;">
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
                                             <asp:GridView ID="grid_horas_trabajadas_oportunidades_ingeniero" Style="display: none;" runat="server"></asp:GridView>
                                             <div id="horas_trabajadas_oportunidades_ingeniero" style="min-width: 200px; height: 400px; max-width: 1200px; margin: 0 auto">
                                             </div>
@@ -1148,6 +1250,16 @@
                                     <div class="row">
 
                                         <div class=" col-lg-12">
+                                            
+                                            <asp:UpdatePanel ID="UpdatePanel12" runat="server" UpdateMode="Always">
+                                                <Triggers>
+                                                    <asp:AsyncPostBackTrigger ControlID="btnfiltrocumcompro" EventName="Click" />
+                                                </Triggers>
+                                                <ContentTemplate>
+                                                    <div id="load_valor_ganado" runat="server" style="display: none;">
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
                                             <div class="table-responsive">
                                                 <table class="dvv table table-responsive table-bordered table-condensed">
                                                     <thead>
@@ -1631,6 +1743,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
+
     <asp:Button ID="btnfiltrocumcompro" OnClick="btnfiltrocumcompro_Click" Style="display: none" runat="server" Text="Button" />
     <asp:Button ID="btnfiltrooportunidades" OnClick="btnfiltrooportunidades_Click" Style="display: none" runat="server" Text="Button" />
     <asp:Button ID="btnviewvalor_ganado" OnClick="btnviewvalor_ganado_Click" Style="display: none" runat="server" Text="Button" />
