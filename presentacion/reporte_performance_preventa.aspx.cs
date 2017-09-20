@@ -245,6 +245,7 @@ namespace presentacion
                     "            point:{" +
                     "               events: {" +
                     "                   click: function () {" +
+
                     "                       return ViewDetailsCumpCompro('',this.name,1);" +
                     "                       }" +
                     "                     }" +
@@ -254,7 +255,6 @@ namespace presentacion
                     sb.Append(script);
                     sb.Append("</script>");
                     ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
-                    load_cumpli_compromisos.Style["display"] = "none";
                 }
             }
             catch (Exception ex)
@@ -449,7 +449,6 @@ namespace presentacion
                     sb.Append(script);
                     sb.Append("</script>");
                     ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), sb.ToString());
-                    load_cumpli_compromisos.Style["display"] = "none";
                 }
             }
             catch (Exception ex)
@@ -586,7 +585,7 @@ namespace presentacion
                             + "          point: {"
                             + "              events: {"
                             + "                   click: function () {"
-                            + "                         return ViewDetailsBacklogCompromisos( " + año_anterior.ToString() + ",this.series.name);"
+                            //+ "                         return ViewDetailsBacklogCompromisos( " + año_anterior.ToString() + ",this.series.name);"
                             + "                       }"
                             + "                     }"
                             + "                  }"
@@ -959,7 +958,7 @@ namespace presentacion
                     "            data: [" + data + "]," +
                     "            point:{" +
                     "               events: {" +
-                    "                   click: function () {" +
+                    "                   click: function () {" +                   
                     "                       return ViewDetailsOportunidades(this.name,'estatus');" +
                     "                       }" +
                     "                     }" +
@@ -1035,6 +1034,12 @@ namespace presentacion
             {
                 Toast.Error("Error al generar modal detalles de oportunidades: " + ex.Message, this);
             }
+            finally
+            {
+                load_estatus_oportunidades.Style["display"] = "none";
+                load_horas_trabajadas.Style["display"] = "none";
+                load_horas_trabajadas_oportunidades_ingeniero.Style["display"] = "none";
+            }
         }
 
         protected void btnfiltrocumcompro_Click(object sender, EventArgs e)
@@ -1099,6 +1104,12 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al generar modal detalles cumplimiento compromisos: " + ex.Message, this);
+            }
+            finally {
+                load_cumpli_compromisos.Style["display"] = "none";
+                load_backlogcompro.Style["display"] = "none";
+                load_cumpli_compromisos_tabla.Style["display"] = "none";
+                load_tiempo_compromisos.Style["display"] = "none";
             }
         }
 

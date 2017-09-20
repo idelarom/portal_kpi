@@ -213,6 +213,8 @@ namespace presentacion
             List<DateTime> list_dates = funciones.RangoFechasTrimestre(DateTime.Now);
             txtfechainicio.Text = list_dates[0].ToString("yyyy-MM-dd");
             txtfechafinal.Text = list_dates[1].ToString("yyyy-MM-dd");
+
+            txtfechafinalstr.Text = list_dates[1].ToString("MMMM yyyy");
             ddltrimestres.DataValueField = "fecha";
             ddltrimestres.DataTextField = "trimestre";
             DataTable dt = funciones.tabla_trimestres();
@@ -425,6 +427,7 @@ namespace presentacion
                 ddltrimestres.Visible = true;
                 List<DateTime> list_dates = funciones.RangoFechasTrimestre(Convert.ToDateTime(txtfechainicio.Text.ToString()));
                 txtfechafinal.Text = list_dates[1].ToString("yyyy-MM-dd");
+                txtfechafinalstr.Text = list_dates[1].ToString("MMMM yyyy");
                 lblinfotipofiltro.Text = "Permite seleccionar solo por rangos de trimestres.";
             }
             else
@@ -432,6 +435,7 @@ namespace presentacion
                 List<DateTime> list_dates = funciones.RangoFechasTrimestre(DateTime.Now);
                 txtfechainicio.Text = list_dates[0].ToString("yyyy-MM-dd");
                 txtfechafinal.Text = list_dates[1].ToString("yyyy-MM-dd");
+                txtfechafinalstr.Text = list_dates[1].ToString("MMMM yyyy");
                 txtfechainicio.Visible = true;
                 lblinfotipofiltro.Text = "Permite seleccionar las fechas libremente. Entre mas larga sea la fecha, mayor sera el tiempo de carga.";
             }
@@ -447,6 +451,7 @@ namespace presentacion
                 List<DateTime> list_dates = funciones.RangoFechasTrimestre(Convert.ToDateTime(txtfechainicio.Text.ToString()));
                 txtfechainicio.Text = list_dates[0].ToString("yyyy-MM-dd");
                 txtfechafinal.Text = list_dates[1].ToString("yyyy-MM-dd");
+                txtfechafinalstr.Text = list_dates[1].ToString("MMMM yyyy");
             }
         }
 
@@ -618,6 +623,15 @@ namespace presentacion
                 Alert.ShowAlertError(ex.ToString(), this.Page);
             }
         }
-        
+
+        protected void txtfechafinalstr_TextChanged(object sender, EventArgs e)
+        {
+            string value = txtfechafinalstr.Text;
+            value = value.Replace("de","");
+            value = funciones.FirstCharToUpper(value);
+            txtfechafinalstr.Text = value;
+        }
+
+
     }
 }

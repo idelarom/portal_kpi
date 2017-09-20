@@ -1210,6 +1210,7 @@
     <Content Include="recordatorios.aspx" />
     <Content Include="reporte_dashboard_bonos_kpi.aspx" />
     <Content Include="reporte_dashboard_compromisos_kpi.aspx" />
+    <Content Include="reporte_performance_comercial.aspx" />
     <Content Include="reporte_performance_ingenieria_netdiario.aspx" />
     <Content Include="reporte_performance_preventa.aspx" />
     <Content Include="Service.asmx" />
@@ -1371,6 +1372,13 @@
     </Compile>
     <Compile Include="reporte_dashboard_compromisos_kpi.aspx.designer.cs">
       <DependentUpon>reporte_dashboard_compromisos_kpi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="reporte_performance_comercial.aspx.cs">
+      <DependentUpon>reporte_performance_comercial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reporte_performance_comercial.aspx.designer.cs">
+      <DependentUpon>reporte_performance_comercial.aspx</DependentUpon>
     </Compile>
     <Compile Include="reporte_performance_ingenieria_netdiario.aspx.cs">
       <DependentUpon>reporte_performance_ingenieria_netdiario.aspx</DependentUpon>

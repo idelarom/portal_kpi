@@ -17,6 +17,24 @@ namespace presentacion
     /// </summary>
     public class funciones
     {
+        public static string FirstCharToUpper(string input)
+        {
+            if (String.IsNullOrEmpty(input))
+                throw new ArgumentException("ARGH!");
+            return input.First().ToString().ToUpper() + String.Join("", input.Skip(1));
+        }
+
+        public static String ValueMoneyMil(decimal money, int numberofdecimals)
+        {
+            string value = "";
+            money = money / 1000;
+
+            decimal d = Math.Round(money, numberofdecimals);
+            value = d.ToString("C2");
+            value = value + " K";
+            value = value.Replace("$","$ ");
+            return value;
+        }
         public static DataTable ToDataTable<T>(T entity) where T : class
         {
             var properties = typeof(T).GetProperties();
@@ -89,13 +107,13 @@ namespace presentacion
                     DataRow nrow2 = dt.NewRow();
                     DataRow nrow3 = dt.NewRow();
                     DataRow nrow4 = dt.NewRow();
-                    nrow1["trimestre"] = "Marzo " + year.ToString();
+                    nrow1["trimestre"] = "marzo " + year.ToString();
                     nrow1["fecha"] = Convert.ToDateTime(year.ToString() + "-03-01");
-                    nrow2["trimestre"] = "Junio " + year.ToString();
+                    nrow2["trimestre"] = "junio " + year.ToString();
                     nrow2["fecha"] = Convert.ToDateTime(year.ToString() + "-06-01");
-                    nrow3["trimestre"] = "Septiembre " + year.ToString();
+                    nrow3["trimestre"] = "septiembre " + year.ToString();
                     nrow3["fecha"] = Convert.ToDateTime(year.ToString() + "-09-01");
-                    nrow4["trimestre"] = "Diciembre " + year.ToString();
+                    nrow4["trimestre"] = "diciembre " + year.ToString();
                     nrow4["fecha"] = Convert.ToDateTime(year.ToString() + "-12-01");
                     dt.Rows.Add(nrow1);
                     dt.Rows.Add(nrow2);

@@ -225,7 +225,9 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="font-size: 10px;">
                                         <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
-                                        <asp:TextBox ID="txtfechafinal" ReadOnly="true" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
+                                         <asp:TextBox ID="txtfechafinalstr" Visible="true" ReadOnly="true" CssClass="form-control" runat="server"></asp:TextBox>
+                                   
+                                        <asp:TextBox ID="txtfechafinal" Visible="false" ReadOnly="true" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="row">
