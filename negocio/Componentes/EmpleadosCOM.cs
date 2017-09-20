@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
+using datos.Model;
 
 namespace negocio.Componentes
 {
@@ -13,6 +14,141 @@ namespace negocio.Componentes
 
     public class EmpleadosCOM
     {
+        /// <summary>
+        /// Agrega un listado de usuarios para que un usuario pueda visualizarlos como si fuera su jefe directo.
+        /// </summary>
+        /// <param name="usuario_jefe"></param>
+        /// <param name="usuarios"></param>
+        /// <returns></returns>
+        public string AgregarDelegados(string usuario_jefe, List<string> usuarios)
+        {
+            try
+            {
+                string vmensaje = EliminarDelegados(usuario_jefe);
+                if (vmensaje != "")
+                {
+                    return vmensaje;
+                }
+                else {
+                    Model context = new Model();
+                    foreach (string usuario in usuarios)
+                    {
+                        if (!ExisteDelegado(usuario_jefe, usuario))
+                        {
+                            usuarios_delegados usuarios_delegado = new usuarios_delegados
+                            {
+                                usuario = usuario,
+                                usuario_jefe = usuario_jefe,
+                                activo = true
+                            };
+                            context.usuarios_delegados.Add(usuarios_delegado);
+                        }
+                    }
+                    context.SaveChanges();
+                    return "";
+                }                
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+        public string EliminarDelegados(string usuario_jefe)
+        {
+            try
+            {
+                Model context = new Model();
+                var query = context.usuarios_delegados
+                                .Where(i => i.usuario_jefe.ToUpper() == usuario_jefe.ToUpper())
+                                .Select(u => new
+                                {
+                                    u.id_usuariod
+                                });
+               DataTable dt = To.DataTable(query.ToList());
+                foreach (DataRow row in dt.Rows)
+                {
+                    int id = Convert.ToInt32(row["id_usuariod"]);
+                    usuarios_delegados usuario_delegado = context.usuarios_delegados
+                               .First(i => i.id_usuariod ==id);
+                    usuario_delegado.activo = false;
+                }
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+        public bool ExisteDelegado(string usuario_jefe, string usuario)
+        {
+            try
+            {
+                Model context = new Model();
+                var query = context.usuarios_delegados
+                                .Where(i => i.usuario_jefe.ToUpper() == usuario_jefe.ToUpper()
+                                && i.usuario.ToUpper() == usuario.ToUpper())
+                                .Select(u => new
+                                {
+                                    u.id_usuariod
+                                });
+                DataTable dt = To.DataTable(query.ToList());
+                foreach (DataRow row in dt.Rows)
+                {
+                    int id = Convert.ToInt32(row["id_usuariod"]);
+                    usuarios_delegados usuario_delegado = context.usuarios_delegados
+                               .First(i => i.id_usuariod == id);
+                    usuario_delegado.activo = true;
+                }
+                context.SaveChanges();
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
+        }
+
+        public DataTable GetDelegados(string usuario)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Model db = new Model();
+                var usuarios = (from p in db.usuarios_delegados
+                           where (p.usuario_jefe.ToUpper() == usuario.ToUpper()
+                           && p.activo == true)
+                           select new { p.usuario }).ToArray();
+                NAVISION dbnavision = new NAVISION();
+                var results = from p in usuarios
+                              join up in dbnavision.Employee on p.usuario.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
+                              select new { Usuario_red = p.usuario, nombre_usuario = up.First_Name.Trim() +" "+up.Last_Name.Trim()+" | "+p.usuario.Trim().ToUpper() };
+                dt = To.DataTable(results.ToList());
+                return dt;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return dt;
+            }
+        }
         public DataSet sp_listado_empleados(int num_empleado, bool ver_Todos_Empleados, bool no_activos)
         {
             DataSet ds = new DataSet();

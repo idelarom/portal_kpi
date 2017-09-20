@@ -585,7 +585,7 @@ namespace presentacion
                             + "          point: {"
                             + "              events: {"
                             + "                   click: function () {"
-                            + "                         return ViewDetailsBacklogCompromisos( " + año_anterior.ToString() + ",this.series.name);"
+                            //+ "                         return ViewDetailsBacklogCompromisos( " + año_anterior.ToString() + ",this.series.name);"
                             + "                       }"
                             + "                     }"
                             + "                  }"

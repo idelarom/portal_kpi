@@ -139,6 +139,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.TextBox txtfechainicio;
         
         /// <summary>
+        /// Control txtfechafinalstr.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtfechafinalstr;
+        
+        /// <summary>
         /// Control txtfechafinal.
         /// </summary>
         /// <remarks>

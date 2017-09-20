@@ -41,8 +41,15 @@
         function EditarClick(usuario) {
             var hdfusuario = document.getElementById('<%= hdfusuario.ClientID %>');
             hdfusuario.value = usuario;
-              document.getElementById('<%= btnver.ClientID%>').click();
-              return false;
+            document.getElementById('<%= btnver.ClientID%>').click();
+            return false;
+        }
+        
+        function DelegadosClick(usuario) {
+            var hdfusuario = document.getElementById('<%= hdfusuario.ClientID %>');
+            hdfusuario.value = usuario;
+            document.getElementById('<%= btndelegados.ClientID%>').click();
+            return false;
         }
         function ChangedTextLoad3()
         {
@@ -61,6 +68,20 @@
             $("#<%= imgpermiso.ClientID%>").show();
             $("#<%= lblpermiso.ClientID%>").show();
             return true;
+        }
+        function ChangedTextLoad2() {
+            $("#<%= imgloadempleado_.ClientID%>").show();
+            $("#<%= lblbe2.ClientID%>").show();
+            return true;
+        }
+        function ConfirmEmpleadoProyectoModal(msg) {
+            if (confirm(msg)) {
+                $("#<%= lnkcargando.ClientID%>").show();
+                $("#<%= lnkguardar.ClientID%>").hide();
+                return true;
+            } else {
+                return false;
+            }
         }
     </script>
 </asp:Content>
@@ -82,11 +103,12 @@
                                 <tr style="font-size: 11px;">
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 60px; text-align: left;" scope="col">Usuario</th>
-                                    <th style="min-width: 60px; text-align: left;" scope="col">No. Empleado</th>
+                                    <th style="min-width: 80px; text-align: left;" scope="col">No. Empleado</th>
                                     <th style="min-width: 200px; text-align: left;" scope="col">Nombre</th>
                                     <th style="min-width: 200px; text-align: left;" scope="col">Puesto</th>
                                     <th style="min-width: 150px; text-align: left;" scope="col">Correo</th>
-                                    <th style="min-width: 200px; text-align: left;" scope="col">Perfil</th>
+                                    <th style="min-width: 150px; text-align: left;" scope="col">Perfil</th>
+                                    <th style="min-width: 60px; text-align: left;" scope="col">Delegados</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,11 +122,17 @@
                                                 </a>
                                             </td>
                                             <td style="text-align: left;"><%# Eval("Usuario") %></td>
-                                            <td style="text-align: left;"><%# Eval("num_empleado") %></td>
+                                            <td style="text-align: center;"><%# Eval("num_empleado") %></td>
                                             <td style="text-align: left;"><%# Eval("Nombre") %></td>
                                             <td style="text-align: left;"><%# Eval("Puesto") %></td>
                                             <td style="text-align: left;"><%# Eval("correo") %></td>
                                             <td style="text-align: left;"><%# Eval("Perfil") %></td>
+                                            <td style="text-align: center;"> 
+                                                 <a style="cursor: pointer;min-width:60px" class="btn btn-primary btn-flat btn-xs" 
+                                                    onclick='<%# "return DelegadosClick("+@""""+Eval("usuario")+@"""" +");" %>'>
+                                                   <%# Eval("total_delegados") %>
+                                                </a>
+                                            </td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -310,6 +338,78 @@
             </asp:UpdatePanel>
         </div>
     </div>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_delegados" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btndelegados" EventName="Click" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Usuarios delegados</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-lg-12 col-xs-12">
+                                    <h5><strong>Listado de usuarios que pueden ser visualizados por el seleccionado.</strong></h5>
+                                    <div style="text-align: left;" class="input-group input-group-sm">
+                                        <asp:TextBox ID="txtbuscarempleado" CssClass="form-control" placeholder="Buscar" runat="server"></asp:TextBox>
+                                        <span class="input-group-btn">
+                                            <asp:LinkButton ID="btnbuscarempleado2" CssClass="btn btn-primary btn-flat" runat="server"
+                                                OnClientClick="return ChangedTextLoad2();" OnClick="btnbuscarempleado2_Click">
+                                                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                            </asp:LinkButton>
+                                        </span>
+                                    </div>
+
+                                    <asp:Image ID="imgloadempleado_" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                    <label id="lblbe2" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <asp:CheckBox ID="cbxcheckall_empleados" Text="Seleccionar todos" OnCheckedChanged="cbxcheckall_empleados_CheckedChanged" AutoPostBack="true" runat="server" />
+                                    <div style="height: 330px; min-width: 500px; overflow: scroll;">
+                                        <asp:Repeater ID="rdllista_empleados" runat="server">
+                                            <ItemTemplate>
+                                                <asp:UpdatePanel ID="jajaja" runat="server" UpdateMode="Always">
+                                                    <Triggers>
+                                                        <asp:AsyncPostBackTrigger ControlID="mycheck" EventName="CheckedChanged" />
+                                                    </Triggers>
+                                                    <ContentTemplate>
+                                                        <asp:CheckBox ID="mycheck" Text='<%# Eval("nombre_usuario").ToString()  %>'
+                                                            ToolTip='<%# Eval("Usuario_Red").ToString()  %>' OnCheckedChanged="mycheck_CheckedChanged"
+                                                            runat="server"
+                                                            AutoPostBack="true"></asp:CheckBox>
+                                                        <br />
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                            <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>&nbsp;Guardando...
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
+                                OnClientClick="return ConfirmEmpleadoProyectoModal('¿Desea Guardar esta información?');" runat="server">
+                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
+                            </asp:LinkButton>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
     <asp:Button ID="btnver" runat="server" Text="" style="display:none" OnClick="btnver_Click" />
+    <asp:Button ID="btndelegados" runat="server" Text="" style="display:none" OnClick="btndelegados_Click" />
     <asp:HiddenField ID="hdfusuario" runat="server" />
 </asp:Content>

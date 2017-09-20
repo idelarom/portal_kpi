@@ -26,6 +26,7 @@ namespace datos.Model
         public virtual DbSet<recordatorios_usuarios_adicionales> recordatorios_usuarios_adicionales { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<usuarios_configuraciones> usuarios_configuraciones { get; set; }
+        public virtual DbSet<usuarios_delegados> usuarios_delegados { get; set; }
         public virtual DbSet<usuarios_grupos> usuarios_grupos { get; set; }
         public virtual DbSet<usuarios_perfiles> usuarios_perfiles { get; set; }
         public virtual DbSet<usuarios_permisos> usuarios_permisos { get; set; }
@@ -278,6 +279,14 @@ namespace datos.Model
 
             modelBuilder.Entity<usuarios_configuraciones>()
                 .Property(e => e.nombre)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios_delegados>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios_delegados>()
+                .Property(e => e.usuario_jefe)
                 .IsUnicode(false);
 
             modelBuilder.Entity<usuarios_grupos>()
