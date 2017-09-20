@@ -10,6 +10,8 @@ using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
+using System.Reflection;
+using System.Web;
 
 namespace presentacion
 {
@@ -474,32 +476,89 @@ namespace presentacion
                 dt = ViewState[hdfsessionid.Value + "-dt_reporte"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Export Export = new Export();
-                    //array de DataTables
-                    List<DataTable> ListaTables = new List<DataTable>();
-                    ListaTables.Add(dt);
-                    //array de nombre de sheets
-                    DateTime localDate = DateTime.Now;
-                    string date = localDate.ToString();
-                    date = date.Replace("/", "_");
-                    date = date.Replace(":", "_");
-                    date = date.Replace(".", "_");
-                    date = date.Replace(" ", "_");
-                    string[] Nombres = new string[] { "Reporte Preventa Ingenieria" };
-                    string mensaje = Export.toExcel("Reporte Preventa Ingenieria", XLColor.White, XLColor.Black, 18, true, DateTime.Now.ToString(), XLColor.White,
-                                           XLColor.Black, 10, ListaTables, XLColor.CelestialBlue, XLColor.White, Nombres, 1,
-                                           "Reporte_Preventa_Ingenieria_" + date + ".xlsx", Page.Response);
+                    //Export Export = new Export();
+                    ////array de DataTables
+                    //List<DataTable> ListaTables = new List<DataTable>();
+                    //ListaTables.Add(dt);
+                    ////array de nombre de sheets
+                    //DateTime localDate = DateTime.Now;
+                    //string date = localDate.ToString();
+                    //date = date.Replace("/", "_");
+                    //date = date.Replace(":", "_");
+                    //date = date.Replace(".", "_");
+                    //date = date.Replace(" ", "_");
+                    //string[] Nombres = new string[] { "Reporte Preventa Ingenieria" };
+                    //string mensaje = Export.toExcel("Reporte Preventa Ingenieria", XLColor.White, XLColor.Black, 18, true, DateTime.Now.ToString(), XLColor.White,
+                    //                       XLColor.Black, 10, ListaTables, XLColor.CelestialBlue, XLColor.White, Nombres, 1,
+                    //                       "Reporte_Preventa_Ingenieria_" + date + ".xlsx", Page.Response);
 
-                    if (mensaje != "")
-                    {
-                        Toast.Error("Error al exportar el reporte a excel: " + mensaje, this);
-                    }
+                    //if (mensaje != "")
+                    //{
+                    //    Toast.Error("Error al exportar el reporte a excel: " + mensaje, this);
+                    //}
+                    ExporttoExcel(dt);
                 }
             }
             catch (Exception ex)
             {
                 Toast.Error("Error al exportar el reporte a excel: " + ex.Message, this);
             }
+        }
+
+        private void ExporttoExcel(DataTable table)
+        {
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.ClearContent();
+            HttpContext.Current.Response.ClearHeaders();
+            HttpContext.Current.Response.Buffer = true;
+            HttpContext.Current.Response.ContentType = "application/ms-excel";
+            HttpContext.Current.Response.Write(@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.0 Transitional//EN"">");
+            //HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=Reports.xls");
+            DateTime localDate = DateTime.Now;
+            string date = localDate.ToString();
+            date = date.Replace("/", "_");
+            date = date.Replace(":", "_");
+            date = date.Replace(".", "_");
+            date = date.Replace(" ", "_");
+            HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=Reporte_Preventa_Ingenieria_" + date + ".xls");
+            HttpContext.Current.Response.Charset = "utf-8";
+            HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.GetEncoding("windows-1250");
+            //sets font
+            HttpContext.Current.Response.Write("<font style='font-size:10.0pt; font-family:Calibri;'>");
+            HttpContext.Current.Response.Write("<BR><BR><BR>");
+            //sets the table border, cell spacing, border color, font of the text, background, foreground, font height
+            HttpContext.Current.Response.Write("<Table border='1' bgColor='#ffffff' " +
+              "borderColor='#000000' cellSpacing='0' cellPadding='0' " +
+              "style='font-size:10.0pt; font-family:Calibri; background:CelestialBlue;'> <TR>");
+            //am getting my grid's column headers
+            int columnscount = table.Columns.Count;
+
+            for (int j = 0; j < columnscount; j++)
+            {      //write in new column
+                HttpContext.Current.Response.Write("<Td>");
+                //Get column headers  and make it as bold in excel columns
+                HttpContext.Current.Response.Write("<B>");
+                HttpContext.Current.Response.Write(table.Columns[j].ToString());
+                HttpContext.Current.Response.Write("</B>");
+                HttpContext.Current.Response.Write("</Td>");
+            }
+            HttpContext.Current.Response.Write("</TR>");
+            foreach (DataRow row in table.Rows)
+            {//write in new row
+                HttpContext.Current.Response.Write("<TR>");
+                for (int i = 0; i < table.Columns.Count; i++)
+                {
+                    HttpContext.Current.Response.Write("<Td>");
+                    HttpContext.Current.Response.Write(row[i].ToString());
+                    HttpContext.Current.Response.Write("</Td>");
+                }
+
+                HttpContext.Current.Response.Write("</TR>");
+            }
+            HttpContext.Current.Response.Write("</Table>");
+            HttpContext.Current.Response.Write("</font>");
+            HttpContext.Current.Response.Flush();
+            HttpContext.Current.Response.End();
         }
 
         protected void btnverempleadodetalles_Click(object sender, EventArgs e)
