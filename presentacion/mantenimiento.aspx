@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="mantenimiento.aspx.cs" Inherits="presentacion.mantenimiento" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+ <link href='http://fonts.googleapis.com/css?family=Lato:900' rel='stylesheet' type='text/css'>
 
 <style type="text/css">
 /*body{
@@ -83,7 +85,7 @@ h1{
     <asp:HiddenField ID="hdfMinutos" runat="server" />
     <asp:HiddenField ID="hdfSegundos" runat="server" />
     <asp:HiddenField ID="hdfFixTime" runat="server" />
- <script>
+ <script type="text/javascript">
 function getTimeRemaining(endtime) {
   var t = Date.parse(endtime) - Date.parse(new Date());
   var segundos = Math.floor((t / 1000) % 60);
@@ -128,9 +130,10 @@ function initializeReloj(id, endtime) {
 //var Segundos = document.getElementById('<%= hdfSegundos.ClientID %>').value;
 
 var FixTime = document.getElementById('<%= hdfFixTime.ClientID %>').value;
-        //var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+       //var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
      //var deadline = new Date(Date.parse(new Date()) + Dias * Horas * Minutos * Segundos * 1000);
-     var deadline = new Date(Date.parse(FixTime));
+     //alert('entre ' + new Date(Date.parse(new Date(FixTime))))
+     var deadline = new Date(Date.parse(new Date(FixTime)));
 initializeReloj('reloj', deadline);
 </script>
 </asp:Content>

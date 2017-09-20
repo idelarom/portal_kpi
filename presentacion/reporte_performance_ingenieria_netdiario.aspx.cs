@@ -489,6 +489,7 @@ namespace presentacion
                     string mensaje = Export.toExcel("Reporte Preventa Ingenieria", XLColor.White, XLColor.Black, 18, true, DateTime.Now.ToString(), XLColor.White,
                                            XLColor.Black, 10, ListaTables, XLColor.CelestialBlue, XLColor.White, Nombres, 1,
                                            "Reporte_Preventa_Ingenieria_" + date + ".xlsx", Page.Response);
+
                     if (mensaje != "")
                     {
                         Toast.Error("Error al exportar el reporte a excel: " + mensaje, this);
