@@ -1651,6 +1651,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.CheckBox cbxnoactivo;
         
         /// <summary>
+        /// Control div_filtro_empleados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_filtro_empleados;
+        
+        /// <summary>
         /// Control txtfilterempleado.
         /// </summary>
         /// <remarks>

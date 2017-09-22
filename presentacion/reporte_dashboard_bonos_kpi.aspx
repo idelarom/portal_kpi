@@ -58,14 +58,13 @@
             $("#<%= lnkcargando.ClientID%>").show();
             $("#<%= lnkguardar.ClientID%>").hide();
             return true;
-          }
-          function Carganodfiltros() {            
-              $("#<%= nkcargandofiltros.ClientID%>").show();
-              $("#<%= lnkfiltros.ClientID%>").hide();
-              return true;
-          }
-        function ChanegdTextLoad()
-        {
+        }
+        function Carganodfiltros() {
+            $("#<%= nkcargandofiltros.ClientID%>").show();
+            $("#<%= lnkfiltros.ClientID%>").hide();
+            return true;
+        }
+        function ChanegdTextLoad() {
             var filter = $("#<%= txtfilterempleado.ClientID%>").val();
             if (filter.length == 0 || filter.length > 3) {
                 return ChangedTextLoad2();
@@ -74,14 +73,13 @@
             }
         }
 
-          function ChangedTextLoad2() {
-              $("#<%= imgloadempleado.ClientID%>").show();
-              $("#<%= lblbemp.ClientID%>").show();
-             return true;
-          }
+        function ChangedTextLoad2() {
+            $("#<%= imgloadempleado.ClientID%>").show();
+            $("#<%= lblbemp.ClientID%>").show();
+            return true;
+        }
 
-        function ViewEmpleado(name,puesto,usuario,prev,imple,sop,comp)
-        {
+        function ViewEmpleado(name, puesto, usuario, prev, imple, sop, comp) {
             var nombre = document.getElementById('<%= hdfnombre.ClientID %>');
             var vpuesto = document.getElementById('<%= hdfpuesto.ClientID %>');
             var commando = document.getElementById('<%= hdfuserselected.ClientID %>');
@@ -107,8 +105,6 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header">Dashboard Bonos</h3>
-            </div>
-            <div class="col-lg-12">
                 <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Cargando filtros
@@ -122,7 +118,7 @@
         <div class="row" id="div_reporte" runat="server" visible="false">
 
             <div class="col-lg-12">
-                <div class="box box-primary">
+                <div class="box box-danger">
                     <div class="box-body">
                         <h4 class="box-title"><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial:</strong>
                             &nbsp;<asp:Label ID="lblfechaini" runat="server" Text="Label"></asp:Label>
@@ -225,8 +221,8 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="font-size: 10px;">
                                         <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
-                                         <asp:TextBox ID="txtfechafinalstr" Visible="true" ReadOnly="true" CssClass="form-control" runat="server"></asp:TextBox>
-                                   
+                                        <asp:TextBox ID="txtfechafinalstr" Visible="true" ReadOnly="true" CssClass="form-control" runat="server"></asp:TextBox>
+
                                         <asp:TextBox ID="txtfechafinal" Visible="false" ReadOnly="true" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                                     </div>
                                 </div>
@@ -236,7 +232,7 @@
                                             &nbsp; 
                                         <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
                                         </h6>
-                                        <div class="input-group input-group-sm">
+                                        <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
                                             <asp:TextBox
                                                 onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
                                                 placeholder="Ingrese un filtro" runat="server"></asp:TextBox>
@@ -302,7 +298,7 @@
                                 <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Generando Reporte
-                                </asp:LinkButton>                              
+                                </asp:LinkButton>
                                 <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat"
                                     OnClientClick="return ConfirmwidgetProyectoModal();" OnClick="lnkguardar_Click" runat="server">
                                             <i class="fa fa-database" aria-hidden="true"></i>&nbsp;Generar Reporte
@@ -314,7 +310,7 @@
                 </asp:UpdatePanel>
             </div>
         </div>
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel"  data-backdrop="static" data-keyboard="false">
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-lg" role="document">
                 <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                     <Triggers>
@@ -385,17 +381,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                            <div class="modal-footer ">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                            </div>
+
+                                <div class="modal-footer ">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                </div>
                             </div>
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
         </div>
-        <asp:Button ID="btnverempleadodetalles" runat="server" Text="Button"  style="display:none" OnClick="btnverempleadodetalles_Click" />
+        <asp:Button ID="btnverempleadodetalles" runat="server" Text="Button" Style="display: none" OnClick="btnverempleadodetalles_Click" />
         <asp:HiddenField ID="hdfsessionid" runat="server" />
         <asp:HiddenField ID="hdfuserselected" runat="server" />
         <asp:HiddenField ID="hdfnombre" runat="server" />

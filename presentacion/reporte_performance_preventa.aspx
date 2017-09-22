@@ -322,7 +322,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-            <h3>Performance Preventa</h3>
+            <h3  class="page-header">Performance Preventa</h3>
             <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                 <i class="fa fa-refresh fa-spin fa-fw"></i>
                                 <span class="sr-only">Loading...</span>&nbsp;Cargando filtros
@@ -1131,7 +1131,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12" style="display:none;">
+        <div class="col-lg-12">
             <div class="box box-danger box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Oportunidades</h3>
@@ -1349,7 +1349,7 @@
                                         &nbsp; 
                                         <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
                                     </h6>
-                                    <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm"  runat="server" id="div_filtro_empleados">
                                         <asp:TextBox
                                             onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
                                             placeholder="Ingrese un filtro(ejemplo:Nombre)" runat="server" OnTextChanged="txtfilterempleado_TextChanged"></asp:TextBox>

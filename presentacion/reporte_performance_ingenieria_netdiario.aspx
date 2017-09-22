@@ -111,7 +111,7 @@
 
         <div class="col-lg-12">
             <br />
-            <div class="box box-primary">
+            <div class="box box-danger">
                 <!-- /.box-header -->
                 <div class="box-header">
                     <div class="col-lg-12">
@@ -341,7 +341,7 @@
                                         &nbsp; 
                                         <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
                                     </h6>
-                                    <div class="input-group input-group-sm">
+                                    <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
                                         <asp:TextBox
                                              onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control" 
                                             placeholder="Ingrese un filtro(ejemplo:Nombre)" runat="server" OnTextChanged="txtfilterempleado_TextChanged"></asp:TextBox>

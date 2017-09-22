@@ -72,8 +72,10 @@ namespace presentacion
                 ddlempleado_a_consultar.DataTextField = "nombre";
                 ddlempleado_a_consultar.DataSource = ds.Tables[0];
                 ddlempleado_a_consultar.DataBind();
+                div_filtro_empleados.Visible = true;
                 if (!ver_Todos_los_empleados)
                 {
+                    div_filtro_empleados.Visible = false;
                     ddlempleado_a_consultar.Enabled = false;
                     CargarListadoEmpleado(num_empleado, false);
                     ddlempleado_a_consultar.SelectedValue = num_empleado.ToString();
@@ -585,7 +587,7 @@ namespace presentacion
                             + "          point: {"
                             + "              events: {"
                             + "                   click: function () {"
-                            //+ "                         return ViewDetailsBacklogCompromisos( " + año_anterior.ToString() + ",this.series.name);"
+                            + "                         return ViewDetailsBacklogCompromisos( " + año_anterior.ToString() + ",this.series.name);"
                             + "                       }"
                             + "                     }"
                             + "                  }"

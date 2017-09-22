@@ -124,8 +124,6 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header">Dashboard Compromisos</h3>
-            </div>
-            <div class="col-lg-12">
                 <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Cargando filtros
@@ -139,7 +137,7 @@
         <div class="row" id="div_reporte" runat="server" visible="false">
 
             <div class="col-lg-12">
-                <div class="box box-primary">
+                <div class="box box-danger">
                     <div class="box-body">
                         <h4 class="box-title"><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial:</strong>
                             &nbsp;<asp:Label ID="lblfechaini" runat="server" Text="Label"></asp:Label>
@@ -238,7 +236,7 @@
                                             &nbsp; 
                                         <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
                                         </h6>
-                                        <div class="input-group input-group-sm">
+                                        <div class="input-group input-group-sm"  runat="server" id="div_filtro_empleados">
                                             <asp:TextBox
                                                 onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
                                                 placeholder="Ingrese un filtro" runat="server"></asp:TextBox>
@@ -354,10 +352,10 @@
                                                                     <th style="min-width: 50px; text-align: center;" scope="col">#Oport.</th>
                                                                     <th style="min-width: 50px; text-align: center;" scope="col">#Comp.</th>
                                                                     <th style="min-width: 400px;" scope="col">Cliente</th>
-                                                                    <th style="min-width: 150px;" scope="col">Creado Por</th>
-                                                                    <th style="min-width: 250px; text-align: center;" scope="col">Compromiso</th>
+                                                                    <th style="min-width: 250px;" scope="col">Creado Por</th>
+                                                                    <th style="min-width: 400px;" scope="col">Compromiso</th>
                                                                     <th style="min-width: 150px; text-align: center;" scope="col">T.Compromiso</th>
-                                                                    <th style="min-width: 150px; text-align: center;" scope="col">Asignado</th>
+                                                                    <th style="min-width: 250px; text-align: center;" scope="col">Asignado</th>
                                                                     <th style="min-width: 150px; text-align: center;" scope="col">Estatus</th>
                                                                     <th style="min-width: 150px; text-align: center;" scope="col">F.Creacion</th>
                                                                     <th style="min-width: 150px; text-align: center;" scope="col">F.Inicio</th>
@@ -376,7 +374,7 @@
                                                                              <td style="text-align: center;"><%# Eval("NumComp") %></td>
                                                                              <td style=""><%# Eval("Cliente") %></td>
                                                                              <td ><%# Eval("CreadorPor") %></td>
-                                                                             <td style="text-align: center;"><%# Eval("Compromiso") %></td>
+                                                                             <td style=""><%# Eval("Compromiso") %></td>
                                                                              <td style="text-align: center;"><%# Eval("TipoCompromiso") %></td>
                                                                              <td style="text-align: center;"><%# Eval("Asignado") %></td>
                                                                              <td style="text-align: center;"><%# Eval("Estatus") %></td>
