@@ -441,7 +441,7 @@
 
                         </div>
                         
-                         <div class="col-lg-4 col-md-4 col-sm-12">
+                         <div class="col-lg-12">
                             <div class="box box-danger">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">Suficiencia de Inventario de Oportunidades</h4>
@@ -510,7 +510,7 @@
                             </div>
 
                         </div>
-                         <div class="col-lg-8 col-md-8 col-sm-12">
+                         <div class="col-lg-12">
                             <div class="box box-danger">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">Detalle de Inventario de Oportunidades 
@@ -529,10 +529,10 @@
                                                 <table bordercolor="black" cellspacing="0" cellpadding="0" border="1">
                                                     <tbody>
                                                         <tr>
-                                                            <td class="header-tbl" style="min-width:600px"  height="30"  colspan="3"><b>Detalle de Inventario de Oportunidades</b></td>
+                                                            <td class="header-tbl" style="min-width:800px"  height="30"  colspan="3"><b>Detalle de Inventario de Oportunidades</b></td>
                                                         </tr>
                                                         <tr  class="header-tbl">
-                                                            <td align="center" style="min-width:300px">Cliente</td>
+                                                            <td align="center" style="min-width:400px">Cliente</td>
                                                             <td align="center">Margen</td>
                                                             <td align="center">Op's</td>
                                                         </tr>

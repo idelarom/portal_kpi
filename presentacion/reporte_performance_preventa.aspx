@@ -371,7 +371,7 @@
                                                     </div>
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
-                                            <div id="cumpli_compromisos" style="min-width: 200px; height: 400px; max-width: 600px; margin: 0 auto">
+                                            <div id="cumpli_compromisos" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
                                             </div>
 
                                             <ul class="chart-legend clearfix" style="text-align: center;">
@@ -1198,7 +1198,7 @@
                                                     </div>
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
-                                            <div id="estatus_oportunidades" style="min-width: 200px; height: 400px; max-width: 600px; margin: 0 auto">
+                                            <div id="estatus_oportunidades" style="min-width: 200px; height: 400px; max-width: 900px; margin: 0 auto">
                                             </div>
                                         </div>
                                     </div>

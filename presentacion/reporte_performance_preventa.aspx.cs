@@ -235,7 +235,9 @@ namespace presentacion
                     "                allowPointSelect: true," +
                     "                cursor: 'pointer'," +
                     "                dataLabels: {" +
-                    "                    enabled: false" +
+                    "                    enabled: true,"+
+                    "                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',"+
+                    "                    style:{  color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'}  " +
                     "                }," +
                     "                showInLegend: false" +
                     "            }" +
@@ -949,7 +951,9 @@ namespace presentacion
                     "                allowPointSelect: true," +
                     "                cursor: 'pointer'," +
                     "                dataLabels: {" +
-                    "                    enabled: false" +
+                    "                    enabled: true," +
+                    "                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'," +
+                    "                    style:{  color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'}  " +
                     "                }," +
                     "                showInLegend: true" +
                     "            }" +
@@ -1119,6 +1123,7 @@ namespace presentacion
         {
             if (div_reporte.Visible)
             {
+                div_reporte.Visible = false;
                 CargarDatosFiltros("");
             }
             ModalShow("#myModal");
@@ -1254,10 +1259,10 @@ namespace presentacion
                         foreach (DataRow row in dt_result.Rows)
                         {
                             valor_ganado = valor_ganado + row["valorganado"].ToString() + ",";
-                            estatus = estatus + "'"+row["estatus"].ToString() + "',";
+                            estatus = estatus + "'" + row["estatus"].ToString() + "',";
                         }
 
-                        valor_ganado = valor_ganado.Substring(0,valor_ganado.Length -1);
+                        valor_ganado = valor_ganado.Substring(0, valor_ganado.Length - 1);
                         estatus = estatus.Substring(0, estatus.Length - 1);
                         repeater_detalles_vg.DataSource = dt_result2;
                         repeater_detalles_vg.DataBind();
@@ -1288,6 +1293,9 @@ namespace presentacion
                             img_employee.ImageUrl = "~/img/" + imagen + "?date=" + date;
                         }
                         //GenerarGraficaValorGanado(ingeniero,estatus,valor_ganado,monto_max);
+                    }
+                    else {
+                        Toast.Info("No se pueden mostrar detalles, debido a que se encuentran como resultado 0 oportunidades.","Mensaje del sistema",this);
                     }
                 }
             }
