@@ -122,6 +122,30 @@ namespace negocio.Componentes
                 return false;
             }
         }
+        public bool Exists(string No_)
+        {
+            try
+            {
+                NAVISION context = new NAVISION();
+                var query = context.Employee
+                                .Where(i => i.No_.Trim().ToUpper() == No_.Trim().ToUpper()
+                                & i.Status == 1)
+                                .Select(u => new
+                                {
+                                    u.No_
+                                });
+                DataTable dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
+        }
 
         public DataTable GetDelegados(string usuario)
         {

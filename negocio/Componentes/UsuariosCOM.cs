@@ -70,6 +70,55 @@ namespace negocio.Componentes
             }
         }
 
+        public string Agregar(usuarios entidad)
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                string mess = "";
+                if (Exist(entidad.usuario, entidad.contraseña))
+                {
+                    mess = "Ya existe un usuario llamado: " + entidad.usuario;
+                }
+                else if (entidad.No_ != "" && !empleados.Exists(entidad.No_)) {
+
+                    mess = "No existe el empleado con el numero: "+ entidad.No_ ;
+                }
+                else
+                {
+                    usuarios usuario = new usuarios
+                    {
+                        usuario = entidad.usuario.ToUpper().Trim(),
+                        No_ = entidad.No_,
+                        
+                        contraseña = entidad.contraseña,
+                        nombres = entidad.nombres.ToUpper().Trim(),
+                        puesto = entidad.puesto,
+                        a_paterno = entidad.a_paterno.ToUpper().Trim(),
+                        a_materno = entidad.a_materno.ToUpper().Trim(),
+                        correo = entidad.correo,
+                        path_imagen = entidad.path_imagen,
+                        activo = true,
+                        usuario_alta = entidad.usuario_alta.ToUpper(),
+                        fecha = DateTime.Now
+                    };
+                    Model context = new Model();
+                    context.usuarios.Add(usuario);
+                    context.SaveChanges();
+                }
+                return mess;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+
         /// <summary>
         /// Agrega un permiso a un usuario
         /// </summary>
@@ -80,7 +129,7 @@ namespace negocio.Componentes
             try
             {
                 string mess = "";
-                if (Exist(entidad.usuario, entidad.id_permiso))
+                if (ExistPermission(entidad.usuario, entidad.id_permiso))
                 {
                     mess = "El usuario ya tiene este permiso.";
                 }
@@ -114,7 +163,7 @@ namespace negocio.Componentes
         /// <param name="usuario"></param>
         /// <param name="id_permiso"></param>
         /// <returns></returns>
-        public bool Exist(string usuario, int id_permiso)
+        public bool ExistPermission(string usuario, int id_permiso)
         {
             DataTable dt = new DataTable();
             try
@@ -127,6 +176,32 @@ namespace negocio.Componentes
                                     u.id_permiso
                                 })
                                 .OrderBy(u => u.id_permiso);
+                dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
+        }
+
+        public bool Exist(string usuario, string contraseña)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Model context = new Model();
+                var query = context.usuarios
+                                .Where(s => s.usuario.ToUpper() == usuario.ToUpper() && s.activo && s.contraseña == contraseña )
+                                .Select(u => new
+                                {
+                                    u.id_usuario
+                                })
+                                .OrderBy(u => u.id_usuario);
                 dt = To.DataTable(query.ToList());
                 return dt.Rows.Count > 0;
             }

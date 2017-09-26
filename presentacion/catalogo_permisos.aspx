@@ -68,9 +68,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-            <div class="col-lg-12">
                 <h4 class="page-header">Catálogo permisos</h4>
-            </div>
+            
         </div>
     </div>
     <div class="row">

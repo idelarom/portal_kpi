@@ -1,4 +1,4 @@
-namespace datos.Model
+﻿namespace datos.Model
 {
     using System;
     using System.Data.Entity;
@@ -25,6 +25,7 @@ namespace datos.Model
         public virtual DbSet<recordatorios> recordatorios { get; set; }
         public virtual DbSet<recordatorios_usuarios_adicionales> recordatorios_usuarios_adicionales { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<usuarios> usuarios { get; set; }
         public virtual DbSet<usuarios_configuraciones> usuarios_configuraciones { get; set; }
         public virtual DbSet<usuarios_delegados> usuarios_delegados { get; set; }
         public virtual DbSet<usuarios_grupos> usuarios_grupos { get; set; }
@@ -271,6 +272,54 @@ namespace datos.Model
 
             modelBuilder.Entity<recordatorios_usuarios_adicionales>()
                 .Property(e => e.nombre)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.No_)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.contraseña)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.puesto)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.nombres)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.a_paterno)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.a_materno)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.correo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.path_imagen)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.usuario_alta)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.usuario_borrado)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.comentarios_borrado)
                 .IsUnicode(false);
 
             modelBuilder.Entity<usuarios_configuraciones>()

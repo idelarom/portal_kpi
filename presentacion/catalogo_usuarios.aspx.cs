@@ -213,7 +213,7 @@ namespace presentacion
                 div_menus.Visible = false;
                 div_permiso.Visible = false;
                 LlenarInformacionModal();
-                ModalShow("#ModalEmpleado");                
+                ModalShow("#ModalEmpleado");
             }
             catch (Exception ex)
             {
@@ -328,7 +328,7 @@ namespace presentacion
                 Toast.Info("Ingrese un minimo de 3 caracteres para realizar la busqueda.", "Mensaje del Sistema", this);
             }
         }
-               
+
         private void CargarListadoPerfiles(string filtro)
         {
             try
@@ -418,7 +418,7 @@ namespace presentacion
                     }
                 }
 
-                
+
             }
             catch (Exception ex)
             {
@@ -465,7 +465,7 @@ namespace presentacion
                     }
                 }
 
-                
+
             }
             catch (Exception ex)
             {
@@ -498,17 +498,19 @@ namespace presentacion
                 string id_menu = ddlmenus.SelectedValue;
                 if (ExistUsuarioinUsuario(usuario, Convert.ToInt32(id_menu)))
                 {
-                    Toast.Info("El usuario ya cuenta con el menu "+ddlmenus.SelectedItem,"Mensaje del sistema",this);
+                    Toast.Info("El usuario ya cuenta con el menu " + ddlmenus.SelectedItem, "Mensaje del sistema", this);
                 }
-                else {
-                    string vmensaje = menus.Agregar(usuario.ToUpper(),Convert.ToInt32(id_menu));
+                else
+                {
+                    string vmensaje = menus.Agregar(usuario.ToUpper(), Convert.ToInt32(id_menu));
                     if (vmensaje != "")
                     {
                         Toast.Error("Error al cargar guardar menu: " + vmensaje, this);
                     }
-                    else {
+                    else
+                    {
                         LlenarInformacionModal();
-                        Toast.Success("Menu asignado al usuario de manera correcta.","Mensaje del sistema", this);
+                        Toast.Success("Menu asignado al usuario de manera correcta.", "Mensaje del sistema", this);
                     }
                 }
             }
@@ -578,7 +580,7 @@ namespace presentacion
         {
             try
             {
-                
+
                 usuarios_permisos permiso = new usuarios_permisos();
                 permiso.id_permiso = Convert.ToInt32(ddlpermiso.SelectedValue);
                 permiso.usuario = hdfusuario.Value.ToUpper();
@@ -683,7 +685,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Erro al guardar esta configuración: "+ex.Message,this);
+                Toast.Error("Erro al guardar esta configuración: " + ex.Message, this);
             }
         }
 
@@ -707,6 +709,67 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al relacionar usuario: " + ex.Message, this);
+            }
+        }
+
+        protected void lnksearch_Click(object sender, EventArgs e)
+        {
+            string filter = txtfilterempleado.Text;
+            try
+            {
+                if (filter.Length == 0 || filter.Length > 3)
+                {
+                    CargarDatosFiltros(filter);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al filtrar empleados: " + ex.Message, this);
+            }
+            finally
+            {
+                imgloadempleado.Style["display"] = "none";
+                lblbemp.Style["display"] = "none";
+            }
+        }
+
+        protected void CargarDatosFiltros(string filtro)
+        {
+            try
+            {
+
+                int NumJefe = Convert.ToInt32(Session["NumJefe"]);
+                int num_empleado = Convert.ToInt32(Session["num_empleado"]);
+                Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                bool no_activos = cbxnoactivo.Checked;
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
+                DataTable dt_empleados = new DataTable();
+                if (filtro != "")
+                {
+                    DataView dv_empleados = ds.Tables[0].DefaultView;
+                    dv_empleados.RowFilter = "nombre like '%" + filtro + "%'";
+                    dt_empleados = dv_empleados.ToTable();
+                }
+                else
+                {
+                    dt_empleados = ds.Tables[0];
+                }
+                ddlempleado_a_consultar.DataValueField = "num_empleado";
+                ddlempleado_a_consultar.DataTextField = "nombre";
+                ddlempleado_a_consultar.DataSource = dt_empleados;
+                ddlempleado_a_consultar.DataBind();
+                ddlempleado_a_consultar.Items.Insert(0,new ListItem("--Seleccione un empleado","0"));
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al iniciar modal de filtros: " + ex.Message, this);
+            }
+            finally
+            {
+
+                imgloadempleado.Visible = true;
+                lblbemp.Style["display"] = "none";
             }
         }
 
@@ -755,6 +818,107 @@ namespace presentacion
             }
         }
 
-      
+        protected void lnknuevousuario_Click(object sender, EventArgs e)
+        {
+            txtusuario.Text ="";
+            txtcontra.Text="";
+            txtconfirmacontra.Text="";
+            txtnombres.Text="";
+            txtapaterno.Text="";
+            txtamaterno.Text="";
+            txtcorreo.Text="";
+            txtpuesto.Text="";
+            CargarDatosFiltros("");
+            ModalShow("#modal_usuarrios");
+        }
+
+        private String Guardar(string usuario, string No_, string contraseña, string nombres, string apaterno, string amaterno,
+            string correo, string path_imagen, string puesto)
+        {
+            try
+            {
+                string vmensaje = "";
+                usuarios usuario_ = new usuarios();
+                UsuariosCOM usuarios = new UsuariosCOM();
+                usuario_.usuario = usuario;
+                usuario_.contraseña = contraseña;
+                usuario_.No_ = No_;
+                usuario_.nombres = nombres;
+                usuario_.a_paterno = apaterno;
+                usuario_.a_materno = amaterno;
+                usuario_.correo = correo;
+                usuario_.path_imagen = path_imagen;
+                usuario_.puesto = puesto;
+                vmensaje = usuarios.Agregar(usuario_);
+                return vmensaje;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        protected void lnkguardarempleado_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string usuario = txtusuario.Text;
+                string contraseña = funciones.deTextoa64(txtcontra.Text);
+                string contraseña2 = funciones.deTextoa64(txtconfirmacontra.Text);
+                string nombres = txtnombres.Text;
+                string apaterno = txtapaterno.Text;
+                string amaterno = txtamaterno.Text;
+                string correo = txtcorreo.Text;
+                string No_ = ddlempleado_a_consultar.SelectedValue.ToString()=="0"?"":ddlempleado_a_consultar.SelectedValue.ToString();
+                string puesto = txtpuesto.Text;
+                string path_imagen = "";
+                string vmensaje = "";
+
+
+                if (No_ == "" && nombres == "" && apaterno == "")
+                {
+                    txtnombres.Focus();
+                    vmensaje = "Si no selecciona un empleado, ingrese un nombre y apellidos para el usuario.";
+                }
+                else if (No_ == "" && correo == "")
+                {
+                    txtcorreo.Focus();
+                    vmensaje = "Ingrese un correo.";
+                }
+                else if (usuario.Length < 5)
+                {
+                    txtusuario.Focus();
+                    vmensaje = "Ingrese un usuario de al menos 5 caracteres.";
+                }
+                else if (usuario == "")
+                {
+                    txtusuario.Focus();
+                    vmensaje = "Ingrese un usuario.";
+                }
+                else if (contraseña != contraseña2)
+                {
+                    txtconfirmacontra.Text = "";
+                    txtconfirmacontra.Focus();
+                    vmensaje = "Las contraseña no coinciden.";
+                }
+                else {
+                    vmensaje = Guardar(usuario,No_,contraseña,nombres,apaterno,amaterno,correo,path_imagen,puesto);
+                }
+
+                if (vmensaje == "")
+                {
+                    ViewState["dt_usuarios"] = null;
+                    CargarCatalogoUsuarios();
+                    Toast.Success("Usuario guardado correctamente","Mensaje del sistema", this);
+                }
+                else
+                {
+                    Toast.Error("Error al guardar usuario: " + vmensaje, this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al guardar usuario: " + ex.Message, this);
+            }
+        }
     }
 }
