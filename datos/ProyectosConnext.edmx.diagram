@@ -12,6 +12,7 @@
         <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_impacto_tiempo" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_probabilidad" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Proyectos_ConnextModel.sysdiagrams" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.proyectos_periodos" Width="1.5" PointX="0.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

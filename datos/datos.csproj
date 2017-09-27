@@ -135,6 +135,9 @@
     <Compile Include="proyectos_estatus.cs">
       <DependentUpon>ProyectosConnext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proyectos_periodos.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
     <Compile Include="requests_automatic_status.cs">
       <DependentUpon>SICOEM.tt</DependentUpon>
     </Compile>
