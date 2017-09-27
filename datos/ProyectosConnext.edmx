@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="proyectos_estatus">
           <Key>
             <PropertyRef Name="id_proyectos_estatus" />
@@ -14,6 +14,17 @@
           <Property Name="estatus" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="activo" Type="bit" Nullable="false" />
           <Property Name="fecha" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="proyectos_periodos">
+          <Key>
+            <PropertyRef Name="id_proyecto_perido" />
+          </Key>
+          <Property Name="id_proyecto_perido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="dias" Type="tinyint" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="riesgos_estatus">
           <Key>
@@ -111,6 +122,7 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Proyectos_ConnextModelStoreContainer">
           <EntitySet Name="proyectos_estatus" EntityType="Self.proyectos_estatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proyectos_periodos" EntityType="Self.proyectos_periodos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos_estatus" EntityType="Self.riesgos_estatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos_estrategia" EntityType="Self.riesgos_estrategia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos_impacto_costo" EntityType="Self.riesgos_impacto_costo" Schema="dbo" store:Type="Tables" />
@@ -118,8 +130,7 @@
           <EntitySet Name="riesgos_probabilidad" EntityType="Self.riesgos_probabilidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Proyectos_ConnextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -234,6 +245,7 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="proyectos_periodos" EntityType="Proyectos_ConnextModel.proyectos_periodos" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -246,6 +258,17 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="proyectos_periodos">
+          <Key>
+            <PropertyRef Name="id_proyecto_perido" />
+          </Key>
+          <Property Name="id_proyecto_perido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="dias" Type="Byte" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -356,6 +379,18 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Proyectos_ConnextModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Proyectos_ConnextModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="proyectos_periodos">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_periodos">
+              <MappingFragment StoreEntitySet="proyectos_periodos">
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="dias" ColumnName="dias" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_proyecto_perido" ColumnName="id_proyecto_perido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
