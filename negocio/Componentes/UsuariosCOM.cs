@@ -12,6 +12,25 @@ namespace negocio.Componentes
 {
     public class UsuariosCOM
     {
+        public usuarios usuario(string usuario_)
+        {
+            try
+            {
+                Model context = new Model();
+                usuarios usuario = context.usuarios
+                                .First(i => i.usuario.ToUpper().Trim() == usuario_.ToUpper().Trim());
+                return usuario;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return null;
+            }
+        }
+
         public DataSet sp_prueba_files()
         {
             DataSet ds = new DataSet();

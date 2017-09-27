@@ -28,7 +28,7 @@
         <ContentTemplate>
             <div class="row">
                 <div class="col-lg-12">
-                    <h4 class="page-header">Configuración de Dashboard
+                    <h4 class="page-header">Configuración de pagina de inicio
                 <small>Puede configurar los widgets que quiera visualizar y el orden en el que los quiera visualizar</small>
                     </h4>
 

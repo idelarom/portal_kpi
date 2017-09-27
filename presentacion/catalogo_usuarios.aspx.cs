@@ -122,11 +122,11 @@ namespace presentacion
                 bool no_activos = false;
                 DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
                 ViewState["dt_empleados"] = null;
-                if (ds.Tables[0].Rows.Count > 0)
+                if (ds.Tables[2].Rows.Count > 0)
                 {
-                    repeat_usuarios.DataSource = ds.Tables[0];
+                    repeat_usuarios.DataSource = ds.Tables[2];
                     repeat_usuarios.DataBind();
-                    ViewState["dt_empleados"] = ds.Tables[0];
+                    ViewState["dt_empleados"] = ds.Tables[2];
                 }
             }
             catch (Exception ex)
@@ -209,11 +209,42 @@ namespace presentacion
         {
             try
             {
-                div_addperfil.Visible = false;
-                div_menus.Visible = false;
-                div_permiso.Visible = false;
-                LlenarInformacionModal();
-                ModalShow("#ModalEmpleado");
+                int num_empleado = hdfnum_empleado.Value == "" ? 0 : Convert.ToInt32(hdfnum_empleado.Value);
+                if (num_empleado > 0)
+                {
+
+                    div_addperfil.Visible = false;
+                    div_menus.Visible = false;
+                    div_permiso.Visible = false;
+                    LlenarInformacionModal();
+                    ModalShow("#ModalEmpleado");
+                }
+                else {
+                    UsuariosCOM usuarios = new UsuariosCOM();
+                    string usuario_ = hdfusuario.Value;
+                    usuarios usuario = new usuarios();
+                    usuario = usuarios.usuario(usuario_);
+                    if (usuario != null)
+                    {
+                        txtusuario.Text = usuario.usuario;
+                        txtcontra.Text = funciones.de64aTexto(usuario.contraseña);
+                        txtconfirmacontra.Text = funciones.de64aTexto(usuario.contraseña);
+                        txtnombres.Text = usuario.nombres;
+                        txtapaterno.Text = usuario.a_paterno;
+                        txtamaterno.Text = usuario.a_materno;
+                        txtcorreo.Text = usuario.correo;
+                        txtpuesto.Text = usuario.puesto;
+                        CargarDatosFiltros("");
+                        if (ddlempleado_a_consultar.Items.FindByValue(usuario.No_) != null)
+                        {
+                            ddlempleado_a_consultar.SelectedValue = usuario.No_;
+                        }
+                        ModalShow("#modal_usuarrios");
+                    }
+                    else{
+                        Toast.Error("Ocurrio un error al busca la información del usuario. Intentelo nuevamente.",this);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -828,6 +859,7 @@ namespace presentacion
             txtamaterno.Text="";
             txtcorreo.Text="";
             txtpuesto.Text="";
+            hdfnum_empleado.Value = "";
             CargarDatosFiltros("");
             ModalShow("#modal_usuarrios");
         }
@@ -849,6 +881,7 @@ namespace presentacion
                 usuario_.correo = correo;
                 usuario_.path_imagen = path_imagen;
                 usuario_.puesto = puesto;
+                usuario_.usuario_alta = Session["usuario"] as string;
                 vmensaje = usuarios.Agregar(usuario_);
                 return vmensaje;
             }
@@ -873,23 +906,9 @@ namespace presentacion
                 string path_imagen = "";
                 string vmensaje = "";
 
-
-                if (No_ == "" && nombres == "" && apaterno == "")
-                {
-                    txtnombres.Focus();
-                    vmensaje = "Si no selecciona un empleado, ingrese un nombre y apellidos para el usuario.";
-                }
-                else if (No_ == "" && correo == "")
-                {
-                    txtcorreo.Focus();
-                    vmensaje = "Ingrese un correo.";
-                }
-                else if (usuario.Length < 5)
-                {
-                    txtusuario.Focus();
-                    vmensaje = "Ingrese un usuario de al menos 5 caracteres.";
-                }
-                else if (usuario == "")
+                
+                 
+                if (usuario == "")
                 {
                     txtusuario.Focus();
                     vmensaje = "Ingrese un usuario.";
@@ -900,12 +919,38 @@ namespace presentacion
                     txtconfirmacontra.Focus();
                     vmensaje = "Las contraseña no coinciden.";
                 }
+                else if(usuario.Length < 5)
+                {
+                    txtusuario.Focus();
+                    vmensaje = "Ingrese un usuario de al menos 5 caracteres.";
+                }
+                else if(No_ == "" && nombres == "" && apaterno == "")
+                {
+                    txtnombres.Focus();
+                    vmensaje = "Si no selecciona un empleado, ingrese un nombre y apellidos para el usuario.";
+                }
+                else if (No_ == "" && correo == "")
+                {
+                    txtcorreo.Focus();
+                    vmensaje = "Ingrese un correo.";
+                }
                 else {
                     vmensaje = Guardar(usuario,No_,contraseña,nombres,apaterno,amaterno,correo,path_imagen,puesto);
                 }
 
                 if (vmensaje == "")
                 {
+                    txtusuario.Text = "";
+                    txtcontra.Text = "";
+                    txtconfirmacontra.Text = "";
+                    txtnombres.Text = "";
+                    txtapaterno.Text = "";
+                    txtamaterno.Text = "";
+                    txtcorreo.Text = "";
+                    txtpuesto.Text = "";
+                    hdfnum_empleado.Value = "";
+                    CargarDatosFiltros("");
+                    ModalClose("#modal_usuarrios");
                     ViewState["dt_usuarios"] = null;
                     CargarCatalogoUsuarios();
                     Toast.Success("Usuario guardado correctamente","Mensaje del sistema", this);

@@ -116,7 +116,10 @@ namespace datos
                         break;
                     case 8:
                         cadena = System.Configuration.ConfigurationManager.ConnectionStrings["NAVINFO"].ToString();
-                        break; 
+                        break;
+                    case 9:
+                        cadena = System.Configuration.ConfigurationManager.ConnectionStrings["Proyectos_Connext"].ToString();
+                        break;
                 }
             }
             catch (Exception ex)

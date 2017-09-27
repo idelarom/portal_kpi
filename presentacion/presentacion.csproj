@@ -272,8 +272,8 @@
     <Content Include="img\logo_bar.png" />
     <Content Include="img\logo_bar_sm.png" />
     <Content Include="img\logo_login.png" />
-    <Content Include="img\user.png" />
     <Content Include="img\mant.jpg" />
+    <Content Include="img\user.png" />
     <Content Include="img\users\load.gif" />
     <Content Include="img\user_mini.png" />
     <Content Include="inicio.aspx" />

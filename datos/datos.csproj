@@ -117,6 +117,24 @@
       <DependentUpon>SICOEM.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProyectosConnext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProyectosConnext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProyectosConnext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProyectosConnext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProyectosConnext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="proyectos_estatus.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
     <Compile Include="requests_automatic_status.cs">
       <DependentUpon>SICOEM.tt</DependentUpon>
     </Compile>
@@ -128,6 +146,21 @@
     </Compile>
     <Compile Include="requests_status.cs">
       <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="riesgos_estatus.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="riesgos_estrategia.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="riesgos_impacto_costo.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="riesgos_impacto_tiempo.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="riesgos_probabilidad.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
     </Compile>
     <Compile Include="SICOEM.Context.cs">
       <AutoGen>True</AutoGen>
@@ -147,6 +180,15 @@
     <Compile Include="Sps_DashBoardReport_Bonos_test_Result.cs">
       <DependentUpon>SICOEM.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+    </Compile>
     <Compile Include="tab_reporte_bonos.cs">
       <DependentUpon>SICOEM.tt</DependentUpon>
     </Compile>
@@ -161,6 +203,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SICOEM.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="ProyectosConnext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ProyectosConnext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ProyectosConnext.edmx.diagram">
+      <DependentUpon>ProyectosConnext.edmx</DependentUpon>
+    </None>
     <None Include="SICOEM.edmx.diagram">
       <DependentUpon>SICOEM.edmx</DependentUpon>
     </None>
@@ -169,6 +218,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ProyectosConnext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProyectosConnext.edmx</DependentUpon>
+      <LastGenOutput>ProyectosConnext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ProyectosConnext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProyectosConnext.edmx</DependentUpon>
+      <LastGenOutput>ProyectosConnext.cs</LastGenOutput>
+    </Content>
     <Content Include="SICOEM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SICOEM.edmx</DependentUpon>

@@ -56,7 +56,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-            <h4 class="page-header">Dashboard</h4>
+            <h4 class="page-header">Inicio</h4>
         </div>
     </div>
     <!-- /Widgets individuales -->

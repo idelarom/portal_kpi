@@ -38,8 +38,11 @@
                 }
             });
         }
-        function EditarClick(usuario) {
+        function EditarClick(usuario, no_) {
             var hdfusuario = document.getElementById('<%= hdfusuario.ClientID %>');
+            hdfusuario.value = usuario;
+            var hdfnum_empleado = document.getElementById('<%= hdfnum_empleado.ClientID %>');
+            hdfnum_empleado.value = no_;
             hdfusuario.value = usuario;
             document.getElementById('<%= btnver.ClientID%>').click();
             return false;
@@ -51,6 +54,7 @@
             document.getElementById('<%= btndelegados.ClientID%>').click();
             return false;
         }
+
         function ChangedTextLoad3()
         {
             $("#<%= imgmenu.ClientID%>").show();
@@ -126,7 +130,7 @@
                                         <tr style="font-size: 11px">
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;" 
-                                                    onclick='<%# "return EditarClick("+@""""+Eval("usuario")+@"""" +");" %>'>
+                                                    onclick='<%# "return EditarClick("+@""""+Eval("usuario")+@"""" +","+Eval("num_empleado")+");" %>'>
                                                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
@@ -524,4 +528,5 @@
     <asp:Button ID="btnver" runat="server" Text="" style="display:none" OnClick="btnver_Click" />
     <asp:Button ID="btndelegados" runat="server" Text="" style="display:none" OnClick="btndelegados_Click" />
     <asp:HiddenField ID="hdfusuario" runat="server" />
+    <asp:HiddenField ID="hdfnum_empleado" runat="server" />
 </asp:Content>
