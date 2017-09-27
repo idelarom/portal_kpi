@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace presentacion
 {
-    public partial class Catalogo_proyectos_estatus : System.Web.UI.Page
+    public partial class catalogo_proyectos_estatus : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
