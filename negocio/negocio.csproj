@@ -61,7 +61,10 @@
     <Compile Include="Componentes\PerformanceIngenieriaCOM.cs" />
     <Compile Include="Componentes\PerformancePreventaCOM.cs" />
     <Compile Include="Componentes\PermisosCOM.cs" />
+    <Compile Include="Componentes\ProyectosEstatusCOM.cs" />
+    <Compile Include="Componentes\ProyectosPeriodosCOM.cs" />
     <Compile Include="Componentes\RecordatoriosCOM.cs" />
+    <Compile Include="Componentes\RiesgosEstatusCOM.cs" />
     <Compile Include="Componentes\To.cs" />
     <Compile Include="Componentes\UsuariosCOM.cs" />
     <Compile Include="Componentes\UsuariosConfiguracionesCOM.cs" />
