@@ -65,6 +65,10 @@
     <Compile Include="Componentes\ProyectosPeriodosCOM.cs" />
     <Compile Include="Componentes\RecordatoriosCOM.cs" />
     <Compile Include="Componentes\RiesgosEstatusCOM.cs" />
+    <Compile Include="Componentes\RiesgosEstrategiaCOM.cs" />
+    <Compile Include="Componentes\RiesgosImpactoCostosCOM.cs" />
+    <Compile Include="Componentes\RiesgosImpactoTiempoCOM.cs" />
+    <Compile Include="Componentes\RiesgosProbabilidadCOM.cs" />
     <Compile Include="Componentes\To.cs" />
     <Compile Include="Componentes\UsuariosCOM.cs" />
     <Compile Include="Componentes\UsuariosConfiguracionesCOM.cs" />
