@@ -22,13 +22,13 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnknuevoproyectoestatus;
         
         /// <summary>
-        /// Control repeat_ayudas.
+        /// Control repeat_proyectoestatus.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeat_ayudas;
+        protected global::System.Web.UI.WebControls.Repeater repeat_proyectoestatus;
         
         /// <summary>
         /// Control UpdatePanel15.
@@ -49,13 +49,13 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.TextBox txtestatus;
         
         /// <summary>
-        /// Control CheckBox1.
+        /// Control chkactivo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox1;
+        protected global::System.Web.UI.WebControls.CheckBox chkactivo;
         
         /// <summary>
         /// Control lnkcargando.
@@ -85,13 +85,13 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Button btneventgrid;
         
         /// <summary>
-        /// Control btneliminarpermiso.
+        /// Control btneliminar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btneliminarpermiso;
+        protected global::System.Web.UI.WebControls.Button btneliminar;
         
         /// <summary>
         /// Control hdfcommand.

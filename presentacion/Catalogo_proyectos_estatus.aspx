@@ -68,14 +68,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div class="row">
         <div class="col-lg-12">
-                <h4 class="page-header">Catálogo ayudas</h4>
+                <h4 class="page-header">Catálogo proyecto estatus</h4>
           
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="box box-danger">
-                <div class="box-body"><asp:LinkButton ID="lnknuevoproyectoestatus" OnClick="lnknuevaayuda_Click" CssClass="btn btn-primary btn-flat" runat="server">
+                <div class="box-body"><asp:LinkButton ID="lnknuevoproyectoestatus" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevoproyectoestatus_Click">
                 Nuevo proyecto estatus&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
             </asp:LinkButton>
                     <div class="table-responsive">
@@ -89,7 +89,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <asp:Repeater ID="repeat_ayudas" runat="server">
+                                <asp:Repeater ID="repeat_proyectoestatus" runat="server">
                                     <ItemTemplate>
                                         <tr style="font-size: 12px">
                                             <td style="text-align: center;">
@@ -121,7 +121,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="lnknuevoestatus" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="lnknuevoproyectoestatus" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btneventgrid" EventName="Click" />
                     <asp:PostBackTrigger ControlID="lnkguardar" />
                 </Triggers>
@@ -139,8 +139,8 @@
                                     <asp:TextBox ID="txtestatus" Rows="1" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>
-                                    <asp:CheckBox ID="CheckBox1" runat="server" />
+                                   <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
+                                    <asp:CheckBox ID="chkactivo" runat="server" text="Activo"/>
                                 </div>
                             </div>
                             
@@ -153,7 +153,7 @@
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando...
                             </asp:LinkButton>
                             <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
-                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este modulo de ayuda?');" runat="server">
+                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este proyecto estatus?');" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                             </asp:LinkButton>
                         </div>
@@ -162,7 +162,7 @@
             </div>
            </div>
     <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display: none;" />
-    <asp:Button ID="btneliminarpermiso" OnClick="btneliminarpermiso_Click" runat="server" Text="Button" Style="display: none;" />
+    <asp:Button ID="btneliminar" OnClick="btneliminar_Click" runat="server" Text="Button" Style="display: none;" />
      <asp:HiddenField ID="hdfcommand" runat="server" />
      <asp:HiddenField ID="hdfid_proyectos_estatus" runat="server" />
 </asp:Content>
