@@ -40,16 +40,16 @@
         }
         function ConfirmEntregableDelete(id_permiso) {
             if (confirm('¿Desea eliminar este permiso?')) {
-                var hdfusuario = document.getElementById('<%= hdfid_ayuda.ClientID %>');
+                var hdfusuario = document.getElementById('<%= hdfid_proyectos_estatus.ClientID %>');
                 hdfusuario.value = id_permiso;
-                document.getElementById('<%= btneliminarpermiso.ClientID%>').click();
+                document.getElementById('<%= btneliminar.ClientID%>').click();
                 return true;
             } else {
                 return false;
             }
         }
         function EditarClick(id_permiso) {
-            var hdfusuario = document.getElementById('<%= hdfid_ayuda.ClientID %>');
+            var hdfusuario = document.getElementById('<%= hdfid_proyectos_estatus.ClientID %>');
             hdfusuario.value = id_permiso;
             document.getElementById('<%= btneventgrid.ClientID%>').click();
             return false;

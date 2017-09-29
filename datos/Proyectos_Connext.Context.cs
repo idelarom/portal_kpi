@@ -28,13 +28,13 @@ namespace datos
         }
     
         public virtual DbSet<proyectos_estatus> proyectos_estatus { get; set; }
+        public virtual DbSet<proyectos_periodos> proyectos_periodos { get; set; }
         public virtual DbSet<riesgos_estatus> riesgos_estatus { get; set; }
         public virtual DbSet<riesgos_estrategia> riesgos_estrategia { get; set; }
         public virtual DbSet<riesgos_impacto_costo> riesgos_impacto_costo { get; set; }
         public virtual DbSet<riesgos_impacto_tiempo> riesgos_impacto_tiempo { get; set; }
         public virtual DbSet<riesgos_probabilidad> riesgos_probabilidad { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<proyectos_periodos> proyectos_periodos { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
