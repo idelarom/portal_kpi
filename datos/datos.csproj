@@ -51,32 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bonds_log.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="bonds_types.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="bons_automatic_types.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="closing_dates.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="comments_types_payments.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
     <Compile Include="conexion.cs" />
     <Compile Include="Datos.cs" />
-    <Compile Include="employees_compensations.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="files_requests_bonds.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="group_leader.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\ayudas.cs" />
     <Compile Include="Model\dispositivos_bloqueados.cs" />
     <Compile Include="Model\grupos.cs" />
@@ -108,142 +84,77 @@
     <Compile Include="NAVISION\Employee.cs" />
     <Compile Include="NAVISION\NAVISION.cs" />
     <Compile Include="OPTRACKER\ModelOPT.cs" />
-    <Compile Include="payment_history.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="periodicity.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="periodicity_ranges.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="permissions_users_bonds_types.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProyectosConnext.Context.cs">
+    <Compile Include="Proyectos_Connext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProyectosConnext.Context.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProyectosConnext.cs">
+    <Compile Include="Proyectos_Connext.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProyectosConnext.Designer.cs">
+    <Compile Include="Proyectos_Connext.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProyectosConnext.edmx</DependentUpon>
+      <DependentUpon>Proyectos_Connext.edmx</DependentUpon>
     </Compile>
     <Compile Include="proyectos_estatus.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="proyectos_periodos.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="requests_automatic_status.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="requests_bonds.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="requests_bonds_Automatic.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="requests_status.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="riesgos_estatus.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="riesgos_estrategia.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="riesgos_impacto_costo.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="riesgos_impacto_tiempo.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="riesgos_probabilidad.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SICOEM.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SICOEM.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SICOEM.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SICOEM.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SICOEM.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Sps_DashBoardReport_Bonos_test_Result.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagrams.cs">
-      <DependentUpon>ProyectosConnext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tab_reporte_bonos.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="tbl_ReplaceBoss.cs">
-      <DependentUpon>SICOEM.tt</DependentUpon>
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <EntityDeploy Include="SICOEM.edmx">
+    <EntityDeploy Include="Proyectos_Connext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SICOEM.Designer.cs</LastGenOutput>
+      <LastGenOutput>Proyectos_Connext.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="ProyectosConnext.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ProyectosConnext.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="ProyectosConnext.edmx.diagram">
-      <DependentUpon>ProyectosConnext.edmx</DependentUpon>
-    </None>
-    <None Include="SICOEM.edmx.diagram">
-      <DependentUpon>SICOEM.edmx</DependentUpon>
+    <None Include="Proyectos_Connext.edmx.diagram">
+      <DependentUpon>Proyectos_Connext.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ProyectosConnext.Context.tt">
+    <Content Include="Proyectos_Connext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProyectosConnext.edmx</DependentUpon>
-      <LastGenOutput>ProyectosConnext.Context.cs</LastGenOutput>
+      <DependentUpon>Proyectos_Connext.edmx</DependentUpon>
+      <LastGenOutput>Proyectos_Connext.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ProyectosConnext.tt">
+    <Content Include="Proyectos_Connext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProyectosConnext.edmx</DependentUpon>
-      <LastGenOutput>ProyectosConnext.cs</LastGenOutput>
-    </Content>
-    <Content Include="SICOEM.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SICOEM.edmx</DependentUpon>
-      <LastGenOutput>SICOEM.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="SICOEM.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SICOEM.edmx</DependentUpon>
-      <LastGenOutput>SICOEM.cs</LastGenOutput>
+      <DependentUpon>Proyectos_Connext.edmx</DependentUpon>
+      <LastGenOutput>Proyectos_Connext.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup />
