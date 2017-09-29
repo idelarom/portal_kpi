@@ -105,7 +105,6 @@
                                                 </a>
                                             </td>
                                             <td style="text-align: left;"><%# Eval("estatus") %></td>
-                                            <td style="text-align: left;"><%# Eval("activo") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>

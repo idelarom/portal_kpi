@@ -34,7 +34,6 @@ namespace datos
         public virtual DbSet<riesgos_impacto_costo> riesgos_impacto_costo { get; set; }
         public virtual DbSet<riesgos_impacto_tiempo> riesgos_impacto_tiempo { get; set; }
         public virtual DbSet<riesgos_probabilidad> riesgos_probabilidad { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
