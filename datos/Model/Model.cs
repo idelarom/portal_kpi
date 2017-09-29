@@ -22,6 +22,10 @@
         public virtual DbSet<perfiles> perfiles { get; set; }
         public virtual DbSet<perfiles_permisos> perfiles_permisos { get; set; }
         public virtual DbSet<permisos> permisos { get; set; }
+        public virtual DbSet<publicaciones> publicaciones { get; set; }
+        public virtual DbSet<publicaciones_comentarios> publicaciones_comentarios { get; set; }
+        public virtual DbSet<publicaciones_imagenes> publicaciones_imagenes { get; set; }
+        public virtual DbSet<publicaciones_likes> publicaciones_likes { get; set; }
         public virtual DbSet<recordatorios> recordatorios { get; set; }
         public virtual DbSet<recordatorios_usuarios_adicionales> recordatorios_usuarios_adicionales { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
@@ -224,6 +228,57 @@
                 .HasMany(e => e.usuarios_permisos)
                 .WithRequired(e => e.permisos)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<publicaciones>()
+                .Property(e => e.titulo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<publicaciones>()
+                .Property(e => e.descripcion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<publicaciones>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<publicaciones>()
+                .HasMany(e => e.publicaciones_comentarios)
+                .WithRequired(e => e.publicaciones)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<publicaciones>()
+                .HasMany(e => e.publicaciones_imagenes)
+                .WithRequired(e => e.publicaciones)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<publicaciones>()
+                .HasMany(e => e.publicaciones_likes)
+                .WithRequired(e => e.publicaciones)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<publicaciones_comentarios>()
+                .Property(e => e.comentario)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<publicaciones_comentarios>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<publicaciones_imagenes>()
+                .Property(e => e.path)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<publicaciones_imagenes>()
+                .Property(e => e.extension)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<publicaciones_imagenes>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<publicaciones_likes>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
 
             modelBuilder.Entity<recordatorios>()
                 .Property(e => e.key_appointment_exchanged)

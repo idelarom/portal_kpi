@@ -88,6 +88,10 @@
     <Compile Include="Model\perfiles.cs" />
     <Compile Include="Model\perfiles_permisos.cs" />
     <Compile Include="Model\permisos.cs" />
+    <Compile Include="Model\publicaciones.cs" />
+    <Compile Include="Model\publicaciones_comentarios.cs" />
+    <Compile Include="Model\publicaciones_imagenes.cs" />
+    <Compile Include="Model\publicaciones_likes.cs" />
     <Compile Include="Model\recordatorios.cs" />
     <Compile Include="Model\recordatorios_usuarios_adicionales.cs" />
     <Compile Include="Model\sysdiagrams.cs" />

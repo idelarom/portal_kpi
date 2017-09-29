@@ -84,6 +84,7 @@
       rel="stylesheet" />
      <link href="dist/css/pages/master_page.css" rel="stylesheet" />
     <script src="dist/js/pages/master_page.js"></script>
+    <script src="plugins/ckeditor/ckeditor.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
