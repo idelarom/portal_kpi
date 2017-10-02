@@ -171,7 +171,10 @@ namespace negocio.Componentes
                                 .Select(u => new
                                 {
                                     u.id_riesgos_estatus,
-                                    u.estatus
+                                    u.estatus,
+                                    u.activo,
+                                    u.fecha,
+                                    u.usuario
                                 })
                                 .OrderBy(u => u.estatus);
                 dt = To.DataTable(query.ToList());

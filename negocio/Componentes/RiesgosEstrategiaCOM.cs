@@ -171,7 +171,10 @@ namespace negocio.Componentes
                                 .Select(u => new
                                 {
                                     u.id_riesgo_estrategia,
-                                    u.nombre
+                                    u.nombre,
+                                    u.activo,
+                                    u.fecha,
+                                    u.usuario
                                 })
                                 .OrderBy(u => u.nombre);
                 dt = To.DataTable(query.ToList());

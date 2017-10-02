@@ -175,7 +175,10 @@ namespace negocio.Componentes
                                 {
                                     u.id_riesgo_impacto_tiempo,
                                     u.nombre,
-                                    u.porcentaje
+                                    u.porcentaje,
+                                    u.activo,
+                                    u.fecha,
+                                    u.usuario
                                 })
                                 .OrderBy(u => u.nombre);
                 dt = To.DataTable(query.ToList());

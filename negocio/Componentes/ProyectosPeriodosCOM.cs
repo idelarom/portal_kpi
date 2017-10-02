@@ -174,7 +174,10 @@ namespace negocio.Componentes
                                 {
                                     u.id_proyecto_perido,
                                     u.nombre,
-                                    u.dias
+                                    u.dias,
+                                    u.activo,
+                                    u.fecha,
+                                    u.usuario
                                 })
                                 .OrderBy(u => u.dias);
                 dt = To.DataTable(query.ToList());
