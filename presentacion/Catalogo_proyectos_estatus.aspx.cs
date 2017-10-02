@@ -136,7 +136,7 @@ namespace presentacion
                 proyectos_estatus PE = new proyectos_estatus();
                 PE.estatus = txtestatus.Text;
                 
-                if (id_proyectos_estatus > 0) { PE.id_proyectos_estatus = id_proyectos_estatus; }
+                if (id_proyectos_estatus > 0) { PE.id_proyecto_estatus = id_proyectos_estatus; }
                 PE.activo = chkactivo.Checked;
                 PE.usuario = Session["usuario"] as string;
                 if (PE.estatus == "")
@@ -198,7 +198,7 @@ namespace presentacion
             {
                 int id_proyectos_estatus = Convert.ToInt32(hdfid_proyectos_estatus.Value == "" ? "0" : hdfid_proyectos_estatus.Value);
                 proyectos_estatus PE = new proyectos_estatus();
-                PE.id_proyectos_estatus = id_proyectos_estatus;
+                PE.id_proyecto_estatus = id_proyectos_estatus;
                 string vmensaje = Eliminar(id_proyectos_estatus);
                 if (vmensaje == "")
                 {

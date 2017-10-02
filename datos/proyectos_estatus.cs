@@ -14,10 +14,19 @@ namespace datos
     
     public partial class proyectos_estatus
     {
-        public int id_proyectos_estatus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public proyectos_estatus()
+        {
+            this.proyectos = new HashSet<proyectos>();
+        }
+    
+        public int id_proyecto_estatus { get; set; }
         public string usuario { get; set; }
         public string estatus { get; set; }
         public bool activo { get; set; }
         public System.DateTime fecha { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<proyectos> proyectos { get; set; }
     }
 }

@@ -14,11 +14,20 @@ namespace datos
     
     public partial class riesgos_impacto_costo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public riesgos_impacto_costo()
+        {
+            this.riesgos = new HashSet<riesgos>();
+        }
+    
         public int id_riesgo_impacto_costo { get; set; }
         public string usuario { get; set; }
         public string nombre { get; set; }
         public decimal porcentaje { get; set; }
         public bool activo { get; set; }
         public System.DateTime fecha { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<riesgos> riesgos { get; set; }
     }
 }
