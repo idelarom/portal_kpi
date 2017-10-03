@@ -287,6 +287,7 @@
     <Content Include="localizador.aspx" />
     <Content Include="login.aspx" />
     <Content Include="mantenimiento.aspx" />
+    <Content Include="mis_proyectos.aspx" />
     <Content Include="mis_publicaciones.aspx" />
     <Content Include="plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="plugins\bootstrap-slider\slider.css" />
@@ -1416,6 +1417,13 @@
     </Compile>
     <Compile Include="mantenimiento.aspx.designer.cs">
       <DependentUpon>mantenimiento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="mis_proyectos.aspx.cs">
+      <DependentUpon>mis_proyectos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="mis_proyectos.aspx.designer.cs">
+      <DependentUpon>mis_proyectos.aspx</DependentUpon>
     </Compile>
     <Compile Include="mis_publicaciones.aspx.cs">
       <DependentUpon>mis_publicaciones.aspx</DependentUpon>
