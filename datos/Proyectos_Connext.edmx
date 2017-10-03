@@ -143,7 +143,7 @@
           <Key>
             <PropertyRef Name="id_riesgos_estatus" />
           </Key>
-          <Property Name="id_riesgos_estatus" Type="int" Nullable="false" />
+          <Property Name="id_riesgos_estatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="estatus" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="activo" Type="bit" Nullable="false" />
