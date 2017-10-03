@@ -9,10 +9,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace presentacion
 {
-    public partial class catalogo_riesgos_estatus : System.Web.UI.Page
+    public partial class catalogo_proyectos_periodos : System.Web.UI.Page
     {
 
         private void ModalShow(string modalname)
@@ -41,7 +40,7 @@ namespace presentacion
             try
             {
 
-                RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
+                ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
                 dt = PE.SelectAll();
             }
             catch (Exception)
@@ -51,13 +50,13 @@ namespace presentacion
             return dt;
         }
 
-        private riesgos_estatus GetProyectoEstatus(int id_riesgos_estatus)
+        private proyectos_periodos GetProyectoEstatus(int id_proyecto_periodo)
         {
-            riesgos_estatus dt = new riesgos_estatus();
+            proyectos_periodos dt = new proyectos_periodos();
             try
             {
-                RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
-                dt = PE.estatus(id_riesgos_estatus);
+                ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
+                dt = PE.proyectos_periodo(id_proyecto_periodo);
             }
             catch (Exception)
             {
@@ -71,8 +70,8 @@ namespace presentacion
             try
             {
                 DataTable dt = GetRiesgosEstatus();
-                repeat_riesgosestatus.DataSource = dt;
-                repeat_riesgosestatus.DataBind();
+                repeat_riesgosestrategias.DataSource = dt;
+                repeat_riesgosestrategias.DataBind();
             }
             catch (Exception ex)
             {
@@ -80,32 +79,30 @@ namespace presentacion
             }
         }
 
-        private string Agregar(riesgos_estatus id_riesgos_estatus)
+        private string Agregar(proyectos_periodos id_proyecto_periodo)
         {
-            RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
-            string vmensaje = PE.Agregar(id_riesgos_estatus);
-
+            ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
+            string vmensaje = PE.Agregar(id_proyecto_periodo);
             return vmensaje;
         }
-        private string Editar(riesgos_estatus id_riesgos_estatus)
+        private string Editar(proyectos_periodos id_proyecto_periodo)
         {
-            RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
-            string vmensaje = PE.Editar(id_riesgos_estatus);
-
+            ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
+            string vmensaje = PE.Editar(id_proyecto_periodo);
             return vmensaje;
         }
 
-        private string Eliminar(int id_riesgos_estatus)
+        private string Eliminar(int id_proyecto_periodo)
         {
-            RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
-            string vmensaje = PE.Eliminar(id_riesgos_estatus);
-
+            ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
+            string vmensaje = PE.Eliminar(id_proyecto_periodo);
             return vmensaje;
         }
 
         protected void lnknuevoproyectoestatus_Click(object sender, EventArgs e)
         {
             txtestatus.Text = "";
+            txtnumdias.Text = "";
             chkactivo.Checked = true;
             ModalShow("#ModalProyectoestatus");
         }
@@ -115,39 +112,44 @@ namespace presentacion
             try
             {
                 string vmensaje = string.Empty;
-                int id_riesgos_estatus = Convert.ToInt32(hdfid_riesgos_estatus.Value == "" ? "0" : hdfid_riesgos_estatus.Value);
-                riesgos_estatus PE = new riesgos_estatus();
-                PE.estatus = txtestatus.Text;
-
-                if (id_riesgos_estatus > 0) { PE.id_riesgos_estatus = id_riesgos_estatus; }
+                int id_proyecto_periodo = Convert.ToInt32(hdfid_proyecto_periodo.Value == "" ? "0" : hdfid_proyecto_periodo.Value);
+                proyectos_periodos PE = new proyectos_periodos();
+                PE.nombre = txtestatus.Text;
+                PE.dias = txtnumdias.Text == "" ? Convert.ToByte(0) : Convert.ToByte(txtnumdias.Text);
+                if (id_proyecto_periodo > 0) { PE.id_proyecto_periodo = id_proyecto_periodo; }
                 PE.activo = chkactivo.Checked;
                 PE.usuario = Session["usuario"] as string;
-                if (PE.estatus == "")
+                if (PE.nombre == "")
                 {
                     ModalShow("#ModalProyectoestatus");
-                    Toast.Error("Error al procesar estatus : Ingrese un titulo", this);
+                    Toast.Error("Error al procesar Periodo : Ingrese un titulo", this);
+                }
+                else if (PE.dias <= 0)
+                {
+                    ModalShow("#ModalProyectoestatus");
+                    Toast.Error("Error al procesar Periodo : Ingrese un numero de dias mayor a cero.", this);
                 }
                 else
                 {
-                    vmensaje = id_riesgos_estatus > 0 ? Editar(PE) : Agregar(PE);
+                    vmensaje = id_proyecto_periodo > 0 ? Editar(PE) : Agregar(PE);
                     if (vmensaje == "")
                     {
                         txtestatus.Text = "";
                         chkactivo.Checked = false;
                         CargarCatalogo();
-                        Toast.Success("Estatus agregado correctamente.", "Mensaje del sistema", this);
+                        Toast.Success("Periodo agregado correctamente.", "Mensaje del sistema", this);
                     }
                     else
                     {
                         ModalShow("#ModalProyectoestatus");
-                        Toast.Error("Error al procesar estatus : " + vmensaje, this);
+                        Toast.Error("Error al procesar Periodo : " + vmensaje, this);
                     }
                 }
             }
             catch (Exception ex)
             {
                 ModalShow("#ModalProyectoestatus");
-                Toast.Error("Error al procesar estatus : " + ex.Message, this);
+                Toast.Error("Error al procesar Periodo : " + ex.Message, this);
             }
         }
 
@@ -156,13 +158,15 @@ namespace presentacion
             try
             {
 
-                int id_riesgos_estatus = Convert.ToInt32(hdfid_riesgos_estatus.Value == "" ? "0" : hdfid_riesgos_estatus.Value);
-                if (id_riesgos_estatus > 0)
+                int id_proyecto_periodo = Convert.ToInt32(hdfid_proyecto_periodo.Value == "" ? "0" : hdfid_proyecto_periodo.Value);
+                if (id_proyecto_periodo > 0)
                 {
-                    riesgos_estatus PE = GetProyectoEstatus(id_riesgos_estatus);
+                    proyectos_periodos PE = GetProyectoEstatus(id_proyecto_periodo);
                     if (PE != null)
                     {
-                        txtestatus.Text = PE.estatus;
+
+                        txtnumdias.Text = PE.dias.ToString();
+                        txtestatus.Text = PE.nombre;
                         chkactivo.Checked = PE.activo;
                         ModalShow("#ModalProyectoestatus");
                     }
@@ -170,7 +174,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar estatus : " + ex.Message, this);
+                Toast.Error("Error al cargar Periodo : " + ex.Message, this);
             }
         }
 
@@ -179,23 +183,23 @@ namespace presentacion
 
             try
             {
-                int id_riesgos_estatus = Convert.ToInt32(hdfid_riesgos_estatus.Value == "" ? "0" : hdfid_riesgos_estatus.Value);
-                riesgos_estatus PE = new riesgos_estatus();
-                PE.id_riesgos_estatus = id_riesgos_estatus;
-                string vmensaje = Eliminar(id_riesgos_estatus);
+                int id_proyecto_periodo = Convert.ToInt32(hdfid_proyecto_periodo.Value == "" ? "0" : hdfid_proyecto_periodo.Value);
+                proyectos_periodos PE = new proyectos_periodos();
+                PE.id_proyecto_periodo = id_proyecto_periodo;
+                string vmensaje = Eliminar(id_proyecto_periodo);
                 if (vmensaje == "")
                 {
                     CargarCatalogo();
-                    Toast.Success("Estatus eliminado correctamente.", "Mensaje del sistema", this);
+                    Toast.Success("Periodo eliminado correctamente.", "Mensaje del sistema", this);
                 }
                 else
                 {
-                    Toast.Error("Error al eliminar estatus: " + vmensaje, this);
+                    Toast.Error("Error al eliminar Periodo: " + vmensaje, this);
                 }
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al eliminar estatus: " + ex.Message, this);
+                Toast.Error("Error al eliminar Periodo: " + ex.Message, this);
             }
         }
     }

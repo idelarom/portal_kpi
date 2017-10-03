@@ -83,47 +83,29 @@ namespace presentacion
         {
             RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
             string vmensaje = PE.Agregar(id_riesgo_estrategia);
-            if (vmensaje == "")
-            {
-                return "";
-            }
-            else
-            {
-                return vmensaje;
-            }
+
+            return vmensaje;
         }
         private string Editar(riesgos_estrategia id_riesgo_estrategia)
         {
             RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
             string vmensaje = PE.Editar(id_riesgo_estrategia);
-            if (vmensaje == "")
-            {
-                return "";
-            }
-            else
-            {
-                return vmensaje;
-            }
+
+            return vmensaje;
         }
 
         private string Eliminar(int id_riesgo_estrategia)
         {
             RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
             string vmensaje = PE.Eliminar(id_riesgo_estrategia);
-            if (vmensaje == "")
-            {
-                return "";
-            }
-            else
-            {
-                return vmensaje;
-            }
+
+            return vmensaje;
         }
 
         protected void lnknuevoproyectoestatus_Click(object sender, EventArgs e)
         {
             txtestatus.Text = "";
-            chkactivo.Checked = false;
+            chkactivo.Checked = true;
             ModalShow("#ModalProyectoestatus");
         }
 
