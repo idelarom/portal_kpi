@@ -195,7 +195,7 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar Estrategia : " + ex.Message, this);
+                Toast.Error("Error al cargar impacto tiempo : " + ex.Message, this);
             }
         }
 

@@ -172,6 +172,7 @@
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="catalago_impacto_tiempo.aspx" />
     <Content Include="catalogo_ayudas.aspx" />
+    <Content Include="catalogo_impacto_costo.aspx" />
     <Content Include="catalogo_menus.aspx" />
     <Content Include="catalogo_perfiles.aspx" />
     <Content Include="catalogo_permisos.aspx" />
@@ -1247,6 +1248,13 @@
     </Compile>
     <Compile Include="catalogo_ayudas.aspx.designer.cs">
       <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="catalogo_impacto_costo.aspx.cs">
+      <DependentUpon>catalogo_impacto_costo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalogo_impacto_costo.aspx.designer.cs">
+      <DependentUpon>catalogo_impacto_costo.aspx</DependentUpon>
     </Compile>
     <Compile Include="catalogo_menus.aspx.cs">
       <DependentUpon>catalogo_menus.aspx</DependentUpon>
