@@ -1215,6 +1215,7 @@
     <Content Include="primitive\js\touch\jquery.ui.touch-punch.js" />
     <Content Include="primitive\primitives.latest.css" />
     <Content Include="primitive\primitives.min.js" />
+    <Content Include="proyectos_dashboard.aspx" />
     <Content Include="recordatorios.aspx" />
     <Content Include="reporte_dashboard_bonos_kpi.aspx" />
     <Content Include="reporte_dashboard_compromisos_kpi.aspx" />
@@ -1416,6 +1417,13 @@
       <DependentUpon>mis_publicaciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="proyectos_dashboard.aspx.cs">
+      <DependentUpon>proyectos_dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="proyectos_dashboard.aspx.designer.cs">
+      <DependentUpon>proyectos_dashboard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="recordatorios.aspx.cs">
       <DependentUpon>recordatorios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -216,6 +216,70 @@ namespace negocio.Componentes
             }
         }
 
+        /// <summary>
+        /// Obtiene una tabla con la informacion de un proyecto
+        /// </summary>
+        /// <param name="id_proyecto"></param>
+        /// <returns></returns>
+        public DataTable Select(int id_proyecto)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                var proyectos = (from p in db.proyectos
+                                 join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
+                                 join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
+                                 where (p.usuario_borrado == null && p.id_proyecto == id_proyecto)
+                                 select new
+                                 {
+                                     p.usuario,
+                                     p.id_proyecto,
+                                     p.id_proyecto_estatus,
+                                     est.estatus,
+                                     p.id_proyecto_periodo,
+                                     periodo = period.nombre,
+                                     p.cveoport,
+                                     p.folio_pmt,
+                                     p.proyecto,
+                                     p.descripcion,
+                                     p.fecha_registro,
+                                     p.fecha_inicio,
+                                     p.fecha_fin
+                                 }).ToArray();
+                NAVISION dbnavision = new NAVISION();
+                var results = from p in proyectos
+                              join up in dbnavision.Employee on p.usuario.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
+                              select new
+                              {
+                                  usuario = p.usuario,
+                                  empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
+                                  p.id_proyecto,
+                                  p.id_proyecto_estatus,
+                                  p.estatus,
+                                  p.id_proyecto_periodo,
+                                  p.periodo,
+                                  p.cveoport,
+                                  p.folio_pmt,
+                                  p.proyecto,
+                                  p.descripcion,
+                                  p.fecha_registro,
+                                  p.fecha_inicio,
+                                  p.fecha_fin
+                              };
+                dt = To.DataTable(results.ToList());
+                return dt;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return dt;
+            }
+        }
 
         /// <summary>
         /// Regresa una tabla con todos los proyectos del empleado y sus subordinados, se manda el id del estatus que quiera filtrarse 1= abierto
