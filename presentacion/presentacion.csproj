@@ -170,6 +170,7 @@
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\npm.js" />
+    <Content Include="catalago_impacto_tiempo.aspx" />
     <Content Include="catalogo_ayudas.aspx" />
     <Content Include="catalogo_menus.aspx" />
     <Content Include="catalogo_perfiles.aspx" />
@@ -1230,6 +1231,13 @@
     </Compile>
     <Compile Include="ayuda.aspx.designer.cs">
       <DependentUpon>ayuda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="catalago_impacto_tiempo.aspx.cs">
+      <DependentUpon>catalago_impacto_tiempo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalago_impacto_tiempo.aspx.designer.cs">
+      <DependentUpon>catalago_impacto_tiempo.aspx</DependentUpon>
     </Compile>
     <Compile Include="catalogo_ayudas.aspx.cs">
       <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
