@@ -193,7 +193,6 @@ namespace presentacion
 
         protected void btneliminar_Click(object sender, EventArgs e)
         {
-
             try
             {
                 int id_proyectos_estatus = Convert.ToInt32(hdfid_proyectos_estatus.Value == "" ? "0" : hdfid_proyectos_estatus.Value);

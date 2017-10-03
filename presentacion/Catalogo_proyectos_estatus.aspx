@@ -85,7 +85,6 @@
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 250px; text-align: left;" scope="col">Estatus</th>
-                                    <th style="min-width: 400px; text-align: left;" scope="col">Activo</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,7 +103,7 @@
                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
-                                            <td style="text-align: left;"><%# Eval("estatus") %></td>
+                                            <td style="text-align: left;"><%# Eval("estatus") %></td>  
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
