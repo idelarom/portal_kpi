@@ -2,6 +2,37 @@
     setInterval(CargarNuevosDispositivos, 1500);
 });
 
+function ValidateRange(Object, val_min, val_max, error_mess) {
+    // It's a number
+
+    if (Object.value != "") {
+        numValue = parseFloat(Object.value);
+        min = parseFloat(val_min);
+        max = parseFloat(val_max);
+        if (numValue < min || numValue > max) {
+            Object.value = "1";
+            swal({
+                title: "Mensaje del Sistema",
+                text: error_mess,
+                type: 'error',
+                showCancelButton: false,
+                confirmButtonColor: "#428bca",
+                confirmButtonText: "Aceptar",
+                closeOnConfirm: false, allowEscapeKey: false
+            });
+        }
+    }
+}
+
+//VALIDA QUE SOLO SEAN NUMEROS ENTEROS REALES
+function validarEnteros(e) {
+    k = (document.all) ? e.keyCode : e.which;
+    if (k == 8 || k == 0) return true;
+    patron = /[0-9\s\t]/;
+    n = String.fromCharCode(k);
+    return patron.test(n);
+}
+
 function PlaySound(path) {
     var audio = new Audio(path);
     audio.play();

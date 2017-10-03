@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace presentacion
 {
-    public partial class catalogo_riesgos_estrategias : System.Web.UI.Page
+    public partial class catalogo_riesgos_probabilidad : System.Web.UI.Page
     {
         private void ModalShow(string modalname)
         {
@@ -40,7 +40,7 @@ namespace presentacion
             try
             {
 
-                RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
+                RiesgosProbabilidadCOM PE = new RiesgosProbabilidadCOM();
                 dt = PE.SelectAll();
             }
             catch (Exception)
@@ -50,13 +50,13 @@ namespace presentacion
             return dt;
         }
 
-        private riesgos_estrategia GetProyectoEstatus(int id_riesgo_estrategia)
+        private riesgos_probabilidad GetProyectoEstatus(int id_riesgo_probabilidad)
         {
-            riesgos_estrategia dt = new riesgos_estrategia();
+            riesgos_probabilidad dt = new riesgos_probabilidad();
             try
             {
-                RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
-                dt = PE.estrategia(id_riesgo_estrategia);
+                RiesgosProbabilidadCOM PE = new RiesgosProbabilidadCOM();
+                dt = PE.impacto(id_riesgo_probabilidad);
             }
             catch (Exception)
             {
@@ -79,32 +79,30 @@ namespace presentacion
             }
         }
 
-        private string Agregar(riesgos_estrategia id_riesgo_estrategia)
+        private string Agregar(riesgos_probabilidad id_riesgo_probabilidad)
         {
-            RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
-            string vmensaje = PE.Agregar(id_riesgo_estrategia);
-
+            RiesgosProbabilidadCOM PE = new RiesgosProbabilidadCOM();
+            string vmensaje = PE.Agregar(id_riesgo_probabilidad);
             return vmensaje;
         }
-        private string Editar(riesgos_estrategia id_riesgo_estrategia)
+        private string Editar(riesgos_probabilidad id_riesgo_probabilidad)
         {
-            RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
-            string vmensaje = PE.Editar(id_riesgo_estrategia);
-
+            RiesgosProbabilidadCOM PE = new RiesgosProbabilidadCOM();
+            string vmensaje = PE.Editar(id_riesgo_probabilidad);
             return vmensaje;
         }
 
-        private string Eliminar(int id_riesgo_estrategia)
+        private string Eliminar(int id_riesgo_probabilidad)
         {
-            RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
-            string vmensaje = PE.Eliminar(id_riesgo_estrategia);
-
+            RiesgosProbabilidadCOM PE = new RiesgosProbabilidadCOM();
+            string vmensaje = PE.Eliminar(id_riesgo_probabilidad);
             return vmensaje;
         }
 
         protected void lnknuevoproyectoestatus_Click(object sender, EventArgs e)
         {
             txtestatus.Text = "";
+            txtnumdias.Text = "";
             chkactivo.Checked = true;
             ModalShow("#ModalProyectoestatus");
         }
@@ -114,39 +112,44 @@ namespace presentacion
             try
             {
                 string vmensaje = string.Empty;
-                int id_riesgo_estrategia = Convert.ToInt32(hdfid_riesgo_estrategia.Value == "" ? "0" : hdfid_riesgo_estrategia.Value);
-                riesgos_estrategia PE = new riesgos_estrategia();
+                int id_riesgo_probabilidad = Convert.ToInt32(hdfid_riesgo_probabilidad.Value == "" ? "0" : hdfid_riesgo_probabilidad.Value);
+                riesgos_probabilidad PE = new riesgos_probabilidad();
                 PE.nombre = txtestatus.Text;
-
-                if (id_riesgo_estrategia > 0) { PE.id_riesgo_estrategia = id_riesgo_estrategia; }
+                PE.porcentaje = txtnumdias.Text == "" ? Convert.ToDecimal(0) : Convert.ToDecimal(txtnumdias.Text);
+                if (id_riesgo_probabilidad > 0) { PE.id_riesgo_probabilidad = id_riesgo_probabilidad; }
                 PE.activo = chkactivo.Checked;
                 PE.usuario = Session["usuario"] as string;
                 if (PE.nombre == "")
                 {
                     ModalShow("#ModalProyectoestatus");
-                    Toast.Error("Error al procesar Estrategia : Ingrese un titulo", this);
+                    Toast.Error("Error al procesar Probabilidad : Ingrese un titulo", this);
+                }
+                else if (PE.porcentaje <= 0)
+                {
+                    ModalShow("#ModalProyectoestatus");
+                    Toast.Error("Error al procesar Probabilidad : Ingrese un porcentaje de probabilidad mayor a cero.", this);
                 }
                 else
                 {
-                    vmensaje = id_riesgo_estrategia > 0 ? Editar(PE) : Agregar(PE);
+                    vmensaje = id_riesgo_probabilidad > 0 ? Editar(PE) : Agregar(PE);
                     if (vmensaje == "")
                     {
                         txtestatus.Text = "";
                         chkactivo.Checked = false;
                         CargarCatalogo();
-                        Toast.Success("Estrategia agregada correctamente.", "Mensaje del sistema", this);
+                        Toast.Success("Probabilidad agregada correctamente.", "Mensaje del sistema", this);
                     }
                     else
                     {
                         ModalShow("#ModalProyectoestatus");
-                        Toast.Error("Error al procesar Estrategia : " + vmensaje, this);
+                        Toast.Error("Error al procesar Probabilidad : " + vmensaje, this);
                     }
                 }
             }
             catch (Exception ex)
             {
                 ModalShow("#ModalProyectoestatus");
-                Toast.Error("Error al procesar Estrategia : " + ex.Message, this);
+                Toast.Error("Error al procesar Probabilidad : " + ex.Message, this);
             }
         }
 
@@ -155,12 +158,14 @@ namespace presentacion
             try
             {
 
-                int id_riesgo_estrategia = Convert.ToInt32(hdfid_riesgo_estrategia.Value == "" ? "0" : hdfid_riesgo_estrategia.Value);
-                if (id_riesgo_estrategia > 0)
+                int id_riesgo_probabilidad = Convert.ToInt32(hdfid_riesgo_probabilidad.Value == "" ? "0" : hdfid_riesgo_probabilidad.Value);
+                if (id_riesgo_probabilidad > 0)
                 {
-                    riesgos_estrategia PE = GetProyectoEstatus(id_riesgo_estrategia);
+                    riesgos_probabilidad PE = GetProyectoEstatus(id_riesgo_probabilidad);
                     if (PE != null)
                     {
+
+                        txtnumdias.Text = PE.porcentaje.ToString();
                         txtestatus.Text = PE.nombre;
                         chkactivo.Checked = PE.activo;
                         ModalShow("#ModalProyectoestatus");
@@ -169,31 +174,32 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar Estrategia : " + ex.Message, this);
+                Toast.Error("Error al cargar Probabilidad : " + ex.Message, this);
             }
         }
 
         protected void btneliminar_Click(object sender, EventArgs e)
         {
+
             try
             {
-                int id_riesgo_estrategia = Convert.ToInt32(hdfid_riesgo_estrategia.Value == "" ? "0" : hdfid_riesgo_estrategia.Value);
-                riesgos_estrategia PE = new riesgos_estrategia();
-                PE.id_riesgo_estrategia = id_riesgo_estrategia;
-                string vmensaje = Eliminar(id_riesgo_estrategia);
+                int id_riesgo_probabilidad = Convert.ToInt32(hdfid_riesgo_probabilidad.Value == "" ? "0" : hdfid_riesgo_probabilidad.Value);
+                riesgos_probabilidad PE = new riesgos_probabilidad();
+                PE.id_riesgo_probabilidad = id_riesgo_probabilidad;
+                string vmensaje = Eliminar(id_riesgo_probabilidad);
                 if (vmensaje == "")
                 {
                     CargarCatalogo();
-                    Toast.Success("Estrategia eliminada correctamente.", "Mensaje del sistema", this);
+                    Toast.Success("Probabilidad eliminada correctamente.", "Mensaje del sistema", this);
                 }
                 else
                 {
-                    Toast.Error("Error al eliminar estrategia: " + vmensaje, this);
+                    Toast.Error("Error al eliminar Probabilidad: " + vmensaje, this);
                 }
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al eliminar estrategia: " + ex.Message, this);
+                Toast.Error("Error al eliminar Probabilidad: " + ex.Message, this);
             }
         }
     }

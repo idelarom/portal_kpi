@@ -9,11 +9,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 namespace presentacion
 {
-    public partial class catalogo_riesgos_estrategias : System.Web.UI.Page
+    public partial class catalogo_proyectos_periodos : System.Web.UI.Page
     {
+
         private void ModalShow(string modalname)
         {
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
@@ -40,7 +40,7 @@ namespace presentacion
             try
             {
 
-                RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
+                ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
                 dt = PE.SelectAll();
             }
             catch (Exception)
@@ -50,13 +50,13 @@ namespace presentacion
             return dt;
         }
 
-        private riesgos_estrategia GetProyectoEstatus(int id_riesgo_estrategia)
+        private proyectos_periodos GetProyectoEstatus(int id_proyecto_periodo)
         {
-            riesgos_estrategia dt = new riesgos_estrategia();
+            proyectos_periodos dt = new proyectos_periodos();
             try
             {
-                RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
-                dt = PE.estrategia(id_riesgo_estrategia);
+                ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
+                dt = PE.proyectos_periodo(id_proyecto_periodo);
             }
             catch (Exception)
             {
@@ -79,32 +79,30 @@ namespace presentacion
             }
         }
 
-        private string Agregar(riesgos_estrategia id_riesgo_estrategia)
+        private string Agregar(proyectos_periodos id_proyecto_periodo)
         {
-            RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
-            string vmensaje = PE.Agregar(id_riesgo_estrategia);
-
+            ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
+            string vmensaje = PE.Agregar(id_proyecto_periodo);
             return vmensaje;
         }
-        private string Editar(riesgos_estrategia id_riesgo_estrategia)
+        private string Editar(proyectos_periodos id_proyecto_periodo)
         {
-            RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
-            string vmensaje = PE.Editar(id_riesgo_estrategia);
-
+            ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
+            string vmensaje = PE.Editar(id_proyecto_periodo);
             return vmensaje;
         }
 
-        private string Eliminar(int id_riesgo_estrategia)
+        private string Eliminar(int id_proyecto_periodo)
         {
-            RiesgosEstrategiaCOM PE = new RiesgosEstrategiaCOM();
-            string vmensaje = PE.Eliminar(id_riesgo_estrategia);
-
+            ProyectosPeriodosCOM PE = new ProyectosPeriodosCOM();
+            string vmensaje = PE.Eliminar(id_proyecto_periodo);
             return vmensaje;
         }
 
         protected void lnknuevoproyectoestatus_Click(object sender, EventArgs e)
         {
             txtestatus.Text = "";
+            txtnumdias.Text = "";
             chkactivo.Checked = true;
             ModalShow("#ModalProyectoestatus");
         }
@@ -114,39 +112,44 @@ namespace presentacion
             try
             {
                 string vmensaje = string.Empty;
-                int id_riesgo_estrategia = Convert.ToInt32(hdfid_riesgo_estrategia.Value == "" ? "0" : hdfid_riesgo_estrategia.Value);
-                riesgos_estrategia PE = new riesgos_estrategia();
+                int id_proyecto_periodo = Convert.ToInt32(hdfid_proyecto_periodo.Value == "" ? "0" : hdfid_proyecto_periodo.Value);
+                proyectos_periodos PE = new proyectos_periodos();
                 PE.nombre = txtestatus.Text;
-
-                if (id_riesgo_estrategia > 0) { PE.id_riesgo_estrategia = id_riesgo_estrategia; }
+                PE.dias = txtnumdias.Text == "" ? Convert.ToByte(0) : Convert.ToByte(txtnumdias.Text);
+                if (id_proyecto_periodo > 0) { PE.id_proyecto_periodo = id_proyecto_periodo; }
                 PE.activo = chkactivo.Checked;
                 PE.usuario = Session["usuario"] as string;
                 if (PE.nombre == "")
                 {
                     ModalShow("#ModalProyectoestatus");
-                    Toast.Error("Error al procesar Estrategia : Ingrese un titulo", this);
+                    Toast.Error("Error al procesar Periodo : Ingrese un titulo", this);
+                }
+                else if (PE.dias <= 0)
+                {
+                    ModalShow("#ModalProyectoestatus");
+                    Toast.Error("Error al procesar Periodo : Ingrese un numero de dias mayor a cero.", this);
                 }
                 else
                 {
-                    vmensaje = id_riesgo_estrategia > 0 ? Editar(PE) : Agregar(PE);
+                    vmensaje = id_proyecto_periodo > 0 ? Editar(PE) : Agregar(PE);
                     if (vmensaje == "")
                     {
                         txtestatus.Text = "";
                         chkactivo.Checked = false;
                         CargarCatalogo();
-                        Toast.Success("Estrategia agregada correctamente.", "Mensaje del sistema", this);
+                        Toast.Success("Periodo agregado correctamente.", "Mensaje del sistema", this);
                     }
                     else
                     {
                         ModalShow("#ModalProyectoestatus");
-                        Toast.Error("Error al procesar Estrategia : " + vmensaje, this);
+                        Toast.Error("Error al procesar Periodo : " + vmensaje, this);
                     }
                 }
             }
             catch (Exception ex)
             {
                 ModalShow("#ModalProyectoestatus");
-                Toast.Error("Error al procesar Estrategia : " + ex.Message, this);
+                Toast.Error("Error al procesar Periodo : " + ex.Message, this);
             }
         }
 
@@ -155,12 +158,14 @@ namespace presentacion
             try
             {
 
-                int id_riesgo_estrategia = Convert.ToInt32(hdfid_riesgo_estrategia.Value == "" ? "0" : hdfid_riesgo_estrategia.Value);
-                if (id_riesgo_estrategia > 0)
+                int id_proyecto_periodo = Convert.ToInt32(hdfid_proyecto_periodo.Value == "" ? "0" : hdfid_proyecto_periodo.Value);
+                if (id_proyecto_periodo > 0)
                 {
-                    riesgos_estrategia PE = GetProyectoEstatus(id_riesgo_estrategia);
+                    proyectos_periodos PE = GetProyectoEstatus(id_proyecto_periodo);
                     if (PE != null)
                     {
+
+                        txtnumdias.Text = PE.dias.ToString();
                         txtestatus.Text = PE.nombre;
                         chkactivo.Checked = PE.activo;
                         ModalShow("#ModalProyectoestatus");
@@ -169,31 +174,32 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar Estrategia : " + ex.Message, this);
+                Toast.Error("Error al cargar Periodo : " + ex.Message, this);
             }
         }
 
         protected void btneliminar_Click(object sender, EventArgs e)
         {
+
             try
             {
-                int id_riesgo_estrategia = Convert.ToInt32(hdfid_riesgo_estrategia.Value == "" ? "0" : hdfid_riesgo_estrategia.Value);
-                riesgos_estrategia PE = new riesgos_estrategia();
-                PE.id_riesgo_estrategia = id_riesgo_estrategia;
-                string vmensaje = Eliminar(id_riesgo_estrategia);
+                int id_proyecto_periodo = Convert.ToInt32(hdfid_proyecto_periodo.Value == "" ? "0" : hdfid_proyecto_periodo.Value);
+                proyectos_periodos PE = new proyectos_periodos();
+                PE.id_proyecto_periodo = id_proyecto_periodo;
+                string vmensaje = Eliminar(id_proyecto_periodo);
                 if (vmensaje == "")
                 {
                     CargarCatalogo();
-                    Toast.Success("Estrategia eliminada correctamente.", "Mensaje del sistema", this);
+                    Toast.Success("Periodo eliminado correctamente.", "Mensaje del sistema", this);
                 }
                 else
                 {
-                    Toast.Error("Error al eliminar estrategia: " + vmensaje, this);
+                    Toast.Error("Error al eliminar Periodo: " + vmensaje, this);
                 }
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al eliminar estrategia: " + ex.Message, this);
+                Toast.Error("Error al eliminar Periodo: " + ex.Message, this);
             }
         }
     }

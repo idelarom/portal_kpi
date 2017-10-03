@@ -176,8 +176,10 @@
     <Content Include="catalogo_perfiles.aspx" />
     <Content Include="catalogo_permisos.aspx" />
     <Content Include="catalogo_proyectos_estatus.aspx" />
+    <Content Include="catalogo_proyectos_periodos.aspx" />
     <Content Include="catalogo_riesgos_estatus.aspx" />
     <Content Include="catalogo_riesgos_estrategias.aspx" />
+    <Content Include="catalogo_riesgos_probabilidad.aspx" />
     <Content Include="catalogo_sesiones_usuario.aspx" />
     <Content Include="catalogo_usuarios.aspx" />
     <Content Include="catalogo_widgets.aspx" />
@@ -1274,6 +1276,13 @@
     <Compile Include="catalogo_proyectos_estatus.aspx.designer.cs">
       <DependentUpon>catalogo_proyectos_estatus.aspx</DependentUpon>
     </Compile>
+    <Compile Include="catalogo_proyectos_periodos.aspx.cs">
+      <DependentUpon>catalogo_proyectos_periodos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalogo_proyectos_periodos.aspx.designer.cs">
+      <DependentUpon>catalogo_proyectos_periodos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="catalogo_riesgos_estatus.aspx.cs">
       <DependentUpon>catalogo_riesgos_estatus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1287,6 +1296,13 @@
     </Compile>
     <Compile Include="catalogo_riesgos_estrategias.aspx.designer.cs">
       <DependentUpon>catalogo_riesgos_estrategias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="catalogo_riesgos_probabilidad.aspx.cs">
+      <DependentUpon>catalogo_riesgos_probabilidad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="catalogo_riesgos_probabilidad.aspx.designer.cs">
+      <DependentUpon>catalogo_riesgos_probabilidad.aspx</DependentUpon>
     </Compile>
     <Compile Include="catalogo_sesiones_usuario.aspx.cs">
       <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>
