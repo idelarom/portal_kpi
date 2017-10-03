@@ -175,7 +175,6 @@ namespace presentacion
 
         protected void btneliminar_Click(object sender, EventArgs e)
         {
-
             try
             {
                 int id_riesgo_estrategia = Convert.ToInt32(hdfid_riesgo_estrategia.Value == "" ? "0" : hdfid_riesgo_estrategia.Value);
