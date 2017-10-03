@@ -12,8 +12,9 @@ using System.Web.UI.WebControls;
 
 namespace presentacion
 {
-    public partial class catalogo_proyectos_estatus : System.Web.UI.Page
+    public partial class catalogo_riesgos_estatus : System.Web.UI.Page
     {
+
         private void ModalShow(string modalname)
         {
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
@@ -34,13 +35,13 @@ namespace presentacion
             }
         }
 
-        private DataTable GetProyectosEstatus()
+        private DataTable GetRiesgosEstatus()
         {
             DataTable dt = new DataTable();
             try
             {
 
-                ProyectosEstatusCOM PE = new ProyectosEstatusCOM();
+                RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
                 dt = PE.SelectAll();
             }
             catch (Exception)
@@ -50,13 +51,13 @@ namespace presentacion
             return dt;
         }
 
-        private proyectos_estatus GetProyectoEstatus(int id_proyecto_estatus)
+        private riesgos_estatus GetProyectoEstatus(int id_riesgos_estatus)
         {
-            proyectos_estatus dt = new proyectos_estatus();
+            riesgos_estatus dt = new riesgos_estatus();
             try
             {
-                ProyectosEstatusCOM PE = new ProyectosEstatusCOM();
-                dt = PE.estatus(id_proyecto_estatus);
+                RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
+                dt = PE.estatus(id_riesgos_estatus);
             }
             catch (Exception)
             {
@@ -69,9 +70,9 @@ namespace presentacion
         {
             try
             {
-                DataTable dt = GetProyectosEstatus();
-                repeat_proyectoestatus.DataSource = dt;
-                repeat_proyectoestatus.DataBind();
+                DataTable dt = GetRiesgosEstatus();
+                repeat_riesgosestatus.DataSource = dt;
+                repeat_riesgosestatus.DataBind();
             }
             catch (Exception ex)
             {
@@ -79,10 +80,10 @@ namespace presentacion
             }
         }
 
-        private string Agregar(proyectos_estatus id_proyecto_estatus)
+        private string Agregar(riesgos_estatus id_riesgos_estatus)
         {
-            ProyectosEstatusCOM PE = new ProyectosEstatusCOM();
-            string vmensaje = PE.Agregar(id_proyecto_estatus);
+            RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
+            string vmensaje = PE.Agregar(id_riesgos_estatus);
             if (vmensaje == "")
             {
                 return "";
@@ -92,10 +93,10 @@ namespace presentacion
                 return vmensaje;
             }
         }
-        private string Editar(proyectos_estatus id_proyecto_estatus)
+        private string Editar(riesgos_estatus id_riesgos_estatus)
         {
-            ProyectosEstatusCOM PE = new ProyectosEstatusCOM();
-            string vmensaje = PE.Editar(id_proyecto_estatus);
+            RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
+            string vmensaje = PE.Editar(id_riesgos_estatus);
             if (vmensaje == "")
             {
                 return "";
@@ -106,10 +107,10 @@ namespace presentacion
             }
         }
 
-        private string Eliminar(int id_proyecto_estatus)
+        private string Eliminar(int id_riesgos_estatus)
         {
-            ProyectosEstatusCOM PE = new ProyectosEstatusCOM();
-            string vmensaje = PE.Eliminar(id_proyecto_estatus);
+            RiesgosEstatusCOM PE = new RiesgosEstatusCOM();
+            string vmensaje = PE.Eliminar(id_riesgos_estatus);
             if (vmensaje == "")
             {
                 return "";
@@ -132,21 +133,21 @@ namespace presentacion
             try
             {
                 string vmensaje = string.Empty;
-                int id_proyecto_estatus = Convert.ToInt32(hdfid_proyecto_estatus.Value == "" ? "0" : hdfid_proyecto_estatus.Value);
-                proyectos_estatus PE = new proyectos_estatus();
+                int id_riesgos_estatus = Convert.ToInt32(hdfid_riesgos_estatus.Value == "" ? "0" : hdfid_riesgos_estatus.Value);
+                riesgos_estatus PE = new riesgos_estatus();
                 PE.estatus = txtestatus.Text;
-                
-                if (id_proyecto_estatus > 0) { PE.id_proyecto_estatus = id_proyecto_estatus; }
+
+                if (id_riesgos_estatus > 0) { PE.id_riesgos_estatus = id_riesgos_estatus; }
                 PE.activo = chkactivo.Checked;
                 PE.usuario = Session["usuario"] as string;
                 if (PE.estatus == "")
                 {
                     ModalShow("#ModalProyectoestatus");
                     Toast.Error("Error al procesar estatus : Ingrese un titulo", this);
-                }               
+                }
                 else
                 {
-                    vmensaje = id_proyecto_estatus > 0 ? Editar(PE) : Agregar(PE);
+                    vmensaje = id_riesgos_estatus > 0 ? Editar(PE) : Agregar(PE);
                     if (vmensaje == "")
                     {
                         txtestatus.Text = "";
@@ -173,14 +174,14 @@ namespace presentacion
             try
             {
 
-                int id_proyecto_estatus = Convert.ToInt32(hdfid_proyecto_estatus.Value == "" ? "0" : hdfid_proyecto_estatus.Value);
-                if (id_proyecto_estatus > 0)
+                int id_riesgos_estatus = Convert.ToInt32(hdfid_riesgos_estatus.Value == "" ? "0" : hdfid_riesgos_estatus.Value);
+                if (id_riesgos_estatus > 0)
                 {
-                    proyectos_estatus PE = GetProyectoEstatus(id_proyecto_estatus);
+                    riesgos_estatus PE = GetProyectoEstatus(id_riesgos_estatus);
                     if (PE != null)
                     {
                         txtestatus.Text = PE.estatus;
-                        chkactivo.Checked = PE.activo;                      
+                        chkactivo.Checked = PE.activo;
                         ModalShow("#ModalProyectoestatus");
                     }
                 }
@@ -196,23 +197,23 @@ namespace presentacion
 
             try
             {
-                int id_proyecto_estatus = Convert.ToInt32(hdfid_proyecto_estatus.Value == "" ? "0" : hdfid_proyecto_estatus.Value);
-                proyectos_estatus PE = new proyectos_estatus();
-                PE.id_proyecto_estatus = id_proyecto_estatus;
-                string vmensaje = Eliminar(id_proyecto_estatus);
+                int id_riesgos_estatus = Convert.ToInt32(hdfid_riesgos_estatus.Value == "" ? "0" : hdfid_riesgos_estatus.Value);
+                riesgos_estatus PE = new riesgos_estatus();
+                PE.id_riesgos_estatus = id_riesgos_estatus;
+                string vmensaje = Eliminar(id_riesgos_estatus);
                 if (vmensaje == "")
                 {
                     CargarCatalogo();
-                    Toast.Success("proyecto estus eliminado correctamente.", "Mensaje del sistema", this);
+                    Toast.Success("Estatus eliminado correctamente.", "Mensaje del sistema", this);
                 }
                 else
                 {
-                    Toast.Error("Error al eliminar proyecto estatus: " + vmensaje, this);
+                    Toast.Error("Error al eliminar estatus: " + vmensaje, this);
                 }
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al eliminar proyecto estus : " + ex.Message, this);
+                Toast.Error("Error al eliminar estatus: " + ex.Message, this);
             }
         }
     }

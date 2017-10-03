@@ -10,7 +10,7 @@
 namespace presentacion {
     
     
-    public partial class catalogo_proyectos_estatus {
+    public partial class catalogo_riesgos_estatus {
         
         /// <summary>
         /// Control lnknuevoproyectoestatus.
@@ -22,13 +22,13 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnknuevoproyectoestatus;
         
         /// <summary>
-        /// Control repeat_proyectoestatus.
+        /// Control repeat_riesgosestatus.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeat_proyectoestatus;
+        protected global::System.Web.UI.WebControls.Repeater repeat_riesgosestatus;
         
         /// <summary>
         /// Control UpdatePanel15.
@@ -103,12 +103,12 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.HiddenField hdfcommand;
         
         /// <summary>
-        /// Control hdfid_proyecto_estatus.
+        /// Control hdfid_riesgos_estatus.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfid_proyecto_estatus;
+        protected global::System.Web.UI.WebControls.HiddenField hdfid_riesgos_estatus;
     }
 }

@@ -192,16 +192,6 @@
           <Property Name="fecha" Type="datetime" Nullable="false" />
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <Association Name="FK_actividades_proyectos">
           <End Role="proyectos" Type="Self.proyectos" Multiplicity="0..1" />
           <End Role="actividades" Type="Self.actividades" Multiplicity="*" />
@@ -390,7 +380,6 @@
           <EntitySet Name="riesgos_impacto_costo" EntityType="Self.riesgos_impacto_costo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos_impacto_tiempo" EntityType="Self.riesgos_impacto_tiempo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos_probabilidad" EntityType="Self.riesgos_probabilidad" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_actividades_proyectos" Association="Self.FK_actividades_proyectos">
             <End Role="proyectos" EntitySet="proyectos" />
             <End Role="actividades" EntitySet="actividades" />
@@ -563,16 +552,6 @@
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="riesgos" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_probabilidad" FromRole="riesgos_probabilidad" ToRole="riesgos" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <Association Name="FK_proyectos_proyectos_estatus">
           <End Role="proyectos_estatus" Type="Self.proyectos_estatus" Multiplicity="0..1" />
           <End Role="proyectos" Type="Self.proyectos" Multiplicity="*" />
@@ -606,7 +585,6 @@
           <EntitySet Name="riesgos_impacto_costo" EntityType="Self.riesgos_impacto_costo" />
           <EntitySet Name="riesgos_impacto_tiempo" EntityType="Self.riesgos_impacto_tiempo" />
           <EntitySet Name="riesgos_probabilidad" EntityType="Self.riesgos_probabilidad" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <AssociationSet Name="FK_proyectos_proyectos_estatus" Association="Self.FK_proyectos_proyectos_estatus">
             <End Role="proyectos_estatus" EntitySet="proyectos_estatus" />
             <End Role="proyectos" EntitySet="proyectos" />
@@ -1031,17 +1009,6 @@
                 <ScalarProperty Name="activo" ColumnName="activo" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Proyectos_ConnextModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

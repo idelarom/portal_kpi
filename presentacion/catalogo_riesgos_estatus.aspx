@@ -1,6 +1,6 @@
-﻿<%@ Page Title="Proyectos Estatus" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_proyectos_estatus.aspx.cs" Inherits="presentacion.catalogo_proyectos_estatus" %>
+﻿<%@ Page Title="Riesgos Estatus" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_riesgos_estatus.aspx.cs" Inherits="presentacion.catalogo_riesgos_estatus" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script type="text/javascript">
+     <script type="text/javascript">
         $(document).ready(function () {
             Init();
         });
@@ -40,7 +40,7 @@
         }
         function ConfirmEntregableDelete(id_permiso) {
             if (confirm('¿Desea eliminar este permiso?')) {
-                var hdfusuario = document.getElementById('<%= hdfid_proyecto_estatus.ClientID %>');
+                var hdfusuario = document.getElementById('<%= hdfid_riesgos_estatus.ClientID %>');
                 hdfusuario.value = id_permiso;
                 document.getElementById('<%= btneliminar.ClientID%>').click();
                 return true;
@@ -49,7 +49,7 @@
             }
         }
         function EditarClick(id_permiso) {
-            var hdfusuario = document.getElementById('<%= hdfid_proyecto_estatus.ClientID %>');
+            var hdfusuario = document.getElementById('<%= hdfid_riesgos_estatus.ClientID %>');
             hdfusuario.value = id_permiso;
             document.getElementById('<%= btneventgrid.ClientID%>').click();
             return false;
@@ -66,9 +66,9 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <div class="row">
+    <div class="row">
         <div class="col-lg-12">
-                <h4 class="page-header">Catálogo proyecto estatus</h4>
+                <h4 class="page-header">Catálogo riesgos estatus</h4>
           
         </div>
     </div>
@@ -88,18 +88,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <asp:Repeater ID="repeat_proyectoestatus" runat="server">
+                                <asp:Repeater ID="repeat_riesgosestatus" runat="server">
                                     <ItemTemplate>
                                         <tr style="font-size: 12px">
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return EditarClick("+Eval("id_proyecto_estatus")+");" %>'>
+                                                    onclick='<%# "return EditarClick("+Eval("id_riesgos_estatus")+");" %>'>
                                                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_proyecto_estatus")+");" %>'>
+                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_riesgos_estatus")+");" %>'>
                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
@@ -162,6 +162,5 @@
     <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display: none;" />
     <asp:Button ID="btneliminar" OnClick="btneliminar_Click" runat="server" Text="Button" Style="display: none;" />
      <asp:HiddenField ID="hdfcommand" runat="server" />
-     <asp:HiddenField ID="hdfid_proyecto_estatus" runat="server" />
+     <asp:HiddenField ID="hdfid_riesgos_estatus" runat="server" />
 </asp:Content>
-

@@ -142,9 +142,6 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

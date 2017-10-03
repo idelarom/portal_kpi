@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_impacto_costo" Width="1.5" PointX="5.75" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_impacto_tiempo" Width="1.5" PointX="7.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_probabilidad" Width="1.5" PointX="7.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Proyectos_ConnextModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="8.125" IsExpanded="true" />
         <AssociationConnector Association="Proyectos_ConnextModel.FK_proyectos_proyectos_estatus" ManuallyRouted="false" />
         <AssociationConnector Association="Proyectos_ConnextModel.FK_proyectos_proyectos_periodos1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Proyectos_ConnextModel.actividades" Width="1.5" PointX="10.25" PointY="4.125" />
