@@ -136,7 +136,7 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="id_proyecto_perido"></param>
         /// <returns></returns>
-        public riesgos_estrategia impacto(int id_riesgo_estrategia)
+        public riesgos_estrategia estrategia(int id_riesgo_estrategia)
         {
             try
             {
