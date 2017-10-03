@@ -4,14 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="00b7961c6e794e4dae8fb842cfb6d9d5" Name="Diagram1">
-        <EntityTypeShape EntityType="Proyectos_ConnextModel.proyectos_estatus" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Proyectos_ConnextModel.proyectos_periodos" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_estatus" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_estrategia" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_impacto_costo" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_impacto_tiempo" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_probabilidad" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="90c72e29e1274b5faebb2393c57eb8f1" Name="Diagram1">
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.proyectos" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.proyectos_estatus" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.proyectos_periodos" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_estatus" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_estrategia" Width="1.5" PointX="5.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_impacto_costo" Width="1.5" PointX="5.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_impacto_tiempo" Width="1.5" PointX="7.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos_probabilidad" Width="1.5" PointX="7.75" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_proyectos_proyectos_estatus" ManuallyRouted="false" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_proyectos_proyectos_periodos1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.actividades" Width="1.5" PointX="10.25" PointY="4.125" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.documentos" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.proyectos_evaluaciones" Width="1.5" PointX="5.25" PointY="16.875" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.riesgos" Width="1.5" PointX="10" PointY="9" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_actividades_proyectos" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_actividades_riesgos" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_documentos_proyectos" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_proyectos_evaluaciones_proyectos" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_proyectos_evaluaciones" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_estatus" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_estrategia" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_costo" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_tiempo" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_probabilidad" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -14,10 +14,19 @@ namespace datos
     
     public partial class riesgos_estatus
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public riesgos_estatus()
+        {
+            this.riesgos = new HashSet<riesgos>();
+        }
+    
         public int id_riesgos_estatus { get; set; }
         public string usuario { get; set; }
         public string estatus { get; set; }
         public bool activo { get; set; }
         public System.DateTime fecha { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<riesgos> riesgos { get; set; }
     }
 }

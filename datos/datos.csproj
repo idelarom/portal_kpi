@@ -51,8 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="actividades.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="conexion.cs" />
     <Compile Include="Datos.cs" />
+    <Compile Include="documentos.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ayudas.cs" />
     <Compile Include="Model\dispositivos_bloqueados.cs" />
     <Compile Include="Model\grupos.cs" />
@@ -85,6 +91,9 @@
     <Compile Include="NAVISION\NAVISION.cs" />
     <Compile Include="OPTRACKER\ModelOPT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="proyectos.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Proyectos_Connext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -103,7 +112,13 @@
     <Compile Include="proyectos_estatus.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proyectos_evaluaciones.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="proyectos_periodos.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="riesgos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="riesgos_estatus.cs">

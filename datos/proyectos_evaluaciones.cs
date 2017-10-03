@@ -12,22 +12,27 @@ namespace datos
     using System;
     using System.Collections.Generic;
     
-    public partial class proyectos_periodos
+    public partial class proyectos_evaluaciones
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public proyectos_periodos()
+        public proyectos_evaluaciones()
         {
-            this.proyectos = new HashSet<proyectos>();
+            this.riesgos = new HashSet<riesgos>();
         }
     
-        public int id_proyecto_periodo { get; set; }
-        public string nombre { get; set; }
-        public byte dias { get; set; }
+        public int id_proyecto_evaluacion { get; set; }
+        public int id_proyecto { get; set; }
+        public System.DateTime fecha_evaluacion { get; set; }
         public System.DateTime fecha { get; set; }
         public string usuario { get; set; }
-        public bool activo { get; set; }
+        public Nullable<System.DateTime> fecha_borrado { get; set; }
+        public string usuario_edicion { get; set; }
+        public Nullable<System.DateTime> fecha_edicion { get; set; }
+        public string usuario_borrado { get; set; }
+        public string comentarios_borrado { get; set; }
     
+        public virtual proyectos proyectos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<proyectos> proyectos { get; set; }
+        public virtual ICollection<riesgos> riesgos { get; set; }
     }
 }

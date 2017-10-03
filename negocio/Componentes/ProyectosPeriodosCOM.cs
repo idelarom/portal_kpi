@@ -60,7 +60,7 @@ namespace negocio.Componentes
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                 proyectos_periodos periodo = context.proyectos_periodos
-                                .First(i => i.id_proyecto_perido == entidad.id_proyecto_perido);
+                                .First(i => i.id_proyecto_periodo == entidad.id_proyecto_periodo);
                 periodo.nombre = entidad.nombre;
                 periodo.dias = entidad.dias;
                 context.SaveChanges();
@@ -81,13 +81,13 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Eliminar(int id_proyecto_perido)
+        public string Eliminar(int id_proyecto_periodo)
         {
             try
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                 proyectos_periodos periodo = context.proyectos_periodos
-                                .First(i => i.id_proyecto_perido == id_proyecto_perido);
+                                .First(i => i.id_proyecto_periodo == id_proyecto_periodo);
                 periodo.activo = false;
                 context.SaveChanges();
                 return "";
@@ -117,9 +117,9 @@ namespace negocio.Componentes
                                 .Where(s => s.nombre.ToUpper() == nombre.ToUpper() && s.activo)
                                 .Select(u => new
                                 {
-                                    u.id_proyecto_perido
+                                    u.id_proyecto_periodo
                                 })
-                                .OrderBy(u => u.id_proyecto_perido);
+                                .OrderBy(u => u.id_proyecto_periodo);
                 dt = To.DataTable(query.ToList());
                 return dt.Rows.Count > 0;
             }
@@ -136,15 +136,15 @@ namespace negocio.Componentes
         /// <summary>
         /// Devuelve una instancia de la clase proyectos_periodos
         /// </summary>
-        /// <param name="id_proyecto_perido"></param>
+        /// <param name="id_proyecto_periodo"></param>
         /// <returns></returns>
-        public proyectos_periodos proyectos_periodo(int id_proyecto_perido)
+        public proyectos_periodos proyectos_periodo(int id_proyecto_periodo)
         {
             try
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                 proyectos_periodos proyectos_periodo = context.proyectos_periodos
-                                .First(i => i.id_proyecto_perido == id_proyecto_perido);
+                                .First(i => i.id_proyecto_periodo == id_proyecto_periodo);
                 return proyectos_periodo;
             }
             catch (DbEntityValidationException ex)
@@ -172,7 +172,7 @@ namespace negocio.Componentes
                                 .Where(s => s.activo)
                                 .Select(u => new
                                 {
-                                    u.id_proyecto_perido,
+                                    u.id_proyecto_periodo,
                                     u.nombre,
                                     u.dias,
                                     u.activo,

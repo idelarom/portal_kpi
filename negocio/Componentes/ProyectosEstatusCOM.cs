@@ -61,7 +61,7 @@ namespace negocio.Componentes
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                 proyectos_estatus estatus = context.proyectos_estatus
-                                .First(i => i.id_proyectos_estatus == entidad.id_proyectos_estatus);
+                                .First(i => i.id_proyecto_estatus == entidad.id_proyecto_estatus);
                 estatus.estatus = entidad.estatus;
                 context.SaveChanges();
                 return "";
@@ -81,13 +81,13 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Eliminar(int id_proyectos_estatus)
+        public string Eliminar(int id_proyecto_estatus)
         {
             try
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                 proyectos_estatus periodo = context.proyectos_estatus
-                                .First(i => i.id_proyectos_estatus == id_proyectos_estatus);
+                                .First(i => i.id_proyecto_estatus == id_proyecto_estatus);
                 periodo.activo = false;
                 context.SaveChanges();
                 return "";
@@ -117,9 +117,9 @@ namespace negocio.Componentes
                                 .Where(s => s.estatus.ToUpper() == estatus.ToUpper() && s.activo)
                                 .Select(u => new
                                 {
-                                    u.id_proyectos_estatus
+                                    u.id_proyecto_estatus
                                 })
-                                .OrderBy(u => u.id_proyectos_estatus);
+                                .OrderBy(u => u.id_proyecto_estatus);
                 dt = To.DataTable(query.ToList());
                 return dt.Rows.Count > 0;
             }
@@ -138,13 +138,13 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="id_proyecto_perido"></param>
         /// <returns></returns>
-        public proyectos_estatus estatus(int id_proyectos_estatus)
+        public proyectos_estatus estatus(int id_proyecto_estatus)
         {
             try
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                 proyectos_estatus estatus = context.proyectos_estatus
-                                .First(i => i.id_proyectos_estatus == id_proyectos_estatus);
+                                .First(i => i.id_proyecto_estatus == id_proyecto_estatus);
                 return estatus;
             }
             catch (DbEntityValidationException ex)
@@ -172,7 +172,7 @@ namespace negocio.Componentes
                                 .Where(s => s.activo)
                                 .Select(u => new
                                 {
-                                    u.id_proyectos_estatus,
+                                    u.id_proyecto_estatus,
                                     u.estatus,
                                     u.activo ,
                                     u.fecha,
