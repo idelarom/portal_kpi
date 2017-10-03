@@ -987,6 +987,7 @@ namespace presentacion
             if (!IsPostBack)
             {
                 CargarDatosFiltros("");
+                lnkfiltros_Click(null, null);
             }
         }
 

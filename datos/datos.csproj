@@ -118,6 +118,9 @@
     <Compile Include="proyectos_periodos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proyectos_tecnologias.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="riesgos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
@@ -134,12 +137,6 @@
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="riesgos_probabilidad.cs">
-      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
   </ItemGroup>

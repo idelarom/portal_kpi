@@ -37,7 +37,8 @@ namespace presentacion
                 rdpfechafinal.SelectedDate = DateTime.Today;
                 hdfsessionid.Value = Guid.NewGuid().ToString();
                 ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
-                CargarDatosFiltros(""); if (Request.QueryString["filter"] != null)
+                CargarDatosFiltros("");
+                if (Request.QueryString["filter"] != null)
                 {
                     lnkfiltros_Click(null, null);
                     string num_empleado = Convert.ToString(Session["num_empleado"]);
@@ -48,6 +49,12 @@ namespace presentacion
                         ddlempleado_a_consultar_SelectedIndexChanged(null, null);
                         lnkagregartodos_Click(null, null);
                     }
+                }
+                //momentaneo mientras se aprueba configuracion
+                else
+                {
+
+                    lnkfiltros_Click(null, null);
                 }
             }
         }
