@@ -44,12 +44,12 @@ namespace presentacion
                 ProyectosCOM Proyectos = new ProyectosCOM();
                 dt = Proyectos.SelectAll(num_empleado, ver_Todos_los_empleados, 1);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 dt = new DataTable();
             }
             return dt;
-        }
+        }     
 
         private proyectos GetProyectoEstatus(int id_proyecto)
         {
@@ -76,7 +76,61 @@ namespace presentacion
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar catalogo: " + ex.Message, this);
+                Toast.Error("Error al cargar proyectos: " + ex.Message, this);
+            }
+        }
+
+        private void Cargarddlperiodo()
+        {
+            try
+            {
+                ProyectosPeriodosCOM periodo = new ProyectosPeriodosCOM();
+                DataTable dt_periodos = new DataTable();
+                dt_periodos = periodo.SelectAll();
+                ddlperiodo.DataValueField = "id_proyecto_periodo";
+                ddlperiodo.DataTextField = "nombre";
+                ddlperiodo.DataSource = dt_periodos;
+                ddlperiodo.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar combo de periodos: " + ex.Message, this);
+            }
+        }
+
+        private void Cargarddlestatus()
+        {
+            try
+            {
+                ProyectosEstatusCOM estatus = new ProyectosEstatusCOM();
+                DataTable dt_estatus = new DataTable();
+                dt_estatus = estatus.SelectAll();
+                ddlestatus.DataValueField = "id_proyecto_estatus";
+                ddlestatus.DataTextField = "estatus";
+                ddlestatus.DataSource = dt_estatus;
+                ddlestatus.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar combo de estatus : " + ex.Message, this);
+            }
+        }
+
+        private void Cargarddltegnologia()
+        {
+            try
+            {
+                ProyectosTecnologiasCOM tegnologia = new ProyectosTecnologiasCOM();
+                DataTable dt_tegnologia = new DataTable();
+                dt_tegnologia = tegnologia.SelectAll();
+                ddltegnologia.DataValueField = "id_proyecto_tecnologia";
+                ddltegnologia.DataTextField = "nombre";
+                ddltegnologia.DataSource = dt_tegnologia;
+                ddltegnologia.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar combo de tegnologias : " + ex.Message, this);
             }
         }
 
@@ -111,6 +165,9 @@ namespace presentacion
             ddlestatus.SelectedIndex = 0;
             txtcveop.Text = "";
             txtfolopmt.Text = "";
+            Cargarddlperiodo();
+            Cargarddlestatus();
+            Cargarddltegnologia();
             ModalShow("#ModalCapturaProyectos");
         }
 
