@@ -76,22 +76,22 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.DropDownList ddlestatus;
         
         /// <summary>
-        /// Control CheckBox3.
+        /// Control txtcveop.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox3;
+        protected global::System.Web.UI.WebControls.TextBox txtcveop;
         
         /// <summary>
-        /// Control CheckBox4.
+        /// Control txtfolopmt.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox4;
+        protected global::System.Web.UI.WebControls.TextBox txtfolopmt;
         
         /// <summary>
         /// Control ddltegnologia.

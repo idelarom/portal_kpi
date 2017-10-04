@@ -124,7 +124,7 @@ namespace presentacion
         {
             txtnombre.Text = "";
             txtporcentaje.Text = "";
-            chkactivo.Checked = false;
+            chkactivo.Checked = false;            
             ModalShow("#ModalImpactotiempo");
         }
 
@@ -158,7 +158,8 @@ namespace presentacion
                     {
                         txtnombre.Text = "";
                         txtporcentaje.Text = "";
-                        chkactivo.Checked = false;
+                        chkactivo.Checked = true;
+                        hdfid_riesgo_impacto_tiempo.Value = "";
                         CargarCatalogo();
                         Toast.Success("impacto tiempo agregado correctamente.", "Mensaje del sistema", this);
                     }

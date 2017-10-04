@@ -75,7 +75,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="box box-danger">
-                <div class="box-body"><asp:LinkButton ID="lnknuevoproyecto" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevoproyectoestatus_Click">
+                <div class="box-body"><asp:LinkButton ID="lnknuevoproyecto" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevoproyecto_Click">
                 Nuevo proyecto&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
             </asp:LinkButton>
                     <div class="table-responsive">
@@ -132,7 +132,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="lnknuevoproyectoestatus" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="lnknuevoproyecto" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btneventgrid" EventName="Click" />
                     <asp:PostBackTrigger ControlID="lnkguardar" />
                 </Triggers>
@@ -162,12 +162,12 @@
                                     <asp:DropDownList ID="ddlestatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                                  <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Oportunidad</strong></h5>
-                                    <asp:CheckBox ID="CheckBox3" runat="server" Checked="true" Visible="false" text="Activo"/>
+                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
+                                    <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
-                                    <asp:CheckBox ID="CheckBox4" runat="server" Checked="true" Visible="false" text="Activo"/>
+                                    <asp:TextBox ID="txtfolopmt" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Tegnoligia</strong></h5>
