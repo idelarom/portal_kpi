@@ -51,7 +51,7 @@ namespace presentacion
             return dt;
         }     
 
-        private proyectos GetProyectoEstatus(int id_proyecto)
+        private proyectos GetProyecto(int id_proyecto)
         {
             proyectos dt = new proyectos();
             try
@@ -178,7 +178,29 @@ namespace presentacion
 
         protected void btneventgrid_Click(object sender, EventArgs e)
         {
-
+            try
+            {            
+                int id_proyecto = Convert.ToInt32(hdfid_proyecto.Value == "" ? "0" : hdfid_proyecto.Value);
+                if (id_proyecto > 0)
+                {
+                    proyectos proyecto = GetProyecto(id_proyecto);
+                    if (proyecto != null)
+                    {
+                        txtnombreproyecto.Text = proyecto.proyecto;
+                        txtdescripcion.Text = proyecto.descripcion;
+                        ddlperiodo.SelectedValue= proyecto.id_proyecto_periodo.ToString();
+                        ddlestatus.SelectedValue = proyecto.id_proyecto_estatus.ToString();
+                        txtcveop.Text = proyecto.cveoport.ToString();
+                        txtfolopmt.Text = proyecto.folio_pmt;
+                        ddltegnologia.SelectedValue = proyecto.id_proyecto_tecnologia.ToString();
+                        ModalShow("#ModalProyectoestatus");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar estatus : " + ex.Message, this);
+            }
         }
 
         protected void btneliminar_Click(object sender, EventArgs e)
