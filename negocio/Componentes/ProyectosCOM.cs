@@ -1,5 +1,6 @@
 ﻿using datos;
 using datos.NAVISION;
+using negocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -309,9 +310,15 @@ namespace negocio.Componentes
                 bool no_activos = false;
                 DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
                 DataTable dt_empleados_subordinados = ds.Tables[0];
+                List<EmpleadoSubordinados> list_emp = new List<EmpleadoSubordinados>();
+                foreach (DataRow row in dt_empleados_subordinados.Rows)
+                {
+                    EmpleadoSubordinados empleado = new EmpleadoSubordinados();
+                    empleado.Usuario = row["usuario"].ToString().ToUpper();
+                    list_emp.Add(empleado);
+                }
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
                 var proyectos = (from p in db.proyectos
-                                 join emp in dt_empleados_subordinados.AsEnumerable() on p.usuario.ToUpper() equals emp.Field<string>("usuario").ToUpper()
                                  join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
                                  join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
@@ -334,8 +341,27 @@ namespace negocio.Componentes
                                      p.fecha_inicio,
                                      p.fecha_fin
                                  }).ToArray();
+                var tproyectos = (from p in proyectos
+                                  join emp in list_emp on p.usuario.ToUpper() equals emp.Usuario
+                                  select new {
+                                      p.usuario,
+                                      p.id_proyecto,
+                                      p.id_proyecto_estatus,
+                                      p.estatus,
+                                      p.id_proyecto_periodo,
+                                      p.periodo,
+                                      p.cveoport,
+                                      p.folio_pmt,
+                                      p.proyecto,
+                                      p.descripcion,
+                                      p.fecha_registro,
+                                      p.fecha_inicio,
+                                      p.fecha_fin,
+                                      p.id_proyecto_tecnologia,
+                                      p.tecnologia
+                                  });
                 NAVISION dbnavision = new NAVISION();
-                var results = from p in proyectos
+                var results = from p in tproyectos
                               join up in dbnavision.Employee on p.usuario.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
                               select new
                               {

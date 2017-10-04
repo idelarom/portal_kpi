@@ -81,6 +81,7 @@
     <Compile Include="Componentes\WidgetsCOM.cs" />
     <Compile Include="Entidades\Appointment.cs" />
     <Compile Include="Entidades\ArbolInvolucrados.cs" />
+    <Compile Include="Entidades\EmpleadoSubordinados.cs" />
     <Compile Include="Entidades\Event.cs" />
     <Compile Include="Entidades\SiteDataItem.cs" />
     <Compile Include="Entidades\UsuariosENT.cs" />
