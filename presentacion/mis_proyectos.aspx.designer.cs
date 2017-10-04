@@ -13,22 +13,22 @@ namespace presentacion {
     public partial class mis_proyectos {
         
         /// <summary>
-        /// Control lnknuevoproyectoestatus.
+        /// Control lnknuevoproyecto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnknuevoproyectoestatus;
+        protected global::System.Web.UI.WebControls.LinkButton lnknuevoproyecto;
         
         /// <summary>
-        /// Control repeat_proyectoestatus.
+        /// Control repeat_proyectos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeat_proyectoestatus;
+        protected global::System.Web.UI.WebControls.Repeater repeat_proyectos;
         
         /// <summary>
         /// Control UpdatePanel15.
@@ -40,22 +40,67 @@ namespace presentacion {
         protected global::System.Web.UI.UpdatePanel UpdatePanel15;
         
         /// <summary>
-        /// Control txtestatus.
+        /// Control txtnombreproyecto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtestatus;
+        protected global::System.Web.UI.WebControls.TextBox txtnombreproyecto;
         
         /// <summary>
-        /// Control chkactivo.
+        /// Control txtdescripcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkactivo;
+        protected global::System.Web.UI.WebControls.TextBox txtdescripcion;
+        
+        /// <summary>
+        /// Control ddlperiodo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlperiodo;
+        
+        /// <summary>
+        /// Control ddlestatus.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlestatus;
+        
+        /// <summary>
+        /// Control txtcveop.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtcveop;
+        
+        /// <summary>
+        /// Control txtfolopmt.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtfolopmt;
+        
+        /// <summary>
+        /// Control ddltegnologia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddltegnologia;
         
         /// <summary>
         /// Control lnkcargando.
@@ -103,12 +148,12 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.HiddenField hdfcommand;
         
         /// <summary>
-        /// Control hdfid_proyecto_estatus.
+        /// Control hdfid_proyecto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfid_proyecto_estatus;
+        protected global::System.Web.UI.WebControls.HiddenField hdfid_proyecto;
     }
 }

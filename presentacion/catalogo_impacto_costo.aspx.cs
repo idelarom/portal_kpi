@@ -124,8 +124,8 @@ namespace presentacion
         {
             txtnombre.Text = "";
             txtporcentaje.Text = "";
-            chkactivo.Checked = false;
-            ModalShow("#ModalImpactotiempo");
+            chkactivo.Checked = true;
+            ModalShow("#ModalImpactocosto");
         }
 
         protected void lnkguardar_Click(object sender, EventArgs e)
@@ -158,7 +158,8 @@ namespace presentacion
                     {
                         txtnombre.Text = "";
                         txtporcentaje.Text = "";
-                        chkactivo.Checked = false;
+                        hdfid_riesgo_impacto_costo.Value = "";
+                        chkactivo.Checked = true;
                         CargarCatalogo();
                         Toast.Success("impacto tiempo agregado correctamente.", "Mensaje del sistema", this);
                     }
