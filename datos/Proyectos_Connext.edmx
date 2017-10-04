@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="actividades">
           <Key>
             <PropertyRef Name="id_actividad" />
@@ -50,6 +50,7 @@
             <PropertyRef Name="id_proyecto" />
           </Key>
           <Property Name="id_proyecto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_proyecto_tecnologia" Type="int" Nullable="false" />
           <Property Name="id_proyecto_periodo" Type="int" Nullable="false" />
           <Property Name="id_proyecto_estatus" Type="int" />
           <Property Name="cveoport" Type="int" />
@@ -113,6 +114,16 @@
           <Property Name="fecha" Type="datetime" Nullable="false" />
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="proyectos_tecnologias">
+          <Key>
+            <PropertyRef Name="id_proyecto_tecnologia" />
+          </Key>
+          <Property Name="id_proyecto_tecnologia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="riesgos">
           <Key>
@@ -264,6 +275,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_proyectos_proyectos_tecnologias">
+          <End Role="proyectos_tecnologias" Type="Self.proyectos_tecnologias" Multiplicity="1" />
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos_tecnologias">
+              <PropertyRef Name="id_proyecto_tecnologia" />
+            </Principal>
+            <Dependent Role="proyectos">
+              <PropertyRef Name="id_proyecto_tecnologia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_riesgos_proyectos_evaluaciones">
           <End Role="proyectos_evaluaciones" Type="Self.proyectos_evaluaciones" Multiplicity="1" />
           <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
@@ -336,37 +359,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Proyectos_ConnextModelStoreContainer">
           <EntitySet Name="actividades" EntityType="Self.actividades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="documentos" EntityType="Self.documentos" Schema="dbo" store:Type="Tables" />
@@ -374,6 +366,7 @@
           <EntitySet Name="proyectos_estatus" EntityType="Self.proyectos_estatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_evaluaciones" EntityType="Self.proyectos_evaluaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_periodos" EntityType="Self.proyectos_periodos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proyectos_tecnologias" EntityType="Self.proyectos_tecnologias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos" EntityType="Self.riesgos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos_estatus" EntityType="Self.riesgos_estatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos_estrategia" EntityType="Self.riesgos_estrategia" Schema="dbo" store:Type="Tables" />
@@ -404,6 +397,10 @@
             <End Role="proyectos_periodos" EntitySet="proyectos_periodos" />
             <End Role="proyectos" EntitySet="proyectos" />
           </AssociationSet>
+          <AssociationSet Name="FK_proyectos_proyectos_tecnologias" Association="Self.FK_proyectos_proyectos_tecnologias">
+            <End Role="proyectos_tecnologias" EntitySet="proyectos_tecnologias" />
+            <End Role="proyectos" EntitySet="proyectos" />
+          </AssociationSet>
           <AssociationSet Name="FK_riesgos_proyectos_evaluaciones" Association="Self.FK_riesgos_proyectos_evaluaciones">
             <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
             <End Role="riesgos" EntitySet="riesgos" />
@@ -429,15 +426,60 @@
             <End Role="riesgos" EntitySet="riesgos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Proyectos_ConnextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="actividades">
+          <Key>
+            <PropertyRef Name="id_actividad" />
+          </Key>
+          <Property Name="id_actividad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyecto" Type="Int32" />
+          <Property Name="id_riesgo" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usuario_resp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_ejecucion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_asignacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="proyectos" Relationship="Self.FK_actividades_proyectos" FromRole="actividades" ToRole="proyectos" />
+          <NavigationProperty Name="riesgos" Relationship="Self.FK_actividades_riesgos" FromRole="actividades" ToRole="riesgos" />
+        </EntityType>
+        <EntityType Name="documentos">
+          <Key>
+            <PropertyRef Name="id_documento" />
+          </Key>
+          <Property Name="id_documento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyecto" Type="Int32" />
+          <Property Name="id_actividad" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contentType" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="extension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tamaño" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="publico" Type="Boolean" Nullable="false" />
+          <Property Name="path" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="proyectos" Relationship="Self.FK_documentos_proyectos" FromRole="documentos" ToRole="proyectos" />
+        </EntityType>
         <EntityType Name="proyectos">
           <Key>
             <PropertyRef Name="id_proyecto" />
           </Key>
           <Property Name="id_proyecto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyecto_tecnologia" Type="Int32" Nullable="false" />
           <Property Name="id_proyecto_periodo" Type="Int32" Nullable="false" />
           <Property Name="id_proyecto_estatus" Type="Int32" />
           <Property Name="cveoport" Type="Int32" />
@@ -465,11 +507,12 @@
           <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="actividades" Relationship="Self.FK_actividades_proyectos" FromRole="proyectos" ToRole="actividades" />
+          <NavigationProperty Name="documentos" Relationship="Self.FK_documentos_proyectos" FromRole="proyectos" ToRole="documentos" />
+          <NavigationProperty Name="proyectos_evaluaciones" Relationship="Self.FK_proyectos_evaluaciones_proyectos" FromRole="proyectos" ToRole="proyectos_evaluaciones" />
           <NavigationProperty Name="proyectos_estatus" Relationship="Self.FK_proyectos_proyectos_estatus" FromRole="proyectos" ToRole="proyectos_estatus" />
           <NavigationProperty Name="proyectos_periodos" Relationship="Self.FK_proyectos_proyectos_periodos1" FromRole="proyectos" ToRole="proyectos_periodos" />
-          <NavigationProperty Name="actividades" Relationship="Proyectos_ConnextModel.FK_actividades_proyectos" FromRole="proyectos" ToRole="actividades" />
-          <NavigationProperty Name="documentos" Relationship="Proyectos_ConnextModel.FK_documentos_proyectos" FromRole="proyectos" ToRole="documentos" />
-          <NavigationProperty Name="proyectos_evaluaciones" Relationship="Proyectos_ConnextModel.FK_proyectos_evaluaciones_proyectos" FromRole="proyectos" ToRole="proyectos_evaluaciones" />
+          <NavigationProperty Name="proyectos_tecnologias" Relationship="Self.FK_proyectos_proyectos_tecnologias" FromRole="proyectos" ToRole="proyectos_tecnologias" />
         </EntityType>
         <EntityType Name="proyectos_estatus">
           <Key>
@@ -481,6 +524,23 @@
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_proyectos_estatus" FromRole="proyectos_estatus" ToRole="proyectos" />
+        </EntityType>
+        <EntityType Name="proyectos_evaluaciones">
+          <Key>
+            <PropertyRef Name="id_proyecto_evaluacion" />
+          </Key>
+          <Property Name="id_proyecto_evaluacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyecto" Type="Int32" Nullable="false" />
+          <Property Name="fecha_evaluacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_evaluaciones_proyectos" FromRole="proyectos_evaluaciones" ToRole="proyectos" />
+          <NavigationProperty Name="riesgos" Relationship="Self.FK_riesgos_proyectos_evaluaciones" FromRole="proyectos_evaluaciones" ToRole="riesgos" />
         </EntityType>
         <EntityType Name="proyectos_periodos">
           <Key>
@@ -494,16 +554,59 @@
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_proyectos_periodos1" FromRole="proyectos_periodos" ToRole="proyectos" />
         </EntityType>
+        <EntityType Name="proyectos_tecnologias">
+          <Key>
+            <PropertyRef Name="id_proyecto_tecnologia" />
+          </Key>
+          <Property Name="id_proyecto_tecnologia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_proyectos_tecnologias" FromRole="proyectos_tecnologias" ToRole="proyectos" />
+        </EntityType>
+        <EntityType Name="riesgos">
+          <Key>
+            <PropertyRef Name="id_riesgo" />
+          </Key>
+          <Property Name="id_riesgo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyecto_evaluacion" Type="Int32" Nullable="false" />
+          <Property Name="id_riesgos_estatus" Type="Int32" Nullable="false" />
+          <Property Name="riesgo" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_riesgo_probabilidad" Type="Int32" Nullable="false" />
+          <Property Name="porc_probabilidad" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="id_riesgo_impacto_costo" Type="Int32" Nullable="false" />
+          <Property Name="porc_impcosto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="id_riesgo_impacto_tiempo" Type="Int32" Nullable="false" />
+          <Property Name="porc_imptiempo" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="riesgo_costo" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="riesgo_tiempo" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="id_riesgo_estrategia" Type="Int32" Nullable="false" />
+          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="actividades" Relationship="Self.FK_actividades_riesgos" FromRole="riesgos" ToRole="actividades" />
+          <NavigationProperty Name="proyectos_evaluaciones" Relationship="Self.FK_riesgos_proyectos_evaluaciones" FromRole="riesgos" ToRole="proyectos_evaluaciones" />
+          <NavigationProperty Name="riesgos_estatus" Relationship="Self.FK_riesgos_riesgos_estatus" FromRole="riesgos" ToRole="riesgos_estatus" />
+          <NavigationProperty Name="riesgos_estrategia" Relationship="Self.FK_riesgos_riesgos_estrategia" FromRole="riesgos" ToRole="riesgos_estrategia" />
+          <NavigationProperty Name="riesgos_impacto_costo" Relationship="Self.FK_riesgos_riesgos_impacto_costo" FromRole="riesgos" ToRole="riesgos_impacto_costo" />
+          <NavigationProperty Name="riesgos_impacto_tiempo" Relationship="Self.FK_riesgos_riesgos_impacto_tiempo" FromRole="riesgos" ToRole="riesgos_impacto_tiempo" />
+          <NavigationProperty Name="riesgos_probabilidad" Relationship="Self.FK_riesgos_riesgos_probabilidad" FromRole="riesgos" ToRole="riesgos_probabilidad" />
+        </EntityType>
         <EntityType Name="riesgos_estatus">
           <Key>
             <PropertyRef Name="id_riesgos_estatus" />
           </Key>
-          <Property Name="id_riesgos_estatus" Type="Int32" Nullable="false" />
+          <Property Name="id_riesgos_estatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="estatus" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="riesgos" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_estatus" FromRole="riesgos_estatus" ToRole="riesgos" />
+          <NavigationProperty Name="riesgos" Relationship="Self.FK_riesgos_riesgos_estatus" FromRole="riesgos_estatus" ToRole="riesgos" />
         </EntityType>
         <EntityType Name="riesgos_estrategia">
           <Key>
@@ -514,7 +617,7 @@
           <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="riesgos" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_estrategia" FromRole="riesgos_estrategia" ToRole="riesgos" />
+          <NavigationProperty Name="riesgos" Relationship="Self.FK_riesgos_riesgos_estrategia" FromRole="riesgos_estrategia" ToRole="riesgos" />
         </EntityType>
         <EntityType Name="riesgos_impacto_costo">
           <Key>
@@ -526,7 +629,7 @@
           <Property Name="porcentaje" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="riesgos" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_costo" FromRole="riesgos_impacto_costo" ToRole="riesgos" />
+          <NavigationProperty Name="riesgos" Relationship="Self.FK_riesgos_riesgos_impacto_costo" FromRole="riesgos_impacto_costo" ToRole="riesgos" />
         </EntityType>
         <EntityType Name="riesgos_impacto_tiempo">
           <Key>
@@ -538,7 +641,7 @@
           <Property Name="porcentaje" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="riesgos" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_tiempo" FromRole="riesgos_impacto_tiempo" ToRole="riesgos" />
+          <NavigationProperty Name="riesgos" Relationship="Self.FK_riesgos_riesgos_impacto_tiempo" FromRole="riesgos_impacto_tiempo" ToRole="riesgos" />
         </EntityType>
         <EntityType Name="riesgos_probabilidad">
           <Key>
@@ -550,8 +653,56 @@
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="riesgos" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_probabilidad" FromRole="riesgos_probabilidad" ToRole="riesgos" />
+          <NavigationProperty Name="riesgos" Relationship="Self.FK_riesgos_riesgos_probabilidad" FromRole="riesgos_probabilidad" ToRole="riesgos" />
         </EntityType>
+        <Association Name="FK_actividades_proyectos">
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="0..1" />
+          <End Role="actividades" Type="Self.actividades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos">
+              <PropertyRef Name="id_proyecto" />
+            </Principal>
+            <Dependent Role="actividades">
+              <PropertyRef Name="id_proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_actividades_riesgos">
+          <End Role="riesgos" Type="Self.riesgos" Multiplicity="0..1" />
+          <End Role="actividades" Type="Self.actividades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="riesgos">
+              <PropertyRef Name="id_riesgo" />
+            </Principal>
+            <Dependent Role="actividades">
+              <PropertyRef Name="id_riesgo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_documentos_proyectos">
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="0..1" />
+          <End Role="documentos" Type="Self.documentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos">
+              <PropertyRef Name="id_proyecto" />
+            </Principal>
+            <Dependent Role="documentos">
+              <PropertyRef Name="id_proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_evaluaciones_proyectos">
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="1" />
+          <End Role="proyectos_evaluaciones" Type="Self.proyectos_evaluaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos">
+              <PropertyRef Name="id_proyecto" />
+            </Principal>
+            <Dependent Role="proyectos_evaluaciones">
+              <PropertyRef Name="id_proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_proyectos_proyectos_estatus">
           <End Role="proyectos_estatus" Type="Self.proyectos_estatus" Multiplicity="0..1" />
           <End Role="proyectos" Type="Self.proyectos" Multiplicity="*" />
@@ -576,252 +727,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Proyectos_ConnextEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="proyectos" EntityType="Self.proyectos" />
-          <EntitySet Name="proyectos_estatus" EntityType="Self.proyectos_estatus" />
-          <EntitySet Name="proyectos_periodos" EntityType="Self.proyectos_periodos" />
-          <EntitySet Name="riesgos_estatus" EntityType="Self.riesgos_estatus" />
-          <EntitySet Name="riesgos_estrategia" EntityType="Self.riesgos_estrategia" />
-          <EntitySet Name="riesgos_impacto_costo" EntityType="Self.riesgos_impacto_costo" />
-          <EntitySet Name="riesgos_impacto_tiempo" EntityType="Self.riesgos_impacto_tiempo" />
-          <EntitySet Name="riesgos_probabilidad" EntityType="Self.riesgos_probabilidad" />
-          <AssociationSet Name="FK_proyectos_proyectos_estatus" Association="Self.FK_proyectos_proyectos_estatus">
-            <End Role="proyectos_estatus" EntitySet="proyectos_estatus" />
-            <End Role="proyectos" EntitySet="proyectos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proyectos_proyectos_periodos1" Association="Self.FK_proyectos_proyectos_periodos1">
-            <End Role="proyectos_periodos" EntitySet="proyectos_periodos" />
-            <End Role="proyectos" EntitySet="proyectos" />
-          </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Proyectos_ConnextModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Proyectos_ConnextModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="actividades" EntityType="Proyectos_ConnextModel.actividades" />
-          <EntitySet Name="documentos" EntityType="Proyectos_ConnextModel.documentos" />
-          <EntitySet Name="proyectos_evaluaciones" EntityType="Proyectos_ConnextModel.proyectos_evaluaciones" />
-          <EntitySet Name="riesgos" EntityType="Proyectos_ConnextModel.riesgos" />
-          <AssociationSet Name="FK_actividades_proyectos" Association="Proyectos_ConnextModel.FK_actividades_proyectos">
-            <End Role="proyectos" EntitySet="proyectos" />
-            <End Role="actividades" EntitySet="actividades" />
-          </AssociationSet>
-          <AssociationSet Name="FK_actividades_riesgos" Association="Proyectos_ConnextModel.FK_actividades_riesgos">
-            <End Role="riesgos" EntitySet="riesgos" />
-            <End Role="actividades" EntitySet="actividades" />
-          </AssociationSet>
-          <AssociationSet Name="FK_documentos_proyectos" Association="Proyectos_ConnextModel.FK_documentos_proyectos">
-            <End Role="proyectos" EntitySet="proyectos" />
-            <End Role="documentos" EntitySet="documentos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proyectos_evaluaciones_proyectos" Association="Proyectos_ConnextModel.FK_proyectos_evaluaciones_proyectos">
-            <End Role="proyectos" EntitySet="proyectos" />
-            <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
-          </AssociationSet>
-          <AssociationSet Name="FK_riesgos_proyectos_evaluaciones" Association="Proyectos_ConnextModel.FK_riesgos_proyectos_evaluaciones">
-            <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
-            <End Role="riesgos" EntitySet="riesgos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_riesgos_riesgos_estatus" Association="Proyectos_ConnextModel.FK_riesgos_riesgos_estatus">
-            <End Role="riesgos_estatus" EntitySet="riesgos_estatus" />
-            <End Role="riesgos" EntitySet="riesgos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_riesgos_riesgos_estrategia" Association="Proyectos_ConnextModel.FK_riesgos_riesgos_estrategia">
-            <End Role="riesgos_estrategia" EntitySet="riesgos_estrategia" />
-            <End Role="riesgos" EntitySet="riesgos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_riesgos_riesgos_impacto_costo" Association="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_costo">
-            <End Role="riesgos_impacto_costo" EntitySet="riesgos_impacto_costo" />
-            <End Role="riesgos" EntitySet="riesgos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_riesgos_riesgos_impacto_tiempo" Association="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_tiempo">
-            <End Role="riesgos_impacto_tiempo" EntitySet="riesgos_impacto_tiempo" />
-            <End Role="riesgos" EntitySet="riesgos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_riesgos_riesgos_probabilidad" Association="Proyectos_ConnextModel.FK_riesgos_riesgos_probabilidad">
-            <End Role="riesgos_probabilidad" EntitySet="riesgos_probabilidad" />
-            <End Role="riesgos" EntitySet="riesgos" />
-          </AssociationSet>
-        </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
-        <EntityType Name="actividades">
-          <Key>
-            <PropertyRef Name="id_actividad" />
-          </Key>
-          <Property Name="id_actividad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_proyecto" Type="Int32" />
-          <Property Name="id_riesgo" Type="Int32" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="usuario_resp" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_ejecucion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="fecha_asignacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
-          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
-          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="proyectos" Relationship="Proyectos_ConnextModel.FK_actividades_proyectos" FromRole="actividades" ToRole="proyectos" />
-          <NavigationProperty Name="riesgos" Relationship="Proyectos_ConnextModel.FK_actividades_riesgos" FromRole="actividades" ToRole="riesgos" />
-        </EntityType>
-        <EntityType Name="documentos">
-          <Key>
-            <PropertyRef Name="id_documento" />
-          </Key>
-          <Property Name="id_documento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_proyecto" Type="Int32" />
-          <Property Name="id_actividad" Type="Int32" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="contentType" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="extension" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="tamaño" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="publico" Type="Boolean" Nullable="false" />
-          <Property Name="path" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
-          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="proyectos" Relationship="Proyectos_ConnextModel.FK_documentos_proyectos" FromRole="documentos" ToRole="proyectos" />
-        </EntityType>
-        <EntityType Name="proyectos_evaluaciones">
-          <Key>
-            <PropertyRef Name="id_proyecto_evaluacion" />
-          </Key>
-          <Property Name="id_proyecto_evaluacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_proyecto" Type="Int32" Nullable="false" />
-          <Property Name="fecha_evaluacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
-          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
-          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="proyectos" Relationship="Proyectos_ConnextModel.FK_proyectos_evaluaciones_proyectos" FromRole="proyectos_evaluaciones" ToRole="proyectos" />
-          <NavigationProperty Name="riesgos" Relationship="Proyectos_ConnextModel.FK_riesgos_proyectos_evaluaciones" FromRole="proyectos_evaluaciones" ToRole="riesgos" />
-        </EntityType>
-        <EntityType Name="riesgos">
-          <Key>
-            <PropertyRef Name="id_riesgo" />
-          </Key>
-          <Property Name="id_riesgo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_proyecto_evaluacion" Type="Int32" Nullable="false" />
-          <Property Name="id_riesgos_estatus" Type="Int32" Nullable="false" />
-          <Property Name="riesgo" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
-          <Property Name="id_riesgo_probabilidad" Type="Int32" Nullable="false" />
-          <Property Name="porc_probabilidad" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="id_riesgo_impacto_costo" Type="Int32" Nullable="false" />
-          <Property Name="porc_impcosto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="id_riesgo_impacto_tiempo" Type="Int32" Nullable="false" />
-          <Property Name="porc_imptiempo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="riesgo_costo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="riesgo_tiempo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="id_riesgo_estrategia" Type="Int32" Nullable="false" />
-          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
-          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
-          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="actividades" Relationship="Proyectos_ConnextModel.FK_actividades_riesgos" FromRole="riesgos" ToRole="actividades" />
-          <NavigationProperty Name="proyectos_evaluaciones" Relationship="Proyectos_ConnextModel.FK_riesgos_proyectos_evaluaciones" FromRole="riesgos" ToRole="proyectos_evaluaciones" />
-          <NavigationProperty Name="riesgos_estatus" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_estatus" FromRole="riesgos" ToRole="riesgos_estatus" />
-          <NavigationProperty Name="riesgos_estrategia" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_estrategia" FromRole="riesgos" ToRole="riesgos_estrategia" />
-          <NavigationProperty Name="riesgos_impacto_costo" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_costo" FromRole="riesgos" ToRole="riesgos_impacto_costo" />
-          <NavigationProperty Name="riesgos_impacto_tiempo" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_tiempo" FromRole="riesgos" ToRole="riesgos_impacto_tiempo" />
-          <NavigationProperty Name="riesgos_probabilidad" Relationship="Proyectos_ConnextModel.FK_riesgos_riesgos_probabilidad" FromRole="riesgos" ToRole="riesgos_probabilidad" />
-        </EntityType>
-        <Association Name="FK_actividades_proyectos">
-          <End Type="Proyectos_ConnextModel.proyectos" Role="proyectos" Multiplicity="0..1" />
-          <End Type="Proyectos_ConnextModel.actividades" Role="actividades" Multiplicity="*" />
+        <Association Name="FK_proyectos_proyectos_tecnologias">
+          <End Role="proyectos_tecnologias" Type="Self.proyectos_tecnologias" Multiplicity="1" />
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="proyectos">
-              <PropertyRef Name="id_proyecto" />
+            <Principal Role="proyectos_tecnologias">
+              <PropertyRef Name="id_proyecto_tecnologia" />
             </Principal>
-            <Dependent Role="actividades">
-              <PropertyRef Name="id_proyecto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_actividades_riesgos">
-          <End Type="Proyectos_ConnextModel.riesgos" Role="riesgos" Multiplicity="0..1" />
-          <End Type="Proyectos_ConnextModel.actividades" Role="actividades" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="riesgos">
-              <PropertyRef Name="id_riesgo" />
-            </Principal>
-            <Dependent Role="actividades">
-              <PropertyRef Name="id_riesgo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_documentos_proyectos">
-          <End Type="Proyectos_ConnextModel.proyectos" Role="proyectos" Multiplicity="0..1" />
-          <End Type="Proyectos_ConnextModel.documentos" Role="documentos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proyectos">
-              <PropertyRef Name="id_proyecto" />
-            </Principal>
-            <Dependent Role="documentos">
-              <PropertyRef Name="id_proyecto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proyectos_evaluaciones_proyectos">
-          <End Type="Proyectos_ConnextModel.proyectos" Role="proyectos" Multiplicity="1" />
-          <End Type="Proyectos_ConnextModel.proyectos_evaluaciones" Role="proyectos_evaluaciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proyectos">
-              <PropertyRef Name="id_proyecto" />
-            </Principal>
-            <Dependent Role="proyectos_evaluaciones">
-              <PropertyRef Name="id_proyecto" />
+            <Dependent Role="proyectos">
+              <PropertyRef Name="id_proyecto_tecnologia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_riesgos_proyectos_evaluaciones">
-          <End Type="Proyectos_ConnextModel.proyectos_evaluaciones" Role="proyectos_evaluaciones" Multiplicity="1" />
-          <End Type="Proyectos_ConnextModel.riesgos" Role="riesgos" Multiplicity="*" />
+          <End Role="proyectos_evaluaciones" Type="Self.proyectos_evaluaciones" Multiplicity="1" />
+          <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="proyectos_evaluaciones">
               <PropertyRef Name="id_proyecto_evaluacion" />
@@ -832,8 +752,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_riesgos_riesgos_estatus">
-          <End Type="Proyectos_ConnextModel.riesgos_estatus" Role="riesgos_estatus" Multiplicity="1" />
-          <End Type="Proyectos_ConnextModel.riesgos" Role="riesgos" Multiplicity="*" />
+          <End Role="riesgos_estatus" Type="Self.riesgos_estatus" Multiplicity="1" />
+          <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="riesgos_estatus">
               <PropertyRef Name="id_riesgos_estatus" />
@@ -844,8 +764,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_riesgos_riesgos_estrategia">
-          <End Type="Proyectos_ConnextModel.riesgos_estrategia" Role="riesgos_estrategia" Multiplicity="1" />
-          <End Type="Proyectos_ConnextModel.riesgos" Role="riesgos" Multiplicity="*" />
+          <End Role="riesgos_estrategia" Type="Self.riesgos_estrategia" Multiplicity="1" />
+          <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="riesgos_estrategia">
               <PropertyRef Name="id_riesgo_estrategia" />
@@ -856,8 +776,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_riesgos_riesgos_impacto_costo">
-          <End Type="Proyectos_ConnextModel.riesgos_impacto_costo" Role="riesgos_impacto_costo" Multiplicity="1" />
-          <End Type="Proyectos_ConnextModel.riesgos" Role="riesgos" Multiplicity="*" />
+          <End Role="riesgos_impacto_costo" Type="Self.riesgos_impacto_costo" Multiplicity="1" />
+          <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="riesgos_impacto_costo">
               <PropertyRef Name="id_riesgo_impacto_costo" />
@@ -868,8 +788,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_riesgos_riesgos_impacto_tiempo">
-          <End Type="Proyectos_ConnextModel.riesgos_impacto_tiempo" Role="riesgos_impacto_tiempo" Multiplicity="1" />
-          <End Type="Proyectos_ConnextModel.riesgos" Role="riesgos" Multiplicity="*" />
+          <End Role="riesgos_impacto_tiempo" Type="Self.riesgos_impacto_tiempo" Multiplicity="1" />
+          <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="riesgos_impacto_tiempo">
               <PropertyRef Name="id_riesgo_impacto_tiempo" />
@@ -880,8 +800,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_riesgos_riesgos_probabilidad">
-          <End Type="Proyectos_ConnextModel.riesgos_probabilidad" Role="riesgos_probabilidad" Multiplicity="1" />
-          <End Type="Proyectos_ConnextModel.riesgos" Role="riesgos" Multiplicity="*" />
+          <End Role="riesgos_probabilidad" Type="Self.riesgos_probabilidad" Multiplicity="1" />
+          <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="riesgos_probabilidad">
               <PropertyRef Name="id_riesgo_probabilidad" />
@@ -891,16 +811,126 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="Proyectos_ConnextEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="actividades" EntityType="Self.actividades" />
+          <EntitySet Name="documentos" EntityType="Self.documentos" />
+          <EntitySet Name="proyectos" EntityType="Self.proyectos" />
+          <EntitySet Name="proyectos_estatus" EntityType="Self.proyectos_estatus" />
+          <EntitySet Name="proyectos_evaluaciones" EntityType="Self.proyectos_evaluaciones" />
+          <EntitySet Name="proyectos_periodos" EntityType="Self.proyectos_periodos" />
+          <EntitySet Name="proyectos_tecnologias" EntityType="Self.proyectos_tecnologias" />
+          <EntitySet Name="riesgos" EntityType="Self.riesgos" />
+          <EntitySet Name="riesgos_estatus" EntityType="Self.riesgos_estatus" />
+          <EntitySet Name="riesgos_estrategia" EntityType="Self.riesgos_estrategia" />
+          <EntitySet Name="riesgos_impacto_costo" EntityType="Self.riesgos_impacto_costo" />
+          <EntitySet Name="riesgos_impacto_tiempo" EntityType="Self.riesgos_impacto_tiempo" />
+          <EntitySet Name="riesgos_probabilidad" EntityType="Self.riesgos_probabilidad" />
+          <AssociationSet Name="FK_actividades_proyectos" Association="Self.FK_actividades_proyectos">
+            <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="actividades" EntitySet="actividades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_actividades_riesgos" Association="Self.FK_actividades_riesgos">
+            <End Role="riesgos" EntitySet="riesgos" />
+            <End Role="actividades" EntitySet="actividades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documentos_proyectos" Association="Self.FK_documentos_proyectos">
+            <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_evaluaciones_proyectos" Association="Self.FK_proyectos_evaluaciones_proyectos">
+            <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_proyectos_estatus" Association="Self.FK_proyectos_proyectos_estatus">
+            <End Role="proyectos_estatus" EntitySet="proyectos_estatus" />
+            <End Role="proyectos" EntitySet="proyectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_proyectos_periodos1" Association="Self.FK_proyectos_proyectos_periodos1">
+            <End Role="proyectos_periodos" EntitySet="proyectos_periodos" />
+            <End Role="proyectos" EntitySet="proyectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_proyectos_tecnologias" Association="Self.FK_proyectos_proyectos_tecnologias">
+            <End Role="proyectos_tecnologias" EntitySet="proyectos_tecnologias" />
+            <End Role="proyectos" EntitySet="proyectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_riesgos_proyectos_evaluaciones" Association="Self.FK_riesgos_proyectos_evaluaciones">
+            <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
+            <End Role="riesgos" EntitySet="riesgos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_riesgos_riesgos_estatus" Association="Self.FK_riesgos_riesgos_estatus">
+            <End Role="riesgos_estatus" EntitySet="riesgos_estatus" />
+            <End Role="riesgos" EntitySet="riesgos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_riesgos_riesgos_estrategia" Association="Self.FK_riesgos_riesgos_estrategia">
+            <End Role="riesgos_estrategia" EntitySet="riesgos_estrategia" />
+            <End Role="riesgos" EntitySet="riesgos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_riesgos_riesgos_impacto_costo" Association="Self.FK_riesgos_riesgos_impacto_costo">
+            <End Role="riesgos_impacto_costo" EntitySet="riesgos_impacto_costo" />
+            <End Role="riesgos" EntitySet="riesgos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_riesgos_riesgos_impacto_tiempo" Association="Self.FK_riesgos_riesgos_impacto_tiempo">
+            <End Role="riesgos_impacto_tiempo" EntitySet="riesgos_impacto_tiempo" />
+            <End Role="riesgos" EntitySet="riesgos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_riesgos_riesgos_probabilidad" Association="Self.FK_riesgos_riesgos_probabilidad">
+            <End Role="riesgos_probabilidad" EntitySet="riesgos_probabilidad" />
+            <End Role="riesgos" EntitySet="riesgos" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Proyectos_ConnextModelStoreContainer" CdmEntityContainer="Proyectos_ConnextEntities">
+          <EntitySetMapping Name="actividades">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.actividades">
+              <MappingFragment StoreEntitySet="actividades">
+                <ScalarProperty Name="id_actividad" ColumnName="id_actividad" />
+                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
+                <ScalarProperty Name="id_riesgo" ColumnName="id_riesgo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="usuario_resp" ColumnName="usuario_resp" />
+                <ScalarProperty Name="fecha_ejecucion" ColumnName="fecha_ejecucion" />
+                <ScalarProperty Name="fecha_asignacion" ColumnName="fecha_asignacion" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
+                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documentos">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.documentos">
+              <MappingFragment StoreEntitySet="documentos">
+                <ScalarProperty Name="id_documento" ColumnName="id_documento" />
+                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
+                <ScalarProperty Name="id_actividad" ColumnName="id_actividad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="contentType" ColumnName="contentType" />
+                <ScalarProperty Name="extension" ColumnName="extension" />
+                <ScalarProperty Name="tamaño" ColumnName="tamaño" />
+                <ScalarProperty Name="publico" ColumnName="publico" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
+                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
+                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="proyectos">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos">
               <MappingFragment StoreEntitySet="proyectos">
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
+                <ScalarProperty Name="id_proyecto_tecnologia" ColumnName="id_proyecto_tecnologia" />
                 <ScalarProperty Name="id_proyecto_periodo" ColumnName="id_proyecto_periodo" />
                 <ScalarProperty Name="id_proyecto_estatus" ColumnName="id_proyecto_estatus" />
                 <ScalarProperty Name="cveoport" ColumnName="cveoport" />
@@ -942,6 +972,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="proyectos_evaluaciones">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_evaluaciones">
+              <MappingFragment StoreEntitySet="proyectos_evaluaciones">
+                <ScalarProperty Name="id_proyecto_evaluacion" ColumnName="id_proyecto_evaluacion" />
+                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
+                <ScalarProperty Name="fecha_evaluacion" ColumnName="fecha_evaluacion" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
+                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="proyectos_periodos">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_periodos">
               <MappingFragment StoreEntitySet="proyectos_periodos">
@@ -951,6 +997,43 @@
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="activo" ColumnName="activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proyectos_tecnologias">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_tecnologias">
+              <MappingFragment StoreEntitySet="proyectos_tecnologias">
+                <ScalarProperty Name="id_proyecto_tecnologia" ColumnName="id_proyecto_tecnologia" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="riesgos">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.riesgos">
+              <MappingFragment StoreEntitySet="riesgos">
+                <ScalarProperty Name="id_riesgo" ColumnName="id_riesgo" />
+                <ScalarProperty Name="id_proyecto_evaluacion" ColumnName="id_proyecto_evaluacion" />
+                <ScalarProperty Name="id_riesgos_estatus" ColumnName="id_riesgos_estatus" />
+                <ScalarProperty Name="riesgo" ColumnName="riesgo" />
+                <ScalarProperty Name="id_riesgo_probabilidad" ColumnName="id_riesgo_probabilidad" />
+                <ScalarProperty Name="porc_probabilidad" ColumnName="porc_probabilidad" />
+                <ScalarProperty Name="id_riesgo_impacto_costo" ColumnName="id_riesgo_impacto_costo" />
+                <ScalarProperty Name="porc_impcosto" ColumnName="porc_impcosto" />
+                <ScalarProperty Name="id_riesgo_impacto_tiempo" ColumnName="id_riesgo_impacto_tiempo" />
+                <ScalarProperty Name="porc_imptiempo" ColumnName="porc_imptiempo" />
+                <ScalarProperty Name="riesgo_costo" ColumnName="riesgo_costo" />
+                <ScalarProperty Name="riesgo_tiempo" ColumnName="riesgo_tiempo" />
+                <ScalarProperty Name="id_riesgo_estrategia" ColumnName="id_riesgo_estrategia" />
+                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
+                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1009,114 +1092,6 @@
                 <ScalarProperty Name="activo" ColumnName="activo" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Proyectos_ConnextModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Proyectos_ConnextModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Proyectos_ConnextModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Proyectos_ConnextModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Proyectos_ConnextModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Proyectos_ConnextModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Proyectos_ConnextModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Proyectos_ConnextModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Proyectos_ConnextModel.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="actividades">
-            <EntityTypeMapping TypeName="Proyectos_ConnextModel.actividades">
-              <MappingFragment StoreEntitySet="actividades">
-                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
-                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
-                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
-                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
-                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
-                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="fecha_asignacion" ColumnName="fecha_asignacion" />
-                <ScalarProperty Name="fecha_ejecucion" ColumnName="fecha_ejecucion" />
-                <ScalarProperty Name="usuario_resp" ColumnName="usuario_resp" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="id_riesgo" ColumnName="id_riesgo" />
-                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
-                <ScalarProperty Name="id_actividad" ColumnName="id_actividad" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="documentos">
-            <EntityTypeMapping TypeName="Proyectos_ConnextModel.documentos">
-              <MappingFragment StoreEntitySet="documentos">
-                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
-                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
-                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
-                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
-                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="path" ColumnName="path" />
-                <ScalarProperty Name="publico" ColumnName="publico" />
-                <ScalarProperty Name="tamaño" ColumnName="tamaño" />
-                <ScalarProperty Name="extension" ColumnName="extension" />
-                <ScalarProperty Name="contentType" ColumnName="contentType" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="id_actividad" ColumnName="id_actividad" />
-                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
-                <ScalarProperty Name="id_documento" ColumnName="id_documento" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="proyectos_evaluaciones">
-            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_evaluaciones">
-              <MappingFragment StoreEntitySet="proyectos_evaluaciones">
-                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
-                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
-                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
-                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
-                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="fecha_evaluacion" ColumnName="fecha_evaluacion" />
-                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
-                <ScalarProperty Name="id_proyecto_evaluacion" ColumnName="id_proyecto_evaluacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="riesgos">
-            <EntityTypeMapping TypeName="Proyectos_ConnextModel.riesgos">
-              <MappingFragment StoreEntitySet="riesgos">
-                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
-                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
-                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
-                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
-                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
-                <ScalarProperty Name="id_riesgo_estrategia" ColumnName="id_riesgo_estrategia" />
-                <ScalarProperty Name="riesgo_tiempo" ColumnName="riesgo_tiempo" />
-                <ScalarProperty Name="riesgo_costo" ColumnName="riesgo_costo" />
-                <ScalarProperty Name="porc_imptiempo" ColumnName="porc_imptiempo" />
-                <ScalarProperty Name="id_riesgo_impacto_tiempo" ColumnName="id_riesgo_impacto_tiempo" />
-                <ScalarProperty Name="porc_impcosto" ColumnName="porc_impcosto" />
-                <ScalarProperty Name="id_riesgo_impacto_costo" ColumnName="id_riesgo_impacto_costo" />
-                <ScalarProperty Name="porc_probabilidad" ColumnName="porc_probabilidad" />
-                <ScalarProperty Name="id_riesgo_probabilidad" ColumnName="id_riesgo_probabilidad" />
-                <ScalarProperty Name="riesgo" ColumnName="riesgo" />
-                <ScalarProperty Name="id_riesgos_estatus" ColumnName="id_riesgos_estatus" />
-                <ScalarProperty Name="id_proyecto_evaluacion" ColumnName="id_proyecto_evaluacion" />
-                <ScalarProperty Name="id_riesgo" ColumnName="id_riesgo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

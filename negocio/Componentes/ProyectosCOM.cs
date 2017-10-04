@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
+using System.Globalization;
 using System.Linq;
 
 
@@ -204,6 +205,12 @@ namespace negocio.Componentes
                                     u.fecha_evaluacion
                                 })
                                 .OrderBy(u => u.fecha_evaluacion);
+                DataTable dt = To.DataTable(query.ToList());
+                dt.Columns.Add("fecha_evaluacion_str");
+                foreach (DataRow row in dt.Rows)
+                {
+                    row["fecha_evaluacion_str"] = Convert.ToDateTime(row["fecha_evaluacion"]).ToString("dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
+                }
                 return To.DataTable(query.ToList());
             }
             catch (DbEntityValidationException ex)
@@ -215,7 +222,7 @@ namespace negocio.Componentes
                 return null;
             }
         }
-
+     
         /// <summary>
         /// Obtiene una tabla con la informacion de un proyecto
         /// </summary>
@@ -231,9 +238,12 @@ namespace negocio.Componentes
                 var proyectos = (from p in db.proyectos
                                  join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
+                                 join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
                                  where (p.usuario_borrado == null && p.id_proyecto == id_proyecto)
                                  select new
                                  {
+                                     p.id_proyecto_tecnologia,
+                                     tecnologia = t.nombre,
                                      p.usuario,
                                      p.id_proyecto,
                                      p.id_proyecto_estatus,
@@ -266,7 +276,9 @@ namespace negocio.Componentes
                                   p.descripcion,
                                   p.fecha_registro,
                                   p.fecha_inicio,
-                                  p.fecha_fin
+                                  p.fecha_fin,
+                                  p.id_proyecto_tecnologia,
+                                  p.tecnologia
                               };
                 dt = To.DataTable(results.ToList());
                 return dt;
@@ -302,8 +314,12 @@ namespace negocio.Componentes
                                  join emp in dt_empleados_subordinados.AsEnumerable() on p.usuario.ToUpper() equals emp.Field<string>("usuario").ToUpper()
                                  join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
+                                 join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
                                  where (p.usuario_borrado == null && p.id_proyecto_estatus == id_proyecto_estatus) 
-                                 select new {
+                                 select new
+                                 {
+                                     p.id_proyecto_tecnologia,
+                                     tecnologia = t.nombre,
                                      p.usuario,
                                      p.id_proyecto,
                                      p.id_proyecto_estatus,
@@ -336,7 +352,9 @@ namespace negocio.Componentes
                                   p.descripcion,
                                   p.fecha_registro,
                                   p.fecha_inicio,
-                                  p.fecha_fin
+                                  p.fecha_fin,
+                                  p.id_proyecto_tecnologia,
+                                  p.tecnologia
                               };
                 dt = To.DataTable(results.ToList());
                 return dt;
