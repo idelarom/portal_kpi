@@ -150,27 +150,27 @@
                                     <asp:TextBox ID="txtnombreproyecto" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
                                      <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Periodo</strong></h5>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Periodo</strong></h5>
                                      <asp:DropDownList ID="ddlperiodo" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                                  <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                                     <asp:DropDownList ID="ddlestatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                                  <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
                                     <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
                                     <asp:TextBox ID="txtfolopmt" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Tegnoligia</strong></h5>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Tegnoligia</strong></h5>
                                     <asp:DropDownList ID="ddltegnologia" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                             </div>
