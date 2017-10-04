@@ -53,6 +53,7 @@ namespace presentacion
                     //lblestatus.Text = proyecto["estatus"].ToString();
                     //lblempleado.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(proyecto["empleado"].ToString().ToLower());
                 }
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -76,6 +77,62 @@ namespace presentacion
                 Toast.Error("Error al cargar información. " + ex.Message, this);
             }
         }
+
+        private void CargarCombos()
+        {
+            try
+            {
+                //estatus
+                RiesgosEstatusCOM estatus = new RiesgosEstatusCOM();
+                DataTable dt_Estatus = estatus.SelectAll();
+                ddlestatus_riesgo.DataTextField = "estatus";
+                ddlestatus_riesgo.DataValueField = "id_riesgos_estatus";
+                ddlestatus_riesgo.DataSource = dt_Estatus;
+                ddlestatus_riesgo.DataBind();
+                //ddlestatus_riesgo.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
+
+                //probabilidad
+                RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
+                DataTable dt_probabilidad = probabilidades.SelectAll();
+                ddlprobabilidad.DataTextField = "nombre";
+                ddlprobabilidad.DataValueField = "id_riesgo_probabilidad";
+                ddlprobabilidad.DataSource = dt_probabilidad;
+                ddlprobabilidad.DataBind();
+                ddlprobabilidad.Items.Insert(0,new ListItem("--Seleccionar--","0"));
+
+                //impacto costo
+                RiesgosImpactoCostosCOM costos = new RiesgosImpactoCostosCOM();
+                DataTable dt_costos = costos.SelectAll();
+                ddlimpacto_costo.DataTextField = "nombre";
+                ddlimpacto_costo.DataValueField = "id_riesgo_impacto_costo";
+                ddlimpacto_costo.DataSource = dt_costos;
+                ddlimpacto_costo.DataBind();
+                ddlimpacto_costo.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
+
+                //impacto tiempo
+                RiesgosImpactoTiempoCOM tiempos = new RiesgosImpactoTiempoCOM();
+                DataTable dt_tiempos = tiempos.SelectAll();
+                ddlimpacto_tiempo.DataTextField = "nombre";
+                ddlimpacto_tiempo.DataValueField = "id_riesgo_impacto_tiempo";
+                ddlimpacto_tiempo.DataSource = dt_tiempos;
+                ddlimpacto_tiempo.DataBind();
+                ddlimpacto_tiempo.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
+
+                //estrategias
+                RiesgosEstrategiaCOM estrategias = new RiesgosEstrategiaCOM();
+                DataTable dt_estrategias = estrategias.SelectAll();
+                ddlestrategias.DataTextField = "nombre";
+                ddlestrategias.DataValueField = "id_riesgo_estrategia";
+                ddlestrategias.DataSource = dt_estrategias;
+                ddlestrategias.DataBind();
+                ddlestrategias.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información de combos. " + ex.Message, this);
+            }
+        }
+
 
         private DateTime fecha_siguiente_evaluacion(int id_proyecto, int dias)
         {
@@ -166,5 +223,42 @@ namespace presentacion
                     break;
             }
         }
+        protected void ddlprobabilidad_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int id_riesgo_probabilidad = Convert.ToInt32(ddlprobabilidad.SelectedValue);
+                if (id_riesgo_probabilidad > 0)
+                {
+                    RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
+                    riesgos_probabilidad probabilidad = probabilidades.impacto(id_riesgo_probabilidad);
+                    txtpprobabilidad.Text = probabilidad.porcentaje.ToString();
+                    txtpprobabilidad_TextChanged(null,null);
+                }
+                else
+                {
+                    txtpprobabilidad.Text = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al calcular probabilidad. " + ex.Message, this);
+            }
+        }
+
+        protected void txtpprobabilidad_TextChanged(object sender, EventArgs e)
+        {
+            string texto = txtpprobabilidad.Text;
+           
+            if (texto == "")
+            {
+                txtpprobabilidad.Text = "";
+            }
+            else {
+                decimal value = Convert.ToDecimal(texto);
+               txtpprobabilidad.Text = value.ToString();
+            }
+        }
+
     }
 }

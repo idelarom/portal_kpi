@@ -179,7 +179,7 @@ namespace negocio.Componentes
                                     u.fecha,
                                     u.usuario
                                 })
-                                .OrderBy(u => u.nombre);
+                                .OrderBy(u => u.porcentaje);
                 dt = To.DataTable(query.ToList());
                 return dt;
             }

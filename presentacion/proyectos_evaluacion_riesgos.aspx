@@ -70,6 +70,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="ss" runat="server" UpdateMode="Always">
                 <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="ddlprobabilidad" EventName="SelectedIndexChanged" />
+                    <asp:AsyncPostBackTrigger ControlID="txtpprobabilidad" EventName="TextChanged" />
                     <asp:AsyncPostBackTrigger ControlID="repeater_evaluaciones_details" EventName="ItemCommand" />
                 </Triggers>
                 <ContentTemplate>
@@ -90,16 +92,31 @@
                                     <asp:DropDownList ID="ddlestatus_riesgo" CssClass="form-control" runat="server"></asp:DropDownList>
                                 </div>
                                 
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Probabilidad</strong></h5>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-8 col-xs-7">
+                                            <asp:DropDownList ID="ddlprobabilidad"
+                                                AutoPostBack="true" OnSelectedIndexChanged="ddlprobabilidad_SelectedIndexChanged"
+                                                 CssClass="form-control" runat="server"></asp:DropDownList>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-4 col-xs-5">
+                                            <asp:TextBox 
+                                                OnTextChanged="txtpprobabilidad_TextChanged" AutoPostBack="true"
+                                                 ID="txtpprobabilidad" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Impacto costo</strong></h5>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                            <asp:DropDownList ID="ddlprobabilidad" CssClass="form-control" runat="server"></asp:DropDownList>
+                                            <asp:DropDownList ID="ddlimpacto_costo" CssClass="form-control" runat="server"></asp:DropDownList>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                            <asp:TextBox ID="txtpprobabilidad" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                            <asp:TextBox ID="txtimpacto_costo" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -115,21 +132,19 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Riesgo costo</strong></h5> 
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;% Riesgo costo</strong></h5> 
                                    
                                             <asp:TextBox ID="txtriesgo_costo" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Riesgo tiempo</strong></h5>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;% Riesgo tiempo</strong></h5>
                                     <asp:TextBox ID="txtriesgo_tiempo" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="row">
-                                
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Estrategia</strong></h5>
-                                   
-                                            <asp:DropDownList ID="ddlestrategias" CssClass="form-control" runat="server"></asp:DropDownList>
+                                    <asp:DropDownList ID="ddlestrategias" CssClass="form-control" runat="server"></asp:DropDownList>
                                 </div>
                             </div>
                         </div>

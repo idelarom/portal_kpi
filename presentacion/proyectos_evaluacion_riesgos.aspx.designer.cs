@@ -94,6 +94,24 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.TextBox txtpprobabilidad;
         
         /// <summary>
+        /// Control ddlimpacto_costo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlimpacto_costo;
+        
+        /// <summary>
+        /// Control txtimpacto_costo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtimpacto_costo;
+        
+        /// <summary>
         /// Control ddlimpacto_tiempo.
         /// </summary>
         /// <remarks>

@@ -146,7 +146,7 @@ namespace presentacion
                     ModalShow("#ModalImpactotiempo");
                     Toast.Error("Error al procesar impacto tiempo : Ingrese un nombre", this);
                 }
-                else if (IT.porcentaje <= 0)
+                else if (IT.porcentaje < 0)
                 {
                     ModalShow("#ModalImpactotiempo");
                     Toast.Error("Error al procesar impacto tiempo : Ingrese un valor del porcentaje", this);

@@ -146,7 +146,7 @@ namespace presentacion
                     ModalShow("#ModalImpactocosto");
                     Toast.Error("Error al procesar impacto costo : Ingrese un nombre", this);
                 }
-                else if (IC.porcentaje <= 0)
+                else if (IC.porcentaje < 0)
                 {
                     ModalShow("#ModalImpactocosto");
                     Toast.Error("Error al procesar impacto costo : Ingrese un valor del porcentaje", this);
