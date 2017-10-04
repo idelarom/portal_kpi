@@ -63,6 +63,7 @@
     <Compile Include="Componentes\PermisosCOM.cs" />
     <Compile Include="Componentes\ProyectosCOM.cs" />
     <Compile Include="Componentes\ProyectosEstatusCOM.cs" />
+    <Compile Include="Componentes\ProyectosEvaluacionesCOM.cs" />
     <Compile Include="Componentes\ProyectosPeriodosCOM.cs" />
     <Compile Include="Componentes\ProyectosTecnologiasCOM.cs" />
     <Compile Include="Componentes\PublicacionesCOM.cs" />

@@ -133,6 +133,7 @@ namespace presentacion
                     {
                         txtestatus.Text = "";
                         chkactivo.Checked = false;
+                        hdfid_riesgo_estrategia.Value = "";
                         CargarCatalogo();
                         Toast.Success("Estrategia agregada correctamente.", "Mensaje del sistema", this);
                     }

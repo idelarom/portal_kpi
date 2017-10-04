@@ -134,6 +134,7 @@ namespace presentacion
                     {
                         txtestatus.Text = "";
                         chkactivo.Checked = false;
+                        hdfid_riesgos_estatus.Value = "";
                         CargarCatalogo();
                         Toast.Success("Estatus agregado correctamente.", "Mensaje del sistema", this);
                     }

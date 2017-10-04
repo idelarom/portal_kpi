@@ -136,6 +136,7 @@ namespace presentacion
                     {
                         txtestatus.Text = "";
                         chkactivo.Checked = false;
+                        hdfid_proyecto_periodo.Value = "";
                         CargarCatalogo();
                         Toast.Success("Periodo agregado correctamente.", "Mensaje del sistema", this);
                     }

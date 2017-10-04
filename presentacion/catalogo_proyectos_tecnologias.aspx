@@ -1,4 +1,4 @@
-﻿<%@ Page Title="PProyectos Tecnologias" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_proyectos_tecnologias.aspx.cs" Inherits="presentacion.catalogo_proyectos_tecnologias" %>
+﻿<%@ Page Title="Proyectos Tecnologias" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_proyectos_tecnologias.aspx.cs" Inherits="presentacion.catalogo_proyectos_tecnologias" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
       <script type="text/javascript">
         $(document).ready(function () {

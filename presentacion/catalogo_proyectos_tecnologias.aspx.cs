@@ -132,7 +132,8 @@ namespace presentacion
                     if (vmensaje == "")
                     {
                         txtestatus.Text = "";
-                        chkactivo.Checked = false;
+                        chkactivo.Checked = true;
+                        hdfid_proyecto_tecnologia.Value = "";
                         CargarCatalogo();
                         Toast.Success("Tecnologia agregada correctamente.", "Mensaje del sistema", this);
                     }

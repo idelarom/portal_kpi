@@ -123,7 +123,8 @@ namespace presentacion
         protected void lnknuevoproyectoestatus_Click(object sender, EventArgs e)
         {
             txtestatus.Text = "";
-            chkactivo.Checked = false;
+            chkactivo.Checked = true;
+            hdfid_proyecto_estatus.Value = "";
             ModalShow("#ModalProyectoestatus");
         }
 
@@ -150,6 +151,7 @@ namespace presentacion
                     if (vmensaje == "")
                     {
                         txtestatus.Text = "";
+                        hdfid_proyecto_estatus.Value = "";
                         chkactivo.Checked = false;
                         CargarCatalogo();
                         Toast.Success("Estatus agregado correctamente.", "Mensaje del sistema", this);

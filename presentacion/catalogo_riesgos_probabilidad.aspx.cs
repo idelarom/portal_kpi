@@ -124,7 +124,7 @@ namespace presentacion
                     ModalShow("#ModalProyectoestatus");
                     Toast.Error("Error al procesar Probabilidad : Ingrese un titulo", this);
                 }
-                else if (PE.porcentaje <= 0)
+                else if (PE.porcentaje < 0)
                 {
                     ModalShow("#ModalProyectoestatus");
                     Toast.Error("Error al procesar Probabilidad : Ingrese un porcentaje de probabilidad mayor a cero.", this);
@@ -136,6 +136,7 @@ namespace presentacion
                     {
                         txtestatus.Text = "";
                         chkactivo.Checked = false;
+                        hdfid_riesgo_probabilidad.Value = "";
                         CargarCatalogo();
                         Toast.Success("Probabilidad agregada correctamente.", "Mensaje del sistema", this);
                     }

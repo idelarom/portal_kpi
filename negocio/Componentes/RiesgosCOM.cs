@@ -12,38 +12,6 @@ namespace negocio.Componentes
     public class RiesgosCOM
     {
         /// <summary>
-        /// Agrega una instancia de proyectos_evaluaciones
-        /// </summary>
-        /// <param name="entidad"></param>
-        /// <returns></returns>
-        public string AgregarEvaluacion(proyectos_evaluaciones entidad)
-        {
-            try
-            {
-                string mess = "";
-                proyectos_evaluaciones evaluacion = new proyectos_evaluaciones
-                {
-                    id_proyecto= entidad.id_proyecto,
-                    fecha_evaluacion = entidad.fecha_evaluacion,
-                    usuario = entidad.usuario.ToUpper(),
-                    fecha = DateTime.Now
-                };
-                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
-                context.proyectos_evaluaciones.Add(evaluacion);
-                context.SaveChanges();
-                return mess;
-            }
-            catch (DbEntityValidationException ex)
-            {
-                var errorMessages = ex.EntityValidationErrors
-                        .SelectMany(x => x.ValidationErrors)
-                        .Select(x => x.ErrorMessage);
-                var fullErrorMessage = string.Join("; ", errorMessages);
-                return fullErrorMessage.ToString();
-            }
-        }
-
-        /// <summary>
         /// Agrega una instancia de riesgos
         /// </summary>
         /// <param name="entidad"></param>
@@ -260,13 +228,66 @@ namespace negocio.Componentes
                 return null;
             }
         }
-        
+        /// <summary>
+        /// Devuelve un cursor con los riesgos por evaluacion
+        /// </summary>
+        /// <param name="id_proyecto_perido"></param>
+        /// <returns></returns>
+        public DataTable evaluacion_riesgos(int id_proyecto_Evaluacion)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                var riesgos = (from r in db.riesgos
+                               join re in db.riesgos_estatus on r.id_riesgos_estatus equals re.id_riesgos_estatus
+                               join rp in db.riesgos_probabilidad on r.id_riesgo_probabilidad equals rp.id_riesgo_probabilidad
+                               join ric in db.riesgos_impacto_costo on r.id_riesgo_impacto_costo equals ric.id_riesgo_impacto_costo
+                               join rit in db.riesgos_impacto_tiempo on r.id_riesgo_impacto_tiempo equals rit.id_riesgo_impacto_tiempo
+                               join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
+                               join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
+                               join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
+                               where (r.id_proyecto_evaluacion == id_proyecto_Evaluacion && r.usuario_borrado == null)
+                               select new
+                               {
+                                   r.id_riesgo,
+                                   r.riesgo,
+                                   r.id_riesgos_estatus,
+                                   re.estatus,
+                                   r.id_riesgo_probabilidad,
+                                   probabilidad = rp.nombre,
+                                   p_probabilidad = rp.porcentaje,
+                                   r.id_riesgo_impacto_costo,
+                                   impacto_costo = ric.nombre,
+                                   p_impacto_costo = ric.porcentaje,
+                                   r.id_riesgo_impacto_tiempo,
+                                   impacto_tiempo = rit.nombre,
+                                   p_impacto_tiempo = rit.porcentaje,
+                                   r.id_riesgo_estrategia,
+                                   estrategia = rs.nombre,
+                                   fecha_evaluacion = pe.fecha_evaluacion,
+                                   proyecto = p.proyecto
+                               });
+
+                dt = To.DataTable(riesgos.ToList());
+                return dt;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return null;
+            }
+        }
+
         /// <summary>
         /// Devuelve un cursor con los riesgos por proyectos
         /// </summary>
         /// <param name="id_proyecto_perido"></param>
         /// <returns></returns>
-        public DataTable riesgos()
+        public DataTable riesgos_historial()
         {
             try
             {

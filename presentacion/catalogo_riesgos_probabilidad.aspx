@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Porcentaje de probabilidad</strong></h5>
-                                    <asp:TextBox  onblur="ValidateRange(this,1,30,'El valor debe ser de 0 - 100 %');" ID="txtnumdias" TextMode="Number" CssClass=" form-control" Width="150px" runat="server"></asp:TextBox>
+                                    <asp:TextBox  onblur="ValidateRange(this,0,100,'El valor debe ser de 0 - 100 %');" ID="txtnumdias" TextMode="Number" CssClass=" form-control" Width="150px" runat="server"></asp:TextBox>
                                    <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
                                     <asp:CheckBox ID="chkactivo" runat="server" Checked="true" Visible="false" text="Activo"/>
                                 </div>
