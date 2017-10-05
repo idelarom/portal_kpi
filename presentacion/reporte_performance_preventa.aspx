@@ -1561,6 +1561,7 @@
             <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Always">
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="btnfiltrooportunidades" EventName="Click" />
+                    <asp:PostBackTrigger ControlID="lnkgenerarexcel"/>                  
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">
@@ -1633,9 +1634,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <br />
+                           <asp:LinkButton ID="lnkgenerarexcel" CssClass="btn btn-success btn-flat"
+                             runat ="server" OnClick="lnkgenerarexcel_Click">
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Exportar a Excel
+                         </asp:LinkButton>
                         </div>
                     </div>
-
+                     
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
@@ -1757,5 +1763,5 @@
     <asp:HiddenField ID="hdftipofiltro_oportunidades" runat="server" />
     <asp:HiddenField ID="hdfestatus" runat="server" />
     <asp:HiddenField ID="hdfvalor_ganado" runat="server" />
-    <asp:HiddenField ID="hdfmonto_max" runat="server" />
+    <asp:HiddenField ID="hdfmonto_max" runat="server" />   
 </asp:Content>

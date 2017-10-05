@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
+using System.Web;
 using Telerik.Web.UI;
+using ClosedXML.Excel;
+using System.Reflection;
 
 namespace presentacion
 {
@@ -994,11 +997,12 @@ namespace presentacion
         protected void btnfiltrooportunidades_Click(object sender, EventArgs e)
         {
             try
-            {
+            {                
                 string ingeniero = hdfingeniero.Value.ToUpper();
                 string tipo_filtro = hdftipofiltro_oportunidades.Value;
                 DataTable dt_oportunidades = details_oportunidades_from_login(ingeniero, tipo_filtro);
-                div_img_empleado3.Visible = false;
+                
+               div_img_empleado3.Visible = false;
                 if (dt_oportunidades.Rows.Count > 0)
                 {
                     repeat_oportunidades.DataSource = dt_oportunidades;
@@ -1305,5 +1309,105 @@ namespace presentacion
                 Toast.Error("Error al mostrar valor ganado: " + ex.Message, this);
             }
         }
+        
+        protected void lnkgenerarexcel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                DataTable dt = new DataTable();
+                //dt = ViewState[Session["num_empleado"].ToString() + "-dt_reporte"] as DataTable;
+                string ingeniero = hdfingeniero.Value.ToUpper();
+                string tipo_filtro = hdftipofiltro_oportunidades.Value;
+                dt = details_oportunidades_from_login(ingeniero, tipo_filtro);
+                if (dt.Rows.Count > 0)
+                {
+                    //Export Export = new Export();
+                    ////array de DataTables
+                    //List<DataTable> ListaTables = new List<DataTable>();
+                    //ListaTables.Add(dt);
+                    ////array de nombre de sheets
+                    //DateTime localDate = DateTime.Now;
+                    //string date = localDate.ToString();
+                    //date = date.Replace("/", "_");
+                    //date = date.Replace(":", "_");
+                    //date = date.Replace(".", "_");
+                    //date = date.Replace(" ", "_");
+                    //string[] Nombres = new string[] { "Reporte Preventa" };
+                    //string mensaje = Export.toExcel("Reporte Preventa", XLColor.White, XLColor.Black, 18, true, DateTime.Now.ToString(), XLColor.White,
+                    //                       XLColor.Black, 10, ListaTables, XLColor.CelestialBlue, XLColor.White, Nombres, 1,
+                    //                       "Reporte_Preventa_" + date + ".xlsx", Page.Response);
+
+                    //if (mensaje != "")
+                    //{
+                    //    Toast.Error("Error al exportar el reporte a excel: " + mensaje, this);
+                    //}
+
+                    ExporttoExcel(dt);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al exportar el reporte a excel: " + ex.Message, this);
+            }
+        }
+
+        private void ExporttoExcel(DataTable table)
+        {
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.ClearContent();
+            HttpContext.Current.Response.ClearHeaders();
+            HttpContext.Current.Response.Buffer = true;
+            HttpContext.Current.Response.ContentType = "application/ms-excel";
+            HttpContext.Current.Response.Write(@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.0 Transitional//EN"">");
+            //HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=Reports.xls");
+            DateTime localDate = DateTime.Now;
+            string date = localDate.ToString();
+            date = date.Replace("/", "_");
+            date = date.Replace(":", "_");
+            date = date.Replace(".", "_");
+            date = date.Replace(" ", "_");
+            HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=Reporte_Preventa_Oportunidades_" + date + ".xls");
+            HttpContext.Current.Response.Charset = "utf-8";
+            HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.GetEncoding("windows-1250");
+            //sets font
+            HttpContext.Current.Response.Write("<font style='font-size:10.0pt; font-family:Calibri;'>");
+            HttpContext.Current.Response.Write("<BR><BR><BR>");
+            //sets the table border, cell spacing, border color, font of the text, background, foreground, font height
+            HttpContext.Current.Response.Write("<Table border='1' bgColor='#ffffff' " +
+              "borderColor='#000000' cellSpacing='0' cellPadding='0' " +
+              "style='font-size:10.0pt; font-family:Calibri; background:CelestialBlue;'> <TR>");
+            //am getting my grid's column headers
+            int columnscount = table.Columns.Count;
+
+            for (int j = 0; j < columnscount; j++)
+            {      //write in new column
+                HttpContext.Current.Response.Write("<Td>");
+                //Get column headers  and make it as bold in excel columns
+                HttpContext.Current.Response.Write("<B>");
+                HttpContext.Current.Response.Write(table.Columns[j].ToString());
+                HttpContext.Current.Response.Write("</B>");
+                HttpContext.Current.Response.Write("</Td>");
+            }
+            HttpContext.Current.Response.Write("</TR>");
+            foreach (DataRow row in table.Rows)
+            {//write in new row
+                HttpContext.Current.Response.Write("<TR>");
+                for (int i = 0; i < table.Columns.Count; i++)
+                {
+                    HttpContext.Current.Response.Write("<Td>");
+                    HttpContext.Current.Response.Write(row[i].ToString());
+                    HttpContext.Current.Response.Write("</Td>");
+                }
+
+                HttpContext.Current.Response.Write("</TR>");
+            }
+            HttpContext.Current.Response.Write("</Table>");
+            HttpContext.Current.Response.Write("</font>");
+            HttpContext.Current.Response.Flush();
+            HttpContext.Current.Response.End();
+        }
+
     }
 }
