@@ -63,6 +63,13 @@
                 return false;
             }
         }
+        function opendashboardriesgos(id_proyecto)
+        {
+            var idproyecto = document.getElementById('<%= hdfid_proyecto.ClientID %>');
+            idproyecto.value = id_proyecto;
+            document.getElementById('<%= btnopendashboard.ClientID%>').click();
+            return true;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -84,13 +91,12 @@
                                 <tr style="font-size: 12px;">
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
-                                    <th style="min-width: 250px; text-align: left;" scope="col">Proyecto</th>
-                                    <th style="min-width: 400px; text-align: left;" scope="col">Nombre del proyecto</th>
-                                    <th style="min-width: 250px; text-align: left;" scope="col">Usuario alta</th>
-                                    <th style="min-width: 400px; text-align: left;" scope="col">Empleado alta</th>
-                                    <th style="min-width: 250px; text-align: left;" scope="col">Estatus</th>
-                                    <th style="min-width: 400px; text-align: left;" scope="col">Periodo evalucion</th>
-                                    <th style="min-width: 400px; text-align: left;" scope="col">Tegnologia</th>
+                                    <th style="min-width: 300px; text-align: left;" scope="col">Proyecto</th>
+                                    <th style="min-width: 100px; text-align: left;" scope="col">Usuario alta</th>
+                                    <th style="min-width: 250px; text-align: left;" scope="col">Empleado alta</th>
+                                    <th style="min-width: 100px; text-align: left;" scope="col">Estatus</th>
+                                    <th style="min-width: 180px; text-align: left;" scope="col">Periodo evalucion</th>
+                                    <th style="min-width: 250px; text-align: left;" scope="col">Tegnologia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,24 +105,26 @@
                                         <tr style="font-size: 12px">
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return EditarClick("+Eval("id_proyecto_estatus")+");" %>'>
+                                                    onclick='<%# "return EditarClick("+Eval("id_proyecto")+");" %>'>
                                                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_proyecto_estatus")+");" %>'>
+                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_proyecto")+");" %>'>
                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
+                                             <td>
+                                                <a style="cursor: pointer;" onclick='<%# "return opendashboardriesgos("+@"""" + Eval("id_proyecto") + @"""" + ");" %>'>
+                                                    <%# Eval("proyecto") %>
+                                                </a>
+                                            </td>
+                                             <td style="text-align: left;"><%# Eval("usuario") %></td>
+                                             <td style="text-align: left;"><%# Eval("empleado") %></td>
                                              <td style="text-align: left;"><%# Eval("estatus") %></td>
-                                             <td style="text-align: left;"><%# Eval("estatus") %></td>
-                                             <td style="text-align: left;"><%# Eval("estatus") %></td>
-                                             <td style="text-align: left;"><%# Eval("estatus") %></td>
-                                             <td style="text-align: left;"><%# Eval("estatus") %></td>
-                                             <td style="text-align: left;"><%# Eval("estatus") %></td>
-                                             <td style="text-align: left;"><%# Eval("estatus") %></td>
-                                             <td style="text-align: left;"><%# Eval("estatus") %></td>
+                                             <td style="text-align: left;"><%# Eval("periodo") %></td>
+                                             <td style="text-align: left;"><%# Eval("tecnologia") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -134,6 +142,7 @@
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="lnknuevoproyecto" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btneventgrid" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="btnopendashboard" EventName="Click" />
                     <asp:PostBackTrigger ControlID="lnkguardar" />
                 </Triggers>
                 <ContentTemplate>
@@ -145,31 +154,31 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Nombre del proyecto</strong></h5>
                                     <asp:TextBox ID="txtnombreproyecto" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
                                      <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                                 <div class="col-lg-12 col-md-12 col-sm-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-6">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Periodo</strong></h5>
                                      <asp:DropDownList ID="ddlperiodo" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
-                                 <div class="col-lg-12 col-md-12 col-sm-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-6">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                                     <asp:DropDownList ID="ddlestatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
-                                 <div class="col-lg-12 col-md-12 col-sm-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-6">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
                                     <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                                 <div class="col-lg-12 col-md-12 col-sm-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-6">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
                                     <asp:TextBox ID="txtfolopmt" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                                 <div class="col-lg-12 col-md-12 col-sm-12">
+                                 <div class="col-lg-3 col-md-3 col-sm-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Tegnoligia</strong></h5>
                                     <asp:DropDownList ID="ddltegnologia" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
@@ -194,6 +203,7 @@
            </div>
     <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display: none;" />
     <asp:Button ID="btneliminar" OnClick="btneliminar_Click" runat="server" Text="Button" Style="display: none;" />
-     <asp:HiddenField ID="hdfcommand" runat="server" />
-     <asp:HiddenField ID="hdfid_proyecto" runat="server" />
+    <asp:Button ID="btnopendashboard" OnClick="btnopendashboard_Click" runat="server" Text="Button" Style="display: none;" />    
+    <asp:HiddenField ID="hdfcommand" runat="server" />
+    <asp:HiddenField ID="hdfid_proyecto" runat="server" />
 </asp:Content>
