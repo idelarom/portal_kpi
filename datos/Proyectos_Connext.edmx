@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="actividades">
           <Key>
             <PropertyRef Name="id_actividad" />
@@ -14,8 +14,9 @@
           <Property Name="id_riesgo" Type="int" />
           <Property Name="nombre" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="usuario_resp" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="fecha_ejecucion" Type="datetime" Nullable="false" />
-          <Property Name="fecha_asignacion" Type="datetime" Nullable="false" />
+          <Property Name="empleado_resp" Type="varchar" MaxLength="8000" />
+          <Property Name="fecha_ejecucion" Type="datetime" />
+          <Property Name="fecha_asignacion" Type="datetime" />
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="fecha_registro" Type="datetime" Nullable="false" />
           <Property Name="comentarios_borrado" Type="varchar" MaxLength="250" />
@@ -426,8 +427,7 @@
             <End Role="riesgos" EntitySet="riesgos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Proyectos_ConnextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -440,8 +440,8 @@
           <Property Name="id_riesgo" Type="Int32" />
           <Property Name="nombre" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="usuario_resp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fecha_ejecucion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="fecha_asignacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_ejecucion" Type="DateTime" Precision="3" />
+          <Property Name="fecha_asignacion" Type="DateTime" Precision="3" />
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
@@ -451,6 +451,7 @@
           <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="proyectos" Relationship="Self.FK_actividades_proyectos" FromRole="actividades" ToRole="proyectos" />
           <NavigationProperty Name="riesgos" Relationship="Self.FK_actividades_riesgos" FromRole="actividades" ToRole="riesgos" />
+          <Property Name="empleado_resp" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="documentos">
           <Key>
@@ -887,6 +888,7 @@
           <EntitySetMapping Name="actividades">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.actividades">
               <MappingFragment StoreEntitySet="actividades">
+                <ScalarProperty Name="empleado_resp" ColumnName="empleado_resp" />
                 <ScalarProperty Name="id_actividad" ColumnName="id_actividad" />
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
                 <ScalarProperty Name="id_riesgo" ColumnName="id_riesgo" />

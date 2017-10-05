@@ -50,10 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Componentes\ActividadesCOM.cs" />
     <Compile Include="Componentes\AyudaCOM.cs" />
     <Compile Include="Componentes\ConfiguracionDashboardCOM.cs" />
     <Compile Include="Componentes\DashboardBonosCOM.cs" />
     <Compile Include="Componentes\DashboardCompromisosCOM.cs" />
+    <Compile Include="Componentes\DocumentosCOM.cs" />
     <Compile Include="Componentes\EmpleadosCOM.cs" />
     <Compile Include="Componentes\MenusCOM.cs" />
     <Compile Include="Componentes\PerfilesCOM.cs" />

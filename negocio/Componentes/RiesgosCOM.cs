@@ -16,7 +16,7 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Agregar(riesgos entidad)
+        public string Agregar(riesgos entidad, List<actividades> lst_actividades, List<documentos> lstdocumentos)
         {
             try
             {
@@ -40,6 +40,42 @@ namespace negocio.Componentes
                 };
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                 context.riesgos.Add(riesgo);
+                context.SaveChanges();
+                int id_riesgo = riesgo.id_riesgo;
+                foreach (actividades actividad in lst_actividades)
+                {
+                    actividad.id_riesgo = id_riesgo;
+                }
+                foreach (actividades entidad2 in lst_actividades)
+                {
+                    actividades actividad = new actividades
+                    {
+                        id_proyecto = entidad2.id_proyecto,
+                        id_riesgo = entidad2.id_riesgo,
+                        nombre = entidad2.nombre,
+                        usuario_resp = entidad2.usuario_resp,
+                        fecha_ejecucion = entidad2.fecha_ejecucion,
+                        fecha_asignacion = entidad2.fecha_asignacion,
+                        usuario = entidad2.usuario,
+                        empleado_resp = entidad2.empleado_resp,
+                        fecha_registro = DateTime.Now
+                    };
+                    context.actividades.Add(actividad);
+                    context.SaveChanges();
+                    int id_actividad = actividad.id_actividad;
+                    foreach (documentos documento in lstdocumentos)
+                    {
+                        if (documento.id_actividad == entidad2.id_actividad)
+                        {
+                            documento.fecha = DateTime.Now;
+                            documento.usuario_edicion = null;
+                            documento.id_actividad = id_actividad;
+                            context.documentos.Add(documento);
+                        }
+                    }
+
+                }
+
                 context.SaveChanges();
                 return mess;
             }
@@ -92,7 +128,127 @@ namespace negocio.Componentes
                 return fullErrorMessage.ToString();
             }
         }
-        
+
+        /// <summary>
+        /// Edita la porbabilidad de una instancia de riesgos
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <returns></returns>
+        public string EditarProbabilidad(int id_riesgo, int id_probabilidad, decimal probabilidad, string usuario)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                riesgos riesgo = context.riesgos
+                                .First(i => i.id_riesgo == id_riesgo);
+                riesgo.id_riesgo_probabilidad = id_probabilidad;
+                riesgo.porc_probabilidad = probabilidad;
+                riesgo.usuario_edicion = usuario;
+                riesgo.fecha_edicion = DateTime.Now;
+                riesgo.riesgo_costo = Convert.ToDecimal(((riesgo.porc_probabilidad * riesgo.porc_impcosto) / 100) );
+                riesgo.riesgo_tiempo = Convert.ToDecimal(((riesgo.porc_probabilidad * riesgo.porc_imptiempo) / 100) );
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Edita el impacto costo de una instancia de riesgos
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <returns></returns>
+        public string EditarImpactoCosto(int id_riesgo, int id_impc, decimal probabilidad, string usuario)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                riesgos riesgo = context.riesgos
+                                .First(i => i.id_riesgo == id_riesgo);
+                riesgo.id_riesgo_impacto_costo = id_impc;
+                riesgo.porc_impcosto = probabilidad;
+                riesgo.usuario_edicion = usuario;
+                riesgo.fecha_edicion = DateTime.Now;
+                riesgo.riesgo_costo = Convert.ToDecimal(((riesgo.porc_probabilidad * riesgo.porc_impcosto) / 100) );
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Edita el impacto tiempo de una instancia de riesgos
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <returns></returns>
+        public string EditarImpactoTiempo(int id_riesgo, int id_impc, decimal probabilidad, string usuario)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                riesgos riesgo = context.riesgos
+                                .First(i => i.id_riesgo == id_riesgo);
+                riesgo.id_riesgo_impacto_tiempo = id_impc;
+                riesgo.porc_imptiempo = probabilidad;
+                riesgo.usuario_edicion = usuario;
+                riesgo.fecha_edicion = DateTime.Now;
+                riesgo.riesgo_tiempo = Convert.ToDecimal(((riesgo.porc_probabilidad * riesgo.porc_imptiempo) / 100) );
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Edita la estrategia de una instancia de riesgos
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <returns></returns>
+        public string EditarImpactoEstrategia(int id_riesgo, int id_impc,string usuario)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                riesgos riesgo = context.riesgos
+                                .First(i => i.id_riesgo == id_riesgo);
+                riesgo.id_riesgo_estrategia = id_impc;
+                riesgo.usuario_edicion = usuario;
+                riesgo.fecha_edicion = DateTime.Now;
+
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
         /// <summary>
         /// Elimina una instancia de riesgos
         /// </summary>
@@ -159,7 +315,9 @@ namespace negocio.Componentes
                                   r.id_riesgo_estrategia,
                                   estrategia = rs.nombre,
                                   fecha_evaluacion = pe.fecha_evaluacion,
-                                  proyecto = p.proyecto
+                                  proyecto = p.proyecto,
+                                  r.riesgo_costo,
+                                  r.riesgo_tiempo
                               });
 
                 dt = To.DataTable(riesgos.ToList());
@@ -213,7 +371,9 @@ namespace negocio.Componentes
                                    r.id_riesgo_estrategia,
                                    estrategia = rs.nombre,
                                    fecha_evaluacion = pe.fecha_evaluacion,
-                                   proyecto = p.proyecto
+                                   proyecto = p.proyecto,
+                                   r.riesgo_costo,
+                                   r.riesgo_tiempo
                                });
 
                 dt = To.DataTable(riesgos.ToList());
@@ -228,6 +388,7 @@ namespace negocio.Componentes
                 return null;
             }
         }
+
         /// <summary>
         /// Devuelve un cursor con los riesgos por evaluacion
         /// </summary>
@@ -248,6 +409,7 @@ namespace negocio.Componentes
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
                                where (r.id_proyecto_evaluacion == id_proyecto_Evaluacion && r.usuario_borrado == null)
+                               orderby(r.riesgo)
                                select new
                                {
                                    r.id_riesgo,
@@ -266,7 +428,9 @@ namespace negocio.Componentes
                                    r.id_riesgo_estrategia,
                                    estrategia = rs.nombre,
                                    fecha_evaluacion = pe.fecha_evaluacion,
-                                   proyecto = p.proyecto
+                                   proyecto = p.proyecto,
+                                   r.riesgo_costo,
+                                   r.riesgo_tiempo
                                });
 
                 dt = To.DataTable(riesgos.ToList());
@@ -320,7 +484,9 @@ namespace negocio.Componentes
                                    r.id_riesgo_estrategia,
                                    estrategia = rs.nombre,
                                    fecha_evaluacion = pe.fecha_evaluacion,
-                                   proyecto = p.proyecto
+                                   proyecto = p.proyecto,
+                                   r.riesgo_costo,
+                                   r.riesgo_tiempo
                                });
 
                 dt = To.DataTable(riesgos.ToList());

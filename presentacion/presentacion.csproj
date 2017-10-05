@@ -1565,6 +1565,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="documentation\" />
+    <Folder Include="files\documents\" />
+    <Folder Include="files\temp\" />
     <Folder Include="files\users\" />
     <Folder Include="img\helps\" />
     <Folder Include="img\users\" />

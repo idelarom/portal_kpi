@@ -210,7 +210,7 @@ namespace negocio.Componentes
                 dt.Columns.Add("fecha_evaluacion_str");
                 foreach (DataRow row in dt.Rows)
                 {
-                    row["fecha_evaluacion_str"] = Convert.ToDateTime(row["fecha_evaluacion"]).ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
+                    row["fecha_evaluacion_str"] = Convert.ToDateTime(row["fecha_evaluacion"]).ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("es-MX"));
                 }
                 return dt;
             }
