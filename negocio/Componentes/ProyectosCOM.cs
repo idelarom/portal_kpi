@@ -44,8 +44,9 @@ namespace negocio.Componentes
                         correo_bienvenida = false,
                         fecha_inicio = entidad.fecha_inicio,
                         fecha_fin = entidad.fecha_fin,
-                        usuario = entidad.usuario.ToUpper(),
-                        fecha_registro = DateTime.Now
+                        usuario = entidad.usuario.ToUpper(),                    
+                        fecha_registro = DateTime.Now,
+                        id_proyecto_tecnologia= entidad.id_proyecto_tecnologia
                     };
                     Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                     context.proyectos.Add(proyecto);
@@ -91,6 +92,7 @@ namespace negocio.Componentes
                 proyecto.fecha_fin = entidad.fecha_fin;
                 proyecto.usuario_edicion = entidad.usuario_edicion.ToUpper();
                 proyecto.fecha_edicion = DateTime.Now;
+                proyecto.id_proyecto_tecnologia = entidad.id_proyecto_tecnologia;
                 context.SaveChanges();
                 return "";
             }
