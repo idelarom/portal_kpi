@@ -25,6 +25,7 @@ namespace datos
         public Nullable<int> id_riesgo { get; set; }
         public string nombre { get; set; }
         public string usuario_resp { get; set; }
+        public string empleado_resp { get; set; }
         public Nullable<System.DateTime> fecha_ejecucion { get; set; }
         public Nullable<System.DateTime> fecha_asignacion { get; set; }
         public string usuario { get; set; }
@@ -34,7 +35,6 @@ namespace datos
         public string usuario_edicion { get; set; }
         public Nullable<System.DateTime> fecha_edicion { get; set; }
         public string usuario_borrado { get; set; }
-        public string empleado_resp { get; set; }
     
         public virtual proyectos proyectos { get; set; }
         public virtual riesgos riesgos { get; set; }

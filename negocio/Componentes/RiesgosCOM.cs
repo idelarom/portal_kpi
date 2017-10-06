@@ -390,8 +390,12 @@ namespace negocio.Componentes
                               join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                               join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                               join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                              where (r.id_riesgo == id_riesgo)
-                              select new {
+                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               where (r.id_riesgo == id_riesgo)
+                              select new
+                              {
+                                  pt.id_proyecto_tecnologia,
+                                  tecnologia = pt.nombre,
                                   r.id_riesgo,
                                   r.riesgo,
                                   r.id_riesgos_estatus,
@@ -445,9 +449,12 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
+                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (p.id_proyecto == id_proyecto && r.usuario_borrado == null)
                                select new
                                {
+                                   pt.id_proyecto_tecnologia,
+                                   tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,
@@ -501,10 +508,13 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
+                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (r.id_proyecto_evaluacion == id_proyecto_Evaluacion && r.usuario_borrado == null)
                                orderby(r.riesgo)
                                select new
                                {
+                                   pt.id_proyecto_tecnologia,
+                                   tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,
@@ -544,7 +554,7 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="id_proyecto_perido"></param>
         /// <returns></returns>
-        public DataTable riesgos_historial()
+        public DataTable riesgos_historial(int id_proyecto_tecnologia)
         {
             try
             {
@@ -558,9 +568,12 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                               where (r.usuario_borrado == null)
+                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               where (r.usuario_borrado == null && p.id_proyecto_tecnologia== id_proyecto_tecnologia)
                                select new
                                {
+                                   pt.id_proyecto_tecnologia,
+                                   tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,

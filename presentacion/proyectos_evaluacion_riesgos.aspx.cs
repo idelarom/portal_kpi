@@ -9,7 +9,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using AjaxControlToolkit;
 
 namespace presentacion
 {
@@ -51,6 +50,7 @@ namespace presentacion
                     int id_proyecto_periodo = Convert.ToInt32(proyecto["id_proyecto_periodo"]);
                     proyectos_periodos periodo = periodos.proyectos_periodo(id_proyecto_periodo);
                     hdf_dias_periodo.Value = periodo.dias.ToString();
+                    ViewState[hdfguid.Value + "id_proyecto_tecnologia"] = proyecto["id_proyecto_tecnologia"].ToString();
                     //hdfid_proyecto.Value = id_proyecto.ToString();
                     //lblproyect.Text = proyecto["proyecto"].ToString();
                     //lblresumen.Text = proyecto["descripcion"].ToString();
@@ -88,6 +88,29 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar información. " + ex.Message, this);
+            }
+        }
+
+        /// <summary>
+        /// Cargar el historial de riesgos con tecnologia similar
+        /// </summary>
+        /// <param name="id_proyecto_tecnologia"></param>
+        private void CargarRiesgosHistorial(int id_proyecto_tecnologia)
+        {
+            try
+            {
+                RiesgosCOM riesgos = new RiesgosCOM();
+                DataTable dt_riesgos = riesgos.riesgos_historial(id_proyecto_tecnologia);
+                if(dt_riesgos.Rows.Count > 0)
+                {
+                    repetaer_historial_riesgos.DataSource = dt_riesgos;
+                    repetaer_historial_riesgos.DataBind();
+                    ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(), "Init('#tabla_historial');", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del historial " + ex.Message, this);
             }
         }
 
@@ -374,6 +397,12 @@ namespace presentacion
                     txtimpacto_tiempo.Text = "";
                     txtpprobabilidad.Text = "";
                     ModalShow("#modal_riesgo");
+                    break;
+                case "importar_riesgos":
+
+                    int id_proyecto_tecnologia = Convert.ToInt32(ViewState[hdfguid.Value + "id_proyecto_tecnologia"]);
+                    CargarRiesgosHistorial(id_proyecto_tecnologia);
+                    ModalShow("#modal_historial");
                     break;
             }
         }
@@ -1330,6 +1359,63 @@ namespace presentacion
             ViewState[hdfguid.Value + "id_proyecto_evaluacion"] = id_proyecto_evaluacion;
         }
 
-      
+        protected void lnkguardarhistorial_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                List<riesgos> list_riesgos = new List<riesgos>();
+                foreach (RepeaterItem item in repetaer_historial_riesgos.Items)
+                {
+                    //HUMBERTO 06/10/2017 06:19 pm
+                    //AQUI ME QUEDE
+
+                    //INSERTAMOS LOS RIESGOS SELECCIONADOS
+                    CheckBox cbx = item.FindControl("cbxseleccionado") as CheckBox;
+                    if (cbx.Checked)
+                    {
+                        int id_riesgo = Convert.ToInt32(cbx.CssClass);
+                        riesgos riesgo = new riesgos
+                        {
+                            id_proyecto_evaluacion = Convert.ToInt32(ViewState[hdfguid.Value + "id_proyecto_evaluacion"]),
+                            riesgo = cbx.Attributes["name"].ToString(),
+                            usuario= Session["usuario"] as string,
+                            fecha_registro = DateTime.Now,
+                            id_riesgos_estatus = 1,
+                            id_riesgo_probabilidad = 1,
+                            porc_probabilidad = 0,
+                            id_riesgo_impacto_costo = 1,
+                            porc_impcosto = 0,
+                            id_riesgo_impacto_tiempo = 1,
+                            porc_imptiempo = 0,
+                            riesgo_costo = 0,
+                            riesgo_tiempo =0,
+                            id_riesgo_estrategia =  Convert.ToInt32(cbx.Attributes["id_riesgo_estrategia"])
+                            //usuario = entidad.usuario,
+                            //fecha_registro = DateTime.Now
+                        };
+                        list_riesgos.Add(riesgo);
+                    }
+                }
+                if (list_riesgos.Count > 0)
+                {
+
+                }
+                else
+                {
+                    Toast.Error("Seleccione al menos un riesgo para importar.", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al seleccionar riesgo: " + ex.Message, this);
+            }
+            finally {
+
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "Init('#tabla_historial');", true);
+            }
+        }
+
+       
     }
 }

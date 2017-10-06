@@ -26,8 +26,14 @@
                             <p class="text-muted">
                                 <asp:Label ID="lblresumen" runat="server" Text="Label"></asp:Label>
                             </p>
-                        </div>
+                        </div>   
                         
+                        <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12">
+                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Tecnología</strong></h5>
+                            <p class="text-muted">
+                                <asp:Label ID="lbltecnologia" runat="server" Text="Label"></asp:Label>
+                            </p>
+                        </div>                     
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                             <p class="text-muted">

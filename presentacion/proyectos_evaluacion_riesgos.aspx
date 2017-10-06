@@ -118,7 +118,7 @@
             document.getElementById('<%= btndescargardocumento.ClientID%>').click();
             return true;
         }
-        
+  
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -497,6 +497,70 @@
                                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar acciones</button>
                                 </div>
                                 <asp:HiddenField ID="hdfid_riesgo" runat="server" />
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+
+     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_historial" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="repeater_evaluaciones_details" EventName="ItemCommand" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Seleccione los riesgos a importar</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table table-responsive">                             
+                                        <table class="table table-responsive  table-bordered" id="tabla_historial">
+                                            <thead>
+                                                <tr style="font-size: 11px;">
+                                                    <th style="min-width: 30px; text-align: left;" scope="col">Seleccionar</th>
+                                                    <th style="min-width: 180px; text-align: left;" scope="col">Riesgo</th>
+                                                    <th style="min-width: 85px; text-align: left;" scope="col">Proyecto</th>
+                                                    <th style="min-width: 50px; text-align: left;" scope="col">Estrategia</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="repetaer_historial_riesgos" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr style="font-size: 11px">
+                                                            <td style="text-align: center;">
+                                                                <asp:CheckBox ID="cbxseleccionado" AutoPostBack="false" 
+                                                                    name='<%# Eval("riesgo") %>' 
+                                                                    id_riesgo_estrategia='<%# Eval("id_riesgo_estrategia") %>' 
+                                                                    CssClass='<%# Eval("id_riesgo") %>' runat="server" />   
+                                                             </td>
+                                                            <td style="text-align: left;"><%# Eval("riesgo") %></td>
+                                                            <td style="text-align: center;"><%# Eval("proyecto") %></td>
+                                                            <td style="text-align: center;"><%# Eval("tecnologia") %></td>
+
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                    <asp:LinkButton OnClientClick="return false;" ID="LinkButton2" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>&nbsp;Guardando
+                                    </asp:LinkButton>
+                                    <asp:LinkButton ID="lnkguardarhistorial" OnClientClick="return ConfirmwidgetProyectoModal('¿Desea importar los riesgos seleccionados?');"
+                                        OnClick="lnkguardarhistorial_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
+                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
+                                    </asp:LinkButton>
+                                </div>
                             </div>
                         </div>
                     </div>

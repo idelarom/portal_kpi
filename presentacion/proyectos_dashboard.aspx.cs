@@ -37,6 +37,7 @@ namespace presentacion
                     lblresumen.Text = proyecto["descripcion"].ToString();
                     lblperiodo.Text = proyecto["periodo"].ToString();
                     lblestatus.Text = proyecto["estatus"].ToString();
+                    lbltecnologia.Text = proyecto["tecnologia"].ToString();
                     lblempleado.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(proyecto["empleado"].ToString().ToLower());
                 }
             }
