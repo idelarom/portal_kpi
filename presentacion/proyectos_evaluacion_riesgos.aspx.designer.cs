@@ -229,13 +229,13 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.TextBox txtfechaejecuacion;
         
         /// <summary>
-        /// Control fuparchivo.
+        /// Control AsyncUpload1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuparchivo;
+        protected global::Telerik.Web.UI.RadAsyncUpload AsyncUpload1;
         
         /// <summary>
         /// Control div_filtro_empleados.
@@ -292,24 +292,6 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.DropDownList ddlempleado_a_consultar;
         
         /// <summary>
-        /// Control grid_acciones.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid grid_acciones;
-        
-        /// <summary>
-        /// Control hdfid_riesgo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfid_riesgo;
-        
-        /// <summary>
         /// Control lnkcargando2.
         /// </summary>
         /// <remarks>
@@ -328,6 +310,24 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnkguardaracciones;
         
         /// <summary>
+        /// Control grid_acciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid grid_acciones;
+        
+        /// <summary>
+        /// Control hdfid_riesgo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfid_riesgo;
+        
+        /// <summary>
         /// Control hdfguid.
         /// </summary>
         /// <remarks>
@@ -344,6 +344,15 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdfid_actividad;
+        
+        /// <summary>
+        /// Control hdfcommandgrid.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfcommandgrid;
         
         /// <summary>
         /// Control btneditarriesgo.

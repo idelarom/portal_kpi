@@ -12,39 +12,37 @@ namespace negocio.Componentes
 {
     public class ActividadesCOM
     {
-        public string Agregar(List<actividades> lstactividades, List<documentos> lstdocumento)
+        public int Agregar(actividades entidad, List<documentos> lstdocumento)
         {
             try
             {
                 string mess = "";
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
-                foreach (actividades entidad in lstactividades)
+                actividades actividad = new actividades
                 {
-                    actividades actividad = new actividades
+                    id_proyecto = entidad.id_proyecto,
+                    id_riesgo = entidad.id_riesgo,
+                    nombre = entidad.nombre,
+                    empleado_resp = entidad.empleado_resp,
+                    usuario_resp = entidad.usuario_resp,
+                    fecha_ejecucion = entidad.fecha_ejecucion,
+                    fecha_asignacion = entidad.fecha_asignacion,
+                    usuario = entidad.usuario,
+                    fecha_registro = DateTime.Now
+                };
+                context.actividades.Add(actividad);
+                context.SaveChanges();
+                int id_actividad = actividad.id_actividad;
+                foreach (documentos documento in lstdocumento)
+                {
+                    if (documento.id_actividad == entidad.id_actividad)
                     {
-                        id_proyecto = entidad.id_proyecto,
-                        id_riesgo = entidad.id_riesgo,
-                        nombre = entidad.nombre,
-                        empleado_resp= entidad.empleado_resp,
-                        usuario_resp = entidad.usuario_resp,
-                        fecha_ejecucion = entidad.fecha_ejecucion,
-                        fecha_asignacion = entidad.fecha_asignacion,
-                        usuario = entidad.usuario,
-                        fecha_registro = DateTime.Now
-                    };
-                    context.actividades.Add(actividad);
-                    int id_actividad = actividad.id_actividad;
-                    foreach (documentos documento in lstdocumento)
-                    {
-                        if (documento.id_actividad == entidad.id_actividad)
-                        {
-                            documento.id_actividad = id_actividad;
-                            context.documentos.Add(documento);
-                        }
+                        documento.id_actividad = id_actividad;
+                        context.documentos.Add(documento);
                     }
                 }
                 context.SaveChanges();
-                return mess;
+                return id_actividad;
             }
             catch (DbEntityValidationException ex)
             {
@@ -52,7 +50,7 @@ namespace negocio.Componentes
                         .SelectMany(x => x.ValidationErrors)
                         .Select(x => x.ErrorMessage);
                 var fullErrorMessage = string.Join("; ", errorMessages);
-                return fullErrorMessage.ToString();
+                return 0;
             }
         }
         public DataSet actividades_riesgo(int id_riesgo)
@@ -113,6 +111,66 @@ namespace negocio.Componentes
             }
         }
 
-       
+        public bool Exist(int id_actividad, int id_riesgo)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                var query = context.actividades
+                                .Where(s => s.id_actividad== id_actividad && s.id_riesgo == id_riesgo)
+                                .Select(u => new
+                                {
+                                    u.id_actividad
+                                })
+                                .OrderBy(u => u.id_actividad);
+                dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        /// Elimina una instancia de actividades
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <returns></returns>
+        public string Eliminar(int id_actividad, string usuario)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                actividades actividad = context.actividades
+                                .First(i => i.id_actividad == id_actividad);
+                actividad.usuario_borrado = usuario;
+                actividad.fecha_borrado = DateTime.Now;
+                actividad.comentarios_borrado = "Borrado por usuario:" + usuario;
+                ICollection<documentos> documentos_por_borrar = actividad.documentos;
+                foreach (documentos documento in documentos_por_borrar)
+                {
+                    documento.usuario_borrado = usuario;
+                    documento.fecha_borrado = DateTime.Now;
+                    documento.comentarios_borrado = "Borrado por usuario:" + usuario;
+                }
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
     }
 }

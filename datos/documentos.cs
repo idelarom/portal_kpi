@@ -32,5 +32,6 @@ namespace datos
         public Nullable<System.DateTime> fecha_borrado { get; set; }
     
         public virtual proyectos proyectos { get; set; }
+        public virtual actividades actividades { get; set; }
     }
 }

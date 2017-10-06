@@ -228,6 +228,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_documentos_actividades">
+          <End Role="actividades" Type="Self.actividades" Multiplicity="0..1" />
+          <End Role="documentos" Type="Self.documentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="actividades">
+              <PropertyRef Name="id_actividad" />
+            </Principal>
+            <Dependent Role="documentos">
+              <PropertyRef Name="id_actividad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_documentos_proyectos">
           <End Role="proyectos" Type="Self.proyectos" Multiplicity="0..1" />
           <End Role="documentos" Type="Self.documentos" Multiplicity="*" />
@@ -382,6 +394,10 @@
             <End Role="riesgos" EntitySet="riesgos" />
             <End Role="actividades" EntitySet="actividades" />
           </AssociationSet>
+          <AssociationSet Name="FK_documentos_actividades" Association="Self.FK_documentos_actividades">
+            <End Role="actividades" EntitySet="actividades" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
           <AssociationSet Name="FK_documentos_proyectos" Association="Self.FK_documentos_proyectos">
             <End Role="proyectos" EntitySet="proyectos" />
             <End Role="documentos" EntitySet="documentos" />
@@ -452,6 +468,7 @@
           <NavigationProperty Name="proyectos" Relationship="Self.FK_actividades_proyectos" FromRole="actividades" ToRole="proyectos" />
           <NavigationProperty Name="riesgos" Relationship="Self.FK_actividades_riesgos" FromRole="actividades" ToRole="riesgos" />
           <Property Name="empleado_resp" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="documentos" Relationship="Proyectos_ConnextModel.FK_documentos_actividades" FromRole="actividades" ToRole="documentos" />
         </EntityType>
         <EntityType Name="documentos">
           <Key>
@@ -474,6 +491,7 @@
           <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
           <NavigationProperty Name="proyectos" Relationship="Self.FK_documentos_proyectos" FromRole="documentos" ToRole="proyectos" />
+          <NavigationProperty Name="actividades" Relationship="Proyectos_ConnextModel.FK_documentos_actividades" FromRole="documentos" ToRole="actividades" />
         </EntityType>
         <EntityType Name="proyectos">
           <Key>
@@ -878,7 +896,23 @@
             <End Role="riesgos_probabilidad" EntitySet="riesgos_probabilidad" />
             <End Role="riesgos" EntitySet="riesgos" />
           </AssociationSet>
+          <AssociationSet Name="FK_documentos_actividades" Association="Proyectos_ConnextModel.FK_documentos_actividades">
+            <End Role="actividades" EntitySet="actividades" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_documentos_actividades">
+          <End Type="Proyectos_ConnextModel.actividades" Role="actividades" Multiplicity="0..1" />
+          <End Type="Proyectos_ConnextModel.documentos" Role="documentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="actividades">
+              <PropertyRef Name="id_actividad" />
+            </Principal>
+            <Dependent Role="documentos">
+              <PropertyRef Name="id_actividad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

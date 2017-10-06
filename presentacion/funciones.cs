@@ -586,6 +586,7 @@ namespace presentacion
 
         public static string de64aTexto(string cadena)
         {
+            cadena = cadena == null ? "" : cadena;
             string enviar;
             var base641 = cadena;
             var data = Convert.FromBase64String(base641);

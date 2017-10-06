@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using AjaxControlToolkit;
 
 namespace presentacion
 {
@@ -30,6 +31,7 @@ namespace presentacion
         {
             if (!IsPostBack)
             {
+                AsyncUpload1.FileUploaded += new Telerik.Web.UI.FileUploadedEventHandler(AsyncUpload1_FileUploaded);
                 hdfguid.Value = Guid.NewGuid().ToString();
                 CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
             }
@@ -74,6 +76,14 @@ namespace presentacion
                 repeater_evaluaciones.DataBind();
                 repeater_evaluaciones_details.DataSource = dt_evaluaciones;
                 repeater_evaluaciones_details.DataBind();
+                if (dt_evaluaciones.Rows.Count > 0)
+                {
+                    int id_proyecto_evaluacion = ViewState[hdfguid.Value + "id_proyecto_evaluacion"] == null ? Convert.ToInt32(dt_evaluaciones.Rows[0]["id_proyecto_evaluacion"]) :
+                        Convert.ToInt32(ViewState[hdfguid.Value + "id_proyecto_evaluacion"]);
+                   
+                    hdf_id_proyecto_evaluacion.Value = id_proyecto_evaluacion.ToString();
+                    MostrarDivPrinciapal(id_proyecto_evaluacion);
+                }
             }
             catch (Exception ex)
             {
@@ -136,6 +146,13 @@ namespace presentacion
             }
         }
 
+        /// <summary>
+        /// Carga los combos de riesgos, dentro del control repeater
+        /// </summary>
+        /// <param name="ddlprobabilidad"></param>
+        /// <param name="ddlimpacto_costo"></param>
+        /// <param name="ddlimpacto_tiempo"></param>
+        /// <param name="ddlestrategias"></param>
         private void CargarCombosinRepeater(DropDownList ddlprobabilidad, DropDownList ddlimpacto_costo, DropDownList ddlimpacto_tiempo, DropDownList ddlestrategias)
         {
             try
@@ -191,6 +208,12 @@ namespace presentacion
             }
         }
 
+        /// <summary>
+        /// Regresa la fecha de la siguiente evaluacion, tomando en cuenta los dias segun el proyecto
+        /// </summary>
+        /// <param name="id_proyecto"></param>
+        /// <param name="dias"></param>
+        /// <returns></returns>
         private DateTime fecha_siguiente_evaluacion(int id_proyecto, int dias)
         {
             try
@@ -308,6 +331,9 @@ namespace presentacion
             ddlestrategia_rep.SelectedIndexChanged += ddlestrategia_rep_SelectedIndexChanged;
         }
 
+        /// <summary>
+        /// Genera los porcentaje de los valores de riesgos del modal_riesgos
+        /// </summary>
         private void GenerarValoresRiesgos()
         {
             try
@@ -479,10 +505,10 @@ namespace presentacion
             return riesgos.Agregar(riesgo,lst_actividades,lstdocumentos);
         }
         
-        public string EditarRiesgo(riesgos riesgo)
+        public string EditarRiesgo(riesgos riesgo, List<actividades> lst_actividades, List<documentos> lstdocumentos)
         {
             RiesgosCOM riesgos = new RiesgosCOM();
-            return riesgos.Editar(riesgo);
+            return riesgos.Editar(riesgo, lst_actividades, lstdocumentos);
         }
 
         protected void lnkguardar_Click(object sender, EventArgs e)
@@ -499,6 +525,7 @@ namespace presentacion
                     List<documentos> documentos = new List<documentos>();
                     Session[hdfguid.Value + "list_documentos"] = documentos;
                 }
+                int id_riesgo = hdf_id_riesgo.Value == "" ? 0 : Convert.ToInt32(hdf_id_riesgo.Value);
                 string vmensaje = "";
                 riesgos riesgo = new riesgos();
                 riesgo.riesgo = txtriesgo.Text;
@@ -515,6 +542,7 @@ namespace presentacion
                 riesgo.id_riesgo_estrategia = Convert.ToInt32(ddlestrategias.SelectedValue);
                 riesgo.usuario = Session["usuario"] as string;
                 riesgo.usuario_edicion = Session["usuario"] as string;
+                if (id_riesgo > 0) { riesgo.id_riesgo = id_riesgo; }
 
                 List<actividades> lstactividades = Session[hdfguid.Value + "list_actividades"] as List<datos.actividades>;
                 List<documentos> lstdocumentos = Session[hdfguid.Value + "list_documentos"] as List<datos.documentos>;
@@ -545,9 +573,11 @@ namespace presentacion
                 }
                 else
                 {
-                    vmensaje = GuardarRiesgo(riesgo, lstactividades, lstdocumentos);
+                    vmensaje = id_riesgo==0? GuardarRiesgo(riesgo, lstactividades, lstdocumentos): EditarRiesgo(riesgo, lstactividades, lstdocumentos);
                     if (vmensaje == "")
                     {
+                        hdfid_riesgo.Value = "";
+                        hdf_id_riesgo.Value = "";
                         CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
                         Toast.Success("Riesgo guardado de manera correcta.", "Mensaje del sistema", this);
                         ModalClose("#modal_riesgo");
@@ -564,6 +594,10 @@ namespace presentacion
             }
         }
 
+        /// <summary>
+        /// Obtiene un el siguiente id de la lista local de actividades
+        /// </summary>
+        /// <returns></returns>
         public int FindMaxacciones(List<actividades> list)
         {
             int maxAge = 0;
@@ -577,6 +611,10 @@ namespace presentacion
             return maxAge;
         }
 
+        /// <summary>
+        /// Obtiene un el siguiente id de la lista local de documentos
+        /// </summary>
+        /// <returns></returns>
         public int FindMaxdocumentos(List<documentos> list)
         {
             int maxAge = 0;
@@ -590,6 +628,10 @@ namespace presentacion
             return maxAge;
         }
 
+        /// <summary>
+        /// Obtiene un el siguiente id de la lista local de actividades
+        /// </summary>
+        /// <returns></returns>
         public int get_id_actividad()
         {
             List<actividades> lstactividades = Session[hdfguid.Value+"list_actividades"] as List<datos.actividades>;
@@ -597,15 +639,30 @@ namespace presentacion
             return FindMaxacciones(lstactividades) + 1;
         }
 
-        public int id_documento()
+        public int get_id_documento()
         {
             List<documentos> lstdocumentos = Session[hdfguid.Value+"list_documentos"] as List<datos.documentos>;
 
             return FindMaxdocumentos(lstdocumentos) + 1;
         }
 
+        /// <summary>
+        /// Agrega una actividadd y sus documentos en una lista local
+        /// </summary>
+        /// <param name="id_actividad"></param>
+        /// <param name="id_proyecto"></param>
+        /// <param name="id_riesgo"></param>
+        /// <param name="nombre"></param>
+        /// <param name="usuario_resp"></param>
+        /// <param name="empleado_resp"></param>
+        /// <param name="fecha_ejecucion"></param>
+        /// <param name="fecha_Asignacion"></param>
+        /// <param name="path_documento"></param>
+        /// <param name="size_documento"></param>
+        /// <param name="publico"></param>
+        /// <param name="id_documento"></param>
         public void AgregarAccionTemporal(int id_actividad,int id_proyecto, int id_riesgo, string nombre, string usuario_resp, string empleado_resp, DateTime? fecha_ejecucion,
-            DateTime? fecha_Asignacion, string path_documento, string size_documento, bool publico)
+            DateTime? fecha_Asignacion, string path_documento, string size_documento, bool publico, int id_documento)
         {
             try
             {
@@ -620,7 +677,7 @@ namespace presentacion
                     Session[hdfguid.Value+"list_documentos"] = documentos;
                 }
                 actividades actividad = new actividades();
-                actividad.id_actividad = id_actividad== 0 ? id_actividad: get_id_actividad();
+                actividad.id_actividad = id_actividad> 0 ? id_actividad: get_id_actividad();
                 actividad.id_proyecto = id_proyecto;
                 actividad.id_riesgo = id_riesgo;
                 actividad.empleado_resp = empleado_resp;
@@ -632,6 +689,7 @@ namespace presentacion
                 actividad.usuario_edicion = Session["usuario"] as string;
 
                 documentos documento = new documentos();
+                if (id_documento > 0) { documento.id_documento = id_documento; }
                 documento.id_actividad = actividad.id_actividad;
                 documento.path = path_documento;
                 documento.nombre = Path.GetFileName(funciones.de64aTexto(path_documento));
@@ -705,6 +763,10 @@ namespace presentacion
             }
         }
 
+        /// <summary>
+        /// Elimina una actividad y sus documentos de la lista local
+        /// </summary>
+        /// <param name="id_actividad"></param>
         public void EliminarAccionTemporal(int id_actividad)
         {
             try
@@ -773,6 +835,9 @@ namespace presentacion
             }
         }
 
+        /// <summary>
+        /// Carga el grid con las acciones por riesgo
+        /// </summary>
         private void CargarGridAcciones()
         {
             try
@@ -818,13 +883,14 @@ namespace presentacion
             }
         }
 
-        protected void lnkguardaracciones_Click(object sender, EventArgs e)
+        protected void AsyncUpload1_FileUploaded(object sender, Telerik.Web.UI.FileUploadedEventArgs e)
         {
             try
             {
+                int r = AsyncUpload1.UploadedFiles.Count;
                 int id_riesgo = Convert.ToInt32(hdfid_riesgo.Value == "" ? "0" : hdfid_riesgo.Value);
                 int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
-                if (!fuparchivo.HasFile)
+                if (r == 0)
                 {
                     Toast.Error("Error al guardar acción: Ingrese seleccione un archivo.", this);
                 }
@@ -845,11 +911,41 @@ namespace presentacion
                     date = date.Replace("/", "_");
                     date = date.Replace(":", "_");
                     date = date.Replace(" ", "");
-                    string name = path_local + Path.GetFileNameWithoutExtension(fuparchivo.FileName)+"_"+date+Path.GetExtension(fuparchivo.FileName);
-                    funciones.UploadFile(fuparchivo, dirInfo.ToString()+ name.Trim(), this.Page);
-                    AgregarAccionTemporal(0,id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
-                         ddlempleado_a_consultar.SelectedItem.ToString(),Convert.ToDateTime(txtfechaejecuacion.Text),
-                        null, funciones.deTextoa64(name), fuparchivo.PostedFile.ContentLength.ToString(), true);
+                    string name = path_local + Path.GetFileNameWithoutExtension(e.File.FileName) + "_" + date + Path.GetExtension(e.File.FileName);
+                    //funciones.UploadFile(fuparchivo, dirInfo.ToString() + name.Trim(), this.Page);
+                    e.File.SaveAs(dirInfo.ToString() + name.Trim());
+                    int id_actividad = 0;
+                    //si existe un id de riesgo, quiere decir que estamos dentro de un modal de edicion, y se agregara directamente el registro a la base de datos.
+                    if (id_riesgo > 0)
+                    {
+                        actividades actividad = new actividades();
+                        actividad.id_proyecto = id_proyecto;
+                        actividad.id_riesgo = id_riesgo;
+                        actividad.nombre = txtaccion.Text;
+                        actividad.empleado_resp = ddlempleado_a_consultar.SelectedItem.ToString();
+                        actividad.usuario_resp = ddlempleado_a_consultar.SelectedValue;
+                        actividad.fecha_ejecucion = Convert.ToDateTime(txtfechaejecuacion.Text);
+                        actividad.usuario = Session["usuario"] as string;
+
+                        documentos documento = new documentos();
+                        documento.id_actividad = actividad.id_actividad;
+                        documento.path = funciones.deTextoa64(name);
+                        documento.nombre = Path.GetFileName(funciones.de64aTexto(funciones.deTextoa64(name)));
+                        documento.tamaño = e.File.ContentLength.ToString();
+                        documento.publico = true;
+                        documento.extension = Path.GetExtension(funciones.de64aTexto(funciones.deTextoa64(name)));
+                        documento.contentType = funciones.ContentType(documento.extension);
+                        documento.fecha = DateTime.Now;
+                        documento.usuario = Session["usuario"] as string;
+                        List<documentos> lstdocumentos = new List<documentos>();
+                        lstdocumentos.Add(documento);
+                        ActividadesCOM actividades = new ActividadesCOM();
+                        id_actividad = actividades.Agregar(actividad, lstdocumentos);
+
+                    }
+                    AgregarAccionTemporal(id_actividad, id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
+                             ddlempleado_a_consultar.SelectedItem.ToString(), Convert.ToDateTime(txtfechaejecuacion.Text),
+                            null, funciones.deTextoa64(name), e.File.ContentLength.ToString(), true, 0);
                     CargarGridAcciones();
                     txtaccion.Text = "";
                     txtfilterempleado.Text = "";
@@ -862,11 +958,15 @@ namespace presentacion
             {
                 Toast.Error("Error al guardar acción: " + ex.Message, this);
             }
-            finally {
+        }
 
-                ModalShow("#modal_riesgo");
-                ModalShow("#modal_acciones");
-            }
+        protected void lnkguardaracciones_Click(object sender, EventArgs e)
+        {
+            int r = AsyncUpload1.UploadedFiles.Count;
+            if (r == 0)
+            {
+                Toast.Error("Error al guardar acción: Ingrese seleccione un archivo.", this);
+            }            
         }
 
         protected void lnkeliminarparticipante_Click(object sender, EventArgs e)
@@ -874,10 +974,30 @@ namespace presentacion
             try
             {
                 LinkButton lnk = sender as LinkButton;
+                int id_riesgo = Convert.ToInt32(hdfid_riesgo.Value == "" ? "0" : hdfid_riesgo.Value);
                 int id_actividad = Convert.ToInt32(lnk.CommandArgument);
-                EliminarAccionTemporal(id_actividad);
-                CargarGridAcciones();
-                Toast.Success("Acción eliminada correctamente", "Mensaje del sistema", this);
+                string vmensaje = "";
+                //si tiene id de riesgo, quiere decir que estamos dentro de un modal de edicion y eliminaremos el registro directo en la bd
+                if (id_riesgo > 0)
+                {
+                    ActividadesCOM actividades = new ActividadesCOM();
+                    vmensaje = actividades.Eliminar(id_actividad, Session["usuario"] as string);
+
+                }
+
+                if (vmensaje == "")
+                {
+                    EliminarAccionTemporal(id_actividad);
+                    CargarGridAcciones();
+                    Toast.Success("Acción eliminada correctamente", "Mensaje del sistema", this);
+                }
+                else
+                {
+                    Toast.Error("Error al eliminar acción: " + vmensaje, this);
+
+                }
+              
+               
             }
             catch (Exception ex)
             {
@@ -919,6 +1039,13 @@ namespace presentacion
             {
                 Toast.Error("Error al editar probabilidad: " + ex.Message, this);
             }
+            finally {
+                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
+                {
+                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
+                    div.Style["display"] = "none";
+                }
+            }
         }
 
         protected void ddlimpacto_costo_rep_SelectedIndexChanged(object sender, EventArgs e)
@@ -951,6 +1078,14 @@ namespace presentacion
             {
                 Toast.Error("Error al editar impacto costo: " + ex.Message, this);
             }
+            finally
+            {
+                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
+                {
+                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
+                    div.Style["display"] = "none";
+                }
+            }
         }
 
         protected void ddlimpacto_tiempo_rep_SelectedIndexChanged(object sender, EventArgs e)
@@ -982,6 +1117,14 @@ namespace presentacion
             {
                 Toast.Error("Error al editar impacto tiempo: " + ex.Message, this);
             }
+            finally
+            {
+                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
+                {
+                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
+                    div.Style["display"] = "none";
+                }
+            }
 
         }
 
@@ -1012,6 +1155,14 @@ namespace presentacion
             {
                 Toast.Error("Error al editar estrategia: " + ex.Message, this);
             }
+            finally
+            {
+                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
+                {
+                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
+                    div.Style["display"] = "none";
+                }
+            }
 
         }
         
@@ -1020,6 +1171,7 @@ namespace presentacion
             try
             {
                 int id_riesgo = Convert.ToInt32(hdf_id_riesgo.Value == "" ? "0" : hdf_id_riesgo.Value);
+                int command = Convert.ToInt32(hdfcommandgrid.Value == "" ? "1" : hdfcommandgrid.Value);
                 if (id_riesgo > 0)
                 {
                     RiesgosCOM riesgos = new RiesgosCOM();
@@ -1028,6 +1180,9 @@ namespace presentacion
                     {
                         DataRow riesgo = dt.Rows[0];
                         txtriesgo.Text = riesgo["riesgo"].ToString();
+                        ddlestatus_riesgo.SelectedValue =
+                       ddlestatus_riesgo.Items.FindByValue(riesgo["id_riesgos_estatus"].ToString()) != null ? riesgo["id_riesgos_estatus"].ToString() : "0";
+
                         ddlprobabilidad.SelectedValue =
                          ddlprobabilidad.Items.FindByValue(riesgo["id_riesgo_probabilidad"].ToString()) != null ? riesgo["id_riesgo_probabilidad"].ToString() : "0";
                         ddlimpacto_costo.SelectedValue =
@@ -1066,6 +1221,7 @@ namespace presentacion
                                 string empleado_resp = row["empleado_resp"].ToString();
                                 string path = "";
                                 string size = "";
+                                int id_documento = 0;
                                 DataView dv = ds.Tables[1].DefaultView;
                                 dv.RowFilter = "id_actividad = " + row["id_actividad"].ToString() + "";
                                 DataTable dt_documento = dv.ToTable();
@@ -1073,12 +1229,18 @@ namespace presentacion
                                 {
                                     path = dt_documento.Rows[0]["path"].ToString();
                                     size = dt_documento.Rows[0]["tamaño"].ToString();
+                                    id_documento = Convert.ToInt32(dt_documento.Rows[0]["id_documento"]);
                                 }
-                                AgregarAccionTemporal(Convert.ToInt32(row["id_actividad"]), id_proyecto, id_riesgo, nombre, usuario_resp, empleado_resp, fecha_ejecucion, fecha_asignacion, path, size, true);
+                                AgregarAccionTemporal(Convert.ToInt32(row["id_actividad"]), id_proyecto, id_riesgo, nombre, usuario_resp, 
+                                    empleado_resp, fecha_ejecucion, fecha_asignacion, path, size, true, id_documento);
                             }
                         }
 
                         ModalShow("#modal_riesgo");
+                        if (command == 2)
+                        {
+                            lnkacciones_Click(null,null);
+                        }
                     }
                 }
             }
@@ -1097,15 +1259,32 @@ namespace presentacion
                 string fileName, contentType;
                 int id = Convert.ToInt32(hdfid_actividad.Value == "" ? "0" : hdfid_actividad.Value);
                 DocumentosCOM documentos_ = new DocumentosCOM();
-                documentos documento = documentos_.documento_actividad(id);
+
+                List<documentos> lstdocumentos = Session[hdfguid.Value + "list_documentos"] as List<datos.documentos>;
+                documentos documento = null;
+                foreach (documentos documento_ in lstdocumentos)
+                {
+                    if (documento_.id_actividad == id)
+                    {
+                        documento = documento_;
+                    }
+                }
+                
                 if (documento != null)
                 {
                     DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/"));
-                    Response.ContentType = ContentType;
-                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + documento.nombre);
-                    Response.WriteFile(dirInfo.ToString() + funciones.de64aTexto(documento.path));
-                    Response.End();
-                    hdfid_actividad.Value = "";
+                    if (File.Exists(dirInfo.ToString() + funciones.de64aTexto(documento.path)))
+                    {
+                        Response.ContentType = ContentType;
+                        Response.AppendHeader("Content-Disposition", "attachment; filename=" + documento.nombre);
+                        Response.WriteFile(dirInfo.ToString() + funciones.de64aTexto(documento.path));
+                        Response.End();
+                        hdfid_actividad.Value = "";
+                    }
+                    else {
+
+                        Toast.Error("No es encuentra el documento especificado", this);
+                    }
                 }
                 else
                 {
@@ -1124,5 +1303,33 @@ namespace presentacion
                 ModalShow("#modal_acciones");
             }
         }
+     
+        /// <summary>
+        /// Muestra los controles dentro de un repeater relacionados a un id_evaluacion
+        /// </summary>
+        /// <param name="id_proyecto_evaluacion"></param>
+        private void MostrarDivPrinciapal(int id_proyecto_evaluacion)
+        {
+            foreach (RepeaterItem item in repeater_evaluaciones.Items)
+            {
+                var li = (HtmlGenericControl)item.FindControl("link_view");
+                li.Attributes["class"] = li.Attributes["id_eval"] ==id_proyecto_evaluacion.ToString()?"active":"";
+            }
+            foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
+            {
+                Panel div_principal = item.FindControl("div_principal") as Panel;
+                div_principal.Visible = div_principal.CssClass == id_proyecto_evaluacion.ToString();
+            }
+        }
+
+        protected void repeater_evaluaciones_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            int id_proyecto_evaluacion = Convert.ToInt32(e.CommandArgument);
+            hdf_id_proyecto_evaluacion.Value = id_proyecto_evaluacion.ToString();
+            MostrarDivPrinciapal(id_proyecto_evaluacion);
+            ViewState[hdfguid.Value + "id_proyecto_evaluacion"] = id_proyecto_evaluacion;
+        }
+
+      
     }
 }

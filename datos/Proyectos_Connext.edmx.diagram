@@ -31,6 +31,7 @@
         <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_costo" ManuallyRouted="false" />
         <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_impacto_tiempo" ManuallyRouted="false" />
         <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_probabilidad" ManuallyRouted="false" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_documentos_actividades" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -94,7 +94,7 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Editar(riesgos entidad)
+        public string Editar(riesgos entidad, List<actividades> lst_actividades, List<documentos> lstdocumentos)
         {
             try
             {
@@ -115,6 +115,99 @@ namespace negocio.Componentes
                 riesgo.id_riesgo_estrategia = entidad.id_riesgo_estrategia;
                 riesgo.usuario_edicion = entidad.usuario_edicion;
                 riesgo.fecha_edicion = DateTime.Now;
+
+                //borramos todas las actividades y documentos
+                ICollection<actividades> actividades_por_borrar = riesgo.actividades;
+                foreach (actividades actividad in actividades_por_borrar)
+                {
+                    actividad.usuario_borrado= entidad.usuario_edicion;
+                    actividad.fecha_borrado = DateTime.Now;
+                    actividad.comentarios_borrado = "Borrado por actualizacion";
+
+                    ICollection<documentos> documentos_por_borrar = actividad.documentos;
+                    foreach (documentos documento in documentos_por_borrar)
+                    {
+                        documento.usuario_borrado = entidad.usuario_edicion;
+                        documento.fecha_borrado = DateTime.Now;
+                        documento.comentarios_borrado = "Borrado por actualizacion";
+                    }
+                }
+
+
+                //actualizamos lo que venga en la lista
+                foreach (actividades entidad2 in lst_actividades)
+                {
+                    ActividadesCOM actividades = new ActividadesCOM();
+                    //si existe actualizamos, si no existe agregamos
+                    if (actividades.Exist(entidad2.id_actividad, Convert.ToInt32(entidad2.id_riesgo)))
+                    {
+                        actividades actividad = context.actividades
+                                  .First(i => i.id_actividad == entidad2.id_actividad);
+                        actividad.id_proyecto = entidad2.id_proyecto;
+                        actividad.id_riesgo = entidad2.id_riesgo;
+                        actividad.nombre = entidad2.nombre;
+                        actividad.usuario_resp = entidad2.usuario_resp;
+                        actividad.fecha_ejecucion = entidad2.fecha_ejecucion;
+                        actividad.fecha_asignacion = entidad2.fecha_asignacion;
+                        actividad.usuario = entidad2.usuario;
+                        actividad.empleado_resp = entidad2.empleado_resp;
+                        actividad.fecha_registro = DateTime.Now;
+                        actividad.usuario_borrado = null;
+                        actividad.fecha_borrado = null;
+                        actividad.comentarios_borrado = null;
+                        actividad.fecha_edicion = DateTime.Now;
+                        actividad.usuario_edicion = entidad.usuario_edicion;
+                        foreach (documentos entidad3 in lstdocumentos)
+                        {
+                            if (entidad3.id_actividad == entidad2.id_actividad)
+                            {
+                                documentos documento = context.documentos
+                                     .First(i => i.id_documento == entidad3.id_documento);
+                                documento.fecha = DateTime.Now;
+                                documento.usuario_edicion = null;
+                                documento.fecha_borrado = null;
+                                documento.usuario_borrado = null;
+                                documento.comentarios_borrado = null;
+                                documento.path = entidad3.path;
+                                documento.nombre = entidad3.nombre;
+                                documento.contentType = entidad3.contentType;
+                                documento.tamaño = entidad3.tamaño;
+                                documento.publico = entidad3.publico;
+                                documento.extension = entidad3.extension;
+                                documento.fecha_edicion = DateTime.Now;
+                                documento.usuario_edicion = entidad.usuario_edicion;
+                            }
+                        }
+                    }
+                    else {
+                        actividades actividad = new actividades
+                        {
+                            id_proyecto = entidad2.id_proyecto,
+                            id_riesgo = entidad2.id_riesgo,
+                            nombre = entidad2.nombre,
+                            usuario_resp = entidad2.usuario_resp,
+                            fecha_ejecucion = entidad2.fecha_ejecucion,
+                            fecha_asignacion = entidad2.fecha_asignacion,
+                            usuario = entidad2.usuario,
+                            empleado_resp = entidad2.empleado_resp,
+                            fecha_registro = DateTime.Now
+                        };
+                        context.actividades.Add(actividad);
+                        context.SaveChanges();
+                        int id_actividad = actividad.id_actividad;
+                        foreach (documentos documento in lstdocumentos)
+                        {
+                            if (documento.id_actividad == entidad2.id_actividad)
+                            {
+                                documento.fecha = DateTime.Now;
+                                documento.usuario_edicion = null;
+                                documento.id_actividad = id_actividad;
+                                context.documentos.Add(documento);
+                            }
+                        }
+                    }
+                }
+
 
                 context.SaveChanges();
                 return "";
