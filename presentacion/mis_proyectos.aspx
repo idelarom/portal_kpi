@@ -39,7 +39,7 @@
             });
         }
         function ConfirmEntregableDelete(id_permiso) {
-            if (confirm('¿Desea eliminar este permiso?')) {
+            if (confirm('¿Desea cerrar este proyecto?')) {
                 var hdfusuario = document.getElementById('<%= hdfid_proyecto.ClientID %>');
                 hdfusuario.value = id_permiso;
                 document.getElementById('<%= btneliminar.ClientID%>').click();
@@ -97,11 +97,11 @@
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 300px; text-align: left;" scope="col">Proyecto</th>
-                                    <th style="min-width: 100px; text-align: left;" scope="col">Usuario alta</th>
-                                    <th style="min-width: 250px; text-align: left;" scope="col">Empleado alta</th>
+                                    <th style="min-width: 100px; text-align: left;" scope="col">Usuario</th>
+                                    <th style="min-width: 250px; text-align: left;" scope="col">Empleado responsable</th>
                                     <th style="min-width: 100px; text-align: left;" scope="col">Estatus</th>
-                                    <th style="min-width: 180px; text-align: left;" scope="col">Periodo evalucion</th>
-                                    <th style="min-width: 250px; text-align: left;" scope="col">Tecnologia</th>
+                                    <th style="min-width: 110px; text-align: left;" scope="col">Periodo evalucion</th>
+                                    <th style="min-width: 80px; text-align: left;" scope="col">Tecnologia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -165,7 +165,7 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h5><strong><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
-                                     <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server" Rows="2"></asp:TextBox>
+                                     <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server" Rows="2" TextMode="MultiLine"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo</strong></h5>
