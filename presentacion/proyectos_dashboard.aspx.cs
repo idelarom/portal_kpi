@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using datos;
 using negocio.Componentes;
 using negocio.Entidades;
 using Newtonsoft.Json;
@@ -15,6 +16,19 @@ namespace presentacion
 {
     public partial class proyectos_dashboard : System.Web.UI.Page
     {
+
+        private void ModalShow(string modalname)
+        {
+            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                             "ModalShow('" + modalname + "');", true);
+        }
+
+        private void ModalClose(string modalname)
+        {
+            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                             "ModalCloseGlobal('" + modalname + "');", true);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -68,6 +82,72 @@ namespace presentacion
         protected void lnkgo_riesgos_Click(object sender, EventArgs e)
         {
             Response.Redirect("proyectos_evaluacion_riesgos.aspx?id_proyecto="+Request.QueryString["id_proyecto"]);
+        }
+
+        protected void lnkterminarproyecto_Click(object sender, EventArgs e)
+        {
+            ModalShow("#modal_terminacion");
+        }
+
+        protected void AsyncUpload1_FileUploaded(object sender, Telerik.Web.UI.FileUploadedEventArgs e)
+        {
+            try
+            {
+                int r = AsyncUpload1.UploadedFiles.Count;
+                if (r == 0)
+                {
+                    Toast.Error("Error al terminar proyecto: Seleccione un archivo.", this);
+                }
+                else
+                {
+                    DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/"));//path localDateTime localDate = DateTime.Now;
+                    string path_local = "files/documents/proyectos/";
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    string name = path_local + Path.GetFileNameWithoutExtension(e.File.FileName) + "_" + date + Path.GetExtension(e.File.FileName);
+                    //funciones.UploadFile(fuparchivo, dirInfo.ToString() + name.Trim(), this.Page);
+                    e.File.SaveAs(dirInfo.ToString() + name.Trim());
+                    int id_proyecto = Convert.ToInt32(hdfid_proyecto.Value);
+                    documentos documento = new documentos();
+                    documento.id_proyecto = id_proyecto;
+                    documento.path = funciones.deTextoa64(name);
+                    documento.nombre = Path.GetFileName(funciones.de64aTexto(funciones.deTextoa64(name)));
+                    documento.tamaño = e.File.ContentLength.ToString();
+                    documento.publico = true;
+                    documento.extension = Path.GetExtension(funciones.de64aTexto(funciones.deTextoa64(name)));
+                    documento.contentType = funciones.ContentType(documento.extension);
+                    documento.fecha = DateTime.Now;
+                    documento.usuario = Session["usuario"] as string;
+
+                    ProyectosCOM proyectos = new ProyectosCOM();
+                    string vmensaje = proyectos.Cerrar(id_proyecto, Session["usuario"] as string, documento);
+                    if (vmensaje == "")
+                    {
+                        System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                                    "AlertGO('Proyecto terminado correctamente.','mis_proyectos.aspx');", true);
+                    }
+                    else
+                    {
+                        Toast.Error("Error al terminar proyecto: " + vmensaje, this);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al terminar proyecto: " + ex.Message, this);
+            }
+        }
+
+        protected void lnkguardarhistorial_Click(object sender, EventArgs e)
+        {
+            int r = AsyncUpload1.UploadedFiles.Count;
+            if (r == 0)
+            {
+                Toast.Error("Error al terminar proyecto: Seleccione un archivo.", this);
+            }
         }
     }
 }

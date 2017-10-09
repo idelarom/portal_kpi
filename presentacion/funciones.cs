@@ -1,4 +1,5 @@
-﻿using negocio.Componentes;
+﻿using datos;
+using negocio.Componentes;
 using presentacion;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ namespace presentacion
     /// </summary>
     public class funciones
     {
+
+       
+
+
         public static string FirstCharToUpper(string input)
         {
             if (String.IsNullOrEmpty(input))

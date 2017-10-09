@@ -62,6 +62,9 @@
     <Compile Include="documentos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="documentos_tipos.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ayudas.cs" />
     <Compile Include="Model\dispositivos_bloqueados.cs" />
     <Compile Include="Model\grupos.cs" />

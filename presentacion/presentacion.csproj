@@ -1565,7 +1565,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="documentation\" />
-    <Folder Include="files\documents\" />
+    <Folder Include="files\documents\actividades\" />
+    <Folder Include="files\documents\proyectos\" />
     <Folder Include="files\temp\" />
     <Folder Include="files\users\" />
     <Folder Include="img\helps\" />

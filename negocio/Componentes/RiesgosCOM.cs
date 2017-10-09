@@ -68,6 +68,7 @@ namespace negocio.Componentes
                         if (documento.id_actividad == entidad2.id_actividad)
                         {
                             documento.fecha = DateTime.Now;
+                            documento.id_documento_tipo = 1;
                             documento.usuario_edicion = null;
                             documento.id_actividad = id_actividad;
                             context.documentos.Add(documento);
@@ -199,6 +200,7 @@ namespace negocio.Componentes
                         {
                             if (documento.id_actividad == entidad2.id_actividad)
                             {
+                                documento.id_documento_tipo = 1;
                                 documento.fecha = DateTime.Now;
                                 documento.usuario_edicion = null;
                                 documento.id_actividad = id_actividad;
