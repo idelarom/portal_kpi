@@ -203,46 +203,46 @@
                                                                 <asp:Repeater ID="repeater_riesgos" OnItemCreated="repeater_riesgos_ItemCreated"
                                                                     OnItemDataBound="repeater_riesgos_ItemDataBound" runat="server">
                                                                     <ItemTemplate>
-                                                                        <tr style="font-size: 11px">
-                                                                            <td style="text-align: center;">
-                                                                                <a style="cursor: pointer;" onclick='<%# "return CargarRiesgos("+Eval("id_riesgo").ToString()+",1);" %>'>
-                                                                                    <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td style="text-align: left;"><%# Eval("riesgo") %></td>
-                                                                            <td style="text-align: center;"><%# Eval("estatus") %></td>
-                                                                            <td style="text-align: left;">
-                                                                                <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
-                                                                                    OnSelectedIndexChanged="ddlprobabilidad_rep_SelectedIndexChanged"
-                                                                                    ID="ddlprobabilidad_rep" runat="server">
-                                                                                </asp:DropDownList>
-                                                                            </td>
-                                                                            <td style="text-align: left;"><%# Eval("p_probabilidad") %>&nbsp;%</td>
-                                                                            <td style="text-align: left;">
-                                                                                <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
-                                                                                    OnSelectedIndexChanged="ddlimpacto_costo_rep_SelectedIndexChanged"
-                                                                                    ID="ddlimpacto_costo_rep" runat="server">
-                                                                                </asp:DropDownList>
-                                                                            </td>
-                                                                            <td style="text-align: left;"><%# Eval("p_impacto_costo") %>&nbsp;%</td>
-                                                                            <td style="text-align: left;">
-                                                                                <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
-                                                                                    OnSelectedIndexChanged="ddlimpacto_tiempo_rep_SelectedIndexChanged" ID="ddlimpacto_tiempo_rep" runat="server">
-                                                                                </asp:DropDownList>
-                                                                            </td>
-                                                                            <td style="text-align: left;"><%# Eval("p_impacto_tiempo") %>&nbsp;%</td>
-                                                                            <td style="text-align: center;"><%# Eval("riesgo_costo") %>&nbsp;%</td>
-                                                                            <td style="text-align: center;"><%# Eval("riesgo_tiempo") %>&nbsp;%</td>
-                                                                            <td style="text-align: left;">
-                                                                                <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
-                                                                                    OnSelectedIndexChanged="ddlestrategia_rep_SelectedIndexChanged" ID="ddlestrategia_rep" runat="server">
-                                                                                </asp:DropDownList>
-                                                                            </td>
-                                                                            <td style="text-align: center;">
-                                                                                <a class="btn btn-success btn-flat btn-xs"  onclick='<%# "return CargarRiesgos("+Eval("id_riesgo").ToString()+",2);" %>'>Acciones
-                                                                                </a>
-                                                                            </td>
-                                                                        </tr>
+                                                                                <tr style="font-size: 11px">
+                                                                                    <td style="text-align: center;">
+                                                                                        <a style="cursor: pointer;" onclick='<%# "return CargarRiesgos("+Eval("id_riesgo").ToString()+",1);" %>'>
+                                                                                            <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                    <td style="text-align: left;"><%# Eval("riesgo") %></td>
+                                                                                    <td style="text-align: center;"><%# Eval("estatus") %></td>
+                                                                                    <td style="text-align: left;">
+                                                                                        <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
+                                                                                            OnSelectedIndexChanged="ddlprobabilidad_rep_SelectedIndexChanged"
+                                                                                            ID="ddlprobabilidad_rep" runat="server">
+                                                                                        </asp:DropDownList>
+                                                                                    </td>
+                                                                                    <td style="text-align: left;"><%# Eval("p_probabilidad") %>&nbsp;%</td>
+                                                                                    <td style="text-align: left;">
+                                                                                        <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
+                                                                                            OnSelectedIndexChanged="ddlimpacto_costo_rep_SelectedIndexChanged"
+                                                                                            ID="ddlimpacto_costo_rep" runat="server">
+                                                                                        </asp:DropDownList>
+                                                                                    </td>
+                                                                                    <td style="text-align: left;"><%# Eval("p_impacto_costo") %>&nbsp;%</td>
+                                                                                    <td style="text-align: left;">
+                                                                                        <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
+                                                                                            OnSelectedIndexChanged="ddlimpacto_tiempo_rep_SelectedIndexChanged" ID="ddlimpacto_tiempo_rep" runat="server">
+                                                                                        </asp:DropDownList>
+                                                                                    </td>
+                                                                                    <td style="text-align: left;"><%# Eval("p_impacto_tiempo") %>&nbsp;%</td>
+                                                                                    <td style="text-align: center;"><%# Eval("riesgo_costo") %>&nbsp;%</td>
+                                                                                    <td style="text-align: center;"><%# Eval("riesgo_tiempo") %>&nbsp;%</td>
+                                                                                    <td style="text-align: left;">
+                                                                                        <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
+                                                                                            OnSelectedIndexChanged="ddlestrategia_rep_SelectedIndexChanged" ID="ddlestrategia_rep" runat="server">
+                                                                                        </asp:DropDownList>
+                                                                                    </td>
+                                                                                    <td style="text-align: center;">
+                                                                                        <a class="btn btn-success btn-flat btn-xs" onclick='<%# "return CargarRiesgos("+Eval("id_riesgo").ToString()+",2);" %>'>Acciones
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
                                                                     </ItemTemplate>
                                                                 </asp:Repeater>
                                                             </tbody>
@@ -522,13 +522,12 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="table table-responsive">                             
-                                        <table class="table table-responsive  table-bordered" id="tabla_historial">
+                                        <table class="table table-responsive table-condensed  table-bordered" id="tabla_historial">
                                             <thead>
                                                 <tr style="font-size: 11px;">
                                                     <th style="min-width: 30px; text-align: left;" scope="col">Seleccionar</th>
                                                     <th style="min-width: 180px; text-align: left;" scope="col">Riesgo</th>
-                                                    <th style="min-width: 85px; text-align: left;" scope="col">Proyecto</th>
-                                                    <th style="min-width: 50px; text-align: left;" scope="col">Estrategia</th>
+                                                    <th style="min-width: 100px; text-align: left;" scope="col">Tecnología</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -537,13 +536,10 @@
                                                         <tr style="font-size: 11px">
                                                             <td style="text-align: center;">
                                                                 <asp:CheckBox ID="cbxseleccionado" AutoPostBack="false" 
-                                                                    name='<%# Eval("riesgo") %>' 
-                                                                    id_riesgo_estrategia='<%# Eval("id_riesgo_estrategia") %>' 
-                                                                    CssClass='<%# Eval("id_riesgo") %>' runat="server" />   
+                                                                    name='<%# Eval("riesgo") %>' runat="server" />   
                                                              </td>
                                                             <td style="text-align: left;"><%# Eval("riesgo") %></td>
-                                                            <td style="text-align: center;"><%# Eval("proyecto") %></td>
-                                                            <td style="text-align: center;"><%# Eval("tecnologia") %></td>
+                                                            <td style="text-align: left;"><%# Eval("tecnologia") %></td>
 
                                                         </tr>
                                                     </ItemTemplate>

@@ -430,6 +430,32 @@ namespace negocio.Componentes
             }
         }
 
+        public Boolean Exists(string riesgo, int id_proyecto_evaluacion)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                var riesgos = (from r in db.riesgos
+                               where (r.riesgo.ToUpper() == riesgo && r.id_proyecto_evaluacion == id_proyecto_evaluacion
+                               && r.usuario_borrado ==  null)
+                               select new
+                               {
+                                   r.id_riesgo
+                               });
+
+                dt = To.DataTable(riesgos.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
+        }
         /// <summary>
         /// Devuelve un cursor con los riesgos por proyectos
         /// </summary>
@@ -572,28 +598,9 @@ namespace negocio.Componentes
                                where (r.usuario_borrado == null && p.id_proyecto_tecnologia== id_proyecto_tecnologia)
                                select new
                                {
-                                   pt.id_proyecto_tecnologia,
                                    tecnologia = pt.nombre,
-                                   r.id_riesgo,
-                                   r.riesgo,
-                                   r.id_riesgos_estatus,
-                                   re.estatus,
-                                   r.id_riesgo_probabilidad,
-                                   probabilidad = rp.nombre,
-                                   p_probabilidad = rp.porcentaje,
-                                   r.id_riesgo_impacto_costo,
-                                   impacto_costo = ric.nombre,
-                                   p_impacto_costo = ric.porcentaje,
-                                   r.id_riesgo_impacto_tiempo,
-                                   impacto_tiempo = rit.nombre,
-                                   p_impacto_tiempo = rit.porcentaje,
-                                   r.id_riesgo_estrategia,
-                                   estrategia = rs.nombre,
-                                   fecha_evaluacion = pe.fecha_evaluacion,
-                                   proyecto = p.proyecto,
-                                   r.riesgo_costo,
-                                   r.riesgo_tiempo
-                               });
+                                   r.riesgo                                  
+                               }).Distinct();
 
                 dt = To.DataTable(riesgos.ToList());
                 return dt;

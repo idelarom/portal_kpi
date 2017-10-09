@@ -1374,10 +1374,9 @@ namespace presentacion
                     CheckBox cbx = item.FindControl("cbxseleccionado") as CheckBox;
                     if (cbx.Checked)
                     {
-                        int id_riesgo = Convert.ToInt32(cbx.CssClass);
                         riesgos riesgo = new riesgos
                         {
-                            id_proyecto_evaluacion = Convert.ToInt32(ViewState[hdfguid.Value + "id_proyecto_evaluacion"]),
+                            id_proyecto_evaluacion = Convert.ToInt32(hdf_id_proyecto_evaluacion.Value),
                             riesgo = cbx.Attributes["name"].ToString(),
                             usuario= Session["usuario"] as string,
                             fecha_registro = DateTime.Now,
@@ -1390,16 +1389,38 @@ namespace presentacion
                             porc_imptiempo = 0,
                             riesgo_costo = 0,
                             riesgo_tiempo =0,
-                            id_riesgo_estrategia =  Convert.ToInt32(cbx.Attributes["id_riesgo_estrategia"])
-                            //usuario = entidad.usuario,
-                            //fecha_registro = DateTime.Now
+                            id_riesgo_estrategia =  1
                         };
                         list_riesgos.Add(riesgo);
                     }
                 }
                 if (list_riesgos.Count > 0)
                 {
+                    RiesgosCOM riesgos = new RiesgosCOM();
+                    string vmensaje = "";
+                    foreach (riesgos riesgo in list_riesgos)
+                    {
+                        if (!riesgos.Exists(riesgo.riesgo, Convert.ToInt32(hdf_id_proyecto_evaluacion.Value)))
+                        {
+                            vmensaje = riesgos.Agregar(riesgo,new List<actividades>(), new List<documentos>());
+                            if (vmensaje != "")
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    if (vmensaje == "")
+                    {
+                        hdfid_riesgo.Value = "";
+                        hdf_id_riesgo.Value = "";
+                        CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        ModalClose("#modal_historial");
+                        Toast.Success("Riesgos importados correctamente", "Mensaje del sistema", this);
 
+                    } else
+                    {
+                        Toast.Error("Error al seleccionar riesgo: " + vmensaje, this);
+                    }
                 }
                 else
                 {
