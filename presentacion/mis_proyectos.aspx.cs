@@ -421,7 +421,7 @@ namespace presentacion
             //{
             //    Toast.Error("Error al eliminar proyecto: " + ex.Message, this);
             //}
-            ModalShow("#modal1");
+            ModalShow("#modal_terminacion");
         }
 
         protected void btnopendashboard_Click(object sender, EventArgs e)

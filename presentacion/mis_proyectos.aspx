@@ -160,6 +160,49 @@
 
         </div>
     </div>
+    
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_terminacion" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btneliminar" EventName="Click" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Cierre de proyecto</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Documento de cierre</strong></h5>
+                                    <telerik:RadAsyncUpload RenderMode="Lightweight" ID="AsyncUpload1" runat="server"
+                                        OnFileUploaded="AsyncUpload1_FileUploaded" PostbackTriggers="lnkguardarhistorial"
+                                        MaxFileSize="2097152" Width="100%"
+                                        AutoAddFileInputs="false" Localization-Select="Seleccionar" Skin="Bootstrap" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                    <asp:LinkButton OnClientClick="return false;" ID="LinkButton2" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>&nbsp;Terminando
+                                    </asp:LinkButton>
+                                    <asp:LinkButton ID="lnkguardarhistorial"
+                                         OnClientClick="return ConfirmwidgetProyectoModal('¿Desea terminar este proyecto?');"
+                                        OnClick="lnkguardarhistorial_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
+                                            Terminar proyecto
+                                    </asp:LinkButton>
+                        </div>
+                    </div>
+                </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+           </div>
+
        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalCapturaProyectos" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel15" runat="server">
@@ -249,48 +292,6 @@
            </div>
 
 
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal1" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                <Triggers>
-                    <%--<asp:AsyncPostBackTrigger ControlID="btneliminar" EventName="Click" />--%>
-                    <asp:PostBackTrigger ControlID="btneliminar" />
-                </Triggers>
-                <ContentTemplate>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Cierre de proyecto</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Documento de cierre</strong></h5>
-                                    <telerik:RadAsyncUpload RenderMode="Lightweight" ID="AsyncUpload1" runat="server"
-                                        OnFileUploaded="AsyncUpload1_FileUploaded" PostbackTriggers="lnkguardarhistorial"
-                                        MaxFileSize="2097152" Width="100%"
-                                        AutoAddFileInputs="false" Localization-Select="Seleccionar" Skin="Bootstrap" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                                    <asp:LinkButton OnClientClick="return false;" ID="LinkButton2" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
-                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
-                                            <span class="sr-only">Loading...</span>&nbsp;Terminando
-                                    </asp:LinkButton>
-                                    <asp:LinkButton ID="lnkguardarhistorial"
-                                         OnClientClick="return ConfirmwidgetProyectoModal('¿Desea terminar este proyecto?');"
-                                        OnClick="lnkguardarhistorial_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
-                                            Terminar proyecto
-                                    </asp:LinkButton>
-                        </div>
-                    </div>
-                </ContentTemplate>
-                </asp:UpdatePanel>
-            </div>
-           </div>
     <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display: none;" />
     <asp:Button ID="btneliminar" OnClick="btneliminar_Click" runat="server" Text="Button" Style="display: none;" />
     <asp:Button ID="btnopendashboard" OnClick="btnopendashboard_Click" runat="server" Text="Button" Style="display: none;" />    
