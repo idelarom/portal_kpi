@@ -39,19 +39,19 @@
                                 <asp:Label ID="lbltecnologia" runat="server" Text="Label"></asp:Label>
                             </p>
                         </div>                     
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblestatus" runat="server" Text="Label"></asp:Label>
                             </p>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6  col-xs-12">
-                            <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo de evaluación asignado</strong></h5>
+                        <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12">
+                            <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo de evaluación</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblperiodo" runat="server" Text="Label"></asp:Label>
                             </p>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6  col-xs-12">
+                        <div class="col-lg-5 col-md-5 col-sm-5  col-xs-12">
                             <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Administrador del proyecto</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblempleado" runat="server" Text="Label"></asp:Label>

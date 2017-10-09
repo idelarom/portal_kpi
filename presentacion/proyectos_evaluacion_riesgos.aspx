@@ -130,45 +130,18 @@
         
         <div class="col-lg-12">
             <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Información general</h3>
-
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body" style="">
+                <div class="box-body with-border" style="">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                             <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Proyecto</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblproyect" runat="server" Text="Label"></asp:Label>
                             </p>
-                        </div>                           
-                        <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12">
-                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Tecnología</strong></h5>
-                            <p class="text-muted">
-                                <asp:Label ID="lbltecnologia" runat="server" Text="Label"></asp:Label>
-                            </p>
-                        </div>                     
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                            <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
-                            <p class="text-muted">
-                                <asp:Label ID="lblestatus" runat="server" Text="Label"></asp:Label>
-                            </p>
-                        </div>
+                        </div>    
                         <div class="col-lg-4 col-md-4 col-sm-6  col-xs-12">
-                            <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo de evaluación asignado</strong></h5>
+                            <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo de evaluación</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblperiodo" runat="server" Text="Label"></asp:Label>
-                            </p>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6  col-xs-12">
-                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Administrador del proyecto</strong></h5>
-                            <p class="text-muted">
-                                <asp:Label ID="lblempleado" runat="server" Text="Label"></asp:Label>
                             </p>
                         </div>
                     </div>
@@ -233,7 +206,7 @@
                                                             <thead>
                                                                 <tr style="font-size: 11px;">
                                                                     <th style="min-width: 30px; text-align: left;" scope="col">Editar</th>
-                                                                    <th style="min-width: 180px; text-align: left;" scope="col">Riesgo</th>
+                                                                    <th style="min-width: 300px; text-align: left;" scope="col">Riesgo</th>
                                                                     <th style="min-width: 40px; text-align: center;" scope="col">Estatus</th>
                                                                     <th style="min-width: 50px; text-align: left;" scope="col">Probabilidad</th>
                                                                     <th style="min-width: 10px; text-align: left;" scope="col"></th>
@@ -386,22 +359,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;% Riesgo costo</strong></h5>
                                     <asp:TextBox ID="txtriesgo_costo" ReadOnly="true" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;% Riesgo tiempo</strong></h5>
                                     <asp:TextBox ID="txtriesgo_tiempo" ReadOnly="true" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Estrategia</strong></h5>
                                     <asp:DropDownList ID="ddlestrategias" CssClass="form-control" runat="server"></asp:DropDownList>
                                 </div>
                                 
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Acciones</strong></h5>
                                     <asp:LinkButton ID="lnkacciones" OnClick="lnkacciones_Click" CssClass="btn btn-success btn-flat" runat="server">Acciones</asp:LinkButton>
                                 </div>

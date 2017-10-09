@@ -53,8 +53,8 @@ namespace presentacion
                     ViewState[hdfguid.Value + "id_proyecto_tecnologia"] = proyecto["id_proyecto_tecnologia"].ToString();
                     lblproyect.Text = proyecto["proyecto"].ToString();
                     lblperiodo.Text = proyecto["periodo"].ToString();
-                    lblestatus.Text = proyecto["estatus"].ToString();
-                    lblempleado.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(proyecto["empleado"].ToString().ToLower());
+                    //lblestatus.Text = proyecto["estatus"].ToString();
+                    //lbltecnologia.Text = proyecto["tecnologia"].ToString();
                 }
                 CargarCombos();
             }
