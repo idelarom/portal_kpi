@@ -384,7 +384,7 @@ namespace negocio.Componentes
                                      p.usuario_resp
                                  }).ToArray();
                 var tproyectos = (from p in proyectos
-                                  join emp in list_emp on p.usuario.ToUpper() equals emp.Usuario
+                                  join emp in list_emp on p.usuario_resp.ToUpper() equals emp.Usuario
                                   select new {
                                       p.usuario,
                                       p.id_proyecto,
