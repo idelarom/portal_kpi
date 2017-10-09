@@ -127,6 +127,54 @@
         <div class="col-lg-12">
             <h5 class="page-header">Evaluaciones de riesgos</h5>
         </div>
+        
+        <div class="col-lg-12">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información general</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Proyecto</strong></h5>
+                            <p class="text-muted">
+                                <asp:Label ID="lblproyect" runat="server" Text="Label"></asp:Label>
+                            </p>
+                        </div>                           
+                        <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12">
+                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Tecnología</strong></h5>
+                            <p class="text-muted">
+                                <asp:Label ID="lbltecnologia" runat="server" Text="Label"></asp:Label>
+                            </p>
+                        </div>                     
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
+                            <p class="text-muted">
+                                <asp:Label ID="lblestatus" runat="server" Text="Label"></asp:Label>
+                            </p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6  col-xs-12">
+                            <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo de evaluación asignado</strong></h5>
+                            <p class="text-muted">
+                                <asp:Label ID="lblperiodo" runat="server" Text="Label"></asp:Label>
+                            </p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6  col-xs-12">
+                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Administrador del proyecto</strong></h5>
+                            <p class="text-muted">
+                                <asp:Label ID="lblempleado" runat="server" Text="Label"></asp:Label>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-12">

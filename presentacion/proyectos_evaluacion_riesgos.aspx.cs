@@ -51,12 +51,10 @@ namespace presentacion
                     proyectos_periodos periodo = periodos.proyectos_periodo(id_proyecto_periodo);
                     hdf_dias_periodo.Value = periodo.dias.ToString();
                     ViewState[hdfguid.Value + "id_proyecto_tecnologia"] = proyecto["id_proyecto_tecnologia"].ToString();
-                    //hdfid_proyecto.Value = id_proyecto.ToString();
-                    //lblproyect.Text = proyecto["proyecto"].ToString();
-                    //lblresumen.Text = proyecto["descripcion"].ToString();
-                    //lblperiodo.Text = proyecto["periodo"].ToString();
-                    //lblestatus.Text = proyecto["estatus"].ToString();
-                    //lblempleado.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(proyecto["empleado"].ToString().ToLower());
+                    lblproyect.Text = proyecto["proyecto"].ToString();
+                    lblperiodo.Text = proyecto["periodo"].ToString();
+                    lblestatus.Text = proyecto["estatus"].ToString();
+                    lblempleado.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(proyecto["empleado"].ToString().ToLower());
                 }
                 CargarCombos();
             }
@@ -1436,7 +1434,6 @@ namespace presentacion
                 ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "Init('#tabla_historial');", true);
             }
         }
-
-       
+        
     }
 }

@@ -31,6 +31,7 @@ namespace presentacion
                 DataTable dt = proyectos.Select(id_proyecto);
                 if (dt.Rows.Count > 0)
                 {
+                    CargarRiesgos(id_proyecto);
                     DataRow proyecto = dt.Rows[0];
                     hdfid_proyecto.Value = id_proyecto.ToString();
                     lblproyect.Text = proyecto["proyecto"].ToString();
@@ -44,6 +45,23 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar información del proyecto. "+ex.Message,this);
+            }
+        }
+
+        private void CargarRiesgos(int id_proyecto)
+        {
+            try
+            {
+                RiesgosCOM riesgos = new RiesgosCOM();
+                DataTable dt = riesgos.proyectos_riesgos(id_proyecto);
+                DataView dv = dt.DefaultView;
+                dv.RowFilter = "id_riesgos_estatus = 1";
+                DataTable dt_riesgos_abierto = dv.ToTable();
+                lblnumriesgos.Text = dt_riesgos_abierto.Rows.Count.ToString();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del proyecto(riesgos): " + ex.Message, this);
             }
         }
 

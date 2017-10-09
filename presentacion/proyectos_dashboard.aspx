@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="Dashboard Proyectos" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="proyectos_dashboard.aspx.cs" Inherits="presentacion.proyectos_dashboard" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script></script>
+    <script type="text/javascript">
+        function GoRiesgos() {
+            document.getElementById('<%= lnkgo_riesgos.ClientID%>').click();
+            return true;
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
@@ -62,7 +67,8 @@
           <!-- small box -->
           <div class="small-box bg-red" onclick="return GoRiesgos();" style="cursor:pointer;">
             <div class="inner">
-              <h3>0</h3>
+              <h3>
+                  <asp:Label ID="lblnumriesgos" runat="server" Text="0"></asp:Label></h3>
 
               <p>Riesgos abiertos</p>
             </div>
