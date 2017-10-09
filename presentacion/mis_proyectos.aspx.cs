@@ -400,27 +400,28 @@ namespace presentacion
 
         protected void btneliminar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                int id_proyecto = Convert.ToInt32(hdfid_proyecto.Value == "" ? "0" : hdfid_proyecto.Value);
-                proyectos proyecto = new proyectos();
-                proyecto.id_proyecto = id_proyecto;
-                proyecto.usuario_borrado = Session["usuario"] as string;
-                string vmensaje = Eliminar(proyecto);
-                if (vmensaje == "")
-                {
-                    CargarProyectos();
-                    Toast.Success("Estatus eliminado correctamente.", "Mensaje del sistema", this);
-                }
-                else
-                {
-                    Toast.Error("Error al eliminar proyecto: " + vmensaje, this);
-                }
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al eliminar proyecto: " + ex.Message, this);
-            }
+            //try
+            //{
+            //    int id_proyecto = Convert.ToInt32(hdfid_proyecto.Value == "" ? "0" : hdfid_proyecto.Value);
+            //    proyectos proyecto = new proyectos();
+            //    proyecto.id_proyecto = id_proyecto;
+            //    proyecto.usuario_borrado = Session["usuario"] as string;
+            //    string vmensaje = Eliminar(proyecto);
+            //    if (vmensaje == "")
+            //    {
+            //        CargarProyectos();
+            //        Toast.Success("Estatus eliminado correctamente.", "Mensaje del sistema", this);
+            //    }
+            //    else
+            //    {
+            //        Toast.Error("Error al eliminar proyecto: " + vmensaje, this);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Toast.Error("Error al eliminar proyecto: " + ex.Message, this);
+            //}
+            ModalShow("#modal1");
         }
 
         protected void btnopendashboard_Click(object sender, EventArgs e)
@@ -450,5 +451,66 @@ namespace presentacion
                 lblbemp.Style["display"] = "none";
             }
         }
+
+        protected void AsyncUpload1_FileUploaded(object sender, Telerik.Web.UI.FileUploadedEventArgs e)
+        {
+            try
+            {
+                int r = AsyncUpload1.UploadedFiles.Count;
+                if (r == 0)
+                {
+                    Toast.Error("Error al terminar proyecto: Seleccione un archivo.", this);
+                }
+                else
+                {
+                    DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/"));//path localDateTime localDate = DateTime.Now;
+                    string path_local = "files/documents/proyectos/";
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    string name = path_local + Path.GetFileNameWithoutExtension(e.File.FileName) + "_" + date + Path.GetExtension(e.File.FileName);
+                    //funciones.UploadFile(fuparchivo, dirInfo.ToString() + name.Trim(), this.Page);
+                    e.File.SaveAs(dirInfo.ToString() + name.Trim());
+                    int id_proyecto = Convert.ToInt32(hdfid_proyecto.Value);
+                    documentos documento = new documentos();
+                    documento.id_proyecto = id_proyecto;
+                    documento.path = funciones.deTextoa64(name);
+                    documento.nombre = Path.GetFileName(funciones.de64aTexto(funciones.deTextoa64(name)));
+                    documento.tamaño = e.File.ContentLength.ToString();
+                    documento.publico = true;
+                    documento.extension = Path.GetExtension(funciones.de64aTexto(funciones.deTextoa64(name)));
+                    documento.contentType = funciones.ContentType(documento.extension);
+                    documento.fecha = DateTime.Now;
+                    documento.usuario = Session["usuario"] as string;
+
+                    ProyectosCOM proyectos = new ProyectosCOM();
+                    string vmensaje = proyectos.Cerrar(id_proyecto, Session["usuario"] as string, documento);
+                    if (vmensaje == "")
+                    {
+                        System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                                    "AlertGO('Proyecto terminado correctamente.','mis_proyectos.aspx');", true);
+                    }
+                    else
+                    {
+                        Toast.Error("Error al terminar proyecto: " + vmensaje, this);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al terminar proyecto: " + ex.Message, this);
+            }
+        }
+
+        protected void lnkguardarhistorial_Click(object sender, EventArgs e)
+        {
+            int r = AsyncUpload1.UploadedFiles.Count;
+            if (r == 0)
+            {
+                Toast.Error("Error al terminar proyecto: Seleccione un archivo.", this);
+            }
+        }        
     }
 }
