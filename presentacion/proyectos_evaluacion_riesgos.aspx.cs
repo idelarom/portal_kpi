@@ -1363,6 +1363,13 @@ namespace presentacion
             {
                 Toast.Error("Error al cargar riesgo: " + ex.Message, this);
             }
+            finally {
+                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
+                {
+                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
+                    div.Style["display"] = "none";
+                }
+            }
         }
 
         protected void lnkdescargararchivo_Click(object sender, EventArgs e)
