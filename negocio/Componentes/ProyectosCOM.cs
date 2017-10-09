@@ -34,6 +34,7 @@ namespace negocio.Componentes
                         id_proyecto_periodo = entidad.id_proyecto_periodo,
                         id_proyecto_estatus = entidad.id_proyecto_estatus,
                         proyecto = entidad.proyecto,
+                        usuario_resp = entidad.usuario_resp,
                         descripcion = entidad.descripcion,
                         cveoport = entidad.cveoport,
                         folio_pmt = entidad.folio_pmt,
@@ -47,6 +48,7 @@ namespace negocio.Componentes
                         usuario = entidad.usuario.ToUpper(),                    
                         fecha_registro = DateTime.Now,
                         id_proyecto_tecnologia= entidad.id_proyecto_tecnologia
+                       
                     };
                     Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                     context.proyectos.Add(proyecto);
@@ -93,6 +95,7 @@ namespace negocio.Componentes
                 proyecto.usuario_edicion = entidad.usuario_edicion.ToUpper();
                 proyecto.fecha_edicion = DateTime.Now;
                 proyecto.id_proyecto_tecnologia = entidad.id_proyecto_tecnologia;
+                proyecto.usuario_resp = entidad.usuario_resp;
                 context.SaveChanges();
                 return "";
             }
@@ -259,14 +262,15 @@ namespace negocio.Componentes
                                      p.descripcion,
                                      p.fecha_registro,
                                      p.fecha_inicio,
-                                     p.fecha_fin
+                                     p.fecha_fin,
+                                     p.usuario_resp
                                  }).ToArray();
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in proyectos
-                              join up in dbnavision.Employee on p.usuario.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
+                              join up in dbnavision.Employee on p.usuario_resp.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
                               select new
                               {
-                                  usuario = p.usuario,
+                                  usuario = p.usuario_resp,
                                   empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
                                   p.id_proyecto,
                                   p.id_proyecto_estatus,
@@ -341,7 +345,8 @@ namespace negocio.Componentes
                                      p.descripcion,
                                      p.fecha_registro,
                                      p.fecha_inicio,
-                                     p.fecha_fin
+                                     p.fecha_fin,
+                                     p.usuario_resp
                                  }).ToArray();
                 var tproyectos = (from p in proyectos
                                   join emp in list_emp on p.usuario.ToUpper() equals emp.Usuario
@@ -360,14 +365,15 @@ namespace negocio.Componentes
                                       p.fecha_inicio,
                                       p.fecha_fin,
                                       p.id_proyecto_tecnologia,
-                                      p.tecnologia
+                                      p.tecnologia,
+                                      p.usuario_resp
                                   });
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in tproyectos
-                              join up in dbnavision.Employee on p.usuario.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
+                              join up in dbnavision.Employee on p.usuario_resp.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
                               select new
                               {
-                                  usuario = p.usuario,
+                                  usuario = p.usuario_resp,
                                   empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
                                   p.id_proyecto,
                                   p.id_proyecto_estatus,
