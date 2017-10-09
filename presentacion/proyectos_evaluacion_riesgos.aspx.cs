@@ -53,14 +53,32 @@ namespace presentacion
                     ViewState[hdfguid.Value + "id_proyecto_tecnologia"] = proyecto["id_proyecto_tecnologia"].ToString();
                     lblproyect.Text = proyecto["proyecto"].ToString();
                     lblperiodo.Text = proyecto["periodo"].ToString();
-                    //lblestatus.Text = proyecto["estatus"].ToString();
-                    //lbltecnologia.Text = proyecto["tecnologia"].ToString();
                 }
                 CargarCombos();
+
             }
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar información del proyecto. " + ex.Message, this);
+            }
+        }
+
+        /// <summary>
+        /// Indica si el proyecto fue terminado
+        /// </summary>
+        /// <returns></returns>
+        private bool ProyectoTerminado()
+        {
+            try
+            {
+                ProyectosCOM proyectos = new ProyectosCOM();
+                bool terminado = proyectos.ProyectoTerminado(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                return terminado;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del cierre de proyecto: " + ex.Message, this);
+                return false;
             }
         }
 
@@ -272,17 +290,26 @@ namespace presentacion
         {
             try
             {
-                int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
-                DateTime fecha_evaluacion = fecha_siguiente_evaluacion(id_proyecto, Convert.ToInt32(hdf_dias_periodo.Value == ""?"0":hdf_dias_periodo.Value));
-                string vmensaje = AgregarEvaluacion(id_proyecto, fecha_evaluacion);
-                if (vmensaje == "")
+                if (!ProyectoTerminado())
                 {
-                    Toast.Success("Evaluación agregada correctamente.","Mensaje del sistema", this);
-                    CargarInformacionInicial(id_proyecto);
+                    int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
+                    DateTime fecha_evaluacion = fecha_siguiente_evaluacion(id_proyecto, Convert.ToInt32(hdf_dias_periodo.Value == "" ? "0" : hdf_dias_periodo.Value));
+                    string vmensaje = AgregarEvaluacion(id_proyecto, fecha_evaluacion);
+                    if (vmensaje == "")
+                    {
+                        Toast.Success("Evaluación agregada correctamente.", "Mensaje del sistema", this);
+                        CargarInformacionInicial(id_proyecto);
+                    }
+                    else
+                    {
+                        Toast.Error("Error al generar nueva evaluación: " + vmensaje, this);
+                    }
+
                 }
                 else
                 {
-                    Toast.Error("Error al generar nueva evaluación: " + vmensaje, this);
+                    Toast.Error("El proyecto ya fue cerrado y no puede generarse ninguna información adicional.", this);
+
                 }
             }
             catch (Exception ex)
@@ -383,26 +410,35 @@ namespace presentacion
         {
             string command = e.CommandName.ToLower();
             hdf_id_proyecto_evaluacion.Value = e.CommandArgument.ToString();
-            switch (command)
+            if (!ProyectoTerminado())
             {
-                case "nuevo_riesgo":
-                    Session[hdfguid.Value + "list_actividades"] = null;
-                    Session[hdfguid.Value + "list_documentos"] = null;
-                    hdf_id_riesgo.Value = "";
-                    CargarCombos();
-                    txtriesgo.Text = "";
-                    txtimpacto_costo.Text = "";
-                    txtimpacto_tiempo.Text = "";
-                    txtpprobabilidad.Text = "";
-                    ModalShow("#modal_riesgo");
-                    break;
-                case "importar_riesgos":
+                switch (command)
+                {
+                    case "nuevo_riesgo":
+                        Session[hdfguid.Value + "list_actividades"] = null;
+                        Session[hdfguid.Value + "list_documentos"] = null;
+                        hdf_id_riesgo.Value = "";
+                        CargarCombos();
+                        txtriesgo.Text = "";
+                        txtimpacto_costo.Text = "";
+                        txtimpacto_tiempo.Text = "";
+                        txtpprobabilidad.Text = "";
+                        ModalShow("#modal_riesgo");
+                        break;
+                    case "importar_riesgos":
 
-                    int id_proyecto_tecnologia = Convert.ToInt32(ViewState[hdfguid.Value + "id_proyecto_tecnologia"]);
-                    CargarRiesgosHistorial(id_proyecto_tecnologia);
-                    ModalShow("#modal_historial");
-                    break;
+                        int id_proyecto_tecnologia = Convert.ToInt32(ViewState[hdfguid.Value + "id_proyecto_tecnologia"]);
+                        CargarRiesgosHistorial(id_proyecto_tecnologia);
+                        ModalShow("#modal_historial");
+                        break;
+                }
             }
+            else
+            {
+                Toast.Error("El proyecto ya fue cerrado y no puede generarse ninguna información adicional.", this);
+
+            }
+            
         }
 
         protected void ddlprobabilidad_SelectedIndexChanged(object sender, EventArgs e)
@@ -542,6 +578,7 @@ namespace presentacion
         {
             try
             {
+
                 if (Session[hdfguid.Value + "list_actividades"] == null)
                 {
                     List<actividades> actividades = new List<actividades>();
@@ -573,8 +610,12 @@ namespace presentacion
 
                 List<actividades> lstactividades = Session[hdfguid.Value + "list_actividades"] as List<datos.actividades>;
                 List<documentos> lstdocumentos = Session[hdfguid.Value + "list_documentos"] as List<datos.documentos>;
-                
-                if (riesgo.riesgo == "")
+                if (ProyectoTerminado())
+                {
+                    Toast.Error("Error al guardar riesgo: El proyecto ya fue cerrado, y no puede generarse ninguna información adicional.", this);
+
+                }
+                else if (riesgo.riesgo == "")
                 {
                     Toast.Error("Error al guardar riesgo: Ingrese un nombre para el riesgo.", this);
                 }
@@ -917,7 +958,11 @@ namespace presentacion
                 int r = AsyncUpload1.UploadedFiles.Count;
                 int id_riesgo = Convert.ToInt32(hdfid_riesgo.Value == "" ? "0" : hdfid_riesgo.Value);
                 int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
-                if (r == 0)
+                if (ProyectoTerminado())
+                {
+                    Toast.Error("Error al guardar acción: El proyecto fue terminado y no puede generarse ninguna información adicional.", this);
+                }
+                else if (r == 0)
                 {
                     Toast.Error("Error al guardar acción: Ingrese seleccione un archivo.", this);
                 }
@@ -1000,29 +1045,37 @@ namespace presentacion
         {
             try
             {
-                LinkButton lnk = sender as LinkButton;
-                int id_riesgo = Convert.ToInt32(hdfid_riesgo.Value == "" ? "0" : hdfid_riesgo.Value);
-                int id_actividad = Convert.ToInt32(lnk.CommandArgument);
-                string vmensaje = "";
-                //si tiene id de riesgo, quiere decir que estamos dentro de un modal de edicion y eliminaremos el registro directo en la bd
-                if (id_riesgo > 0)
+                if (!ProyectoTerminado())
                 {
-                    ActividadesCOM actividades = new ActividadesCOM();
-                    vmensaje = actividades.Eliminar(id_actividad, Session["usuario"] as string);
+                    LinkButton lnk = sender as LinkButton;
+                    int id_riesgo = Convert.ToInt32(hdfid_riesgo.Value == "" ? "0" : hdfid_riesgo.Value);
+                    int id_actividad = Convert.ToInt32(lnk.CommandArgument);
+                    string vmensaje = "";
+                    //si tiene id de riesgo, quiere decir que estamos dentro de un modal de edicion y eliminaremos el registro directo en la bd
+                    if (id_riesgo > 0)
+                    {
+                        ActividadesCOM actividades = new ActividadesCOM();
+                        vmensaje = actividades.Eliminar(id_actividad, Session["usuario"] as string);
 
-                }
+                    }
 
-                if (vmensaje == "")
-                {
-                    EliminarAccionTemporal(id_actividad);
-                    CargarGridAcciones();
-                    Toast.Success("Acción eliminada correctamente", "Mensaje del sistema", this);
+                    if (vmensaje == "")
+                    {
+                        EliminarAccionTemporal(id_actividad);
+                        CargarGridAcciones();
+                        Toast.Success("Acción eliminada correctamente", "Mensaje del sistema", this);
+                    }
+                    else
+                    {
+                        Toast.Error("Error al eliminar acción: " + vmensaje, this);
+
+                    }
                 }
                 else
                 {
-                    Toast.Error("Error al eliminar acción: " + vmensaje, this);
-
+                    Toast.Error("El proyecto ha sido terminado y no puede generarse ninguna información adicional.", this);
                 }
+              
               
                
             }
@@ -1041,26 +1094,34 @@ namespace presentacion
         {
             try
             {
-                DropDownList ddl = sender as DropDownList;
-                RiesgosCOM riesgos = new RiesgosCOM();
-                int id_riesgo_probabilidad = Convert.ToInt32(ddl.SelectedValue);
-                int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
-                int id_riesgo_probabilidad_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_probabilidad_selected"]);
-                if (id_riesgo_probabilidad > 0 && id_riesgo_probabilidad != id_riesgo_probabilidad_selected)
+                if (!ProyectoTerminado())
                 {
-                    RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
-                    riesgos_probabilidad probabilidad = probabilidades.impacto(id_riesgo_probabilidad);
-                    string vmensaje = riesgos.EditarProbabilidad(id_riesgo, id_riesgo_probabilidad, probabilidad.porcentaje, Session["usuario"] as string);
-                    if (vmensaje == "")
+                    DropDownList ddl = sender as DropDownList;
+                    RiesgosCOM riesgos = new RiesgosCOM();
+                    int id_riesgo_probabilidad = Convert.ToInt32(ddl.SelectedValue);
+                    int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
+                    int id_riesgo_probabilidad_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_probabilidad_selected"]);
+                    if (id_riesgo_probabilidad > 0 && id_riesgo_probabilidad != id_riesgo_probabilidad_selected)
                     {
-                        ddl.Attributes["id_riesgo_probabilidad_selected"] = id_riesgo_probabilidad.ToString();
-                        CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                    }
-                    else
-                    {
-                        Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
+                        riesgos_probabilidad probabilidad = probabilidades.impacto(id_riesgo_probabilidad);
+                        string vmensaje = riesgos.EditarProbabilidad(id_riesgo, id_riesgo_probabilidad, probabilidad.porcentaje, Session["usuario"] as string);
+                        if (vmensaje == "")
+                        {
+                            ddl.Attributes["id_riesgo_probabilidad_selected"] = id_riesgo_probabilidad.ToString();
+                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        }
+                        else
+                        {
+                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        }
                     }
                 }
+                else
+                {
+                    Toast.Error("El proyecto ha sido terminado y no puede generarse ninguna información adicional.", this);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -1080,26 +1141,34 @@ namespace presentacion
 
             try
             {
-                DropDownList ddl = sender as DropDownList;
-                RiesgosCOM riesgos = new RiesgosCOM();
-                int id_riesgo_impacto_costo = Convert.ToInt32(ddl.SelectedValue);
-                int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
-                int id_riesgo_impacto_costo_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_impacto_costo_selected"]);
-                if (id_riesgo_impacto_costo > 0 && id_riesgo_impacto_costo != id_riesgo_impacto_costo_selected)
+                if (!ProyectoTerminado())
                 {
-                    RiesgosImpactoCostosCOM probabilidades = new RiesgosImpactoCostosCOM();
-                    riesgos_impacto_costo probabilidad = probabilidades.impacto(id_riesgo_impacto_costo);
-                    string vmensaje = riesgos.EditarImpactoCosto(id_riesgo, id_riesgo_impacto_costo, probabilidad.porcentaje, Session["usuario"] as string);
-                    if (vmensaje == "")
+                    DropDownList ddl = sender as DropDownList;
+                    RiesgosCOM riesgos = new RiesgosCOM();
+                    int id_riesgo_impacto_costo = Convert.ToInt32(ddl.SelectedValue);
+                    int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
+                    int id_riesgo_impacto_costo_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_impacto_costo_selected"]);
+                    if (id_riesgo_impacto_costo > 0 && id_riesgo_impacto_costo != id_riesgo_impacto_costo_selected)
                     {
-                        ddl.Attributes["id_riesgo_impacto_costo_selected"] = id_riesgo_impacto_costo.ToString();
-                        CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                    }
-                    else
-                    {
-                        Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        RiesgosImpactoCostosCOM probabilidades = new RiesgosImpactoCostosCOM();
+                        riesgos_impacto_costo probabilidad = probabilidades.impacto(id_riesgo_impacto_costo);
+                        string vmensaje = riesgos.EditarImpactoCosto(id_riesgo, id_riesgo_impacto_costo, probabilidad.porcentaje, Session["usuario"] as string);
+                        if (vmensaje == "")
+                        {
+                            ddl.Attributes["id_riesgo_impacto_costo_selected"] = id_riesgo_impacto_costo.ToString();
+                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        }
+                        else
+                        {
+                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        }
                     }
                 }
+                else
+                {
+                    Toast.Error("El proyecto ha sido terminado y no puede generarse ninguna información adicional.", this);
+                }
+               
             }
             catch (Exception ex)
             {
@@ -1119,26 +1188,34 @@ namespace presentacion
         {
             try
             {
-                DropDownList ddl = sender as DropDownList;
-                RiesgosCOM riesgos = new RiesgosCOM();
-                int id_riesgo_impacto_tiempo = Convert.ToInt32(ddl.SelectedValue);
-                int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
-                int id_riesgo_impacto_tiempo_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_impacto_tiempo_selected"]);
-                if (id_riesgo_impacto_tiempo > 0 && id_riesgo_impacto_tiempo  != id_riesgo_impacto_tiempo_selected)
+                if (!ProyectoTerminado())
                 {
-                    RiesgosImpactoTiempoCOM probabilidades = new RiesgosImpactoTiempoCOM();
-                    riesgos_impacto_tiempo probabilidad = probabilidades.impacto(id_riesgo_impacto_tiempo);
-                    string vmensaje = riesgos.EditarImpactoTiempo(id_riesgo, id_riesgo_impacto_tiempo, probabilidad.porcentaje, Session["usuario"] as string);
-                    if (vmensaje == "")
+                    DropDownList ddl = sender as DropDownList;
+                    RiesgosCOM riesgos = new RiesgosCOM();
+                    int id_riesgo_impacto_tiempo = Convert.ToInt32(ddl.SelectedValue);
+                    int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
+                    int id_riesgo_impacto_tiempo_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_impacto_tiempo_selected"]);
+                    if (id_riesgo_impacto_tiempo > 0 && id_riesgo_impacto_tiempo != id_riesgo_impacto_tiempo_selected)
                     {
-                        ddl.Attributes["id_riesgo_impacto_tiempo_selected"] = id_riesgo_impacto_tiempo.ToString();
-                        CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                    }
-                    else
-                    {
-                        Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        RiesgosImpactoTiempoCOM probabilidades = new RiesgosImpactoTiempoCOM();
+                        riesgos_impacto_tiempo probabilidad = probabilidades.impacto(id_riesgo_impacto_tiempo);
+                        string vmensaje = riesgos.EditarImpactoTiempo(id_riesgo, id_riesgo_impacto_tiempo, probabilidad.porcentaje, Session["usuario"] as string);
+                        if (vmensaje == "")
+                        {
+                            ddl.Attributes["id_riesgo_impacto_tiempo_selected"] = id_riesgo_impacto_tiempo.ToString();
+                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        }
+                        else
+                        {
+                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        }
                     }
                 }
+                else
+                {
+                    Toast.Error("El proyecto ha sido terminado y no puede generarse ninguna información adicional.", this);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -1159,24 +1236,32 @@ namespace presentacion
         {
             try
             {
-                DropDownList ddl = sender as DropDownList;
-                RiesgosCOM riesgos = new RiesgosCOM();
-                int id_estrategia = Convert.ToInt32(ddl.SelectedValue);
-                int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
-                int id_riesgo_estrategia_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_estrategia_selected"]);
-                if (id_estrategia > 0 && id_estrategia != id_riesgo_estrategia_selected)
+                if (!ProyectoTerminado())
                 {
-                    string vmensaje = riesgos.EditarImpactoEstrategia(id_riesgo, id_estrategia, Session["usuario"] as string);
-                    if (vmensaje == "")
+                    DropDownList ddl = sender as DropDownList;
+                    RiesgosCOM riesgos = new RiesgosCOM();
+                    int id_estrategia = Convert.ToInt32(ddl.SelectedValue);
+                    int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
+                    int id_riesgo_estrategia_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_estrategia_selected"]);
+                    if (id_estrategia > 0 && id_estrategia != id_riesgo_estrategia_selected)
                     {
-                        ddl.Attributes["id_riesgo_estrategia_selected"] = id_riesgo.ToString();
-                        CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                    }
-                    else
-                    {
-                        Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        string vmensaje = riesgos.EditarImpactoEstrategia(id_riesgo, id_estrategia, Session["usuario"] as string);
+                        if (vmensaje == "")
+                        {
+                            ddl.Attributes["id_riesgo_estrategia_selected"] = id_riesgo.ToString();
+                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        }
+                        else
+                        {
+                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        }
                     }
                 }
+                else
+                {
+                    Toast.Error("El proyecto ha sido terminado y no puede generarse ninguna información adicional.", this);
+                }
+               
             }
             catch (Exception ex)
             {
@@ -1237,11 +1322,13 @@ namespace presentacion
                                 string nombre = row["nombre"].ToString();
                                 int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
                                 DateTime? fecha_ejecucion = null;
-                                if (row["fecha_ejecucion"] != DBNull.Value) {
-                                    fecha_ejecucion =Convert.ToDateTime(row["fecha_ejecucion"]);
+                                if (row["fecha_ejecucion"] != DBNull.Value)
+                                {
+                                    fecha_ejecucion = Convert.ToDateTime(row["fecha_ejecucion"]);
                                 }
                                 DateTime? fecha_asignacion = null;
-                                if (row["fecha_asignacion"] != DBNull.Value) {
+                                if (row["fecha_asignacion"] != DBNull.Value)
+                                {
                                     fecha_asignacion = Convert.ToDateTime(row["fecha_asignacion"]);
                                 }
                                 string usuario_resp = row["usuario_resp"].ToString();
@@ -1258,7 +1345,7 @@ namespace presentacion
                                     size = dt_documento.Rows[0]["tamaño"].ToString();
                                     id_documento = Convert.ToInt32(dt_documento.Rows[0]["id_documento"]);
                                 }
-                                AgregarAccionTemporal(Convert.ToInt32(row["id_actividad"]), id_proyecto, id_riesgo, nombre, usuario_resp, 
+                                AgregarAccionTemporal(Convert.ToInt32(row["id_actividad"]), id_proyecto, id_riesgo, nombre, usuario_resp,
                                     empleado_resp, fecha_ejecucion, fecha_asignacion, path, size, true, id_documento);
                             }
                         }
@@ -1266,10 +1353,11 @@ namespace presentacion
                         ModalShow("#modal_riesgo");
                         if (command == 2)
                         {
-                            lnkacciones_Click(null,null);
+                            lnkacciones_Click(null, null);
                         }
                     }
                 }
+
             }
             catch (Exception ex)
             {
@@ -1361,68 +1449,77 @@ namespace presentacion
         {
             try
             {
-
-                List<riesgos> list_riesgos = new List<riesgos>();
-                foreach (RepeaterItem item in repetaer_historial_riesgos.Items)
+                if (!ProyectoTerminado())
                 {
-                    //HUMBERTO 06/10/2017 06:19 pm
-                    //AQUI ME QUEDE
 
-                    //INSERTAMOS LOS RIESGOS SELECCIONADOS
-                    CheckBox cbx = item.FindControl("cbxseleccionado") as CheckBox;
-                    if (cbx.Checked)
+                    List<riesgos> list_riesgos = new List<riesgos>();
+                    foreach (RepeaterItem item in repetaer_historial_riesgos.Items)
                     {
-                        riesgos riesgo = new riesgos
+                        //HUMBERTO 06/10/2017 06:19 pm
+                        //AQUI ME QUEDE
+
+                        //INSERTAMOS LOS RIESGOS SELECCIONADOS
+                        CheckBox cbx = item.FindControl("cbxseleccionado") as CheckBox;
+                        if (cbx.Checked)
                         {
-                            id_proyecto_evaluacion = Convert.ToInt32(hdf_id_proyecto_evaluacion.Value),
-                            riesgo = cbx.Attributes["name"].ToString(),
-                            usuario= Session["usuario"] as string,
-                            fecha_registro = DateTime.Now,
-                            id_riesgos_estatus = 1,
-                            id_riesgo_probabilidad = 1,
-                            porc_probabilidad = 0,
-                            id_riesgo_impacto_costo = 1,
-                            porc_impcosto = 0,
-                            id_riesgo_impacto_tiempo = 1,
-                            porc_imptiempo = 0,
-                            riesgo_costo = 0,
-                            riesgo_tiempo =0,
-                            id_riesgo_estrategia =  1
-                        };
-                        list_riesgos.Add(riesgo);
-                    }
-                }
-                if (list_riesgos.Count > 0)
-                {
-                    RiesgosCOM riesgos = new RiesgosCOM();
-                    string vmensaje = "";
-                    foreach (riesgos riesgo in list_riesgos)
-                    {
-                        if (!riesgos.Exists(riesgo.riesgo, Convert.ToInt32(hdf_id_proyecto_evaluacion.Value)))
-                        {
-                            vmensaje = riesgos.Agregar(riesgo,new List<actividades>(), new List<documentos>());
-                            if (vmensaje != "")
+                            riesgos riesgo = new riesgos
                             {
-                                break;
-                            }
+                                id_proyecto_evaluacion = Convert.ToInt32(hdf_id_proyecto_evaluacion.Value),
+                                riesgo = cbx.Attributes["name"].ToString(),
+                                usuario = Session["usuario"] as string,
+                                fecha_registro = DateTime.Now,
+                                id_riesgos_estatus = 1,
+                                id_riesgo_probabilidad = 1,
+                                porc_probabilidad = 0,
+                                id_riesgo_impacto_costo = 1,
+                                porc_impcosto = 0,
+                                id_riesgo_impacto_tiempo = 1,
+                                porc_imptiempo = 0,
+                                riesgo_costo = 0,
+                                riesgo_tiempo = 0,
+                                id_riesgo_estrategia = 1
+                            };
+                            list_riesgos.Add(riesgo);
                         }
                     }
-                    if (vmensaje == "")
+                    if (list_riesgos.Count > 0)
                     {
-                        hdfid_riesgo.Value = "";
-                        hdf_id_riesgo.Value = "";
-                        CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                        ModalClose("#modal_historial");
-                        Toast.Success("Riesgos importados correctamente", "Mensaje del sistema", this);
+                        RiesgosCOM riesgos = new RiesgosCOM();
+                        string vmensaje = "";
+                        foreach (riesgos riesgo in list_riesgos)
+                        {
+                            if (!riesgos.Exists(riesgo.riesgo, Convert.ToInt32(hdf_id_proyecto_evaluacion.Value)))
+                            {
+                                vmensaje = riesgos.Agregar(riesgo, new List<actividades>(), new List<documentos>());
+                                if (vmensaje != "")
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        if (vmensaje == "")
+                        {
+                            hdfid_riesgo.Value = "";
+                            hdf_id_riesgo.Value = "";
+                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                            ModalClose("#modal_historial");
+                            Toast.Success("Riesgos importados correctamente", "Mensaje del sistema", this);
 
-                    } else
+                        }
+                        else
+                        {
+                            Toast.Error("Error al seleccionar riesgo: " + vmensaje, this);
+                        }
+                    }
+                    else
                     {
-                        Toast.Error("Error al seleccionar riesgo: " + vmensaje, this);
+                        Toast.Error("Seleccione al menos un riesgo para importar.", this);
                     }
                 }
                 else
                 {
-                    Toast.Error("Seleccione al menos un riesgo para importar.", this);
+                    Toast.Error("Error al cargar riesgo: El proyecto ha sido terminado y no puede generarse ninguna información adicional.", this);
+
                 }
             }
             catch (Exception ex)

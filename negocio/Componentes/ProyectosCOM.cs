@@ -202,7 +202,33 @@ namespace negocio.Componentes
                 return false;
             }
         }
-        
+
+        public bool ProyectoTerminado(int id_proyecto)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                var query = context.proyectos
+                                .Where(s => s.id_proyecto == id_proyecto && s.id_proyecto_estatus == 2)
+                                .Select(u => new
+                                {
+                                    u.id_proyecto
+                                })
+                                .OrderBy(u => u.id_proyecto);
+                dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
+        }
+
         /// <summary>
         /// Devuelve una instancia de la clase proyectos
         /// </summary>
