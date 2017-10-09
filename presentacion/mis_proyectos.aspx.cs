@@ -1,6 +1,7 @@
 ﻿using datos;
 using datos.Model;
 using negocio.Componentes;
+using negocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -157,6 +158,93 @@ namespace presentacion
             return vmensaje;
         }
 
+        protected void CargarDatosempleados(string filtro)
+        {
+            try
+            {
+
+                int NumJefe = Convert.ToInt32(Session["NumJefe"]);
+                int num_empleado = Convert.ToInt32(Session["num_empleado"]);
+                Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                bool no_activos = false;
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
+                DataTable dt_empleados = new DataTable();
+                if (filtro != "")
+                {
+                    DataView dv_empleados = ds.Tables[0].DefaultView;
+                    dv_empleados.RowFilter = "nombre like '%" + filtro + "%'";
+                    if (dv_empleados.ToTable().Rows.Count <= 0)
+                    {
+                        dv_empleados.RowFilter = "usuario like '%" + filtro + "%'";
+                    }
+                    dt_empleados = dv_empleados.ToTable();
+                    if (dt_empleados.Rows.Count == 1)
+                    {
+                        int num_jefe = Convert.ToInt32(dt_empleados.Rows[0]["num_empleado"].ToString());
+                        CargarListadoEmpleado(num_jefe, false);
+                    }
+                }
+                else
+                {
+                    dt_empleados = ds.Tables[0];
+                }
+                ddlempleado_a_consultar.DataValueField = "num_empleado";
+                ddlempleado_a_consultar.DataTextField = "nombre";
+                ddlempleado_a_consultar.DataSource = dt_empleados;
+                ddlempleado_a_consultar.DataBind();
+                if (!ver_Todos_los_empleados)
+                {
+                    CargarListadoEmpleado(num_empleado, false);
+                    ddlempleado_a_consultar.SelectedValue = num_empleado.ToString();
+                    //lnkagregartodos_Click(null, null);
+                }
+
+                ddlempleado_a_consultar.Enabled = ver_Todos_los_empleados;
+                div_filtro_empleados.Visible = ver_Todos_los_empleados;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al iniciar busqueda de empleados: " + ex.Message, this);
+            }
+            finally
+            {
+
+            }
+        }
+
+        protected void CargarListadoEmpleado(int num_jefe, Boolean ver_Todos_los_empleados)
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                bool no_activos = false;
+                DataSet ds = empleados.sp_listado_empleados(num_jefe, ver_Todos_los_empleados, no_activos);
+                DataTable dt = ds.Tables[0];
+                List<SiteDataItem> siteData = new List<SiteDataItem>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    siteData.Add(new SiteDataItem(
+                        Convert.ToInt32(row["num_empleado"]),
+                        Convert.ToInt32(row["numjefe"]),
+                        row["nombre"].ToString(),
+                        row["usuario"].ToString()
+                        ));
+                }
+                //rtvListEmpleado.DataTextField = "Text";
+                //rtvListEmpleado.DataValueField = "Value";
+                //rtvListEmpleado.DataFieldID = "ID";
+                //rtvListEmpleado.DataFieldParentID = "ParentID";
+                //rtvListEmpleado.DataSource = siteData;
+                //rtvListEmpleado.DataBind();
+                //lblcountlistempleados.Text = siteData.Count.ToString();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar listado de empleados: " + ex.Message, this);
+            }
+        }
+
         protected void lnknuevoproyecto_Click(object sender, EventArgs e)
         {
             txtnombreproyecto.Text = "";
@@ -168,6 +256,19 @@ namespace presentacion
             Cargarddlperiodo();
             Cargarddlestatus();
             Cargarddltegnologia();
+            CargarDatosempleados("");
+            if (Request.QueryString["filter"] != null)
+            {
+                //lnkfiltros_Click(null, null);
+                string num_empleado = Convert.ToString(Session["num_empleado"]);
+                ListItem itwm = ddlempleado_a_consultar.Items.FindByValue(num_empleado);
+                if (Items != null)
+                {
+                    ddlempleado_a_consultar.SelectedValue = num_empleado;
+                    //ddlempleado_a_consultar_SelectedIndexChanged(null, null);
+                    //lnkagregartodos_Click(null, null);
+                }
+            }
             ModalShow("#ModalCapturaProyectos");
         }
 
@@ -188,7 +289,12 @@ namespace presentacion
                 proyecto.id_proyecto_tecnologia = Convert.ToInt32(ddltegnologia.SelectedValue);
 
                 if (id_proyecto > 0) { proyecto.id_proyecto = id_proyecto; }
-                proyecto.usuario = Session["usuario"] as string;
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                int num_empleado = Convert.ToInt32(ddlempleado_a_consultar.SelectedValue);
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, false, false);
+                DataTable dt = ds.Tables[0];
+                string Usuario = dt.Rows[0]["usuario"].ToString();
+                proyecto.usuario = Usuario;//Session["usuario"] as string;
                 if (proyecto.proyecto == "")
                 {
                     ModalShow("#ModalCapturaProyectos");
@@ -241,12 +347,12 @@ namespace presentacion
                         Cargarddltegnologia();
                         hdfid_proyecto.Value = "";
                         CargarProyectos();
-                        Toast.Success("Estatus agregado correctamente.", "Mensaje del sistema", this);
+                        Toast.Success("proyecto agregado correctamente.", "Mensaje del sistema", this);
                     }
                     else
                     {
                         ModalShow("#ModalProyectoestatus");
-                        Toast.Error("Error al procesar estatus : " + vmensaje, this);
+                        Toast.Error("Error al procesar proyecto : " + vmensaje, this);
                     }
                 }
             }
@@ -278,13 +384,15 @@ namespace presentacion
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
                         ddltegnologia.SelectedValue = proyecto.id_proyecto_tecnologia.ToString();
+                        CargarDatosempleados(proyecto.usuario);
+
                         ModalShow("#ModalCapturaProyectos");
                     }
                 }
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al cargar estatus : " + ex.Message, this);
+                Toast.Error("Error al cargar proyecto : " + ex.Message, this);
             }
         }
 
@@ -304,12 +412,12 @@ namespace presentacion
                 }
                 else
                 {
-                    Toast.Error("Error al eliminar estatus: " + vmensaje, this);
+                    Toast.Error("Error al eliminar proyecto: " + vmensaje, this);
                 }
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al eliminar estatus: " + ex.Message, this);
+                Toast.Error("Error al eliminar proyecto: " + ex.Message, this);
             }
         }
 
@@ -318,6 +426,27 @@ namespace presentacion
             string id_proyecto = funciones.deTextoa64(hdfid_proyecto.Value);
             Response.Redirect("proyectos_dashboard.aspx?id_proyecto=" + id_proyecto);
 
+        }
+
+        protected void lnksearch_Click(object sender, EventArgs e)
+        {
+            string filter = txtfilterempleado.Text;
+            try
+            {
+                if (filter.Length == 0 || filter.Length > 3)
+                {
+                    CargarDatosempleados(filter);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al filtrar empleados: " + ex.Message, this);
+            }
+            finally
+            {
+                imgloadempleado.Style["display"] = "none";
+                lblbemp.Style["display"] = "none";
+            }
         }
     }
 }

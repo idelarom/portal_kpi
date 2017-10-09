@@ -70,6 +70,11 @@
             document.getElementById('<%= btnopendashboard.ClientID%>').click();
             return true;
         }
+         function ChangedTextLoad2() {
+            $("#<%= imgloadempleado.ClientID%>").show();
+            $("#<%= lblbemp.ClientID%>").show();
+            return true;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -96,7 +101,7 @@
                                     <th style="min-width: 250px; text-align: left;" scope="col">Empleado alta</th>
                                     <th style="min-width: 100px; text-align: left;" scope="col">Estatus</th>
                                     <th style="min-width: 180px; text-align: left;" scope="col">Periodo evalucion</th>
-                                    <th style="min-width: 250px; text-align: left;" scope="col">Tegnologia</th>
+                                    <th style="min-width: 250px; text-align: left;" scope="col">Tecnologia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -154,11 +159,11 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Nombre del proyecto</strong></h5>
                                     <asp:TextBox ID="txtnombreproyecto" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
                                      <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
@@ -179,11 +184,33 @@
                                     <asp:TextBox ID="txtfolopmt" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Tegnoligia</strong></h5>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
                                     <asp:DropDownList ID="ddltegnologia" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                             </div>
-                            
+                             <div class="row">
+                                    <div class="col-lg-12 col-xs-12">
+                                        <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Seleccione el empleado responsable del proyecto</strong>
+                                            &nbsp; 
+                                        </h6>
+                                        <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
+                                            <asp:TextBox
+                                                onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
+                                                placeholder="Ingrese un filtro" runat="server"></asp:TextBox>
+                                            <span class="input-group-btn">
+                                                <asp:LinkButton ID="lnksearch" CssClass="btn btn-primary btn-flat"
+                                                    OnClientClick="return ChangedTextLoad2();" OnClick="lnksearch_Click" runat="server">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                </asp:LinkButton>
+                                            </span>
+                                        </div>
+                                        <asp:Image ID="imgloadempleado" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                        <label id="lblbemp" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
+                                        <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control"
+                                            AutoPostBack="true"  runat="server">
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
                         </div>
 
                         <div class="modal-footer ">
