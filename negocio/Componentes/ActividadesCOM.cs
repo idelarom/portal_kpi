@@ -37,6 +37,7 @@ namespace negocio.Componentes
                 {
                     if (documento.id_actividad == entidad.id_actividad)
                     {
+                        documento.id_documento_tipo = 1;
                         documento.id_actividad = id_actividad;
                         context.documentos.Add(documento);
                     }

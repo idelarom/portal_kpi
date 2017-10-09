@@ -137,6 +137,41 @@ namespace negocio.Componentes
             }
         }
 
+        public string Cerrar(int id_proyecto, string usuario, documentos documento)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                proyectos proyecto = context.proyectos
+                                .First(i => i.id_proyecto == id_proyecto);
+                proyecto.usuario_edicion = usuario.ToUpper();
+                proyecto.fecha_edicion = DateTime.Now;
+                proyecto.terminado = true;
+                proyecto.id_proyecto_estatus = 2;
+
+                DocumentosCOM documentos = new DocumentosCOM();
+                string vmensaje = documentos.Agregar(documento);
+                if (vmensaje == "")
+                {
+                    context.SaveChanges();
+                    return "";
+
+                }
+                else
+                {
+                    return "Error al anexar documento, "+vmensaje;
+                }
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
         /// <summary>
         /// Devuelve un valor booleano si existe un proyecto con el mismo nombre
         /// </summary>

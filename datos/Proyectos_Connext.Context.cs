@@ -27,6 +27,7 @@ namespace datos
     
         public virtual DbSet<actividades> actividades { get; set; }
         public virtual DbSet<documentos> documentos { get; set; }
+        public virtual DbSet<documentos_tipos> documentos_tipos { get; set; }
         public virtual DbSet<proyectos> proyectos { get; set; }
         public virtual DbSet<proyectos_estatus> proyectos_estatus { get; set; }
         public virtual DbSet<proyectos_evaluaciones> proyectos_evaluaciones { get; set; }

@@ -15,6 +15,7 @@ namespace datos
     public partial class documentos
     {
         public int id_documento { get; set; }
+        public Nullable<int> id_documento_tipo { get; set; }
         public Nullable<int> id_proyecto { get; set; }
         public Nullable<int> id_actividad { get; set; }
         public string nombre { get; set; }
@@ -32,6 +33,7 @@ namespace datos
         public Nullable<System.DateTime> fecha_borrado { get; set; }
     
         public virtual actividades actividades { get; set; }
+        public virtual documentos_tipos documentos_tipos { get; set; }
         public virtual proyectos proyectos { get; set; }
     }
 }

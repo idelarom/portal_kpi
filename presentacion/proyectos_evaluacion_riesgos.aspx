@@ -133,7 +133,7 @@
                 <div class="box-body with-border" style="">
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Proyecto</strong></h5>
+                            <h5><strong><i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;Proyecto</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblproyect" runat="server" Text="Label"></asp:Label>
                             </p>

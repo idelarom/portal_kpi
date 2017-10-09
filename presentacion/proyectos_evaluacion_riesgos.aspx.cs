@@ -932,7 +932,7 @@ namespace presentacion
                 else
                 {
                     DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/"));//path localDateTime localDate = DateTime.Now;
-                    string path_local = "files/documents/";
+                    string path_local = "files/documents/actividades/";
                     DateTime localDate = DateTime.Now;
                     string date = localDate.ToString();
                     date = date.Replace("/", "_");
