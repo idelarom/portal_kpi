@@ -160,31 +160,31 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Nombre del proyecto</strong></h5>
+                                    <h5><strong><i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;Nombre del proyecto</strong></h5>
                                     <asp:TextBox ID="txtnombreproyecto" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
-                                     <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <h5><strong><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
+                                     <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server" Rows="2"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Periodo</strong></h5>
+                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo</strong></h5>
                                      <asp:DropDownList ID="ddlperiodo" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
+                                    <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                                     <asp:DropDownList ID="ddlestatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
+                                    <h5><strong><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
                                     <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
+                                    <h5><strong><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
                                     <asp:TextBox ID="txtfolopmt" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
+                                    <h5><strong><i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
                                     <asp:DropDownList ID="ddltegnologia" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                             </div>

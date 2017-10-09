@@ -294,7 +294,9 @@ namespace presentacion
                 DataSet ds = empleados.sp_listado_empleados(num_empleado, false, false);
                 DataTable dt = ds.Tables[0];
                 string Usuario = dt.Rows[0]["usuario"].ToString();
-                proyecto.usuario = Usuario;//Session["usuario"] as string;
+                proyecto.usuario_resp = Usuario;
+                proyecto.usuario = Session["usuario"] as string;
+
                 if (proyecto.proyecto == "")
                 {
                     ModalShow("#ModalCapturaProyectos");
@@ -384,7 +386,7 @@ namespace presentacion
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
                         ddltegnologia.SelectedValue = proyecto.id_proyecto_tecnologia.ToString();
-                        CargarDatosempleados(proyecto.usuario);
+                        CargarDatosempleados(proyecto.usuario_resp);
 
                         ModalShow("#ModalCapturaProyectos");
                     }
