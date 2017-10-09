@@ -94,7 +94,7 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Editar(riesgos entidad)
+        public string Editar(riesgos entidad, List<actividades> lst_actividades, List<documentos> lstdocumentos)
         {
             try
             {
@@ -115,6 +115,99 @@ namespace negocio.Componentes
                 riesgo.id_riesgo_estrategia = entidad.id_riesgo_estrategia;
                 riesgo.usuario_edicion = entidad.usuario_edicion;
                 riesgo.fecha_edicion = DateTime.Now;
+
+                //borramos todas las actividades y documentos
+                ICollection<actividades> actividades_por_borrar = riesgo.actividades;
+                foreach (actividades actividad in actividades_por_borrar)
+                {
+                    actividad.usuario_borrado= entidad.usuario_edicion;
+                    actividad.fecha_borrado = DateTime.Now;
+                    actividad.comentarios_borrado = "Borrado por actualizacion";
+
+                    ICollection<documentos> documentos_por_borrar = actividad.documentos;
+                    foreach (documentos documento in documentos_por_borrar)
+                    {
+                        documento.usuario_borrado = entidad.usuario_edicion;
+                        documento.fecha_borrado = DateTime.Now;
+                        documento.comentarios_borrado = "Borrado por actualizacion";
+                    }
+                }
+
+
+                //actualizamos lo que venga en la lista
+                foreach (actividades entidad2 in lst_actividades)
+                {
+                    ActividadesCOM actividades = new ActividadesCOM();
+                    //si existe actualizamos, si no existe agregamos
+                    if (actividades.Exist(entidad2.id_actividad, Convert.ToInt32(entidad2.id_riesgo)))
+                    {
+                        actividades actividad = context.actividades
+                                  .First(i => i.id_actividad == entidad2.id_actividad);
+                        actividad.id_proyecto = entidad2.id_proyecto;
+                        actividad.id_riesgo = entidad2.id_riesgo;
+                        actividad.nombre = entidad2.nombre;
+                        actividad.usuario_resp = entidad2.usuario_resp;
+                        actividad.fecha_ejecucion = entidad2.fecha_ejecucion;
+                        actividad.fecha_asignacion = entidad2.fecha_asignacion;
+                        actividad.usuario = entidad2.usuario;
+                        actividad.empleado_resp = entidad2.empleado_resp;
+                        actividad.fecha_registro = DateTime.Now;
+                        actividad.usuario_borrado = null;
+                        actividad.fecha_borrado = null;
+                        actividad.comentarios_borrado = null;
+                        actividad.fecha_edicion = DateTime.Now;
+                        actividad.usuario_edicion = entidad.usuario_edicion;
+                        foreach (documentos entidad3 in lstdocumentos)
+                        {
+                            if (entidad3.id_actividad == entidad2.id_actividad)
+                            {
+                                documentos documento = context.documentos
+                                     .First(i => i.id_documento == entidad3.id_documento);
+                                documento.fecha = DateTime.Now;
+                                documento.usuario_edicion = null;
+                                documento.fecha_borrado = null;
+                                documento.usuario_borrado = null;
+                                documento.comentarios_borrado = null;
+                                documento.path = entidad3.path;
+                                documento.nombre = entidad3.nombre;
+                                documento.contentType = entidad3.contentType;
+                                documento.tamaño = entidad3.tamaño;
+                                documento.publico = entidad3.publico;
+                                documento.extension = entidad3.extension;
+                                documento.fecha_edicion = DateTime.Now;
+                                documento.usuario_edicion = entidad.usuario_edicion;
+                            }
+                        }
+                    }
+                    else {
+                        actividades actividad = new actividades
+                        {
+                            id_proyecto = entidad2.id_proyecto,
+                            id_riesgo = entidad2.id_riesgo,
+                            nombre = entidad2.nombre,
+                            usuario_resp = entidad2.usuario_resp,
+                            fecha_ejecucion = entidad2.fecha_ejecucion,
+                            fecha_asignacion = entidad2.fecha_asignacion,
+                            usuario = entidad2.usuario,
+                            empleado_resp = entidad2.empleado_resp,
+                            fecha_registro = DateTime.Now
+                        };
+                        context.actividades.Add(actividad);
+                        context.SaveChanges();
+                        int id_actividad = actividad.id_actividad;
+                        foreach (documentos documento in lstdocumentos)
+                        {
+                            if (documento.id_actividad == entidad2.id_actividad)
+                            {
+                                documento.fecha = DateTime.Now;
+                                documento.usuario_edicion = null;
+                                documento.id_actividad = id_actividad;
+                                context.documentos.Add(documento);
+                            }
+                        }
+                    }
+                }
+
 
                 context.SaveChanges();
                 return "";
@@ -297,8 +390,12 @@ namespace negocio.Componentes
                               join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                               join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                               join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                              where (r.id_riesgo == id_riesgo)
-                              select new {
+                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               where (r.id_riesgo == id_riesgo)
+                              select new
+                              {
+                                  pt.id_proyecto_tecnologia,
+                                  tecnologia = pt.nombre,
                                   r.id_riesgo,
                                   r.riesgo,
                                   r.id_riesgos_estatus,
@@ -333,6 +430,32 @@ namespace negocio.Componentes
             }
         }
 
+        public Boolean Exists(string riesgo, int id_proyecto_evaluacion)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                var riesgos = (from r in db.riesgos
+                               where (r.riesgo.ToUpper() == riesgo && r.id_proyecto_evaluacion == id_proyecto_evaluacion
+                               && r.usuario_borrado ==  null)
+                               select new
+                               {
+                                   r.id_riesgo
+                               });
+
+                dt = To.DataTable(riesgos.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
+            }
+        }
         /// <summary>
         /// Devuelve un cursor con los riesgos por proyectos
         /// </summary>
@@ -352,9 +475,12 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
+                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (p.id_proyecto == id_proyecto && r.usuario_borrado == null)
                                select new
                                {
+                                   pt.id_proyecto_tecnologia,
+                                   tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,
@@ -408,10 +534,13 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
+                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (r.id_proyecto_evaluacion == id_proyecto_Evaluacion && r.usuario_borrado == null)
                                orderby(r.riesgo)
                                select new
                                {
+                                   pt.id_proyecto_tecnologia,
+                                   tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,
@@ -451,7 +580,7 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="id_proyecto_perido"></param>
         /// <returns></returns>
-        public DataTable riesgos_historial()
+        public DataTable riesgos_historial(int id_proyecto_tecnologia)
         {
             try
             {
@@ -465,29 +594,13 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                               where (r.usuario_borrado == null)
+                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               where (r.usuario_borrado == null && p.id_proyecto_tecnologia== id_proyecto_tecnologia)
                                select new
                                {
-                                   r.id_riesgo,
-                                   r.riesgo,
-                                   r.id_riesgos_estatus,
-                                   re.estatus,
-                                   r.id_riesgo_probabilidad,
-                                   probabilidad = rp.nombre,
-                                   p_probabilidad = rp.porcentaje,
-                                   r.id_riesgo_impacto_costo,
-                                   impacto_costo = ric.nombre,
-                                   p_impacto_costo = ric.porcentaje,
-                                   r.id_riesgo_impacto_tiempo,
-                                   impacto_tiempo = rit.nombre,
-                                   p_impacto_tiempo = rit.porcentaje,
-                                   r.id_riesgo_estrategia,
-                                   estrategia = rs.nombre,
-                                   fecha_evaluacion = pe.fecha_evaluacion,
-                                   proyecto = p.proyecto,
-                                   r.riesgo_costo,
-                                   r.riesgo_tiempo
-                               });
+                                   tecnologia = pt.nombre,
+                                   r.riesgo                                  
+                               }).Distinct();
 
                 dt = To.DataTable(riesgos.ToList());
                 return dt;

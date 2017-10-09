@@ -31,6 +31,7 @@ namespace datos
         public string comentarios_borrado { get; set; }
         public Nullable<System.DateTime> fecha_borrado { get; set; }
     
+        public virtual actividades actividades { get; set; }
         public virtual proyectos proyectos { get; set; }
     }
 }

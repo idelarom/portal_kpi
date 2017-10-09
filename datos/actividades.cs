@@ -14,11 +14,18 @@ namespace datos
     
     public partial class actividades
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public actividades()
+        {
+            this.documentos = new HashSet<documentos>();
+        }
+    
         public int id_actividad { get; set; }
         public Nullable<int> id_proyecto { get; set; }
         public Nullable<int> id_riesgo { get; set; }
         public string nombre { get; set; }
         public string usuario_resp { get; set; }
+        public string empleado_resp { get; set; }
         public Nullable<System.DateTime> fecha_ejecucion { get; set; }
         public Nullable<System.DateTime> fecha_asignacion { get; set; }
         public string usuario { get; set; }
@@ -28,9 +35,10 @@ namespace datos
         public string usuario_edicion { get; set; }
         public Nullable<System.DateTime> fecha_edicion { get; set; }
         public string usuario_borrado { get; set; }
-        public string empleado_resp { get; set; }
     
         public virtual proyectos proyectos { get; set; }
         public virtual riesgos riesgos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<documentos> documentos { get; set; }
     }
 }

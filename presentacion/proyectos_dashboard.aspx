@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="Dashboard Proyectos" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="proyectos_dashboard.aspx.cs" Inherits="presentacion.proyectos_dashboard" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script></script>
+    <script type="text/javascript">
+        function GoRiesgos() {
+            document.getElementById('<%= lnkgo_riesgos.ClientID%>').click();
+            return true;
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
@@ -26,21 +31,27 @@
                             <p class="text-muted">
                                 <asp:Label ID="lblresumen" runat="server" Text="Label"></asp:Label>
                             </p>
-                        </div>
+                        </div>   
                         
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12">
+                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Tecnología</strong></h5>
+                            <p class="text-muted">
+                                <asp:Label ID="lbltecnologia" runat="server" Text="Label"></asp:Label>
+                            </p>
+                        </div>                     
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblestatus" runat="server" Text="Label"></asp:Label>
                             </p>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6  col-xs-12">
-                            <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo de evaluación asignado</strong></h5>
+                        <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12">
+                            <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo de evaluación</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblperiodo" runat="server" Text="Label"></asp:Label>
                             </p>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6  col-xs-12">
+                        <div class="col-lg-5 col-md-5 col-sm-5  col-xs-12">
                             <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Administrador del proyecto</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblempleado" runat="server" Text="Label"></asp:Label>
@@ -56,7 +67,8 @@
           <!-- small box -->
           <div class="small-box bg-red" onclick="return GoRiesgos();" style="cursor:pointer;">
             <div class="inner">
-              <h3>0</h3>
+              <h3>
+                  <asp:Label ID="lblnumriesgos" runat="server" Text="0"></asp:Label></h3>
 
               <p>Riesgos abiertos</p>
             </div>
