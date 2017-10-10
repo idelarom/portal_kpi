@@ -48,21 +48,21 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="cveoport"></param>
         /// <returns></returns>
-        public String ExistFolioOP(String Folio_Op)
+        public String ExistFoliopm(String Folio_Pm)
         {
             DataTable dt = new DataTable();
             try
             {
                 OPTrackerEntities context = new OPTrackerEntities();
                 var query = context.Oportunidad
-                                .Where(s => s.Folio_Op.Trim() == Folio_Op.Trim())
+                                .Where(s => s.Folio_Op.Trim() == Folio_Pm.Trim())
                                 .Select(u => new
                                 {
                                     u.CveOport
                                 })
                                 .OrderBy(u => u.CveOport);
                 dt = To.DataTable(query.ToList());
-                return dt.Rows.Count > 0 ? "" : "No existe ninguN folio: " + Folio_Op.ToString();
+                return dt.Rows.Count > 0 ? "" : "No existe ninguN folio: " + Folio_Pm.ToString();
             }
             catch (DbEntityValidationException ex)
             {

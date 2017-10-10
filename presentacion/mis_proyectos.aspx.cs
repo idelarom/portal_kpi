@@ -68,7 +68,7 @@ namespace presentacion
                 dt = null;
             }
             return dt;
-        }
+        }  
 
         private void CargarProyectos(int id_proyecto_estatus)
         {
@@ -194,6 +194,20 @@ namespace presentacion
             ProyectosCOM Proyecto = new ProyectosCOM();
             string vmensaje = Proyecto.Elimina(id_proyecto);
 
+            return vmensaje;
+        }
+
+        private string cveOportunidad(int cveoport)
+        {           
+            OportunidadesCOM cveoportunidad = new OportunidadesCOM();
+            string vmensaje = cveoportunidad.ExistCveOport(cveoport);            
+            return vmensaje;
+        }
+
+        private string foliopmtracker(String Folio_Pm)
+        {
+            OportunidadesCOM foliopm = new OportunidadesCOM();
+            string vmensaje = foliopm.ExistFoliopm(Folio_Pm);
             return vmensaje;
         }
 
@@ -596,6 +610,41 @@ namespace presentacion
             dt_filtros.AcceptChanges();         
             repeat_proyectos.DataSource = dt_filtros;
             repeat_proyectos.DataBind();
+        }
+
+        protected void txtcveop_TextChanged(object sender, EventArgs e)
+
+        {
+            if (txtcveop.Text!="")
+            {
+                string vmansaje = cveOportunidad(Convert.ToInt32(txtcveop.Text == "" ? "0" : txtcveop.Text));
+                if (vmansaje != "")
+                {
+                    txtcveop.Text = "";
+                    txtcveop.Focus();
+                    Toast.Error(vmansaje, this);
+                }
+            }
+           
+        }
+
+        protected void txtfolopmt_TextChanged(object sender, EventArgs e)
+        {
+            if (txtfolopmt.Text != "")
+            {
+                string vmansaje = foliopmtracker(txtfolopmt.Text);
+                if (vmansaje != "")
+                {
+                    txtfolopmt.Text = "";
+                    txtfolopmt.Focus();
+                    Toast.Error(vmansaje, this);
+                }
+            }
+        }
+
+        protected void txtcped_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
