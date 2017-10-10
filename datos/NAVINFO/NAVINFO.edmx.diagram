@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="35d575d90ec34220a5f7600ed3fb228f" Name="Diagram1">
+        <EntityTypeShape EntityType="NAVINFOModel.c_valor_ganado" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblAños" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblAprobaciones" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblAreas" Width="1.5" PointX="6" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblClientes" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblCobranzas" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblCobranzasMensuales" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblCobranzasPronosticosMensuales" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblEscalaciones" Width="1.5" PointX="11.25" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblEstatusCobranzas" Width="1.5" PointX="9" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblEstatusCobranzas2" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblEstatusEnviar" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblEstatusInventarios" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblEstatusNoEnvios" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblEstatusRechazos" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblLogError" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblMeses" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblMotivosRechazos" Width="1.5" PointX="6" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblRechazos" Width="1.5" PointX="8.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblRoles" Width="1.5" PointX="12" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblSeguimientosAprobaciones" Width="1.5" PointX="11.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblSeguimientosRechazos" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblSubEstatusCobranza1" Width="1.5" PointX="9" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblSubEstatusCobranza2" Width="1.5" PointX="9" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblSubMotivosRechazos" Width="1.5" PointX="6" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblTiposActividades" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblUsuarios" Width="1.5" PointX="14.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.dias_festivos" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.dias_inhabiles" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Employee_Relative" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.EmployeePaso" Width="1.5" PointX="16.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Esquema_EmpleadoPaso" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Horas_Trabajo_Ingenieros" Width="1.5" PointX="11.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Misc__Article_Information" Width="1.5" PointX="13.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.MotivosBaja" Width="1.5" PointX="13.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.P_Pendientes" Width="1.5" PointX="18.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Puestos_Ingenieros" Width="1.5" PointX="20.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Relative" Width="1.5" PointX="20.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tb_PrecioVentaNav" Width="1.5" PointX="20.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tb_ProductosNav" Width="1.5" PointX="20.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tbl_Concepto_Gasto_Operativo" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tbl_Empresas" Width="1.5" PointX="0.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tbl_EstatusCobranza" Width="1.5" PointX="0.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tbl_EstatusRechazo" Width="1.5" PointX="2.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tbl_Gerencias" Width="1.5" PointX="22.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tbl_Grupos_Centro_Costos" Width="1.5" PointX="22.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.C_Prueba_Sharepoint_2" Width="1.5" PointX="22.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Agrupadores_Diana" Width="1.5" PointX="22.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Agrupadores_Diana_Respaldo" Width="1.5" PointX="22.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Clientes_OP" Width="1.5" PointX="22.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Clientes_PM" Width="1.5" PointX="8.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Clientes_SaiLine" Width="1.5" PointX="24.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Cobranza_tblCobranzasMensuales_Demo" Width="1.5" PointX="24.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.dias_vacaciones" Width="1.5" PointX="0.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.EmpleadosActiveDirectory" Width="1.5" PointX="2.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.EmployeePasoPrueba" Width="1.5" PointX="4.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Filtros_Gestor" Width="1.5" PointX="10.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Info_O2C_Sharepoint" Width="1.5" PointX="12.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Info_O2C_Sharepoint_V1" Width="1.5" PointX="24.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.No_Operativos" Width="1.5" PointX="26.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Oportunidad" Width="1.5" PointX="26.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.ScanNSBuffer_Log" Width="1.5" PointX="6.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.SeguimientoObtener" Width="1.5" PointX="26.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Sueldos2" Width="1.5" PointX="26.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tb_Cubo_PmTracker_Horas_Devengadas" Width="1.5" PointX="28.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tb_Cubo_PmTracker_Horas_Devengadas_2" Width="1.5" PointX="28.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tb_Currency" Width="1.5" PointX="8.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tb_PrecioVenta" Width="1.5" PointX="28.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tbl_Estructura_Area" Width="1.5" PointX="28.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tbl_Estructura_CC" Width="1.5" PointX="28.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tbl_Estructura_CC_old" Width="1.5" PointX="28.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tbl_Estructura_Gerencia" Width="1.5" PointX="28.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tbl_Estructura_Grupo" Width="1.5" PointX="0.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tbl_Estructura_SubUnidad" Width="1.5" PointX="28.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.Tbl_Estructura_Unidad" Width="1.5" PointX="30.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tbl_Productos_20121210" Width="1.5" PointX="30.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tbl_Productos_20121210_Prueba" Width="1.5" PointX="10.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tblCostoIngeniero" Width="1.5" PointX="12.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.tblSueldos" Width="1.5" PointX="6.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.V_ExplotacionActividades_OP" Width="1.5" PointX="22.75" PointY="31.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.V_ExplotacionActividades_PM" Width="1.5" PointX="32.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.V_ExplotacionActividades_PM1" Width="1.5" PointX="0.75" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NAVINFOModel.V_ExplotacionActividades_SaiLine" Width="1.5" PointX="32.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblAprobaciones_Cobranza_tblCobranzas" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblAprobaciones_Cobranza_tblEstatusEnviar" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblAprobaciones_Cobranza_tblEstatusNoEnvios" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblEscalaciones_Cobranza_tblAreas" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblRechazos_Cobranza_tblAreas" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblUsuarios_Cobranza_tblAreas" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblCobranzas_Cobranza_tblCobranzas" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblCobranzas_Cobranza_tblEstatusCobranzas2" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblCobranzas_Cobranza_tblEstatusInventarios" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblRechazos_Cobranza_tblCobranzas" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblSeguimientosAprobaciones_Cobranza_tblCobranzas" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblSeguimientosRechazos_Cobranza_tblCobranzas" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblEscalaciones_Cobranza_tblRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblEscalaciones_Cobranza_tblUsuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblEscalaciones_Cobranza_tblUsuarios1" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblEscalaciones_Cobranza_tblUsuarios2" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblSeguimientosAprobaciones_Cobranza_tblEstatusCobranzas" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblRechazos_Cobranza_tblEstatusEnviar" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblRechazos_Cobranza_tblEstatusRechazos" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblSeguimientosRechazos_Cobranza_tblEstatusRechazos" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblRechazos_Cobranza_tblMotivosRechazos" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblSubMotivosRechazos_Cobranza_tblMotivosRechazos" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblRechazos_Cobranza_tblSubMotivosRechazos" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblUsuarios_Cobranza_tblRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblSeguimientosAprobaciones_Cobranza_tblSubEstatusCobranza1" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblSeguimientosAprobaciones_Cobranza_tblSubEstatusCobranza2" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblSeguimientosAprobaciones_Cobranza_tblTiposActividades" ManuallyRouted="false" />
+        <AssociationConnector Association="NAVINFOModel.FK_Cobranza_tblSeguimientosRechazos_Cobranza_tblTiposActividades" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="NAVINFOModel.CPED_Connext" Width="1.5" PointX="29.375" PointY="32.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

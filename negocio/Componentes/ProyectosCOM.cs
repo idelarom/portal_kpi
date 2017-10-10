@@ -48,7 +48,9 @@ namespace negocio.Componentes
                         costo =entidad.costo,
                         usuario = entidad.usuario.ToUpper(),                    
                         fecha_registro = DateTime.Now,
-                        id_proyecto_tecnologia= entidad.id_proyecto_tecnologia
+                        id_proyecto_tecnologia= entidad.id_proyecto_tecnologia,
+                        cped =entidad.cped,
+                        tipo_moneda = entidad.tipo_moneda
                        
                     };
                     Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();

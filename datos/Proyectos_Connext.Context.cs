@@ -12,6 +12,8 @@ namespace datos
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Proyectos_ConnextEntities : DbContext
     {
@@ -39,5 +41,14 @@ namespace datos
         public virtual DbSet<riesgos_impacto_costo> riesgos_impacto_costo { get; set; }
         public virtual DbSet<riesgos_impacto_tiempo> riesgos_impacto_tiempo { get; set; }
         public virtual DbSet<riesgos_probabilidad> riesgos_probabilidad { get; set; }
+    
+        public virtual ObjectResult<sp_get_cped_Result> sp_get_cped(string pdocumento)
+        {
+            var pdocumentoParameter = pdocumento != null ?
+                new ObjectParameter("pdocumento", pdocumento) :
+                new ObjectParameter("pdocumento", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_cped_Result>("sp_get_cped", pdocumentoParameter);
+        }
     }
 }
