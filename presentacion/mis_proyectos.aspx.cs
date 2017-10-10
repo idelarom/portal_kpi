@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 namespace presentacion
 {
     public partial class mis_proyectos : System.Web.UI.Page
@@ -31,11 +32,13 @@ namespace presentacion
         {
             if (!IsPostBack)
             {
-                CargarProyectos();
+                Cargarddlstatus();
+                Cargarddltechnology();
+                CargarProyectos(1);
             }
         }
 
-        private DataTable GetProyectos()
+        private DataTable GetProyectos(int id_proyecto_estatus)
         {
             DataTable dt = new DataTable();
             try
@@ -43,7 +46,7 @@ namespace presentacion
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
                 Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
                 ProyectosCOM Proyectos = new ProyectosCOM();
-                dt = Proyectos.SelectAll(num_empleado, ver_Todos_los_empleados, 1);
+                dt = Proyectos.SelectAll(num_empleado, ver_Todos_los_empleados, id_proyecto_estatus);
             }
             catch (Exception ex)
             {
@@ -67,17 +70,53 @@ namespace presentacion
             return dt;
         }
 
-        private void CargarProyectos()
+        private void CargarProyectos(int id_proyecto_estatus)
         {
             try
-            {
-                DataTable dt = GetProyectos();
+            {               
+                DataTable dt = GetProyectos(id_proyecto_estatus);
                 repeat_proyectos.DataSource = dt;
                 repeat_proyectos.DataBind();
             }
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar proyectos: " + ex.Message, this);
+            }
+        }
+
+        private void Cargarddlstatus()
+        {
+            try
+            {
+                ProyectosEstatusCOM estatus = new ProyectosEstatusCOM();
+                DataTable dt_estatus = new DataTable();
+                dt_estatus = estatus.SelectAll();
+                ddlstatus.DataValueField = "id_proyecto_estatus";
+                ddlstatus.DataTextField = "estatus";
+                ddlstatus.DataSource = dt_estatus;
+                ddlstatus.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar combo de estatus : " + ex.Message, this);
+            }
+        }
+
+        private void Cargarddltechnology()
+        {
+            try
+            {
+                ProyectosTecnologiasCOM tegnologia = new ProyectosTecnologiasCOM();
+                DataTable dt_tegnologia = new DataTable();
+                dt_tegnologia = tegnologia.SelectAll();
+                ddltechnology.DataValueField = "id_proyecto_tecnologia";
+                ddltechnology.DataTextField = "nombre";
+                ddltechnology.DataSource = dt_tegnologia;
+                ddltechnology.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar combo de tegnologias : " + ex.Message, this);
             }
         }
 
@@ -257,6 +296,9 @@ namespace presentacion
             Cargarddlestatus();
             Cargarddltegnologia();
             CargarDatosempleados("");
+            rdpfechainicial.SelectedDate = DateTime.Today;
+            rdpfechafinal.SelectedDate = DateTime.Today;
+
             if (Request.QueryString["filter"] != null)
             {
                 //lnkfiltros_Click(null, null);
@@ -297,6 +339,10 @@ namespace presentacion
                 proyecto.usuario_resp = Usuario;
                 proyecto.usuario = Session["usuario"] as string;
 
+                DateTime fechaInicial = Convert.ToDateTime(rdpfechainicial.SelectedDate);
+                DateTime fechaFinal = Convert.ToDateTime(rdpfechafinal.SelectedDate);
+                int dias = ((fechaFinal - fechaInicial)).Days;
+
                 if (proyecto.proyecto == "")
                 {
                     ModalShow("#ModalCapturaProyectos");
@@ -332,6 +378,16 @@ namespace presentacion
                     ModalShow("#ModalCapturaProyectos");
                     Toast.Error("Error al procesar tecnologia : Seleccione una tecnologia ", this);
                 }
+                else if (rdpfechainicial.SelectedDate == null)
+                {
+                    ModalShow("#ModalCapturaProyectos");
+                    Toast.Error("Error al procesar tecnologia : la fecha inicial no puede ser mayor a la fecha final ", this);
+                }
+                else if (rdpfechainicial.SelectedDate> rdpfechafinal.SelectedDate)
+                {
+                    ModalShow("#ModalCapturaProyectos");
+                    Toast.Error("Error al procesar tecnologia : la fecha inicial no puede ser mayor a la fecha final ", this);
+                }
                 else
                 {
                     proyecto.usuario_edicion = Session["usuario"] as string;
@@ -348,7 +404,7 @@ namespace presentacion
                         Cargarddlestatus();
                         Cargarddltegnologia();
                         hdfid_proyecto.Value = "";
-                        CargarProyectos();
+                        CargarProyectos(1);
                         Toast.Success("proyecto agregado correctamente.", "Mensaje del sistema", this);
                     }
                     else
@@ -363,6 +419,11 @@ namespace presentacion
                 ModalShow("#ModalProyectoestatus");
                 Toast.Error("Error al procesar estatus : " + ex.Message, this);
             }
+        }
+
+        private long DateDiff(object day, DateTime fechaInicial, DateTime fechaFinal)
+        {
+            throw new NotImplementedException();
         }
 
         protected void btneventgrid_Click(object sender, EventArgs e)
@@ -511,6 +572,30 @@ namespace presentacion
             {
                 Toast.Error("Error al terminar proyecto: Seleccione un archivo.", this);
             }
-        }        
+        }
+
+        protected void ddlstatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int id_proyecto_estatus = Convert.ToInt32(ddlstatus.SelectedValue);
+            CargarProyectos(id_proyecto_estatus);
+        }
+
+        protected void ddltechnology_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int id_proyecto_estatus = Convert.ToInt32(ddlstatus.SelectedValue);
+            DataTable dt_filtros = GetProyectos(id_proyecto_estatus);
+            foreach (DataRow dr in dt_filtros.Rows)
+            {
+                if (ddltechnology.SelectedItem.Text != dr["Tecnologia"].ToString())
+                {
+                    //dt_filtros.Rows.Remove(dr);
+                    dr.Delete();
+                    break;
+                }
+            }           
+            dt_filtros.AcceptChanges();         
+            repeat_proyectos.DataSource = dt_filtros;
+            repeat_proyectos.DataBind();
+        }
     }
 }
