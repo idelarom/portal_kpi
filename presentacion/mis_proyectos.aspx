@@ -109,6 +109,43 @@
                 <div class="box-body"><asp:LinkButton ID="lnknuevoproyecto" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevoproyecto_Click">
                 Nuevo proyecto&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
             </asp:LinkButton>
+                     <div class="row">
+     <%--   <div class="col-lg-12">
+            <h4 class="page-header">
+                <i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;<asp:Label ID="lblproyect" runat="server" Text="Mis Proyecto"></asp:Label></h4>
+            <asp:LinkButton ID="lnknuevoproyecto" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevoproyecto_Click">
+                Nuevo proyecto&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+            </asp:LinkButton>
+        </div>--%>
+        <div class="col-lg-12">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Filtros</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body" style="">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                        <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Filtro estatus</strong></h5>
+                            <asp:DropDownList ID="ddlstatus" MaxLength="250" CssClass=" form-control" runat="server" OnSelectedIndexChanged="ddlstatus_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <h5><strong><i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
+                            <asp:DropDownList ID="ddltechnology" MaxLength="250" CssClass=" form-control" runat="server" OnSelectedIndexChanged="ddltechnology_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                        </div>
+                       
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                   
                     <div class="table-responsive">
                         <table class="dvv table no-margin table-condensed">
                             <thead>
@@ -248,6 +285,22 @@
                                  <div class="col-lg-3 col-md-3 col-sm-12">
                                     <h5><strong><i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
                                     <asp:DropDownList ID="ddltegnologia" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
+                                </div>
+                                 <div class="col-lg-3 col-md-3 col-sm-6">
+                                    <h5><strong><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;CPED</strong></h5>
+                                    <asp:TextBox ID="txtcped" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                                 <div class="col-lg-3 col-md-3 col-sm-6">
+                                    <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto</strong></h5>
+                                    <asp:TextBox ID="TextBox2" MaxLength="250" CssClass=" form-control" runat="server" Enabled="true"></asp:TextBox>
+                                </div>
+                                 <div class="col-lg-3 col-md-3 col-sm-6">
+                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
+                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker> 
+                                </div>
+                                 <div class="col-lg-3 col-md-3 col-sm-6">
+                                   <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
+                                    <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
                             </div>
                              <div class="row">
