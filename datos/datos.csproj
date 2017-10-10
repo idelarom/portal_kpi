@@ -93,6 +93,273 @@
     <Compile Include="Model\usuarios_widgets.cs" />
     <Compile Include="Model\widgets.cs" />
     <Compile Include="Model\widgets_perfiles.cs" />
+    <Compile Include="NAVINFO\Agrupadores_Diana.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Agrupadores_Diana_Respaldo.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Clientes_OP.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Clientes_PM.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Clientes_SaiLine.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblAprobaciones.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblAreas.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblAños.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblClientes.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblCobranzas.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblCobranzasMensuales.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblCobranzasMensuales_Demo.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblCobranzasPronosticosMensuales.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblEscalaciones.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblEstatusCobranzas.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblEstatusCobranzas2.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblEstatusEnviar.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblEstatusInventarios.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblEstatusNoEnvios.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblEstatusRechazos.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblLogError.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblMeses.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblMotivosRechazos.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblRechazos.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblRoles.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblSeguimientosAprobaciones.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblSeguimientosRechazos.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblSubEstatusCobranza1.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblSubEstatusCobranza2.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblSubMotivosRechazos.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblTiposActividades.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Cobranza_tblUsuarios.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\CPED_Connext.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\C_Prueba_Sharepoint_2.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\c_valor_ganado.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\dias_festivos.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\dias_inhabiles.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\dias_vacaciones.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\EmpleadosActiveDirectory.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\EmployeePaso.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\EmployeePasoPrueba.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Employee_Relative.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Esquema_EmpleadoPaso.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Filtros_Gestor.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Horas_Trabajo_Ingenieros.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Info_O2C_Sharepoint.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Info_O2C_Sharepoint_V1.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Misc__Article_Information.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\MotivosBaja.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\NAVINFO.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NAVINFO.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\NAVINFO.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\NAVINFO.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NAVINFO.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\No_Operativos.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Oportunidad.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Puestos_Ingenieros.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\P_Pendientes.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Relative.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\ScanNSBuffer_Log.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\SeguimientoObtener.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Sueldos2.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tblCostoIngeniero.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tblSueldos.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tbl_Concepto_Gasto_Operativo.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tbl_Empresas.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tbl_EstatusCobranza.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tbl_EstatusRechazo.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tbl_Estructura_Area.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tbl_Estructura_CC.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tbl_Estructura_CC_old.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tbl_Estructura_Gerencia.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tbl_Estructura_Grupo.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tbl_Estructura_SubUnidad.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tbl_Estructura_Unidad.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tbl_Gerencias.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tbl_Grupos_Centro_Costos.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tbl_Productos_20121210.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tbl_Productos_20121210_Prueba.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tb_Cubo_PmTracker_Horas_Devengadas.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\Tb_Cubo_PmTracker_Horas_Devengadas_2.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tb_Currency.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tb_PrecioVenta.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tb_PrecioVentaNav.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\tb_ProductosNav.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\V_ExplotacionActividades_OP.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\V_ExplotacionActividades_PM.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\V_ExplotacionActividades_PM1.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NAVINFO\V_ExplotacionActividades_SaiLine.cs">
+      <DependentUpon>NAVINFO.tt</DependentUpon>
+    </Compile>
     <Compile Include="NAVISION\Employee.cs" />
     <Compile Include="NAVISION\NAVISION.cs" />
     <Compile Include="OPTRACKER\Accesos.cs">
@@ -441,6 +708,9 @@
     <Compile Include="riesgos_probabilidad.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_get_cped_Result.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -448,6 +718,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OPTracker.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="NAVINFO\NAVINFO.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NAVINFO.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="NAVINFO\NAVINFO.edmx.diagram">
+      <DependentUpon>NAVINFO.edmx</DependentUpon>
+    </None>
     <None Include="OPTRACKER\OPTracker.edmx.diagram">
       <DependentUpon>OPTracker.edmx</DependentUpon>
     </None>
@@ -464,6 +741,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NAVINFO\NAVINFO.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NAVINFO.edmx</DependentUpon>
+      <LastGenOutput>NAVINFO.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="NAVINFO\NAVINFO.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NAVINFO.edmx</DependentUpon>
+      <LastGenOutput>NAVINFO.cs</LastGenOutput>
+    </Content>
     <Content Include="OPTRACKER\OPTracker.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>OPTracker.edmx</DependentUpon>

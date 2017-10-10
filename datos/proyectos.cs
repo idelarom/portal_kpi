@@ -54,6 +54,7 @@ namespace datos
         public string usuario_borrado { get; set; }
         public string comentarios_borrado { get; set; }
         public Nullable<System.DateTime> fecha_borrado { get; set; }
+        public string tipo_moneda { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<actividades> actividades { get; set; }

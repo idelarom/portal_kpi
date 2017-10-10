@@ -53,6 +53,7 @@
     <Compile Include="Componentes\ActividadesCOM.cs" />
     <Compile Include="Componentes\AyudaCOM.cs" />
     <Compile Include="Componentes\ConfiguracionDashboardCOM.cs" />
+    <Compile Include="Componentes\CpedCOM.cs" />
     <Compile Include="Componentes\DashboardBonosCOM.cs" />
     <Compile Include="Componentes\DashboardCompromisosCOM.cs" />
     <Compile Include="Componentes\DocumentosCOM.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Componentes\WidgetsCOM.cs" />
     <Compile Include="Entidades\Appointment.cs" />
     <Compile Include="Entidades\ArbolInvolucrados.cs" />
+    <Compile Include="Entidades\CPED.cs" />
     <Compile Include="Entidades\EmpleadoSubordinados.cs" />
     <Compile Include="Entidades\Event.cs" />
     <Compile Include="Entidades\SiteDataItem.cs" />

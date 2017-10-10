@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="actividades">
           <Key>
             <PropertyRef Name="id_actividad" />
@@ -66,6 +66,7 @@
           <Property Name="id_proyecto_periodo" Type="int" Nullable="false" />
           <Property Name="id_proyecto_estatus" Type="int" />
           <Property Name="cped" Type="varchar" MaxLength="20" />
+          <Property Name="tipo_moneda" Type="varchar" MaxLength="5" />
           <Property Name="cveoport" Type="int" Nullable="false" />
           <Property Name="folio_pmt" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="id_cliente" Type="int" />
@@ -402,6 +403,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_get_cped" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pdocumento" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="Proyectos_ConnextModelStoreContainer">
           <EntitySet Name="actividades" EntityType="Self.actividades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="documentos" EntityType="Self.documentos" Schema="dbo" store:Type="Tables" />
@@ -478,8 +482,7 @@
             <End Role="riesgos" EntitySet="riesgos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Proyectos_ConnextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -584,6 +587,7 @@
           <NavigationProperty Name="proyectos_estatus" Relationship="Self.FK_proyectos_proyectos_estatus" FromRole="proyectos" ToRole="proyectos_estatus" />
           <NavigationProperty Name="proyectos_periodos" Relationship="Self.FK_proyectos_proyectos_periodos1" FromRole="proyectos" ToRole="proyectos_periodos" />
           <NavigationProperty Name="proyectos_tecnologias" Relationship="Self.FK_proyectos_proyectos_tecnologias" FromRole="proyectos" ToRole="proyectos_tecnologias" />
+          <Property Name="tipo_moneda" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="proyectos_estatus">
           <Key>
@@ -985,7 +989,15 @@
             <End Role="riesgos_probabilidad" EntitySet="riesgos_probabilidad" />
             <End Role="riesgos" EntitySet="riesgos" />
           </AssociationSet>
+          <FunctionImport Name="sp_get_cped" ReturnType="Collection(Proyectos_ConnextModel.sp_get_cped_Result)">
+          <Parameter Name="pdocumento" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_get_cped_Result">
+          <Property Type="String" Name="documento" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="costo" Nullable="true" Precision="18" Scale="4" />
+          <Property Type="String" Name="tipo_moneda" Nullable="true" MaxLength="5" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1050,6 +1062,7 @@
           <EntitySetMapping Name="proyectos">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos">
               <MappingFragment StoreEntitySet="proyectos">
+                <ScalarProperty Name="tipo_moneda" ColumnName="tipo_moneda" />
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
                 <ScalarProperty Name="id_proyecto_tecnologia" ColumnName="id_proyecto_tecnologia" />
                 <ScalarProperty Name="id_proyecto_periodo" ColumnName="id_proyecto_periodo" />
@@ -1223,6 +1236,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_get_cped" FunctionName="Proyectos_ConnextModel.Store.sp_get_cped">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Proyectos_ConnextModel.sp_get_cped_Result">
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="tipo_moneda" ColumnName="tipo_moneda" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
