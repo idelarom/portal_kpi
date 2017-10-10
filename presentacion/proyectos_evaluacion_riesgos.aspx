@@ -12,6 +12,7 @@
         }
     </style>
     <script type="text/javascript">
+
         var opts = {
             lines: 13 // The number of lines to draw
           , length: 28 // The length of each line
@@ -37,40 +38,113 @@
 
         $(document).ready(function () {
             Init('.dvv');
-        });
-        function Init(value) {
-            $(value).DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "language": {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+        }); 
+        function InitPagging(value) {
+            if ($.fn.dataTable.isDataTable(value)) {
+                table = $('#example').DataTable();
+            }
+            else {
+                $(value).DataTable({
+                    "paging": true,
+                    "pageLength": 8,
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "language": {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
                     }
+                });
+            }
+
+        }
+        function Init(value) {
+            if ($.fn.dataTable.isDataTable(value)) {
+                table = $('#example').DataTable();
+            }
+            else {
+                $(value).DataTable({
+                    "paging": false,
+                    "pageLength": 500,
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "language": {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    }
+                });
+            }
+           
+        }
+        
+        function ConfirmEntregableDelete(msg) {
+            if (confirm(msg)) {
+                return ReturnPrompMsg(msg);
+            } else {
+                return false;
+            }
+        }
+        function ReturnPrompMsg() {
+            var motivo = prompt("Motivo de Eliminación", "");
+            if (motivo != null) {
+                if (motivo != '') {
+                    var myHidden = document.getElementById('<%= hdfmotivos.ClientID %>');
+                    myHidden.value = motivo;
+                    return true;
+                } else {
+                    alert('ES NECESARIO EL MOTIVO DE LA ELIMINACIÓN.');
+                    ReturnPrompMsg();
+                    return false;
                 }
-            });
+            } else {
+                return false;
+            }
+
         }
         function ConfirmwidgetProyectoModal(msg) {
             if (confirm(msg)) {
@@ -130,7 +204,7 @@
         <div class="col-lg-12">
             <h5 class="page-header">Evaluaciones de riesgos</h5>
         </div>
-        
+
         <div class="col-lg-12">
             <div class="box box-danger">
                 <div class="box-body with-border" style="">
@@ -140,7 +214,7 @@
                             <p class="text-muted">
                                 <asp:Label ID="lblproyect" runat="server" Text="Label"></asp:Label>
                             </p>
-                        </div>    
+                        </div>
                         <div class="col-lg-4 col-md-4 col-sm-6  col-xs-12">
                             <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo de evaluación</strong></h5>
                             <p class="text-muted">
@@ -154,18 +228,19 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <asp:LinkButton OnClientClick="return confirm('¿Desea agregar una nueva evaluación.?');" 
-                 OnClick="lnknuevaevaluacion_Click" ID="lnknuevaevaluacion" CssClass="btn btn-primary btn-flat" 
+            <asp:LinkButton OnClientClick="return confirm('¿Desea agregar una nueva evaluación.?');"
+                OnClick="lnknuevaevaluacion_Click" ID="lnknuevaevaluacion" CssClass="btn btn-primary btn-flat"
                 runat="server">Nueva evaluación&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></asp:LinkButton>
-            </div>
+        </div>
         <div class="col-lg-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
+
                     <asp:Repeater ID="repeater_evaluaciones" runat="server" OnItemCommand="repeater_evaluaciones_ItemCommand">
                         <ItemTemplate>
                             <li id_eval='<%#Eval("id_proyecto_evaluacion") %>' class='' id="link_view" runat="server">
                                 <asp:LinkButton ID="lnkview"
-                                     CommandArgument='<%#Eval("id_proyecto_evaluacion") %>' runat="server">
+                                    CommandArgument='<%#Eval("id_proyecto_evaluacion") %>' runat="server">
                                     <%# Eval("fecha_evaluacion_str") %>
                                 </asp:LinkButton>
                             </li>
@@ -180,6 +255,7 @@
                             <asp:UpdatePanel ID="ss" runat="server" UpdateMode="Always">
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="lnkguardar" EventName="Click" />
+                                    <asp:PostBackTrigger ControlID="lnkeliminarevaluacion" />
                                 </Triggers>
                                 <ContentTemplate>
                                     <div id="load_cumpli_compromisos" class="loading" runat="server" style="display: none;">
@@ -190,8 +266,22 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;
-                                            Detalles de evaluación del dia <%# Eval("fecha_evaluacion_str") %></strong></h5>
+                                                        Detalles de evaluación del dia <%# Eval("fecha_evaluacion_str") %></strong></h5>
                                                 </div>
+                                                <div class="col-lg-4 col-md-5 col-sm-6 col-xs-6">
+                                                    <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Riesgo costo</strong></h5>
+                                                    <p class="text-muted">
+                                                        &nbsp;<%# Convert.ToDecimal(Eval("p_riesgo_costo")).ToString("P2") %> / <%# Convert.ToDecimal(Eval("riesgo_costo")).ToString("C2") %>
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-5 col-sm-6  col-xs-6">
+                                                    <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Riesgo tiempo</strong></h5>
+                                                    <p class="text-muted">
+                                                        &nbsp;<%# Convert.ToDecimal(Eval("p_riesgo_tiempo")).ToString("P2") %> / <%# Eval("riesgo_tiempo") %>&nbsp;dia(s).
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-lg-12" id="div_no_hay_riesgos" runat="server">
                                                     <p class=" text-red">Esta evaluación no contiene riesgos.</p>
                                                 </div>
@@ -202,25 +292,30 @@
                                                     <asp:LinkButton ID="lnkimportarriesgos" CssClass="btn btn-success btn-flat btn-sm" CommandName="importar_riesgos" CommandArgument='<%# Eval("id_proyecto_evaluacion") %>'
                                                         runat="server">Importar riesgos&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></asp:LinkButton>
 
+                                                    <asp:LinkButton ID="lnkeliminarevaluacion" CssClass="btn btn-danger btn-flat btn-sm" OnClientClick="return ConfirmEntregableDelete('¿Desea eliminar esta evaluación? Esta acción eliminara tambien los riesgos, acciones y documentos relacionados.');"
+                                                        OnClick="lnkeliminarevaluacion_Click" CommandArgument='<%# Eval("id_proyecto_evaluacion") %>'
+                                                        runat="server">Eliminar evaluación&nbsp;<i class="fa fa-trash" aria-hidden="true"></i></asp:LinkButton>
+
+
                                                 </div>
                                                 <div class="col-lg-12">
                                                     <div class="table table-responsive">
-                                                        <table class="table table-responsive table-hover table-condensed table-bordered">
+                                                        <table class="dvv table table-responsive table-hover table-condensed table-bordered">
                                                             <thead>
                                                                 <tr style="font-size: 11px;">
-                                                                    <th style="min-width: 30px; text-align: left;" scope="col">Editar</th>
-                                                                    <th style="min-width: 300px; text-align: left;" scope="col">Riesgo</th>
-                                                                    <th style="min-width: 40px; text-align: center;" scope="col">Estatus</th>
-                                                                    <th style="min-width: 50px; text-align: left;" scope="col">Probabilidad</th>
-                                                                    <th style="min-width: 10px; text-align: left;" scope="col"></th>
-                                                                    <th style="min-width: 90px; text-align: left;" scope="col">Impacto costo</th>
-                                                                    <th style="min-width: 10px; text-align: left;" scope="col"></th>
-                                                                    <th style="min-width: 90px; text-align: left;" scope="col">Impacto tiempo</th>
-                                                                    <th style="min-width: 10px; text-align: left;" scope="col"></th>
-                                                                    <th style="min-width: 80px; text-align: left;" scope="col">Riesgo costo</th>
-                                                                    <th style="min-width: 85px; text-align: left;" scope="col">Riesgo tiempo</th>
-                                                                    <th style="min-width: 50px; text-align: left;" scope="col">Estrategia</th>
-                                                                    <th style="min-width: 50px; text-align: left;" scope="col"></th>
+                                                                    <th style="min-width: 20px; text-align: left;" scope="col"></th>
+                                                                    <th style="min-width: 180px; text-align: left;" scope="col">Riesgo</th>
+                                                                    <th style="min-width: 20px; text-align: center;" scope="col">Estatus</th>
+                                                                    <th style="min-width: 30px; text-align: left;" scope="col">Probabilidad</th>
+                                                                    <th style="min-width: 5px; text-align: left;" scope="col"></th>
+                                                                    <th style="min-width: 60px; text-align: left;" scope="col">Impacto costo</th>
+                                                                    <th style="min-width: 5px; text-align: left;" scope="col"></th>
+                                                                    <th style="min-width: 80px; text-align: left;" scope="col">Impacto tiempo</th>
+                                                                    <th style="min-width: 5px; text-align: left;" scope="col"></th>
+                                                                    <th style="min-width: 40px; text-align: left;" scope="col">R. costo</th>
+                                                                    <th style="min-width: 50px; text-align: left;" scope="col">R. tiempo</th>
+                                                                    <th style="min-width: 30px; text-align: left;" scope="col">Estrategia</th>
+                                                                    <th style="min-width: 30px; text-align: left;" scope="col"></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -229,11 +324,14 @@
                                                                     <ItemTemplate>
                                                                         <tr style="font-size: 11px">
                                                                             <td style="text-align: center;">
-                                                                                <a style="cursor: pointer;" onclick='<%# "return CargarRiesgos("+Eval("id_riesgo").ToString()+",1);" %>'>
-                                                                                    <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                                                                                <a style="cursor: pointer;" class="btn btn-primary btn-xs btn-flat" onclick='<%# "return CargarRiesgos("+Eval("id_riesgo").ToString()+",1);" %>'>Editar
                                                                                 </a>
                                                                             </td>
-                                                                            <td style="text-align: left;"><%# Eval("riesgo") %></td>
+                                                                            <td style="text-align: left;">
+                                                                                <%# Eval("riesgo").ToString().Substring(0,(Eval("riesgo").ToString().Length>67?67:Eval("riesgo").ToString().Length))+
+                                                                                     (Eval("riesgo").ToString().Length>67?"...":"")    %>
+
+                                                                            </td>
                                                                             <td style="text-align: center;"><%# Eval("estatus") %></td>
                                                                             <td style="text-align: left;">
                                                                                 <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
@@ -268,6 +366,7 @@
                                                                             </td>
                                                                         </tr>
                                                                     </ItemTemplate>
+
                                                                 </asp:Repeater>
                                                             </tbody>
                                                         </table>
@@ -286,7 +385,7 @@
         </div>
     </div>
     <asp:HiddenField ID="hdf_dias_periodo" runat="server" />
-    
+
     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_riesgo" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="ss" runat="server" UpdateMode="Always">
@@ -315,19 +414,20 @@
                                     <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                                     <asp:DropDownList ID="ddlestatus_riesgo" CssClass="form-control" runat="server"></asp:DropDownList>
                                 </div>
-                                
+
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Probabilidad</strong></h5>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-8 col-xs-7">
                                             <asp:DropDownList ID="ddlprobabilidad"
                                                 AutoPostBack="true" OnSelectedIndexChanged="ddlprobabilidad_SelectedIndexChanged"
-                                                 CssClass="form-control" runat="server"></asp:DropDownList>
+                                                CssClass="form-control" runat="server">
+                                            </asp:DropDownList>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-4 col-xs-5">
-                                            <asp:TextBox ReadOnly="true" 
+                                            <asp:TextBox ReadOnly="true"
                                                 OnTextChanged="txtpprobabilidad_TextChanged" AutoPostBack="true"
-                                                 ID="txtpprobabilidad" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                                ID="txtpprobabilidad" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -337,14 +437,15 @@
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Impacto costo</strong></h5>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                            <asp:DropDownList ID="ddlimpacto_costo" 
-                                                 AutoPostBack="true" OnSelectedIndexChanged="ddlimpacto_costo_SelectedIndexChanged"
-                                                 CssClass="form-control" runat="server"></asp:DropDownList>
+                                            <asp:DropDownList ID="ddlimpacto_costo"
+                                                AutoPostBack="true" OnSelectedIndexChanged="ddlimpacto_costo_SelectedIndexChanged"
+                                                CssClass="form-control" runat="server">
+                                            </asp:DropDownList>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                            <asp:TextBox ID="txtimpacto_costo"  ReadOnly="true" 
-                                                 AutoPostBack="true" OnTextChanged="txtimpacto_costo_TextChanged"
-                                                 MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                            <asp:TextBox ID="txtimpacto_costo" ReadOnly="true"
+                                                AutoPostBack="true" OnTextChanged="txtimpacto_costo_TextChanged"
+                                                MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -353,12 +454,13 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                             <asp:DropDownList ID="ddlimpacto_tiempo" AutoPostBack="true"
-                                                 OnSelectedIndexChanged="ddlimpacto_tiempo_SelectedIndexChanged" CssClass="form-control" runat="server"></asp:DropDownList>
+                                                OnSelectedIndexChanged="ddlimpacto_tiempo_SelectedIndexChanged" CssClass="form-control" runat="server">
+                                            </asp:DropDownList>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                             <asp:TextBox ID="txtimpacto_tiempo" ReadOnly="true"
-                                                 OnTextChanged="txtimpacto_tiempo_TextChanged"
-                                                 MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                                OnTextChanged="txtimpacto_tiempo_TextChanged"
+                                                MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
@@ -376,7 +478,7 @@
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Estrategia</strong></h5>
                                     <asp:DropDownList ID="ddlestrategias" CssClass="form-control" runat="server"></asp:DropDownList>
                                 </div>
-                                
+
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Acciones</strong></h5>
                                     <asp:LinkButton ID="lnkacciones" OnClick="lnkacciones_Click" CssClass="btn btn-success btn-flat" runat="server">Acciones</asp:LinkButton>
@@ -391,8 +493,8 @@
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando
                             </asp:LinkButton>
-                            <asp:LinkButton ID="lnkguardar"   OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este riesgo?');" 
-                                 OnClick="lnkguardar_Click" CssClass="btn btn-primary btn-flat" runat="server">
+                            <asp:LinkButton ID="lnkguardar" OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este riesgo?');"
+                                OnClick="lnkguardar_Click" CssClass="btn btn-primary btn-flat" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                             </asp:LinkButton>
                         </div>
@@ -407,8 +509,8 @@
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="btneditarriesgo" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="lnkacciones" EventName="Click" />
-                    <asp:PostBackTrigger ControlID="btndescargardocumento"/>
-              
+                    <asp:PostBackTrigger ControlID="btndescargardocumento" />
+
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">
@@ -469,10 +571,10 @@
                                     </asp:LinkButton>
                                 </div>
                                 <div class="col-lg-12 col-xs-12">
-                                    <div class="table table-responsive" style="height: 130px; overflow: scroll;" >
+                                    <div class="table table-responsive" style="height: 130px; overflow: scroll;">
                                         <telerik:RadGrid ID="grid_acciones" runat="server" Skin="Metro">
                                             <MasterTableView AutoGenerateColumns="false" CssClass="table table-responsive table-bordered"
-                                                HeaderStyle-BackColor="White" HeaderStyle-ForeColor="Black"  style="font-size:9px"
+                                                HeaderStyle-BackColor="White" HeaderStyle-ForeColor="Black" Style="font-size: 9px"
                                                 Width="100%">
                                                 <Columns>
                                                     <telerik:GridTemplateColumn>
@@ -518,7 +620,7 @@
                                         </telerik:RadGrid>
 
                                     </div>
-                                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar acciones</button>
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar acciones</button>
                                 </div>
                                 <asp:HiddenField ID="hdfid_riesgo" runat="server" />
                             </div>
@@ -529,7 +631,7 @@
         </div>
     </div>
 
-     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_historial" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_historial" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
                 <Triggers>
@@ -545,7 +647,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="table table-responsive">                             
+                                    <div class="table table-responsive">
                                         <table class="table table-responsive table-condensed  table-bordered" id="tabla_historial">
                                             <thead>
                                                 <tr style="font-size: 11px;">
@@ -559,9 +661,9 @@
                                                     <ItemTemplate>
                                                         <tr style="font-size: 11px">
                                                             <td style="text-align: center;">
-                                                                <asp:CheckBox ID="cbxseleccionado" AutoPostBack="false" 
-                                                                    name='<%# Eval("riesgo") %>' runat="server" />   
-                                                             </td>
+                                                                <asp:CheckBox ID="cbxseleccionado" AutoPostBack="false"
+                                                                    name='<%# Eval("riesgo") %>' runat="server" />
+                                                            </td>
                                                             <td style="text-align: left;"><%# Eval("riesgo") %></td>
                                                             <td style="text-align: left;"><%# Eval("tecnologia") %></td>
 
@@ -590,7 +692,8 @@
     </div>
     <asp:HiddenField ID="hdfguid" runat="server" />
     <asp:HiddenField ID="hdfid_actividad" runat="server" />
+    <asp:HiddenField ID="hdfmotivos" runat="server" />
     <asp:HiddenField ID="hdfcommandgrid" runat="server" />
-    <asp:Button ID="btneditarriesgo" OnClick="btneditarriesgo_Click" runat="server" Text="" style="display:none" />
-    <asp:Button ID="btndescargardocumento" OnClick="lnkdescargararchivo_Click" runat="server" Text="" style="display:none" />
+    <asp:Button ID="btneditarriesgo" OnClick="btneditarriesgo_Click" runat="server" Text="" Style="display: none" />
+    <asp:Button ID="btndescargardocumento" OnClick="lnkdescargararchivo_Click" runat="server" Text="" Style="display: none" />
 </asp:Content>

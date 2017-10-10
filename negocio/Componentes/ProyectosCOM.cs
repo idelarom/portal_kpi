@@ -45,6 +45,7 @@ namespace negocio.Componentes
                         correo_bienvenida = false,
                         fecha_inicio = entidad.fecha_inicio,
                         fecha_fin = entidad.fecha_fin,
+                        costo =entidad.costo,
                         usuario = entidad.usuario.ToUpper(),                    
                         fecha_registro = DateTime.Now,
                         id_proyecto_tecnologia= entidad.id_proyecto_tecnologia
@@ -269,14 +270,18 @@ namespace negocio.Componentes
                                 {
                                     u.id_proyecto_evaluacion,
                                     u.id_proyecto,
-                                    u.fecha_evaluacion
+                                    u.fecha_evaluacion,
+                                    u.riesgo_costo,
+                                    u.riesgo_tiempo,
+                                    u.p_riesgo_costo,
+                                    u.p_riesgo_tiempo
                                 })
                                 .OrderBy(u => u.fecha_evaluacion);
                 DataTable dt = To.DataTable(query.ToList());
                 dt.Columns.Add("fecha_evaluacion_str");
                 foreach (DataRow row in dt.Rows)
                 {
-                    row["fecha_evaluacion_str"] = Convert.ToDateTime(row["fecha_evaluacion"]).ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("es-MX"));
+                    row["fecha_evaluacion_str"] = Convert.ToDateTime(row["fecha_evaluacion"]).ToString("dd MMM yyyy", CultureInfo.CreateSpecificCulture("es-MX"));
                 }
                 return dt;
             }

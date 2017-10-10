@@ -400,6 +400,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.HiddenField hdfid_actividad;
         
         /// <summary>
+        /// Control hdfmotivos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfmotivos;
+        
+        /// <summary>
         /// Control hdfcommandgrid.
         /// </summary>
         /// <remarks>

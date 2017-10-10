@@ -121,7 +121,7 @@ namespace presentacion
                 {
                     repetaer_historial_riesgos.DataSource = dt_riesgos;
                     repetaer_historial_riesgos.DataBind();
-                    ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(), "Init('#tabla_historial');", true);
+                    ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
                 }
             }
             catch (Exception ex)
@@ -316,6 +316,10 @@ namespace presentacion
             {
                 Toast.Error("Error al generar nueva evaluación. " + ex.Message, this);
             }
+            finally
+            {
+                InicializarTablas();
+            }
         }
 
         protected void repeater_evaluaciones_details_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -432,6 +436,8 @@ namespace presentacion
                         ModalShow("#modal_historial");
                         break;
                 }
+
+                InicializarTablas();
             }
             else
             {
@@ -439,6 +445,43 @@ namespace presentacion
 
             }
             
+        }
+
+        protected void lnkeliminarevaluacion_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!ProyectoTerminado())
+                {
+                    string motivos = hdfmotivos.Value;
+                    LinkButton lnk = sender as LinkButton;
+                    ProyectosEvaluacionesCOM evaluaciones = new ProyectosEvaluacionesCOM();
+                    proyectos_evaluaciones evaluacion = new proyectos_evaluaciones();
+                    evaluacion.usuario_borrado = Session["usuario"] as string;
+                    evaluacion.comentarios_borrado = motivos;
+                    evaluacion.id_proyecto_evaluacion = Convert.ToInt32(lnk.CommandArgument);
+                    string vmensaje = evaluaciones.Eliminar(evaluacion);
+                    if (vmensaje == "")
+                    {
+                        System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                                    "AlertGO('Evaluación eliminada correctamente.','proyectos_evaluacion_riesgos.aspx?id_proyecto="+ Request.QueryString["id_proyecto"] + "');", true);
+                    }
+                    else
+                    {
+                        Toast.Error("Error al eliminar evaluación: " + vmensaje, this);
+
+                    }
+                }
+                else {
+
+                    Toast.Error("El proyecto ya fue cerrado y no puede generarse ninguna información adicional.", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al eliminar evaluación.", this);
+            }
+
         }
 
         protected void ddlprobabilidad_SelectedIndexChanged(object sender, EventArgs e)
@@ -451,7 +494,7 @@ namespace presentacion
                     RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
                     riesgos_probabilidad probabilidad = probabilidades.impacto(id_riesgo_probabilidad);
                     txtpprobabilidad.Text = probabilidad.porcentaje.ToString();
-                    txtpprobabilidad_TextChanged(null,null);
+                    txtpprobabilidad_TextChanged(null, null);
                 }
                 else
                 {
@@ -462,6 +505,10 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al calcular probabilidad. " + ex.Message, this);
+            }
+            finally
+            {
+                InicializarTablas();
             }
         }
 
@@ -534,6 +581,10 @@ namespace presentacion
             {
                 Toast.Error("Error al calcular impacto costo. " + ex.Message, this);
             }
+            finally
+            {
+                InicializarTablas();
+            }
 
         }
 
@@ -558,6 +609,10 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al calcular impacto tiempo. " + ex.Message, this);
+            }
+            finally
+            {
+                InicializarTablas();
             }
 
         }
@@ -641,7 +696,7 @@ namespace presentacion
                 }
                 else
                 {
-                    vmensaje = id_riesgo==0? GuardarRiesgo(riesgo, lstactividades, lstdocumentos): EditarRiesgo(riesgo, lstactividades, lstdocumentos);
+                    vmensaje = id_riesgo == 0 ? GuardarRiesgo(riesgo, lstactividades, lstdocumentos) : EditarRiesgo(riesgo, lstactividades, lstdocumentos);
                     if (vmensaje == "")
                     {
                         hdfid_riesgo.Value = "";
@@ -659,6 +714,10 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al guardar riesgo: " + ex.Message, this);
+            }
+            finally {
+
+                InicializarTablas();
             }
         }
 
@@ -928,6 +987,8 @@ namespace presentacion
             txtfilterempleado.Text = "";
             txtfechaejecuacion.Text = DateTime.Now.ToString("yyyy-MM-dd").Replace(' ', 'T');
             ModalShow("#modal_acciones");
+
+            InicializarTablas();
         }
 
         protected void lnksearch_Click(object sender, EventArgs e)
@@ -1030,6 +1091,9 @@ namespace presentacion
             {
                 Toast.Error("Error al guardar acción: " + ex.Message, this);
             }
+            finally {
+                InicializarTablas();
+            }
         }
 
         protected void lnkguardaracciones_Click(object sender, EventArgs e)
@@ -1085,6 +1149,7 @@ namespace presentacion
             }
             finally
             {
+                InicializarTablas();
                 ModalShow("#modal_riesgo");
                 ModalShow("#modal_acciones");
             }
@@ -1133,6 +1198,8 @@ namespace presentacion
                     HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
                     div.Style["display"] = "none";
                 }
+
+                InicializarTablas();
             }
         }
 
@@ -1181,6 +1248,8 @@ namespace presentacion
                     HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
                     div.Style["display"] = "none";
                 }
+
+                InicializarTablas();
             }
         }
 
@@ -1228,6 +1297,8 @@ namespace presentacion
                     HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
                     div.Style["display"] = "none";
                 }
+
+                InicializarTablas();
             }
 
         }
@@ -1274,6 +1345,8 @@ namespace presentacion
                     HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
                     div.Style["display"] = "none";
                 }
+
+                InicializarTablas();
             }
 
         }
@@ -1369,6 +1442,8 @@ namespace presentacion
                     HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
                     div.Style["display"] = "none";
                 }
+
+                InicializarTablas();
             }
         }
 
@@ -1535,9 +1610,18 @@ namespace presentacion
             }
             finally {
 
-                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "Init('#tabla_historial');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
+                InicializarTablas();
             }
         }
-        
+
+        /// <summary>
+        /// Inicializa las tablas en modo resposinvo
+        /// </summary>
+        private void InicializarTablas()
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "Init('.dvv');", true);
+        }
+
     }
 }

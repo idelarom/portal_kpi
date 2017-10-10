@@ -199,6 +199,7 @@
     <Content Include="dist\css\alt\AdminLTE-select2.min.css" />
     <Content Include="dist\css\alt\AdminLTE-without-plugins.css" />
     <Content Include="dist\css\alt\AdminLTE-without-plugins.min.css" />
+    <Content Include="dist\css\jquery.dynatable.css" />
     <Content Include="dist\css\pages\master_page.css" />
     <Content Include="dist\css\skins\skin-black-light.css" />
     <Content Include="dist\css\skins\skin-black-light.min.css" />
@@ -262,6 +263,7 @@
     <Content Include="dist\js\client.min.js" />
     <Content Include="dist\js\demo.js" />
     <Content Include="dist\js\gmap.js" />
+    <Content Include="dist\js\jquery.dynatable.js" />
     <Content Include="dist\js\loading.js" />
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />

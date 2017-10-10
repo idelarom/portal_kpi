@@ -26,13 +26,15 @@ namespace datos
         public int id_proyecto_tecnologia { get; set; }
         public int id_proyecto_periodo { get; set; }
         public Nullable<int> id_proyecto_estatus { get; set; }
-        public Nullable<int> cveoport { get; set; }
+        public string cped { get; set; }
+        public int cveoport { get; set; }
         public string folio_pmt { get; set; }
         public Nullable<int> id_cliente { get; set; }
         public string proyecto { get; set; }
         public string descripcion { get; set; }
         public Nullable<short> duración { get; set; }
         public Nullable<decimal> avance { get; set; }
+        public decimal costo { get; set; }
         public Nullable<decimal> costo_real { get; set; }
         public Nullable<decimal> valor_ganado { get; set; }
         public Nullable<System.DateTime> fecha_inicio { get; set; }
