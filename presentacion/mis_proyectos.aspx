@@ -248,6 +248,8 @@
                     <asp:AsyncPostBackTrigger ControlID="btneventgrid" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btnopendashboard" EventName="Click" />
                     <asp:PostBackTrigger ControlID="lnkguardar" />
+                     <asp:AsyncPostBackTrigger ControlID="txtcveop" EventName="TextChanged"/>
+                     <asp:AsyncPostBackTrigger ControlID="txtfolopmt" EventName="TextChanged" />
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">
@@ -276,11 +278,11 @@
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
                                     <h5><strong><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
-                                    <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcveop_TextChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
                                     <h5><strong><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
-                                    <asp:TextBox ID="txtfolopmt" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtfolopmt" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtfolopmt_TextChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-12">
                                     <h5><strong><i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
@@ -288,11 +290,11 @@
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
                                     <h5><strong><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;CPED</strong></h5>
-                                    <asp:TextBox ID="txtcped" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtcped" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcped_TextChanged"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto</strong></h5>
-                                    <asp:TextBox ID="TextBox2" MaxLength="250" CssClass=" form-control" runat="server" Enabled="true"></asp:TextBox>
+                                    <asp:TextBox ID="txtmonto" MaxLength="250" CssClass=" form-control" runat="server" Enabled="false"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6">
                                      <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
