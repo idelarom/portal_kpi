@@ -78,6 +78,8 @@ namespace negocio.Componentes
                 }
 
                 context.SaveChanges();
+
+                EditarRiesgosEvaluacion(riesgo.id_proyecto_evaluacion);
                 return mess;
             }
             catch (DbEntityValidationException ex)
@@ -212,6 +214,7 @@ namespace negocio.Componentes
 
 
                 context.SaveChanges();
+                EditarRiesgosEvaluacion(riesgo.id_proyecto_evaluacion);
                 return "";
             }
             catch (DbEntityValidationException ex)
@@ -243,6 +246,7 @@ namespace negocio.Componentes
                 riesgo.riesgo_costo = Convert.ToDecimal(((riesgo.porc_probabilidad * riesgo.porc_impcosto) / 100) );
                 riesgo.riesgo_tiempo = Convert.ToDecimal(((riesgo.porc_probabilidad * riesgo.porc_imptiempo) / 100) );
                 context.SaveChanges();
+                EditarRiesgosEvaluacion(riesgo.id_proyecto_evaluacion);
                 return "";
             }
             catch (DbEntityValidationException ex)
@@ -273,6 +277,7 @@ namespace negocio.Componentes
                 riesgo.fecha_edicion = DateTime.Now;
                 riesgo.riesgo_costo = Convert.ToDecimal(((riesgo.porc_probabilidad * riesgo.porc_impcosto) / 100) );
                 context.SaveChanges();
+                EditarRiesgosEvaluacion(riesgo.id_proyecto_evaluacion);
                 return "";
             }
             catch (DbEntityValidationException ex)
@@ -303,6 +308,7 @@ namespace negocio.Componentes
                 riesgo.fecha_edicion = DateTime.Now;
                 riesgo.riesgo_tiempo = Convert.ToDecimal(((riesgo.porc_probabilidad * riesgo.porc_imptiempo) / 100) );
                 context.SaveChanges();
+                EditarRiesgosEvaluacion(riesgo.id_proyecto_evaluacion);
                 return "";
             }
             catch (DbEntityValidationException ex)
@@ -330,7 +336,6 @@ namespace negocio.Componentes
                 riesgo.id_riesgo_estrategia = id_impc;
                 riesgo.usuario_edicion = usuario;
                 riesgo.fecha_edicion = DateTime.Now;
-
                 context.SaveChanges();
                 return "";
             }
@@ -342,6 +347,65 @@ namespace negocio.Componentes
                 var fullErrorMessage = string.Join("; ", errorMessages);
                 return fullErrorMessage.ToString();
             }
+        }
+
+        public string EditarRiesgosEvaluacion(int id_proyecto_evaluacion)
+        {
+            try
+            {
+                Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                var riesgos = (from r in db.riesgos
+                               where(r.id_proyecto_evaluacion == id_proyecto_evaluacion
+                               && r.usuario_borrado== null)
+                               select new {
+                                   r.riesgo_costo,
+                                   r.riesgo_tiempo
+                               });
+                DataTable dt_values = To.DataTable(riesgos.ToList());
+                int total = dt_values.Rows.Count;
+
+                decimal riesgo_costo = 0;
+                decimal riesgo_tiempo = 0;
+                foreach (DataRow row in dt_values.Rows)
+                {
+                    riesgo_costo = riesgo_costo + Convert.ToDecimal(row["riesgo_costo"]);
+                    riesgo_tiempo = riesgo_tiempo + Convert.ToDecimal(row["riesgo_tiempo"]);
+                }
+
+                proyectos_evaluaciones evaluacion = db.proyectos_evaluaciones
+                               .First(i => i.id_proyecto_evaluacion == id_proyecto_evaluacion);
+
+                proyectos proyecto = db.proyectos
+                               .First(i => i.id_proyecto == evaluacion.id_proyecto);
+
+                evaluacion.riesgo_costo = total == 0?0:
+                    Convert.ToDecimal(proyecto.costo * Convert.ToDecimal(riesgo_costo/100));
+
+                double diff_days = (Convert.ToDateTime(proyecto.fecha_fin) - Convert.ToDateTime(proyecto.fecha_inicio)).TotalDays;
+
+
+                evaluacion.riesgo_tiempo = total == 0 ? Convert.ToInt16(0) :
+                   Convert.ToInt16(Math.Round(Convert.ToDecimal(Convert.ToDecimal(diff_days) * Convert.ToDecimal(riesgo_tiempo/100)), 0, MidpointRounding.AwayFromZero));
+
+                evaluacion.p_riesgo_costo = Convert.ToDecimal(riesgo_costo / 100);
+                evaluacion.p_riesgo_tiempo = Convert.ToDecimal(riesgo_tiempo / 100);
+
+                evaluacion.riesgo_costo = evaluacion.p_riesgo_costo > 0 ? evaluacion.riesgo_costo : 0;
+                evaluacion.riesgo_tiempo = evaluacion.p_riesgo_tiempo > 0 ? evaluacion.riesgo_tiempo : 0;
+                evaluacion.fecha_edicion = DateTime.Now;
+
+                db.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+
         }
 
         /// <summary>

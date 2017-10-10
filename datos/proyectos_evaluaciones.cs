@@ -23,6 +23,10 @@ namespace datos
         public int id_proyecto_evaluacion { get; set; }
         public int id_proyecto { get; set; }
         public System.DateTime fecha_evaluacion { get; set; }
+        public Nullable<decimal> riesgo_costo { get; set; }
+        public Nullable<short> riesgo_tiempo { get; set; }
+        public Nullable<decimal> p_riesgo_costo { get; set; }
+        public Nullable<decimal> p_riesgo_tiempo { get; set; }
         public System.DateTime fecha { get; set; }
         public string usuario { get; set; }
         public Nullable<System.DateTime> fecha_borrado { get; set; }

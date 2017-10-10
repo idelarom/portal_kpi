@@ -95,7 +95,303 @@
     <Compile Include="Model\widgets_perfiles.cs" />
     <Compile Include="NAVISION\Employee.cs" />
     <Compile Include="NAVISION\NAVISION.cs" />
-    <Compile Include="OPTRACKER\ModelOPT.cs" />
+    <Compile Include="OPTRACKER\Accesos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Actividades.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\ActivxClie.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\ActivxClieEliminadas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\ActivxOp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\activxop2.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\ActivxOpEliminadas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Aplicaciones.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\AplicacionesPermiso.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Areas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Avances.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Avances_Color.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\CalifTmp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\CalifxOp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Calif_Atributos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Calif_Atributos_V1.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Calif_Posibles_Resp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Calif_Posibles_Resp_V1.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Calif_Preguntas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Calif_Preguntas_V1.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Calif_Tipo.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Calif_Tipo_V1.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Clientes_MKT.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Clientes_MKT_Trash.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Clientes_Potenciales.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Competencia.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Compettmp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Contactos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\ContactosOutlook.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\ContactosOutlookTrash.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\ContactosOutlookV1.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\ContactosPROOutlook.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Contactos_Tipos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Fabricantes.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Fabricas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\FabricaTmp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\FabricaxOp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Filtros_Campos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Filtros_Consultas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Filtros_ConsultasBKP.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Filtros_Nivel.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Filtros_Operadores.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Filtros_Tipos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Filtros_Usuarios.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Fuentes.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\HistOPComprometidas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\HistReaperturaOp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\NivelesdeUsuario.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Oportunidad.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\OPTracker.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OPTracker.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\OPTracker.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\OPTracker.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OPTracker.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\OP_ScoreBoard_Historia.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\sugerencias.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblAccesosCarga.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblActividades.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblAreas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblBitacora.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblClasifLn.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblCorporativos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblCuotas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblDocsMarketing.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblDocumentos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblEstatusCliente.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblFuenteCliente.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblParametros.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblPublicaciones.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblRespClasifLn.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblRespLN.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblStatusComp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblTipoActividades.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblTipoActividadPreventa.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tblTipoDoc.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbltitulos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblVisitasClientes.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblVisitasClientesbkp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\TblVisitasClientesTrash.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_Archivos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_CatValoracion.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_Compromisos.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_CompromisosDependentes.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_Compromisos_tmp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_Configuraciones.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_Cotizacion.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_DetalleFuentes.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_HorarioLaboral.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_OportModMargenBruto.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_ProgramaVentas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_TipoCotizacion.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_TipoMoneda.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_TituloGrafica.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbl_VentaCruzada.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tbStatusCarga.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tb_TiposUsuario_Aplicaciones.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\tmpFolioOp.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\Usuarios.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPTRACKER\UsuariosporAreas.cs">
+      <DependentUpon>OPTracker.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proyectos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
@@ -148,6 +444,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="OPTRACKER\OPTracker.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>OPTracker.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="OPTRACKER\OPTracker.edmx.diagram">
+      <DependentUpon>OPTracker.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <EntityDeploy Include="Proyectos_Connext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -161,6 +464,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="OPTRACKER\OPTracker.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OPTracker.edmx</DependentUpon>
+      <LastGenOutput>OPTracker.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="OPTRACKER\OPTracker.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>OPTracker.edmx</DependentUpon>
+      <LastGenOutput>OPTracker.cs</LastGenOutput>
+    </Content>
     <Content Include="Proyectos_Connext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Proyectos_Connext.edmx</DependentUpon>

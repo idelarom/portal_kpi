@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f25f8c542c52452fb2f17ae8fc85180b" Name="Diagram1">
+        <EntityTypeShape EntityType="OPTrackerModel.Aplicaciones" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.AplicacionesPermiso" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Calif_Atributos" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Calif_Atributos_V1" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Calif_Posibles_Resp" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Calif_Posibles_Resp_V1" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Calif_Preguntas" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Calif_Preguntas_V1" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.CalifxOp" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.ContactosOutlook" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.ContactosOutlookV1" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.ContactosPROOutlook" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Fabricas" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.HistOPComprometidas" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.NivelesdeUsuario" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Oportunidad" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblAreas" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblCorporativos" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblDocsMarketing" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblEstatusCliente" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Usuarios" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Accesos" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Actividades" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.ActivxClie" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.ActivxClieEliminadas" Width="1.5" PointX="14.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.ActivxOp" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.activxop2" Width="1.5" PointX="16.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.ActivxOpEliminadas" Width="1.5" PointX="16.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Areas" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Avances" Width="1.5" PointX="0.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Avances_Color" Width="1.5" PointX="2.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Calif_Tipo" Width="1.5" PointX="18.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Calif_Tipo_V1" Width="1.5" PointX="4.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.CalifTmp" Width="1.5" PointX="6.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Clientes_MKT" Width="1.5" PointX="18.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Clientes_MKT_Trash" Width="1.5" PointX="18.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Clientes_Potenciales" Width="1.5" PointX="20.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Competencia" Width="1.5" PointX="8.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Compettmp" Width="1.5" PointX="20.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Contactos" Width="1.5" PointX="10.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Contactos_Tipos" Width="1.5" PointX="20.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.ContactosOutlookTrash" Width="1.5" PointX="20.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Fabricantes" Width="1.5" PointX="2.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.FabricaTmp" Width="1.5" PointX="12.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.FabricaxOp" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Filtros_Campos" Width="1.5" PointX="22.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Filtros_Consultas" Width="1.5" PointX="22.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Filtros_ConsultasBKP" Width="1.5" PointX="22.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Filtros_Nivel" Width="1.5" PointX="22.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Filtros_Operadores" Width="1.5" PointX="22.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Filtros_Tipos" Width="1.5" PointX="22.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Filtros_Usuarios" Width="1.5" PointX="14.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.Fuentes" Width="1.5" PointX="22.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.HistReaperturaOp" Width="1.5" PointX="24.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.OP_ScoreBoard_Historia" Width="1.5" PointX="0.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.sugerencias" Width="1.5" PointX="2.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tb_TiposUsuario_Aplicaciones" Width="1.5" PointX="24.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_Archivos" Width="1.5" PointX="4.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_CatValoracion" Width="1.5" PointX="24.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_Compromisos" Width="1.5" PointX="6.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_Compromisos_tmp" Width="1.5" PointX="24.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_CompromisosDependentes" Width="1.5" PointX="16.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_Configuraciones" Width="1.5" PointX="24.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_Cotizacion" Width="1.5" PointX="24.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_DetalleFuentes" Width="1.5" PointX="26.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_HorarioLaboral" Width="1.5" PointX="26.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_OportModMargenBruto" Width="1.5" PointX="26.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_ProgramaVentas" Width="1.5" PointX="26.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_TipoCotizacion" Width="1.5" PointX="26.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_TipoMoneda" Width="1.5" PointX="18.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_TituloGrafica" Width="1.5" PointX="20.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbl_VentaCruzada" Width="1.5" PointX="26.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblAccesosCarga" Width="1.5" PointX="26.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblActividades" Width="1.5" PointX="12.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblBitacora" Width="1.5" PointX="22.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblClasifLn" Width="1.5" PointX="28.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblCuotas" Width="1.5" PointX="0.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblDocumentos" Width="1.5" PointX="2.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblFuenteCliente" Width="1.5" PointX="28.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblParametros" Width="1.5" PointX="28.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblPublicaciones" Width="1.5" PointX="8.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblRespClasifLn" Width="1.5" PointX="28.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblRespLN" Width="1.5" PointX="28.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblStatusComp" Width="1.5" PointX="14.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblTipoActividades" Width="1.5" PointX="28.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblTipoActividadPreventa" Width="1.5" PointX="28.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tblTipoDoc" Width="1.5" PointX="28.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbltitulos" Width="1.5" PointX="28.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblVisitasClientes" Width="1.5" PointX="24.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblVisitasClientesbkp" Width="1.5" PointX="26.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.TblVisitasClientesTrash" Width="1.5" PointX="28.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tbStatusCarga" Width="1.5" PointX="30.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.tmpFolioOp" Width="1.5" PointX="30.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OPTrackerModel.UsuariosporAreas" Width="1.5" PointX="30.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="OPTrackerModel.FK_AplicacionesPermiso_Aplicaciones" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -65,13 +65,15 @@
           <Property Name="id_proyecto_tecnologia" Type="int" Nullable="false" />
           <Property Name="id_proyecto_periodo" Type="int" Nullable="false" />
           <Property Name="id_proyecto_estatus" Type="int" />
-          <Property Name="cveoport" Type="int" />
-          <Property Name="folio_pmt" Type="char" MaxLength="10" />
+          <Property Name="cped" Type="varchar" MaxLength="20" />
+          <Property Name="cveoport" Type="int" Nullable="false" />
+          <Property Name="folio_pmt" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="id_cliente" Type="int" />
           <Property Name="proyecto" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="descripcion" Type="varchar" MaxLength="8000" />
           <Property Name="duración" Type="smallint" />
           <Property Name="avance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="costo" Type="money" Nullable="false" />
           <Property Name="costo_real" Type="money" />
           <Property Name="valor_ganado" Type="money" />
           <Property Name="fecha_inicio" Type="datetime" />
@@ -109,6 +111,10 @@
           <Property Name="id_proyecto_evaluacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_proyecto" Type="int" Nullable="false" />
           <Property Name="fecha_evaluacion" Type="datetime" Nullable="false" />
+          <Property Name="riesgo_costo" Type="money" />
+          <Property Name="riesgo_tiempo" Type="smallint" />
+          <Property Name="p_riesgo_costo" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="p_riesgo_tiempo" Type="decimal" Precision="18" Scale="4" />
           <Property Name="fecha" Type="datetime" Nullable="false" />
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="fecha_borrado" Type="datetime" />
@@ -544,13 +550,15 @@
           <Property Name="id_proyecto_tecnologia" Type="Int32" Nullable="false" />
           <Property Name="id_proyecto_periodo" Type="Int32" Nullable="false" />
           <Property Name="id_proyecto_estatus" Type="Int32" />
-          <Property Name="cveoport" Type="Int32" />
-          <Property Name="folio_pmt" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="cped" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cveoport" Type="Int32" Nullable="false" />
+          <Property Name="folio_pmt" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="id_cliente" Type="Int32" />
           <Property Name="proyecto" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="descripcion" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
           <Property Name="duración" Type="Int16" />
           <Property Name="avance" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="costo" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="costo_real" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="valor_ganado" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="fecha_inicio" Type="DateTime" Precision="3" />
@@ -595,6 +603,10 @@
           <Property Name="id_proyecto_evaluacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_proyecto" Type="Int32" Nullable="false" />
           <Property Name="fecha_evaluacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="riesgo_costo" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="riesgo_tiempo" Type="Int16" />
+          <Property Name="p_riesgo_costo" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="p_riesgo_tiempo" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
@@ -1042,6 +1054,7 @@
                 <ScalarProperty Name="id_proyecto_tecnologia" ColumnName="id_proyecto_tecnologia" />
                 <ScalarProperty Name="id_proyecto_periodo" ColumnName="id_proyecto_periodo" />
                 <ScalarProperty Name="id_proyecto_estatus" ColumnName="id_proyecto_estatus" />
+                <ScalarProperty Name="cped" ColumnName="cped" />
                 <ScalarProperty Name="cveoport" ColumnName="cveoport" />
                 <ScalarProperty Name="folio_pmt" ColumnName="folio_pmt" />
                 <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
@@ -1049,6 +1062,7 @@
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="duración" ColumnName="duración" />
                 <ScalarProperty Name="avance" ColumnName="avance" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
                 <ScalarProperty Name="costo_real" ColumnName="costo_real" />
                 <ScalarProperty Name="valor_ganado" ColumnName="valor_ganado" />
                 <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
@@ -1088,6 +1102,10 @@
                 <ScalarProperty Name="id_proyecto_evaluacion" ColumnName="id_proyecto_evaluacion" />
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
                 <ScalarProperty Name="fecha_evaluacion" ColumnName="fecha_evaluacion" />
+                <ScalarProperty Name="riesgo_costo" ColumnName="riesgo_costo" />
+                <ScalarProperty Name="riesgo_tiempo" ColumnName="riesgo_tiempo" />
+                <ScalarProperty Name="p_riesgo_costo" ColumnName="p_riesgo_costo" />
+                <ScalarProperty Name="p_riesgo_tiempo" ColumnName="p_riesgo_tiempo" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
