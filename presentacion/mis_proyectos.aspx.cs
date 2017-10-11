@@ -642,17 +642,19 @@ namespace presentacion
         {
             int id_proyecto_estatus = Convert.ToInt32(ddlstatus.SelectedValue);
             DataTable dt_filtros = GetProyectos(id_proyecto_estatus);
-            foreach (DataRow dr in dt_filtros.Rows)
-            {
-                if (ddltechnology.SelectedItem.Text != dr["Tecnologia"].ToString())
-                {
-                    //dt_filtros.Rows.Remove(dr);
-                    dr.Delete();
-                    break;
-                }
-            }           
-            dt_filtros.AcceptChanges();         
-            repeat_proyectos.DataSource = dt_filtros;
+            DataView dv = dt_filtros.DefaultView;
+            dv.RowFilter = "id_proyecto_tecnologia = " + ddltechnology.SelectedValue.ToString() + "";
+            DataTable dt_result = dv.ToTable();
+            //foreach (DataRow dr in dt_filtros.Rows)
+            //{
+            //    if (ddltechnology.SelectedItem.Text != dr["Tecnologia"].ToString())
+            //    {
+            //        //dt_filtros.Rows.Remove(dr);
+            //        dr.Delete();
+            //    }
+            //}           
+            //dt_filtros.AcceptChanges();         
+            repeat_proyectos.DataSource = dt_result;
             repeat_proyectos.DataBind();
         }
 
@@ -667,6 +669,7 @@ namespace presentacion
                     txtcveop.Focus();
                     Toast.Error(vmansaje, this);
                 }
+                
             }
         }
 
