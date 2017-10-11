@@ -188,6 +188,7 @@
             var target = document.getElementById('<%= load_cumpli_compromisos.ClientID %>');
             var spinner = new Spinner(opts).spin(target);
             document.getElementById('<%= btneditarriesgo.ClientID%>').click();
+            return true;
         }
         function DownloadFile(id_actividad) {
             var hdf_id_riesgo = document.getElementById('<%= hdfid_actividad.ClientID %>');
@@ -248,18 +249,17 @@
                     </asp:Repeater>
                 </ul>
                 <div class="tab-content">
-                    <asp:Repeater ID="repeater_evaluaciones_details" runat="server"
-                        OnItemCommand="repeater_evaluaciones_details_ItemCommand"
-                        OnItemDataBound="repeater_evaluaciones_details_ItemDataBound">
-                        <ItemTemplate>
-                            <asp:UpdatePanel ID="ss" runat="server" UpdateMode="Always">
-                                <Triggers>
-                                    <asp:AsyncPostBackTrigger ControlID="lnkguardar" EventName="Click" />
-                                    <asp:PostBackTrigger ControlID="lnkeliminarevaluacion" />
-                                </Triggers>
-                                <ContentTemplate>
-                                    <div id="load_cumpli_compromisos" class="loading" runat="server" style="display: none;">
-                                    </div>
+                    <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Always">
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="lnkguardar" EventName="Click" />
+                        </Triggers>
+                        <ContentTemplate>
+                            <div id="load_cumpli_compromisos" class="loading" runat="server" style="display: none;">
+                            </div>
+                            <asp:Repeater ID="repeater_evaluaciones_details" runat="server"
+                                OnItemCommand="repeater_evaluaciones_details_ItemCommand"
+                                OnItemDataBound="repeater_evaluaciones_details_ItemDataBound">
+                                <ItemTemplate>
                                     <asp:Panel CssClass='<%#Eval("id_proyecto_evaluacion") %>' ID="div_principal" runat="server">
                                         <div class='<%#  "tab-pane active" %>' id='<%# "tab_"+Eval("id_proyecto_evaluacion") %>'>
 
@@ -376,10 +376,10 @@
 
                                         </div>
                                     </asp:Panel>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-                        </ItemTemplate>
-                    </asp:Repeater>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
             </div>
         </div>
