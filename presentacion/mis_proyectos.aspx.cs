@@ -320,12 +320,17 @@ namespace presentacion
             ddlestatus.SelectedIndex = 0;
             txtcveop.Text = "";
             txtfolopmt.Text = "";
+            txtcped.Text = "";
             Cargarddlperiodo();
             Cargarddlestatus();
             Cargarddltegnologia();
             CargarDatosempleados("");
             rdpfechainicial.SelectedDate = DateTime.Today;
             rdpfechafinal.SelectedDate = DateTime.Today;
+
+            txtcveop.BorderColor = System.Drawing.Color.Silver;
+            txtfolopmt.BorderColor = System.Drawing.Color.Silver;
+            txtcped.BorderColor = System.Drawing.Color.Silver;
 
             if (Request.QueryString["filter"] != null)
             {
@@ -479,6 +484,9 @@ namespace presentacion
                     proyectos proyecto = GetProyecto(id_proyecto);
                     if (proyecto != null)
                     {
+                        txtcveop.BorderColor = System.Drawing.Color.Silver;
+                        txtfolopmt.BorderColor = System.Drawing.Color.Silver;
+                        txtcped.BorderColor = System.Drawing.Color.Silver;
                         Cargarddlperiodo();
                         Cargarddlestatus();
                         Cargarddltegnologia();
@@ -666,8 +674,15 @@ namespace presentacion
                 if (vmansaje != "")
                 {
                     txtcveop.Text = "";
-                    txtcveop.Focus();
+                    txtcveop.BorderStyle = BorderStyle.Solid;
+                    txtcveop.BorderColor = System.Drawing.Color.Red;
+                    txtcveop.Focus();                    
                     Toast.Error(vmansaje, this);
+                }
+                else
+                {
+                    txtcveop.BorderStyle = BorderStyle.Solid;
+                    txtcveop.BorderColor = System.Drawing.Color.Green;
                 }
                 
             }
@@ -681,8 +696,15 @@ namespace presentacion
                 if (vmansaje != "")
                 {
                     txtfolopmt.Text = "";
+                    txtfolopmt.BorderStyle = BorderStyle.Solid;
+                    txtfolopmt.BorderColor = System.Drawing.Color.Red;
                     txtfolopmt.Focus();
                     Toast.Error(vmansaje, this);
+                }
+                else
+                {
+                    txtfolopmt.BorderStyle = BorderStyle.Solid;
+                    txtfolopmt.BorderColor = System.Drawing.Color.Green;
                 }
             }
         }
@@ -697,11 +719,15 @@ namespace presentacion
                     Toast.Error("No se encuentra ningun CPED con el folio: " + txtcped.Text, this);
                     txtcped.Text = "";
                     txtmonto.Text = "";
+                    txtcped.BorderStyle = BorderStyle.Solid;
+                    txtcped.BorderColor = System.Drawing.Color.Red;
                     txtcped.Focus();                    
                 }
                 else
                 {
                     txtmonto.Text = cped.costo.ToString("C2") + "-" + cped.tipo_moneda;
+                    txtcped.BorderStyle = BorderStyle.Solid;
+                    txtcped.BorderColor = System.Drawing.Color.Green;
                 }
             }
         }
