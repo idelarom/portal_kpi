@@ -324,7 +324,7 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="proyectos" style="display:none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Proyectos</h3>
+                    <h3 class="box-title">Mis proyectos</h3>
                     <div class="box-tools pull-right">
                         <a id="btnayuda_proyectos">
                             <i class="material-icons">info</i>
@@ -333,16 +333,17 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table table-responsive" style="width: 100%; max-height: 250px; overflow: scroll;">
+                    <div class="table table-responsive" style="width: 100%;overflow: scroll;">
                         <table id="table_proyectos" class="dvv table table-responsive table-condensed">
                             <thead>
-                                <tr style="font-size: 11px;">
+                                <tr style="font-size: 12px;">
                                     <th style="min-width: 250px; text-align: left;" scope="col">Proyecto</th>
+                                    <th style="min-width: 50px; text-align: left;" scope="col">Estatus</th>
                                     <th style="min-width: 190px; text-align: left;" scope="col">Empleado</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_table_proyectos"
-                                style="font-size: 11px;">
+                                style="font-size: 12px;">
                             </tbody>
                         </table>
                     </div>
@@ -351,7 +352,7 @@
 
                 <div class="box-footer clearfix">
                     <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_proyectos"
-                        onclick="CloseAjax('reporte_performance_ingenieria_netdiario.aspx?filter=1');">Mis proyectos
+                        onclick="CloseAjax('mis_proyectos.aspx');">Ver todos
                     </a>
                 </div>
                 <!-- /.box-footer -->

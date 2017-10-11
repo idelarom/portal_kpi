@@ -467,10 +467,10 @@ function CargarProyectos() {
                     $('#table_proyectos').find('tbody').append('' +
                         '<tr>' +
                             '<td><a href="proyectos_dashboard.aspx?id_proyecto=' + id_proyecto + '">' + performance[indice].proyecto + '</a></td>' +
+                            '<td><span class="label label-success">' + performance[indice].estatus + '</span></td>' +
                             '<td>' + performance[indice].empleado + '</td>' +
                         '</tr>');
                 }
-                Init('#table_proyectos');
             }
             $('#link_proyectos').attr('href', 'mis_proyectos.aspx');
             spinner.stop();

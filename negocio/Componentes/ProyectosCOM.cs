@@ -497,6 +497,7 @@ namespace negocio.Componentes
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
                                  join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
                                  where (p.usuario_borrado == null && p.id_proyecto_estatus == 1)
+                                 orderby (p.fecha_registro)
                                  select new
                                  {
                                      p.id_proyecto_tecnologia,
@@ -515,9 +516,10 @@ namespace negocio.Componentes
                                      p.fecha_inicio,
                                      p.fecha_fin,
                                      p.usuario_resp
-                                 }).ToArray().Take(10);
+                                 }).ToArray().Take(7);
                 var tproyectos = (from p in proyectos
                                   join emp in list_emp on p.usuario_resp.ToUpper() equals emp.Usuario
+                                  orderby (p.fecha_registro)
                                   select new
                                   {
                                       p.usuario,
@@ -540,6 +542,7 @@ namespace negocio.Componentes
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in tproyectos
                               join up in dbnavision.Employee on p.usuario_resp.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
+                              orderby(p.fecha_registro)
                               select new
                               {
                                   usuario = p.usuario_resp,
