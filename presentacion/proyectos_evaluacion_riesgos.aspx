@@ -200,18 +200,19 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <div class="row">
         <div class="col-lg-12">
             <h5 class="page-header">Evaluaciones de riesgos</h5>
         </div>
-
         <div class="col-lg-12">
             <div class="box box-danger">
                 <div class="box-body with-border" style="">
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <h5><strong><i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;Proyecto</strong></h5>
+                            <h5><strong><i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;Proyecto</strong>
+                                &nbsp;<asp:LinkButton ID="lnkdashboard" CssClass="btn btn-danger btn-xs btn-flat"
+                                     OnClick="lnkdashboard_Click" runat="server">Dashboard</asp:LinkButton>
+                            </h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblproyect" runat="server" Text="Label"></asp:Label>
                             </p>

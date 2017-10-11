@@ -85,5 +85,30 @@ namespace presentacion
             }
         }
 
+        [System.Web.Services.WebMethod(EnableSession = true)]
+        public String ProyectosWidget(string username, string password, string dominio)
+        {
+            try
+            {
+                string value = "";
+                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, dominio))
+                {
+                    Boolean isValid = false;
+                    // validate the credentials
+                    isValid = pc.ValidateCredentials(username, password);
+                    EmpleadosCOM empleados = new EmpleadosCOM();
+                    DataTable dt = empleados.GetLogin(username, "");
+                    if (isValid && dt.Rows.Count > 0)
+                    {
+                        value = JsonConvert.SerializeObject(dt);
+                    }
+                }
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
     }
 }

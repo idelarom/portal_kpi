@@ -88,7 +88,6 @@ namespace presentacion
         {
             ModalShow("#modal_terminacion");
         }
-
         protected void AsyncUpload1_FileUploaded(object sender, Telerik.Web.UI.FileUploadedEventArgs e)
         {
             try
