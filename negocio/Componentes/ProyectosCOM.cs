@@ -99,6 +99,9 @@ namespace negocio.Componentes
                 proyecto.fecha_edicion = DateTime.Now;
                 proyecto.id_proyecto_tecnologia = entidad.id_proyecto_tecnologia;
                 proyecto.usuario_resp = entidad.usuario_resp;
+                proyecto.cped = entidad.cped;
+                proyecto.costo = entidad.costo;
+                proyecto.tipo_moneda = entidad.tipo_moneda;
                 context.SaveChanges();
                 return "";
             }
