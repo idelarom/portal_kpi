@@ -244,7 +244,7 @@ namespace presentacion {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtfechaejecuacion;
+        protected global::Telerik.Web.UI.RadDatePicker txtfechaejecuacion;
         
         /// <summary>
         /// Control AsyncUpload1.

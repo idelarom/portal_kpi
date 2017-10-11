@@ -527,7 +527,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha de ejecución</strong></h5>
-                                    <asp:TextBox ID="txtfechaejecuacion" TextMode="Date" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                     <telerik:RadDatePicker ID="txtfechaejecuacion" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Documento</strong></h5>

@@ -985,7 +985,7 @@ namespace presentacion
             CargarDatosFiltros(""); CargarGridAcciones();
             txtaccion.Text = "";
             txtfilterempleado.Text = "";
-            txtfechaejecuacion.Text = DateTime.Now.ToString("yyyy-MM-dd").Replace(' ', 'T');
+            txtfechaejecuacion.SelectedDate = DateTime.Now;
             ModalShow("#modal_acciones");
 
             InicializarTablas();
@@ -1031,7 +1031,7 @@ namespace presentacion
                 {
                     Toast.Error("Error al guardar acción: Ingrese la acción ejecutada.", this);
                 }
-                else if (txtfechaejecuacion.Text == "")
+                else if (!txtfechaejecuacion.SelectedDate.HasValue)
                 {
                     Toast.Error("Error al guardar acción: Ingrese la fecha de ejecución.", this);
                 }
@@ -1057,7 +1057,7 @@ namespace presentacion
                         actividad.nombre = txtaccion.Text;
                         actividad.empleado_resp = ddlempleado_a_consultar.SelectedItem.ToString();
                         actividad.usuario_resp = ddlempleado_a_consultar.SelectedValue;
-                        actividad.fecha_ejecucion = Convert.ToDateTime(txtfechaejecuacion.Text);
+                        actividad.fecha_ejecucion = txtfechaejecuacion.SelectedDate;
                         actividad.usuario = Session["usuario"] as string;
 
                         documentos documento = new documentos();
@@ -1077,12 +1077,12 @@ namespace presentacion
 
                     }
                     AgregarAccionTemporal(id_actividad, id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
-                             ddlempleado_a_consultar.SelectedItem.ToString(), Convert.ToDateTime(txtfechaejecuacion.Text),
+                             ddlempleado_a_consultar.SelectedItem.ToString(),txtfechaejecuacion.SelectedDate,
                             null, funciones.deTextoa64(name), e.File.ContentLength.ToString(), true, 0);
                     CargarGridAcciones();
                     txtaccion.Text = "";
                     txtfilterempleado.Text = "";
-                    txtfechaejecuacion.Text = DateTime.Now.ToString("yyyy-MM-dd").Replace(' ', 'T');
+                    txtfechaejecuacion.SelectedDate = DateTime.Now;
                     CargarDatosFiltros("");
                     Toast.Success("Acción agregada correctamente", "Mensaje del sistema", this);
                 }
