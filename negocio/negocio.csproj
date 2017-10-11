@@ -53,6 +53,7 @@
     <Compile Include="Componentes\ActividadesCOM.cs" />
     <Compile Include="Componentes\AyudaCOM.cs" />
     <Compile Include="Componentes\ConfiguracionDashboardCOM.cs" />
+    <Compile Include="Componentes\CorreosCOM.cs" />
     <Compile Include="Componentes\CpedCOM.cs" />
     <Compile Include="Componentes\DashboardBonosCOM.cs" />
     <Compile Include="Componentes\DashboardCompromisosCOM.cs" />

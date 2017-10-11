@@ -348,7 +348,7 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataTable GetUsers(Employee entidad)
+        public DataTable GetUsers()
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();

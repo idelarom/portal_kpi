@@ -50,5 +50,22 @@ namespace datos
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_cped_Result>("sp_get_cped", pdocumentoParameter);
         }
+    
+        public virtual int sp_send_mail(string mail, string subject, string mail_to)
+        {
+            var mailParameter = mail != null ?
+                new ObjectParameter("mail", mail) :
+                new ObjectParameter("mail", typeof(string));
+    
+            var subjectParameter = subject != null ?
+                new ObjectParameter("subject", subject) :
+                new ObjectParameter("subject", typeof(string));
+    
+            var mail_toParameter = mail_to != null ?
+                new ObjectParameter("mail_to", mail_to) :
+                new ObjectParameter("mail_to", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_send_mail", mailParameter, subjectParameter, mail_toParameter);
+        }
     }
 }

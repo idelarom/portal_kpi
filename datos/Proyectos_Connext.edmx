@@ -406,6 +406,11 @@
         <Function Name="sp_get_cped" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pdocumento" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_send_mail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mail" Type="varchar(max)" Mode="In" />
+          <Parameter Name="subject" Type="varchar" Mode="In" />
+          <Parameter Name="mail_to" Type="varchar(max)" Mode="In" />
+        </Function>
         <EntityContainer Name="Proyectos_ConnextModelStoreContainer">
           <EntitySet Name="actividades" EntityType="Self.actividades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="documentos" EntityType="Self.documentos" Schema="dbo" store:Type="Tables" />
@@ -992,6 +997,11 @@
           <FunctionImport Name="sp_get_cped" ReturnType="Collection(Proyectos_ConnextModel.sp_get_cped_Result)">
           <Parameter Name="pdocumento" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_send_mail">
+            <Parameter Name="mail" Mode="In" Type="String" />
+            <Parameter Name="subject" Mode="In" Type="String" />
+            <Parameter Name="mail_to" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_get_cped_Result">
           <Property Type="String" Name="documento" Nullable="true" MaxLength="20" />
@@ -1245,6 +1255,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_send_mail" FunctionName="Proyectos_ConnextModel.Store.sp_send_mail" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

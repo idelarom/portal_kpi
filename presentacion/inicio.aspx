@@ -343,7 +343,7 @@
                                 </tr>
                             </thead>
                             <tbody id="tbody_table_proyectos"
-                                style="font-size: 12px;">
+                                style="font-size: 11px;">
                             </tbody>
                         </table>
                     </div>

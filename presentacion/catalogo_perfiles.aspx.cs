@@ -27,7 +27,7 @@ namespace presentacion
             {
                 Employee entidad = new Employee();
                 EmpleadosCOM empleados = new EmpleadosCOM();
-                DataTable dt_original = empleados.GetUsers(entidad);
+                DataTable dt_original = empleados.GetUsers();
 
                 DataTable dt = new DataTable();
                 if (filtro == "")
@@ -139,7 +139,7 @@ namespace presentacion
             {
                 Employee entidad = new Employee();
                 EmpleadosCOM empleados = new EmpleadosCOM();
-                DataTable dt_original = empleados.GetUsers(entidad);
+                DataTable dt_original = empleados.GetUsers();
 
                 DataTable dt = new DataTable();
                 if (dt_original.Select("usuario_red = '" + usuario.Trim().ToUpper() + "'").Length > 0)
