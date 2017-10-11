@@ -375,6 +375,7 @@ namespace presentacion
                 proyecto.duración = Convert.ToInt16(dias);
                 proyecto.cveoport = Convert.ToInt32(txtcveop.Text == "" ? "0" : txtcveop.Text);
                 proyecto.folio_pmt = txtfolopmt.Text.Trim();
+                //CPED
                 proyecto.cped = "CPED-" + txtcped.Text.Trim();
                 string monto = txtmonto.Text;
                 proyecto.costo = 0;
