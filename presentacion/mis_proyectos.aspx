@@ -93,6 +93,18 @@
             } else {
                 return false;
             }
+         }
+        function validNumericos(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (((charCode == 8) || (charCode == 46)
+            || (charCode >= 35 && charCode <= 40)
+                || (charCode >= 48 && charCode <= 57)
+                || (charCode >= 96 && charCode <= 105))) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     </script>
 </asp:Content>
@@ -250,6 +262,7 @@
                     <asp:PostBackTrigger ControlID="lnkguardar" />
                      <asp:AsyncPostBackTrigger ControlID="txtcveop" EventName="TextChanged"/>
                      <asp:AsyncPostBackTrigger ControlID="txtfolopmt" EventName="TextChanged" />
+                    <asp:AsyncPostBackTrigger ControlID="txtcped" EventName="TextChanged" />
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">
@@ -284,7 +297,7 @@
                             <div class="row">
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
-                                    <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcveop_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                    <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcveop_TextChanged" onkeydown="return validNumericos(event)" AutoPostBack="true"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
@@ -292,7 +305,7 @@
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;CPED</strong></h5>
-                                    <asp:TextBox ID="txtcped" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcped_TextChanged"></asp:TextBox>
+                                    <asp:TextBox ID="txtcped" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcped_TextChanged" onkeydown="return validNumericos(event)" AutoPostBack="true"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto</strong></h5>

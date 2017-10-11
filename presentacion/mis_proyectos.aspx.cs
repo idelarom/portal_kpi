@@ -672,16 +672,17 @@ namespace presentacion
         {
             if (txtcped.Text != "")
             {
-                CPED cped = Getcped(txtcped.Text);
+                CPED cped = Getcped("CPED-" + txtcped.Text);
                 if (cped== null)
                 {
-                    Toast.Error("No se encuentra ningun CPED con el folio: " + txtcped.Text, this);
+                    Toast.Error("No se encuentra ningun CPED con el folio: CPED-" + txtcped.Text, this);
                     txtcped.Text = "";
                     txtmonto.Text = "";
                     txtcped.Focus();                    
                 }
                 else
                 {
+                    txtcped.Text = cped.documento;
                     txtmonto.Text = cped.costo.ToString("C2") + "-" + cped.tipo_moneda;
                 }
             }
