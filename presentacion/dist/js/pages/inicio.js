@@ -170,6 +170,10 @@ function IniciarWidgets() {
                     ajax_ejecutados.push("CargarDashboardCompromisosIndividual");
                     CargarDashboardCompromisosIndividual();
                 }
+                else if ((div == "proyectos") && jQuery.inArray("CargarProyectos", ajax_ejecutados) == -1) {
+                    ajax_ejecutados.push("CargarProyectos");
+                    CargarProyectos();
+                }
             }
         },
         error: function (result, status, err) {
@@ -280,7 +284,6 @@ function CargarDashboardbonos() {
     });
     xhrRequests.push(call);
 }
-
 
 //WIDGET DE PERFORMANCE INGENIERIA INDIVIDUAL
 function CargarPerformanceIngenieriaIndividual() {
@@ -436,6 +439,45 @@ function CargarDashboardCompromisosIndividual() {
             console.log("error", result.responseText);
             spinner.stop();
             spinner2.stop();
+        }
+    });
+    xhrRequests.push(call);
+}
+
+//WIDGET DE PROYECTOS
+function CargarProyectos() {
+    //load de dashboard bonos
+    var target = document.getElementById('proyectos');
+    var spinner = new Spinner(opts2).spin(target);
+
+    var num_empleado = NumEmpleado();// $('#ContentPlaceHolder1_hdf_usuario').val();
+    //guardamos esta ejecucion en un array
+    var call = $.ajax({
+        url: 'Service.asmx/ProyectosWidget',
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        dataType: "json",
+        data: "{num_empleado:" + num_empleado + "}",
+        success: function (response) {
+            var performance = JSON.parse(response.d);
+            if (performance.length > 0) {
+                var cadena = '';
+                for (indice = 0; indice < performance.length; indice++) {
+                    var id_proyecto = btoa(performance[indice].id_proyecto);
+                    $('#table_proyectos').find('tbody').append('' +
+                        '<tr>' +
+                            '<td><a href="proyectos_dashboard.aspx?id_proyecto=' + id_proyecto + '">' + performance[indice].proyecto + '</a></td>' +
+                            '<td><span class="label label-success">' + performance[indice].estatus + '</span></td>' +
+                            '<td>' + performance[indice].empleado + '</td>' +
+                        '</tr>');
+                }
+            }
+            $('#link_proyectos').attr('href', 'mis_proyectos.aspx');
+            spinner.stop();
+        },
+        error: function (result, status, err) {
+            console.log("error", result.responseText);
+            spinner.stop();
         }
     });
     xhrRequests.push(call);

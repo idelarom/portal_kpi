@@ -282,7 +282,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" id="performance_ing" style="display: none;">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="performance_ing" style="display: none;">
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Performance Ingenieria</h3>
@@ -321,7 +321,43 @@
                 <!-- /.box-footer -->
             </div>
         </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="proyectos" style="display:none;">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Mis proyectos</h3>
+                    <div class="box-tools pull-right">
+                        <a id="btnayuda_proyectos">
+                            <i class="material-icons">info</i>
+                        </a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table table-responsive" style="width: 100%;overflow: scroll;">
+                        <table id="table_proyectos" class="dvv table table-responsive table-condensed">
+                            <thead>
+                                <tr style="font-size: 12px;">
+                                    <th style="min-width: 250px; text-align: left;" scope="col">Proyecto</th>
+                                    <th style="min-width: 50px; text-align: left;" scope="col">Estatus</th>
+                                    <th style="min-width: 190px; text-align: left;" scope="col">Empleado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody_table_proyectos"
+                                style="font-size: 12px;">
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
 
+                <div class="box-footer clearfix">
+                    <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_proyectos"
+                        onclick="CloseAjax('mis_proyectos.aspx');">Ver todos
+                    </a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
     </div>    
     <div class="modal fade  bs-example-modal-lg" id="modal_widget" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog  modal-lg">
