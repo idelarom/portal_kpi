@@ -62,7 +62,7 @@ namespace negocio.Componentes
                                 })
                                 .OrderBy(u => u.CveOport);
                 dt = To.DataTable(query.ToList());
-                return dt.Rows.Count > 0 ? "" : "No existe ninguN folio: " + Folio_Pm.ToString();
+                return dt.Rows.Count > 0 ? "" : "No existe ningun folio: " + Folio_Pm.ToString();
             }
             catch (DbEntityValidationException ex)
             {

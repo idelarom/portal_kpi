@@ -211,6 +211,13 @@ namespace presentacion
             return vmensaje;
         }
 
+        private CPED Getcped(string documento)
+        {
+            CpedCOM Documento = new CpedCOM();
+            CPED cped = Documento.cped(documento);
+            return cped;
+        }
+
         protected void CargarDatosempleados(string filtro)
         {
             try
@@ -355,7 +362,21 @@ namespace presentacion
 
                 DateTime fechaInicial = Convert.ToDateTime(rdpfechainicial.SelectedDate);
                 DateTime fechaFinal = Convert.ToDateTime(rdpfechafinal.SelectedDate);
+                proyecto.fecha_inicio = fechaInicial;
+                proyecto.fecha_fin = fechaFinal;
                 int dias = ((fechaFinal - fechaInicial)).Days;
+                proyecto.duración = Convert.ToInt16(dias);
+                proyecto.cveoport = Convert.ToInt32(txtcveop.Text == "" ? "0" : txtcveop.Text);
+                proyecto.folio_pmt = txtfolopmt.Text;
+                proyecto.cped = txtcped.Text.Replace("$","").Replace(",","").Replace(" ","");
+                string monto = txtmonto.Text;
+                proyecto.costo = 0;
+                if (txtmonto.Text != "")
+                {
+                    string[] costo = monto.Split('-');
+                    proyecto.costo = Convert.ToDecimal(costo[0].Replace("$", "").Replace(",", "").Replace(" ", ""));
+                    proyecto.tipo_moneda = costo[1];
+                }   
 
                 if (proyecto.proyecto == "")
                 {
@@ -377,7 +398,7 @@ namespace presentacion
                     ModalShow("#ModalCapturaProyectos");
                     Toast.Error("Error al procesar estatus : Seleccione un estatus", this);
                 }
-                else if (proyecto.cveoport <=0)
+                else if (proyecto.cveoport == 0)
                 {
                     ModalShow("#ModalCapturaProyectos");
                     Toast.Error("Error al procesar folio pmtracker : Ingrese un folio pmtracker", this);
@@ -392,15 +413,15 @@ namespace presentacion
                     ModalShow("#ModalCapturaProyectos");
                     Toast.Error("Error al procesar tecnologia : Seleccione una tecnologia ", this);
                 }
-                else if (rdpfechainicial.SelectedDate == null)
+                else if (proyecto.cped =="")
                 {
                     ModalShow("#ModalCapturaProyectos");
-                    Toast.Error("Error al procesar tecnologia : la fecha inicial no puede ser mayor a la fecha final ", this);
+                    Toast.Error("Error al procesar CPED : Favor de ingresar un CPED", this);
                 }
                 else if (rdpfechainicial.SelectedDate> rdpfechafinal.SelectedDate)
                 {
                     ModalShow("#ModalCapturaProyectos");
-                    Toast.Error("Error al procesar tecnologia : la fecha inicial no puede ser mayor a la fecha final ", this);
+                    Toast.Error("Error al procesar periodo : la fecha inicial no puede ser mayor a la fecha final ", this);
                 }
                 else
                 {
@@ -644,7 +665,21 @@ namespace presentacion
 
         protected void txtcped_TextChanged(object sender, EventArgs e)
         {
-
+            if (txtcped.Text != "")
+            {
+                CPED cped = Getcped(txtcped.Text);
+                if (cped== null)
+                {
+                    Toast.Error("No se encuentra ningun CPED con el folio: " + txtcped.Text, this);
+                    txtcped.Text = "";
+                    txtmonto.Text = "";
+                    txtcped.Focus();                    
+                }
+                else
+                {
+                    txtmonto.Text = cped.costo.ToString("C2") + "-" + cped.tipo_moneda;
+                }
+            }
         }
     }
 }
