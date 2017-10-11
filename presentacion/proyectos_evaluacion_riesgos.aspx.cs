@@ -1450,9 +1450,9 @@ namespace presentacion
                     DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/"));
                     if (File.Exists(dirInfo.ToString() + funciones.de64aTexto(documento.path)))
                     {
-                        Response.ContentType = ContentType;
+                        Response.ContentType = "doc/docx";
                         Response.AppendHeader("Content-Disposition", "attachment; filename=" + documento.nombre);
-                        Response.WriteFile(dirInfo.ToString() + funciones.de64aTexto(documento.path));
+                        Response.TransmitFile(dirInfo.ToString() + funciones.de64aTexto(documento.path));
                         Response.End();
                         hdfid_actividad.Value = "";
                     }
@@ -1601,5 +1601,9 @@ namespace presentacion
             ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "Init('.dvv');", true);
         }
 
+        protected void lnkdashboard_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("proyectos_dashboard.aspx?id_proyecto="+Request.QueryString["id_proyecto"]);
+        }
     }
 }

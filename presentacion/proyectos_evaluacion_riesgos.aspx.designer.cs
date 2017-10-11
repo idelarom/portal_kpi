@@ -13,6 +13,15 @@ namespace presentacion {
     public partial class proyectos_evaluacion_riesgos {
         
         /// <summary>
+        /// Control lnkdashboard.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkdashboard;
+        
+        /// <summary>
         /// Control lblproyect.
         /// </summary>
         /// <remarks>
