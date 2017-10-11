@@ -375,7 +375,7 @@ namespace presentacion
                 proyecto.duración = Convert.ToInt16(dias);
                 proyecto.cveoport = Convert.ToInt32(txtcveop.Text == "" ? "0" : txtcveop.Text);
                 proyecto.folio_pmt = txtfolopmt.Text.Trim();
-                proyecto.cped = txtcped.Text.Replace("$","").Replace(",","").Replace(" ","");
+                proyecto.cped = "CPED-" + txtcped.Text.Trim();
                 string monto = txtmonto.Text;
                 proyecto.costo = 0;
                 if (txtmonto.Text != "")
@@ -502,7 +502,7 @@ namespace presentacion
 
                             txtcped.Enabled = true;
                         }
-                        txtcped.Text = proyecto.cped;
+                        txtcped.Text = proyecto.cped.Replace("CPED","").Replace("-","");
                         txtmonto.Text = proyecto.costo.ToString("C2") +"-"+ proyecto.tipo_moneda;
                         rdpfechainicial.SelectedDate = proyecto.fecha_inicio;
                         rdpfechafinal.SelectedDate = proyecto.fecha_fin;
@@ -666,10 +666,6 @@ namespace presentacion
                     txtcveop.Focus();
                     Toast.Error(vmansaje, this);
                 }
-                else
-                {
-                    txtfolopmt.Focus();
-                }
             }
         }
 
@@ -683,10 +679,6 @@ namespace presentacion
                     txtfolopmt.Text = "";
                     txtfolopmt.Focus();
                     Toast.Error(vmansaje, this);
-                }
-                else
-                {
-                    txtcped.Focus();
                 }
             }
         }
@@ -705,9 +697,7 @@ namespace presentacion
                 }
                 else
                 {
-                    txtcped.Text = cped.documento;
                     txtmonto.Text = cped.costo.ToString("C2") + "-" + cped.tipo_moneda;
-                    txtmonto.Focus();
                 }
             }
         }
