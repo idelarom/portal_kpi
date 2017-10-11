@@ -102,6 +102,9 @@
                 || (charCode >= 96 && charCode <= 105))) {
                 return true;
             }
+            else if (charCode==13) {
+                
+            }
             else {
                 return false;
             }
@@ -297,7 +300,7 @@
                             <div class="row">
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
-                                    <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcveop_TextChanged" onkeydown="return validNumericos(event)" AutoPostBack="true"></asp:TextBox>
+                                    <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcveop_TextChanged" onkeydown="return validNumericos(event)"  AutoPostBack="true"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>

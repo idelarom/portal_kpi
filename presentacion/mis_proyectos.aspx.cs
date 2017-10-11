@@ -218,6 +218,13 @@ namespace presentacion
             return cped;
         }
 
+        private Boolean Permisos(string usuario, int id_permiso)
+        {
+            UsuariosCOM usuarioP = new UsuariosCOM();
+            Boolean permiso = usuarioP.ExistPermission(usuario, id_permiso);
+            return permiso;
+        }
+
         protected void CargarDatosempleados(string filtro)
         {
             try
@@ -367,7 +374,7 @@ namespace presentacion
                 int dias = ((fechaFinal - fechaInicial)).Days;
                 proyecto.duración = Convert.ToInt16(dias);
                 proyecto.cveoport = Convert.ToInt32(txtcveop.Text == "" ? "0" : txtcveop.Text);
-                proyecto.folio_pmt = txtfolopmt.Text;
+                proyecto.folio_pmt = txtfolopmt.Text.Trim();
                 proyecto.cped = txtcped.Text.Replace("$","").Replace(",","").Replace(" ","");
                 string monto = txtmonto.Text;
                 proyecto.costo = 0;
@@ -485,6 +492,16 @@ namespace presentacion
                         CargarDatosempleados(proyecto.usuario_resp);
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
+                        Boolean permiso = Permisos(Session["usuario"] as string, 2);
+                        if (permiso==false)
+                        {
+                            txtcped.Enabled = false;
+                        }
+                        else
+                        {
+
+                            txtcped.Enabled = true;
+                        }
                         txtcped.Text = proyecto.cped;
                         txtmonto.Text = proyecto.costo.ToString("C2") +"-"+ proyecto.tipo_moneda;
                         rdpfechainicial.SelectedDate = proyecto.fecha_inicio;
@@ -639,7 +656,6 @@ namespace presentacion
         }
 
         protected void txtcveop_TextChanged(object sender, EventArgs e)
-
         {
             if (txtcveop.Text!="")
             {
@@ -650,20 +666,27 @@ namespace presentacion
                     txtcveop.Focus();
                     Toast.Error(vmansaje, this);
                 }
+                else
+                {
+                    txtfolopmt.Focus();
+                }
             }
-           
         }
 
         protected void txtfolopmt_TextChanged(object sender, EventArgs e)
         {
             if (txtfolopmt.Text != "")
             {
-                string vmansaje = foliopmtracker(txtfolopmt.Text);
+                string vmansaje = foliopmtracker(txtfolopmt.Text.Trim());
                 if (vmansaje != "")
                 {
                     txtfolopmt.Text = "";
                     txtfolopmt.Focus();
                     Toast.Error(vmansaje, this);
+                }
+                else
+                {
+                    txtcped.Focus();
                 }
             }
         }
@@ -675,7 +698,7 @@ namespace presentacion
                 CPED cped = Getcped("CPED-" + txtcped.Text);
                 if (cped== null)
                 {
-                    Toast.Error("No se encuentra ningun CPED con el folio: CPED-" + txtcped.Text, this);
+                    Toast.Error("No se encuentra ningun CPED con el folio: " + txtcped.Text, this);
                     txtcped.Text = "";
                     txtmonto.Text = "";
                     txtcped.Focus();                    
@@ -684,6 +707,7 @@ namespace presentacion
                 {
                     txtcped.Text = cped.documento;
                     txtmonto.Text = cped.costo.ToString("C2") + "-" + cped.tipo_moneda;
+                    txtmonto.Focus();
                 }
             }
         }
