@@ -486,7 +486,7 @@ namespace presentacion
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
                         txtcped.Text = proyecto.cped;
-                        txtmonto.Text = proyecto.costo.ToString("C2");
+                        txtmonto.Text = proyecto.costo.ToString("C2") +"-"+ proyecto.tipo_moneda;
                         rdpfechainicial.SelectedDate = proyecto.fecha_inicio;
                         rdpfechafinal.SelectedDate = proyecto.fecha_fin;
                         ModalShow("#ModalCapturaProyectos");
