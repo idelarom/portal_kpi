@@ -483,7 +483,12 @@ namespace presentacion
                         txtfolopmt.Text = proyecto.folio_pmt;
                         ddltegnologia.SelectedValue = proyecto.id_proyecto_tecnologia.ToString();
                         CargarDatosempleados(proyecto.usuario_resp);
-
+                        txtcveop.Text = proyecto.cveoport.ToString();
+                        txtfolopmt.Text = proyecto.folio_pmt;
+                        txtcped.Text = proyecto.cped;
+                        txtmonto.Text = proyecto.costo.ToString("C2");
+                        rdpfechainicial.SelectedDate = proyecto.fecha_inicio;
+                        rdpfechafinal.SelectedDate = proyecto.fecha_fin;
                         ModalShow("#ModalCapturaProyectos");
                     }
                 }
