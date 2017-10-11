@@ -49,6 +49,24 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Repeater repeater_evaluaciones;
         
         /// <summary>
+        /// Control UpdatePanel3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel3;
+        
+        /// <summary>
+        /// Control load_cumpli_compromisos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load_cumpli_compromisos;
+        
+        /// <summary>
         /// Control repeater_evaluaciones_details.
         /// </summary>
         /// <remarks>

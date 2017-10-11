@@ -1192,13 +1192,9 @@ namespace presentacion
             {
                 Toast.Error("Error al editar probabilidad: " + ex.Message, this);
             }
-            finally {
-                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
-                {
-                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
-                    div.Style["display"] = "none";
-                }
-
+            finally
+            {
+                load_cumpli_compromisos.Style["display"] = "none";
                 InicializarTablas();
             }
         }
@@ -1243,11 +1239,7 @@ namespace presentacion
             }
             finally
             {
-                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
-                {
-                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
-                    div.Style["display"] = "none";
-                }
+                load_cumpli_compromisos.Style["display"] = "none";
 
                 InicializarTablas();
             }
@@ -1292,11 +1284,7 @@ namespace presentacion
             }
             finally
             {
-                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
-                {
-                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
-                    div.Style["display"] = "none";
-                }
+                load_cumpli_compromisos.Style["display"] = "none";
 
                 InicializarTablas();
             }
@@ -1340,12 +1328,7 @@ namespace presentacion
             }
             finally
             {
-                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
-                {
-                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
-                    div.Style["display"] = "none";
-                }
-
+                load_cumpli_compromisos.Style["display"] = "none";
                 InicializarTablas();
             }
 
@@ -1437,12 +1420,7 @@ namespace presentacion
                 Toast.Error("Error al cargar riesgo: " + ex.Message, this);
             }
             finally {
-                foreach (RepeaterItem item in repeater_evaluaciones_details.Items)
-                {
-                    HtmlGenericControl div = item.FindControl("load_cumpli_compromisos") as HtmlGenericControl;
-                    div.Style["display"] = "none";
-                }
-
+                load_cumpli_compromisos.Style["display"] = "none";
                 InicializarTablas();
             }
         }
