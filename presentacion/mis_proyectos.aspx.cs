@@ -384,7 +384,7 @@ namespace presentacion
                 proyecto.cveoport = Convert.ToInt32(txtcveop.Text == "" ? "0" : txtcveop.Text);
                 proyecto.folio_pmt = txtfolopmt.Text.Trim();
                 //CPED
-                proyecto.cped = "CPED-" + txtcped.Text.Trim();
+                proyecto.cped = txtcped.Text.Trim();
                 //string monto = txtmonto.Text;
                 //proyecto.costo = 0;
                 //if (txtmonto.Text != "")
@@ -496,6 +496,10 @@ namespace presentacion
                         ddlestatus.SelectedIndex = 0;
                         txtcveop.Text = "";
                         txtfolopmt.Text = "";
+                        txtcped.Text = "";
+                        txtmonto.Text = "";
+                        txtmontomn.Text = "";
+                        txtmoneda.Text = "";
                         Cargarddlperiodo();
                         Cargarddlestatus();
                         Cargarddltegnologia();
@@ -559,7 +563,7 @@ namespace presentacion
 
                             txtcped.Enabled = true;
                         }
-                        txtcped.Text = proyecto.cped.Replace("CPED","").Replace("-","");
+                        txtcped.Text = proyecto.cped;
                         txtmonto.Text = proyecto.costo_usd.ToString("C2");
                         txtmontomn.Text = proyecto.costo_mn.ToString("C2");
                         txtmoneda.Text = proyecto.tipo_moneda;
