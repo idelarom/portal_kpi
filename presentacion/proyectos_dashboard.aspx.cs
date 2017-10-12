@@ -151,7 +151,6 @@ namespace presentacion
                             CorreosCOM correos = new CorreosCOM();
                             bool correct = correos.SendMail(mail,subject,mail_to);
                         }
-                        proyecto = proyectos.proyecto(id_proyecto);
                         System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
                                     "AlertGO('Proyecto terminado correctamente.','mis_proyectos.aspx');", true);
                     }

@@ -5,6 +5,7 @@ using negocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -442,6 +443,49 @@ namespace presentacion
                     vmensaje = id_proyecto > 0 ? Editar(proyecto) : Agregar(proyecto);
                     if (vmensaje == "")
                     {
+                        if (id_proyecto == 0)
+                        {
+
+                            string usuario_resp = proyecto.usuario_resp;
+                            EmpleadosCOM usuarios = new EmpleadosCOM();
+                            DataTable dt_usuario = usuarios.GetUsers();
+                            DataView dv = dt_usuario.DefaultView;
+                            dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
+                            DataTable dt_result = dv.ToTable();
+                            if (dt_result.Rows.Count > 0)
+                            {
+                                string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+                                DataRow usuario = dt_result.Rows[0];
+                                string mail_to = usuario["mail"].ToString() == "" ? "" : (usuario["mail"].ToString() + ";");
+                                string subject = "Módulo de proyectos - Proyecto creado";
+                                string mail = "<div>" + saludo + " <strong>" +
+                                    System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
+                                    + "</strong> <div>" +
+                                    "<br>" +
+                                    "<p>Le fue asignado el proyecto <strong>" + proyecto.proyecto + "</strong>"+
+                                    "</p>" +
+                                    "<dl>"+
+                                       "<dt><strong>Descripción</strong> </dt>" +   
+                                       "<dd>"+(proyecto.descripcion == "" || proyecto.descripcion == null ?proyecto.proyecto:proyecto.descripcion)+"</dd> " +
+                                       "<dt><strong>CPED</strong> </dt>" +
+                                       "<dd>" + proyecto.cped+ "</dd> " +
+                                       "<dt><strong>Tecnología</strong> </dt>" +
+                                       "<dd>" +ddltegnologia.SelectedItem.ToString() + "</dd> " +
+                                       "<dt><strong>Costo</strong> </dt>" +
+                                       "<dd>" +txtmonto.Text + "</dd> " +
+                                       "<dt><strong>Duración</strong> </dt>" +
+                                       "<dd>" + proyecto.duración+ " dia(s)</dd> " +
+                                     "</dl>" +
+                                    "<p>Este movimiento fue realizado por <strong>" +
+                                    System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower()) 
+                                    + "</strong> el dia <strong>" +
+                                    DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                    "</p>";
+                                CorreosCOM correos = new CorreosCOM();
+                                bool correct = correos.SendMail(mail, subject, mail_to);
+                            }
+                        }
+
                         txtnombreproyecto.Text = "";
                         txtdescripcion.Text = "";
                         ddlperiodo.SelectedIndex = 0;
