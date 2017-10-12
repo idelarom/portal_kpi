@@ -470,19 +470,17 @@ namespace presentacion
                                     "<br>" +
                                     "<p>Le fue asignado el proyecto <strong>" + proyecto.proyecto + "</strong>"+
                                     "</p>" +
-                                    "<dl>"+
-                                       "<dt><strong>Descripción</strong> </dt>" +   
-                                       "<dd>"+(proyecto.descripcion == "" || proyecto.descripcion == null ?proyecto.proyecto:proyecto.descripcion)+"</dd> " +
-                                       "<dt><strong>CPED</strong> </dt>" +
-                                       "<dd>" + proyecto.cped+ "</dd> " +
-                                       "<dt><strong>Tecnología</strong> </dt>" +
-                                       "<dd>" +ddltegnologia.SelectedItem.ToString() + "</dd> " +
-                                       "<dt><strong>Costo</strong> </dt>" +
-                                       "<dd>" +txtmonto.Text + "</dd> " +
-                                       "<dt><strong>Duración</strong> </dt>" +
-                                       "<dd>" + proyecto.duración+ " dia(s)</dd> " +
-                                     "</dl>" +
-                                    "<p>Este movimiento fue realizado por <strong>" +
+                                       "<p><strong>Descripción</strong> <br/> " +
+                                      (proyecto.descripcion == "" || proyecto.descripcion == null ?proyecto.proyecto:proyecto.descripcion)+"</dd> " +
+                                       "<p><strong>CPED</strong> <br/> " +
+                                       proyecto.cped + "</p> " +
+                                       "<p><strong>Tecnología</strong><br/> " +
+                                      ddltegnologia.SelectedItem.ToString() + "</p> " +
+                                       "<p><strong>Costo</strong><br/> " +
+                                      txtmonto.Text + "</p> " +
+                                       "<p><strong>Duración</strong><br/> " +
+                                      proyecto.duración+ " dia(s)</p> " +
+                                    "<br/><p>Este movimiento fue realizado por <strong>" +
                                     System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower()) 
                                     + "</strong> el dia <strong>" +
                                     DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +

@@ -67,7 +67,7 @@
                             </p>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6  col-xs-12">
-                            <h5><strong><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;Monto</strong></h5>
+                            <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblmonto" runat="server" Text="Label"></asp:Label>
                             </p>
