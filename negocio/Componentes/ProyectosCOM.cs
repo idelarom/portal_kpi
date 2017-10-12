@@ -336,7 +336,10 @@ namespace negocio.Componentes
                                      p.fecha_registro,
                                      p.fecha_inicio,
                                      p.fecha_fin,
-                                     p.usuario_resp
+                                     p.usuario_resp,
+                                        p.costo_mn,
+
+                                        p.costo_usd
                                  }).ToArray();
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in proyectos
@@ -358,7 +361,10 @@ namespace negocio.Componentes
                                   p.fecha_inicio,
                                   p.fecha_fin,
                                   p.id_proyecto_tecnologia,
-                                  p.tecnologia
+                                  p.tecnologia,
+                                  p.costo_mn,
+
+                                  p.costo_usd
                               };
                 dt = To.DataTable(results.ToList());
                 return dt;
@@ -419,7 +425,10 @@ namespace negocio.Componentes
                                      p.fecha_registro,
                                      p.fecha_inicio,
                                      p.fecha_fin,
-                                     p.usuario_resp
+                                     p.usuario_resp,
+                                     p.costo_mn,
+
+                                     p.costo_usd
                                  }).ToArray();
                 var tproyectos = (from p in proyectos
                                   join emp in list_emp on p.usuario_resp.ToUpper() equals emp.Usuario
@@ -439,7 +448,10 @@ namespace negocio.Componentes
                                       p.fecha_fin,
                                       p.id_proyecto_tecnologia,
                                       p.tecnologia,
-                                      p.usuario_resp
+                                      p.usuario_resp,
+                                      p.costo_mn,
+
+                                      p.costo_usd
                                   });
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in tproyectos
@@ -461,7 +473,10 @@ namespace negocio.Componentes
                                   p.fecha_inicio,
                                   p.fecha_fin,
                                   p.id_proyecto_tecnologia,
-                                  p.tecnologia
+                                  p.tecnologia,
+                                  p.costo_mn,
+
+                                  p.costo_usd
                               };
                 dt = To.DataTable(results.ToList());
                 return dt;
