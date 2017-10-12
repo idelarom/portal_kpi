@@ -45,7 +45,8 @@ namespace negocio.Componentes
                         correo_bienvenida = false,
                         fecha_inicio = entidad.fecha_inicio,
                         fecha_fin = entidad.fecha_fin,
-                        costo =entidad.costo,
+                        costo_mn =entidad.costo_mn,
+                        costo_usd = entidad.costo_usd,
                         usuario = entidad.usuario.ToUpper(),                    
                         fecha_registro = DateTime.Now,
                         id_proyecto_tecnologia= entidad.id_proyecto_tecnologia,
@@ -100,7 +101,8 @@ namespace negocio.Componentes
                 proyecto.id_proyecto_tecnologia = entidad.id_proyecto_tecnologia;
                 proyecto.usuario_resp = entidad.usuario_resp;
                 proyecto.cped = entidad.cped;
-                proyecto.costo = entidad.costo;
+                proyecto.costo_usd = entidad.costo_usd;
+                proyecto.costo_mn = entidad.costo_mn;
                 proyecto.tipo_moneda = entidad.tipo_moneda;
                 context.SaveChanges();
                 return "";
@@ -334,7 +336,10 @@ namespace negocio.Componentes
                                      p.fecha_registro,
                                      p.fecha_inicio,
                                      p.fecha_fin,
-                                     p.usuario_resp
+                                     p.usuario_resp,
+                                        p.costo_mn,
+
+                                        p.costo_usd
                                  }).ToArray();
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in proyectos
@@ -356,7 +361,10 @@ namespace negocio.Componentes
                                   p.fecha_inicio,
                                   p.fecha_fin,
                                   p.id_proyecto_tecnologia,
-                                  p.tecnologia
+                                  p.tecnologia,
+                                  p.costo_mn,
+
+                                  p.costo_usd
                               };
                 dt = To.DataTable(results.ToList());
                 return dt;
@@ -417,7 +425,10 @@ namespace negocio.Componentes
                                      p.fecha_registro,
                                      p.fecha_inicio,
                                      p.fecha_fin,
-                                     p.usuario_resp
+                                     p.usuario_resp,
+                                     p.costo_mn,
+
+                                     p.costo_usd
                                  }).ToArray();
                 var tproyectos = (from p in proyectos
                                   join emp in list_emp on p.usuario_resp.ToUpper() equals emp.Usuario
@@ -437,7 +448,10 @@ namespace negocio.Componentes
                                       p.fecha_fin,
                                       p.id_proyecto_tecnologia,
                                       p.tecnologia,
-                                      p.usuario_resp
+                                      p.usuario_resp,
+                                      p.costo_mn,
+
+                                      p.costo_usd
                                   });
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in tproyectos
@@ -459,7 +473,10 @@ namespace negocio.Componentes
                                   p.fecha_inicio,
                                   p.fecha_fin,
                                   p.id_proyecto_tecnologia,
-                                  p.tecnologia
+                                  p.tecnologia,
+                                  p.costo_mn,
+
+                                  p.costo_usd
                               };
                 dt = To.DataTable(results.ToList());
                 return dt;
