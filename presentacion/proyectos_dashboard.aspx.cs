@@ -149,6 +149,8 @@ namespace presentacion
                                 + DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
                                 "</p>" +
                                 "<p>Este movimiento fue realizado por <strong>"+ System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())+"</strong>"+
+                                " el dia <strong> " +
+                                DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
                                 "</p>";
                             CorreosCOM correos = new CorreosCOM();
                             bool correct = correos.SendMail(mail,subject,mail_to);

@@ -670,6 +670,34 @@ namespace presentacion
                     string vmensaje = proyectos.Cerrar(id_proyecto, Session["usuario"] as string, documento);
                     if (vmensaje == "")
                     {
+                        proyectos proyecto = proyectos.proyecto(id_proyecto);
+
+                        string usuario_resp = proyecto.usuario_resp;
+                        EmpleadosCOM usuarios = new EmpleadosCOM();
+                        DataTable dt_usuario = usuarios.GetUsers();
+                        DataView dv = dt_usuario.DefaultView;
+                        dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
+                        DataTable dt_result = dv.ToTable();
+                        if (dt_result.Rows.Count > 0)
+                        {
+                            string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+                            DataRow usuario = dt_result.Rows[0];
+                            string mail_to = usuario["mail"].ToString() == "" ? "" : (usuario["mail"].ToString() + ";");
+                            string subject = "Módulo de proyectos - Proyecto cerrado";
+                            string mail = "<div>" + saludo + " <strong>" +
+                                System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
+                                + "</strong> <div>" +
+                                "<br>" +
+                                "<p>Se le comunica que el proyecto <strong>" + proyecto.proyecto + "</strong>, fue cerrado el dia <strong>"
+                                + DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                "</p>" +
+                                "<p>Este movimiento fue realizado por <strong>" + System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower()) + "</strong>" +
+                                " el dia <strong> " +
+                                DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                "</p>";
+                            CorreosCOM correos = new CorreosCOM();
+                            bool correct = correos.SendMail(mail, subject, mail_to);
+                        }
                         System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
                                     "AlertGO('Proyecto terminado correctamente.','mis_proyectos.aspx');", true);
                     }
