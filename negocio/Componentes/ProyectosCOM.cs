@@ -338,8 +338,8 @@ namespace negocio.Componentes
                                      p.fecha_fin,
                                      p.usuario_resp,
                                         p.costo_mn,
-
-                                        p.costo_usd
+                                        p.costo_usd,
+                                        p.cped
                                  }).ToArray();
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in proyectos
@@ -363,7 +363,7 @@ namespace negocio.Componentes
                                   p.id_proyecto_tecnologia,
                                   p.tecnologia,
                                   p.costo_mn,
-
+                                  p.cped,
                                   p.costo_usd
                               };
                 dt = To.DataTable(results.ToList());
@@ -427,7 +427,8 @@ namespace negocio.Componentes
                                      p.fecha_fin,
                                      p.usuario_resp,
                                      p.costo_mn,
-                                     p.costo_usd
+                                     p.costo_usd,
+                                     p.cped
                                  }).ToArray();
                 var tproyectos = (from p in proyectos
                                   join emp in list_emp on p.usuario_resp.ToUpper() equals emp.Usuario
@@ -449,7 +450,7 @@ namespace negocio.Componentes
                                       p.tecnologia,
                                       p.usuario_resp,
                                       p.costo_mn,
-
+                                      p.cped,
                                       p.costo_usd
                                   });
                 NAVISION dbnavision = new NAVISION();
@@ -474,7 +475,7 @@ namespace negocio.Componentes
                                   p.id_proyecto_tecnologia,
                                   p.tecnologia,
                                   p.costo_mn,
-
+                                  p.cped,
                                   p.costo_usd
                               };
                 dt = To.DataTable(results.ToList());

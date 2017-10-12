@@ -49,10 +49,12 @@ namespace presentacion
                     DataRow proyecto = dt.Rows[0];
                     hdfid_proyecto.Value = id_proyecto.ToString();
                     lblproyect.Text = proyecto["proyecto"].ToString();
-                    lblresumen.Text = proyecto["descripcion"].ToString();
+                    //lblresumen.Text = proyecto["descripcion"].ToString();
+                    lblmonto.Text = Convert.ToDecimal(proyecto["costo_usd"]).ToString("C2")+ " USD / " + Convert.ToDecimal(proyecto["costo_mn"]).ToString("C2") + " MN";
                     lblperiodo.Text = proyecto["periodo"].ToString();
                     lblestatus.Text = proyecto["estatus"].ToString();
                     lbltecnologia.Text = proyecto["tecnologia"].ToString();
+                    lblcped.Text = proyecto["cped"].ToString();
                     lblempleado.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(proyecto["empleado"].ToString().ToLower());
                 }
             }

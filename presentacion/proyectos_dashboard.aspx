@@ -36,26 +36,19 @@
                 </div>
                 <div class="box-body" style="">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Resumen del Proyecto</strong></h5>
-                            <p class="text-muted">
-                                <asp:Label ID="lblresumen" runat="server" Text="Label"></asp:Label>
-                            </p>
-                        </div>   
-                        
                         <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12">
                             <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Tecnología</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lbltecnologia" runat="server" Text="Label"></asp:Label>
                             </p>
-                        </div>                     
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
                             <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblestatus" runat="server" Text="Label"></asp:Label>
                             </p>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4  col-xs-8">
                             <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo de evaluación</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblperiodo" runat="server" Text="Label"></asp:Label>
@@ -65,6 +58,18 @@
                             <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Administrador del proyecto</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblempleado" runat="server" Text="Label"></asp:Label>
+                            </p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3  col-xs-12">
+                            <h5><strong><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;CPED</strong></h5>
+                            <p class="text-muted">
+                                <asp:Label ID="lblcped" runat="server" Text="Label"></asp:Label>
+                            </p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6  col-xs-12">
+                            <h5><strong><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;Monto</strong></h5>
+                            <p class="text-muted">
+                                <asp:Label ID="lblmonto" runat="server" Text="Label"></asp:Label>
                             </p>
                         </div>
                     </div>
@@ -78,28 +83,28 @@
         </div>
     </div>
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red" onclick="return GoRiesgos();" style="cursor:pointer;">
-            <div class="inner">
-              <h3>
-                  <asp:Label ID="lblnumriesgos" runat="server" Text="0"></asp:Label></h3>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red" onclick="return GoRiesgos();" style="cursor: pointer;">
+                <div class="inner">
+                    <h3>
+                        <asp:Label ID="lblnumriesgos" runat="server" Text="0"></asp:Label></h3>
 
-              <p>Riesgos abiertos</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-android-warning"></i>
-            </div>
-              <asp:LinkButton ID="lnkgo_riesgos" OnClick="lnkgo_riesgos_Click" runat="server"   CssClass="small-box-footer">
+                    <p>Riesgos abiertos</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-android-warning"></i>
+                </div>
+                <asp:LinkButton ID="lnkgo_riesgos" OnClick="lnkgo_riesgos_Click" runat="server" CssClass="small-box-footer">
                   
               Evaluaciones&nbsp;<i class="fa fa-arrow-circle-right"></i>
-              </asp:LinkButton>
-          </div>
+                </asp:LinkButton>
+            </div>
         </div>
     </div>
     <asp:HiddenField ID="hdfid_proyecto" runat="server" />
-    
-     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_terminacion" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_terminacion" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
                 <Triggers>
@@ -125,15 +130,15 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                                    <asp:LinkButton OnClientClick="return false;" ID="LinkButton2" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                            <asp:LinkButton OnClientClick="return false;" ID="LinkButton2" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Terminando
-                                    </asp:LinkButton>
-                                    <asp:LinkButton ID="lnkguardarhistorial"
-                                         OnClientClick="return ConfirmwidgetProyectoModal('¿Desea terminar este proyecto?');"
-                                        OnClick="lnkguardarhistorial_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="lnkguardarhistorial"
+                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea terminar este proyecto?');"
+                                OnClick="lnkguardarhistorial_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
                                             Terminar proyecto
-                                    </asp:LinkButton>
+                            </asp:LinkButton>
                         </div>
                     </div>
                 </ContentTemplate>

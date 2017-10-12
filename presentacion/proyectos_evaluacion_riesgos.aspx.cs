@@ -620,7 +620,7 @@ namespace presentacion
         public string GuardarRiesgo(riesgos riesgo,  List<actividades> lst_actividades, List<documentos> lstdocumentos)
         {
             RiesgosCOM riesgos = new RiesgosCOM();
-            return riesgos.Agregar(riesgo,lst_actividades,lstdocumentos);
+            return riesgos.Agregar(riesgo,lst_actividades,lstdocumentos, lblproyect.Text, Session["nombre"] as string);
         }
         
         public string EditarRiesgo(riesgos riesgo, List<actividades> lst_actividades, List<documentos> lstdocumentos)
@@ -1074,6 +1074,40 @@ namespace presentacion
                         lstdocumentos.Add(documento);
                         ActividadesCOM actividades = new ActividadesCOM();
                         id_actividad = actividades.Agregar(actividad, lstdocumentos);
+
+                        //ENVIAMOS NOTIFICACION
+                        string usuario_resp = actividad.usuario_resp;
+                        EmpleadosCOM usuarios = new EmpleadosCOM();
+                        DataTable dt_usuario = usuarios.GetUsers();
+                        DataView dv = dt_usuario.DefaultView;
+                        dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
+                        DataTable dt_result = dv.ToTable();
+                        if (dt_result.Rows.Count > 0)
+                        {
+                            
+                            string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+                            DataRow usuario = dt_result.Rows[0];
+                            string mail_to = usuario["mail"].ToString() == "" ? "" : (usuario["mail"].ToString() + ";");
+                            string subject = "Módulo de proyectos - Actividad relacionada";
+                            string mail = "<div>" + saludo + " <strong>" +
+                                System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
+                                + "</strong> <div>" +
+                                "<br>" +
+                                "<p>Le fue asignada una actividad, dentro de una evaluación en el proyecto <strong>" + lblproyect.Text + "</strong>" +
+                                "</p>" +
+                                "<p>A continuación, se muestra la información completa:</p>"+
+                                     "<p><strong>Riesgo</strong><br/> " +
+                                  txtriesgo.Text + "</p> " +
+                                   "<p><strong>Actividad/Acción</strong><br/> " +
+                                   txtaccion.Text + "</p> " +
+                                "<br/><p>Este movimiento fue realizado por <strong>" +
+                                System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
+                                + "</strong> el dia <strong>" +
+                                DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                "</p>";
+                            CorreosCOM correos = new CorreosCOM();
+                            bool correct = correos.SendMail(mail, subject, mail_to);
+                        }
 
                     }
                     AgregarAccionTemporal(id_actividad, id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
@@ -1550,7 +1584,7 @@ namespace presentacion
                         {
                             if (!riesgos.Exists(riesgo.riesgo, Convert.ToInt32(hdf_id_proyecto_evaluacion.Value)))
                             {
-                                vmensaje = riesgos.Agregar(riesgo, new List<actividades>(), new List<documentos>());
+                                vmensaje = riesgos.Agregar(riesgo, new List<actividades>(), new List<documentos>(),lblproyect.Text,Session["nombre"] as string);
                                 if (vmensaje != "")
                                 {
                                     break;

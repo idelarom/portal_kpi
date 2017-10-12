@@ -16,7 +16,8 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Agregar(riesgos entidad, List<actividades> lst_actividades, List<documentos> lstdocumentos)
+        public string Agregar(riesgos entidad, List<actividades> lst_actividades, 
+            List<documentos> lstdocumentos, string nombre_proyecto, string nombre_session)
         {
             try
             {
@@ -63,6 +64,39 @@ namespace negocio.Componentes
                     context.actividades.Add(actividad);
                     context.SaveChanges();
                     int id_actividad = actividad.id_actividad;
+                    //ENVIAMOS NOTIFICACION
+                    string usuario_resp = actividad.usuario_resp;
+                    EmpleadosCOM usuarios = new EmpleadosCOM();
+                    DataTable dt_usuario = usuarios.GetUsers();
+                    DataView dv = dt_usuario.DefaultView;
+                    dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
+                    DataTable dt_result = dv.ToTable();
+                    if (dt_result.Rows.Count > 0)
+                    {
+
+                        string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+                        DataRow usuario = dt_result.Rows[0];
+                        string mail_to = usuario["mail"].ToString() == "" ? "" : (usuario["mail"].ToString() + ";");
+                        string subject = "Módulo de proyectos - Actividad relacionada";
+                        string mail = "<div>" + saludo + " <strong>" +
+                            System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
+                            + "</strong> <div>" +
+                            "<br>" +
+                            "<p>Le fue asignada una actividad, dentro de una evaluación en el proyecto <strong>" + nombre_proyecto + "</strong>" +
+                            "</p>" +
+                            "<p>A continuación, se muestra la información completa:</p>" +                          
+                               "<p><strong>Riesgo</strong><br/> " +
+                                 riesgo.riesgo + "</p> " +
+                               "<p><strong>Actividad/Acción</strong><br/> " +
+                                actividad.nombre + "</p> " +
+                            "<br/><p>Este movimiento fue realizado por <strong>" +
+                            System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nombre_session.ToLower())
+                            + "</strong> el dia <strong>" +
+                            DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                            "</p>";
+                        CorreosCOM correos = new CorreosCOM();
+                        bool correct = correos.SendMail(mail, subject, mail_to);
+                    }
                     foreach (documentos documento in lstdocumentos)
                     {
                         if (documento.id_actividad == entidad2.id_actividad)

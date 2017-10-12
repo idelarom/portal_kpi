@@ -22,15 +22,6 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Label lblproyect;
         
         /// <summary>
-        /// Control lblresumen.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblresumen;
-        
-        /// <summary>
         /// Control lbltecnologia.
         /// </summary>
         /// <remarks>
@@ -65,6 +56,24 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblempleado;
+        
+        /// <summary>
+        /// Control lblcped.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblcped;
+        
+        /// <summary>
+        /// Control lblmonto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblmonto;
         
         /// <summary>
         /// Control lnkterminarproyecto.
