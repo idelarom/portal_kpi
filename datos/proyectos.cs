@@ -27,6 +27,7 @@ namespace datos
         public int id_proyecto_periodo { get; set; }
         public Nullable<int> id_proyecto_estatus { get; set; }
         public string cped { get; set; }
+        public string tipo_moneda { get; set; }
         public int cveoport { get; set; }
         public string folio_pmt { get; set; }
         public Nullable<int> id_cliente { get; set; }
@@ -34,7 +35,8 @@ namespace datos
         public string descripcion { get; set; }
         public Nullable<short> duración { get; set; }
         public Nullable<decimal> avance { get; set; }
-        public decimal costo { get; set; }
+        public decimal costo_usd { get; set; }
+        public Nullable<decimal> costo_mn { get; set; }
         public Nullable<decimal> costo_real { get; set; }
         public Nullable<decimal> valor_ganado { get; set; }
         public Nullable<System.DateTime> fecha_inicio { get; set; }
@@ -54,7 +56,6 @@ namespace datos
         public string usuario_borrado { get; set; }
         public string comentarios_borrado { get; set; }
         public Nullable<System.DateTime> fecha_borrado { get; set; }
-        public string tipo_moneda { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<actividades> actividades { get; set; }

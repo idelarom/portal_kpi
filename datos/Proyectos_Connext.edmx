@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="actividades">
           <Key>
             <PropertyRef Name="id_actividad" />
@@ -74,7 +74,8 @@
           <Property Name="descripcion" Type="varchar" MaxLength="8000" />
           <Property Name="duración" Type="smallint" />
           <Property Name="avance" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="costo" Type="money" Nullable="false" />
+          <Property Name="costo_usd" Type="money" Nullable="false" />
+          <Property Name="costo_mn" Type="money" />
           <Property Name="costo_real" Type="money" />
           <Property Name="valor_ganado" Type="money" />
           <Property Name="fecha_inicio" Type="datetime" />
@@ -487,7 +488,8 @@
             <End Role="riesgos" EntitySet="riesgos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Proyectos_ConnextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -559,6 +561,7 @@
           <Property Name="id_proyecto_periodo" Type="Int32" Nullable="false" />
           <Property Name="id_proyecto_estatus" Type="Int32" />
           <Property Name="cped" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_moneda" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="cveoport" Type="Int32" Nullable="false" />
           <Property Name="folio_pmt" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="id_cliente" Type="Int32" />
@@ -566,7 +569,8 @@
           <Property Name="descripcion" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
           <Property Name="duración" Type="Int16" />
           <Property Name="avance" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="costo" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="costo_usd" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="costo_mn" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="costo_real" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="valor_ganado" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="fecha_inicio" Type="DateTime" Precision="3" />
@@ -592,7 +596,6 @@
           <NavigationProperty Name="proyectos_estatus" Relationship="Self.FK_proyectos_proyectos_estatus" FromRole="proyectos" ToRole="proyectos_estatus" />
           <NavigationProperty Name="proyectos_periodos" Relationship="Self.FK_proyectos_proyectos_periodos1" FromRole="proyectos" ToRole="proyectos_periodos" />
           <NavigationProperty Name="proyectos_tecnologias" Relationship="Self.FK_proyectos_proyectos_tecnologias" FromRole="proyectos" ToRole="proyectos_tecnologias" />
-          <Property Name="tipo_moneda" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="proyectos_estatus">
           <Key>
@@ -995,7 +998,7 @@
             <End Role="riesgos" EntitySet="riesgos" />
           </AssociationSet>
           <FunctionImport Name="sp_get_cped" ReturnType="Collection(Proyectos_ConnextModel.sp_get_cped_Result)">
-          <Parameter Name="pdocumento" Mode="In" Type="String" />
+            <Parameter Name="pdocumento" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_send_mail">
             <Parameter Name="mail" Mode="In" Type="String" />
@@ -1072,12 +1075,12 @@
           <EntitySetMapping Name="proyectos">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos">
               <MappingFragment StoreEntitySet="proyectos">
-                <ScalarProperty Name="tipo_moneda" ColumnName="tipo_moneda" />
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
                 <ScalarProperty Name="id_proyecto_tecnologia" ColumnName="id_proyecto_tecnologia" />
                 <ScalarProperty Name="id_proyecto_periodo" ColumnName="id_proyecto_periodo" />
                 <ScalarProperty Name="id_proyecto_estatus" ColumnName="id_proyecto_estatus" />
                 <ScalarProperty Name="cped" ColumnName="cped" />
+                <ScalarProperty Name="tipo_moneda" ColumnName="tipo_moneda" />
                 <ScalarProperty Name="cveoport" ColumnName="cveoport" />
                 <ScalarProperty Name="folio_pmt" ColumnName="folio_pmt" />
                 <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
@@ -1085,7 +1088,8 @@
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="duración" ColumnName="duración" />
                 <ScalarProperty Name="avance" ColumnName="avance" />
-                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="costo_usd" ColumnName="costo_usd" />
+                <ScalarProperty Name="costo_mn" ColumnName="costo_mn" />
                 <ScalarProperty Name="costo_real" ColumnName="costo_real" />
                 <ScalarProperty Name="valor_ganado" ColumnName="valor_ganado" />
                 <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />

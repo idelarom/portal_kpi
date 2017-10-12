@@ -45,7 +45,8 @@ namespace negocio.Componentes
                         correo_bienvenida = false,
                         fecha_inicio = entidad.fecha_inicio,
                         fecha_fin = entidad.fecha_fin,
-                        costo =entidad.costo,
+                        costo_mn =entidad.costo_mn,
+                        costo_usd = entidad.costo_usd,
                         usuario = entidad.usuario.ToUpper(),                    
                         fecha_registro = DateTime.Now,
                         id_proyecto_tecnologia= entidad.id_proyecto_tecnologia,
@@ -100,7 +101,8 @@ namespace negocio.Componentes
                 proyecto.id_proyecto_tecnologia = entidad.id_proyecto_tecnologia;
                 proyecto.usuario_resp = entidad.usuario_resp;
                 proyecto.cped = entidad.cped;
-                proyecto.costo = entidad.costo;
+                proyecto.costo_usd = entidad.costo_usd;
+                proyecto.costo_mn = entidad.costo_mn;
                 proyecto.tipo_moneda = entidad.tipo_moneda;
                 context.SaveChanges();
                 return "";
