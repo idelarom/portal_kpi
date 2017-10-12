@@ -560,7 +560,9 @@ namespace presentacion
                             txtcped.Enabled = true;
                         }
                         txtcped.Text = proyecto.cped.Replace("CPED","").Replace("-","");
-                        txtmonto.Text = proyecto.costo.ToString("C2") +"-"+ proyecto.tipo_moneda;
+                        txtmonto.Text = proyecto.costo_usd.ToString("C2");
+                        txtmontomn.Text = proyecto.costo_mn.ToString("C2");
+                        txtmoneda.Text = proyecto.tipo_moneda;
                         rdpfechainicial.SelectedDate = proyecto.fecha_inicio;
                         rdpfechafinal.SelectedDate = proyecto.fecha_fin;
                         ModalShow("#ModalCapturaProyectos");
