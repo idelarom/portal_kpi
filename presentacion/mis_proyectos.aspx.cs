@@ -322,6 +322,8 @@ namespace presentacion
             txtcveop.Text = "";
             txtfolopmt.Text = "";
             txtcped.Text = "";
+            txtmonto.Text = "";
+            txtmontomn.Text = "";
             Cargarddlperiodo();
             Cargarddlestatus();
             Cargarddltegnologia();
