@@ -8,7 +8,8 @@ namespace negocio.Entidades
     public class CPED
     {
         public string documento { get; set; }
-        public decimal costo { get; set; }
+        public decimal costo_usd { get; set; }
+        public decimal costo_mn { get; set; }
         public string tipo_moneda { get; set; }
     }
 }

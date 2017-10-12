@@ -35,8 +35,8 @@ namespace negocio.Componentes
                         costo_mn = Convert.ToDecimal(result.costo_mn);
                         cped.tipo_moneda = result.tipo_moneda;
                     }
-                    cped.costo = costo_usd;
-                    cped.costo = costo_usd;
+                    cped.costo_usd = costo_usd;
+                    cped.costo_mn = costo_usd;
                     return cped;
                 }
                 else {

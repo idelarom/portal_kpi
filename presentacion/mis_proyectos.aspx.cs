@@ -383,14 +383,18 @@ namespace presentacion
                 proyecto.folio_pmt = txtfolopmt.Text.Trim();
                 //CPED
                 proyecto.cped = "CPED-" + txtcped.Text.Trim();
-                string monto = txtmonto.Text;
-                proyecto.costo = 0;
-                if (txtmonto.Text != "")
-                {
-                    string[] costo = monto.Split('-');
-                    proyecto.costo = Convert.ToDecimal(costo[0].Replace("$", "").Replace(",", "").Replace(" ", ""));
-                    proyecto.tipo_moneda = costo[1];
-                }   
+                //string monto = txtmonto.Text;
+                //proyecto.costo = 0;
+                //if (txtmonto.Text != "")
+                //{
+                //    string[] costo = monto.Split('-');
+                //    proyecto.costo = Convert.ToDecimal(costo[0].Replace("$", "").Replace(",", "").Replace(" ", ""));
+                //    proyecto.tipo_moneda = costo[1];
+                //}  
+                
+                proyecto.costo_usd = Convert.ToDecimal(txtmonto.Text.Replace("$", "").Replace(",", "").Replace(" ", ""));
+                proyecto.costo_mn = Convert.ToDecimal(txtmontomn.Text.Replace("$", "").Replace(",", "").Replace(" ", ""));
+                proyecto.tipo_moneda = txtmoneda.Text;
 
                 if (proyecto.proyecto == "")
                 {
@@ -769,7 +773,9 @@ namespace presentacion
                 }
                 else
                 {
-                    txtmonto.Text = cped.costo.ToString("C2") + "-" + cped.tipo_moneda;
+                    txtmonto.Text = cped.costo_usd.ToString("C2");
+                    txtmontomn.Text = cped.costo_mn.ToString("C2");
+                    txtmoneda.Text = cped.tipo_moneda;
                     txtcped.BorderStyle = BorderStyle.Solid;
                     txtcped.BorderColor = System.Drawing.Color.Green;
                 }

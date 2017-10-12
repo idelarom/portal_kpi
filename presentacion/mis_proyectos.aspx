@@ -317,6 +317,7 @@
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto MN</strong></h5>
                                     <asp:TextBox ID="txtmontomn" MaxLength="250" CssClass=" form-control" runat="server" Enabled="false"></asp:TextBox>
+                                     <asp:TextBox ID="txtmoneda" MaxLength="250" CssClass=" form-control" runat="server" Enabled="false" Visible="false"></asp:TextBox>
                                 </div>
                                 </div>
                             <div class="row">
