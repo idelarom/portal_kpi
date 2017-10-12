@@ -25,15 +25,18 @@ namespace negocio.Componentes
                 List<sp_get_cped_Result> resultado = db.sp_get_cped(documento).ToList();
                 if (resultado.Count > 0)
                 {
-                    decimal costo = 0;
+                    decimal costo_usd = 0;
+                    decimal costo_mn = 0;
                     CPED cped = new CPED();
                     cped.documento = documento;
                     foreach (sp_get_cped_Result result in resultado)
                     {
-                        costo = Convert.ToDecimal(result.costo);
+                        costo_usd = Convert.ToDecimal(result.costo_usd);
+                        costo_mn = Convert.ToDecimal(result.costo_mn);
                         cped.tipo_moneda = result.tipo_moneda;
                     }
-                    cped.costo = costo;
+                    cped.costo = costo_usd;
+                    cped.costo = costo_usd;
                     return cped;
                 }
                 else {

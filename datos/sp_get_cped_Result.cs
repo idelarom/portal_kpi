@@ -14,7 +14,8 @@ namespace datos
     public partial class sp_get_cped_Result
     {
         public string documento { get; set; }
-        public Nullable<decimal> costo { get; set; }
+        public Nullable<decimal> costo_usd { get; set; }
+        public Nullable<decimal> costo_mn { get; set; }
         public string tipo_moneda { get; set; }
     }
 }

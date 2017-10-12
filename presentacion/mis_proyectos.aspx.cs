@@ -757,7 +757,7 @@ namespace presentacion
         {
             if (txtcped.Text != "")
             {
-                CPED cped = Getcped("CPED-" + txtcped.Text);
+                CPED cped = Getcped(txtcped.Text);
                 if (cped== null)
                 {
                     Toast.Error("No se encuentra ningun CPED con el folio: " + txtcped.Text, this);

@@ -289,7 +289,7 @@
                                     <asp:DropDownList ID="ddltegnologia" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo</strong></h5>
+                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo de evaluación </strong></h5>
                                      <asp:DropDownList ID="ddlperiodo" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
@@ -308,11 +308,15 @@
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;CPED</strong></h5>
-                                    <asp:TextBox ID="txtcped" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcped_TextChanged" TextMode="Number" onkeypress="return validarEnteros(event);" AutoPostBack="true"></asp:TextBox>
+                                    <asp:TextBox ID="txtcped" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcped_TextChanged" TextMode="Number" AutoPostBack="true"></asp:TextBox>
                                 </div>
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                                    <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto</strong></h5>
+                                    <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto USD</strong></h5>
                                     <asp:TextBox ID="txtmonto" MaxLength="250" CssClass=" form-control" runat="server" Enabled="false"></asp:TextBox>
+                                </div>
+                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                    <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto MN</strong></h5>
+                                    <asp:TextBox ID="txtmontomn" MaxLength="250" CssClass=" form-control" runat="server" Enabled="false"></asp:TextBox>
                                 </div>
                                 </div>
                             <div class="row">
