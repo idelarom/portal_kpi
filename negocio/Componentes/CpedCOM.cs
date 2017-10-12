@@ -36,7 +36,7 @@ namespace negocio.Componentes
                         cped.tipo_moneda = result.tipo_moneda;
                     }
                     cped.costo_usd = costo_usd;
-                    cped.costo_mn = costo_usd;
+                    cped.costo_mn = costo_mn;
                     return cped;
                 }
                 else {
