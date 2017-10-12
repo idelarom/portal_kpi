@@ -477,7 +477,7 @@ namespace presentacion
                                        "<p><strong>Tecnología</strong><br/> " +
                                       ddltegnologia.SelectedItem.ToString() + "</p> " +
                                        "<p><strong>Costo</strong><br/> " +
-                                      txtmonto.Text + "</p> " +
+                                       txtmonto.Text +" USD / "+ txtmontomn.Text + " MN</p> " +
                                        "<p><strong>Duración</strong><br/> " +
                                       proyecto.duración+ " dia(s)</p> " +
                                     "<br/><p>Este movimiento fue realizado por <strong>" +
