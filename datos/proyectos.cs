@@ -36,7 +36,7 @@ namespace datos
         public Nullable<short> duración { get; set; }
         public Nullable<decimal> avance { get; set; }
         public decimal costo_usd { get; set; }
-        public Nullable<decimal> costo_mn { get; set; }
+        public decimal costo_mn { get; set; }
         public Nullable<decimal> costo_real { get; set; }
         public Nullable<decimal> valor_ganado { get; set; }
         public Nullable<System.DateTime> fecha_inicio { get; set; }

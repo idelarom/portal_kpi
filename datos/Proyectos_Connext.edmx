@@ -75,7 +75,7 @@
           <Property Name="duración" Type="smallint" />
           <Property Name="avance" Type="decimal" Precision="18" Scale="2" />
           <Property Name="costo_usd" Type="money" Nullable="false" />
-          <Property Name="costo_mn" Type="money" />
+          <Property Name="costo_mn" Type="money" Nullable="false" />
           <Property Name="costo_real" Type="money" />
           <Property Name="valor_ganado" Type="money" />
           <Property Name="fecha_inicio" Type="datetime" />
@@ -570,7 +570,7 @@
           <Property Name="duración" Type="Int16" />
           <Property Name="avance" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="costo_usd" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="costo_mn" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="costo_mn" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="costo_real" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="valor_ganado" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="fecha_inicio" Type="DateTime" Precision="3" />
