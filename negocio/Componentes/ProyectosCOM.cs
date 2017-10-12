@@ -427,7 +427,6 @@ namespace negocio.Componentes
                                      p.fecha_fin,
                                      p.usuario_resp,
                                      p.costo_mn,
-
                                      p.costo_usd
                                  }).ToArray();
                 var tproyectos = (from p in proyectos

@@ -20,6 +20,7 @@ namespace negocio.Componentes
         {
             try
             {
+                int id_proyecto_evaluacion_anterior = get_id_proyecto_evaluacion(entidad.id_proyecto);
                 proyectos_evaluaciones evaluacion = new proyectos_evaluaciones
                 {
                     id_proyecto = entidad.id_proyecto,
@@ -35,6 +36,35 @@ namespace negocio.Componentes
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                 context.proyectos_evaluaciones.Add(evaluacion);
                 context.SaveChanges();
+
+                proyectos_evaluaciones pevaluacion = context.proyectos_evaluaciones
+                                .First(i => i.id_proyecto_evaluacion == id_proyecto_evaluacion_anterior);
+                ICollection<riesgos> riesgos = pevaluacion.riesgos;
+                foreach (riesgos riesgo in riesgos)
+                {
+                    if (riesgo.id_riesgos_estatus == 1 && riesgo.usuario_borrado==null)
+                    { 
+                        riesgo.id_proyecto_evaluacion = evaluacion.id_proyecto_evaluacion;
+                        riesgo.usuario = entidad.usuario;
+                        riesgo.fecha_registro = DateTime.Now;
+                        riesgo.usuario_edicion = null;
+                        riesgo.usuario_borrado = null;
+                        riesgo.fecha_borrado = null;
+                        riesgo.id_riesgos_estatus = 1;
+                        riesgo.id_riesgo_probabilidad = 1;
+                        riesgo.porc_probabilidad = 0;
+                        riesgo.id_riesgo_impacto_costo = 1;
+                        riesgo.porc_impcosto = 0;
+                        riesgo.id_riesgo_impacto_tiempo = 1;
+                        riesgo.porc_imptiempo = 0;
+                        riesgo.riesgo_costo = 0;
+                        riesgo.riesgo_tiempo = 0;
+                        riesgo.id_riesgo_estrategia = 1;
+                        context.riesgos.Add(riesgo);
+                    }
+                }
+
+
                 return evaluacion.id_proyecto_evaluacion;
             }
             catch (DbEntityValidationException ex)
@@ -134,6 +164,40 @@ namespace negocio.Componentes
                         .Select(x => x.ErrorMessage);
                 var fullErrorMessage = string.Join("; ", errorMessages);
                 return DateTime.Now;
+            }
+        }
+
+
+        /// <summary>
+        /// Regresa el id de la evaluacion mas reciente
+        /// </summary>
+        /// <param name="id_proyecto"></param>
+        /// <param name="dias"></param>
+        /// <returns></returns>
+        public int get_id_proyecto_evaluacion(int id_proyecto)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                var query = context.proyectos_evaluaciones
+                                .Where(s => s.usuario_borrado == null && s.id_proyecto == id_proyecto)
+                                .Select(u => new
+                                {
+                                    u.id_proyecto_evaluacion,
+                                    u.id_proyecto,
+                                    u.fecha_evaluacion
+                                })
+                                .OrderBy(u => u.id_proyecto_evaluacion);
+                DataTable dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0 ? 0:Convert.ToInt32(dt.Rows[dt.Rows.Count -1]["id_proyecto_evaluacion"]);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return 0;
             }
         }
     }

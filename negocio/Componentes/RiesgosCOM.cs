@@ -379,7 +379,9 @@ namespace negocio.Componentes
                                .First(i => i.id_proyecto == evaluacion.id_proyecto);
 
                 evaluacion.riesgo_costo = total == 0?0:
-                    Convert.ToDecimal(proyecto.costo * Convert.ToDecimal(riesgo_costo/100));
+                    Convert.ToDecimal(proyecto.costo_usd * Convert.ToDecimal(riesgo_costo/100));
+                evaluacion.riesgo_costo_mn = total == 0 ? 0 :
+                    Convert.ToDecimal(proyecto.costo_mn * Convert.ToDecimal(riesgo_costo / 100));
 
                 double diff_days = (Convert.ToDateTime(proyecto.fecha_fin) - Convert.ToDateTime(proyecto.fecha_inicio)).TotalDays;
 
@@ -391,6 +393,7 @@ namespace negocio.Componentes
                 evaluacion.p_riesgo_tiempo = Convert.ToDecimal(riesgo_tiempo / 100);
 
                 evaluacion.riesgo_costo = evaluacion.p_riesgo_costo > 0 ? evaluacion.riesgo_costo : 0;
+                evaluacion.riesgo_costo_mn = evaluacion.p_riesgo_costo > 0 ? evaluacion.riesgo_costo_mn : 0;
                 evaluacion.riesgo_tiempo = evaluacion.p_riesgo_tiempo > 0 ? evaluacion.riesgo_tiempo : 0;
                 evaluacion.fecha_edicion = DateTime.Now;
 
