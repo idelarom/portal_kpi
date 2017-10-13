@@ -103,22 +103,22 @@
                             <table class="dvv table table-responsive table-condensed">
                                 <thead>
                                     <tr style="font-size: 11px;">
-                                        <th style="min-width: 100px; text-align: left;" scope="col">Usuario</th>
+                                        <th style="min-width: 80px; text-align: left;" scope="col">Usuario</th>
                                         <th style="min-width: 200px; text-align: left;" scope="col">Empleado</th>
                                         <th style="min-width: 250px; text-align: center;" scope="col">Proyecto</th>
                                         <%--<th style="min-width: 250px; text-align: center;" scope="col">Descripcion</th>--%>
-                                        <th style="min-width: 150px; text-align: center;" scope="col">Tecnologia</th>
-                                        <th style="min-width: 150px; text-align: center;" scope="col">Periodo</th>
-                                        <th style="min-width: 100px; text-align: left;" scope="col">ClaveOP</th>
+                                        <th style="min-width: 80px; text-align: center;" scope="col">Tecnologia</th>
+                                        <th style="min-width: 60px; text-align: center;" scope="col">Periodo</th>
+                                        <th style="min-width: 80px; text-align: left;" scope="col">ClaveOP</th>
                                         <th style="min-width: 100px; text-align: left;" scope="col">Folio pmtracker</th>
-                                        <th style="min-width: 100px; text-align: center;" scope="col">CPED</th>
+                                        <th style="min-width: 80px; text-align: center;" scope="col">CPED</th>
                                         <th style="min-width: 100px; text-align: center;" scope="col">Monto USD</th>
                                         <th style="min-width: 100px; text-align: center;" scope="col">Monto MN</th>
-                                        <th style="min-width: 100px; text-align: center;" scope="col">Tipo de moneda</th>
-                                        <th style="min-width: 100px; text-align: center;" scope="col">Fecha registro</th>
-                                        <th style="min-width: 100px; text-align: center;" scope="col">fecha inicial</th>
-                                        <th style="min-width: 100px; text-align: center;" scope="col">Fecha final</th>
-                                        <th style="min-width: 100px; text-align: center;" scope="col">Estatus</th>
+                                        <th style="min-width: 30px; text-align: center;" scope="col">Moneda</th>
+                                        <th style="min-width: 80px; text-align: center;" scope="col">Fecha registro</th>
+                                        <th style="min-width: 80px; text-align: center;" scope="col">fecha inicial</th>
+                                        <th style="min-width: 80px; text-align: center;" scope="col">Fecha final</th>
+                                        <th style="min-width: 50px; text-align: center;" scope="col">Estatus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -138,12 +138,12 @@
                                                 <td style="text-align: center;"><%# Eval("cveoport") %></td>
                                                 <td style="text-align: center;"><%# Eval("folio_pmt") %></td>
                                                 <td style="text-align: center;"><%# Eval("cped") %></td>
-                                                <td style="text-align: center;"><%# Eval("costo_usd") %></td>
-                                                <td style="text-align: center;"><%# Eval("costo_mn") %></td>
+                                                <td style="text-align: center;"><%# Eval("costo_usd","{0:C2}" ) %></td>
+                                                <td style="text-align: center;"><%# Eval("costo_mn", "{0:C2}") %></td>
                                                 <td style="text-align: center;"><%# Eval("tipo_moneda") %></td>
-                                                <td style="text-align: center;"><%# Eval("fecha_registro") %></td>
-                                                <td style="text-align: center;"><%# Eval("fecha_inicio") %></td>
-                                                <td style="text-align: center;"><%# Eval("fecha_fin") %></td>
+                                                <td style="text-align: center;"><%# Eval("fecha_registro", "{0:d}")%></td>
+                                                <td style="text-align: center;"><%# Eval("fecha_inicio", "{0:d}") %></td>
+                                                <td style="text-align: center;"><%# Eval("fecha_fin", "{0:d}") %></td>
                                                 <td style="text-align: center;"><%# Eval("estatus") %></td>
                                             </tr>
                                         </ItemTemplate>
