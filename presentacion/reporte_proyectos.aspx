@@ -30,6 +30,7 @@
          $(document).ready(function () {
              Init();
          });
+
         function Init() {
             $('.dvv').DataTable({
                 "paging": true,

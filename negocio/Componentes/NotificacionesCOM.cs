@@ -10,6 +10,39 @@ namespace negocio.Componentes
 {
     public class NotificacionesCOM
     {
+        /// <summary>
+        /// grega una nueva notificacion
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <param name="mensaje"></param>
+        /// <param name="icono"></param>
+        /// <returns></returns>
+        public string Agregar(string usuario, string mensaje, string icono, string url)
+        {
+            try
+            {
+                Model context = new Model();
+                notificaciones notificacion = new notificaciones {
+                    usuario= usuario,
+                    notificacion = mensaje,
+                    icono = icono,
+                    leido = false,
+                    url=url,
+                    fecha_registro=DateTime.Now
+                };
+                context.notificaciones.Add(notificacion);
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
         public string MarcarLeido(string usuario)
         {
             try
