@@ -39,6 +39,8 @@ namespace presentacion
                 CargarImagen();
                 UpdateDevices();
                 GetRecordsToday();
+                ScriptManager.RegisterStartupScript(this.Page,GetType(),Guid.NewGuid().ToString(),
+                    "CargarNotificaciones('" + Convert.ToString(Session["usuario"]).ToUpper() + "');", true);
                 if (Convert.ToInt32(Session["id_perfil"]) == 0)
                 {
                     Toast.Info("El usuario en uso: " + Convert.ToString(Session["usuario"]).ToUpper() + ", no cuenta con un perfil asignado. Por favor, comuniquese con su administrador.", "Mensaje del sistema", this.Page);

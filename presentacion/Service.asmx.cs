@@ -102,5 +102,24 @@ namespace presentacion
                 return "";
             }
         }
+
+
+        [System.Web.Services.WebMethod(EnableSession = true)]
+        public String GetAvisos(string usuario)
+        {
+            try
+            {
+                string value = "";
+                NotificacionesCOM proyectos = new NotificacionesCOM();
+                DataTable dt = new DataTable();
+                dt = proyectos.notificaciones(usuario.ToUpper());
+                value = JsonConvert.SerializeObject(dt);
+                return value;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
     }
 }

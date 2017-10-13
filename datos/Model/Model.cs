@@ -19,6 +19,7 @@
         public virtual DbSet<menus> menus { get; set; }
         public virtual DbSet<menus_perfiles> menus_perfiles { get; set; }
         public virtual DbSet<menus_usuarios> menus_usuarios { get; set; }
+        public virtual DbSet<notificaciones> notificaciones { get; set; }
         public virtual DbSet<perfiles> perfiles { get; set; }
         public virtual DbSet<perfiles_permisos> perfiles_permisos { get; set; }
         public virtual DbSet<permisos> permisos { get; set; }
@@ -28,7 +29,6 @@
         public virtual DbSet<publicaciones_likes> publicaciones_likes { get; set; }
         public virtual DbSet<recordatorios> recordatorios { get; set; }
         public virtual DbSet<recordatorios_usuarios_adicionales> recordatorios_usuarios_adicionales { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<usuarios> usuarios { get; set; }
         public virtual DbSet<usuarios_configuraciones> usuarios_configuraciones { get; set; }
         public virtual DbSet<usuarios_delegados> usuarios_delegados { get; set; }
@@ -159,6 +159,22 @@
                 .IsUnicode(false);
 
             modelBuilder.Entity<menus_usuarios>()
+                .Property(e => e.usuario)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<notificaciones>()
+                .Property(e => e.icono)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<notificaciones>()
+                .Property(e => e.notificacion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<notificaciones>()
+                .Property(e => e.url)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<notificaciones>()
                 .Property(e => e.usuario)
                 .IsUnicode(false);
 

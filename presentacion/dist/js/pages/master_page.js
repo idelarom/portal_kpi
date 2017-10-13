@@ -203,3 +203,33 @@ function LoadSinc(msg) {
         return false;
     }
 }
+
+
+function CargarNotificaciones(usuario) {
+    $.ajax({
+        url: 'Service.asmx/GetAvisos',
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        dataType: "json",
+        data: "{usuario:'" + usuario + "'}",
+        success: function (response) {
+            var notificaciones = JSON.parse(response.d);
+            $("#menu_notificaciones").empty();
+            if (notificaciones.length > 0) {
+                $("#numero_notificaciones").show(); 
+                $("#numero_notificaciones").text(notificaciones.length);
+                $("#lblnumero_notificaciones").text(notificaciones.length);
+                for (indice = 0; indice < notificaciones.length; indice++) {
+                    var notificacion = notificaciones[indice].notificacion;
+                    var url = notificaciones[indice].url;
+                    var icono = notificaciones[indice].icono;
+                    console.log("aviso", notificacion,url,icono);
+                    $("#menu_notificaciones").append('<li><a href="' + (url == null ? "#" : url) + '"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
+                }
+            }
+        },
+        error: function (result, status, err) {
+            console.log("error", result.responseText);
+        }
+    });
+}
