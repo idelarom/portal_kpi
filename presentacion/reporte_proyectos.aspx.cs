@@ -186,10 +186,10 @@ namespace presentacion
                     date = date.Replace(":", "_");
                     date = date.Replace(".", "_");
                     date = date.Replace(" ", "_");
-                    string[] Nombres = new string[] { "Reporte Dashboard Bonos" };
-                    string mensaje = Export.toExcel("Reporte Dashboard Bonos", XLColor.White, XLColor.Black, 18, true, DateTime.Now.ToString(), XLColor.White,
+                    string[] Nombres = new string[] { "Reporte Dashboard proyectos" };
+                    string mensaje = Export.toExcel("Reporte Dashboard proyectos", XLColor.White, XLColor.Black, 18, true, DateTime.Now.ToString(), XLColor.White,
                                            XLColor.Black, 10, ListaTables, XLColor.CelestialBlue, XLColor.White, Nombres, 1,
-                                           "reporte_dashbonos_" + date + ".xlsx", Page.Response);
+                                           "reporte_dashbonos_proyectos_" + date + ".xlsx", Page.Response);
                     if (mensaje != "")
                     {
                         Toast.Error("Error al exportar el reporte a excel: " + mensaje, this);
@@ -221,8 +221,8 @@ namespace presentacion
                     date = date.Replace(":", "_");
                     date = date.Replace(".", "_");
                     date = date.Replace(" ", "_");
-                    string[] Nombres = new string[] { "Reporte Dashboard Bonos" };
-                    string mensaje = Export.ToPdf("reporte_dashbonos_" + date, ListaTables, 1, Nombres, Page.Response);
+                    string[] Nombres = new string[] { "Reporte Dashboard proyectos" };
+                    string mensaje = Export.ToPdf("reporte_dashbonos_proyectos_" + date, ListaTables, 1, Nombres, Page.Response);
                     if (mensaje != "")
                     {
                         Toast.Error("Error al exportar el reporte a PDF: " + mensaje, this);
