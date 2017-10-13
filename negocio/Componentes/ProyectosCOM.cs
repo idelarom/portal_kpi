@@ -407,7 +407,7 @@ namespace negocio.Componentes
                                  join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
                                  join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
-                                 where (p.usuario_borrado == null && p.id_proyecto_estatus == id_proyecto_estatus) 
+                                 where (p.usuario_borrado == null && (p.id_proyecto_estatus == (id_proyecto_estatus>0?id_proyecto_estatus:p.id_proyecto_estatus))) 
                                  select new
                                  {
                                      p.id_proyecto_tecnologia,
@@ -428,7 +428,8 @@ namespace negocio.Componentes
                                      p.usuario_resp,
                                      p.costo_mn,
                                      p.costo_usd,
-                                     p.cped
+                                     p.cped,
+                                     p.tipo_moneda
                                  }).ToArray();
                 var tproyectos = (from p in proyectos
                                   join emp in list_emp on p.usuario_resp.ToUpper() equals emp.Usuario
@@ -451,7 +452,8 @@ namespace negocio.Componentes
                                       p.usuario_resp,
                                       p.costo_mn,
                                       p.cped,
-                                      p.costo_usd
+                                      p.costo_usd,
+                                      p.tipo_moneda
                                   });
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in tproyectos
@@ -476,7 +478,8 @@ namespace negocio.Componentes
                                   p.tecnologia,
                                   p.costo_mn,
                                   p.cped,
-                                  p.costo_usd
+                                  p.costo_usd,
+                                  p.tipo_moneda
                               };
                 dt = To.DataTable(results.ToList());
                 return dt;
@@ -491,6 +494,126 @@ namespace negocio.Componentes
             }
         }
 
+
+
+        /// <summary>
+        /// Regresa una tabla con reporte de los proyectos del empleado y sus subordinados
+        /// </summary>
+        /// <param name="num_empleado"></param>
+        /// <param name="ver_Todos_los_empleados"></param>
+        /// <param name="id_proyecto_estatus"></param>
+        /// <returns></returns>
+        public DataTable reporte_proyectos(int num_empleado, bool ver_Todos_los_empleados, int id_proyecto_estatus, DateTime fecha_inicio,
+            DateTime fecha_fin)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                bool no_activos = false;
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
+                DataTable dt_empleados_subordinados = ds.Tables[0];
+                List<EmpleadoSubordinados> list_emp = new List<EmpleadoSubordinados>();
+                foreach (DataRow row in dt_empleados_subordinados.Rows)
+                {
+                    EmpleadoSubordinados empleado = new EmpleadoSubordinados();
+                    empleado.Usuario = row["usuario"].ToString().ToUpper();
+                    list_emp.Add(empleado);
+                }
+                Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                var proyectos = (from p in db.proyectos
+                                 join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
+                                 join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
+                                 join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
+                                 where (p.usuario_borrado == null
+                                 && (p.id_proyecto_estatus == (id_proyecto_estatus > 0 ? id_proyecto_estatus : p.id_proyecto_estatus))
+                                  && (p.fecha_registro.Date >= fecha_inicio.Date && p.fecha_registro.Date <= fecha_fin.Date))
+                                 select new
+                                 {
+                                     p.id_proyecto_tecnologia,
+                                     tecnologia = t.nombre,
+                                     p.usuario,
+                                     p.id_proyecto,
+                                     p.id_proyecto_estatus,
+                                     est.estatus,
+                                     p.id_proyecto_periodo,
+                                     periodo = period.nombre,
+                                     p.cveoport,
+                                     p.folio_pmt,
+                                     p.proyecto,
+                                     p.descripcion,
+                                     p.fecha_registro,
+                                     p.fecha_inicio,
+                                     p.fecha_fin,
+                                     p.usuario_resp,
+                                     p.costo_mn,
+                                     p.costo_usd,
+                                     p.cped,
+                                     p.tipo_moneda
+                                 }).ToArray();
+                var tproyectos = (from p in proyectos
+                                  join emp in list_emp on p.usuario_resp.ToUpper() equals emp.Usuario
+                                  select new
+                                  {
+                                      p.usuario,
+                                      p.id_proyecto,
+                                      p.id_proyecto_estatus,
+                                      p.estatus,
+                                      p.id_proyecto_periodo,
+                                      p.periodo,
+                                      p.cveoport,
+                                      p.folio_pmt,
+                                      p.proyecto,
+                                      p.descripcion,
+                                      p.fecha_registro,
+                                      p.fecha_inicio,
+                                      p.fecha_fin,
+                                      p.id_proyecto_tecnologia,
+                                      p.tecnologia,
+                                      p.usuario_resp,
+                                      p.costo_mn,
+                                      p.cped,
+                                      p.costo_usd,
+                                      p.tipo_moneda
+                                  });
+                NAVISION dbnavision = new NAVISION();
+                var results = from p in tproyectos
+                              join up in dbnavision.Employee on p.usuario_resp.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
+                              select new
+                              {
+                                  usuario = p.usuario_resp,
+                                  empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
+                                  p.id_proyecto,
+                                  p.id_proyecto_estatus,
+                                  p.estatus,
+                                  p.id_proyecto_periodo,
+                                  p.periodo,
+                                  p.cveoport,
+                                  p.folio_pmt,
+                                  p.proyecto,
+                                  p.descripcion,
+                                  p.fecha_registro,
+                                  p.fecha_inicio,
+                                  p.fecha_fin,
+                                  p.id_proyecto_tecnologia,
+                                  p.tecnologia,
+                                  p.costo_mn,
+                                  p.cped,
+                                  p.costo_usd,
+                                  p.tipo_moneda
+                              };
+                dt = To.DataTable(results.ToList());
+                return dt;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                          .SelectMany(x => x.ValidationErrors)
+                          .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return dt;
+            }
+        }
 
         public DataTable SelectWidget(int num_empleado, bool ver_Todos_los_empleados)
         {
@@ -591,5 +714,7 @@ namespace negocio.Componentes
                 return dt;
             }
         }
+
+        
     }
 }
