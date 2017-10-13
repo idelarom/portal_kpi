@@ -29,16 +29,7 @@
         $(document).ready(function () {
             Init();
             
-        $('#<%= txtfilterempleado.ClientID%>').on('keypress', function (e) {
-               var code = e.keyCode || e.which;
-               if (code == 13) {
-                   return false;
-               } else {
-                   return true;
-               }
-            });
-           
-        });
+       
         function Init() {
             $('.dvv').DataTable({
                 "paging": true,
@@ -79,43 +70,7 @@
             $("#<%= lnkcargando.ClientID%>").show();
             $("#<%= lnkguardar.ClientID%>").hide();
             return true;
-          }
-          function Carganodfiltros() {            
-              $("#<%= nkcargandofiltros.ClientID%>").show();
-              $("#<%= lnkfiltros.ClientID%>").hide();
-              return true;
-          }
-        function ChanegdTextLoad()
-        {
-            var filter = $("#<%= txtfilterempleado.ClientID%>").val();
-            if (filter.length == 0 || filter.length > 3) {
-                return ChangedTextLoad2();
-            } else {
-                return true;
-            }
-        }
-
-          function ChangedTextLoad2() {
-              $("#<%= imgloadempleado.ClientID%>").show();
-              $("#<%= lblbemp.ClientID%>").show();
-             return true;
-          }
-
-        function ViewEmpleado(name,login)
-        {
-            var nombre = document.getElementById('<%= hdfnombre.ClientID %>');
-            var vlogin = document.getElementById('<%= hdfuserselected.ClientID %>');
-            nombre.value = name;
-            vlogin.value = login;
-            $('<%= modal_bdy.ClientID%>').hide();
-            ModalShow('#ModalEmpleado');
-            var target2 = document.getElementById('modal_cn');
-            var spinner2 = new Spinner(opts2).spin(target2);
-
-            document.getElementById('<%= btnverempleadodetalles.ClientID%>').click();
-            spinerr2.stop();
-            return true;
-        }
+          }         
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -123,7 +78,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Dashboard Compromisos</h3>
+                <h3 class="page-header">Dashboard Proyectos</h3>
                 <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Cargando filtros
@@ -156,7 +111,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <asp:Repeater ID="repeater_compromisos" runat="server">
+                                    <asp:Repeater ID="repeater_reporte_proyectos" runat="server">
                                         <ItemTemplate>
                                             <tr style="font-size: 11px">
                                                 <td>
@@ -204,7 +159,7 @@
                             <h4 class="modal-title">Filtros</h4>
                         </div>
                         <div class="modal-body" id="div_modalbodyfiltros" runat="server">   
-                            <div class="row">
+                           <%-- <div class="row">
                                  <div class="col-lg-12 col-xs-12">
                                     <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Seleccione el empleado a consultar</strong>
                                         &nbsp; 
@@ -227,7 +182,7 @@
                                         AutoPostBack="true" OnSelectedIndexChanged="ddlempleado_a_consultar_SelectedIndexChanged" runat="server">
                                     </asp:DropDownList>
                                 </div>
-                            </div>
+                            </div>--%>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
@@ -237,8 +192,12 @@
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
                                     <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
+                                <div class="col-lg-3 col-md-3 col-sm-12">
+                        <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Filtro estatus</strong></h5>
+                            <asp:DropDownList ID="ddlstatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
+                        </div>
                             </div>
-                            <div class="row">
+                            <%--<div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <br />
                                     <asp:LinkButton ID="lnkagregarseleccion" OnClick="lnkagregarseleccion_Click" 
@@ -279,7 +238,7 @@
                                     <label>
                                         <asp:Label ID="lblcountselecteds" runat="server" Text="0"></asp:Label></label>
                                 </div>
-                            </div>
+                            </div>--%>
                         </div>
                         <div class="modal-footer ">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
@@ -298,7 +257,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel" >
+        <%--<div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEmpleado" role="dialog" aria-labelledby="mySmallModalLabel" >
             <div class="modal-dialog modal-lg" role="document">
                 <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                     <Triggers>
@@ -387,8 +346,8 @@
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
-        </div>
-        <asp:Button ID="btnverempleadodetalles" runat="server" Text="Button"  style="display:none" OnClick="btnverempleadodetalles_Click" />
+        </div>--%>
+        <asp:Button ID="btnverempleadodetalles" runat="server" Text="Button"  style="display:none"/>
         <asp:HiddenField ID="hdfsessionid" runat="server" />
         <asp:HiddenField ID="hdfuserselected" runat="server" />
         <asp:HiddenField ID="hdfnombre" runat="server" />
