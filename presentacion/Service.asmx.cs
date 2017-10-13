@@ -121,5 +121,19 @@ namespace presentacion
                 return "";
             }
         }
+
+        [System.Web.Services.WebMethod(EnableSession = true)]
+        public String LeerNotificacion(string usuario)
+        {
+            try
+            {
+                NotificacionesCOM proyectos = new NotificacionesCOM();
+                return proyectos.MarcarLeido(usuario);
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
     }
 }
