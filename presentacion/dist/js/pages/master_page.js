@@ -215,18 +215,41 @@ function CargarNotificaciones(usuario) {
         success: function (response) {
             var notificaciones = JSON.parse(response.d);
             $("#menu_notificaciones").empty();
+            $('#btn_not').removeAttr('onclick');
             if (notificaciones.length > 0) {
                 $("#numero_notificaciones").show(); 
                 $("#numero_notificaciones").text(notificaciones.length);
                 $("#lblnumero_notificaciones").text(notificaciones.length);
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-full-width",
+                    "preventDuplicates": true,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "500000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                Command: toastr["info"]("Tiene " + notificaciones.length + " notificacion(es)", "Nueva notificaciones")
                 for (indice = 0; indice < notificaciones.length; indice++) {
                     var notificacion = notificaciones[indice].notificacion;
                     var url = notificaciones[indice].url;
                     var icono = notificaciones[indice].icono;
                     var id_notificacion = notificaciones[indice].id_notificacion;
-                    console.log("aviso", notificacion,url,icono);
-                    $("#menu_notificaciones").append('<li style="cursor:pointer;"><a onclick="LeerNotificacion(\'' + usuario + '\',\'' + (url == null ? "#" : url) + '\');"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
+                    console.log("aviso", notificacion, url, icono);
+
+                    $("#menu_notificaciones").append('<li style="cursor:pointer;"><a href="#" aria-hidden="true"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
+                   //$("#menu_notificaciones").append('<li style="cursor:pointer;"><a onclick="LeerNotificacion(\'' + usuario + '\',\'' + (url == null ? "#" : url) + '\');"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
                 }
+               // $("#menu_notificaciones").append('<li style="cursor:pointer;"><a onclick="LeerNotificacion(\'' + usuario + '\',\'' + (url == null ? "#" : url) + '\');"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
+
+                $('#btn_not').attr('onClick', 'LeerNotificacion(\'' + usuario + '\',\'' + "" + '\');');
             }
         },
         error: function (result, status, err) {
@@ -261,10 +284,11 @@ function LeerNotificacion(usuario, url) {
                     "showMethod": "fadeIn",
                     "hideMethod": "fadeOut"
                 }
-
                 Command: toastr["danger"](mensaje,"Error en el sistema")
             } else {
-                window.location.href = url;
+                if (url != '') {
+                    window.location.href = url;
+                }
             }
         },
         error: function (result, status, err) {
