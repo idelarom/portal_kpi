@@ -223,9 +223,48 @@ function CargarNotificaciones(usuario) {
                     var notificacion = notificaciones[indice].notificacion;
                     var url = notificaciones[indice].url;
                     var icono = notificaciones[indice].icono;
+                    var id_notificacion = notificaciones[indice].id_notificacion;
                     console.log("aviso", notificacion,url,icono);
-                    $("#menu_notificaciones").append('<li><a href="' + (url == null ? "#" : url) + '"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
+                    $("#menu_notificaciones").append('<li style="cursor:pointer;"><a onclick="LeerNotificacion(\'' + usuario + '\',\'' + (url == null ? "#" : url) + '\');"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
                 }
+            }
+        },
+        error: function (result, status, err) {
+            console.log("error", result.responseText);
+        }
+    });
+}
+
+function LeerNotificacion(usuario, url) {
+    $.ajax({
+        url: 'Service.asmx/LeerNotificacion',
+        contentType: "application/json; charset=utf-8",
+        type: "POST",
+        dataType: "json",
+        data: "{usuario:'" + usuario + "'}",
+        success: function (response) {
+            var mensaje = response.d;
+            if (mensaje != "") {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-full-width",
+                    "preventDuplicates": true,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "500000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                Command: toastr["danger"](mensaje,"Error en el sistema")
+            } else {
+                window.location.href = url;
             }
         },
         error: function (result, status, err) {
