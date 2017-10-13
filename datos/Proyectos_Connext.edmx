@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Proyectos_ConnextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="actividades">
           <Key>
             <PropertyRef Name="id_actividad" />
@@ -489,7 +489,8 @@
             <End Role="riesgos" EntitySet="riesgos" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Proyectos_ConnextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -617,6 +618,7 @@
           <Property Name="fecha_evaluacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="riesgo_costo" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="riesgo_tiempo" Type="Int16" />
+          <Property Name="riesgo_costo_mn" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="p_riesgo_costo" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="p_riesgo_tiempo" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
@@ -628,7 +630,6 @@
           <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_evaluaciones_proyectos" FromRole="proyectos_evaluaciones" ToRole="proyectos" />
           <NavigationProperty Name="riesgos" Relationship="Self.FK_riesgos_proyectos_evaluaciones" FromRole="proyectos_evaluaciones" ToRole="riesgos" />
-          <Property Name="riesgo_costo_mn" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="proyectos_periodos">
           <Key>
@@ -999,7 +1000,7 @@
             <End Role="riesgos" EntitySet="riesgos" />
           </AssociationSet>
           <FunctionImport Name="sp_get_cped" ReturnType="Collection(Proyectos_ConnextModel.sp_get_cped_Result)">
-          <Parameter Name="pdocumento" Mode="In" Type="String" />
+            <Parameter Name="pdocumento" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_send_mail">
             <Parameter Name="mail" Mode="In" Type="String" />
@@ -1128,12 +1129,12 @@
           <EntitySetMapping Name="proyectos_evaluaciones">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_evaluaciones">
               <MappingFragment StoreEntitySet="proyectos_evaluaciones">
-                <ScalarProperty Name="riesgo_costo_mn" ColumnName="riesgo_costo_mn" />
                 <ScalarProperty Name="id_proyecto_evaluacion" ColumnName="id_proyecto_evaluacion" />
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
                 <ScalarProperty Name="fecha_evaluacion" ColumnName="fecha_evaluacion" />
                 <ScalarProperty Name="riesgo_costo" ColumnName="riesgo_costo" />
                 <ScalarProperty Name="riesgo_tiempo" ColumnName="riesgo_tiempo" />
+                <ScalarProperty Name="riesgo_costo_mn" ColumnName="riesgo_costo_mn" />
                 <ScalarProperty Name="p_riesgo_costo" ColumnName="p_riesgo_costo" />
                 <ScalarProperty Name="p_riesgo_tiempo" ColumnName="p_riesgo_tiempo" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />

@@ -73,6 +73,7 @@
     <Compile Include="Model\menus_perfiles.cs" />
     <Compile Include="Model\menus_usuarios.cs" />
     <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\notificaciones.cs" />
     <Compile Include="Model\perfiles.cs" />
     <Compile Include="Model\perfiles_permisos.cs" />
     <Compile Include="Model\permisos.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="Model\publicaciones_likes.cs" />
     <Compile Include="Model\recordatorios.cs" />
     <Compile Include="Model\recordatorios_usuarios_adicionales.cs" />
-    <Compile Include="Model\sysdiagrams.cs" />
     <Compile Include="Model\usuarios.cs" />
     <Compile Include="Model\usuarios_configuraciones.cs" />
     <Compile Include="Model\usuarios_delegados.cs" />
@@ -772,6 +772,7 @@
       <LastGenOutput>Proyectos_Connext.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

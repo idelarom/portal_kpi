@@ -25,6 +25,7 @@ namespace datos
         public System.DateTime fecha_evaluacion { get; set; }
         public Nullable<decimal> riesgo_costo { get; set; }
         public Nullable<short> riesgo_tiempo { get; set; }
+        public Nullable<decimal> riesgo_costo_mn { get; set; }
         public Nullable<decimal> p_riesgo_costo { get; set; }
         public Nullable<decimal> p_riesgo_tiempo { get; set; }
         public System.DateTime fecha { get; set; }
@@ -34,7 +35,6 @@ namespace datos
         public Nullable<System.DateTime> fecha_edicion { get; set; }
         public string usuario_borrado { get; set; }
         public string comentarios_borrado { get; set; }
-        public Nullable<decimal> riesgo_costo_mn { get; set; }
     
         public virtual proyectos proyectos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

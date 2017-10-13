@@ -527,7 +527,7 @@ namespace negocio.Componentes
                                  join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
                                  where (p.usuario_borrado == null
                                  && (p.id_proyecto_estatus == (id_proyecto_estatus > 0 ? id_proyecto_estatus : p.id_proyecto_estatus))
-                                  && (p.fecha_registro.Date >= fecha_inicio.Date && p.fecha_registro.Date <= fecha_fin.Date))
+                                  && (p.fecha_registro >= fecha_inicio && p.fecha_registro <= fecha_fin))
                                  select new
                                  {
                                      p.id_proyecto_tecnologia,

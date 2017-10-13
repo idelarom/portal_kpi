@@ -60,6 +60,7 @@
     <Compile Include="Componentes\DocumentosCOM.cs" />
     <Compile Include="Componentes\EmpleadosCOM.cs" />
     <Compile Include="Componentes\MenusCOM.cs" />
+    <Compile Include="Componentes\NotificacionesCOM.cs" />
     <Compile Include="Componentes\OportunidadesCOM.cs" />
     <Compile Include="Componentes\PerfilesCOM.cs" />
     <Compile Include="Componentes\PerformanceComercial.cs" />
