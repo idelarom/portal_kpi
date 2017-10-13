@@ -26,7 +26,10 @@
             , hwaccel: true // Whether to use hardware acceleration
             , position: 'absolute' // Element positioning
          };
-               
+        
+         $(document).ready(function () {
+             Init();
+         });
         function Init() {
             $('.dvv').DataTable({
                 "paging": true,
