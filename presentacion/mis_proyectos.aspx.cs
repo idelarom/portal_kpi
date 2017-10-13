@@ -11,7 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using ClosedXML.Excel;
 
 namespace presentacion
 {
@@ -813,6 +813,86 @@ namespace presentacion
                     txtcped.BorderStyle = BorderStyle.Solid;
                     txtcped.BorderColor = System.Drawing.Color.Green;
                 }
+            }
+        }
+
+        protected void lnkgenerarexcel_Click(object sender, EventArgs e)
+        {            
+            try
+            {
+                //DataTable dt = new DataTable();
+                //dt = ViewState[hdfsessionid.Value + "-dt_reporte"] as DataTable;
+                int id_proyecto_estatus = Convert.ToInt32(ddlstatus.SelectedValue);
+                DataTable dt_filtros = GetProyectos(id_proyecto_estatus);
+                DataView dv = dt_filtros.DefaultView;
+                dv.RowFilter = "id_proyecto_tecnologia = " + ddltechnology.SelectedValue.ToString() + "";
+                DataTable dt_result = dv.ToTable();
+
+                if (dt_result.Rows.Count > 0)
+                {
+                    Export Export = new Export();
+                    //array de DataTables
+                    List<DataTable> ListaTables = new List<DataTable>();
+                    ListaTables.Add(dt_result);
+                    //array de nombre de sheets
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(".", "_");
+                    date = date.Replace(" ", "_");
+                    string[] Nombres = new string[] { "Filtrado de mis proyectoss" };
+                    string mensaje = Export.toExcel("Filtrado de mis proyectos", XLColor.White, XLColor.Black, 18, true, DateTime.Now.ToString(), XLColor.White,
+                                           XLColor.Black, 10, ListaTables, XLColor.CelestialBlue, XLColor.White, Nombres, 1,
+                                           "mis proyectos_" + date + ".xlsx", Page.Response);
+                    if (mensaje != "")
+                    {
+                        Toast.Error("Error al exportar el reporte a excel: " + mensaje, this);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al exportar el reporte a excel: " + ex.Message, this);
+            }
+        }
+
+        protected void lnkgenerarpdf_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //DataTable dt = new DataTable();
+                //dt = ViewState[hdfsessionid.Value + "-dt_reporte"] as DataTable;
+                int id_proyecto_estatus = Convert.ToInt32(ddlstatus.SelectedValue);
+                DataTable dt_filtros = GetProyectos(id_proyecto_estatus);
+                DataView dv = dt_filtros.DefaultView;
+                dv.RowFilter = "id_proyecto_tecnologia = " + ddltechnology.SelectedValue.ToString() + "";
+                DataTable dt_result = dv.ToTable();
+
+                if (dt_result.Rows.Count > 0)
+                {
+                    Export Export = new Export();
+                    //array de DataTables
+                    List<DataTable> ListaTables = new List<DataTable>();
+                    ListaTables.Add(dt_result);
+                    //array de nombre de sheets
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(".", "_");
+                    date = date.Replace(" ", "_");
+                    string[] Nombres = new string[] { "Filtrado de mis proyectos" };
+                    string mensaje = Export.ToPdf("Filtrado_de_mis_proyectos_" + date, ListaTables, 1, Nombres, Page.Response);
+                    if (mensaje != "")
+                    {
+                        Toast.Error("Error al exportar el reporte a PDF: " + mensaje, this);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al exportar el reporte a PDF: " + ex.Message, this);
             }
         }
     }

@@ -209,7 +209,17 @@
                     </div>
                 </div>
             </div>
+             <div class=" box-footer">
 
+                    <asp:LinkButton ID="lnkgenerarpdf" CssClass="btn btn-danger btn-flat"
+                        OnClick="lnkgenerarpdf_Click" runat="server">
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Exportar a PDF
+                    </asp:LinkButton>
+                    <asp:LinkButton ID="lnkgenerarexcel" CssClass="btn btn-success btn-flat"
+                        OnClick="lnkgenerarexcel_Click" runat="server">
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Exportar a Excel
+                    </asp:LinkButton>
+                </div>
         </div>
     </div>
     
