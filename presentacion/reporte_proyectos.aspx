@@ -207,18 +207,18 @@
                                 </div>
                             </div>--%>
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
                                     <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>                                     
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"  style="font-size:10px;">
+                                <div class="col-lg-4 col-md-4 col-sm-12"  style="font-size:10px;">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
                                     <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-12">
-                        <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Filtro estatus</strong></h5>
-                            <asp:DropDownList ID="ddlstatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
-                        </div>
+                              <div class="col-lg-4 col-md-4 col-sm-12">
+                                <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Filtro estatus</strong></h5>
+                                <asp:DropDownList ID="ddlstatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
+                              </div>
                             </div>
                             <%--<div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
