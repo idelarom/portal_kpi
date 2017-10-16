@@ -96,6 +96,7 @@ namespace presentacion
                 ddlstatus.DataTextField = "estatus";
                 ddlstatus.DataSource = dt_estatus;
                 ddlstatus.DataBind();
+                ddlstatus.Items.Insert(0, new ListItem("Todos", "0"));
             }
             catch (Exception ex)
             {
@@ -114,6 +115,7 @@ namespace presentacion
                 ddltechnology.DataTextField = "nombre";
                 ddltechnology.DataSource = dt_tegnologia;
                 ddltechnology.DataBind();
+                ddltechnology.Items.Insert(0, new ListItem("Todos", "0"));
             }
             catch (Exception ex)
             {
@@ -150,6 +152,7 @@ namespace presentacion
                 ddlestatus.DataTextField = "estatus";
                 ddlestatus.DataSource = dt_estatus;
                 ddlestatus.DataBind();
+                
             }
             catch (Exception ex)
             {
@@ -733,8 +736,16 @@ namespace presentacion
             int id_proyecto_estatus = Convert.ToInt32(ddlstatus.SelectedValue);
             DataTable dt_filtros = GetProyectos(id_proyecto_estatus);
             DataView dv = dt_filtros.DefaultView;
-            dv.RowFilter = "id_proyecto_tecnologia = " + ddltechnology.SelectedValue.ToString() + "";
-            DataTable dt_result = dv.ToTable();
+            DataTable dt_result = new DataTable();
+            if (ddltechnology.SelectedValue!="0")
+            {
+                dv.RowFilter = "id_proyecto_tecnologia = " + ddltechnology.SelectedValue.ToString() + "";
+                dt_result = dv.ToTable();
+            }
+            else
+            {
+                dt_result = dt_filtros;
+            }          
             //foreach (DataRow dr in dt_filtros.Rows)
             //{
             //    if (ddltechnology.SelectedItem.Text != dr["Tecnologia"].ToString())
@@ -825,8 +836,16 @@ namespace presentacion
                 int id_proyecto_estatus = Convert.ToInt32(ddlstatus.SelectedValue);
                 DataTable dt_filtros = GetProyectos(id_proyecto_estatus);
                 DataView dv = dt_filtros.DefaultView;
-                dv.RowFilter = "id_proyecto_tecnologia = " + ddltechnology.SelectedValue.ToString() + "";
-                DataTable dt_result = dv.ToTable();
+                DataTable dt_result = new DataTable();
+                if (ddltechnology.SelectedValue != "0")
+                {
+                    dv.RowFilter = "id_proyecto_tecnologia = " + ddltechnology.SelectedValue.ToString() + "";
+                    dt_result = dv.ToTable();
+                }
+                else
+                {
+                    dt_result = dt_filtros;
+                }
 
                 if (dt_result.Rows.Count > 0)
                 {
@@ -866,8 +885,16 @@ namespace presentacion
                 int id_proyecto_estatus = Convert.ToInt32(ddlstatus.SelectedValue);
                 DataTable dt_filtros = GetProyectos(id_proyecto_estatus);
                 DataView dv = dt_filtros.DefaultView;
-                dv.RowFilter = "id_proyecto_tecnologia = " + ddltechnology.SelectedValue.ToString() + "";
-                DataTable dt_result = dv.ToTable();
+                DataTable dt_result = new DataTable();
+                if (ddltechnology.SelectedValue != "0")
+                {
+                    dv.RowFilter = "id_proyecto_tecnologia = " + ddltechnology.SelectedValue.ToString() + "";
+                    dt_result = dv.ToTable();
+                }
+                else
+                {
+                    dt_result = dt_filtros;
+                }
 
                 if (dt_result.Rows.Count > 0)
                 {
