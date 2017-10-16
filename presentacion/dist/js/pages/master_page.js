@@ -6,65 +6,23 @@
 
 //DEVUELVE NOTIFICACION DE ESCRITORIO
 function NotificacionDesktop(title, Mensaje, img) {
-    if (!("Notification" in window)) {
-        Notifica(Mensaje);
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-full-width",
+        "preventDuplicates": true,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "500000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
     }
-    else if (Notification.permission === "granted") {
-        var options = {
-            body: Mensaje,
-            icon: img,
-            dir: "ltr",
-            tag: "PENDIENTE"
-        };
-        var notification = new Notification(title, options);
-        notification.onclick = function () {
-            notification.close();
-        };
-        setTimeout(function () {
-            notification.close();
-        }, 8000);
-    }
-    else if (Notification.permission !== 'denied') {
-        Notification.requestPermission(function (permission) {
-            if (!('permission' in Notification)) {
-                Notification.permission = permission;
-            }
-            if (permission === "granted") {
-                var options = {
-                    body: Mensaje,
-                    icon: img,
-                    dir: "ltr",
-                    tag: "PENDIENTE"
-                };
-                var notification = new Notification(title, options);
-                notification.onclick = function () {
-                    notification.close();
-                };
-                setTimeout(function () {
-                    notification.close();
-                }, 8000);
-
-            } else {
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "newestOnTop": true,
-                    "progressBar": true,
-                    "positionClass": "toast-top-full-width",
-                    "preventDuplicates": true,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "500000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-                Command: toastr["info"](Mensaje, title)
-            }
-        });
-    }
+    Command: toastr["info"](Mensaje, title);
 }
 
 
