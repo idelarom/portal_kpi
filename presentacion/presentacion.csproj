@@ -274,6 +274,9 @@
     <Content Include="dist\js\sweetalert-dev.js" />
     <Content Include="dist\js\sweetalert.min.js" />
     <Content Include="dist\sounds\info.mp3" />
+    <Content Include="dist\sounds\mensaje.wav" />
+    <Content Include="dist\sounds\notification.mp3" />
+    <Content Include="dist\sounds\pling.mp3" />
     <Content Include="files\load.gif" />
     <Content Include="img\load.gif" />
     <Content Include="img\loading.gif" />
