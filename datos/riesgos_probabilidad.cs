@@ -22,7 +22,7 @@ namespace datos
     
         public int id_riesgo_probabilidad { get; set; }
         public string nombre { get; set; }
-        public decimal porcentaje { get; set; }
+        public byte valor { get; set; }
         public bool activo { get; set; }
         public System.DateTime fecha { get; set; }
         public string usuario { get; set; }

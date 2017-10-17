@@ -28,6 +28,7 @@ namespace datos
         }
     
         public virtual DbSet<actividades> actividades { get; set; }
+        public virtual DbSet<actividades_tipos> actividades_tipos { get; set; }
         public virtual DbSet<documentos> documentos { get; set; }
         public virtual DbSet<documentos_tipos> documentos_tipos { get; set; }
         public virtual DbSet<proyectos> proyectos { get; set; }
@@ -38,8 +39,7 @@ namespace datos
         public virtual DbSet<riesgos> riesgos { get; set; }
         public virtual DbSet<riesgos_estatus> riesgos_estatus { get; set; }
         public virtual DbSet<riesgos_estrategia> riesgos_estrategia { get; set; }
-        public virtual DbSet<riesgos_impacto_costo> riesgos_impacto_costo { get; set; }
-        public virtual DbSet<riesgos_impacto_tiempo> riesgos_impacto_tiempo { get; set; }
+        public virtual DbSet<riesgos_impactos> riesgos_impactos { get; set; }
         public virtual DbSet<riesgos_probabilidad> riesgos_probabilidad { get; set; }
     
         public virtual ObjectResult<sp_get_cped_Result> sp_get_cped(string pdocumento)

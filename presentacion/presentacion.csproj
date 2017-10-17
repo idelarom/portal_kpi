@@ -170,7 +170,6 @@
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\npm.js" />
-    <Content Include="catalago_impacto_tiempo.aspx" />
     <Content Include="catalogo_ayudas.aspx" />
     <Content Include="catalogo_impacto_costo.aspx" />
     <Content Include="catalogo_menus.aspx" />
@@ -274,6 +273,9 @@
     <Content Include="dist\js\sweetalert-dev.js" />
     <Content Include="dist\js\sweetalert.min.js" />
     <Content Include="dist\sounds\info.mp3" />
+    <Content Include="dist\sounds\mensaje.wav" />
+    <Content Include="dist\sounds\notification.mp3" />
+    <Content Include="dist\sounds\pling.mp3" />
     <Content Include="files\load.gif" />
     <Content Include="img\load.gif" />
     <Content Include="img\loading.gif" />
@@ -1241,13 +1243,6 @@
     </Compile>
     <Compile Include="ayuda.aspx.designer.cs">
       <DependentUpon>ayuda.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalago_impacto_tiempo.aspx.cs">
-      <DependentUpon>catalago_impacto_tiempo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalago_impacto_tiempo.aspx.designer.cs">
-      <DependentUpon>catalago_impacto_tiempo.aspx</DependentUpon>
     </Compile>
     <Compile Include="catalogo_ayudas.aspx.cs">
       <DependentUpon>catalogo_ayudas.aspx</DependentUpon>

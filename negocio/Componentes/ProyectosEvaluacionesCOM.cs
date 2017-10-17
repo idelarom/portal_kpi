@@ -54,13 +54,7 @@ namespace negocio.Componentes
                                 fecha_registro = DateTime.Now,
                                 id_riesgos_estatus = 1,
                                 id_riesgo_probabilidad = 1,
-                                porc_probabilidad = 0,
-                                id_riesgo_impacto_costo = 1,
-                                porc_impcosto = 0,
-                                id_riesgo_impacto_tiempo = 1,
-                                porc_imptiempo = 0,
-                                riesgo_costo = 0,
-                                riesgo_tiempo = 0,
+                                id_riesgo_impacto = 1,
                                 id_riesgo_estrategia = 1
                             };
                             context.riesgos.Add(new_riesgo);

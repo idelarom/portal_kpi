@@ -1,4 +1,5 @@
 ﻿using negocio.Componentes;
+using Newtonsoft.Json;
 using System;
 using System.Data;
 using System.IO;
@@ -39,6 +40,7 @@ namespace presentacion
                 CargarImagen();
                 UpdateDevices();
                 GetRecordsToday();
+                hdf_mp_usuario.Value = Convert.ToString(Session["usuario"]).ToUpper();
                 ScriptManager.RegisterStartupScript(this.Page,GetType(),Guid.NewGuid().ToString(),
                     "CargarNotificaciones('" + Convert.ToString(Session["usuario"]).ToUpper() + "');", true);
                 if (Convert.ToInt32(Session["id_perfil"]) == 0)
@@ -377,5 +379,6 @@ namespace presentacion
 
             }
         }
+
     }
 }

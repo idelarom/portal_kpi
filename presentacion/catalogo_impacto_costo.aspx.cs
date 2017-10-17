@@ -50,13 +50,13 @@ namespace presentacion
             return dt;
         }
 
-        private riesgos_impacto_costo GetImpactoCosto(int id_riesgo_impacto_costo)
+        private riesgos_impactos GetImpactoCosto(int id_riesgo_impacto)
         {
-            riesgos_impacto_costo dt = new riesgos_impacto_costo();
+            riesgos_impactos dt = new riesgos_impactos();
             try
             {
                 RiesgosImpactoCostosCOM IC = new RiesgosImpactoCostosCOM();
-                dt = IC.impacto(id_riesgo_impacto_costo);
+                dt = IC.impacto(id_riesgo_impacto);
             }
             catch (Exception)
             {
@@ -79,10 +79,10 @@ namespace presentacion
             }
         }
 
-        private string Agregar(riesgos_impacto_costo id_riesgo_impacto_costo)
+        private string Agregar(riesgos_impactos id_riesgo_impacto)
         {
             RiesgosImpactoCostosCOM IC = new RiesgosImpactoCostosCOM();
-            string vmensaje = IC.Agregar(id_riesgo_impacto_costo);
+            string vmensaje = IC.Agregar(id_riesgo_impacto);
             if (vmensaje == "")
             {
                 return "";
@@ -92,10 +92,10 @@ namespace presentacion
                 return vmensaje;
             }
         }
-        private string Editar(riesgos_impacto_costo id_riesgo_impacto_costo)
+        private string Editar(riesgos_impactos id_riesgo_impacto)
         {
             RiesgosImpactoCostosCOM IC = new RiesgosImpactoCostosCOM();
-            string vmensaje = IC.Editar(id_riesgo_impacto_costo);
+            string vmensaje = IC.Editar(id_riesgo_impacto);
             if (vmensaje == "")
             {
                 return "";
@@ -106,10 +106,10 @@ namespace presentacion
             }
         }
 
-        private string Eliminar(int id_riesgo_impacto_costo)
+        private string Eliminar(int id_riesgo_impacto)
         {
             RiesgosImpactoCostosCOM IC = new RiesgosImpactoCostosCOM();
-            string vmensaje = IC.Eliminar(id_riesgo_impacto_costo);
+            string vmensaje = IC.Eliminar(id_riesgo_impacto);
             if (vmensaje == "")
             {
                 return "";
@@ -133,12 +133,12 @@ namespace presentacion
             try
             {
                 string vmensaje = string.Empty;
-                int id_riesgo_impacto_costo = Convert.ToInt32(hdfid_riesgo_impacto_costo.Value == "" ? "0" : hdfid_riesgo_impacto_costo.Value);
-                riesgos_impacto_costo IC = new riesgos_impacto_costo();
+                int id_riesgo_impacto = Convert.ToInt32(hdfid_riesgo_impacto_costo.Value == "" ? "0" : hdfid_riesgo_impacto_costo.Value);
+                riesgos_impactos IC = new riesgos_impactos();
                 IC.nombre = txtnombre.Text;
 
-                if (id_riesgo_impacto_costo > 0) { IC.id_riesgo_impacto_costo = id_riesgo_impacto_costo; }
-                IC.porcentaje = Convert.ToDecimal(txtporcentaje.Text);
+                if (id_riesgo_impacto > 0) { IC.id_riesgo_impacto = id_riesgo_impacto; }
+                IC.valor = Convert.ToByte(txtporcentaje.Text);
                 IC.activo = chkactivo.Checked;
                 IC.usuario = Session["usuario"] as string;
                 if (IC.nombre == "")
@@ -146,14 +146,14 @@ namespace presentacion
                     ModalShow("#ModalImpactocosto");
                     Toast.Error("Error al procesar impacto costo : Ingrese un nombre", this);
                 }
-                else if (IC.porcentaje < 0)
+                else if (IC.valor < 0)
                 {
                     ModalShow("#ModalImpactocosto");
                     Toast.Error("Error al procesar impacto costo : Ingrese un valor del porcentaje", this);
                 }
                 else
                 {
-                    vmensaje = id_riesgo_impacto_costo > 0 ? Editar(IC) : Agregar(IC);
+                    vmensaje = id_riesgo_impacto > 0 ? Editar(IC) : Agregar(IC);
                     if (vmensaje == "")
                     {
                         txtnombre.Text = "";
@@ -181,10 +181,10 @@ namespace presentacion
         {
             try
             {
-                int id_riesgo_impacto_costo = Convert.ToInt32(hdfid_riesgo_impacto_costo.Value == "" ? "0" : hdfid_riesgo_impacto_costo.Value);
-                if (id_riesgo_impacto_costo > 0)
+                int id_riesgo_impacto = Convert.ToInt32(hdfid_riesgo_impacto_costo.Value == "" ? "0" : hdfid_riesgo_impacto_costo.Value);
+                if (id_riesgo_impacto > 0)
                 {
-                    riesgos_impacto_costo IC = GetImpactoCosto(id_riesgo_impacto_costo);
+                    riesgos_impactos IC = GetImpactoCosto(id_riesgo_impacto);
                     if (IC != null)
                     {
                         txtnombre.Text = IC.nombre;
@@ -205,10 +205,10 @@ namespace presentacion
 
             try
             {
-                int id_riesgo_impacto_costo = Convert.ToInt32(hdfid_riesgo_impacto_costo.Value == "" ? "0" : hdfid_riesgo_impacto_costo.Value);
-                riesgos_impacto_costo IC = new riesgos_impacto_costo();
-                IC.id_riesgo_impacto_costo = id_riesgo_impacto_costo;
-                string vmensaje = Eliminar(id_riesgo_impacto_costo);
+                int id_riesgo_impacto = Convert.ToInt32(hdfid_riesgo_impacto_costo.Value == "" ? "0" : hdfid_riesgo_impacto_costo.Value);
+                riesgos_impactos IC = new riesgos_impactos();
+                IC.id_riesgo_impacto = id_riesgo_impacto;
+                string vmensaje = Eliminar(id_riesgo_impacto);
                 if (vmensaje == "")
                 {
                     CargarCatalogo();

@@ -10,11 +10,11 @@ namespace negocio.Componentes
     public class RiesgosImpactoCostosCOM
     {
         /// <summary>
-        /// Agrega una instancia de riesgos_impacto_costo
+        /// Agrega una instancia de riesgos_impactos
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Agregar(riesgos_impacto_costo entidad)
+        public string Agregar(riesgos_impactos entidad)
         {
             try
             {
@@ -25,16 +25,16 @@ namespace negocio.Componentes
                 }
                 else
                 {
-                    riesgos_impacto_costo impacto = new riesgos_impacto_costo
+                    riesgos_impactos impacto = new riesgos_impactos
                     {
                         nombre = entidad.nombre,
-                        porcentaje = entidad.porcentaje,
+                        valor = entidad.valor,
                         activo = true,
                         usuario = entidad.usuario.ToUpper(),
                         fecha = DateTime.Now
                     };
                     Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
-                    context.riesgos_impacto_costo.Add(impacto);
+                    context.riesgos_impactos.Add(impacto);
                     context.SaveChanges();
                 }
                 return mess;
@@ -50,19 +50,19 @@ namespace negocio.Componentes
         }
 
         /// <summary>
-        /// Edita una instancia de riesgos_impacto_costo
+        /// Edita una instancia de riesgos_impactos
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Editar(riesgos_impacto_costo entidad)
+        public string Editar(riesgos_impactos entidad)
         {
             try
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
-                riesgos_impacto_costo impacto = context.riesgos_impacto_costo
-                                .First(i => i.id_riesgo_impacto_costo == entidad.id_riesgo_impacto_costo);
+                riesgos_impactos impacto = context.riesgos_impactos
+                                .First(i => i.id_riesgo_impacto == entidad.id_riesgo_impacto);
                 impacto.nombre = entidad.nombre;
-                impacto.porcentaje = entidad.porcentaje;
+                impacto.valor = entidad.valor;
                 context.SaveChanges();
                 return "";
             }
@@ -77,17 +77,17 @@ namespace negocio.Componentes
         }
 
         /// <summary>
-        /// Elimina una instancia de riesgos_impacto_costo
+        /// Elimina una instancia de riesgos_impactos
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Eliminar(int id_riesgo_impacto_costo)
+        public string Eliminar(int id_riesgo_impacto)
         {
             try
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
-                riesgos_impacto_costo periodo = context.riesgos_impacto_costo
-                                .First(i => i.id_riesgo_impacto_costo == id_riesgo_impacto_costo);
+                riesgos_impactos periodo = context.riesgos_impactos
+                                .First(i => i.id_riesgo_impacto == id_riesgo_impacto);
                 periodo.activo = false;
                 context.SaveChanges();
                 return "";
@@ -113,13 +113,13 @@ namespace negocio.Componentes
             try
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
-                var query = context.riesgos_impacto_costo
+                var query = context.riesgos_impactos
                                 .Where(s => s.nombre.ToUpper() == nombre.ToUpper() && s.activo)
                                 .Select(u => new
                                 {
-                                    u.id_riesgo_impacto_costo
+                                    u.id_riesgo_impacto
                                 })
-                                .OrderBy(u => u.id_riesgo_impacto_costo);
+                                .OrderBy(u => u.id_riesgo_impacto);
                 dt = To.DataTable(query.ToList());
                 return dt.Rows.Count > 0;
             }
@@ -134,17 +134,17 @@ namespace negocio.Componentes
         }
 
         /// <summary>
-        /// Devuelve una instancia de la clase riesgos_impacto_costo
+        /// Devuelve una instancia de la clase riesgos_impactos
         /// </summary>
         /// <param name="id_proyecto_perido"></param>
         /// <returns></returns>
-        public riesgos_impacto_costo impacto(int id_riesgo_impacto_costo)
+        public riesgos_impactos impacto(int id_riesgo_impacto)
         {
             try
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
-                riesgos_impacto_costo impacto = context.riesgos_impacto_costo
-                                .First(i => i.id_riesgo_impacto_costo == id_riesgo_impacto_costo);
+                riesgos_impactos impacto = context.riesgos_impactos
+                                .First(i => i.id_riesgo_impacto == id_riesgo_impacto);
                 return impacto;
             }
             catch (DbEntityValidationException ex)
@@ -158,7 +158,7 @@ namespace negocio.Componentes
         }
 
         /// <summary>
-        /// Devuelve una tabla con los riesgos_impacto_costo
+        /// Devuelve una tabla con los riesgos_impactos
         /// </summary>
         /// <returns></returns>
         public DataTable SelectAll()
@@ -168,18 +168,18 @@ namespace negocio.Componentes
             {
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
 
-                var query = context.riesgos_impacto_costo
+                var query = context.riesgos_impactos
                                 .Where(s => s.activo)
                                 .Select(u => new
                                 {
-                                    u.id_riesgo_impacto_costo,
-                                    u.nombre,
-                                    u.porcentaje,
+                                    u.id_riesgo_impacto,
+                                    u.nombre,                                    
+                                    u.valor,
                                     u.activo,
                                     u.fecha,
                                     u.usuario
                                 })
-                                .OrderBy(u => u.porcentaje);
+                                .OrderBy(u => u.valor);
                 dt = To.DataTable(query.ToList());
                 return dt;
             }

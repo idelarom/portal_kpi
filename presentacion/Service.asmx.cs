@@ -1,4 +1,5 @@
-﻿using negocio.Componentes;
+﻿using datos.NAVISION;
+using negocio.Componentes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace presentacion
     /// <summary>
     /// Descripción breve de Service
     /// </summary>
-    [WebService(Namespace = "http://tempuri.org/")]
+    [WebService(Namespace = "http://apps.migesa.com.mx/portal_connext/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
@@ -135,5 +136,8 @@ namespace presentacion
                 return ex.Message;
             }
         }
+
+       
+
     }
 }

@@ -1,6 +1,30 @@
 ﻿$(document).ready(function () {
     setInterval(CargarNuevosDispositivos, 1500);
+    //setInterval(CargarNotificaciones, 5000);
+
 });
+
+//DEVUELVE NOTIFICACION DE ESCRITORIO
+function NotificacionDesktop(title, Mensaje, img) {
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-full-width",
+        "preventDuplicates": true,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "500000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+    Command: toastr["info"](Mensaje, title);
+}
+
 
 function ValidateRange(Object, val_min, val_max, error_mess) {
     // It's a number
@@ -205,7 +229,9 @@ function LoadSinc(msg) {
 }
 
 
-function CargarNotificaciones(usuario) {
+function CargarNotificaciones() {
+    var usuario = $("#hdf_mp_usuario").val();
+    console.log(usuario);
     $.ajax({
         url: 'Service.asmx/GetAvisos',
         contentType: "application/json; charset=utf-8",
@@ -217,35 +243,20 @@ function CargarNotificaciones(usuario) {
             $("#menu_notificaciones").empty();
             $('#btn_not').removeAttr('onclick');
             if (notificaciones.length > 0) {
+                NotificacionDesktop("Nuevas notificaciones.", "Tiene " + notificaciones.length + " notificacion(es)","img/logo_login.png")
+                PlaySound('dist/sounds/notification.mp3');
                 $("#numero_notificaciones").show(); 
                 $("#numero_notificaciones").text(notificaciones.length);
                 $("#lblnumero_notificaciones").text(notificaciones.length);
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "newestOnTop": true,
-                    "progressBar": true,
-                    "positionClass": "toast-top-full-width",
-                    "preventDuplicates": true,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "500000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-                Command: toastr["info"]("Tiene " + notificaciones.length + " notificacion(es)", "Nueva notificaciones")
+                
                 for (indice = 0; indice < notificaciones.length; indice++) {
                     var notificacion = notificaciones[indice].notificacion;
                     var url = notificaciones[indice].url;
                     var icono = notificaciones[indice].icono;
                     var id_notificacion = notificaciones[indice].id_notificacion;
-                    console.log("aviso", notificacion, url, icono);
 
-                    $("#menu_notificaciones").append('<li style="cursor:pointer;"><a href="#" aria-hidden="true"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
-                   //$("#menu_notificaciones").append('<li style="cursor:pointer;"><a onclick="LeerNotificacion(\'' + usuario + '\',\'' + (url == null ? "#" : url) + '\');"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
+                    //$("#menu_notificaciones").append('<li style="cursor:pointer;"><a href="#" aria-hidden="true"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
+                    $("#menu_notificaciones").append('<li style="cursor:pointer;"><a onclick="LeerNotificacion(\'' + usuario + '\',\'' + (url == null ? "#" : url) + '\');"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
                 }
                // $("#menu_notificaciones").append('<li style="cursor:pointer;"><a onclick="LeerNotificacion(\'' + usuario + '\',\'' + (url == null ? "#" : url) + '\');"><i class="' + (icono == null ? "fa fa-info-circle" : icono) + '" aria-hidden="true"></i>' + notificacion + '</a></li>');
 
@@ -259,40 +270,40 @@ function CargarNotificaciones(usuario) {
 }
 
 function LeerNotificacion(usuario, url) {
-    $.ajax({
-        url: 'Service.asmx/LeerNotificacion',
-        contentType: "application/json; charset=utf-8",
-        type: "POST",
-        dataType: "json",
-        data: "{usuario:'" + usuario + "'}",
-        success: function (response) {
-            var mensaje = response.d;
-            if (mensaje != "") {
-                toastr.options = {
-                    "closeButton": true,
-                    "debug": false,
-                    "newestOnTop": true,
-                    "progressBar": true,
-                    "positionClass": "toast-top-full-width",
-                    "preventDuplicates": true,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "500000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
+    if (url != '') {
+        window.location.href = url;
+    } else {
+        $.ajax({
+            url: 'Service.asmx/LeerNotificacion',
+            contentType: "application/json; charset=utf-8",
+            type: "POST",
+            dataType: "json",
+            data: "{usuario:'" + usuario + "'}",
+            success: function (response) {
+                var mensaje = response.d;
+                if (mensaje != "") {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-full-width",
+                        "preventDuplicates": true,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "500000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    Command: toastr["danger"](mensaje, "Error en el sistema")
                 }
-                Command: toastr["danger"](mensaje,"Error en el sistema")
-            } else {
-                if (url != '') {
-                    window.location.href = url;
-                }
+            },
+            error: function (result, status, err) {
+                console.log("error", result.responseText);
             }
-        },
-        error: function (result, status, err) {
-            console.log("error", result.responseText);
-        }
-    });
+        });
+    }
 }

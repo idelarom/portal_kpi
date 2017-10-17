@@ -21,6 +21,7 @@ namespace datos
         }
     
         public int id_actividad { get; set; }
+        public Nullable<int> id_actividad_tipo { get; set; }
         public Nullable<int> id_proyecto { get; set; }
         public Nullable<int> id_riesgo { get; set; }
         public string nombre { get; set; }
@@ -28,6 +29,8 @@ namespace datos
         public string empleado_resp { get; set; }
         public Nullable<System.DateTime> fecha_ejecucion { get; set; }
         public Nullable<System.DateTime> fecha_asignacion { get; set; }
+        public string resultado { get; set; }
+        public Nullable<bool> recomendada { get; set; }
         public string usuario { get; set; }
         public System.DateTime fecha_registro { get; set; }
         public string comentarios_borrado { get; set; }
@@ -36,6 +39,7 @@ namespace datos
         public Nullable<System.DateTime> fecha_edicion { get; set; }
         public string usuario_borrado { get; set; }
     
+        public virtual actividades_tipos actividades_tipos { get; set; }
         public virtual proyectos proyectos { get; set; }
         public virtual riesgos riesgos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

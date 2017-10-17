@@ -157,42 +157,6 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.TextBox txtimpacto_costo;
         
         /// <summary>
-        /// Control ddlimpacto_tiempo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlimpacto_tiempo;
-        
-        /// <summary>
-        /// Control txtimpacto_tiempo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtimpacto_tiempo;
-        
-        /// <summary>
-        /// Control txtriesgo_costo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtriesgo_costo;
-        
-        /// <summary>
-        /// Control txtriesgo_tiempo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtriesgo_tiempo;
-        
-        /// <summary>
         /// Control ddlestrategias.
         /// </summary>
         /// <remarks>

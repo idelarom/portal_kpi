@@ -115,7 +115,7 @@ namespace presentacion
                 int id_riesgo_probabilidad = Convert.ToInt32(hdfid_riesgo_probabilidad.Value == "" ? "0" : hdfid_riesgo_probabilidad.Value);
                 riesgos_probabilidad PE = new riesgos_probabilidad();
                 PE.nombre = txtestatus.Text;
-                PE.porcentaje = txtnumdias.Text == "" ? Convert.ToDecimal(0) : Convert.ToDecimal(txtnumdias.Text);
+                PE.valor = txtnumdias.Text == "" ? Convert.ToByte(0) : Convert.ToByte(txtnumdias.Text);
                 if (id_riesgo_probabilidad > 0) { PE.id_riesgo_probabilidad = id_riesgo_probabilidad; }
                 PE.activo = chkactivo.Checked;
                 PE.usuario = Session["usuario"] as string;
@@ -124,7 +124,7 @@ namespace presentacion
                     ModalShow("#ModalProyectoestatus");
                     Toast.Error("Error al procesar Probabilidad : Ingrese un titulo", this);
                 }
-                else if (PE.porcentaje < 0)
+                else if (PE.valor < 0)
                 {
                     ModalShow("#ModalProyectoestatus");
                     Toast.Error("Error al procesar Probabilidad : Ingrese un porcentaje de probabilidad mayor a cero.", this);
@@ -166,7 +166,7 @@ namespace presentacion
                     if (PE != null)
                     {
 
-                        txtnumdias.Text = PE.porcentaje.ToString();
+                        txtnumdias.Text = PE.valor.ToString();
                         txtestatus.Text = PE.nombre;
                         chkactivo.Checked = PE.activo;
                         ModalShow("#ModalProyectoestatus");
