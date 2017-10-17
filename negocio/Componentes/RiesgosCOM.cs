@@ -559,6 +559,7 @@ namespace negocio.Componentes
                 return false;
             }
         }
+
         /// <summary>
         /// Devuelve un cursor con los riesgos por proyectos
         /// </summary>
@@ -580,9 +581,11 @@ namespace negocio.Componentes
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
                                join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (p.id_proyecto == id_proyecto && r.usuario_borrado == null)
+                               orderby(r.riesgo)
                                select new
                                {
                                    pt.id_proyecto_tecnologia,
+                                   p.proyecto,
                                    tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
@@ -600,11 +603,9 @@ namespace negocio.Componentes
                                    r.id_riesgo_estrategia,
                                    estrategia = rs.nombre,
                                    fecha_evaluacion = pe.fecha_evaluacion,
-                                   proyecto = p.proyecto,
                                    r.riesgo_costo,
                                    r.riesgo_tiempo
                                });
-
                 dt = To.DataTable(riesgos.ToList());
                 return dt;
             }
@@ -717,6 +718,7 @@ namespace negocio.Componentes
                 return null;
             }
         }
+        
 
     }
 }
