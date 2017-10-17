@@ -552,7 +552,7 @@ namespace presentacion
                         ddlestatus.SelectedValue = proyecto.id_proyecto_estatus.ToString();
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
-                        ddltegnologia.SelectedValue = proyecto.id_proyecto_tecnologia.ToString();
+                        ddltegnologia.SelectedValue = proyecto.id_proyecto_tecnologia.ToString();                       
                         CargarDatosempleados(proyecto.usuario_resp);
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;

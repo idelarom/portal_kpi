@@ -1,5 +1,6 @@
 ﻿using datos;
 using datos.NAVISION;
+using negocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -606,6 +607,136 @@ namespace negocio.Componentes
                                });
 
                 dt = To.DataTable(riesgos.ToList());
+                return dt;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Devuelve un cursor con los riesgos por proyectos
+        /// </summary>
+        /// <param name="id_proyecto_perido"></param>
+        /// <returns></returns>
+        public DataTable proyectos_riesgos_reporte(int num_empleado, bool ver_Todos_los_empleados,  DateTime fecha_inicio, DateTime fecha_fin)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                bool no_activos = false;
+                DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
+                DataTable dt_empleados_subordinados = ds.Tables[0];
+                List<EmpleadoSubordinados> list_emp = new List<EmpleadoSubordinados>();
+                foreach (DataRow row in dt_empleados_subordinados.Rows)
+                {
+                    EmpleadoSubordinados empleado = new EmpleadoSubordinados();
+                    empleado.Usuario = row["usuario"].ToString().ToUpper();
+                    list_emp.Add(empleado);
+                }
+               
+                Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                var riesgos = (from r in db.riesgos
+                               join re in db.riesgos_estatus on r.id_riesgos_estatus equals re.id_riesgos_estatus
+                               join rp in db.riesgos_probabilidad on r.id_riesgo_probabilidad equals rp.id_riesgo_probabilidad
+                               join ric in db.riesgos_impacto_costo on r.id_riesgo_impacto_costo equals ric.id_riesgo_impacto_costo
+                               join rit in db.riesgos_impacto_tiempo on r.id_riesgo_impacto_tiempo equals rit.id_riesgo_impacto_tiempo
+                               join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
+                               join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
+                               join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
+                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               where (p.usuario_borrado == null
+                                 && (r.usuario_borrado==null)
+                                  && (r.fecha_registro >= fecha_inicio && r.fecha_registro <= fecha_fin))
+                               orderby r.id_riesgo ascending
+                               select new
+                               {
+                                   pt.id_proyecto_tecnologia,
+                                   tecnologia = pt.nombre,
+                                   r.id_riesgo,
+                                   r.riesgo,
+                                   r.id_riesgos_estatus,
+                                   re.estatus,
+                                   r.id_riesgo_probabilidad,
+                                   probabilidad = rp.nombre,
+                                   p_probabilidad = rp.porcentaje,
+                                   r.id_riesgo_impacto_costo,
+                                   impacto_costo = ric.nombre,
+                                   p_impacto_costo = ric.porcentaje,
+                                   r.id_riesgo_impacto_tiempo,
+                                   impacto_tiempo = rit.nombre,
+                                   p_impacto_tiempo = rit.porcentaje,
+                                   r.id_riesgo_estrategia,
+                                   estrategia = rs.nombre,
+                                   fecha_evaluacion = pe.fecha_evaluacion,
+                                   proyecto = p.proyecto,
+                                   r.riesgo_costo,
+                                   r.riesgo_tiempo,
+                                   r.usuario
+                               }).ToArray();
+                 var triesgos = (from r in riesgos
+                                 join emp in list_emp on r.usuario.ToUpper() equals emp.Usuario
+                                 select new
+                                 {
+                                     r.usuario,
+                                     r.id_proyecto_tecnologia,
+                                     r.tecnologia,
+                                     r.id_riesgo,
+                                     r.riesgo,
+                                     r.id_riesgos_estatus,
+                                     r.estatus,
+                                     r.id_riesgo_probabilidad,
+                                     r.probabilidad,
+                                     r.p_probabilidad,
+                                     r.id_riesgo_impacto_costo,
+                                     r.impacto_costo,
+                                     r.p_impacto_costo,
+                                     r.id_riesgo_impacto_tiempo,
+                                     r.impacto_tiempo,
+                                     r.p_impacto_tiempo,
+                                     r.id_riesgo_estrategia,
+                                     r.estrategia,
+                                     r.fecha_evaluacion,
+                                     r.proyecto,
+                                     r.riesgo_costo,
+                                     r.riesgo_tiempo
+                                   });
+                NAVISION dbnavision = new NAVISION();
+                var results = from r in riesgos
+                              join up in dbnavision.Employee on r.usuario.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
+                              select new
+                              {
+                                  usuario = r.usuario,
+                                  empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
+                                  r.id_proyecto_tecnologia,
+                                  r.tecnologia,
+                                  r.id_riesgo,
+                                  r.riesgo,
+                                  r.id_riesgos_estatus,
+                                  r.estatus,
+                                  r.id_riesgo_probabilidad,
+                                  r.probabilidad,
+                                  r.p_probabilidad,
+                                  r.id_riesgo_impacto_costo,
+                                  r.impacto_costo,
+                                  r.p_impacto_costo,
+                                  r.id_riesgo_impacto_tiempo,
+                                  r.impacto_tiempo,
+                                  r.p_impacto_tiempo,
+                                  r.id_riesgo_estrategia,
+                                  r.estrategia,
+                                  r.fecha_evaluacion,
+                                  r.proyecto,
+                                  r.riesgo_costo,
+                                  r.riesgo_tiempo
+                              };
+                dt = To.DataTable(results.ToList());
                 return dt;
             }
             catch (DbEntityValidationException ex)
