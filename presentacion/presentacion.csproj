@@ -1229,6 +1229,7 @@
     <Content Include="reporte_performance_ingenieria_netdiario.aspx" />
     <Content Include="reporte_performance_preventa.aspx" />
     <Content Include="reporte_proyectos.aspx" />
+    <Content Include="reporte_riesgos.aspx" />
     <Content Include="Service.asmx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1493,6 +1494,13 @@
     </Compile>
     <Compile Include="reporte_proyectos.aspx.designer.cs">
       <DependentUpon>reporte_proyectos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="reporte_riesgos.aspx.cs">
+      <DependentUpon>reporte_riesgos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reporte_riesgos.aspx.designer.cs">
+      <DependentUpon>reporte_riesgos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Service.asmx.cs">
       <DependentUpon>Service.asmx</DependentUpon>

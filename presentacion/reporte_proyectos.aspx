@@ -71,7 +71,12 @@
             $("#<%= lnkcargando.ClientID%>").show();
             $("#<%= lnkguardar.ClientID%>").hide();
             return true;
-          }         
+        }
+         function dashboardproyectos(id_proyect)
+         {
+             var id_proyecto =  btoa(id_proyect);
+             window.location.href = "proyectos_dashboard.aspx?id_proyecto=" + id_proyecto;
+         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -129,7 +134,7 @@
                                                 <td style="text-align: center;"><%# Eval("usuario") %></td>
                                                 <td style="text-align: center;"><%# Eval("empleado") %></td>
                                                 <td>
-                                                    <a style="cursor: pointer;" onclick='<%# "return ViewEmpleado("+@"""" + Eval("id_proyecto") + @"""" + ");" %>'>
+                                                    <a style="cursor: pointer;" onclick='<%# "return dashboardproyectos("+@"""" + Eval("id_proyecto") + @"""" + ");" %>'>
                                                         <%# Eval("proyecto") %>
                                                     </a>
                                                 </td>
