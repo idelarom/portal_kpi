@@ -57,6 +57,9 @@
     <Compile Include="actividades.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="actividades_tipos.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="conexion.cs" />
     <Compile Include="Datos.cs" />
     <Compile Include="documentos.cs">
@@ -699,10 +702,7 @@
     <Compile Include="riesgos_estrategia.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
-    <Compile Include="riesgos_impacto_costo.cs">
-      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="riesgos_impacto_tiempo.cs">
+    <Compile Include="riesgos_impactos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="riesgos_probabilidad.cs">

@@ -156,19 +156,10 @@ namespace presentacion
                 RiesgosImpactoCostosCOM costos = new RiesgosImpactoCostosCOM();
                 DataTable dt_costos = costos.SelectAll();
                 ddlimpacto_costo.DataTextField = "nombre";
-                ddlimpacto_costo.DataValueField = "id_riesgo_impacto_costo";
+                ddlimpacto_costo.DataValueField = "id_riesgo_impacto";
                 ddlimpacto_costo.DataSource = dt_costos;
                 ddlimpacto_costo.DataBind();
                 ddlimpacto_costo.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
-
-                //impacto tiempo
-                RiesgosImpactoTiempoCOM tiempos = new RiesgosImpactoTiempoCOM();
-                DataTable dt_tiempos = tiempos.SelectAll();
-                ddlimpacto_tiempo.DataTextField = "nombre";
-                ddlimpacto_tiempo.DataValueField = "id_riesgo_impacto_tiempo";
-                ddlimpacto_tiempo.DataSource = dt_tiempos;
-                ddlimpacto_tiempo.DataBind();
-                ddlimpacto_tiempo.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
 
                 //estrategias
                 RiesgosEstrategiaCOM estrategias = new RiesgosEstrategiaCOM();
@@ -192,7 +183,7 @@ namespace presentacion
         /// <param name="ddlimpacto_costo"></param>
         /// <param name="ddlimpacto_tiempo"></param>
         /// <param name="ddlestrategias"></param>
-        private void CargarCombosinRepeater(DropDownList ddlprobabilidad, DropDownList ddlimpacto_costo, DropDownList ddlimpacto_tiempo, DropDownList ddlestrategias)
+        private void CargarCombosinRepeater(DropDownList ddlprobabilidad, DropDownList ddlimpacto_costo,  DropDownList ddlestrategias)
         {
             try
             {
@@ -218,20 +209,12 @@ namespace presentacion
                 RiesgosImpactoCostosCOM costos = new RiesgosImpactoCostosCOM();
                 DataTable dt_costos = costos.SelectAll();
                 ddlimpacto_costo.DataTextField = "nombre";
-                ddlimpacto_costo.DataValueField = "id_riesgo_impacto_costo";
+                ddlimpacto_costo.DataValueField = "id_riesgo_impacto";
                 ddlimpacto_costo.DataSource = dt_costos;
                 ddlimpacto_costo.DataBind();
                 ddlimpacto_costo.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
 
-                //impacto tiempo
-                RiesgosImpactoTiempoCOM tiempos = new RiesgosImpactoTiempoCOM();
-                DataTable dt_tiempos = tiempos.SelectAll();
-                ddlimpacto_tiempo.DataTextField = "nombre";
-                ddlimpacto_tiempo.DataValueField = "id_riesgo_impacto_tiempo";
-                ddlimpacto_tiempo.DataSource = dt_tiempos;
-                ddlimpacto_tiempo.DataBind();
-                ddlimpacto_tiempo.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
-
+               
                 //estrategias
                 RiesgosEstrategiaCOM estrategias = new RiesgosEstrategiaCOM();
                 DataTable dt_estrategias = estrategias.SelectAll();
@@ -341,9 +324,8 @@ namespace presentacion
             DataRowView dbr = (DataRowView)e.Item.DataItem;
             DropDownList ddlprobabilidad_rep = e.Item.FindControl("ddlprobabilidad_rep") as DropDownList;
             DropDownList ddlimpacto_costo_rep = e.Item.FindControl("ddlimpacto_costo_rep") as DropDownList;
-            DropDownList ddlimpacto_tiempo_rep = e.Item.FindControl("ddlimpacto_tiempo_rep") as DropDownList;
             DropDownList ddlestrategia_rep = e.Item.FindControl("ddlestrategia_rep") as DropDownList;
-            CargarCombosinRepeater(ddlprobabilidad_rep, ddlimpacto_costo_rep, ddlimpacto_tiempo_rep, ddlestrategia_rep);
+            CargarCombosinRepeater(ddlprobabilidad_rep, ddlimpacto_costo_rep, ddlestrategia_rep);
             int id_riesgo = Convert.ToInt32(DataBinder.Eval(dbr, "id_riesgo"));
             int id_riesgo_probabilidad = Convert.ToInt32(DataBinder.Eval(dbr, "id_riesgo_probabilidad"));
             int id_riesgo_impacto_costo = Convert.ToInt32(DataBinder.Eval(dbr, "id_riesgo_impacto_costo"));
@@ -353,21 +335,18 @@ namespace presentacion
                 ddlprobabilidad_rep.Items.FindByValue(id_riesgo_probabilidad.ToString()) != null ? id_riesgo_probabilidad.ToString() : "0";
             ddlimpacto_costo_rep.SelectedValue =
                 ddlimpacto_costo_rep.Items.FindByValue(id_riesgo_impacto_costo.ToString()) != null ? id_riesgo_impacto_costo.ToString() : "0";
-            ddlimpacto_tiempo_rep.SelectedValue =
-                ddlimpacto_tiempo_rep.Items.FindByValue(id_riesgo_impacto_tiempo.ToString()) != null ? id_riesgo_impacto_tiempo.ToString() : "0";
+            
             ddlestrategia_rep.SelectedValue =
                 ddlestrategia_rep.Items.FindByValue(id_riesgo_estrategia.ToString()) != null ? id_riesgo_estrategia.ToString() : "0";
             ddlprobabilidad_rep.Attributes["id_riesgo_probabilidad_selected"] =
                 ddlprobabilidad_rep.Items.FindByValue(id_riesgo_probabilidad.ToString()) != null ? id_riesgo_probabilidad.ToString() : "0";
             ddlimpacto_costo_rep.Attributes["id_riesgo_impacto_costo_selected"] =
                 ddlimpacto_costo_rep.Items.FindByValue(id_riesgo_impacto_costo.ToString()) != null ? id_riesgo_impacto_costo.ToString() : "0";
-            ddlimpacto_tiempo_rep.Attributes["id_riesgo_impacto_tiempo_selected"] =
-                ddlimpacto_tiempo_rep.Items.FindByValue(id_riesgo_impacto_tiempo.ToString()) != null ? id_riesgo_impacto_tiempo.ToString() : "0";
+           
             ddlestrategia_rep.Attributes["id_riesgo_estrategia_selected"] =
                 ddlestrategia_rep.Items.FindByValue(id_riesgo_estrategia.ToString()) != null ? id_riesgo_estrategia.ToString() : "0";
             ddlprobabilidad_rep.Attributes["id_riesgo"] = id_riesgo.ToString();
-            ddlimpacto_costo_rep.Attributes["id_riesgo"] = id_riesgo.ToString();
-            ddlimpacto_tiempo_rep.Attributes["id_riesgo"] = id_riesgo.ToString();
+            ddlimpacto_costo_rep.Attributes["id_riesgo"] = id_riesgo.ToString();          
             ddlestrategia_rep.Attributes["id_riesgo"] = id_riesgo.ToString();
         }
 
@@ -375,40 +354,12 @@ namespace presentacion
         {
             DropDownList ddlprobabilidad_rep = e.Item.FindControl("ddlprobabilidad_rep") as DropDownList;
             DropDownList ddlimpacto_costo_rep = e.Item.FindControl("ddlimpacto_costo_rep") as DropDownList;
-            DropDownList ddlimpacto_tiempo_rep = e.Item.FindControl("ddlimpacto_tiempo_rep") as DropDownList;
             DropDownList ddlestrategia_rep = e.Item.FindControl("ddlestrategia_rep") as DropDownList;
             ddlprobabilidad_rep.SelectedIndexChanged += ddlprobabilidad_rep_SelectedIndexChanged;
             ddlimpacto_costo_rep.SelectedIndexChanged += ddlimpacto_costo_rep_SelectedIndexChanged;
-            ddlimpacto_tiempo_rep.SelectedIndexChanged += ddlimpacto_tiempo_rep_SelectedIndexChanged;
             ddlestrategia_rep.SelectedIndexChanged += ddlestrategia_rep_SelectedIndexChanged;
         }
 
-        /// <summary>
-        /// Genera los porcentaje de los valores de riesgos del modal_riesgos
-        /// </summary>
-        private void GenerarValoresRiesgos()
-        {
-            try
-            {
-                decimal probabilidad = Convert.ToDecimal(txtpprobabilidad.Text == "" ? "0.00" : txtpprobabilidad.Text.Replace(" %", ""));
-                decimal impacto_tiempo = Convert.ToDecimal(txtimpacto_tiempo.Text == "" ? "0.00" : txtimpacto_tiempo.Text.Replace(" %", ""));
-                decimal impacto_costo = Convert.ToDecimal(txtimpacto_costo.Text == "" ? "0.00" : txtimpacto_costo.Text.Replace(" %", ""));
-                if (ddlestatus_riesgo.SelectedValue == "1")
-                {
-                    txtriesgo_costo.Text = Convert.ToDouble(((probabilidad * impacto_costo)/100)/100).ToString("P");
-                    txtriesgo_tiempo.Text = Convert.ToDouble(((probabilidad * impacto_tiempo)/100)/100).ToString("P");
-                }
-                else {
-                    txtriesgo_costo.Text = "0.00 %";
-                    txtriesgo_tiempo.Text = "0.00 %";
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al calcular riesgos. " + ex.Message, this);
-            }
-        }
 
         protected void repeater_evaluaciones_details_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
@@ -425,7 +376,6 @@ namespace presentacion
                         CargarCombos();
                         txtriesgo.Text = "";
                         txtimpacto_costo.Text = "";
-                        txtimpacto_tiempo.Text = "";
                         txtpprobabilidad.Text = "";
                         ModalShow("#modal_riesgo");
                         break;
@@ -493,14 +443,13 @@ namespace presentacion
                 {
                     RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
                     riesgos_probabilidad probabilidad = probabilidades.impacto(id_riesgo_probabilidad);
-                    txtpprobabilidad.Text = probabilidad.porcentaje.ToString();
+                    txtpprobabilidad.Text = probabilidad.valor.ToString();
                     txtpprobabilidad_TextChanged(null, null);
                 }
                 else
                 {
                     txtpprobabilidad.Text = "";
                 }
-                GenerarValoresRiesgos();
             }
             catch (Exception ex)
             {
@@ -543,21 +492,7 @@ namespace presentacion
 
         }
 
-        protected void txtimpacto_tiempo_TextChanged(object sender, EventArgs e)
-        {
-            string texto = txtimpacto_tiempo.Text;
-
-            if (texto == "")
-            {
-                txtimpacto_tiempo.Text = "";
-            }
-            else
-            {
-                decimal value = Convert.ToDecimal(texto) / 100;
-                txtimpacto_tiempo.Text = value.ToString("P");
-            }
-
-        }
+     
 
         protected void ddlimpacto_costo_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -567,15 +502,14 @@ namespace presentacion
                 if (id_impacto_costo > 0)
                 {
                     RiesgosImpactoCostosCOM costos = new RiesgosImpactoCostosCOM();
-                    riesgos_impacto_costo costo = costos.impacto(id_impacto_costo);
-                    txtimpacto_costo.Text = costo.porcentaje.ToString();
+                    riesgos_impactos costo = costos.impacto(id_impacto_costo);
+                    txtimpacto_costo.Text = costo.valor.ToString();
                     txtimpacto_costo_TextChanged(null, null);
                 }
                 else
                 {
                     txtimpacto_costo.Text = "";
                 }
-                GenerarValoresRiesgos();
             }
             catch (Exception ex)
             {
@@ -588,34 +522,6 @@ namespace presentacion
 
         }
 
-        protected void ddlimpacto_tiempo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int id_impacto_tiempo = Convert.ToInt32(ddlimpacto_tiempo.SelectedValue);
-                if (id_impacto_tiempo > 0)
-                {
-                    RiesgosImpactoTiempoCOM costos = new RiesgosImpactoTiempoCOM();
-                    riesgos_impacto_tiempo costo = costos.impacto(id_impacto_tiempo);
-                    txtimpacto_tiempo.Text = costo.porcentaje.ToString();
-                    txtimpacto_tiempo_TextChanged(null, null);
-                }
-                else
-                {
-                    txtimpacto_tiempo.Text = "";
-                }
-                GenerarValoresRiesgos();
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al calcular impacto tiempo. " + ex.Message, this);
-            }
-            finally
-            {
-                InicializarTablas();
-            }
-
-        }
 
         public string GuardarRiesgo(riesgos riesgo,  List<actividades> lst_actividades, List<documentos> lstdocumentos)
         {
@@ -651,13 +557,7 @@ namespace presentacion
                 riesgo.id_proyecto_evaluacion = Convert.ToInt32(hdf_id_proyecto_evaluacion.Value == "" ? "0" : hdf_id_proyecto_evaluacion.Value);
                 riesgo.id_riesgos_estatus = Convert.ToInt32(ddlestatus_riesgo.SelectedValue);
                 riesgo.id_riesgo_probabilidad = Convert.ToInt32(ddlprobabilidad.SelectedValue);
-                riesgo.porc_probabilidad = Convert.ToDecimal(txtpprobabilidad.Text == "" ? "0" : txtpprobabilidad.Text.Replace(" %", ""));
-                riesgo.id_riesgo_impacto_costo = Convert.ToInt32(ddlimpacto_costo.SelectedValue);
-                riesgo.porc_impcosto = Convert.ToDecimal(txtimpacto_costo.Text == "" ? "0" : txtimpacto_costo.Text.Replace(" %", ""));
-                riesgo.id_riesgo_impacto_tiempo = Convert.ToInt32(ddlimpacto_tiempo.SelectedValue);
-                riesgo.porc_imptiempo = Convert.ToDecimal(txtimpacto_tiempo.Text == "" ? "0" : txtimpacto_tiempo.Text.Replace(" %", ""));
-                riesgo.riesgo_costo = Convert.ToDecimal(txtriesgo_costo.Text == "" ? "0" : txtriesgo_costo.Text.Replace(" %", ""));
-                riesgo.riesgo_tiempo = Convert.ToDecimal(txtriesgo_tiempo.Text == "" ? "0" : txtriesgo_tiempo.Text.Replace(" %", ""));
+               
                 riesgo.id_riesgo_estrategia = Convert.ToInt32(ddlestrategias.SelectedValue);
                 riesgo.usuario = Session["usuario"] as string;
                 riesgo.usuario_edicion = Session["usuario"] as string;
@@ -682,13 +582,9 @@ namespace presentacion
                 {
                     Toast.Error("Error al guardar riesgo: Ingrese una probabilidad para el riesgo.", this);
                 }
-                else if (riesgo.id_riesgo_impacto_costo == 0)
+                else if (riesgo.id_riesgo_impacto == 0)
                 {
-                    Toast.Error("Error al guardar riesgo: Ingrese un impacto costo para el riesgo.", this);
-                }
-                else if (riesgo.id_riesgo_impacto_tiempo == 0)
-                {
-                    Toast.Error("Error al guardar riesgo: Ingrese un impacto tiempo para el riesgo.", this);
+                    Toast.Error("Error al guardar riesgo: Ingrese un impacto para el riesgo.", this);
                 }
                 else if (riesgo.id_riesgo_estrategia == 0)
                 {
@@ -1204,16 +1100,16 @@ namespace presentacion
                     {
                         RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
                         riesgos_probabilidad probabilidad = probabilidades.impacto(id_riesgo_probabilidad);
-                        string vmensaje = riesgos.EditarProbabilidad(id_riesgo, id_riesgo_probabilidad, probabilidad.porcentaje, Session["usuario"] as string);
-                        if (vmensaje == "")
-                        {
-                            ddl.Attributes["id_riesgo_probabilidad_selected"] = id_riesgo_probabilidad.ToString();
-                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                        }
-                        else
-                        {
-                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
-                        }
+                        //string vmensaje = riesgos.EditarProbabilidad(id_riesgo, id_riesgo_probabilidad, probabilidad.porcentaje, Session["usuario"] as string);
+                        //if (vmensaje == "")
+                        //{
+                        //    ddl.Attributes["id_riesgo_probabilidad_selected"] = id_riesgo_probabilidad.ToString();
+                        //    CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        //}
+                        //else
+                        //{
+                        //    Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        //}
                     }
                 }
                 else
@@ -1248,17 +1144,17 @@ namespace presentacion
                     if (id_riesgo_impacto_costo > 0 && id_riesgo_impacto_costo != id_riesgo_impacto_costo_selected)
                     {
                         RiesgosImpactoCostosCOM probabilidades = new RiesgosImpactoCostosCOM();
-                        riesgos_impacto_costo probabilidad = probabilidades.impacto(id_riesgo_impacto_costo);
-                        string vmensaje = riesgos.EditarImpactoCosto(id_riesgo, id_riesgo_impacto_costo, probabilidad.porcentaje, Session["usuario"] as string);
-                        if (vmensaje == "")
-                        {
-                            ddl.Attributes["id_riesgo_impacto_costo_selected"] = id_riesgo_impacto_costo.ToString();
-                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                        }
-                        else
-                        {
-                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
-                        }
+                        riesgos_impactos probabilidad = probabilidades.impacto(id_riesgo_impacto_costo);
+                        //string vmensaje = riesgos.EditarImpactoCosto(id_riesgo, id_riesgo_impacto_costo, probabilidad.porcentaje, Session["usuario"] as string);
+                        //if (vmensaje == "")
+                        //{
+                        //    ddl.Attributes["id_riesgo_impacto_costo_selected"] = id_riesgo_impacto_costo.ToString();
+                        //    CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        //}
+                        //else
+                        //{
+                        //    Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        //}
                     }
                 }
                 else
@@ -1278,53 +1174,7 @@ namespace presentacion
                 InicializarTablas();
             }
         }
-
-        protected void ddlimpacto_tiempo_rep_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!ProyectoTerminado())
-                {
-                    DropDownList ddl = sender as DropDownList;
-                    RiesgosCOM riesgos = new RiesgosCOM();
-                    int id_riesgo_impacto_tiempo = Convert.ToInt32(ddl.SelectedValue);
-                    int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
-                    int id_riesgo_impacto_tiempo_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_impacto_tiempo_selected"]);
-                    if (id_riesgo_impacto_tiempo > 0 && id_riesgo_impacto_tiempo != id_riesgo_impacto_tiempo_selected)
-                    {
-                        RiesgosImpactoTiempoCOM probabilidades = new RiesgosImpactoTiempoCOM();
-                        riesgos_impacto_tiempo probabilidad = probabilidades.impacto(id_riesgo_impacto_tiempo);
-                        string vmensaje = riesgos.EditarImpactoTiempo(id_riesgo, id_riesgo_impacto_tiempo, probabilidad.porcentaje, Session["usuario"] as string);
-                        if (vmensaje == "")
-                        {
-                            ddl.Attributes["id_riesgo_impacto_tiempo_selected"] = id_riesgo_impacto_tiempo.ToString();
-                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                        }
-                        else
-                        {
-                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
-                        }
-                    }
-                }
-                else
-                {
-                    Toast.Error("El proyecto ha sido terminado y no puede generarse ninguna información adicional.", this);
-                }
-                
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al editar impacto tiempo: " + ex.Message, this);
-            }
-            finally
-            {
-                load_cumpli_compromisos.Style["display"] = "none";
-
-                InicializarTablas();
-            }
-
-        }
-
+              
         protected void ddlestrategia_rep_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -1338,16 +1188,16 @@ namespace presentacion
                     int id_riesgo_estrategia_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_estrategia_selected"]);
                     if (id_estrategia > 0 && id_estrategia != id_riesgo_estrategia_selected)
                     {
-                        string vmensaje = riesgos.EditarImpactoEstrategia(id_riesgo, id_estrategia, Session["usuario"] as string);
-                        if (vmensaje == "")
-                        {
-                            ddl.Attributes["id_riesgo_estrategia_selected"] = id_riesgo.ToString();
-                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                        }
-                        else
-                        {
-                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
-                        }
+                        //string vmensaje = riesgos.EditarImpactoEstrategia(id_riesgo, id_estrategia, Session["usuario"] as string);
+                        //if (vmensaje == "")
+                        //{
+                        //    ddl.Attributes["id_riesgo_estrategia_selected"] = id_riesgo.ToString();
+                        //    CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        //}
+                        //else
+                        //{
+                        //    Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        //}
                     }
                 }
                 else
@@ -1388,17 +1238,12 @@ namespace presentacion
                         ddlprobabilidad.SelectedValue =
                          ddlprobabilidad.Items.FindByValue(riesgo["id_riesgo_probabilidad"].ToString()) != null ? riesgo["id_riesgo_probabilidad"].ToString() : "0";
                         ddlimpacto_costo.SelectedValue =
-                            ddlimpacto_costo.Items.FindByValue(riesgo["id_riesgo_impacto_costo"].ToString()) != null ? riesgo["id_riesgo_impacto_costo"].ToString() : "0";
-                        ddlimpacto_tiempo.SelectedValue =
-                            ddlimpacto_tiempo.Items.FindByValue(riesgo["id_riesgo_impacto_tiempo"].ToString()) != null ? riesgo["id_riesgo_impacto_tiempo"].ToString() : "0";
-                        ddlestrategias.SelectedValue =
+                            ddlimpacto_costo.Items.FindByValue(riesgo["id_riesgo_impacto"].ToString()) != null ? riesgo["id_riesgo_impacto"].ToString() : "0";
+                       ddlestrategias.SelectedValue =
                             ddlestrategias.Items.FindByValue(riesgo["id_riesgo_estrategia"].ToString()) != null ? riesgo["id_riesgo_estrategia"].ToString() : "0";
 
                         txtpprobabilidad.Text = (Convert.ToDecimal(riesgo["p_probabilidad"]) / 100).ToString("P");
-                        txtimpacto_costo.Text = (Convert.ToDecimal(riesgo["p_impacto_costo"]) / 100).ToString("P");
-                        txtimpacto_tiempo.Text = (Convert.ToDecimal(riesgo["p_impacto_tiempo"]) / 100).ToString("P");
-                        txtriesgo_costo.Text = (Convert.ToDecimal(riesgo["riesgo_costo"]) / 100).ToString("P");
-                        txtriesgo_tiempo.Text = (Convert.ToDecimal(riesgo["riesgo_tiempo"]) / 100).ToString("P");
+                        txtimpacto_costo.Text = (Convert.ToDecimal(riesgo["p_impacto_costo"]) / 100).ToString("P");                     
 
 
                         Session[hdfguid.Value + "list_actividades"] = null;
@@ -1564,13 +1409,13 @@ namespace presentacion
                                 fecha_registro = DateTime.Now,
                                 id_riesgos_estatus = 1,
                                 id_riesgo_probabilidad = 1,
-                                porc_probabilidad = 0,
-                                id_riesgo_impacto_costo = 1,
-                                porc_impcosto = 0,
-                                id_riesgo_impacto_tiempo = 1,
-                                porc_imptiempo = 0,
-                                riesgo_costo = 0,
-                                riesgo_tiempo = 0,
+                                //porc_probabilidad = 0,
+                                //id_riesgo_impacto_costo = 1,
+                                //porc_impcosto = 0,
+                                //id_riesgo_impacto_tiempo = 1,
+                                //porc_imptiempo = 0,
+                                //riesgo_costo = 0,
+                                //riesgo_tiempo = 0,
                                 id_riesgo_estrategia = 1
                             };
                             list_riesgos.Add(riesgo);

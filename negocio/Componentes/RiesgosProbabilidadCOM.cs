@@ -28,7 +28,7 @@ namespace negocio.Componentes
                     riesgos_probabilidad impacto = new riesgos_probabilidad
                     {
                         nombre = entidad.nombre,
-                        porcentaje = entidad.porcentaje,
+                        valor = entidad.valor,
                         activo = true,
                         usuario = entidad.usuario.ToUpper(),
                         fecha = DateTime.Now
@@ -62,7 +62,7 @@ namespace negocio.Componentes
                 riesgos_probabilidad impacto = context.riesgos_probabilidad
                                 .First(i => i.id_riesgo_probabilidad == entidad.id_riesgo_probabilidad);
                 impacto.nombre = entidad.nombre;
-                impacto.porcentaje = entidad.porcentaje;
+                impacto.valor = entidad.valor;
                 context.SaveChanges();
                 return "";
             }
@@ -174,12 +174,12 @@ namespace negocio.Componentes
                                 {
                                     u.id_riesgo_probabilidad,
                                     u.nombre,
-                                    u.porcentaje,
+                                    u.valor,
                                     u.activo,
                                     u.fecha,
                                     u.usuario
                                 })
-                                .OrderBy(u => u.porcentaje);
+                                .OrderBy(u => u.valor);
                 dt = To.DataTable(query.ToList());
                 return dt;
             }

@@ -12,22 +12,21 @@ namespace datos
     using System;
     using System.Collections.Generic;
     
-    public partial class riesgos_impacto_costo
+    public partial class actividades_tipos
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public riesgos_impacto_costo()
+        public actividades_tipos()
         {
-            this.riesgos = new HashSet<riesgos>();
+            this.actividades = new HashSet<actividades>();
         }
     
-        public int id_riesgo_impacto_costo { get; set; }
-        public string usuario { get; set; }
-        public string nombre { get; set; }
-        public decimal porcentaje { get; set; }
-        public bool activo { get; set; }
+        public int id_actividad_tipo { get; set; }
         public System.DateTime fecha { get; set; }
+        public string usuario { get; set; }
+        public string tipo { get; set; }
+        public bool activo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<riesgos> riesgos { get; set; }
+        public virtual ICollection<actividades> actividades { get; set; }
     }
 }

@@ -25,14 +25,11 @@ namespace datos
         public int id_riesgos_estatus { get; set; }
         public string riesgo { get; set; }
         public int id_riesgo_probabilidad { get; set; }
-        public decimal porc_probabilidad { get; set; }
-        public int id_riesgo_impacto_costo { get; set; }
-        public decimal porc_impcosto { get; set; }
-        public int id_riesgo_impacto_tiempo { get; set; }
-        public decimal porc_imptiempo { get; set; }
-        public decimal riesgo_costo { get; set; }
-        public decimal riesgo_tiempo { get; set; }
+        public Nullable<int> id_riesgo_impacto { get; set; }
+        public Nullable<byte> valor { get; set; }
         public int id_riesgo_estrategia { get; set; }
+        public string estrategia { get; set; }
+        public string usuario_resp { get; set; }
         public Nullable<System.DateTime> fecha_borrado { get; set; }
         public System.DateTime fecha_registro { get; set; }
         public string usuario { get; set; }
@@ -46,8 +43,7 @@ namespace datos
         public virtual proyectos_evaluaciones proyectos_evaluaciones { get; set; }
         public virtual riesgos_estatus riesgos_estatus { get; set; }
         public virtual riesgos_estrategia riesgos_estrategia { get; set; }
-        public virtual riesgos_impacto_costo riesgos_impacto_costo { get; set; }
-        public virtual riesgos_impacto_tiempo riesgos_impacto_tiempo { get; set; }
+        public virtual riesgos_impactos riesgos_impactos { get; set; }
         public virtual riesgos_probabilidad riesgos_probabilidad { get; set; }
     }
 }

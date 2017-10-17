@@ -12,18 +12,18 @@ namespace datos
     using System;
     using System.Collections.Generic;
     
-    public partial class riesgos_impacto_tiempo
+    public partial class riesgos_impactos
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public riesgos_impacto_tiempo()
+        public riesgos_impactos()
         {
             this.riesgos = new HashSet<riesgos>();
         }
     
-        public int id_riesgo_impacto_tiempo { get; set; }
+        public int id_riesgo_impacto { get; set; }
         public string usuario { get; set; }
         public string nombre { get; set; }
-        public decimal porcentaje { get; set; }
+        public byte valor { get; set; }
         public bool activo { get; set; }
         public System.DateTime fecha { get; set; }
     

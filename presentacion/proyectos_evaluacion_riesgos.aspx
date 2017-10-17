@@ -269,18 +269,6 @@
                                                     <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;
                                                         Detalles de evaluación del dia <%# Eval("fecha_evaluacion_str") %></strong></h5>
                                                 </div>
-                                                <div class="col-lg-4 col-md-5 col-sm-6 col-xs-6">
-                                                    <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Riesgo costo</strong></h5>
-                                                    <p class="text-muted">
-                                                        &nbsp;<%# Convert.ToDecimal(Eval("p_riesgo_costo")).ToString("P2") %> / <%# Convert.ToDecimal(Eval("riesgo_costo")).ToString("C2") %>
-                                                    </p>
-                                                </div>
-                                                <div class="col-lg-4 col-md-5 col-sm-6  col-xs-6">
-                                                    <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Riesgo tiempo</strong></h5>
-                                                    <p class="text-muted">
-                                                        &nbsp;<%# Convert.ToDecimal(Eval("p_riesgo_tiempo")).ToString("P2") %> / <%# Eval("riesgo_tiempo") %>&nbsp;dia(s).
-                                                    </p>
-                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-12" id="div_no_hay_riesgos" runat="server">
@@ -308,13 +296,7 @@
                                                                     <th style="min-width: 180px; text-align: left;" scope="col">Riesgo</th>
                                                                     <th style="min-width: 20px; text-align: center;" scope="col">Estatus</th>
                                                                     <th style="min-width: 30px; text-align: left;" scope="col">Probabilidad</th>
-                                                                    <th style="min-width: 5px; text-align: left;" scope="col"></th>
-                                                                    <th style="min-width: 60px; text-align: left;" scope="col">Impacto costo</th>
-                                                                    <th style="min-width: 5px; text-align: left;" scope="col"></th>
-                                                                    <th style="min-width: 80px; text-align: left;" scope="col">Impacto tiempo</th>
-                                                                    <th style="min-width: 5px; text-align: left;" scope="col"></th>
-                                                                    <th style="min-width: 40px; text-align: left;" scope="col">R. costo</th>
-                                                                    <th style="min-width: 50px; text-align: left;" scope="col">R. tiempo</th>
+                                                                    <th style="min-width: 60px; text-align: left;" scope="col">Impacto</th>
                                                                     <th style="min-width: 30px; text-align: left;" scope="col">Estrategia</th>
                                                                     <th style="min-width: 30px; text-align: left;" scope="col"></th>
                                                                 </tr>
@@ -340,22 +322,12 @@
                                                                                     ID="ddlprobabilidad_rep" runat="server">
                                                                                 </asp:DropDownList>
                                                                             </td>
-                                                                            <td style="text-align: left;"><%# Eval("p_probabilidad") %>&nbsp;%</td>
                                                                             <td style="text-align: left;">
                                                                                 <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
                                                                                     OnSelectedIndexChanged="ddlimpacto_costo_rep_SelectedIndexChanged"
                                                                                     ID="ddlimpacto_costo_rep" runat="server">
                                                                                 </asp:DropDownList>
                                                                             </td>
-                                                                            <td style="text-align: left;"><%# Eval("p_impacto_costo") %>&nbsp;%</td>
-                                                                            <td style="text-align: left;">
-                                                                                <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
-                                                                                    OnSelectedIndexChanged="ddlimpacto_tiempo_rep_SelectedIndexChanged" ID="ddlimpacto_tiempo_rep" runat="server">
-                                                                                </asp:DropDownList>
-                                                                            </td>
-                                                                            <td style="text-align: left;"><%# Eval("p_impacto_tiempo") %>&nbsp;%</td>
-                                                                            <td style="text-align: center;"><%# Eval("riesgo_costo") %>&nbsp;%</td>
-                                                                            <td style="text-align: center;"><%# Eval("riesgo_tiempo") %>&nbsp;%</td>
                                                                             <td style="text-align: left;">
                                                                                 <asp:DropDownList AutoPostBack="true" onchange="ChangedValue();"
                                                                                     OnSelectedIndexChanged="ddlestrategia_rep_SelectedIndexChanged" ID="ddlestrategia_rep" runat="server">
@@ -450,29 +422,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <h5><strong><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;Impacto tiempo</strong></h5>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                            <asp:DropDownList ID="ddlimpacto_tiempo" AutoPostBack="true"
-                                                OnSelectedIndexChanged="ddlimpacto_tiempo_SelectedIndexChanged" CssClass="form-control" runat="server">
-                                            </asp:DropDownList>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                            <asp:TextBox ID="txtimpacto_tiempo" ReadOnly="true"
-                                                OnTextChanged="txtimpacto_tiempo_TextChanged"
-                                                MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;% Riesgo costo</strong></h5>
-                                    <asp:TextBox ID="txtriesgo_costo" ReadOnly="true" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <h5><strong><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;% Riesgo tiempo</strong></h5>
-                                    <asp:TextBox ID="txtriesgo_tiempo" ReadOnly="true" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
+                              
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">

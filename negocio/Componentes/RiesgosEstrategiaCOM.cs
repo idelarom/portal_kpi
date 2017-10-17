@@ -30,6 +30,9 @@ namespace negocio.Componentes
                         nombre = entidad.nombre,
                         activo = true,
                         usuario = entidad.usuario.ToUpper(),
+                        descripcion = entidad.descripcion,
+                        valor_max = entidad.valor_max,
+                        valor_min = entidad.valor_min,
                         fecha = DateTime.Now
                     };
                     Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
@@ -61,6 +64,9 @@ namespace negocio.Componentes
                 riesgos_estrategia impacto = context.riesgos_estrategia
                                 .First(i => i.id_riesgo_estrategia == entidad.id_riesgo_estrategia);
                 impacto.nombre = entidad.nombre;
+                impacto.descripcion = entidad.descripcion;
+                impacto.valor_min = entidad.valor_min;
+                impacto.valor_max = entidad.valor_max;
                 context.SaveChanges();
                 return "";
             }
@@ -172,6 +178,9 @@ namespace negocio.Componentes
                                 {
                                     u.id_riesgo_estrategia,
                                     u.nombre,
+                                    u.descripcion,
+                                    u.valor_max,
+                                    u.valor_min,
                                     u.activo,
                                     u.fecha,
                                     u.usuario
