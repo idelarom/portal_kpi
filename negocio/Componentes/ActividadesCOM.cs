@@ -23,12 +23,15 @@ namespace negocio.Componentes
                     id_proyecto = entidad.id_proyecto,
                     id_riesgo = entidad.id_riesgo,
                     nombre = entidad.nombre,
+                    id_actividad_tipo = entidad.id_actividad_tipo,
                     empleado_resp = entidad.empleado_resp,
                     usuario_resp = entidad.usuario_resp,
                     fecha_ejecucion = entidad.fecha_ejecucion,
                     fecha_asignacion = entidad.fecha_asignacion,
                     usuario = entidad.usuario,
-                    fecha_registro = DateTime.Now
+                    fecha_registro = DateTime.Now,
+                    resultado = entidad.resultado,
+                    recomendada = entidad.recomendada
                 };
                 context.actividades.Add(actividad);
                 context.SaveChanges();
@@ -72,7 +75,10 @@ namespace negocio.Componentes
                                        a.usuario_resp,
                                        a.fecha_ejecucion,
                                        a.fecha_asignacion,
-                                       a.empleado_resp
+                                       a.empleado_resp,
+                                       a.recomendada,
+                                       a.resultado,
+                                       a.id_actividad_tipo
                                    }).ToArray();
                 dt = To.DataTable(actividades.ToList());
                 if (dt.Rows.Count > 0)
@@ -101,6 +107,44 @@ namespace negocio.Componentes
                 else {
                     return null;
                 }
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return null;
+            }
+        }
+
+        public DataTable actividades_tecnologia(int id_tecnologia)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                DataTable dt = new DataTable();
+                Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                var actividades = (from a in db.actividades
+                                   join p in db.proyectos on a.id_proyecto equals p.id_proyecto
+                                   where (a.usuario_borrado == null && p.id_proyecto_tecnologia == id_tecnologia
+                                   && p.usuario_borrado == null)
+                                   select new
+                                   {
+                                       a.id_actividad,
+                                       a.id_proyecto,
+                                       a.id_riesgo,
+                                       a.nombre,
+                                       a.usuario_resp,
+                                       a.fecha_ejecucion,
+                                       a.fecha_asignacion,
+                                       a.empleado_resp,
+                                       a.recomendada,
+                                       a.resultado,
+                                       a.id_actividad_tipo
+                                   });
+                dt = To.DataTable(actividades.ToList());
+                return dt;
             }
             catch (DbEntityValidationException ex)
             {

@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Componentes\ActividadesCOM.cs" />
+    <Compile Include="Componentes\ActividadesTiposCOM.cs" />
     <Compile Include="Componentes\AyudaCOM.cs" />
     <Compile Include="Componentes\ConfiguracionDashboardCOM.cs" />
     <Compile Include="Componentes\CorreosCOM.cs" />

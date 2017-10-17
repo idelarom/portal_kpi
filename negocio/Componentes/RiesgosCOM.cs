@@ -48,6 +48,7 @@ namespace negocio.Componentes
                 {
                     actividades actividad = new actividades
                     {
+                        id_actividad_tipo= entidad2.id_actividad_tipo,
                         id_proyecto = entidad2.id_proyecto,
                         id_riesgo = entidad2.id_riesgo,
                         nombre = entidad2.nombre,
@@ -56,7 +57,9 @@ namespace negocio.Componentes
                         fecha_asignacion = entidad2.fecha_asignacion,
                         usuario = entidad2.usuario,
                         empleado_resp = entidad2.empleado_resp,
-                        fecha_registro = DateTime.Now
+                        fecha_registro = DateTime.Now,
+                        recomendada = false,
+                        resultado =""
                     };
                     context.actividades.Add(actividad);
                     context.SaveChanges();
@@ -175,6 +178,7 @@ namespace negocio.Componentes
                         actividad.id_proyecto = entidad2.id_proyecto;
                         actividad.id_riesgo = entidad2.id_riesgo;
                         actividad.recomendada = entidad2.recomendada;
+                        actividad.id_actividad_tipo = entidad2.id_actividad_tipo;
                         actividad.resultado = entidad2.resultado;
                         actividad.nombre = entidad2.nombre;
                         actividad.usuario_resp = entidad2.usuario_resp;
@@ -216,12 +220,15 @@ namespace negocio.Componentes
                             id_proyecto = entidad2.id_proyecto,
                             id_riesgo = entidad2.id_riesgo,
                             nombre = entidad2.nombre,
+                            id_actividad_tipo = entidad2.id_actividad_tipo,
                             usuario_resp = entidad2.usuario_resp,
                             fecha_ejecucion = entidad2.fecha_ejecucion,
                             fecha_asignacion = entidad2.fecha_asignacion,
                             usuario = entidad2.usuario,
                             empleado_resp = entidad2.empleado_resp,
-                            fecha_registro = DateTime.Now
+                            fecha_registro = DateTime.Now,
+                            recomendada =false,
+                            resultado = ""
                         };
                         context.actividades.Add(actividad);
                         context.SaveChanges();
@@ -282,7 +289,107 @@ namespace negocio.Componentes
                 return fullErrorMessage.ToString();
             }
         }
-        
+
+
+        /// <summary>
+        /// Elimina una instancia de riesgos
+        /// </summary>
+        /// <param name="entidad"></param>
+        /// <returns></returns>
+        public string EditarProbabilidad (int id_riesgo, int id_probabilidad, string usuario)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                riesgos riesgo = context.riesgos
+                                .First(i => i.id_riesgo == id_riesgo);
+                int id_impacto = Convert.ToInt32(riesgo.id_riesgo_impacto);
+                if (id_impacto > 0 && id_probabilidad > 0)
+                {
+                    RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
+                    riesgos_probabilidad probabilidad = probabilidades.impacto(id_probabilidad);
+                    RiesgosImpactoCostosCOM impactos = new RiesgosImpactoCostosCOM();
+                    riesgos_impactos impacto = impactos.impacto(id_impacto);
+                    int valor = impacto.valor * probabilidad.valor;
+                    RiesgosEstrategiaCOM estrategias = new RiesgosEstrategiaCOM();
+                    DataTable dt = estrategias.SelectAll();
+                    foreach (DataRow estrategia in dt.Rows)
+                    {
+                        int value_min = Convert.ToInt16(estrategia["valor_min"]);
+                        int value_max = Convert.ToInt16(estrategia["valor_max"]);
+                        if (valor >= value_min && valor <= value_max)
+                        {
+                            riesgo.usuario_edicion = usuario;
+                            riesgo.fecha_edicion = DateTime.Now;
+                            riesgo.valor = Convert.ToByte(valor);
+                            riesgo.id_riesgo_estrategia = Convert.ToInt32(estrategia["id_riesgo_estrategia"]);
+                            riesgo.id_riesgo_probabilidad = id_probabilidad;
+                            break;
+                        }
+                    }
+                }
+                
+                
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
+        public string EditarImpacto(int id_riesgo, int id_impacto, string usuario)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                riesgos riesgo = context.riesgos
+                                .First(i => i.id_riesgo == id_riesgo);
+                int id_probabilidad = Convert.ToInt32(riesgo.id_riesgo_probabilidad);
+                if (id_impacto > 0 && id_probabilidad > 0)
+                {
+                    RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
+                    riesgos_probabilidad probabilidad = probabilidades.impacto(id_probabilidad);
+                    RiesgosImpactoCostosCOM impactos = new RiesgosImpactoCostosCOM();
+                    riesgos_impactos impacto = impactos.impacto(id_impacto);
+                    int valor = impacto.valor * probabilidad.valor;
+                    RiesgosEstrategiaCOM estrategias = new RiesgosEstrategiaCOM();
+                    DataTable dt = estrategias.SelectAll();
+                    foreach (DataRow estrategia in dt.Rows)
+                    {
+                        int value_min = Convert.ToInt16(estrategia["valor_min"]);
+                        int value_max = Convert.ToInt16(estrategia["valor_max"]);
+                        if (valor >= value_min && valor <= value_max)
+                        {
+                            riesgo.usuario_edicion = usuario;
+                            riesgo.fecha_edicion = DateTime.Now;
+                            riesgo.valor = Convert.ToByte(valor);
+                            riesgo.id_riesgo_estrategia = Convert.ToInt32(estrategia["id_riesgo_estrategia"]);
+                            riesgo.id_riesgo_impacto = id_impacto;
+                            break;
+                        }
+                    }
+                }
+
+
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
+
         /// <summary>
         /// Devuelve una instancia de la clase riesgos
         /// </summary>

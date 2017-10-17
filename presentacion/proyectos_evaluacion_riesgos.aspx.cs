@@ -122,6 +122,7 @@ namespace presentacion
                     repetaer_historial_riesgos.DataSource = dt_riesgos;
                     repetaer_historial_riesgos.DataBind();
                     ScriptManager.RegisterStartupScript(this,GetType(),Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
                 }
             }
             catch (Exception ex)
@@ -161,14 +162,15 @@ namespace presentacion
                 ddlimpacto_costo.DataBind();
                 ddlimpacto_costo.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
 
-                //estrategias
-                RiesgosEstrategiaCOM estrategias = new RiesgosEstrategiaCOM();
-                DataTable dt_estrategias = estrategias.SelectAll();
-                ddlestrategias.DataTextField = "nombre";
-                ddlestrategias.DataValueField = "id_riesgo_estrategia";
-                ddlestrategias.DataSource = dt_estrategias;
-                ddlestrategias.DataBind();
-                ddlestrategias.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
+                //tipos_actividades
+                ActividadesTiposCOM tipos = new ActividadesTiposCOM();
+                DataTable dt_tipos = tipos.SelectAll();
+                ddltipo_actividad.DataTextField = "tipo";
+                ddltipo_actividad.DataValueField = "id_actividad_tipo";
+                ddltipo_actividad.DataSource = dt_tipos;
+                ddltipo_actividad.DataBind();
+                ddltipo_actividad.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
+
             }
             catch (Exception ex)
             {
@@ -183,7 +185,7 @@ namespace presentacion
         /// <param name="ddlimpacto_costo"></param>
         /// <param name="ddlimpacto_tiempo"></param>
         /// <param name="ddlestrategias"></param>
-        private void CargarCombosinRepeater(DropDownList ddlprobabilidad, DropDownList ddlimpacto_costo,  DropDownList ddlestrategias)
+        private void CargarCombosinRepeater(DropDownList ddlprobabilidad, DropDownList ddlimpacto_costo)
         {
             try
             {
@@ -215,14 +217,6 @@ namespace presentacion
                 ddlimpacto_costo.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
 
                
-                //estrategias
-                RiesgosEstrategiaCOM estrategias = new RiesgosEstrategiaCOM();
-                DataTable dt_estrategias = estrategias.SelectAll();
-                ddlestrategias.DataTextField = "nombre";
-                ddlestrategias.DataValueField = "id_riesgo_estrategia";
-                ddlestrategias.DataSource = dt_estrategias;
-                ddlestrategias.DataBind();
-                ddlestrategias.Items.Insert(0, new ListItem("--Seleccionar--", "0"));
             }
             catch (Exception ex)
             {
@@ -324,40 +318,37 @@ namespace presentacion
             DataRowView dbr = (DataRowView)e.Item.DataItem;
             DropDownList ddlprobabilidad_rep = e.Item.FindControl("ddlprobabilidad_rep") as DropDownList;
             DropDownList ddlimpacto_costo_rep = e.Item.FindControl("ddlimpacto_costo_rep") as DropDownList;
-            DropDownList ddlestrategia_rep = e.Item.FindControl("ddlestrategia_rep") as DropDownList;
-            CargarCombosinRepeater(ddlprobabilidad_rep, ddlimpacto_costo_rep, ddlestrategia_rep);
+            //DropDownList ddlestrategia_rep = e.Item.FindControl("ddlestrategia_rep") as DropDownList;
+            CargarCombosinRepeater(ddlprobabilidad_rep, ddlimpacto_costo_rep);
             int id_riesgo = Convert.ToInt32(DataBinder.Eval(dbr, "id_riesgo"));
             int id_riesgo_probabilidad = Convert.ToInt32(DataBinder.Eval(dbr, "id_riesgo_probabilidad"));
-            int id_riesgo_impacto_costo = Convert.ToInt32(DataBinder.Eval(dbr, "id_riesgo_impacto_costo"));
-            int id_riesgo_impacto_tiempo = Convert.ToInt32(DataBinder.Eval(dbr, "id_riesgo_impacto_tiempo"));
+            int id_riesgo_impacto_costo = Convert.ToInt32(DataBinder.Eval(dbr, "id_riesgo_impacto"));
             int id_riesgo_estrategia = Convert.ToInt32(DataBinder.Eval(dbr, "id_riesgo_estrategia"));
             ddlprobabilidad_rep.SelectedValue =
                 ddlprobabilidad_rep.Items.FindByValue(id_riesgo_probabilidad.ToString()) != null ? id_riesgo_probabilidad.ToString() : "0";
             ddlimpacto_costo_rep.SelectedValue =
                 ddlimpacto_costo_rep.Items.FindByValue(id_riesgo_impacto_costo.ToString()) != null ? id_riesgo_impacto_costo.ToString() : "0";
             
-            ddlestrategia_rep.SelectedValue =
-                ddlestrategia_rep.Items.FindByValue(id_riesgo_estrategia.ToString()) != null ? id_riesgo_estrategia.ToString() : "0";
+            //ddlestrategia_rep.SelectedValue =
+            //    ddlestrategia_rep.Items.FindByValue(id_riesgo_estrategia.ToString()) != null ? id_riesgo_estrategia.ToString() : "0";
             ddlprobabilidad_rep.Attributes["id_riesgo_probabilidad_selected"] =
                 ddlprobabilidad_rep.Items.FindByValue(id_riesgo_probabilidad.ToString()) != null ? id_riesgo_probabilidad.ToString() : "0";
             ddlimpacto_costo_rep.Attributes["id_riesgo_impacto_costo_selected"] =
                 ddlimpacto_costo_rep.Items.FindByValue(id_riesgo_impacto_costo.ToString()) != null ? id_riesgo_impacto_costo.ToString() : "0";
            
-            ddlestrategia_rep.Attributes["id_riesgo_estrategia_selected"] =
-                ddlestrategia_rep.Items.FindByValue(id_riesgo_estrategia.ToString()) != null ? id_riesgo_estrategia.ToString() : "0";
+            //ddlestrategia_rep.Attributes["id_riesgo_estrategia_selected"] =
+            //    ddlestrategia_rep.Items.FindByValue(id_riesgo_estrategia.ToString()) != null ? id_riesgo_estrategia.ToString() : "0";
             ddlprobabilidad_rep.Attributes["id_riesgo"] = id_riesgo.ToString();
             ddlimpacto_costo_rep.Attributes["id_riesgo"] = id_riesgo.ToString();          
-            ddlestrategia_rep.Attributes["id_riesgo"] = id_riesgo.ToString();
+            //ddlestrategia_rep.Attributes["id_riesgo"] = id_riesgo.ToString();
         }
 
         protected void repeater_riesgos_ItemCreated(object sender, RepeaterItemEventArgs e)
         {
             DropDownList ddlprobabilidad_rep = e.Item.FindControl("ddlprobabilidad_rep") as DropDownList;
             DropDownList ddlimpacto_costo_rep = e.Item.FindControl("ddlimpacto_costo_rep") as DropDownList;
-            DropDownList ddlestrategia_rep = e.Item.FindControl("ddlestrategia_rep") as DropDownList;
             ddlprobabilidad_rep.SelectedIndexChanged += ddlprobabilidad_rep_SelectedIndexChanged;
             ddlimpacto_costo_rep.SelectedIndexChanged += ddlimpacto_costo_rep_SelectedIndexChanged;
-            ddlestrategia_rep.SelectedIndexChanged += ddlestrategia_rep_SelectedIndexChanged;
         }
 
 
@@ -375,8 +366,10 @@ namespace presentacion
                         hdf_id_riesgo.Value = "";
                         CargarCombos();
                         txtriesgo.Text = "";
-                        txtimpacto_costo.Text = "";
-                        txtpprobabilidad.Text = "";
+                        txtestrategia.Text = "";
+                        txtestrategia_det.Text = "";
+                        hdfid_estrategia.Value = "";
+                        hdfvalor_riesgo.Value = "";
                         ModalShow("#modal_riesgo");
                         break;
                     case "importar_riesgos":
@@ -432,97 +425,7 @@ namespace presentacion
                 Toast.Error("Error al eliminar evaluación.", this);
             }
 
-        }
-
-        protected void ddlprobabilidad_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int id_riesgo_probabilidad = Convert.ToInt32(ddlprobabilidad.SelectedValue);
-                if (id_riesgo_probabilidad > 0)
-                {
-                    RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
-                    riesgos_probabilidad probabilidad = probabilidades.impacto(id_riesgo_probabilidad);
-                    txtpprobabilidad.Text = probabilidad.valor.ToString();
-                    txtpprobabilidad_TextChanged(null, null);
-                }
-                else
-                {
-                    txtpprobabilidad.Text = "";
-                }
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al calcular probabilidad. " + ex.Message, this);
-            }
-            finally
-            {
-                InicializarTablas();
-            }
-        }
-
-        protected void txtpprobabilidad_TextChanged(object sender, EventArgs e)
-        {
-            string texto = txtpprobabilidad.Text;
-           
-            if (texto == "")
-            {
-                txtpprobabilidad.Text = "";
-            }
-            else
-            {
-                decimal value = Convert.ToDecimal(texto) / 100;
-                txtpprobabilidad.Text = value.ToString("P");
-            }
-        }
-
-        protected void txtimpacto_costo_TextChanged(object sender, EventArgs e)
-        {
-            string texto = txtimpacto_costo.Text;
-
-            if (texto == "")
-            {
-                txtimpacto_costo.Text = "";
-            }
-            else
-            {
-                decimal value = Convert.ToDecimal(texto) / 100;
-                txtimpacto_costo.Text = value.ToString("P");
-            }
-
-        }
-
-     
-
-        protected void ddlimpacto_costo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int id_impacto_costo = Convert.ToInt32(ddlimpacto_costo.SelectedValue);
-                if (id_impacto_costo > 0)
-                {
-                    RiesgosImpactoCostosCOM costos = new RiesgosImpactoCostosCOM();
-                    riesgos_impactos costo = costos.impacto(id_impacto_costo);
-                    txtimpacto_costo.Text = costo.valor.ToString();
-                    txtimpacto_costo_TextChanged(null, null);
-                }
-                else
-                {
-                    txtimpacto_costo.Text = "";
-                }
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al calcular impacto costo. " + ex.Message, this);
-            }
-            finally
-            {
-                InicializarTablas();
-            }
-
-        }
-
-
+        }      
         public string GuardarRiesgo(riesgos riesgo,  List<actividades> lst_actividades, List<documentos> lstdocumentos)
         {
             RiesgosCOM riesgos = new RiesgosCOM();
@@ -557,12 +460,14 @@ namespace presentacion
                 riesgo.id_proyecto_evaluacion = Convert.ToInt32(hdf_id_proyecto_evaluacion.Value == "" ? "0" : hdf_id_proyecto_evaluacion.Value);
                 riesgo.id_riesgos_estatus = Convert.ToInt32(ddlestatus_riesgo.SelectedValue);
                 riesgo.id_riesgo_probabilidad = Convert.ToInt32(ddlprobabilidad.SelectedValue);
-               
-                riesgo.id_riesgo_estrategia = Convert.ToInt32(ddlestrategias.SelectedValue);
+                riesgo.id_riesgo_impacto = Convert.ToInt32(ddlimpacto_costo.SelectedValue);
+                riesgo.id_riesgo_estrategia = Convert.ToInt32(hdfid_estrategia.Value == "" ? "0" : hdfid_estrategia.Value);
                 riesgo.usuario = Session["usuario"] as string;
                 riesgo.usuario_edicion = Session["usuario"] as string;
+                riesgo.usuario_resp = riesgo.usuario;
                 if (id_riesgo > 0) { riesgo.id_riesgo = id_riesgo; }
-
+                riesgo.estrategia = txtestrategia_det.Text;
+                riesgo.valor = Convert.ToByte(hdfvalor_riesgo.Value == "" ? "0" : hdfvalor_riesgo.Value);
                 List<actividades> lstactividades = Session[hdfguid.Value + "list_actividades"] as List<datos.actividades>;
                 List<documentos> lstdocumentos = Session[hdfguid.Value + "list_documentos"] as List<datos.documentos>;
                 if (ProyectoTerminado())
@@ -597,6 +502,8 @@ namespace presentacion
                     {
                         hdfid_riesgo.Value = "";
                         hdf_id_riesgo.Value = "";
+                        hdfvalor_riesgo.Value = "";
+                        hdfid_estrategia.Value = "";
                         CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
                         Toast.Success("Riesgo guardado de manera correcta.", "Mensaje del sistema", this);
                         ModalClose("#modal_riesgo");
@@ -684,7 +591,7 @@ namespace presentacion
         /// <param name="size_documento"></param>
         /// <param name="publico"></param>
         /// <param name="id_documento"></param>
-        public void AgregarAccionTemporal(int id_actividad,int id_proyecto, int id_riesgo, string nombre, string usuario_resp, string empleado_resp, DateTime? fecha_ejecucion,
+        public void AgregarAccionTemporal(int id_actividad,int id_tipo,string resultado, bool recomendada,int id_proyecto, int id_riesgo, string nombre, string usuario_resp, string empleado_resp, DateTime? fecha_ejecucion,
             DateTime? fecha_Asignacion, string path_documento, string size_documento, bool publico, int id_documento)
         {
             try
@@ -705,23 +612,32 @@ namespace presentacion
                 actividad.id_riesgo = id_riesgo;
                 actividad.empleado_resp = empleado_resp;
                 actividad.nombre = nombre;
+                actividad.id_actividad_tipo = id_tipo;
                 actividad.usuario_resp = usuario_resp;
-                actividad.fecha_ejecucion = fecha_ejecucion;
                 actividad.fecha_asignacion = fecha_Asignacion;
                 actividad.usuario = Session["usuario"] as string;
                 actividad.usuario_edicion = Session["usuario"] as string;
+                actividad.resultado = resultado;
+                actividad.recomendada = recomendada;
 
+
+                List<documentos> lstdocumentos = Session[hdfguid.Value + "list_documentos"] as List<datos.documentos>;
                 documentos documento = new documentos();
-                if (id_documento > 0) { documento.id_documento = id_documento; }
-                documento.id_actividad = actividad.id_actividad;
-                documento.path = path_documento;
-                documento.nombre = Path.GetFileName(funciones.de64aTexto(path_documento));
-                documento.tamaño = size_documento;
-                documento.publico = publico;
-                documento.extension = Path.GetExtension(funciones.de64aTexto(path_documento));
-                documento.contentType = funciones.ContentType(documento.extension);
-                documento.usuario = Session["usuario"] as string;
-                documento.usuario_edicion = Session["usuario"] as string;
+                if (size_documento != "")
+                {
+
+                    if (id_documento > 0) { documento.id_documento = id_documento; }
+                    documento.id_actividad = actividad.id_actividad;
+                    documento.path = path_documento;
+                    documento.nombre = Path.GetFileName(funciones.de64aTexto(path_documento));
+                    documento.tamaño = size_documento;
+                    documento.publico = publico;
+                    documento.extension = Path.GetExtension(funciones.de64aTexto(path_documento));
+                    documento.contentType = funciones.ContentType(documento.extension);
+                    documento.usuario = Session["usuario"] as string;
+                    documento.usuario_edicion = Session["usuario"] as string;
+                    lstdocumentos.Add(documento);
+                }
 
 
                 List<actividades> lstactividades = Session[hdfguid.Value+"list_actividades"] as List<datos.actividades>;
@@ -729,8 +645,6 @@ namespace presentacion
                 Session[hdfguid.Value+"list_actividades"] = lstactividades;
 
 
-                List<documentos> lstdocumentos = Session[hdfguid.Value+"list_documentos"] as List<datos.documentos>;
-                lstdocumentos.Add(documento);
                 Session[hdfguid.Value+"list_documentos"] = lstdocumentos;
 
 
@@ -880,11 +794,23 @@ namespace presentacion
         {
             CargarDatosFiltros(""); CargarGridAcciones();
             txtaccion.Text = "";
+            div_nueva_Accion.Visible = true;
+            div_cierre_actividad.Visible = false;
             txtfilterempleado.Text = "";
             txtfechaejecuacion.SelectedDate = DateTime.Now;
             ModalShow("#modal_acciones");
 
             InicializarTablas();
+        }
+
+
+        protected void lnkcancelar_Click(object sender, EventArgs e)
+        {
+            div_nueva_Accion.Visible = true;
+            div_cierre_actividad.Visible = false;
+
+            InicializarTablas();
+
         }
 
         protected void lnksearch_Click(object sender, EventArgs e)
@@ -915,9 +841,14 @@ namespace presentacion
                 int r = AsyncUpload1.UploadedFiles.Count;
                 int id_riesgo = Convert.ToInt32(hdfid_riesgo.Value == "" ? "0" : hdfid_riesgo.Value);
                 int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
+                int id_actividad_tipo = Convert.ToInt32(ddltipo_actividad.SelectedValue);
                 if (ProyectoTerminado())
                 {
                     Toast.Error("Error al guardar acción: El proyecto fue terminado y no puede generarse ninguna información adicional.", this);
+                }
+                else if (id_actividad_tipo == 0)
+                {
+                    Toast.Error("Error al guardar acción: Seleccione un tipo de actividad", this);
                 }
                 else if (r == 0)
                 {
@@ -933,16 +864,7 @@ namespace presentacion
                 }
                 else
                 {
-                    DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/"));//path localDateTime localDate = DateTime.Now;
-                    string path_local = "files/documents/actividades/";
-                    DateTime localDate = DateTime.Now;
-                    string date = localDate.ToString();
-                    date = date.Replace("/", "_");
-                    date = date.Replace(":", "_");
-                    date = date.Replace(" ", "");
-                    string name = path_local + Path.GetFileNameWithoutExtension(e.File.FileName) + "_" + date + Path.GetExtension(e.File.FileName);
-                    //funciones.UploadFile(fuparchivo, dirInfo.ToString() + name.Trim(), this.Page);
-                    e.File.SaveAs(dirInfo.ToString() + name.Trim());
+                    string name = "";
                     int id_actividad = 0;
                     //si existe un id de riesgo, quiere decir que estamos dentro de un modal de edicion, y se agregara directamente el registro a la base de datos.
                     if (id_riesgo > 0)
@@ -953,8 +875,23 @@ namespace presentacion
                         actividad.nombre = txtaccion.Text;
                         actividad.empleado_resp = ddlempleado_a_consultar.SelectedItem.ToString();
                         actividad.usuario_resp = ddlempleado_a_consultar.SelectedValue;
-                        actividad.fecha_ejecucion = txtfechaejecuacion.SelectedDate;
+                        actividad.fecha_asignacion = txtfechaejecuacion.SelectedDate;
                         actividad.usuario = Session["usuario"] as string;
+                        actividad.resultado = "";
+                        actividad.recomendada = true;
+                        actividad.id_actividad_tipo = id_actividad_tipo;
+                        List<documentos> lstdocumentos = new List<documentos>();
+
+                        DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/"));//path localDateTime localDate = DateTime.Now;
+                        string path_local = "files/documents/actividades/";
+                        DateTime localDate = DateTime.Now;
+                        string date = localDate.ToString();
+                        date = date.Replace("/", "_");
+                        date = date.Replace(":", "_");
+                        date = date.Replace(" ", "");
+                        name = path_local + Path.GetFileNameWithoutExtension(e.File.FileName) + "_" + date + Path.GetExtension(e.File.FileName);
+                        //funciones.UploadFile(fuparchivo, dirInfo.ToString() + name.Trim(), this.Page);
+                        e.File.SaveAs(dirInfo.ToString() + name.Trim());
 
                         documentos documento = new documentos();
                         documento.id_actividad = actividad.id_actividad;
@@ -966,8 +903,9 @@ namespace presentacion
                         documento.contentType = funciones.ContentType(documento.extension);
                         documento.fecha = DateTime.Now;
                         documento.usuario = Session["usuario"] as string;
-                        List<documentos> lstdocumentos = new List<documentos>();
                         lstdocumentos.Add(documento);
+
+
                         ActividadesCOM actividades = new ActividadesCOM();
                         id_actividad = actividades.Agregar(actividad, lstdocumentos);
 
@@ -1006,11 +944,14 @@ namespace presentacion
                         }
 
                     }
-                    AgregarAccionTemporal(id_actividad, id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
-                             ddlempleado_a_consultar.SelectedItem.ToString(),txtfechaejecuacion.SelectedDate,
-                            null, funciones.deTextoa64(name), e.File.ContentLength.ToString(), true, 0);
+                    AgregarAccionTemporal(id_actividad, id_actividad_tipo, "",false, id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
+                             ddlempleado_a_consultar.SelectedItem.ToString(),
+                            null, txtfechaejecuacion.SelectedDate, funciones.deTextoa64(name), e.File.ContentLength.ToString(), true, 0);
                     CargarGridAcciones();
                     txtaccion.Text = "";
+                    div_nueva_Accion.Visible = true;
+
+                    div_cierre_actividad.Visible = false;
                     txtfilterempleado.Text = "";
                     txtfechaejecuacion.SelectedDate = DateTime.Now;
                     CargarDatosFiltros("");
@@ -1031,8 +972,108 @@ namespace presentacion
             int r = AsyncUpload1.UploadedFiles.Count;
             if (r == 0)
             {
-                Toast.Error("Error al guardar acción: Ingrese seleccione un archivo.", this);
-            }            
+                try
+                {
+                    int id_actividad_tipo = Convert.ToInt32(ddltipo_actividad.SelectedValue);
+                    int id_riesgo = Convert.ToInt32(hdfid_riesgo.Value == "" ? "0" : hdfid_riesgo.Value);
+                    int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
+                    if (ProyectoTerminado())
+                    {
+                        Toast.Error("Error al guardar acción: El proyecto fue terminado y no puede generarse ninguna información adicional.", this);
+                    }
+                    else if (id_actividad_tipo == 0)
+                    {
+                        Toast.Error("Error al guardar acción: Seleccione un tipo de actividad", this);
+                    }
+                    else if (txtaccion.Text == "")
+                    {
+                        Toast.Error("Error al guardar acción: Ingrese la acción ejecutada.", this);
+                    }
+                    else if (!txtfechaejecuacion.SelectedDate.HasValue)
+                    {
+                        Toast.Error("Error al guardar acción: Ingrese la fecha de asignación.", this);
+                    }
+                    else
+                    {
+                        string name = "";
+                        int id_actividad = 0;
+                        //si existe un id de riesgo, quiere decir que estamos dentro de un modal de edicion, y se agregara directamente el registro a la base de datos.
+                        if (id_riesgo > 0)
+                        {
+                            actividades actividad = new actividades();
+                            actividad.id_proyecto = id_proyecto;
+                            actividad.id_riesgo = id_riesgo;
+                            actividad.nombre = txtaccion.Text;
+                            actividad.empleado_resp = ddlempleado_a_consultar.SelectedItem.ToString();
+                            actividad.usuario_resp = ddlempleado_a_consultar.SelectedValue;
+                            actividad.fecha_asignacion = txtfechaejecuacion.SelectedDate;
+                            actividad.usuario = Session["usuario"] as string;
+                            actividad.resultado = "";
+                            actividad.recomendada = true;
+                            actividad.id_actividad_tipo = id_actividad_tipo;
+                            List<documentos> lstdocumentos = new List<documentos>();
+                       
+
+                            ActividadesCOM actividades = new ActividadesCOM();
+                            id_actividad = actividades.Agregar(actividad, lstdocumentos);
+
+                            //ENVIAMOS NOTIFICACION
+                            string usuario_resp = actividad.usuario_resp;
+                            EmpleadosCOM usuarios = new EmpleadosCOM();
+                            DataTable dt_usuario = usuarios.GetUsers();
+                            DataView dv = dt_usuario.DefaultView;
+                            dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
+                            DataTable dt_result = dv.ToTable();
+                            if (dt_result.Rows.Count > 0)
+                            {
+
+                                string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+                                DataRow usuario = dt_result.Rows[0];
+                                string mail_to = usuario["mail"].ToString() == "" ? "" : (usuario["mail"].ToString() + ";");
+                                string subject = "Módulo de proyectos - Actividad relacionada";
+                                string mail = "<div>" + saludo + " <strong>" +
+                                    System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
+                                    + "</strong> <div>" +
+                                    "<br>" +
+                                    "<p>Le fue asignada una actividad, dentro de una evaluación en el proyecto <strong>" + lblproyect.Text + "</strong>" +
+                                    "</p>" +
+                                    "<p>A continuación, se muestra la información completa:</p>" +
+                                         "<p><strong>Riesgo</strong><br/> " +
+                                      txtriesgo.Text + "</p> " +
+                                       "<p><strong>Actividad/Acción</strong><br/> " +
+                                       txtaccion.Text + "</p> " +
+                                    "<br/><p>Este movimiento fue realizado por <strong>" +
+                                    System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
+                                    + "</strong> el dia <strong>" +
+                                    DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                    "</p>";
+                                CorreosCOM correos = new CorreosCOM();
+                                bool correct = correos.SendMail(mail, subject, mail_to);
+                            }
+
+                        }
+                        AgregarAccionTemporal(id_actividad, id_actividad_tipo,"", false, id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
+                            ddlempleado_a_consultar.SelectedItem.ToString(),
+                           null, txtfechaejecuacion.SelectedDate, funciones.deTextoa64(name), "0", true, 0);
+                        CargarGridAcciones();
+                        txtaccion.Text = "";
+                        div_nueva_Accion.Visible = true;
+                        div_cierre_actividad.Visible = false;
+                        txtfilterempleado.Text = "";
+                        txtfechaejecuacion.SelectedDate = DateTime.Now;
+                        CargarDatosFiltros("");
+                        Toast.Success("Acción agregada correctamente", "Mensaje del sistema", this);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Toast.Error("Error al guardar acción: " + ex.Message, this);
+                }
+                finally
+                {
+                    InicializarTablas();
+                }
+            }
         }
 
         protected void lnkeliminarparticipante_Click(object sender, EventArgs e)
@@ -1080,7 +1121,6 @@ namespace presentacion
             finally
             {
                 InicializarTablas();
-                ModalShow("#modal_riesgo");
                 ModalShow("#modal_acciones");
             }
         }
@@ -1100,16 +1140,16 @@ namespace presentacion
                     {
                         RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
                         riesgos_probabilidad probabilidad = probabilidades.impacto(id_riesgo_probabilidad);
-                        //string vmensaje = riesgos.EditarProbabilidad(id_riesgo, id_riesgo_probabilidad, probabilidad.porcentaje, Session["usuario"] as string);
-                        //if (vmensaje == "")
-                        //{
-                        //    ddl.Attributes["id_riesgo_probabilidad_selected"] = id_riesgo_probabilidad.ToString();
-                        //    CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                        //}
-                        //else
-                        //{
-                        //    Toast.Error("Error al editar riesgo: " + vmensaje, this);
-                        //}
+                        string vmensaje = riesgos.EditarProbabilidad(id_riesgo, id_riesgo_probabilidad,Session["usuario"] as string);
+                        if (vmensaje == "")
+                        {
+                            ddl.Attributes["id_riesgo_probabilidad_selected"] = id_riesgo_probabilidad.ToString();
+                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        }
+                        else
+                        {
+                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        }
                     }
                 }
                 else
@@ -1145,16 +1185,16 @@ namespace presentacion
                     {
                         RiesgosImpactoCostosCOM probabilidades = new RiesgosImpactoCostosCOM();
                         riesgos_impactos probabilidad = probabilidades.impacto(id_riesgo_impacto_costo);
-                        //string vmensaje = riesgos.EditarImpactoCosto(id_riesgo, id_riesgo_impacto_costo, probabilidad.porcentaje, Session["usuario"] as string);
-                        //if (vmensaje == "")
-                        //{
-                        //    ddl.Attributes["id_riesgo_impacto_costo_selected"] = id_riesgo_impacto_costo.ToString();
-                        //    CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                        //}
-                        //else
-                        //{
-                        //    Toast.Error("Error al editar riesgo: " + vmensaje, this);
-                        //}
+                        string vmensaje = riesgos.EditarImpacto(id_riesgo, id_riesgo_impacto_costo, Session["usuario"] as string);
+                        if (vmensaje == "")
+                        {
+                            ddl.Attributes["id_riesgo_impacto_costo_selected"] = id_riesgo_impacto_costo.ToString();
+                            CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                        }
+                        else
+                        {
+                            Toast.Error("Error al editar riesgo: " + vmensaje, this);
+                        }
                     }
                 }
                 else
@@ -1175,49 +1215,7 @@ namespace presentacion
             }
         }
               
-        protected void ddlestrategia_rep_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!ProyectoTerminado())
-                {
-                    DropDownList ddl = sender as DropDownList;
-                    RiesgosCOM riesgos = new RiesgosCOM();
-                    int id_estrategia = Convert.ToInt32(ddl.SelectedValue);
-                    int id_riesgo = Convert.ToInt32(ddl.Attributes["id_riesgo"]);
-                    int id_riesgo_estrategia_selected = Convert.ToInt32(ddl.Attributes["id_riesgo_estrategia_selected"]);
-                    if (id_estrategia > 0 && id_estrategia != id_riesgo_estrategia_selected)
-                    {
-                        //string vmensaje = riesgos.EditarImpactoEstrategia(id_riesgo, id_estrategia, Session["usuario"] as string);
-                        //if (vmensaje == "")
-                        //{
-                        //    ddl.Attributes["id_riesgo_estrategia_selected"] = id_riesgo.ToString();
-                        //    CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                        //}
-                        //else
-                        //{
-                        //    Toast.Error("Error al editar riesgo: " + vmensaje, this);
-                        //}
-                    }
-                }
-                else
-                {
-                    Toast.Error("El proyecto ha sido terminado y no puede generarse ninguna información adicional.", this);
-                }
-               
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al editar estrategia: " + ex.Message, this);
-            }
-            finally
-            {
-                load_cumpli_compromisos.Style["display"] = "none";
-                InicializarTablas();
-            }
-
-        }
-        
+       
         protected void btneditarriesgo_Click(object sender, EventArgs e)
         {
             try
@@ -1239,13 +1237,9 @@ namespace presentacion
                          ddlprobabilidad.Items.FindByValue(riesgo["id_riesgo_probabilidad"].ToString()) != null ? riesgo["id_riesgo_probabilidad"].ToString() : "0";
                         ddlimpacto_costo.SelectedValue =
                             ddlimpacto_costo.Items.FindByValue(riesgo["id_riesgo_impacto"].ToString()) != null ? riesgo["id_riesgo_impacto"].ToString() : "0";
-                       ddlestrategias.SelectedValue =
-                            ddlestrategias.Items.FindByValue(riesgo["id_riesgo_estrategia"].ToString()) != null ? riesgo["id_riesgo_estrategia"].ToString() : "0";
 
-                        txtpprobabilidad.Text = (Convert.ToDecimal(riesgo["p_probabilidad"]) / 100).ToString("P");
-                        txtimpacto_costo.Text = (Convert.ToDecimal(riesgo["p_impacto_costo"]) / 100).ToString("P");                     
-
-
+                        ddlprobabilidad_SelectedIndexChanged(null,null);
+                        txtestrategia_det.Text = riesgo["estrategia_detalle"].ToString();
                         Session[hdfguid.Value + "list_actividades"] = null;
                         Session[hdfguid.Value + "list_documentos"] = null;
                         ActividadesCOM actividades = new ActividadesCOM();
@@ -1280,13 +1274,17 @@ namespace presentacion
                                     size = dt_documento.Rows[0]["tamaño"].ToString();
                                     id_documento = Convert.ToInt32(dt_documento.Rows[0]["id_documento"]);
                                 }
-                                AgregarAccionTemporal(Convert.ToInt32(row["id_actividad"]), id_proyecto, id_riesgo, nombre, usuario_resp,
+                                AgregarAccionTemporal(Convert.ToInt32(row["id_actividad"]), Convert.ToInt32(row["id_actividad_tipo"]), row["resultado"].ToString(),Convert.ToBoolean(row["recomendada"]),
+                                    id_proyecto, id_riesgo, nombre, usuario_resp,
                                     empleado_resp, fecha_ejecucion, fecha_asignacion, path, size, true, id_documento);
                             }
                         }
 
-                        ModalShow("#modal_riesgo");
-                        if (command == 2)
+                        if (command == 1)
+                        {
+                            ModalShow("#modal_riesgo");
+                        }
+                        else
                         {
                             lnkacciones_Click(null, null);
                         }
@@ -1468,6 +1466,7 @@ namespace presentacion
             finally {
 
                 ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
                 InicializarTablas();
             }
         }
@@ -1483,6 +1482,69 @@ namespace presentacion
         protected void lnkdashboard_Click(object sender, EventArgs e)
         {
             Response.Redirect("proyectos_dashboard.aspx?id_proyecto="+Request.QueryString["id_proyecto"]);
+        }
+
+        protected void ddlprobabilidad_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int id_probabilidad = Convert.ToInt32(ddlprobabilidad.SelectedValue);
+                int id_impacto = Convert.ToInt32(ddlimpacto_costo.SelectedValue);
+                if (id_impacto > 0 && id_probabilidad > 0)
+                {
+                    RiesgosProbabilidadCOM probabilidades = new RiesgosProbabilidadCOM();
+                    riesgos_probabilidad probabilidad = probabilidades.impacto(id_probabilidad);
+                    RiesgosImpactoCostosCOM impactos = new RiesgosImpactoCostosCOM();
+                    riesgos_impactos impacto = impactos.impacto(id_impacto);
+                    int valor = impacto.valor * probabilidad.valor;
+                    hdfvalor_riesgo.Value = valor.ToString();
+                    RiesgosEstrategiaCOM estrategias = new RiesgosEstrategiaCOM();
+                    DataTable dt = estrategias.SelectAll();
+                    foreach (DataRow estrategia in dt.Rows)
+                    {
+                        int value_min = Convert.ToInt16(estrategia["valor_min"]);
+                        int value_max = Convert.ToInt16(estrategia["valor_max"]);
+                        if (valor >= value_min && valor <= value_max)
+                        {
+                            hdfid_estrategia.Value = Convert.ToInt32(estrategia["id_riesgo_estrategia"]).ToString();
+                            txtestrategia.Text = estrategia["nombre"].ToString();
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al seleccionar probabilidad: " + ex.Message, this);
+            }
+            finally
+            {
+                InicializarTablas();
+            }
+        }
+
+        protected void lnkguardaresultados_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void lnkresultado_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                div_cierre_actividad.Visible = true;
+                div_nueva_Accion.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al visualizar resultado: " + ex.Message, this);
+            }
+            finally
+            {
+                InicializarTablas();
+                ModalShow("#modal_acciones");
+            }
+
         }
     }
 }
