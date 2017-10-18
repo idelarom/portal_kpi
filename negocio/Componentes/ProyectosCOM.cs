@@ -158,6 +158,7 @@ namespace negocio.Componentes
                 proyecto.id_proyecto_estatus = 2;
 
                 DocumentosCOM documentos = new DocumentosCOM();
+                documento.id_documento_tipo = 2;
                 string vmensaje = documentos.Agregar(documento);
                 if (vmensaje == "")
                 {

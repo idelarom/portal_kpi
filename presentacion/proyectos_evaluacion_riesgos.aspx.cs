@@ -1433,7 +1433,7 @@ namespace presentacion
                                 id_riesgo_estrategia = 1,
                                 valor = 1,
                                 usuario_resp = Session["usuario"] as string,
-                                estrategia =""
+                                estrategia = cbx.Attributes["estrategia"].ToString()
                             };
                             list_riesgos.Add(riesgo);
                         }

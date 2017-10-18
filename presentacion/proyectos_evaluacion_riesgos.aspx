@@ -41,7 +41,7 @@
         });
         function InitPagging(value) {
             if ($.fn.dataTable.isDataTable(value)) {
-                table = $('#example').DataTable();
+                table = $(value).DataTable();
             }
             else {
                 $(value).DataTable({
@@ -82,7 +82,7 @@
         }
         function Init(value) {
             if ($.fn.dataTable.isDataTable(value)) {
-                table = $('#example').DataTable();
+                table = $(value).DataTable();
             }
             else {
                 $(value).DataTable({
@@ -229,7 +229,7 @@
                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                             <h5><strong><i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;Proyecto</strong>
                                 &nbsp;<asp:LinkButton ID="lnkdashboard" CssClass="btn btn-danger btn-xs btn-flat"
-                                     OnClick="lnkdashboard_Click" runat="server">Dashboard</asp:LinkButton>
+                                    OnClick="lnkdashboard_Click" runat="server">Dashboard</asp:LinkButton>
                             </h5>
                             <p class="text-muted">
                                 <asp:Label ID="lblproyect" runat="server" Text="Label"></asp:Label>
@@ -528,19 +528,19 @@
                                 </div>
                             </div>
                             <div class="row" id="div_cierre_actividad" runat="server" visible="false">
-                                <div class="col-lg-12 col-md-2 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Accion</strong></h5>
                                         <asp:TextBox ID="txtaccion_title" ReadOnly="true" TextMode="MultiLine" Rows="2" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                   
                                 </div>
-                                <div class="col-lg-12 col-md-2 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Documento</strong></h5>
                                     <telerik:RadAsyncUpload RenderMode="Lightweight" ID="AsyncUpload1" runat="server"
                                         OnFileUploaded="AsyncUpload1_FileUploaded" PostbackTriggers="lnkguardaresultados"
                                         MaxFileSize="2097152" Width="100%"
                                         AutoAddFileInputs="false" Localization-Select="Seleccionar" Skin="Silk" />
                                 </div>
-                                <div class="col-lg-12 col-md-2 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Resultado</strong></h5>
                                     <asp:TextBox ID="txtresultado" CssClass="form-control" Rows="2" TextMode="MultiLine" runat="server"></asp:TextBox>
                                 </div>
@@ -666,7 +666,7 @@
                                                         <tr style="font-size: 11px">
                                                             <td style="max-width: 30px; text-align: center">
                                                                 <asp:CheckBox ID="cbxseleccionado" AutoPostBack="false"
-                                                                    name='<%# Eval("riesgo") %>' runat="server" />
+                                                                    name='<%# Eval("riesgo") %>'  estrategia='<%# Eval("estrategia") %>' runat="server" />
                                                             </td>
                                                             <td style="min-width: 350px; text-align: left;"><%# Eval("riesgo") %></td>
                                                             <td style="min-width: 120px; text-align: left;"><%# Eval("tecnologia") %></td>
@@ -726,7 +726,7 @@
                                                     <ItemTemplate>
                                                         <tr style="font-size: 11px">
                                                             <td style="min-width: 450px; text-align: left;">
-                                                               <a style="cursor:pointer;" onclick='<%# "return ViewLeccionesAprendidas("+@""""+Eval("nombre")+@"""" +","+Eval("id_actividad_tipo")+");"%>'>
+                                                               <a style="cursor:pointer;" onclick='<%# "return ViewLeccionesAprendidas("+@""""+Eval("nombre").ToString().Replace(@"""","'").Replace(System.Environment.NewLine,"").Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("\r", String.Empty)+@"""" +","+Eval("id_actividad_tipo")+");"%>'>
                                                                <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>200?200:Eval("nombre").ToString().Length))+
                                                                                      (Eval("nombre").ToString().Length>200?"...":"")    %>
                                                                </a>
@@ -734,7 +734,7 @@
                                                             <td style="min-width: 100px; text-align: left;"><%# Eval("tipo") %></td>
                                                             <td style="max-width: 30px; text-align: center">
                                                                 <asp:CheckBox ID="CheckBox1" AutoPostBack="false" Enabled="false"
-                                                                    name='<%# Eval("recomendada") %>' runat="server" />
+                                                                    Checked='<%# Eval("recomendada") %>' runat="server" />
                                                             </td>
 
                                                         </tr>

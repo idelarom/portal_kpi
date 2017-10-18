@@ -122,6 +122,7 @@ namespace presentacion
                     documento.contentType = funciones.ContentType(documento.extension);
                     documento.fecha = DateTime.Now;
                     documento.usuario = Session["usuario"] as string;
+                    documento.id_documento_tipo = 2;
 
                     ProyectosCOM proyectos = new ProyectosCOM();
                     string vmensaje = proyectos.Cerrar(id_proyecto, Session["usuario"] as string, documento);

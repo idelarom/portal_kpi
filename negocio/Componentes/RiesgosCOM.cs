@@ -701,7 +701,8 @@ namespace negocio.Componentes
                                select new
                                {
                                    tecnologia = pt.nombre,
-                                   r.riesgo                                  
+                                   r.riesgo,
+                                   r.estrategia                                  
                                }).Distinct();
 
                 dt = To.DataTable(riesgos.ToList());
