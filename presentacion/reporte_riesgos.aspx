@@ -78,25 +78,7 @@
              window.location.href = "proyectos_dashboard.aspx?id_proyecto=" + id_proyecto;
          }
 
-         function CargarRiesgos(id_riesgo, command) {
-            var hdf_id_riesgo = document.getElementById('<%= hdf_id_riesgo.ClientID %>');
-            hdf_id_riesgo.value = id_riesgo;
-            var hdfid_riesgo = document.getElementById('<%= hdfid_riesgo.ClientID %>');
-            hdfid_riesgo.value = id_riesgo;
-            var hdfcommandgrid = document.getElementById('<%= hdfcommandgrid.ClientID %>');
-            hdfcommandgrid.value = command;
-             $("#<%= load_cumpli_compromisos.ClientID%>").show();
-            var target = document.getElementById('<%= load_cumpli_compromisos.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
-            document.getElementById('<%= btneditarriesgo.ClientID%>').click();
-            return true;
-        }
-        function DownloadFile(id_actividad) {
-            var hdf_id_riesgo = document.getElementById('<%= hdfid_actividad.ClientID %>');
-            hdf_id_riesgo.value = id_actividad;
-            document.getElementById('<%= btndescargardocumento.ClientID%>').click();
-            return true;
-        }
+       
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
