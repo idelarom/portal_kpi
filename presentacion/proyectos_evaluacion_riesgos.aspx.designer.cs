@@ -319,6 +319,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.DropDownList ddlempleado_a_consultar;
         
         /// <summary>
+        /// Control lnkcargarleccionesaprendidas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkcargarleccionesaprendidas;
+        
+        /// <summary>
         /// Control lnkcargando2.
         /// </summary>
         /// <remarks>
@@ -344,6 +353,15 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_cierre_actividad;
+        
+        /// <summary>
+        /// Control txtaccion_title.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtaccion_title;
         
         /// <summary>
         /// Control AsyncUpload1.
@@ -409,13 +427,13 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnkguardaresultados;
         
         /// <summary>
-        /// Control grid_acciones.
+        /// Control repeater_acciones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid grid_acciones;
+        protected global::System.Web.UI.WebControls.Repeater repeater_acciones;
         
         /// <summary>
         /// Control hdfid_riesgo.
@@ -472,31 +490,13 @@ namespace presentacion {
         protected global::System.Web.UI.UpdatePanel UpdatePanel4;
         
         /// <summary>
-        /// Control Repeater1.
+        /// Control repeter_hisitorial_acciones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Repeater1;
-        
-        /// <summary>
-        /// Control LinkButton1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
-        
-        /// <summary>
-        /// Control LinkButton3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
+        protected global::System.Web.UI.WebControls.Repeater repeter_hisitorial_acciones;
         
         /// <summary>
         /// Control hdfguid.

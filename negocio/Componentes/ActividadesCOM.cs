@@ -31,7 +31,8 @@ namespace negocio.Componentes
                     usuario = entidad.usuario,
                     fecha_registro = DateTime.Now,
                     resultado = entidad.resultado,
-                    recomendada = entidad.recomendada
+                    recomendada = entidad.recomendada,
+                    terminada=false
                 };
                 context.actividades.Add(actividad);
                 context.SaveChanges();
@@ -57,6 +58,44 @@ namespace negocio.Componentes
                 return 0;
             }
         }
+
+        public string GuardarResultado(actividades entidad, List<documentos> lstdocumento)
+        {
+            try
+            {
+                string mess = "";
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                actividades actividad = context.actividades
+                              .First(i => i.id_actividad == entidad.id_actividad);
+                actividad.fecha_ejecucion = DateTime.Now;
+                actividad.fecha_edicion = DateTime.Now;
+                actividad.usuario_edicion = entidad.usuario_edicion;
+                actividad.resultado = entidad.resultado;
+                actividad.recomendada = entidad.recomendada;
+                actividad.terminada = true;
+                int id_actividad = actividad.id_actividad;
+                foreach (documentos documento in lstdocumento)
+                {
+                    if (documento.id_actividad == entidad.id_actividad)
+                    {
+                        documento.id_documento_tipo = 1;
+                        documento.id_actividad = id_actividad;
+                        context.documentos.Add(documento);
+                    }
+                }
+                context.SaveChanges();
+                context.SaveChanges();
+                return "";
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
         public DataSet actividades_riesgo(int id_riesgo)
         {
             try
@@ -78,7 +117,8 @@ namespace negocio.Componentes
                                        a.empleado_resp,
                                        a.recomendada,
                                        a.resultado,
-                                       a.id_actividad_tipo
+                                       a.id_actividad_tipo,
+                                       a.terminada
                                    }).ToArray();
                 dt = To.DataTable(actividades.ToList());
                 if (dt.Rows.Count > 0)
@@ -127,6 +167,7 @@ namespace negocio.Componentes
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
                 var actividades = (from a in db.actividades
                                    join p in db.proyectos on a.id_proyecto equals p.id_proyecto
+                                   join ta in db.actividades_tipos on a.id_actividad_tipo equals ta.id_actividad_tipo
                                    where (a.usuario_borrado == null && p.id_proyecto_tecnologia == id_tecnologia
                                    && p.usuario_borrado == null)
                                    select new
@@ -141,7 +182,9 @@ namespace negocio.Componentes
                                        a.empleado_resp,
                                        a.recomendada,
                                        a.resultado,
-                                       a.id_actividad_tipo
+                                       a.id_actividad_tipo,
+                                       ta.tipo,
+                                       a.terminada
                                    });
                 dt = To.DataTable(actividades.ToList());
                 return dt;
@@ -215,6 +258,25 @@ namespace negocio.Componentes
                         .Select(x => x.ErrorMessage);
                 var fullErrorMessage = string.Join("; ", errorMessages);
                 return fullErrorMessage.ToString();
+            }
+        }
+
+        public actividades actividad(int id_actividad)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                actividades actividad = context.actividades
+                                .First(i => i.id_actividad == id_actividad);
+                return actividad;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return null;
             }
         }
     }

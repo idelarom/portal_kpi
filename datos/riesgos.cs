@@ -25,8 +25,8 @@ namespace datos
         public int id_riesgos_estatus { get; set; }
         public string riesgo { get; set; }
         public int id_riesgo_probabilidad { get; set; }
-        public Nullable<int> id_riesgo_impacto { get; set; }
-        public Nullable<byte> valor { get; set; }
+        public int id_riesgo_impacto { get; set; }
+        public byte valor { get; set; }
         public int id_riesgo_estrategia { get; set; }
         public string estrategia { get; set; }
         public string usuario_resp { get; set; }

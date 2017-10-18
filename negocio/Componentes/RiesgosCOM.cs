@@ -59,8 +59,9 @@ namespace negocio.Componentes
                         usuario = entidad2.usuario,
                         empleado_resp = entidad2.empleado_resp,
                         fecha_registro = DateTime.Now,
-                        recomendada = false,
-                        resultado =""
+                        recomendada = entidad2.recomendada,
+                        resultado ="",
+                        terminada=false
                     };
                     context.actividades.Add(actividad);
                     context.SaveChanges();
@@ -228,8 +229,9 @@ namespace negocio.Componentes
                             usuario = entidad2.usuario,
                             empleado_resp = entidad2.empleado_resp,
                             fecha_registro = DateTime.Now,
-                            recomendada =false,
-                            resultado = ""
+                            recomendada =entidad2.recomendada,
+                            resultado = "",
+                            terminada=false
                         };
                         context.actividades.Add(actividad);
                         context.SaveChanges();
@@ -548,8 +550,6 @@ namespace negocio.Componentes
                 var riesgos = (from r in db.riesgos
                                join re in db.riesgos_estatus on r.id_riesgos_estatus equals re.id_riesgos_estatus
                                join rp in db.riesgos_probabilidad on r.id_riesgo_probabilidad equals rp.id_riesgo_probabilidad
-                               join ric in db.riesgos_impacto_costo on r.id_riesgo_impacto_costo equals ric.id_riesgo_impacto_costo
-                               join rit in db.riesgos_impacto_tiempo on r.id_riesgo_impacto_tiempo equals rit.id_riesgo_impacto_tiempo
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
@@ -568,19 +568,10 @@ namespace negocio.Componentes
                                    re.estatus,
                                    r.id_riesgo_probabilidad,
                                    probabilidad = rp.nombre,
-                                   p_probabilidad = rp.porcentaje,
-                                   r.id_riesgo_impacto_costo,
-                                   impacto_costo = ric.nombre,
-                                   p_impacto_costo = ric.porcentaje,
-                                   r.id_riesgo_impacto_tiempo,
-                                   impacto_tiempo = rit.nombre,
-                                   p_impacto_tiempo = rit.porcentaje,
                                    r.id_riesgo_estrategia,
                                    estrategia = rs.nombre,
                                    fecha_evaluacion = pe.fecha_evaluacion,
                                    proyecto = p.proyecto,
-                                   r.riesgo_costo,
-                                   r.riesgo_tiempo,
                                    r.usuario
                                }).ToArray();
                  var triesgos = (from r in riesgos
@@ -596,19 +587,10 @@ namespace negocio.Componentes
                                      r.estatus,
                                      r.id_riesgo_probabilidad,
                                      r.probabilidad,
-                                     r.p_probabilidad,
-                                     r.id_riesgo_impacto_costo,
-                                     r.impacto_costo,
-                                     r.p_impacto_costo,
-                                     r.id_riesgo_impacto_tiempo,
-                                     r.impacto_tiempo,
-                                     r.p_impacto_tiempo,
                                      r.id_riesgo_estrategia,
                                      r.estrategia,
                                      r.fecha_evaluacion,
-                                     r.proyecto,
-                                     r.riesgo_costo,
-                                     r.riesgo_tiempo
+                                     r.proyecto
                                    });
                 NAVISION dbnavision = new NAVISION();
                 var results = from r in riesgos
@@ -625,19 +607,10 @@ namespace negocio.Componentes
                                   r.estatus,
                                   r.id_riesgo_probabilidad,
                                   r.probabilidad,
-                                  r.p_probabilidad,
-                                  r.id_riesgo_impacto_costo,
-                                  r.impacto_costo,
-                                  r.p_impacto_costo,
-                                  r.id_riesgo_impacto_tiempo,
-                                  r.impacto_tiempo,
-                                  r.p_impacto_tiempo,
                                   r.id_riesgo_estrategia,
                                   r.estrategia,
                                   r.fecha_evaluacion,
-                                  r.proyecto,
-                                  r.riesgo_costo,
-                                  r.riesgo_tiempo
+                                  r.proyecto
                               };
                 dt = To.DataTable(results.ToList());
                 return dt;

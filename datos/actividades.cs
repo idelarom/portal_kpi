@@ -28,9 +28,10 @@ namespace datos
         public string usuario_resp { get; set; }
         public string empleado_resp { get; set; }
         public Nullable<System.DateTime> fecha_ejecucion { get; set; }
-        public Nullable<System.DateTime> fecha_asignacion { get; set; }
+        public System.DateTime fecha_asignacion { get; set; }
         public string resultado { get; set; }
-        public Nullable<bool> recomendada { get; set; }
+        public bool recomendada { get; set; }
+        public bool terminada { get; set; }
         public string usuario { get; set; }
         public System.DateTime fecha_registro { get; set; }
         public string comentarios_borrado { get; set; }

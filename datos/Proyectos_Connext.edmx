@@ -15,11 +15,12 @@
           <Property Name="id_riesgo" Type="int" />
           <Property Name="nombre" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="usuario_resp" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="empleado_resp" Type="varchar" MaxLength="8000" />
+          <Property Name="empleado_resp" Type="varchar" MaxLength="8000" Nullable="false" />
           <Property Name="fecha_ejecucion" Type="datetime" />
-          <Property Name="fecha_asignacion" Type="datetime" />
+          <Property Name="fecha_asignacion" Type="datetime" Nullable="false" />
           <Property Name="resultado" Type="varchar" MaxLength="8000" />
-          <Property Name="recomendada" Type="bit" />
+          <Property Name="recomendada" Type="bit" Nullable="false" />
+          <Property Name="terminada" Type="bit" Nullable="false" />
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="fecha_registro" Type="datetime" Nullable="false" />
           <Property Name="comentarios_borrado" Type="varchar" MaxLength="250" />
@@ -37,6 +38,15 @@
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tipo" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="correos_historial">
+          <Key>
+            <PropertyRef Name="id_correo_historial" />
+          </Key>
+          <Property Name="id_correo_historial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mail" Type="varchar(max)" Nullable="false" />
+          <Property Name="mail_to" Type="varchar(max)" Nullable="false" />
+          <Property Name="mail_from" Type="varchar" MaxLength="8000" />
         </EntityType>
         <EntityType Name="documentos">
           <Key>
@@ -169,11 +179,11 @@
           <Property Name="id_riesgos_estatus" Type="int" Nullable="false" />
           <Property Name="riesgo" Type="varchar" MaxLength="8000" Nullable="false" />
           <Property Name="id_riesgo_probabilidad" Type="int" Nullable="false" />
-          <Property Name="id_riesgo_impacto" Type="int" />
-          <Property Name="valor" Type="tinyint" />
+          <Property Name="id_riesgo_impacto" Type="int" Nullable="false" />
+          <Property Name="valor" Type="tinyint" Nullable="false" />
           <Property Name="id_riesgo_estrategia" Type="int" Nullable="false" />
           <Property Name="estrategia" Type="varchar" MaxLength="8000" />
-          <Property Name="usuario_resp" Type="varchar" MaxLength="50" />
+          <Property Name="usuario_resp" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="fecha_borrado" Type="datetime" />
           <Property Name="fecha_registro" Type="datetime" Nullable="false" />
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
@@ -384,7 +394,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_riesgos_riesgos_impactos">
-          <End Role="riesgos_impactos" Type="Self.riesgos_impactos" Multiplicity="0..1" />
+          <End Role="riesgos_impactos" Type="Self.riesgos_impactos" Multiplicity="1" />
           <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="riesgos_impactos">
@@ -418,6 +428,7 @@
         <EntityContainer Name="Proyectos_ConnextModelStoreContainer">
           <EntitySet Name="actividades" EntityType="Self.actividades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="actividades_tipos" EntityType="Self.actividades_tipos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="correos_historial" EntityType="Self.correos_historial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="documentos" EntityType="Self.documentos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="documentos_tipos" EntityType="Self.documentos_tipos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos" EntityType="Self.proyectos" Schema="dbo" store:Type="Tables" />
@@ -506,11 +517,12 @@
           <Property Name="id_riesgo" Type="Int32" />
           <Property Name="nombre" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="usuario_resp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="empleado_resp" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="empleado_resp" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha_ejecucion" Type="DateTime" Precision="3" />
-          <Property Name="fecha_asignacion" Type="DateTime" Precision="3" />
+          <Property Name="fecha_asignacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="resultado" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
-          <Property Name="recomendada" Type="Boolean" />
+          <Property Name="recomendada" Type="Boolean" Nullable="false" />
+          <Property Name="terminada" Type="Boolean" Nullable="false" />
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
@@ -533,6 +545,15 @@
           <Property Name="tipo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="actividades" Relationship="Self.FK_actividades_actividades_tipos" FromRole="actividades_tipos" ToRole="actividades" />
+        </EntityType>
+        <EntityType Name="correos_historial">
+          <Key>
+            <PropertyRef Name="id_correo_historial" />
+          </Key>
+          <Property Name="id_correo_historial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mail_to" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mail_from" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="documentos">
           <Key>
@@ -680,11 +701,11 @@
           <Property Name="id_riesgos_estatus" Type="Int32" Nullable="false" />
           <Property Name="riesgo" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="id_riesgo_probabilidad" Type="Int32" Nullable="false" />
-          <Property Name="id_riesgo_impacto" Type="Int32" />
-          <Property Name="valor" Type="Byte" />
+          <Property Name="id_riesgo_impacto" Type="Int32" Nullable="false" />
+          <Property Name="valor" Type="Byte" Nullable="false" />
           <Property Name="id_riesgo_estrategia" Type="Int32" Nullable="false" />
           <Property Name="estrategia" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
-          <Property Name="usuario_resp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_resp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
           <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -905,7 +926,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_riesgos_riesgos_impactos">
-          <End Role="riesgos_impactos" Type="Self.riesgos_impactos" Multiplicity="0..1" />
+          <End Role="riesgos_impactos" Type="Self.riesgos_impactos" Multiplicity="1" />
           <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="riesgos_impactos">
@@ -931,6 +952,7 @@
         <EntityContainer Name="Proyectos_ConnextEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="actividades" EntityType="Self.actividades" />
           <EntitySet Name="actividades_tipos" EntityType="Self.actividades_tipos" />
+          <EntitySet Name="correos_historial" EntityType="Self.correos_historial" />
           <EntitySet Name="documentos" EntityType="Self.documentos" />
           <EntitySet Name="documentos_tipos" EntityType="Self.documentos_tipos" />
           <EntitySet Name="proyectos" EntityType="Self.proyectos" />
@@ -1038,6 +1060,7 @@
                 <ScalarProperty Name="fecha_asignacion" ColumnName="fecha_asignacion" />
                 <ScalarProperty Name="resultado" ColumnName="resultado" />
                 <ScalarProperty Name="recomendada" ColumnName="recomendada" />
+                <ScalarProperty Name="terminada" ColumnName="terminada" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
                 <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
@@ -1056,6 +1079,16 @@
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="tipo" ColumnName="tipo" />
                 <ScalarProperty Name="activo" ColumnName="activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="correos_historial">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.correos_historial">
+              <MappingFragment StoreEntitySet="correos_historial">
+                <ScalarProperty Name="id_correo_historial" ColumnName="id_correo_historial" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="mail_to" ColumnName="mail_to" />
+                <ScalarProperty Name="mail_from" ColumnName="mail_from" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

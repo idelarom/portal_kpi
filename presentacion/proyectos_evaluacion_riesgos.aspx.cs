@@ -131,6 +131,31 @@ namespace presentacion
             }
         }
 
+        /// <summary>
+        /// Cargar el historial de acciones con tecnologia similar
+        /// </summary>
+        /// <param name="id_proyecto_tecnologia"></param>
+        private void CargarAccionesHistorial(int id_proyecto_tecnologia)
+        {
+            try
+            {
+                ActividadesCOM actividades = new ActividadesCOM();
+                DataTable dt_riesgos = actividades.actividades_tecnologia(id_proyecto_tecnologia);
+                if (dt_riesgos.Rows.Count > 0)
+                {
+                    repeter_hisitorial_acciones.DataSource = dt_riesgos;
+                    repeter_hisitorial_acciones.DataBind();
+                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del historial de acciones, " + ex.Message, this);
+            }
+        }
+
+
         private void CargarCombos()
         {
             try
@@ -591,7 +616,7 @@ namespace presentacion
         /// <param name="size_documento"></param>
         /// <param name="publico"></param>
         /// <param name="id_documento"></param>
-        public void AgregarAccionTemporal(int id_actividad,int id_tipo,string resultado, bool recomendada,int id_proyecto, int id_riesgo, string nombre, string usuario_resp, string empleado_resp, DateTime? fecha_ejecucion,
+        public void AgregarAccionTemporal(int id_actividad,int id_tipo,string resultado,bool terminada, bool recomendada,int id_proyecto, int id_riesgo, string nombre, string usuario_resp, string empleado_resp, DateTime? fecha_ejecucion,
             DateTime? fecha_Asignacion, string path_documento, string size_documento, bool publico, int id_documento)
         {
             try
@@ -614,16 +639,18 @@ namespace presentacion
                 actividad.nombre = nombre;
                 actividad.id_actividad_tipo = id_tipo;
                 actividad.usuario_resp = usuario_resp;
-                actividad.fecha_asignacion = fecha_Asignacion;
+                actividad.fecha_asignacion = Convert.ToDateTime(fecha_Asignacion);
                 actividad.usuario = Session["usuario"] as string;
                 actividad.usuario_edicion = Session["usuario"] as string;
                 actividad.resultado = resultado;
                 actividad.recomendada = recomendada;
+                actividad.terminada = terminada;
+                actividad.fecha_ejecucion = fecha_ejecucion;
 
 
                 List<documentos> lstdocumentos = Session[hdfguid.Value + "list_documentos"] as List<datos.documentos>;
                 documentos documento = new documentos();
-                if (size_documento != "")
+                if (size_documento != "" && size_documento != "0")
                 {
 
                     if (id_documento > 0) { documento.id_documento = id_documento; }
@@ -671,7 +698,7 @@ namespace presentacion
                         actividad.nombre = nombre;
                         actividad.usuario_resp = usuario_resp;
                         actividad.fecha_ejecucion = fecha_ejecucion;
-                        actividad.fecha_asignacion = fecha_Asignacion;
+                        actividad.fecha_asignacion = Convert.ToDateTime(fecha_Asignacion);
                         actividad.usuario = Session["usuario"] as string;
                         actividad.usuario_edicion = Session["usuario"] as string;
                     }
@@ -781,8 +808,8 @@ namespace presentacion
             {
 
                 List<actividades> lstactividades = Session[hdfguid.Value + "list_actividades"] as List<datos.actividades>;
-                grid_acciones.DataSource = lstactividades;
-                grid_acciones.DataBind();
+                repeater_acciones.DataSource = lstactividades;
+                repeater_acciones.DataBind();
             }
             catch (Exception ex)
             {
@@ -792,7 +819,8 @@ namespace presentacion
 
         protected void lnkacciones_Click(object sender, EventArgs e)
         {
-            CargarDatosFiltros(""); CargarGridAcciones();
+            CargarDatosFiltros("");
+            CargarGridAcciones();
             txtaccion.Text = "";
             div_nueva_Accion.Visible = true;
             div_cierre_actividad.Visible = false;
@@ -806,6 +834,10 @@ namespace presentacion
 
         protected void lnkcancelar_Click(object sender, EventArgs e)
         {
+            txtresultado.Text = "";
+            cbxleccionesapren.Checked = true;
+            cbxleccionesapren.Checked = true;
+            ViewState["id_actividad"] = "";
             div_nueva_Accion.Visible = true;
             div_cierre_actividad.Visible = false;
 
@@ -829,6 +861,9 @@ namespace presentacion
             }
             finally
             {
+                InicializarTablas();
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
                 imgloadempleado.Style["display"] = "none";
                 lblbemp.Style["display"] = "none";
             }
@@ -838,48 +873,34 @@ namespace presentacion
         {
             try
             {
+                //GUARDAMOS LOS RESULTADOS DE LA ACTIVIDAD
                 int r = AsyncUpload1.UploadedFiles.Count;
                 int id_riesgo = Convert.ToInt32(hdfid_riesgo.Value == "" ? "0" : hdfid_riesgo.Value);
                 int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
                 int id_actividad_tipo = Convert.ToInt32(ddltipo_actividad.SelectedValue);
                 if (ProyectoTerminado())
                 {
-                    Toast.Error("Error al guardar acción: El proyecto fue terminado y no puede generarse ninguna información adicional.", this);
+                    Toast.Error("Error al guardar resultado: El proyecto fue terminado y no puede generarse ninguna información adicional.", this);
                 }
-                else if (id_actividad_tipo == 0)
+                
+                else if (txtresultado.Text == "")
                 {
-                    Toast.Error("Error al guardar acción: Seleccione un tipo de actividad", this);
-                }
-                else if (r == 0)
-                {
-                    Toast.Error("Error al guardar acción: Ingrese seleccione un archivo.", this);
-                }
-                else if (txtaccion.Text == "")
-                {
-                    Toast.Error("Error al guardar acción: Ingrese la acción ejecutada.", this);
-                }
-                else if (!txtfechaejecuacion.SelectedDate.HasValue)
-                {
-                    Toast.Error("Error al guardar acción: Ingrese la fecha de ejecución.", this);
+                    Toast.Error("Error al guardar resultado: Ingrese el reusltado de la acción ejecutada.", this);
                 }
                 else
                 {
                     string name = "";
-                    int id_actividad = 0;
                     //si existe un id de riesgo, quiere decir que estamos dentro de un modal de edicion, y se agregara directamente el registro a la base de datos.
                     if (id_riesgo > 0)
                     {
-                        actividades actividad = new actividades();
-                        actividad.id_proyecto = id_proyecto;
-                        actividad.id_riesgo = id_riesgo;
-                        actividad.nombre = txtaccion.Text;
-                        actividad.empleado_resp = ddlempleado_a_consultar.SelectedItem.ToString();
-                        actividad.usuario_resp = ddlempleado_a_consultar.SelectedValue;
-                        actividad.fecha_asignacion = txtfechaejecuacion.SelectedDate;
-                        actividad.usuario = Session["usuario"] as string;
-                        actividad.resultado = "";
+                        ActividadesCOM actividades = new ActividadesCOM();
+                        string id_actividad = ViewState["id_actividad"] as string;
+                        actividades actividad = actividades.actividad(Convert.ToInt32(id_actividad == "0" ? "" : id_actividad));                       
+                        actividad.id_riesgo = id_riesgo;                      
+                        actividad.usuario_edicion = Session["usuario"] as string;
+                        actividad.resultado = txtresultado.Text;
                         actividad.recomendada = true;
-                        actividad.id_actividad_tipo = id_actividad_tipo;
+                        actividad.recomendada = cbxrecomendado.Checked;
                         List<documentos> lstdocumentos = new List<documentos>();
 
                         DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/"));//path localDateTime localDate = DateTime.Now;
@@ -905,62 +926,64 @@ namespace presentacion
                         documento.usuario = Session["usuario"] as string;
                         lstdocumentos.Add(documento);
 
+                        
+                        string vmensaje = actividades.GuardarResultado(actividad, lstdocumentos);
+                        if (vmensaje == "")
+                        {   //ENVIAMOS NOTIFICACION
+                            string usuario_resp = actividad.usuario_resp;
+                            EmpleadosCOM usuarios = new EmpleadosCOM();
+                            DataTable dt_usuario = usuarios.GetUsers();
+                            DataView dv = dt_usuario.DefaultView;
+                            dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
+                            DataTable dt_result = dv.ToTable();
+                            if (dt_result.Rows.Count > 0)
+                            {
 
-                        ActividadesCOM actividades = new ActividadesCOM();
-                        id_actividad = actividades.Agregar(actividad, lstdocumentos);
-
-                        //ENVIAMOS NOTIFICACION
-                        string usuario_resp = actividad.usuario_resp;
-                        EmpleadosCOM usuarios = new EmpleadosCOM();
-                        DataTable dt_usuario = usuarios.GetUsers();
-                        DataView dv = dt_usuario.DefaultView;
-                        dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
-                        DataTable dt_result = dv.ToTable();
-                        if (dt_result.Rows.Count > 0)
+                                string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+                                DataRow usuario = dt_result.Rows[0];
+                                string mail_to = usuario["mail"].ToString() == "" ? "" : (usuario["mail"].ToString() + ";");
+                                string subject = "Módulo de proyectos - Resultado de actividad";
+                                string mail = "<div>" + saludo + " <strong>" +
+                                    System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
+                                    + "</strong> <div>" +
+                                    "<br>" +
+                                    "<p>Fue ingreso el resultado de una acción, dentro de una evaluación en el proyecto <strong>" + lblproyect.Text + "</strong>" +
+                                    "</p>" +
+                                    "<p>A continuación, se muestra la información completa:</p>" +
+                                         "<p><strong>Riesgo</strong><br/> " +
+                                      txtriesgo.Text + "</p> " +
+                                       "<p><strong>Actividad/Acción</strong><br/> " +
+                                       txtaccion_title.Text + "</p> " +
+                                       "<p><strong>Resultado</strong><br/> " +
+                                       txtresultado.Text + "</p> " +
+                                    "<br/><p>Este movimiento fue realizado por <strong>" +
+                                    System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
+                                    + "</strong> el dia <strong>" +
+                                    DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                    "</p>";
+                                CorreosCOM correos = new CorreosCOM();
+                                bool correct = correos.SendMail(mail, subject, mail_to);
+                            }
+                            ViewState["id_actividad"] = "";
+                            hdfid_actividad.Value = "";
+                            btneditarriesgo_Click(null, null);
+                            Toast.Success("Resultado guardado correctamente", "Mensaje del sistema", this);
+                        }
+                        else
                         {
-                            
-                            string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
-                            DataRow usuario = dt_result.Rows[0];
-                            string mail_to = usuario["mail"].ToString() == "" ? "" : (usuario["mail"].ToString() + ";");
-                            string subject = "Módulo de proyectos - Actividad relacionada";
-                            string mail = "<div>" + saludo + " <strong>" +
-                                System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
-                                + "</strong> <div>" +
-                                "<br>" +
-                                "<p>Le fue asignada una actividad, dentro de una evaluación en el proyecto <strong>" + lblproyect.Text + "</strong>" +
-                                "</p>" +
-                                "<p>A continuación, se muestra la información completa:</p>"+
-                                     "<p><strong>Riesgo</strong><br/> " +
-                                  txtriesgo.Text + "</p> " +
-                                   "<p><strong>Actividad/Acción</strong><br/> " +
-                                   txtaccion.Text + "</p> " +
-                                "<br/><p>Este movimiento fue realizado por <strong>" +
-                                System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
-                                + "</strong> el dia <strong>" +
-                                DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
-                                "</p>";
-                            CorreosCOM correos = new CorreosCOM();
-                            bool correct = correos.SendMail(mail, subject, mail_to);
+
+                            Toast.Error("Error al guardar resultado: " + vmensaje, this);
                         }
 
-                    }
-                    AgregarAccionTemporal(id_actividad, id_actividad_tipo, "",false, id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
-                             ddlempleado_a_consultar.SelectedItem.ToString(),
-                            null, txtfechaejecuacion.SelectedDate, funciones.deTextoa64(name), e.File.ContentLength.ToString(), true, 0);
-                    CargarGridAcciones();
-                    txtaccion.Text = "";
-                    div_nueva_Accion.Visible = true;
 
-                    div_cierre_actividad.Visible = false;
-                    txtfilterempleado.Text = "";
-                    txtfechaejecuacion.SelectedDate = DateTime.Now;
-                    CargarDatosFiltros("");
-                    Toast.Success("Acción agregada correctamente", "Mensaje del sistema", this);
+                    }
+                  
+                  
                 }
             }
             catch (Exception ex)
             {
-                Toast.Error("Error al guardar acción: " + ex.Message, this);
+                Toast.Error("Error al guardar resultado: " + ex.Message, this);
             }
             finally {
                 InicializarTablas();
@@ -1006,7 +1029,7 @@ namespace presentacion
                             actividad.nombre = txtaccion.Text;
                             actividad.empleado_resp = ddlempleado_a_consultar.SelectedItem.ToString();
                             actividad.usuario_resp = ddlempleado_a_consultar.SelectedValue;
-                            actividad.fecha_asignacion = txtfechaejecuacion.SelectedDate;
+                            actividad.fecha_asignacion = Convert.ToDateTime(txtfechaejecuacion.SelectedDate);
                             actividad.usuario = Session["usuario"] as string;
                             actividad.resultado = "";
                             actividad.recomendada = true;
@@ -1052,7 +1075,7 @@ namespace presentacion
                             }
 
                         }
-                        AgregarAccionTemporal(id_actividad, id_actividad_tipo,"", false, id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
+                        AgregarAccionTemporal(id_actividad, id_actividad_tipo,"",false, true, id_proyecto, id_riesgo, txtaccion.Text, ddlempleado_a_consultar.SelectedValue,
                             ddlempleado_a_consultar.SelectedItem.ToString(),
                            null, txtfechaejecuacion.SelectedDate, funciones.deTextoa64(name), "0", true, 0);
                         CargarGridAcciones();
@@ -1221,7 +1244,7 @@ namespace presentacion
             try
             {
                 int id_riesgo = Convert.ToInt32(hdf_id_riesgo.Value == "" ? "0" : hdf_id_riesgo.Value);
-                int command = Convert.ToInt32(hdfcommandgrid.Value == "" ? "1" : hdfcommandgrid.Value);
+                int command = Convert.ToInt32(hdfcommandgrid.Value == "" ? "2" : hdfcommandgrid.Value);
                 if (id_riesgo > 0)
                 {
                     RiesgosCOM riesgos = new RiesgosCOM();
@@ -1274,7 +1297,8 @@ namespace presentacion
                                     size = dt_documento.Rows[0]["tamaño"].ToString();
                                     id_documento = Convert.ToInt32(dt_documento.Rows[0]["id_documento"]);
                                 }
-                                AgregarAccionTemporal(Convert.ToInt32(row["id_actividad"]), Convert.ToInt32(row["id_actividad_tipo"]), row["resultado"].ToString(),Convert.ToBoolean(row["recomendada"]),
+                                AgregarAccionTemporal(Convert.ToInt32(row["id_actividad"]), Convert.ToInt32(row["id_actividad_tipo"]),
+                                    row["resultado"].ToString(), Convert.ToBoolean(row["terminada"]), Convert.ToBoolean(row["recomendada"]),
                                     id_proyecto, id_riesgo, nombre, usuario_resp,
                                     empleado_resp, fecha_ejecucion, fecha_asignacion, path, size, true, id_documento);
                             }
@@ -1341,7 +1365,7 @@ namespace presentacion
                 else
                 {
 
-                    Toast.Error("Error al descargar documento", this);
+                    Toast.Error("Esta actividad no contiene documento.", this);
                 }
 
             }
@@ -1350,8 +1374,6 @@ namespace presentacion
                 Toast.Error("Error al descargar documento: " + ex.Message, this);
             }
             finally {
-
-                ModalShow("#modal_riesgo");
                 ModalShow("#modal_acciones");
             }
         }
@@ -1407,14 +1429,11 @@ namespace presentacion
                                 fecha_registro = DateTime.Now,
                                 id_riesgos_estatus = 1,
                                 id_riesgo_probabilidad = 1,
-                                //porc_probabilidad = 0,
-                                //id_riesgo_impacto_costo = 1,
-                                //porc_impcosto = 0,
-                                //id_riesgo_impacto_tiempo = 1,
-                                //porc_imptiempo = 0,
-                                //riesgo_costo = 0,
-                                //riesgo_tiempo = 0,
-                                id_riesgo_estrategia = 1
+                                id_riesgo_impacto = 4,
+                                id_riesgo_estrategia = 1,
+                                valor = 1,
+                                usuario_resp = Session["usuario"] as string,
+                                estrategia =""
                             };
                             list_riesgos.Add(riesgo);
                         }
@@ -1525,6 +1544,22 @@ namespace presentacion
 
         protected void lnkguardaresultados_Click(object sender, EventArgs e)
         {
+            try
+            {
+                int r = AsyncUpload1.UploadedFiles.Count;
+                if (r == 0)
+                {
+                    Toast.Error("Error al guardar resultado: Seleccione un documento como evidencia", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al guardar resultado: " + ex.Message, this);
+            }
+            finally
+            {
+                InicializarTablas();
+            }
 
         }
 
@@ -1532,8 +1567,25 @@ namespace presentacion
         {
             try
             {
+                LinkButton LNK = sender as LinkButton;
+                txtresultado.Text = "";
+                cbxleccionesapren.Checked = true;
+                cbxleccionesapren.Checked = true;
+                ViewState["id_actividad"] = LNK.CommandArgument.ToString();
+                hdfid_actividad.Value = Convert.ToInt32(LNK.CommandArgument).ToString();
                 div_cierre_actividad.Visible = true;
                 div_nueva_Accion.Visible = false;
+
+                ActividadesCOM actividades = new ActividadesCOM();
+                string id_actividad = ViewState["id_actividad"] as string;
+                actividades actividad = actividades.actividad(Convert.ToInt32(id_actividad == "0" ? "" : id_actividad));
+                if (actividad != null)
+                {
+                    txtaccion_title.Text = actividad.nombre;
+                    txtresultado.Text = actividad.resultado;
+                    cbxleccionesapren.Checked = true;
+                    cbxrecomendado.Checked = Convert.ToBoolean(actividad.recomendada);
+                }
             }
             catch (Exception ex)
             {
@@ -1543,6 +1595,27 @@ namespace presentacion
             {
                 InicializarTablas();
                 ModalShow("#modal_acciones");
+            }
+
+        }
+
+        protected void lnkcargarleccionesaprendidas_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id_proyecto_tecnologia = Convert.ToInt32(ViewState[hdfguid.Value + "id_proyecto_tecnologia"]);
+                CargarAccionesHistorial(id_proyecto_tecnologia);
+                ModalShow("#modal_historial_acciones");
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al visualizar resultado: " + ex.Message, this);
+            }
+            finally
+            {
+                InicializarTablas();
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
             }
 
         }
