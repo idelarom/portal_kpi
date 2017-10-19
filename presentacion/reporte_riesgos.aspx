@@ -117,15 +117,15 @@
                                         <th style="min-width: 250px; text-align: center;" scope="col">Riesgo</th>
                                         <th style="min-width: 80px; text-align: center;" scope="col">Tecnologia</th>                                        
                                         <th style="min-width: 80px; text-align: left;" scope="col">Probabilidad</th>
-                                        <th style="min-width: 100px; text-align: left;" scope="col">p_probabilidad</th>
-                                        <th style="min-width: 100px; text-align: left;" scope="col">impacto_costo</th>
-                                        <th style="min-width: 100px; text-align: left;" scope="col">p_impacto_costo</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">impacto_tiempo</th>
-                                        <th style="min-width: 100px; text-align: center;" scope="col">p_impacto_tiempo</th>
+                                        <%--<th style="min-width: 100px; text-align: left;" scope="col">p_probabilidad</th>--%>
+                                       <%-- <th style="min-width: 100px; text-align: left;" scope="col">impacto_costo</th>--%>
+                                       <%-- <th style="min-width: 100px; text-align: left;" scope="col">p_impacto_costo</th>--%>
+                                       <%-- <th style="min-width: 80px; text-align: center;" scope="col">impacto_tiempo</th>--%>
+                                        <%--<th style="min-width: 100px; text-align: center;" scope="col">p_impacto_tiempo</th>--%>
                                         <th style="min-width: 100px; text-align: center;" scope="col">estrategia</th>
                                         <th style="min-width: 30px; text-align: center;" scope="col">fecha_evaluacion</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">riesgo_costo</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">riesgo_tiempo</th>
+                                        <%--<th style="min-width: 80px; text-align: center;" scope="col">riesgo_costo</th>
+                                        <th style="min-width: 80px; text-align: center;" scope="col">riesgo_tiempo</th>--%>
                                         <th style="min-width: 50px; text-align: center;" scope="col">Estatus</th>
                                     </tr>
                                 </thead>
@@ -143,15 +143,15 @@
                                                 </td>
                                                 <td style="text-align: center;"><%# Eval("tecnologia") %></td>                                                
                                                 <td style="text-align: center;"><%# Eval("probabilidad") %></td>
-                                                <td style="text-align: center;"><%# Eval("p_probabilidad") %></td>
-                                                <td style="text-align: center;"><%# Eval("impacto_costo") %></td>
-                                                <td style="text-align: center;"><%# Eval("p_impacto_costo") %></td>
-                                                <td style="text-align: center;"><%# Eval("impacto_tiempo") %></td>
-                                                <td style="text-align: center;"><%# Eval("p_impacto_tiempo") %></td>
+                                               <%-- <td style="text-align: center;"><%# Eval("p_probabilidad") %></td>--%>
+                                              <%--  <td style="text-align: center;"><%# Eval("impacto_costo") %></td>--%>
+                                               <%-- <td style="text-align: center;"><%# Eval("p_impacto_costo") %></td>--%>
+                                                <%--<td style="text-align: center;"><%# Eval("impacto_tiempo") %></td>--%>
+                                               <%-- <td style="text-align: center;"><%# Eval("p_impacto_tiempo") %></td>--%>
                                                 <td style="text-align: center;"><%# Eval("estrategia")%></td>
                                                 <td style="text-align: center;"><%# Eval("fecha_evaluacion", "{0:d}") %></td>
-                                                <td style="text-align: center;"><%# Eval("riesgo_costo") %></td>
-                                                <td style="text-align: center;"><%# Eval("riesgo_tiempo") %></td>
+                                                <%--<td style="text-align: center;"><%# Eval("riesgo_costo") %></td>
+                                                <td style="text-align: center;"><%# Eval("riesgo_tiempo") %></td>--%>
                                                 <td style="text-align: center;"><%# Eval("estatus") %></td>
                                             </tr>b
                                         </ItemTemplate>
