@@ -165,14 +165,17 @@ namespace negocio.Componentes
                 Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                 DataTable dt = new DataTable();
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                IEnumerable<proyectos_historial_tecnologias> tbltecnologias = db.proyectos_historial_tecnologias
+                                   .Where(s => s.id_proyecto == id_proyecto).ToList();
                 var actividades = (from a in db.actividades
                                    join p in db.proyectos on a.id_proyecto equals p.id_proyecto
                                    join pht in db.proyectos_historial_tecnologias on p.id_proyecto equals pht.id_proyecto
                                    join ta in db.actividades_tipos on a.id_actividad_tipo equals ta.id_actividad_tipo
-                                   where (a.usuario_borrado == null && p.id_proyecto == id_proyecto
+                                   where (a.usuario_borrado == null
                                    && p.usuario_borrado == null)
                                    select new
                                    {
+                                       pht.id_proyecto_tecnologia,
                                        a.id_actividad,
                                        a.id_proyecto,
                                        a.id_riesgo,
@@ -186,8 +189,25 @@ namespace negocio.Componentes
                                        a.id_actividad_tipo,
                                        ta.tipo,
                                        a.terminada
-                                   });
-                dt = To.DataTable(actividades.ToList());
+                                   }).Distinct().Take(100).ToArray();
+                var result = (from a in actividades
+                              join tec in tbltecnologias on a.id_proyecto_tecnologia equals tec.id_proyecto_tecnologia
+                              select new {
+                                  a.id_actividad,
+                                  a.id_proyecto,
+                                  a.id_riesgo,
+                                  a.nombre,
+                                  a.usuario_resp,
+                                  a.fecha_ejecucion,
+                                  a.fecha_asignacion,
+                                  a.empleado_resp,
+                                  a.recomendada,
+                                  a.resultado,
+                                  a.id_actividad_tipo,
+                                  a.tipo,
+                                  a.terminada
+                              });
+                dt = To.DataTable(result.ToList());
                 return dt;
             }
             catch (DbEntityValidationException ex)
