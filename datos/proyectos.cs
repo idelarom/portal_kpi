@@ -20,10 +20,10 @@ namespace datos
             this.actividades = new HashSet<actividades>();
             this.documentos = new HashSet<documentos>();
             this.proyectos_evaluaciones = new HashSet<proyectos_evaluaciones>();
+            this.proyectos_historial_tecnologias = new HashSet<proyectos_historial_tecnologias>();
         }
     
         public int id_proyecto { get; set; }
-        public int id_proyecto_tecnologia { get; set; }
         public int id_proyecto_periodo { get; set; }
         public Nullable<int> id_proyecto_estatus { get; set; }
         public string cped { get; set; }
@@ -63,8 +63,9 @@ namespace datos
         public virtual ICollection<documentos> documentos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<proyectos_evaluaciones> proyectos_evaluaciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<proyectos_historial_tecnologias> proyectos_historial_tecnologias { get; set; }
         public virtual proyectos_estatus proyectos_estatus { get; set; }
         public virtual proyectos_periodos proyectos_periodos { get; set; }
-        public virtual proyectos_tecnologias proyectos_tecnologias { get; set; }
     }
 }

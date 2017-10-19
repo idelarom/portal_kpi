@@ -411,7 +411,8 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                               join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                               join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               join pht in db.proyectos_historial_tecnologias on p.id_proyecto equals pht.id_proyecto
+                               join pt in db.proyectos_tecnologias on pht.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (r.id_riesgo == id_riesgo)
                               select new
                               {
@@ -490,7 +491,8 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               join pht in db.proyectos_historial_tecnologias on p.id_proyecto equals pht.id_proyecto
+                               join pt in db.proyectos_tecnologias on pht.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (p.id_proyecto == id_proyecto && r.usuario_borrado == null)
                                orderby(r.riesgo)
                                select new
@@ -553,7 +555,8 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               join pht in db.proyectos_historial_tecnologias on p.id_proyecto equals pht.id_proyecto
+                               join pt in db.proyectos_tecnologias on pht.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (p.usuario_borrado == null
                                  && (r.usuario_borrado==null)
                                   && (r.fecha_registro >= fecha_inicio && r.fecha_registro <= fecha_fin))
@@ -643,13 +646,10 @@ namespace negocio.Componentes
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (r.id_proyecto_evaluacion == id_proyecto_Evaluacion && r.usuario_borrado == null)
                                orderby(r.riesgo)
                                select new
                                {
-                                   pt.id_proyecto_tecnologia,
-                                   tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,
@@ -683,29 +683,39 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="id_proyecto_perido"></param>
         /// <returns></returns>
-        public DataTable riesgos_historial(int id_proyecto_tecnologia)
+        public DataTable riesgos_historial(int id_proyecto)
         {
             try
             {
                 DataTable dt = new DataTable();
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                IEnumerable<proyectos_historial_tecnologias> tbltecnologias= db.proyectos_historial_tecnologias
+                                    .Where(s => s.id_proyecto == id_proyecto).ToList();
                 var riesgos = (from r in db.riesgos
                                join re in db.riesgos_estatus on r.id_riesgos_estatus equals re.id_riesgos_estatus
                                join rp in db.riesgos_probabilidad on r.id_riesgo_probabilidad equals rp.id_riesgo_probabilidad
                                join ric in db.riesgos_impactos on r.id_riesgo_impacto equals ric.id_riesgo_impacto
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
-                               join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
-                               join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                               join pt in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
-                               where (r.usuario_borrado == null && p.id_proyecto_tecnologia== id_proyecto_tecnologia)
+                               join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion                               
+                               join pht in db.proyectos_historial_tecnologias on pe.id_proyecto equals pht.id_proyecto
+                               join pt in db.proyectos_tecnologias on pht.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               where (r.usuario_borrado == null)
+                               orderby(r.fecha_registro)
                                select new
                                {
                                    tecnologia = pt.nombre,
+                                   pht.id_proyecto_tecnologia,
                                    r.riesgo,
                                    r.estrategia                                  
-                               }).Distinct();
-
-                dt = To.DataTable(riesgos.ToList());
+                               }).Distinct().Take(100).ToArray();
+                var result = (from r in riesgos
+                              join tec in tbltecnologias on r.id_proyecto_tecnologia equals tec.id_proyecto_tecnologia
+                              select new
+                              {
+                                  r.riesgo,
+                                  r.estrategia
+                              }).Distinct();
+                dt = To.DataTable(result.ToList());
                 return dt;
             }
             catch (DbEntityValidationException ex)

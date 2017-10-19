@@ -35,6 +35,7 @@ namespace datos
         public virtual DbSet<proyectos> proyectos { get; set; }
         public virtual DbSet<proyectos_estatus> proyectos_estatus { get; set; }
         public virtual DbSet<proyectos_evaluaciones> proyectos_evaluaciones { get; set; }
+        public virtual DbSet<proyectos_historial_tecnologias> proyectos_historial_tecnologias { get; set; }
         public virtual DbSet<proyectos_periodos> proyectos_periodos { get; set; }
         public virtual DbSet<proyectos_tecnologias> proyectos_tecnologias { get; set; }
         public virtual DbSet<riesgos> riesgos { get; set; }
@@ -50,6 +51,11 @@ namespace datos
                 new ObjectParameter("pdocumento", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_cped_Result>("sp_get_cped", pdocumentoParameter);
+        }
+    
+        public virtual ObjectResult<sp_get_tecnologias_historial_Result> sp_get_tecnologias_historial()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_tecnologias_historial_Result>("sp_get_tecnologias_historial");
         }
     
         public virtual int sp_send_mail(string mail, string subject, string mail_to)

@@ -37,7 +37,7 @@
                 <div class="box-body" style="">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12">
-                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Tecnología</strong></h5>
+                            <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Tecnología(s)</strong></h5>
                             <p class="text-muted">
                                 <asp:Label ID="lbltecnologia" runat="server" Text="Label"></asp:Label>
                             </p>

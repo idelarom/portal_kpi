@@ -17,7 +17,7 @@ namespace datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public proyectos_tecnologias()
         {
-            this.proyectos = new HashSet<proyectos>();
+            this.proyectos_historial_tecnologias = new HashSet<proyectos_historial_tecnologias>();
         }
     
         public int id_proyecto_tecnologia { get; set; }
@@ -27,6 +27,6 @@ namespace datos
         public System.DateTime fecha { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<proyectos> proyectos { get; set; }
+        public virtual ICollection<proyectos_historial_tecnologias> proyectos_historial_tecnologias { get; set; }
     }
 }

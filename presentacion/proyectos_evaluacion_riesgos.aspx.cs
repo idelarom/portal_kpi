@@ -50,7 +50,7 @@ namespace presentacion
                     int id_proyecto_periodo = Convert.ToInt32(proyecto["id_proyecto_periodo"]);
                     proyectos_periodos periodo = periodos.proyectos_periodo(id_proyecto_periodo);
                     hdf_dias_periodo.Value = periodo.dias.ToString();
-                    ViewState[hdfguid.Value + "id_proyecto_tecnologia"] = proyecto["id_proyecto_tecnologia"].ToString();
+                    //ViewState[hdfguid.Value + "id_proyecto_tecnologia"] = proyecto["id_proyecto_tecnologia"].ToString();
                     lblproyect.Text = proyecto["proyecto"].ToString();
                     lblperiodo.Text = proyecto["periodo"].ToString();
                 }
@@ -111,12 +111,12 @@ namespace presentacion
         /// Cargar el historial de riesgos con tecnologia similar
         /// </summary>
         /// <param name="id_proyecto_tecnologia"></param>
-        private void CargarRiesgosHistorial(int id_proyecto_tecnologia)
+        private void CargarRiesgosHistorial(int id_proyecto)
         {
             try
             {
                 RiesgosCOM riesgos = new RiesgosCOM();
-                DataTable dt_riesgos = riesgos.riesgos_historial(id_proyecto_tecnologia);
+                DataTable dt_riesgos = riesgos.riesgos_historial(id_proyecto);
                 if(dt_riesgos.Rows.Count > 0)
                 {
                     repetaer_historial_riesgos.DataSource = dt_riesgos;
@@ -135,12 +135,12 @@ namespace presentacion
         /// Cargar el historial de acciones con tecnologia similar
         /// </summary>
         /// <param name="id_proyecto_tecnologia"></param>
-        private void CargarAccionesHistorial(int id_proyecto_tecnologia)
+        private void CargarAccionesHistorial(int id_proyecto)
         {
             try
             {
                 ActividadesCOM actividades = new ActividadesCOM();
-                DataTable dt_riesgos = actividades.actividades_tecnologia(id_proyecto_tecnologia);
+                DataTable dt_riesgos = actividades.actividades_tecnologia(id_proyecto);
                 if (dt_riesgos.Rows.Count > 0)
                 {
                     repeter_hisitorial_acciones.DataSource = dt_riesgos;
@@ -398,9 +398,8 @@ namespace presentacion
                         ModalShow("#modal_riesgo");
                         break;
                     case "importar_riesgos":
-
-                        int id_proyecto_tecnologia = Convert.ToInt32(ViewState[hdfguid.Value + "id_proyecto_tecnologia"]);
-                        CargarRiesgosHistorial(id_proyecto_tecnologia);
+                        
+                        CargarRiesgosHistorial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
                         ModalShow("#modal_historial");
                         break;
                 }
@@ -1603,8 +1602,7 @@ namespace presentacion
         {
             try
             {
-                int id_proyecto_tecnologia = Convert.ToInt32(ViewState[hdfguid.Value + "id_proyecto_tecnologia"]);
-                CargarAccionesHistorial(id_proyecto_tecnologia);
+                CargarAccionesHistorial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
                 ModalShow("#modal_historial_acciones");
             }
             catch (Exception ex)

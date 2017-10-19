@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ClosedXML.Excel;
+using Telerik.Web.UI;
 
 namespace presentacion
 {
@@ -179,17 +180,17 @@ namespace presentacion
             }
         }
 
-        private string Agregar(proyectos id_proyecto)
+        private string Agregar(proyectos id_proyecto, List<proyectos_historial_tecnologias> tecnologias)
         {
             ProyectosCOM Proyecto = new ProyectosCOM();
-            string vmensaje = Proyecto.Agregar(id_proyecto);
+            string vmensaje = Proyecto.Agregar(id_proyecto, tecnologias);
 
             return vmensaje;
         }
-        private string Editar(proyectos id_proyecto)
+        private string Editar(proyectos id_proyecto, List<proyectos_historial_tecnologias> tecnologias)
         {
             ProyectosCOM Proyecto = new ProyectosCOM();
-            string vmensaje = Proyecto.Editar(id_proyecto);
+            string vmensaje = Proyecto.Editar(id_proyecto, tecnologias);
 
             return vmensaje;
         }
@@ -368,7 +369,6 @@ namespace presentacion
                 proyecto.id_proyecto_estatus = Convert.ToInt32(ddlestatus.SelectedValue);
                 proyecto.cveoport = Convert.ToInt32(txtcveop.Text);
                 proyecto.folio_pmt = txtfolopmt.Text;
-                proyecto.id_proyecto_tecnologia = Convert.ToInt32(ddltegnologia.SelectedValue);
 
                 if (id_proyecto > 0) { proyecto.id_proyecto = id_proyecto; }
                 EmpleadosCOM empleados = new EmpleadosCOM();
@@ -398,9 +398,27 @@ namespace presentacion
                 //    proyecto.tipo_moneda = costo[1];
                 //}  
                 
+
                 proyecto.costo_usd = Convert.ToDecimal(txtmonto.Text.Replace("$", "").Replace(",", "").Replace(" ", ""));
                 proyecto.costo_mn = Convert.ToDecimal(txtmontomn.Text.Replace("$", "").Replace(",", "").Replace(" ", ""));
                 proyecto.tipo_moneda = txtmoneda.Text;
+
+
+                List<proyectos_historial_tecnologias> tecnologias = new List<proyectos_historial_tecnologias>();
+                string strtecnologias = "";
+                IList<RadComboBoxItem> list_tecnologias =  ddltegnologia.CheckedItems;
+                foreach (RadComboBoxItem item in list_tecnologias)
+                {
+                    if (item.Checked) {
+                        proyectos_historial_tecnologias tecnologia = new proyectos_historial_tecnologias
+                        {
+                            id_proyecto_tecnologia = Convert.ToInt32(item.Value)
+                        };
+                        strtecnologias = strtecnologias + item.Text + ",";
+                        tecnologias.Add(tecnologia);
+                    }
+                }
+                strtecnologias = strtecnologias.Substring(0,strtecnologias.Length-1);
 
                 if (proyecto.proyecto == "")
                 {
@@ -432,7 +450,7 @@ namespace presentacion
                     ModalShow("#ModalCapturaProyectos");
                     Toast.Error("Error al procesar folio pmtracker : Ingrese un folio pmtracker", this);
                 }
-                else if (proyecto.id_proyecto_tecnologia <= 0)
+                else if (tecnologias.Count <= 0)
                 {
                     ModalShow("#ModalCapturaProyectos");
                     Toast.Error("Error al procesar tecnologia : Seleccione una tecnologia ", this);
@@ -450,7 +468,7 @@ namespace presentacion
                 else
                 {
                     proyecto.usuario_edicion = Session["usuario"] as string;
-                    vmensaje = id_proyecto > 0 ? Editar(proyecto) : Agregar(proyecto);
+                    vmensaje = id_proyecto > 0 ? Editar(proyecto, tecnologias) : Agregar(proyecto,tecnologias);
                     if (vmensaje == "")
                     {
                         if (id_proyecto == 0)
@@ -479,7 +497,7 @@ namespace presentacion
                                        "<p><strong>CPED</strong> <br/> " +
                                        proyecto.cped + "</p> " +
                                        "<p><strong>Tecnología</strong><br/> " +
-                                      ddltegnologia.SelectedItem.ToString() + "</p> " +
+                                     strtecnologias + "</p> " +
                                        "<p><strong>Costo</strong><br/> " +
                                        txtmonto.Text +" USD / "+ txtmontomn.Text + " MN</p> " +
                                        "<p><strong>Duración</strong><br/> " +
@@ -553,7 +571,20 @@ namespace presentacion
                         ddlestatus.SelectedValue = proyecto.id_proyecto_estatus.ToString();
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
-                        ddltegnologia.SelectedValue = proyecto.id_proyecto_tecnologia.ToString();                       
+
+                        ICollection<proyectos_historial_tecnologias> tecnologias = proyecto.proyectos_historial_tecnologias;
+                        foreach (RadComboBoxItem item in ddltegnologia.Items)
+                        {
+                            foreach (proyectos_historial_tecnologias tecnologia in tecnologias)
+                            {
+                                if (item.Value == tecnologia.id_proyecto_tecnologia.ToString())
+                                {
+                                    item.Checked = true;
+                                }
+                            }
+                        }
+
+                        //ddltegnologia.SelectedValue = proyecto.id_proyecto_tecnologia.ToString();                       
                         CargarDatosempleados(proyecto.usuario_resp);
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
