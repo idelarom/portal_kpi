@@ -98,6 +98,7 @@ namespace presentacion
                 ddlstatus.DataSource = dt_estatus;
                 ddlstatus.DataBind();
                 ddlstatus.Items.Insert(0, new ListItem("Todos", "0"));
+                ddlstatus.SelectedValue = "1";
             }
             catch (Exception ex)
             {
