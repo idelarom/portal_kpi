@@ -690,6 +690,9 @@
     <Compile Include="proyectos_evaluaciones.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proyectos_historial_tecnologias.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="proyectos_periodos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
@@ -712,6 +715,9 @@
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_get_cped_Result.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_get_tecnologias_historial_Result.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
   </ItemGroup>

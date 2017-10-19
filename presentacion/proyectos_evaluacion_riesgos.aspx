@@ -656,8 +656,7 @@
                                             <thead>
                                                 <tr style="font-size: 11px;">
                                                     <th style="min-width: 30px; text-align: left;" scope="col">Seleccionar</th>
-                                                    <th style="min-width: 180px; text-align: left;" scope="col">Riesgo</th>
-                                                    <th style="min-width: 100px; text-align: left;" scope="col">Tecnología</th>
+                                                    <th style="min-width: 280px; text-align: left;" scope="col">Riesgo</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -669,7 +668,6 @@
                                                                     name='<%# Eval("riesgo") %>'  estrategia='<%# Eval("estrategia") %>' runat="server" />
                                                             </td>
                                                             <td style="min-width: 350px; text-align: left;"><%# Eval("riesgo") %></td>
-                                                            <td style="min-width: 120px; text-align: left;"><%# Eval("tecnologia") %></td>
 
                                                         </tr>
                                                     </ItemTemplate>

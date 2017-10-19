@@ -158,7 +158,7 @@ namespace negocio.Componentes
             }
         }
 
-        public DataTable actividades_tecnologia(int id_tecnologia)
+        public DataTable actividades_tecnologia(int id_proyecto)
         {
             try
             {
@@ -167,8 +167,9 @@ namespace negocio.Componentes
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
                 var actividades = (from a in db.actividades
                                    join p in db.proyectos on a.id_proyecto equals p.id_proyecto
+                                   join pht in db.proyectos_historial_tecnologias on p.id_proyecto equals pht.id_proyecto
                                    join ta in db.actividades_tipos on a.id_actividad_tipo equals ta.id_actividad_tipo
-                                   where (a.usuario_borrado == null && p.id_proyecto_tecnologia == id_tecnologia
+                                   where (a.usuario_borrado == null && p.id_proyecto == id_proyecto
                                    && p.usuario_borrado == null)
                                    select new
                                    {

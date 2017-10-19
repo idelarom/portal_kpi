@@ -85,7 +85,6 @@
             <PropertyRef Name="id_proyecto" />
           </Key>
           <Property Name="id_proyecto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="id_proyecto_tecnologia" Type="int" Nullable="false" />
           <Property Name="id_proyecto_periodo" Type="int" Nullable="false" />
           <Property Name="id_proyecto_estatus" Type="int" />
           <Property Name="cped" Type="varchar" MaxLength="20" />
@@ -148,6 +147,15 @@
           <Property Name="fecha_edicion" Type="datetime" />
           <Property Name="usuario_borrado" Type="varchar" MaxLength="50" />
           <Property Name="comentarios_borrado" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="proyectos_historial_tecnologias">
+          <Key>
+            <PropertyRef Name="id_proyectoht" />
+          </Key>
+          <Property Name="id_proyectoht" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_proyecto" Type="int" Nullable="false" />
+          <Property Name="id_proyecto_tecnologia" Type="int" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="proyectos_periodos">
           <Key>
@@ -321,6 +329,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_proyectos_historial_tecnologias_proyectos">
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="1" />
+          <End Role="proyectos_historial_tecnologias" Type="Self.proyectos_historial_tecnologias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos">
+              <PropertyRef Name="id_proyecto" />
+            </Principal>
+            <Dependent Role="proyectos_historial_tecnologias">
+              <PropertyRef Name="id_proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_historial_tecnologias_proyectos_tecnologias">
+          <End Role="proyectos_tecnologias" Type="Self.proyectos_tecnologias" Multiplicity="1" />
+          <End Role="proyectos_historial_tecnologias" Type="Self.proyectos_historial_tecnologias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos_tecnologias">
+              <PropertyRef Name="id_proyecto_tecnologia" />
+            </Principal>
+            <Dependent Role="proyectos_historial_tecnologias">
+              <PropertyRef Name="id_proyecto_tecnologia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_proyectos_proyectos_estatus">
           <End Role="proyectos_estatus" Type="Self.proyectos_estatus" Multiplicity="0..1" />
           <End Role="proyectos" Type="Self.proyectos" Multiplicity="*" />
@@ -342,18 +374,6 @@
             </Principal>
             <Dependent Role="proyectos">
               <PropertyRef Name="id_proyecto_periodo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proyectos_proyectos_tecnologias">
-          <End Role="proyectos_tecnologias" Type="Self.proyectos_tecnologias" Multiplicity="1" />
-          <End Role="proyectos" Type="Self.proyectos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proyectos_tecnologias">
-              <PropertyRef Name="id_proyecto_tecnologia" />
-            </Principal>
-            <Dependent Role="proyectos">
-              <PropertyRef Name="id_proyecto_tecnologia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -420,6 +440,7 @@
         <Function Name="sp_get_cped" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pdocumento" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_get_tecnologias_historial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_send_mail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="varchar(max)" Mode="In" />
           <Parameter Name="subject" Type="varchar" Mode="In" />
@@ -434,6 +455,7 @@
           <EntitySet Name="proyectos" EntityType="Self.proyectos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_estatus" EntityType="Self.proyectos_estatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_evaluaciones" EntityType="Self.proyectos_evaluaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proyectos_historial_tecnologias" EntityType="Self.proyectos_historial_tecnologias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_periodos" EntityType="Self.proyectos_periodos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_tecnologias" EntityType="Self.proyectos_tecnologias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos" EntityType="Self.riesgos" Schema="dbo" store:Type="Tables" />
@@ -469,16 +491,20 @@
             <End Role="proyectos" EntitySet="proyectos" />
             <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
           </AssociationSet>
+          <AssociationSet Name="FK_proyectos_historial_tecnologias_proyectos" Association="Self.FK_proyectos_historial_tecnologias_proyectos">
+            <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="proyectos_historial_tecnologias" EntitySet="proyectos_historial_tecnologias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_historial_tecnologias_proyectos_tecnologias" Association="Self.FK_proyectos_historial_tecnologias_proyectos_tecnologias">
+            <End Role="proyectos_tecnologias" EntitySet="proyectos_tecnologias" />
+            <End Role="proyectos_historial_tecnologias" EntitySet="proyectos_historial_tecnologias" />
+          </AssociationSet>
           <AssociationSet Name="FK_proyectos_proyectos_estatus" Association="Self.FK_proyectos_proyectos_estatus">
             <End Role="proyectos_estatus" EntitySet="proyectos_estatus" />
             <End Role="proyectos" EntitySet="proyectos" />
           </AssociationSet>
           <AssociationSet Name="FK_proyectos_proyectos_periodos1" Association="Self.FK_proyectos_proyectos_periodos1">
             <End Role="proyectos_periodos" EntitySet="proyectos_periodos" />
-            <End Role="proyectos" EntitySet="proyectos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proyectos_proyectos_tecnologias" Association="Self.FK_proyectos_proyectos_tecnologias">
-            <End Role="proyectos_tecnologias" EntitySet="proyectos_tecnologias" />
             <End Role="proyectos" EntitySet="proyectos" />
           </AssociationSet>
           <AssociationSet Name="FK_riesgos_proyectos_evaluaciones" Association="Self.FK_riesgos_proyectos_evaluaciones">
@@ -596,7 +622,6 @@
             <PropertyRef Name="id_proyecto" />
           </Key>
           <Property Name="id_proyecto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_proyecto_tecnologia" Type="Int32" Nullable="false" />
           <Property Name="id_proyecto_periodo" Type="Int32" Nullable="false" />
           <Property Name="id_proyecto_estatus" Type="Int32" />
           <Property Name="cped" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -632,9 +657,9 @@
           <NavigationProperty Name="actividades" Relationship="Self.FK_actividades_proyectos" FromRole="proyectos" ToRole="actividades" />
           <NavigationProperty Name="documentos" Relationship="Self.FK_documentos_proyectos" FromRole="proyectos" ToRole="documentos" />
           <NavigationProperty Name="proyectos_evaluaciones" Relationship="Self.FK_proyectos_evaluaciones_proyectos" FromRole="proyectos" ToRole="proyectos_evaluaciones" />
+          <NavigationProperty Name="proyectos_historial_tecnologias" Relationship="Self.FK_proyectos_historial_tecnologias_proyectos" FromRole="proyectos" ToRole="proyectos_historial_tecnologias" />
           <NavigationProperty Name="proyectos_estatus" Relationship="Self.FK_proyectos_proyectos_estatus" FromRole="proyectos" ToRole="proyectos_estatus" />
           <NavigationProperty Name="proyectos_periodos" Relationship="Self.FK_proyectos_proyectos_periodos1" FromRole="proyectos" ToRole="proyectos_periodos" />
-          <NavigationProperty Name="proyectos_tecnologias" Relationship="Self.FK_proyectos_proyectos_tecnologias" FromRole="proyectos" ToRole="proyectos_tecnologias" />
         </EntityType>
         <EntityType Name="proyectos_estatus">
           <Key>
@@ -669,6 +694,17 @@
           <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_evaluaciones_proyectos" FromRole="proyectos_evaluaciones" ToRole="proyectos" />
           <NavigationProperty Name="riesgos" Relationship="Self.FK_riesgos_proyectos_evaluaciones" FromRole="proyectos_evaluaciones" ToRole="riesgos" />
         </EntityType>
+        <EntityType Name="proyectos_historial_tecnologias">
+          <Key>
+            <PropertyRef Name="id_proyectoht" />
+          </Key>
+          <Property Name="id_proyectoht" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyecto" Type="Int32" Nullable="false" />
+          <Property Name="id_proyecto_tecnologia" Type="Int32" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_historial_tecnologias_proyectos" FromRole="proyectos_historial_tecnologias" ToRole="proyectos" />
+          <NavigationProperty Name="proyectos_tecnologias" Relationship="Self.FK_proyectos_historial_tecnologias_proyectos_tecnologias" FromRole="proyectos_historial_tecnologias" ToRole="proyectos_tecnologias" />
+        </EntityType>
         <EntityType Name="proyectos_periodos">
           <Key>
             <PropertyRef Name="id_proyecto_periodo" />
@@ -690,7 +726,7 @@
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_proyectos_tecnologias" FromRole="proyectos_tecnologias" ToRole="proyectos" />
+          <NavigationProperty Name="proyectos_historial_tecnologias" Relationship="Self.FK_proyectos_historial_tecnologias_proyectos_tecnologias" FromRole="proyectos_tecnologias" ToRole="proyectos_historial_tecnologias" />
         </EntityType>
         <EntityType Name="riesgos">
           <Key>
@@ -853,6 +889,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_proyectos_historial_tecnologias_proyectos">
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="1" />
+          <End Role="proyectos_historial_tecnologias" Type="Self.proyectos_historial_tecnologias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos">
+              <PropertyRef Name="id_proyecto" />
+            </Principal>
+            <Dependent Role="proyectos_historial_tecnologias">
+              <PropertyRef Name="id_proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_proyectos_proyectos_estatus">
           <End Role="proyectos_estatus" Type="Self.proyectos_estatus" Multiplicity="0..1" />
           <End Role="proyectos" Type="Self.proyectos" Multiplicity="*" />
@@ -877,18 +925,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_proyectos_proyectos_tecnologias">
-          <End Role="proyectos_tecnologias" Type="Self.proyectos_tecnologias" Multiplicity="1" />
-          <End Role="proyectos" Type="Self.proyectos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proyectos_tecnologias">
-              <PropertyRef Name="id_proyecto_tecnologia" />
-            </Principal>
-            <Dependent Role="proyectos">
-              <PropertyRef Name="id_proyecto_tecnologia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_riesgos_proyectos_evaluaciones">
           <End Role="proyectos_evaluaciones" Type="Self.proyectos_evaluaciones" Multiplicity="1" />
           <End Role="riesgos" Type="Self.riesgos" Multiplicity="*" />
@@ -898,6 +934,18 @@
             </Principal>
             <Dependent Role="riesgos">
               <PropertyRef Name="id_proyecto_evaluacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_historial_tecnologias_proyectos_tecnologias">
+          <End Role="proyectos_tecnologias" Type="Self.proyectos_tecnologias" Multiplicity="1" />
+          <End Role="proyectos_historial_tecnologias" Type="Self.proyectos_historial_tecnologias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos_tecnologias">
+              <PropertyRef Name="id_proyecto_tecnologia" />
+            </Principal>
+            <Dependent Role="proyectos_historial_tecnologias">
+              <PropertyRef Name="id_proyecto_tecnologia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -958,6 +1006,7 @@
           <EntitySet Name="proyectos" EntityType="Self.proyectos" />
           <EntitySet Name="proyectos_estatus" EntityType="Self.proyectos_estatus" />
           <EntitySet Name="proyectos_evaluaciones" EntityType="Self.proyectos_evaluaciones" />
+          <EntitySet Name="proyectos_historial_tecnologias" EntityType="Self.proyectos_historial_tecnologias" />
           <EntitySet Name="proyectos_periodos" EntityType="Self.proyectos_periodos" />
           <EntitySet Name="proyectos_tecnologias" EntityType="Self.proyectos_tecnologias" />
           <EntitySet Name="riesgos" EntityType="Self.riesgos" />
@@ -993,6 +1042,10 @@
             <End Role="proyectos" EntitySet="proyectos" />
             <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
           </AssociationSet>
+          <AssociationSet Name="FK_proyectos_historial_tecnologias_proyectos" Association="Self.FK_proyectos_historial_tecnologias_proyectos">
+            <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="proyectos_historial_tecnologias" EntitySet="proyectos_historial_tecnologias" />
+          </AssociationSet>
           <AssociationSet Name="FK_proyectos_proyectos_estatus" Association="Self.FK_proyectos_proyectos_estatus">
             <End Role="proyectos_estatus" EntitySet="proyectos_estatus" />
             <End Role="proyectos" EntitySet="proyectos" />
@@ -1001,13 +1054,13 @@
             <End Role="proyectos_periodos" EntitySet="proyectos_periodos" />
             <End Role="proyectos" EntitySet="proyectos" />
           </AssociationSet>
-          <AssociationSet Name="FK_proyectos_proyectos_tecnologias" Association="Self.FK_proyectos_proyectos_tecnologias">
-            <End Role="proyectos_tecnologias" EntitySet="proyectos_tecnologias" />
-            <End Role="proyectos" EntitySet="proyectos" />
-          </AssociationSet>
           <AssociationSet Name="FK_riesgos_proyectos_evaluaciones" Association="Self.FK_riesgos_proyectos_evaluaciones">
             <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
             <End Role="riesgos" EntitySet="riesgos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_historial_tecnologias_proyectos_tecnologias" Association="Self.FK_proyectos_historial_tecnologias_proyectos_tecnologias">
+            <End Role="proyectos_tecnologias" EntitySet="proyectos_tecnologias" />
+            <End Role="proyectos_historial_tecnologias" EntitySet="proyectos_historial_tecnologias" />
           </AssociationSet>
           <AssociationSet Name="FK_riesgos_riesgos_estatus" Association="Self.FK_riesgos_riesgos_estatus">
             <End Role="riesgos_estatus" EntitySet="riesgos_estatus" />
@@ -1028,6 +1081,7 @@
           <FunctionImport Name="sp_get_cped" ReturnType="Collection(Proyectos_ConnextModel.sp_get_cped_Result)">
             <Parameter Name="pdocumento" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_get_tecnologias_historial" ReturnType="Collection(Proyectos_ConnextModel.sp_get_tecnologias_historial_Result)" />
           <FunctionImport Name="sp_send_mail">
             <Parameter Name="mail" Mode="In" Type="String" />
             <Parameter Name="subject" Mode="In" Type="String" />
@@ -1039,6 +1093,10 @@
           <Property Type="Decimal" Name="costo_usd" Nullable="true" Precision="18" Scale="4" />
           <Property Type="Decimal" Name="costo_mn" Nullable="true" Precision="18" Scale="4" />
           <Property Type="String" Name="tipo_moneda" Nullable="true" MaxLength="5" />
+        </ComplexType>
+        <ComplexType Name="sp_get_tecnologias_historial_Result">
+          <Property Type="Int32" Name="id_proyecto" Nullable="true" />
+          <Property Type="String" Name="tecnologias" Nullable="true" MaxLength="8000" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1130,7 +1188,6 @@
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos">
               <MappingFragment StoreEntitySet="proyectos">
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
-                <ScalarProperty Name="id_proyecto_tecnologia" ColumnName="id_proyecto_tecnologia" />
                 <ScalarProperty Name="id_proyecto_periodo" ColumnName="id_proyecto_periodo" />
                 <ScalarProperty Name="id_proyecto_estatus" ColumnName="id_proyecto_estatus" />
                 <ScalarProperty Name="cped" ColumnName="cped" />
@@ -1195,6 +1252,16 @@
                 <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
                 <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
                 <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proyectos_historial_tecnologias">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_historial_tecnologias">
+              <MappingFragment StoreEntitySet="proyectos_historial_tecnologias">
+                <ScalarProperty Name="id_proyectoht" ColumnName="id_proyectoht" />
+                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
+                <ScalarProperty Name="id_proyecto_tecnologia" ColumnName="id_proyecto_tecnologia" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1300,6 +1367,14 @@
                 <ScalarProperty Name="costo_usd" ColumnName="costo_usd" />
                 <ScalarProperty Name="costo_mn" ColumnName="costo_mn" />
                 <ScalarProperty Name="tipo_moneda" ColumnName="tipo_moneda" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_get_tecnologias_historial" FunctionName="Proyectos_ConnextModel.Store.sp_get_tecnologias_historial">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Proyectos_ConnextModel.sp_get_tecnologias_historial_Result">
+                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
+                <ScalarProperty Name="tecnologias" ColumnName="tecnologias" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -168,11 +168,11 @@
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 300px; text-align: left;" scope="col">Proyecto</th>
-                                    <th style="min-width: 100px; text-align: left;" scope="col">Usuario</th>
-                                    <th style="min-width: 250px; text-align: left;" scope="col">Empleado responsable</th>
-                                    <th style="min-width: 100px; text-align: left;" scope="col">Estatus</th>
-                                    <th style="min-width: 110px; text-align: left;" scope="col">Periodo evalucion</th>
-                                    <th style="min-width: 80px; text-align: left;" scope="col">Tecnologia</th>
+                                    <th style="min-width:70px; text-align: left;" scope="col">Usuario</th>
+                                    <th style="min-width: 250px; text-align: left;" scope="col">Responsable</th>
+                                    <th style="min-width: 50px; text-align: left;" scope="col">Estatus</th>
+                                    <th style="min-width: 110px; text-align: left;" scope="col">Periodo evaluación</th>
+                                    <th style="min-width:140px; text-align: left;" scope="col">Tecnologia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -292,46 +292,46 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
-                                     <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server" Rows="2" TextMode="MultiLine"></asp:TextBox>
+                                    <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server" Rows="2" TextMode="MultiLine"></asp:TextBox>
                                 </div>
-                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
-                                    <asp:DropDownList ID="ddltegnologia" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
-                                     <%--<telerik:RadComboBox RenderMode="Lightweight" ID="rcbotegnologia" MaxLength="250" runat="server" CheckBoxes="True" Skin="Bootstrap"> </telerik:RadComboBox>--%>
-                                </div>                                
-                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo de evaluación </strong></h5>
-                                     <asp:DropDownList ID="ddlperiodo" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
+                                    <telerik:RadComboBox RenderMode="Lightweight" ID="ddltegnologia" Width="100%" MaxLength="250" runat="server" 
+                                        CheckBoxes="True" Skin="Bootstrap"> </telerik:RadComboBox>
                                 </div>
-                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo de evaluación </strong></h5>
+                                    <asp:DropDownList ID="ddlperiodo" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                                     <asp:DropDownList ID="ddlestatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
-                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
                                     <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcveop_TextChanged" TextMode="Number" onkeypress="return validarEnteros(event);" AutoPostBack="true"></asp:TextBox>
                                 </div>
-                                </div>                             
-                                <div class="row">
-                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            </div>                             
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
                                     <asp:TextBox ID="txtfolopmt" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtfolopmt_TextChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
-                               
-                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;CPED</strong></h5>
                                     <asp:TextBox ID="txtcped" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcped_TextChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
-                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto USD</strong></h5>
                                     <asp:TextBox ID="txtmonto" MaxLength="250" CssClass=" form-control" runat="server" Enabled="false"></asp:TextBox>
                                 </div>
-                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto MN</strong></h5>
                                     <asp:TextBox ID="txtmontomn" MaxLength="250" CssClass=" form-control" runat="server" Enabled="false"></asp:TextBox>
-                                     <asp:TextBox ID="txtmoneda" MaxLength="250" CssClass=" form-control" runat="server" Enabled="false" Visible="false"></asp:TextBox>
+                                    <asp:TextBox ID="txtmoneda" MaxLength="250" CssClass=" form-control" runat="server" Enabled="false" Visible="false"></asp:TextBox>
                                 </div>
-                                </div>
+                            </div>
                             <div class="row">
                                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                      <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
@@ -342,29 +342,30 @@
                                     <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
                             </div>
-                             <div class="row">
-                                    <div class="col-lg-12 col-xs-12">
-                                        <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Seleccione el empleado responsable del proyecto</strong>
-                                            &nbsp; 
-                                        </h6>
-                                        <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
-                                            <asp:TextBox
-                                                onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
-                                                placeholder="Ingrese un filtro" runat="server"></asp:TextBox>
-                                            <span class="input-group-btn">
-                                                <asp:LinkButton ID="lnksearch" CssClass="btn btn-primary btn-flat"
-                                                    OnClientClick="return ChangedTextLoad2();" OnClick="lnksearch_Click" runat="server">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-122">
+                                    <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Empleado responsable del proyecto</strong>
+                                        &nbsp; 
+                                    </h6>
+                                    <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
+                                        <asp:TextBox
+                                            onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
+                                            placeholder="Ingrese un filtro" runat="server"></asp:TextBox>
+                                        <span class="input-group-btn">
+                                            <asp:LinkButton ID="lnksearch" CssClass="btn btn-primary btn-flat"
+                                                OnClientClick="return ChangedTextLoad2();" OnClick="lnksearch_Click" runat="server">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
-                                                </asp:LinkButton>
-                                            </span>
-                                        </div>
-                                        <asp:Image ID="imgloadempleado" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
-                                        <label id="lblbemp" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
-                                        <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control"
-                                            AutoPostBack="true"  runat="server">
-                                        </asp:DropDownList>
+                                            </asp:LinkButton>
+                                        </span>
                                     </div>
+                                    <asp:Image ID="imgloadempleado" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
+                                    <label id="lblbemp" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
+                                    <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control"
+                                        AutoPostBack="true" runat="server">
+                                    </asp:DropDownList>
                                 </div>
+                                
+                            </div>
                         </div>
 
                         <div class="modal-footer ">

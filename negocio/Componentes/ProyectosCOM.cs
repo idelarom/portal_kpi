@@ -18,7 +18,7 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Agregar(proyectos entidad)
+        public string Agregar(proyectos entidad, List<proyectos_historial_tecnologias> tecnologias)
         {
             try
             {
@@ -49,13 +49,19 @@ namespace negocio.Componentes
                         costo_usd = entidad.costo_usd,
                         usuario = entidad.usuario.ToUpper(),                    
                         fecha_registro = DateTime.Now,
-                        id_proyecto_tecnologia= entidad.id_proyecto_tecnologia,
                         cped =entidad.cped,
                         tipo_moneda = entidad.tipo_moneda
                        
                     };
                     Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
                     context.proyectos.Add(proyecto);
+                    context.SaveChanges();
+                    foreach (proyectos_historial_tecnologias tecnologia in tecnologias)
+                    {
+                        tecnologia.id_proyecto = proyecto.id_proyecto;
+                        tecnologia.activo = true;
+                        context.proyectos_historial_tecnologias.Add(tecnologia);
+                    }
                     context.SaveChanges();
                 }
                 return mess;
@@ -75,7 +81,7 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Editar(proyectos entidad)
+        public string Editar(proyectos entidad,List<proyectos_historial_tecnologias> tecnologias)
         {
             try
             {
@@ -98,12 +104,24 @@ namespace negocio.Componentes
                 proyecto.fecha_fin = entidad.fecha_fin;
                 proyecto.usuario_edicion = entidad.usuario_edicion.ToUpper();
                 proyecto.fecha_edicion = DateTime.Now;
-                proyecto.id_proyecto_tecnologia = entidad.id_proyecto_tecnologia;
                 proyecto.usuario_resp = entidad.usuario_resp;
                 proyecto.cped = entidad.cped;
                 proyecto.costo_usd = entidad.costo_usd;
                 proyecto.costo_mn = entidad.costo_mn;
                 proyecto.tipo_moneda = entidad.tipo_moneda;
+                context.SaveChanges();
+                List<proyectos_historial_tecnologias> tecnologias_historial = proyecto.proyectos_historial_tecnologias.ToList();
+                foreach (proyectos_historial_tecnologias ptecno in tecnologias_historial)
+                {
+                    context.proyectos_historial_tecnologias.Remove(ptecno);
+                }
+                context.SaveChanges();
+                foreach (proyectos_historial_tecnologias tecnologia in tecnologias)
+                {                    
+                    tecnologia.id_proyecto = proyecto.id_proyecto;
+                    tecnologia.activo = true;
+                    context.proyectos_historial_tecnologias.Add(tecnologia);
+                }
                 context.SaveChanges();
                 return "";
             }
@@ -262,6 +280,9 @@ namespace negocio.Componentes
             }
         }
 
+
+
+       
         /// <summary>
         /// Devuelve un listado de instancias de la clase evaluaciones por proyectos
         /// </summary>
@@ -315,15 +336,13 @@ namespace negocio.Componentes
             {
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                List<sp_get_tecnologias_historial_Result> tecnologias = db.sp_get_tecnologias_historial().ToList();
                 var proyectos = (from p in db.proyectos
                                  join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
-                                 join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
                                  where (p.usuario_borrado == null && p.id_proyecto == id_proyecto)
                                  select new
                                  {
-                                     p.id_proyecto_tecnologia,
-                                     tecnologia = t.nombre,
                                      p.usuario,
                                      p.id_proyecto,
                                      p.id_proyecto_estatus,
@@ -344,9 +363,11 @@ namespace negocio.Componentes
                                  }).ToArray();
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in proyectos
+                              join tec in tecnologias on p.id_proyecto equals tec.id_proyecto
                               join up in dbnavision.Employee on p.usuario_resp.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
                               select new
                               {
+                                  tecnologia= tec.tecnologias,
                                   usuario = p.usuario_resp,
                                   empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
                                   p.id_proyecto,
@@ -361,8 +382,6 @@ namespace negocio.Componentes
                                   p.fecha_registro,
                                   p.fecha_inicio,
                                   p.fecha_fin,
-                                  p.id_proyecto_tecnologia,
-                                  p.tecnologia,
                                   p.costo_mn,
                                   p.cped,
                                   p.costo_usd
@@ -404,15 +423,13 @@ namespace negocio.Componentes
                     list_emp.Add(empleado);
                 }
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                List<sp_get_tecnologias_historial_Result> tecnologias = db.sp_get_tecnologias_historial().ToList();
                 var proyectos = (from p in db.proyectos
                                  join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
-                                 join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
                                  where (p.usuario_borrado == null && (p.id_proyecto_estatus == (id_proyecto_estatus>0?id_proyecto_estatus:p.id_proyecto_estatus))) 
                                  select new
                                  {
-                                     p.id_proyecto_tecnologia,
-                                     tecnologia = t.nombre,
                                      p.usuario,
                                      p.id_proyecto,
                                      p.id_proyecto_estatus,
@@ -448,8 +465,6 @@ namespace negocio.Componentes
                                       p.fecha_registro,
                                       p.fecha_inicio,
                                       p.fecha_fin,
-                                      p.id_proyecto_tecnologia,
-                                      p.tecnologia,
                                       p.usuario_resp,
                                       p.costo_mn,
                                       p.cped,
@@ -458,9 +473,11 @@ namespace negocio.Componentes
                                   });
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in tproyectos
+                              join tec in tecnologias on p.id_proyecto equals tec.id_proyecto
                               join up in dbnavision.Employee on p.usuario_resp.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
                               select new
                               {
+                                  tecnologia = tec.tecnologias,
                                   usuario = p.usuario_resp,
                                   empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
                                   p.id_proyecto,
@@ -475,8 +492,6 @@ namespace negocio.Componentes
                                   p.fecha_registro,
                                   p.fecha_inicio,
                                   p.fecha_fin,
-                                  p.id_proyecto_tecnologia,
-                                  p.tecnologia,
                                   p.costo_mn,
                                   p.cped,
                                   p.costo_usd,
@@ -522,17 +537,15 @@ namespace negocio.Componentes
                     list_emp.Add(empleado);
                 }
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                List<sp_get_tecnologias_historial_Result> tecnologias = db.sp_get_tecnologias_historial().ToList();
                 var proyectos = (from p in db.proyectos
                                  join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
-                                 join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
                                  where (p.usuario_borrado == null
                                  && (p.id_proyecto_estatus == (id_proyecto_estatus > 0 ? id_proyecto_estatus : p.id_proyecto_estatus))
                                   && (p.fecha_registro >= fecha_inicio && p.fecha_registro <= fecha_fin))
                                  select new
                                  {
-                                     p.id_proyecto_tecnologia,
-                                     tecnologia = t.nombre,
                                      p.usuario,
                                      p.id_proyecto,
                                      p.id_proyecto_estatus,
@@ -569,8 +582,6 @@ namespace negocio.Componentes
                                       p.fecha_registro,
                                       p.fecha_inicio,
                                       p.fecha_fin,
-                                      p.id_proyecto_tecnologia,
-                                      p.tecnologia,
                                       p.usuario_resp,
                                       p.costo_mn,
                                       p.cped,
@@ -579,9 +590,11 @@ namespace negocio.Componentes
                                   });
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in tproyectos
+                              join tec in tecnologias on p.id_proyecto equals tec.id_proyecto
                               join up in dbnavision.Employee on p.usuario_resp.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
                               select new
                               {
+                                  tecnologia= tec.tecnologias,
                                   usuario = p.usuario_resp,
                                   empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
                                   p.id_proyecto,
@@ -596,8 +609,6 @@ namespace negocio.Componentes
                                   p.fecha_registro,
                                   p.fecha_inicio,
                                   p.fecha_fin,
-                                  p.id_proyecto_tecnologia,
-                                  p.tecnologia,
                                   p.costo_mn,
                                   p.cped,
                                   p.costo_usd,
@@ -633,16 +644,14 @@ namespace negocio.Componentes
                     list_emp.Add(empleado);
                 }
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                List<sp_get_tecnologias_historial_Result> tecnologias = db.sp_get_tecnologias_historial().ToList();
                 var proyectos = (from p in db.proyectos
                                  join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
-                                 join t in db.proyectos_tecnologias on p.id_proyecto_tecnologia equals t.id_proyecto_tecnologia
                                  where (p.usuario_borrado == null && p.id_proyecto_estatus == 1)
                                  orderby (p.fecha_registro)
                                  select new
                                  {
-                                     p.id_proyecto_tecnologia,
-                                     tecnologia = t.nombre,
                                      p.usuario,
                                      p.id_proyecto,
                                      p.id_proyecto_estatus,
@@ -676,16 +685,16 @@ namespace negocio.Componentes
                                       p.fecha_registro,
                                       p.fecha_inicio,
                                       p.fecha_fin,
-                                      p.id_proyecto_tecnologia,
-                                      p.tecnologia,
                                       p.usuario_resp
                                   });
                 NAVISION dbnavision = new NAVISION();
                 var results = from p in tproyectos
+                              join tec in tecnologias on p.id_proyecto equals tec.id_proyecto
                               join up in dbnavision.Employee on p.usuario_resp.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
                               orderby(p.fecha_registro)
                               select new
                               {
+                                  tecnologia= tec.tecnologias,
                                   usuario = p.usuario_resp,
                                   empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
                                   p.id_proyecto,
@@ -699,9 +708,7 @@ namespace negocio.Componentes
                                   p.descripcion,
                                   p.fecha_registro,
                                   p.fecha_inicio,
-                                  p.fecha_fin,
-                                  p.id_proyecto_tecnologia,
-                                  p.tecnologia
+                                  p.fecha_fin
                               };
                 dt = To.DataTable(results.ToList());
                 return dt;
