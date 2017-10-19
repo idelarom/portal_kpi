@@ -176,133 +176,7 @@
             </div>
         </div>
 
-         <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_acciones" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg" role="document">
-            <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="btneditarriesgo" EventName="Click" />
-                    <asp:AsyncPostBackTrigger ControlID="lnkacciones" EventName="Click" />
-                    <asp:PostBackTrigger ControlID="btndescargardocumento" />
-
-                </Triggers>
-                <ContentTemplate>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Acciones</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Accion</strong></h5>
-                                    <asp:TextBox ID="txtaccion" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha de ejecución</strong></h5>
-                                     <telerik:RadDatePicker ID="txtfechaejecuacion" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Documento</strong></h5>
-                                    <telerik:RadAsyncUpload RenderMode="Lightweight" ID="AsyncUpload1" runat="server"
-                                        OnFileUploaded="AsyncUpload1_FileUploaded" PostbackTriggers="lnkguardaracciones"
-                                        MaxFileSize="2097152" Width="100%"
-                                        AutoAddFileInputs="false" Localization-Select="Seleccionar" Skin="Silk" />
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 col-sm-12 col-xs-12">
-                                    <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Seleccione el empleado responsable</strong>
-                                        &nbsp; 
-                                    </h6>
-                                    <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
-                                        <asp:TextBox
-                                            onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
-                                            placeholder="Ingrese un filtro" runat="server"></asp:TextBox>
-                                        <span class="input-group-btn">
-                                            <asp:LinkButton ID="lnksearch" CssClass="btn btn-primary btn-flat"
-                                                OnClientClick="return ChangedTextLoad2();" OnClick="lnksearch_Click" runat="server">
-                                                <i class="fa fa-search" aria-hidden="true"></i>
-                                            </asp:LinkButton>
-                                        </span>
-                                    </div>
-                                    <asp:Image ID="imgloadempleado" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
-                                    <label id="lblbemp" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
-                                    <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control" runat="server">
-                                    </asp:DropDownList>
-                                </div>
-                                <div class="col-lg-12 col-sm-12 col-xs-12">
-                                    <br />
-                                    <asp:LinkButton OnClientClick="return false;" ID="lnkcargando2" CssClass="btn btn-danger btn-flat pull-right btn-sm" runat="server" Style="display: none;">
-                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
-                                            <span class="sr-only">Loading...</span>&nbsp;Agregando
-                                    </asp:LinkButton>
-                                    <asp:LinkButton ID="lnkguardaracciones" OnClientClick="return ConfirmwidgetProyectoModal2('¿Desea Guardar esta acción?');"
-                                        OnClick="lnkguardaracciones_Click" CssClass="btn btn-danger btn-flat pull-right btn-sm" runat="server">
-                                            Agregar acción&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
-                                    </asp:LinkButton>
-                                </div>
-                                <div class="col-lg-12 col-xs-12">
-                                    <div class="table table-responsive" style="height: 130px; overflow: scroll;">
-                                        <telerik:RadGrid ID="grid_acciones" runat="server" Skin="Metro">
-                                            <MasterTableView AutoGenerateColumns="false" CssClass="table table-responsive table-bordered"
-                                                HeaderStyle-BackColor="White" HeaderStyle-ForeColor="Black" Style="font-size: 9px"
-                                                Width="100%">
-                                                <Columns>
-                                                    <telerik:GridTemplateColumn>
-                                                        <HeaderStyle Width="20px" />
-                                                        <ItemStyle HorizontalAlign="Center" />
-                                                        <ItemTemplate>
-                                                            <asp:LinkButton ID="lnkeliminarparticipante"
-                                                                OnClientClick="return confirm('¿Desea Eliminar esta acción?');"
-                                                                OnClick="lnkeliminarparticipante_Click" runat="server" CommandName="View"
-                                                                CommandArgument='<%# DataBinder.Eval(Container.DataItem, "id_actividad").ToString() %>'>
-                                                        <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-                                                            </asp:LinkButton>
-                                                        </ItemTemplate>
-                                                    </telerik:GridTemplateColumn>
-                                                    <telerik:GridTemplateColumn>
-                                                        <HeaderStyle Width="20px" />
-                                                        <ItemStyle HorizontalAlign="Center" />
-                                                        <ItemTemplate>
-                                                            <asp:LinkButton ID="lnkdescargararchivo" OnClientClick='<%# "return DownloadFile("+ DataBinder.Eval(Container.DataItem, "id_actividad").ToString()+");" %>'
-                                                                OnClick="lnkdescargararchivo_Click" runat="server" CommandName="Download"
-                                                                CommandArgument='<%# DataBinder.Eval(Container.DataItem, "id_actividad").ToString() %>'>
-                                                        <i class="fa fa-file-archive-o fa-2x" aria-hidden="true"></i>
-                                                            </asp:LinkButton>
-                                                        </ItemTemplate>
-                                                    </telerik:GridTemplateColumn>
-                                                    <telerik:GridBoundColumn DataField="nombre" HeaderText="Acción" UniqueName="accion"
-                                                        Visible="true">
-                                                    </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn DataField="empleado_resp" HeaderText="Responsable" UniqueName="empleado_resp"
-                                                        Visible="true">
-                                                        <HeaderStyle Width="200px" />
-                                                    </telerik:GridBoundColumn>
-
-                                                    <telerik:GridTemplateColumn HeaderText="Fecha ejecución">
-                                                        <HeaderStyle Width="110px" />
-                                                        <ItemStyle HorizontalAlign="Left" />
-                                                        <ItemTemplate>
-                                                            <label><%# Convert.ToDateTime(DataBinder.Eval(Container.DataItem, "fecha_ejecucion")).ToString("dd MMMM yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %></label>
-                                                        </ItemTemplate>
-                                                    </telerik:GridTemplateColumn>
-                                                </Columns>
-                                            </MasterTableView>
-                                        </telerik:RadGrid>
-
-                                    </div>
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar acciones</button>
-                                </div>
-                                <asp:HiddenField ID="hdfid_riesgo" runat="server" />
-                            </div>
-                        </div>
-                    </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
-        </div>
-    </div>
+         
 
         <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
@@ -346,12 +220,6 @@
             </asp:UpdatePanel>
         </div>
     </div>
-    <asp:HiddenField ID="hdfguid" runat="server" />
-    <asp:HiddenField ID="hdfid_actividad" runat="server" />
-    <asp:HiddenField ID="hdfmotivos" runat="server" />
-    <asp:HiddenField ID="hdfcommandgrid" runat="server" />
-    <asp:Button ID="btneditarriesgo" OnClick="btneditarriesgo_Click" runat="server" Text="" Style="display: none" />
-    <asp:Button ID="btndescargardocumento" OnClick="lnkdescargararchivo_Click" runat="server" Text="" Style="display: none" />
     <asp:HiddenField ID="hdfsessionid" runat="server" />
     </div>
 </asp:Content>
