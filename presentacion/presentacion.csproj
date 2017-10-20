@@ -1222,6 +1222,8 @@
     <Content Include="primitive\primitives.min.js" />
     <Content Include="proyectos_dashboard.aspx" />
     <Content Include="proyectos_evaluacion_riesgos.aspx" />
+    <Content Include="proyectos_minutas.aspx" />
+    <Content Include="proyectos_recursos.aspx" />
     <Content Include="recordatorios.aspx" />
     <Content Include="reporte_dashboard_bonos_kpi.aspx" />
     <Content Include="reporte_dashboard_compromisos_kpi.aspx" />
@@ -1445,6 +1447,20 @@
     </Compile>
     <Compile Include="proyectos_evaluacion_riesgos.aspx.designer.cs">
       <DependentUpon>proyectos_evaluacion_riesgos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="proyectos_minutas.aspx.cs">
+      <DependentUpon>proyectos_minutas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="proyectos_minutas.aspx.designer.cs">
+      <DependentUpon>proyectos_minutas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="proyectos_recursos.aspx.cs">
+      <DependentUpon>proyectos_recursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="proyectos_recursos.aspx.designer.cs">
+      <DependentUpon>proyectos_recursos.aspx</DependentUpon>
     </Compile>
     <Compile Include="recordatorios.aspx.cs">
       <DependentUpon>recordatorios.aspx</DependentUpon>

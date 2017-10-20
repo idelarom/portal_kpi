@@ -168,7 +168,7 @@
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 300px; text-align: left;" scope="col">Proyecto</th>
-                                    <th style="min-width:70px; text-align: left;" scope="col">Usuario</th>
+                                    <th style="min-width:60px; text-align: left;" scope="col">Usuario</th>
                                     <th style="min-width: 250px; text-align: left;" scope="col">Responsable</th>
                                     <th style="min-width: 50px; text-align: left;" scope="col">Estatus</th>
                                     <th style="min-width: 110px; text-align: left;" scope="col">Periodo evaluación</th>
@@ -188,7 +188,7 @@
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
                                                     onclick='<%# "return ConfirmEntregableDelete("+Eval("id_proyecto")+");" %>'>
-                                                    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                                    <i class="fa fa-handshake-o fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                              <td>

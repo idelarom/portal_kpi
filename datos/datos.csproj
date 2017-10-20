@@ -684,6 +684,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Proyectos_Connext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="proyectos_empleados.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="proyectos_estatus.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
@@ -691,6 +694,15 @@
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="proyectos_historial_tecnologias.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proyectos_minutas.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proyectos_minutas_participantes.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proyectos_minutas_pendientes.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="proyectos_periodos.cs">

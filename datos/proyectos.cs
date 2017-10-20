@@ -19,8 +19,10 @@ namespace datos
         {
             this.actividades = new HashSet<actividades>();
             this.documentos = new HashSet<documentos>();
+            this.proyectos_empleados = new HashSet<proyectos_empleados>();
             this.proyectos_evaluaciones = new HashSet<proyectos_evaluaciones>();
             this.proyectos_historial_tecnologias = new HashSet<proyectos_historial_tecnologias>();
+            this.proyectos_minutas = new HashSet<proyectos_minutas>();
         }
     
         public int id_proyecto { get; set; }
@@ -62,9 +64,13 @@ namespace datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<documentos> documentos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<proyectos_empleados> proyectos_empleados { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<proyectos_evaluaciones> proyectos_evaluaciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<proyectos_historial_tecnologias> proyectos_historial_tecnologias { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<proyectos_minutas> proyectos_minutas { get; set; }
         public virtual proyectos_estatus proyectos_estatus { get; set; }
         public virtual proyectos_periodos proyectos_periodos { get; set; }
     }

@@ -46,6 +46,7 @@ namespace presentacion
                 if (dt.Rows.Count > 0)
                 {
                     CargarRiesgos(id_proyecto);
+                    CargarRecursos(id_proyecto);
                     DataRow proyecto = dt.Rows[0];
                     hdfid_proyecto.Value = id_proyecto.ToString();
                     lblproyect.Text = proyecto["proyecto"].ToString();
@@ -81,6 +82,20 @@ namespace presentacion
             }
         }
 
+
+        private void CargarRecursos(int id_proyecto)
+        {
+            try
+            {
+                ProyectosEmpleadosCOM empleados = new ProyectosEmpleadosCOM();
+                DataTable dt = empleados.empleados_proyecto(id_proyecto);                
+                lblrecursos.Text = dt.Rows.Count.ToString();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del proyecto(recursos): " + ex.Message, this);
+            }
+        }
         protected void lnkgo_riesgos_Click(object sender, EventArgs e)
         {
             Response.Redirect("proyectos_evaluacion_riesgos.aspx?id_proyecto="+Request.QueryString["id_proyecto"]);
@@ -178,6 +193,12 @@ namespace presentacion
             {
                 Toast.Error("Error al terminar proyecto: Seleccione un archivo.", this);
             }
+        }
+
+        protected void lnkrecursos_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("proyectos_recursos.aspx?id_proyecto=" + Request.QueryString["id_proyecto"]);
+
         }
     }
 }

@@ -118,6 +118,18 @@
           <Property Name="comentarios_borrado" Type="varchar" MaxLength="250" />
           <Property Name="fecha_borrado" Type="datetime" />
         </EntityType>
+        <EntityType Name="proyectos_empleados">
+          <Key>
+            <PropertyRef Name="id_proyectoe" />
+          </Key>
+          <Property Name="id_proyectoe" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_proyecto" Type="int" Nullable="false" />
+          <Property Name="administrador_proyecto" Type="bit" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="usuario_registro" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="proyectos_estatus">
           <Key>
             <PropertyRef Name="id_proyecto_estatus" />
@@ -156,6 +168,64 @@
           <Property Name="id_proyecto" Type="int" Nullable="false" />
           <Property Name="id_proyecto_tecnologia" Type="int" Nullable="false" />
           <Property Name="activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="proyectos_minutas">
+          <Key>
+            <PropertyRef Name="id_proyectomin" />
+          </Key>
+          <Property Name="id_proyectomin" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_proyecto" Type="int" Nullable="false" />
+          <Property Name="asunto" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="propósito" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="resultados" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="acuerdos" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="lugar" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="enviada" Type="bit" Nullable="false" />
+          <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="usuario_edicion" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_edicion" Type="datetime" />
+          <Property Name="usuario_borrado" Type="varchar" MaxLength="50" />
+          <Property Name="comentarios_borrado" Type="varchar" MaxLength="250" />
+          <Property Name="fecha_borrado" Type="datetime" />
+        </EntityType>
+        <EntityType Name="proyectos_minutas_participantes">
+          <Key>
+            <PropertyRef Name="id_proyectominpart" />
+          </Key>
+          <Property Name="id_proyectominpart" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_proyectomin" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="nombre" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" />
+          <Property Name="organización" Type="varchar" MaxLength="1000" />
+          <Property Name="rol" Type="varchar" MaxLength="1000" />
+          <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+          <Property Name="usuario_registro" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_edicion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_borrado" Type="datetime" />
+          <Property Name="usuario_borrado" Type="varchar" MaxLength="50" />
+          <Property Name="comentarios_borrado" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="proyectos_minutas_pendientes">
+          <Key>
+            <PropertyRef Name="id_proyectominpen" />
+          </Key>
+          <Property Name="id_proyectominpen" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_proyectomin" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="avance" Type="tinyint" />
+          <Property Name="nombre" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="usuario_resp" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_planeada" Type="datetime" Nullable="false" />
+          <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+          <Property Name="usuario_registro" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="usuario_edicion" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_edicion" Type="datetime" />
+          <Property Name="usuario_borrado" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_borrado" Type="datetime" />
+          <Property Name="comentarios_borrado" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="proyectos_periodos">
           <Key>
@@ -317,6 +387,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_proyectos_empleados_proyectos">
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="1" />
+          <End Role="proyectos_empleados" Type="Self.proyectos_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos">
+              <PropertyRef Name="id_proyecto" />
+            </Principal>
+            <Dependent Role="proyectos_empleados">
+              <PropertyRef Name="id_proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_proyectos_evaluaciones_proyectos">
           <End Role="proyectos" Type="Self.proyectos" Multiplicity="1" />
           <End Role="proyectos_evaluaciones" Type="Self.proyectos_evaluaciones" Multiplicity="*" />
@@ -350,6 +432,42 @@
             </Principal>
             <Dependent Role="proyectos_historial_tecnologias">
               <PropertyRef Name="id_proyecto_tecnologia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_minutas_participantes_proyectos_minutas">
+          <End Role="proyectos_minutas" Type="Self.proyectos_minutas" Multiplicity="0..1" />
+          <End Role="proyectos_minutas_participantes" Type="Self.proyectos_minutas_participantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos_minutas">
+              <PropertyRef Name="id_proyectomin" />
+            </Principal>
+            <Dependent Role="proyectos_minutas_participantes">
+              <PropertyRef Name="id_proyectomin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_minutas_pendientes_proyectos_minutas">
+          <End Role="proyectos_minutas" Type="Self.proyectos_minutas" Multiplicity="1" />
+          <End Role="proyectos_minutas_pendientes" Type="Self.proyectos_minutas_pendientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos_minutas">
+              <PropertyRef Name="id_proyectomin" />
+            </Principal>
+            <Dependent Role="proyectos_minutas_pendientes">
+              <PropertyRef Name="id_proyectomin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_minutas_proyectos">
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="1" />
+          <End Role="proyectos_minutas" Type="Self.proyectos_minutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos">
+              <PropertyRef Name="id_proyecto" />
+            </Principal>
+            <Dependent Role="proyectos_minutas">
+              <PropertyRef Name="id_proyecto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -453,9 +571,13 @@
           <EntitySet Name="documentos" EntityType="Self.documentos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="documentos_tipos" EntityType="Self.documentos_tipos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos" EntityType="Self.proyectos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proyectos_empleados" EntityType="Self.proyectos_empleados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_estatus" EntityType="Self.proyectos_estatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_evaluaciones" EntityType="Self.proyectos_evaluaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_historial_tecnologias" EntityType="Self.proyectos_historial_tecnologias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proyectos_minutas" EntityType="Self.proyectos_minutas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proyectos_minutas_participantes" EntityType="Self.proyectos_minutas_participantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proyectos_minutas_pendientes" EntityType="Self.proyectos_minutas_pendientes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_periodos" EntityType="Self.proyectos_periodos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_tecnologias" EntityType="Self.proyectos_tecnologias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos" EntityType="Self.riesgos" Schema="dbo" store:Type="Tables" />
@@ -487,6 +609,10 @@
             <End Role="proyectos" EntitySet="proyectos" />
             <End Role="documentos" EntitySet="documentos" />
           </AssociationSet>
+          <AssociationSet Name="FK_proyectos_empleados_proyectos" Association="Self.FK_proyectos_empleados_proyectos">
+            <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="proyectos_empleados" EntitySet="proyectos_empleados" />
+          </AssociationSet>
           <AssociationSet Name="FK_proyectos_evaluaciones_proyectos" Association="Self.FK_proyectos_evaluaciones_proyectos">
             <End Role="proyectos" EntitySet="proyectos" />
             <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
@@ -498,6 +624,18 @@
           <AssociationSet Name="FK_proyectos_historial_tecnologias_proyectos_tecnologias" Association="Self.FK_proyectos_historial_tecnologias_proyectos_tecnologias">
             <End Role="proyectos_tecnologias" EntitySet="proyectos_tecnologias" />
             <End Role="proyectos_historial_tecnologias" EntitySet="proyectos_historial_tecnologias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_minutas_participantes_proyectos_minutas" Association="Self.FK_proyectos_minutas_participantes_proyectos_minutas">
+            <End Role="proyectos_minutas" EntitySet="proyectos_minutas" />
+            <End Role="proyectos_minutas_participantes" EntitySet="proyectos_minutas_participantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_minutas_pendientes_proyectos_minutas" Association="Self.FK_proyectos_minutas_pendientes_proyectos_minutas">
+            <End Role="proyectos_minutas" EntitySet="proyectos_minutas" />
+            <End Role="proyectos_minutas_pendientes" EntitySet="proyectos_minutas_pendientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_minutas_proyectos" Association="Self.FK_proyectos_minutas_proyectos">
+            <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="proyectos_minutas" EntitySet="proyectos_minutas" />
           </AssociationSet>
           <AssociationSet Name="FK_proyectos_proyectos_estatus" Association="Self.FK_proyectos_proyectos_estatus">
             <End Role="proyectos_estatus" EntitySet="proyectos_estatus" />
@@ -656,10 +794,25 @@
           <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
           <NavigationProperty Name="actividades" Relationship="Self.FK_actividades_proyectos" FromRole="proyectos" ToRole="actividades" />
           <NavigationProperty Name="documentos" Relationship="Self.FK_documentos_proyectos" FromRole="proyectos" ToRole="documentos" />
+          <NavigationProperty Name="proyectos_empleados" Relationship="Self.FK_proyectos_empleados_proyectos" FromRole="proyectos" ToRole="proyectos_empleados" />
           <NavigationProperty Name="proyectos_evaluaciones" Relationship="Self.FK_proyectos_evaluaciones_proyectos" FromRole="proyectos" ToRole="proyectos_evaluaciones" />
           <NavigationProperty Name="proyectos_historial_tecnologias" Relationship="Self.FK_proyectos_historial_tecnologias_proyectos" FromRole="proyectos" ToRole="proyectos_historial_tecnologias" />
+          <NavigationProperty Name="proyectos_minutas" Relationship="Self.FK_proyectos_minutas_proyectos" FromRole="proyectos" ToRole="proyectos_minutas" />
           <NavigationProperty Name="proyectos_estatus" Relationship="Self.FK_proyectos_proyectos_estatus" FromRole="proyectos" ToRole="proyectos_estatus" />
           <NavigationProperty Name="proyectos_periodos" Relationship="Self.FK_proyectos_proyectos_periodos1" FromRole="proyectos" ToRole="proyectos_periodos" />
+        </EntityType>
+        <EntityType Name="proyectos_empleados">
+          <Key>
+            <PropertyRef Name="id_proyectoe" />
+          </Key>
+          <Property Name="id_proyectoe" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyecto" Type="Int32" Nullable="false" />
+          <Property Name="administrador_proyecto" Type="Boolean" Nullable="false" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="usuario_registro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_empleados_proyectos" FromRole="proyectos_empleados" ToRole="proyectos" />
         </EntityType>
         <EntityType Name="proyectos_estatus">
           <Key>
@@ -704,6 +857,69 @@
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_historial_tecnologias_proyectos" FromRole="proyectos_historial_tecnologias" ToRole="proyectos" />
           <NavigationProperty Name="proyectos_tecnologias" Relationship="Self.FK_proyectos_historial_tecnologias_proyectos_tecnologias" FromRole="proyectos_historial_tecnologias" ToRole="proyectos_tecnologias" />
+        </EntityType>
+        <EntityType Name="proyectos_minutas">
+          <Key>
+            <PropertyRef Name="id_proyectomin" />
+          </Key>
+          <Property Name="id_proyectomin" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyecto" Type="Int32" Nullable="false" />
+          <Property Name="asunto" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="propósito" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="resultados" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="acuerdos" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lugar" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="enviada" Type="Boolean" Nullable="false" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_minutas_proyectos" FromRole="proyectos_minutas" ToRole="proyectos" />
+          <NavigationProperty Name="proyectos_minutas_participantes" Relationship="Self.FK_proyectos_minutas_participantes_proyectos_minutas" FromRole="proyectos_minutas" ToRole="proyectos_minutas_participantes" />
+          <NavigationProperty Name="proyectos_minutas_pendientes" Relationship="Self.FK_proyectos_minutas_pendientes_proyectos_minutas" FromRole="proyectos_minutas" ToRole="proyectos_minutas_pendientes" />
+        </EntityType>
+        <EntityType Name="proyectos_minutas_participantes">
+          <Key>
+            <PropertyRef Name="id_proyectominpart" />
+          </Key>
+          <Property Name="id_proyectominpart" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyectomin" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="nombre" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="organización" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="rol" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario_registro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
+          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="proyectos_minutas" Relationship="Self.FK_proyectos_minutas_participantes_proyectos_minutas" FromRole="proyectos_minutas_participantes" ToRole="proyectos_minutas" />
+        </EntityType>
+        <EntityType Name="proyectos_minutas_pendientes">
+          <Key>
+            <PropertyRef Name="id_proyectominpen" />
+          </Key>
+          <Property Name="id_proyectominpen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_proyectomin" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="avance" Type="Byte" />
+          <Property Name="nombre" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usuario_resp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_planeada" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="usuario_registro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="usuario_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_borrado" Type="DateTime" Precision="3" />
+          <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="proyectos_minutas" Relationship="Self.FK_proyectos_minutas_pendientes_proyectos_minutas" FromRole="proyectos_minutas_pendientes" ToRole="proyectos_minutas" />
         </EntityType>
         <EntityType Name="proyectos_periodos">
           <Key>
@@ -877,6 +1093,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_proyectos_empleados_proyectos">
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="1" />
+          <End Role="proyectos_empleados" Type="Self.proyectos_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos">
+              <PropertyRef Name="id_proyecto" />
+            </Principal>
+            <Dependent Role="proyectos_empleados">
+              <PropertyRef Name="id_proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_proyectos_evaluaciones_proyectos">
           <End Role="proyectos" Type="Self.proyectos" Multiplicity="1" />
           <End Role="proyectos_evaluaciones" Type="Self.proyectos_evaluaciones" Multiplicity="*" />
@@ -897,6 +1125,18 @@
               <PropertyRef Name="id_proyecto" />
             </Principal>
             <Dependent Role="proyectos_historial_tecnologias">
+              <PropertyRef Name="id_proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_minutas_proyectos">
+          <End Role="proyectos" Type="Self.proyectos" Multiplicity="1" />
+          <End Role="proyectos_minutas" Type="Self.proyectos_minutas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos">
+              <PropertyRef Name="id_proyecto" />
+            </Principal>
+            <Dependent Role="proyectos_minutas">
               <PropertyRef Name="id_proyecto" />
             </Dependent>
           </ReferentialConstraint>
@@ -946,6 +1186,30 @@
             </Principal>
             <Dependent Role="proyectos_historial_tecnologias">
               <PropertyRef Name="id_proyecto_tecnologia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_minutas_participantes_proyectos_minutas">
+          <End Role="proyectos_minutas" Type="Self.proyectos_minutas" Multiplicity="0..1" />
+          <End Role="proyectos_minutas_participantes" Type="Self.proyectos_minutas_participantes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos_minutas">
+              <PropertyRef Name="id_proyectomin" />
+            </Principal>
+            <Dependent Role="proyectos_minutas_participantes">
+              <PropertyRef Name="id_proyectomin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_minutas_pendientes_proyectos_minutas">
+          <End Role="proyectos_minutas" Type="Self.proyectos_minutas" Multiplicity="1" />
+          <End Role="proyectos_minutas_pendientes" Type="Self.proyectos_minutas_pendientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos_minutas">
+              <PropertyRef Name="id_proyectomin" />
+            </Principal>
+            <Dependent Role="proyectos_minutas_pendientes">
+              <PropertyRef Name="id_proyectomin" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1004,9 +1268,13 @@
           <EntitySet Name="documentos" EntityType="Self.documentos" />
           <EntitySet Name="documentos_tipos" EntityType="Self.documentos_tipos" />
           <EntitySet Name="proyectos" EntityType="Self.proyectos" />
+          <EntitySet Name="proyectos_empleados" EntityType="Self.proyectos_empleados" />
           <EntitySet Name="proyectos_estatus" EntityType="Self.proyectos_estatus" />
           <EntitySet Name="proyectos_evaluaciones" EntityType="Self.proyectos_evaluaciones" />
           <EntitySet Name="proyectos_historial_tecnologias" EntityType="Self.proyectos_historial_tecnologias" />
+          <EntitySet Name="proyectos_minutas" EntityType="Self.proyectos_minutas" />
+          <EntitySet Name="proyectos_minutas_participantes" EntityType="Self.proyectos_minutas_participantes" />
+          <EntitySet Name="proyectos_minutas_pendientes" EntityType="Self.proyectos_minutas_pendientes" />
           <EntitySet Name="proyectos_periodos" EntityType="Self.proyectos_periodos" />
           <EntitySet Name="proyectos_tecnologias" EntityType="Self.proyectos_tecnologias" />
           <EntitySet Name="riesgos" EntityType="Self.riesgos" />
@@ -1038,6 +1306,10 @@
             <End Role="proyectos" EntitySet="proyectos" />
             <End Role="documentos" EntitySet="documentos" />
           </AssociationSet>
+          <AssociationSet Name="FK_proyectos_empleados_proyectos" Association="Self.FK_proyectos_empleados_proyectos">
+            <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="proyectos_empleados" EntitySet="proyectos_empleados" />
+          </AssociationSet>
           <AssociationSet Name="FK_proyectos_evaluaciones_proyectos" Association="Self.FK_proyectos_evaluaciones_proyectos">
             <End Role="proyectos" EntitySet="proyectos" />
             <End Role="proyectos_evaluaciones" EntitySet="proyectos_evaluaciones" />
@@ -1045,6 +1317,10 @@
           <AssociationSet Name="FK_proyectos_historial_tecnologias_proyectos" Association="Self.FK_proyectos_historial_tecnologias_proyectos">
             <End Role="proyectos" EntitySet="proyectos" />
             <End Role="proyectos_historial_tecnologias" EntitySet="proyectos_historial_tecnologias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_minutas_proyectos" Association="Self.FK_proyectos_minutas_proyectos">
+            <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="proyectos_minutas" EntitySet="proyectos_minutas" />
           </AssociationSet>
           <AssociationSet Name="FK_proyectos_proyectos_estatus" Association="Self.FK_proyectos_proyectos_estatus">
             <End Role="proyectos_estatus" EntitySet="proyectos_estatus" />
@@ -1061,6 +1337,14 @@
           <AssociationSet Name="FK_proyectos_historial_tecnologias_proyectos_tecnologias" Association="Self.FK_proyectos_historial_tecnologias_proyectos_tecnologias">
             <End Role="proyectos_tecnologias" EntitySet="proyectos_tecnologias" />
             <End Role="proyectos_historial_tecnologias" EntitySet="proyectos_historial_tecnologias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_minutas_participantes_proyectos_minutas" Association="Self.FK_proyectos_minutas_participantes_proyectos_minutas">
+            <End Role="proyectos_minutas" EntitySet="proyectos_minutas" />
+            <End Role="proyectos_minutas_participantes" EntitySet="proyectos_minutas_participantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_minutas_pendientes_proyectos_minutas" Association="Self.FK_proyectos_minutas_pendientes_proyectos_minutas">
+            <End Role="proyectos_minutas" EntitySet="proyectos_minutas" />
+            <End Role="proyectos_minutas_pendientes" EntitySet="proyectos_minutas_pendientes" />
           </AssociationSet>
           <AssociationSet Name="FK_riesgos_riesgos_estatus" Association="Self.FK_riesgos_riesgos_estatus">
             <End Role="riesgos_estatus" EntitySet="riesgos_estatus" />
@@ -1223,6 +1507,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="proyectos_empleados">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_empleados">
+              <MappingFragment StoreEntitySet="proyectos_empleados">
+                <ScalarProperty Name="id_proyectoe" ColumnName="id_proyectoe" />
+                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
+                <ScalarProperty Name="administrador_proyecto" ColumnName="administrador_proyecto" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="usuario_registro" ColumnName="usuario_registro" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="proyectos_estatus">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_estatus">
               <MappingFragment StoreEntitySet="proyectos_estatus">
@@ -1262,6 +1559,67 @@
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
                 <ScalarProperty Name="id_proyecto_tecnologia" ColumnName="id_proyecto_tecnologia" />
                 <ScalarProperty Name="activo" ColumnName="activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proyectos_minutas">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_minutas">
+              <MappingFragment StoreEntitySet="proyectos_minutas">
+                <ScalarProperty Name="id_proyectomin" ColumnName="id_proyectomin" />
+                <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
+                <ScalarProperty Name="asunto" ColumnName="asunto" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="propósito" ColumnName="propósito" />
+                <ScalarProperty Name="resultados" ColumnName="resultados" />
+                <ScalarProperty Name="acuerdos" ColumnName="acuerdos" />
+                <ScalarProperty Name="lugar" ColumnName="lugar" />
+                <ScalarProperty Name="enviada" ColumnName="enviada" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
+                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
+                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proyectos_minutas_participantes">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_minutas_participantes">
+              <MappingFragment StoreEntitySet="proyectos_minutas_participantes">
+                <ScalarProperty Name="id_proyectominpart" ColumnName="id_proyectominpart" />
+                <ScalarProperty Name="id_proyectomin" ColumnName="id_proyectomin" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="organización" ColumnName="organización" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="usuario_registro" ColumnName="usuario_registro" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
+                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
+                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proyectos_minutas_pendientes">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_minutas_pendientes">
+              <MappingFragment StoreEntitySet="proyectos_minutas_pendientes">
+                <ScalarProperty Name="id_proyectominpen" ColumnName="id_proyectominpen" />
+                <ScalarProperty Name="id_proyectomin" ColumnName="id_proyectomin" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="avance" ColumnName="avance" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="usuario_resp" ColumnName="usuario_resp" />
+                <ScalarProperty Name="fecha_planeada" ColumnName="fecha_planeada" />
+                <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+                <ScalarProperty Name="usuario_registro" ColumnName="usuario_registro" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_borrado" ColumnName="usuario_borrado" />
+                <ScalarProperty Name="fecha_borrado" ColumnName="fecha_borrado" />
+                <ScalarProperty Name="comentarios_borrado" ColumnName="comentarios_borrado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

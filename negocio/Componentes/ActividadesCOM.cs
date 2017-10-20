@@ -206,7 +206,7 @@ namespace negocio.Componentes
                                   a.id_actividad_tipo,
                                   a.tipo,
                                   a.terminada
-                              });
+                              }).Distinct();
                 dt = To.DataTable(result.ToList());
                 return dt;
             }

@@ -63,6 +63,9 @@ namespace negocio.Componentes
                         context.proyectos_historial_tecnologias.Add(tecnologia);
                     }
                     context.SaveChanges();
+
+                    ProyectosEmpleadosCOM empleados = new ProyectosEmpleadosCOM();
+                    empleados.Agregar(proyecto.id_proyecto,proyecto.usuario_resp,true,proyecto.usuario);
                 }
                 return mess;
             }
