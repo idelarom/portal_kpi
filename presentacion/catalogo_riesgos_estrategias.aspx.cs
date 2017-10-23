@@ -121,10 +121,27 @@ namespace presentacion
                 if (id_riesgo_estrategia > 0) { PE.id_riesgo_estrategia = id_riesgo_estrategia; }
                 PE.activo = chkactivo.Checked;
                 PE.usuario = Session["usuario"] as string;
+                PE.valor_min = txtmin.Text==""? Convert.ToByte(0) : Convert.ToByte(txtmin.Text);
+                PE.valor_max = txtmax.Text == "" ? Convert.ToByte(0) : Convert.ToByte(txtmax.Text);
                 if (PE.nombre == "")
                 {
                     ModalShow("#ModalProyectoestatus");
                     Toast.Error("Error al procesar Estrategia : Ingrese un titulo", this);
+                }
+                else if (PE.valor_min == 0)
+                {
+                    ModalShow("#ModalProyectoestatus");
+                    Toast.Error("Error al procesar Estrategia : Ingrese un valor minimo", this);
+                }
+                else if (PE.valor_max == 0)
+                {
+                    ModalShow("#ModalProyectoestatus");
+                    Toast.Error("Error al procesar Estrategia : Ingrese un valor maximo", this);
+                }
+                else if (PE.valor_max < PE.valor_min)
+                {
+                    ModalShow("#ModalProyectoestatus");
+                    Toast.Error("Error al procesar Estrategia : El valor maximo debe ser mayor o igual al minimo.", this);
                 }
                 else
                 {
@@ -163,6 +180,8 @@ namespace presentacion
                     if (PE != null)
                     {
                         txtestatus.Text = PE.nombre;
+                        txtmax.Text = PE.valor_max.ToString();
+                        txtmin.Text = PE.valor_min.ToString();
                         chkactivo.Checked = PE.activo;
                         ModalShow("#ModalProyectoestatus");
                     }

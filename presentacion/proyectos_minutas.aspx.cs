@@ -52,13 +52,7 @@ namespace presentacion
 
                     lbltecnologia.Text = proyecto["tecnologia"].ToString();
                     lblcped.Text = proyecto["cped"].ToString();
-                    if (ProyectoTerminado())
-                    {
-                        lnkguardarminuta.Visible = false;
-                        lnknuevaminuta.Visible = false;
-                        lnkaddparticipante.Visible = false;
-                        lnkaddpendientes.Visible = false;
-                    }
+                  
                 }
             }
             catch (Exception ex)
@@ -138,7 +132,10 @@ namespace presentacion
             try
             {
                 string vmensaje = "";
-                if (rtxtasuntominuta.Text == "")
+                if (ProyectoTerminado())
+                {
+                    vmensaje = "El proyecto fue terminado y no puede generarse información adicional.";
+                }else if (rtxtasuntominuta.Text == "")
                 {
                     vmensaje = "Ingrese un Asunto para la minuta";
                 }
@@ -318,201 +315,208 @@ namespace presentacion
         {
             try
             {
-                LinkButton lnk = sender as LinkButton;
-                int id_minuta = Convert.ToInt32(lnk.CommandArgument);
-                string vmensaje = "";
-                switch (lnk.CommandName.ToLower())
+                if (ProyectoTerminado())
                 {
-                    case "editar":
-                    case "terminar":
-                        datos.proyectos_minutas entidad = new datos.proyectos_minutas();
-                        entidad.id_proyectomin = id_minuta;
-                        ProyectosMinutasCOM minutas = new ProyectosMinutasCOM();
-                        DataTable dt = minutas.Get(entidad);
-                        if (dt.Rows.Count > 0)
-                        {
-                            txtid_minuta.Text = id_minuta.ToString();
-                            rtxtasuntominuta.Text = dt.Rows[0]["asunto"].ToString();
-                            rtxtlugarminuta.Text = dt.Rows[0]["lugar"].ToString();
-                            rtxtpropositos.Text = dt.Rows[0]["propósito"].ToString();
-                            rtxtresultados.Text = dt.Rows[0]["resultados"].ToString();
-                            rtxtacuerdos.Text = dt.Rows[0]["acuerdos"].ToString();
-                            rdpfechaminuta.SelectedDate = Convert.ToDateTime(dt.Rows[0]["fecha"]);
-                        }
-                        DataTable dt_participantes = minutas.GetAllParticipante(id_minuta);
-                        if (dt_participantes.Rows.Count > 0)
-                        {
-                            DataView view = new System.Data.DataView(dt_participantes);
-                            DataTable selected = view.ToTable("Selected", false, "usuario", "nombre", "organización", "rol", "id_proyectominpart");
-                          
-
-                            ViewState["dt_participantes"] = selected;
-                            CargarParticipantes();
-                        }
-                        else
-                        {
-                            ViewState["dt_participantes"] = null;
-                            CargarParticipantes();
-                        }
-                        DataTable dt_pendientes = minutas.GetAllPendientes(Convert.ToInt32(txtid_minuta.Text == "" ? "0" : txtid_minuta.Text));
-                        if (dt_pendientes.Rows.Count > 0)
-                        {
-                            DataView view = new System.Data.DataView(dt_pendientes);
-                            DataTable selected = view.ToTable("Selected", false, "usuario_resp", "responsable", "descripcion", "fecha_planeada", "id_proyectominpen", "avance");
-                            selected.Columns["fecha_planeada"].ColumnName = "fecha";
-                            selected.Columns["responsable"].ColumnName = "nombre";
-                            ViewState["dt_pendientes"] = selected;
-                            CargarPendientes();
-                        }
-                        else
-                        {
-                            ViewState["dt_pendientes"] = null;
-                            CargarPendientes();
-                        }
-                        if (lnk.CommandName.ToLower() == "terminar")
-                        {
-                            if(0>1) //(hdfid_cliente.Value == "" || hdfid_cliente.Value == "0")
+                    Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+                } else
+                {
+                    LinkButton lnk = sender as LinkButton;
+                    int id_minuta = Convert.ToInt32(lnk.CommandArgument);
+                    string vmensaje = "";
+                    switch (lnk.CommandName.ToLower())
+                    {
+                        case "editar":
+                        case "terminar":
+                            datos.proyectos_minutas entidad = new datos.proyectos_minutas();
+                            entidad.id_proyectomin = id_minuta;
+                            ProyectosMinutasCOM minutas = new ProyectosMinutasCOM();
+                            DataTable dt = minutas.Get(entidad);
+                            if (dt.Rows.Count > 0)
                             {
-                                vmensaje = "Para Enviar la Minuta, debe relacionar este proyecto a un cliente.";
+                                txtid_minuta.Text = id_minuta.ToString();
+                                rtxtasuntominuta.Text = dt.Rows[0]["asunto"].ToString();
+                                rtxtlugarminuta.Text = dt.Rows[0]["lugar"].ToString();
+                                rtxtpropositos.Text = dt.Rows[0]["propósito"].ToString();
+                                rtxtresultados.Text = dt.Rows[0]["resultados"].ToString();
+                                rtxtacuerdos.Text = dt.Rows[0]["acuerdos"].ToString();
+                                rdpfechaminuta.SelectedDate = Convert.ToDateTime(dt.Rows[0]["fecha"]);
+                            }
+                            DataTable dt_participantes = minutas.GetAllParticipante(id_minuta);
+                            if (dt_participantes.Rows.Count > 0)
+                            {
+                                DataView view = new System.Data.DataView(dt_participantes);
+                                DataTable selected = view.ToTable("Selected", false, "usuario", "nombre", "organización", "rol", "id_proyectominpart");
+
+
+                                ViewState["dt_participantes"] = selected;
+                                CargarParticipantes();
                             }
                             else
                             {
-                                //CargarCorreosCliente();
-                                bool es_cliente = Convert.ToBoolean(Session["cliente"]);
-                                string correos_clientes = "";
-                                //if (es_cliente)
-                                //{
-                                //    ProyectosEmpleadosCOM proyectos = new ProyectosEmpleadosCOM();
-                                //    DataTable dt_empleados = proyectos.empleados_proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                                //    string correos = "";
-                                //    foreach (DataRow row in dt_empleados.Rows)
-                                //    {
-                                //        correos = correos + row["correo"].ToString().Trim() + ";";
-                                //        Session["correo_pm"] = correos;
-                                //    }
-                                //    correos_clientes = Session["correo_pm"] as string;
-                                //}
-                                //else
-                                //{
-                                //    correos_clientes = Session["correo_clientes"] as string;
-                                //}
-                                ProyectosEmpleadosCOM empleados = new ProyectosEmpleadosCOM();
-                                DataTable dt_empleados = empleados.empleados_proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                                DataTable dt_empleados_participantes = empleados.participantes_proyectos(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                                string correos = "";
-                                foreach (DataRow row in dt_empleados.Rows)
-                                {
-                                    correos = correos + row["correo"].ToString().ToLower().Trim() + ";";
-                                    Session["correo_pm"] = correos;
-                                }
-                                foreach (DataRow row in dt_empleados_participantes.Rows)
-                                {
-                                    correos = correos + row["correo"].ToString().ToLower().Trim() + ";";
-                                    Session["correo_pm"] = correos;
-                                }
-                                // correos_clientes = Session["correo_pm"] as string;
-                                if (Session["correo_pm"] != null)
-                                {
-                                    ProyectosCOM proyectos = new ProyectosCOM();
-                                    datos.proyectos proyecto = proyectos.proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                                    string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
-                                  
-                                    DataView view = new System.Data.DataView(dt_participantes);
-                                    DataTable dt_participantes2 = view.ToTable("Selected", false, "nombre","correo","puesto", "organización", "rol");
-                                    
-                                    DataView view2 = new System.Data.DataView(dt_pendientes);
-                                    DataTable dt_pendientes2 = view2.ToTable("Selected", false, "responsable", "correo", "puesto", "descripcion", "fecha_planeada");
-                                    dt_pendientes2.Columns["fecha_planeada"].ColumnName = "fecha planeada";
-                                    dt_pendientes2.Columns["descripcion"].ColumnName = "pendiente";
-
-                                    string mail_to = Session["correo_pm"] as string;
-                                    string subject = "Módulo de proyectos - Nueva Minuta";
-                                    string informacion =
-                                             "<h4 style='text-align:left;'>Asistente de trabajo y minutas</p><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
-                                             "<br><br>" +
-                                             "<table style='font-size: 12px;font-family: Verdana; '>" +
-                                             "<tr>" +
-                                                 "<th style=' width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>Proyecto</th>" +
-                                                 "<th style='width: 450px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + proyecto.proyecto + "</th>" +
-                                                 "<th style='width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>Fecha</th>" +
-                                                 "<th style='width:350px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + Convert.ToDateTime(rdpfechaminuta.SelectedDate).ToString("dddd dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")) + "</th>" +
-                                                 "</tr>" +
-                                                 "<tr>" +
-                                                 "<th style=' width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>" + (es_cliente ? "Solicitante" : "PM") + "</th>" +
-                                                 "<th style='width: 450px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Convert.ToString(Session["nombre"]).ToString().ToLower())  + "</th>" +
-                                                 "<th style='width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>Lugar</th>" +
-                                                 "<th style='width:350px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + rtxtlugarminuta.Text.Trim() + "</th>" +
-                                                 "</tr>" +
-                                                 "<tr>" +
-                                                 "<th style=' width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>Asunto</th>" +
-                                                 "<th style='width: 450px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + rtxtasuntominuta.Text.Trim() + "</th>" +
-                                                 "</tr>" +
-                                             "</table>" +
-                                             "<br><br>" +
-                                             "<h4>Propósito de la junta</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
-                                             "<p>" + rtxtpropositos.Text.Trim() + "</p>" +
-                                             "<br><br>" +
-                                             "<h4>Resultados (entregables) a obtener al terminar la reunión</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
-                                             "<p>" + rtxtresultados.Text.Trim() + "</p>" +
-                                             "<br><br>" +
-                                             "<h4>Personas que participan</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
-                                             funciones.TableDinamic(dt_participantes2, "tab_parti") +
-                                             "<br><br>" +
-                                             "<h4>Acuerdos tomados y resoluciones</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
-                                             "<p>" + rtxtacuerdos.Text.Trim() + "</p>" +
-                                             "<br><br>" +
-                                             "<h4>Acciones a realizar y asuntos pendientes</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
-                                             funciones.TableDinamic(dt_pendientes2, "tab_pendinte");
-
-                                    string mail = "<div>" + saludo + "<div>" +
-                                       "<br>" +
-                                       "<p>Se agrego una nueva Minuta para el proyecto <strong>" + proyecto.proyecto + "</strong>" +
-                                        informacion+
-                                       "<br/><p>Este movimiento fue realizado por <strong>" +
-                                       System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
-                                       + "</strong> el dia <strong>" +
-                                       DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
-                                       "</p>";
-                                    CorreosCOM sendcorreos = new CorreosCOM();
-                                    bool correct = sendcorreos.SendMail(mail, subject, mail_to);
-                                }
-                                //Enviamos correos
-                           
-                                vmensaje = minutas.Enviar(id_minuta,Session["usuario"] as string);
+                                ViewState["dt_participantes"] = null;
+                                CargarParticipantes();
                             }
+                            DataTable dt_pendientes = minutas.GetAllPendientes(Convert.ToInt32(txtid_minuta.Text == "" ? "0" : txtid_minuta.Text));
+                            if (dt_pendientes.Rows.Count > 0)
+                            {
+                                DataView view = new System.Data.DataView(dt_pendientes);
+                                DataTable selected = view.ToTable("Selected", false, "usuario_resp", "responsable", "descripcion", "fecha_planeada", "id_proyectominpen", "avance");
+                                selected.Columns["fecha_planeada"].ColumnName = "fecha";
+                                selected.Columns["responsable"].ColumnName = "nombre";
+                                ViewState["dt_pendientes"] = selected;
+                                CargarPendientes();
+                            }
+                            else
+                            {
+                                ViewState["dt_pendientes"] = null;
+                                CargarPendientes();
+                            }
+                            if (lnk.CommandName.ToLower() == "terminar")
+                            {
+                                if (0 > 1) //(hdfid_cliente.Value == "" || hdfid_cliente.Value == "0")
+                                {
+                                    vmensaje = "Para Enviar la Minuta, debe relacionar este proyecto a un cliente.";
+                                }
+                                else
+                                {
+                                    //CargarCorreosCliente();
+                                    bool es_cliente = Convert.ToBoolean(Session["cliente"]);
+                                    string correos_clientes = "";
+                                    //if (es_cliente)
+                                    //{
+                                    //    ProyectosEmpleadosCOM proyectos = new ProyectosEmpleadosCOM();
+                                    //    DataTable dt_empleados = proyectos.empleados_proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                                    //    string correos = "";
+                                    //    foreach (DataRow row in dt_empleados.Rows)
+                                    //    {
+                                    //        correos = correos + row["correo"].ToString().Trim() + ";";
+                                    //        Session["correo_pm"] = correos;
+                                    //    }
+                                    //    correos_clientes = Session["correo_pm"] as string;
+                                    //}
+                                    //else
+                                    //{
+                                    //    correos_clientes = Session["correo_clientes"] as string;
+                                    //}
+                                    ProyectosEmpleadosCOM empleados = new ProyectosEmpleadosCOM();
+                                    DataTable dt_empleados = empleados.empleados_proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                                    DataTable dt_empleados_participantes = empleados.participantes_proyectos(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                                    string correos = "";
+                                    foreach (DataRow row in dt_empleados.Rows)
+                                    {
+                                        correos = correos + row["correo"].ToString().ToLower().Trim() + ";";
+                                        Session["correo_pm"] = correos;
+                                    }
+                                    foreach (DataRow row in dt_empleados_participantes.Rows)
+                                    {
+                                        correos = correos + row["correo"].ToString().ToLower().Trim() + ";";
+                                        Session["correo_pm"] = correos;
+                                    }
+                                    // correos_clientes = Session["correo_pm"] as string;
+                                    if (Session["correo_pm"] != null)
+                                    {
+                                        ProyectosCOM proyectos = new ProyectosCOM();
+                                        datos.proyectos proyecto = proyectos.proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                                        string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+
+                                        DataView view = new System.Data.DataView(dt_participantes);
+                                        DataTable dt_participantes2 = view.ToTable("Selected", false, "nombre", "correo", "puesto", "organización", "rol");
+
+                                        DataView view2 = new System.Data.DataView(dt_pendientes);
+                                        DataTable dt_pendientes2 = view2.ToTable("Selected", false, "responsable", "correo", "puesto", "descripcion", "fecha_planeada");
+                                        dt_pendientes2.Columns["fecha_planeada"].ColumnName = "fecha planeada";
+                                        dt_pendientes2.Columns["descripcion"].ColumnName = "pendiente";
+
+                                        string mail_to = Session["correo_pm"] as string;
+                                        string subject = "Módulo de proyectos - Nueva Minuta";
+                                        string informacion =
+                                                 "<h4 style='text-align:left;'>Asistente de trabajo y minutas</p><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 "<br><br>" +
+                                                 "<table style='font-size: 12px;font-family: Verdana; '>" +
+                                                 "<tr>" +
+                                                     "<th style=' width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>Proyecto</th>" +
+                                                     "<th style='width: 450px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + proyecto.proyecto + "</th>" +
+                                                     "<th style='width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>Fecha</th>" +
+                                                     "<th style='width:350px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + Convert.ToDateTime(rdpfechaminuta.SelectedDate).ToString("dddd dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")) + "</th>" +
+                                                     "</tr>" +
+                                                     "<tr>" +
+                                                     "<th style=' width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>" + (es_cliente ? "Solicitante" : "PM") + "</th>" +
+                                                     "<th style='width: 450px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Convert.ToString(Session["nombre"]).ToString().ToLower()) + "</th>" +
+                                                     "<th style='width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>Lugar</th>" +
+                                                     "<th style='width:350px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + rtxtlugarminuta.Text.Trim() + "</th>" +
+                                                     "</tr>" +
+                                                     "<tr>" +
+                                                     "<th style=' width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>Asunto</th>" +
+                                                     "<th style='width: 450px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + rtxtasuntominuta.Text.Trim() + "</th>" +
+                                                     "</tr>" +
+                                                 "</table>" +
+                                                 "<br><br>" +
+                                                 "<h4>Propósito de la junta</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 "<p>" + rtxtpropositos.Text.Trim() + "</p>" +
+                                                 "<br><br>" +
+                                                 "<h4>Resultados (entregables) a obtener al terminar la reunión</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 "<p>" + rtxtresultados.Text.Trim() + "</p>" +
+                                                 "<br><br>" +
+                                                 "<h4>Personas que participan</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 funciones.TableDinamic(dt_participantes2, "tab_parti") +
+                                                 "<br><br>" +
+                                                 "<h4>Acuerdos tomados y resoluciones</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 "<p>" + rtxtacuerdos.Text.Trim() + "</p>" +
+                                                 "<br><br>" +
+                                                 "<h4>Acciones a realizar y asuntos pendientes</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 funciones.TableDinamic(dt_pendientes2, "tab_pendinte");
+
+                                        string mail = "<div>" + saludo + "<div>" +
+                                           "<br>" +
+                                           "<p>Se agrego una nueva Minuta para el proyecto <strong>" + proyecto.proyecto + "</strong>" +
+                                            informacion +
+                                           "<br/><p>Este movimiento fue realizado por <strong>" +
+                                           System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
+                                           + "</strong> el dia <strong>" +
+                                           DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                           "</p>";
+                                        CorreosCOM sendcorreos = new CorreosCOM();
+                                        bool correct = sendcorreos.SendMail(mail, subject, mail_to);
+                                    }
+                                    //Enviamos correos
+
+                                    vmensaje = minutas.Enviar(id_minuta, Session["usuario"] as string);
+                                }
+                                if (vmensaje == "")
+                                {
+                                    string url = "proyectos_minutas.aspx?id_proyecto=" + Request.QueryString["id_proyecto"];
+                                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                                        "AlertGO('Minuta enviada correctamente', '" + url + "');", true);
+                                }
+                                else
+                                {
+                                    Toast.Error("Error al enviar minuta: " + vmensaje, this);
+                                }
+                            }
+                            else
+                            {
+                                ModalShow("#myModalMinutas");
+                            }
+                            break;
+
+                        case "delete":
+                            string comentarios = hdfmotivos.Value;
+                            ProyectosMinutasCOM minutasview = new ProyectosMinutasCOM();
+                            vmensaje = minutasview.Eliminar(id_minuta, comentarios, comentarios);
                             if (vmensaje == "")
                             {
                                 string url = "proyectos_minutas.aspx?id_proyecto=" + Request.QueryString["id_proyecto"];
                                 ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
-                                    "AlertGO('Minuta enviada correctamente', '" + url + "');", true);
+                                    "AlertGO('Minuta eliminada correctamente', '" + url + "');", true);
                             }
                             else
                             {
-                                Toast.Error("Error al enviar minuta: " + vmensaje, this);
+                                Toast.Error("Error al eliminar minuta: " + vmensaje, this);
                             }
-                        }
-                        else
-                        {
-                            ModalShow("#myModalMinutas");
-                        }
-                        break;
-
-                    case "delete":
-                        string comentarios = hdfmotivos.Value;
-                        ProyectosMinutasCOM minutasview = new ProyectosMinutasCOM();
-                        vmensaje = minutasview.Eliminar(id_minuta, comentarios,comentarios);
-                        if (vmensaje == "")
-                        {
-                            string url = "proyectos_minutas.aspx?id_proyecto=" + Request.QueryString["id_proyecto"];
-                            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
-                                "AlertGO('Minuta eliminada correctamente', '" + url + "');", true);
-                        }
-                        else
-                        {
-                            Toast.Error("Error al eliminar minuta: " + vmensaje, this);
-                        }
-                        break;
+                            break;
+                    }
                 }
+    
             }
             catch (Exception ex)
             {
@@ -536,7 +540,6 @@ namespace presentacion
             rtxtrol.Text = "";
             rtxtorganizacion.Text = "";
             hdf_usuario_participante.Value = "";
-            // div_selectedinvo.Visible = !div_selectedinvo.Visible;
         }
 
         protected void lnkpendientes_Click(object sender, EventArgs e)
@@ -566,10 +569,17 @@ namespace presentacion
         {
             try
             {
-                LinkButton lnk = sender as LinkButton;
-                string nombre = lnk.CommandArgument;
-                DeleteTableParticipantes(nombre, "", "");
-                CargarParticipantes();
+                if (ProyectoTerminado())
+                {
+                    Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+                }
+                else
+                {
+                    LinkButton lnk = sender as LinkButton;
+                    string nombre = lnk.CommandArgument;
+                    DeleteTableParticipantes(nombre, "", "");
+                    CargarParticipantes();
+                }
             }
             catch (Exception ex)
             {
@@ -611,7 +621,10 @@ namespace presentacion
             try
             {
                 string usuario = hdf_usuario_participante.Value.ToUpper();
-                if (rtxtnombreparticipante.Text == "")
+                if (ProyectoTerminado())
+                {
+                    Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+                }else if (rtxtnombreparticipante.Text == "")
                 {
                     Toast.Error("Error al cargar guardar participante: " + "Ingrese el Nombre del Participante", this);
                 }
@@ -647,7 +660,11 @@ namespace presentacion
                 IList<RadListBoxItem> collection = rdlinvopendientes.SelectedItems;
                 string usuario_Resp = ddlempleado_a_consultar.SelectedValue;
                 string nombre_Responsable = ddlempleado_a_consultar.SelectedItem.ToString();
-                if (usuario_Resp == "" && collection.Count == 0)
+                if (ProyectoTerminado())
+                {
+                    Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+                }
+                else if (usuario_Resp == "" && collection.Count == 0)
                 {
                     Toast.Error("Error al cargar guardar pendientes: " + "Ingrese el Nombre del Responsable o Seleccione uno de la lista", this);
                 }
@@ -668,25 +685,6 @@ namespace presentacion
                         string pendiente = ViewState["pendiente_descripcion"] as string;
                         DeleteTablePendientes(nombre, pendiente);
                     }
-                    //if (collection.Count > 0)
-                    //{
-                    //    foreach (RadListBoxItem item in collection)
-                    //    {
-                    //        proyectos_involucrados entidad = new proyectos_involucrados();
-                    //        entidad.id_pinvolucrado = Convert.ToInt32(item.Value);
-                    //        InvolucradosCOM involucrados = new InvolucradosCOM();
-                    //        DataTable dt = involucrados.Get(entidad);
-                    //        if (dt.Rows.Count > 0)
-                    //        {
-                    //            AddTablePendientes(dt.Rows[0]["nombre"].ToString(), rtxtpendiente.Text,
-                    //                Convert.ToDateTime(rdtfecha_planeada.SelectedDate), Convert.ToInt32(item.Value), Convert.ToInt32(txtavancependientes.Text));
-                    //        }
-                    //    }
-                    //}
-                    //else
-                    //{
-
-                    //}
                     int id_pendiente = hdf_id_proyectominpen.Value == "" ? 0 : Convert.ToInt32(hdf_id_proyectominpen.Value);
                     AddTablePendientes(id_pendiente, nombre_Responsable, usuario_Resp, rtxtpendiente.Text,
                            Convert.ToDateTime(rdtfecha_planeada.SelectedDate), 0, Convert.ToInt32(txtavancependientes.Text));
@@ -732,31 +730,39 @@ namespace presentacion
         {
             try
             {
-                LinkButton lnk = sender as LinkButton;
-                string nombre = lnk.CommandArgument;
-                string pendiente = lnk.CommandName;
-                int id_proyectominpen = Convert.ToInt32(lnk.Attributes["id_proyectominpen"]);
-                hdf_id_proyectominpen.Value = "";
-                if (ViewState["dt_pendientes"] != null)
+                if (ProyectoTerminado())
                 {
-                    DataTable dt = ViewState["dt_pendientes"] as DataTable;
-                    DataTable dt_filter = dt.Select("descripcion = '" + pendiente.Trim() + "' and usuario_resp = '" + nombre + "'").CopyToDataTable();
-                    if (dt_filter.Rows.Count > 0)
+                    Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+                }
+                else
+                {
+                    LinkButton lnk = sender as LinkButton;
+                    string nombre = lnk.CommandArgument;
+                    string pendiente = lnk.CommandName;
+                    int id_proyectominpen = Convert.ToInt32(lnk.Attributes["id_proyectominpen"]);
+                    hdf_id_proyectominpen.Value = "";
+                    if (ViewState["dt_pendientes"] != null)
                     {
-                        CargarDatosFiltros("");
-                        hdf_id_proyectominpen.Value = id_proyectominpen.ToString();
-                        txtavancependientes.Text = dt_filter.Rows[0]["avance"].ToString();
-                        ddlempleado_a_consultar.SelectedValue = dt_filter.Rows[0]["usuario_resp"].ToString();
-                        rtxtpendiente.Text = dt_filter.Rows[0]["descripcion"].ToString();
-                        rdtfecha_planeada.SelectedDate = Convert.ToDateTime(dt_filter.Rows[0]["fecha"]);
-                        ViewState["pendiente_responsable"] = nombre;
-                        ViewState["pendiente_descripcion"] = pendiente;
+                        DataTable dt = ViewState["dt_pendientes"] as DataTable;
+                        DataTable dt_filter = dt.Select("descripcion = '" + pendiente.Trim() + "' and usuario_resp = '" + nombre + "'").CopyToDataTable();
+                        if (dt_filter.Rows.Count > 0)
+                        {
+                            CargarDatosFiltros("");
+                            hdf_id_proyectominpen.Value = id_proyectominpen.ToString();
+                            txtavancependientes.Text = dt_filter.Rows[0]["avance"].ToString();
+                            ddlempleado_a_consultar.SelectedValue = dt_filter.Rows[0]["usuario_resp"].ToString();
+                            rtxtpendiente.Text = dt_filter.Rows[0]["descripcion"].ToString();
+                            rdtfecha_planeada.SelectedDate = Convert.ToDateTime(dt_filter.Rows[0]["fecha"]);
+                            ViewState["pendiente_responsable"] = nombre;
+                            ViewState["pendiente_descripcion"] = pendiente;
+                        }
+                        else
+                        {
+                            Toast.Error("Error al cargar pendiente: " + "Se genero un error al buscar el pendiente. Contacte a su administrador.", this);
+                            ModalShow("#myModalPendientes");
+                        }
                     }
-                    else
-                    {
-                        Toast.Error("Error al cargar pendiente: " + "Se genero un error al buscar el pendiente. Contacte a su administrador.", this);
-                        ModalShow("#myModalPendientes");
-                    }
+
                 }
             }
             catch (Exception ex)
@@ -770,15 +776,21 @@ namespace presentacion
         {
             try
             {
-
-                rdtfecha_planeada.SelectedDate = DateTime.Now;
-                txtavancependientes.Text = "0";
-                rtxtpendiente.Text = "";
-                LinkButton lnk = sender as LinkButton;
-                string nombre = lnk.CommandArgument;
-                string pendiente = lnk.CommandName;
-                DeleteTablePendientes(nombre, pendiente);
-                CargarPendientes();
+                if (ProyectoTerminado())
+                {
+                    Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+                }
+                else
+                {
+                    rdtfecha_planeada.SelectedDate = DateTime.Now;
+                    txtavancependientes.Text = "0";
+                    rtxtpendiente.Text = "";
+                    LinkButton lnk = sender as LinkButton;
+                    string nombre = lnk.CommandArgument;
+                    string pendiente = lnk.CommandName;
+                    DeleteTablePendientes(nombre, pendiente);
+                    CargarPendientes();
+                }
             }
             catch (Exception ex)
             {
@@ -904,9 +916,16 @@ namespace presentacion
             string filter = txtfilterempleado.Text;
             try
             {
-                if (filter.Length == 0 || filter.Length > 3)
+                if (ProyectoTerminado())
                 {
-                    CargarDatosFiltros(filter);
+                    Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+                }
+                else
+                {
+                    if (filter.Length == 0 || filter.Length > 3)
+                    {
+                        CargarDatosFiltros(filter);
+                    }
                 }
             }
             catch (Exception ex)
@@ -946,9 +965,16 @@ namespace presentacion
             string filter = txtfiltroempleado2.Text;
             try
             {
-                if (filter.Length == 0 || filter.Length > 3)
+                if (ProyectoTerminado())
                 {
-                    CargarDatosFiltros(filter);
+                    Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+                }
+                else
+                {
+                    if (filter.Length == 0 || filter.Length > 3)
+                    {
+                        CargarDatosFiltros(filter);
+                    }
                 }
             }
             catch (Exception ex)
@@ -965,15 +991,22 @@ namespace presentacion
 
         protected void ddlempleado_participante_SelectedIndexChanged(object sender, EventArgs e)
         {
-            rtxtnombreparticipante.ReadOnly = true;
-            rtxtrol.ReadOnly = true;
-            rtxtorganizacion.ReadOnly = true;
-            string usuario = ddlempleado_participante.SelectedValue.ToString();
-            string nombre = ddlempleado_participante.SelectedItem.ToString();
-            rtxtnombreparticipante.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nombre.ToLower());
-            hdf_usuario_participante.Value = usuario;
-            rtxtrol.Text = "Empleado Connext";
-            rtxtorganizacion.Text = "Connext";
+            if (ProyectoTerminado())
+            {
+                Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+            }
+            else
+            {
+                rtxtnombreparticipante.ReadOnly = true;
+                rtxtrol.ReadOnly = true;
+                rtxtorganizacion.ReadOnly = true;
+                string usuario = ddlempleado_participante.SelectedValue.ToString();
+                string nombre = ddlempleado_participante.SelectedItem.ToString();
+                rtxtnombreparticipante.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nombre.ToLower());
+                hdf_usuario_participante.Value = usuario;
+                rtxtrol.Text = "Empleado Connext";
+                rtxtorganizacion.Text = "Connext";
+            }
         }
 
         private bool ProyectoTerminado()

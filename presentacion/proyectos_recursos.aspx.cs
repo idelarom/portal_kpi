@@ -23,6 +23,21 @@ namespace presentacion
                              "ModalCloseGlobal('" + modalname + "');", true);
         }
 
+        private bool ProyectoTerminado()
+        {
+            try
+            {
+                ProyectosCOM proyectos = new ProyectosCOM();
+                bool terminado = proyectos.ProyectoTerminado(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                return terminado;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del cierre de proyecto: " + ex.Message, this);
+                return false;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -128,7 +143,11 @@ namespace presentacion
 
         protected void btnbuscarempleado_Click(object sender, EventArgs e)
         {
-            if (txtbuscarempleadoproyecto.Text.Trim().Length > 2 || txtbuscarempleadoproyecto.Text.Trim().Length == 0)
+            if (ProyectoTerminado())
+            {
+                Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+            }
+            else if (txtbuscarempleadoproyecto.Text.Trim().Length > 2 || txtbuscarempleadoproyecto.Text.Trim().Length == 0)
             {
                 CargarListadoEmpleados(txtbuscarempleadoproyecto.Text.Trim());
                 imgloadempleados.Style["display"] = "none";
@@ -151,6 +170,11 @@ namespace presentacion
                     vmensaje = "Seleccione minimo 1 empleado.";
                 }
                 string correos_pm = "";
+                if (ProyectoTerminado())
+                {
+                    vmensaje = "El proyecto fue terminado y no puede generarse información adicional.";
+                }
+
                 if (vmensaje == "")
                 {
                     ProyectosEmpleadosCOM proyectos = new ProyectosEmpleadosCOM();
@@ -212,7 +236,7 @@ namespace presentacion
                 }
                 else
                 {
-                    Toast.Error("Error al guardar lista de empleados. " + vmensaje, this);
+                    Toast.Error("Error al guardar lista de empleados: " + vmensaje, this);
                 }
             }
             catch (Exception ex)
@@ -231,6 +255,10 @@ namespace presentacion
                 int id_pempleado = Convert.ToInt32(lnk.CommandArgument);
                 ProyectosEmpleadosCOM proyectos = new ProyectosEmpleadosCOM();
                 vmensaje = proyectos.Eliminar(id_pempleado,Session["usuario"] as string);
+                if (ProyectoTerminado())
+                {
+                    vmensaje = "El proyecto fue terminado y no puede generarse información adicional.";
+                }
                 if (vmensaje == "")
                 {
                     string url = "proyectos_recursos.aspx?id_proyecto=" + Request.QueryString["id_proyecto"];

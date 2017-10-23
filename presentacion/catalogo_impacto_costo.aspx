@@ -68,7 +68,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-                <h4 class="page-header">Catálogo impacto costo</h4>
+                <h4 class="page-header">Catálogo riesgos impactos</h4>
           
         </div>
     </div>
@@ -84,7 +84,8 @@
                                 <tr style="font-size: 12px;">
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
-                                    <th style=" min-width:400px; text-align: left;" scope="col">Nombre del impacto</th>
+                                    <th style=" min-width:600px; text-align: left;" scope="col">Nombre del impacto</th>
+                                    <th style=" min-width:80px; text-align: center;" scope="col">Valor</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,17 +94,18 @@
                                         <tr style="font-size: 12px">
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return EditarClick("+Eval("id_riesgo_impacto_costo")+");" %>'>
+                                                    onclick='<%# "return EditarClick("+Eval("id_riesgo_impacto")+");" %>'>
                                                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_riesgo_impacto_costo")+");" %>'>
+                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_riesgo_impacto")+");" %>'>
                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: left;"><%# Eval("nombre") %></td>
+                                            <td style="text-align: center;"><%# Eval("valor") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -136,9 +138,9 @@
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Nombre</strong></h5>
                                     <asp:TextBox ID="txtnombre" MaxLength="250" Rows="3" TextMode="MultiLine" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Porcentaje</strong></h5>
-                                    <asp:TextBox ID="txtporcentaje" MaxLength="250" Rows="3" TextMode="MultiLine" CssClass=" form-control" runat="server"></asp:TextBox>
+                                <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Valor</strong></h5>
+                                    <asp:TextBox ID="txtporcentaje" TextMode="Number" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                    <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>

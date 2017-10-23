@@ -84,7 +84,9 @@
                                 <tr style="font-size: 12px;">
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
-                                    <th style=" min-width:400px; text-align: left;" scope="col">Estrategia</th>
+                                    <th style=" min-width:600px; text-align: left;" scope="col">Estrategia</th>
+                                    <th style=" min-width:100px; text-align: center;" scope="col">Valor minimo</th>
+                                    <th style=" min-width:100px; text-align: center;" scope="col">Valor maximo</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,6 +106,8 @@
                                                 </a>
                                             </td>
                                             <td style="text-align: left;"><%# Eval("nombre") %></td>
+                                            <td style="text-align: center;"><%# Eval("valor_min") %></td>
+                                            <td style="text-align: center;"><%# Eval("valor_max") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -140,7 +144,18 @@
                                    <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
                                     <asp:CheckBox ID="chkactivo" runat="server" Checked="true" Visible="false" text="Activo"/>
                                 </div>
+                                
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Valor minimo</strong></h5>
+                                    <asp:TextBox ID="txtmin" TextMode="Number" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Valor maximo</strong></h5>
+                                    <asp:TextBox ID="txtmax" TextMode="Number" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
                             </div>
+
                             
                         </div>
 

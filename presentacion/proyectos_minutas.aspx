@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Minutas" Language="C#" MasterPageFile="~/Global.Master" AutoEventWireup="true" CodeBehind="proyectos_minutas.aspx.cs" Inherits="presentacion.proyectos_minutas" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        <script type="text/javascript">
+    <script type="text/javascript">
 
 
         $(document).ready(function () {
@@ -48,7 +48,7 @@
             }
 
         }
-        
+
         function ConfirmMinutaModal(msg) {
             if (confirm(msg)) {
                 $("#<%= lnkcargandoMinuta.ClientID%>").show();
@@ -59,17 +59,67 @@
             }
         }
 
-            function ChangedTextLoad2() {
-                $("#<%= imgloadempleado.ClientID%>").show();
-                $("#<%= lblbemp.ClientID%>").show();
-                return true;
+        function ChangedTextLoad2() {
+            $("#<%= imgloadempleado.ClientID%>").show();
+            $("#<%= lblbemp.ClientID%>").show();
+            return true;
+        }
+
+        function ChangedTextLoad3() {
+            $("#<%= imgempleado.ClientID%>").show();
+            $("#<%= lblempleado.ClientID%>").show();
+            return true;
+        }
+        function ConfirmEntregableDelete(msg) {
+            if (confirm(msg)) {
+                return ReturnPrompMsg(msg);
+            } else {
+                return false;
             }
-        
-            function ChangedTextLoad3() {
-                $("#<%= imgempleado.ClientID%>").show();
-                $("#<%= lblempleado.ClientID%>").show();
-                return true;
+        }
+
+        function ReturnPrompMsg() {
+            var motivo = prompt("Motivo de eliminación", "");
+            if (motivo != null) {
+                if (motivo != '') {
+                    var myHidden = document.getElementById('<%= hdfmotivos.ClientID %>');
+                    myHidden.value = motivo;
+                    return true;
+                } else {
+                    alert('ES NECESARIO EL MOTIVO DE LA ELIMINACIÓN.');
+                    ReturnPrompMsg();
+                }
+            } else {
+                return false;
             }
+
+        }
+        var opts = {
+            lines: 13 // The number of lines to draw
+                , length: 28 // The length of each line
+                , width: 14 // The line thickness
+                , radius: 42 // The radius of the inner circle
+                , scale: 1.2 // Scales overall size of the spinner
+                , corners: 1 // Corner roundness (0..1)
+                , color: '#000' // #rgb or #rrggbb or array of colors
+                , opacity: 0.1 // Opacity of the lines
+                , rotate: 0 // The rotation offset
+                , direction: 1 // 1: clockwise, -1: counterclockwise
+                , speed: 1 // Rounds per second
+                , trail: 60 // Afterglow percentage
+                , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+                , zIndex: 10 // The z-index (defaults to 2000000000)
+                , className: 'spinner' // The CSS class to assign to the spinner
+                , top: '45%' // Top position relative to parent
+                , left: '50%' // Left position relative to parent
+                , shadow: true // Whether to render a shadow
+                , hwaccel: true // Whether to use hardware acceleration
+                , position: 'absolute' // Element positioning
+        };
+        function Loading(modal) {            
+            var target = document.getElementById(modal);
+            var spinner = new Spinner(opts).spin(target);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -114,7 +164,7 @@
         </div>
         <div class="col-lg-12">
             <div class="box box-danger">
-                <div class="box-body with-border" style="">
+                <div class="box-body with-border" style=""  id="table_minutas">
                     <div class="row">
                         <div class="col-lg-12">
                             <asp:LinkButton OnClick="lnknuevaminuta_Click" ID="lnknuevaminuta" 
@@ -149,7 +199,7 @@
                                                             </asp:LinkButton>
                                                         </td>
                                                         <td style="text-align:center;">
-                                                            <asp:LinkButton ID="lnkeditminuta" runat="server" 
+                                                            <asp:LinkButton ID="lnkeditminuta" runat="server"  OnClientClick="return Loading('table_minutas');"
                                                                 OnClick="lnkeditminuta_Click" CommandName="Editar" CssClass="btn btn-primary btn-flat"
                                                                 CommandArgument='<%# Eval("id_proyectomin") %>' Visible='<%# !Convert.ToBoolean(Eval("enviada")) %>'>
                                                                      <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -160,7 +210,7 @@
                                                                 OnClick="lnkeditminuta_Click" CommandName="Delete" 
                                                                 CssClass="btn btn-danger btn-flat"
                                                                 CommandArgument='<%# Eval("id_proyectomin") %>' Visible='<%# !Convert.ToBoolean(Eval("enviada")) %>' 
-                                                                OnClientClick="return ConfirmEntregableDelete('¿Desea Eliminar la Minuta?');">
+                                                                OnClientClick="return ConfirmEntregableDelete('¿Desea eliminar la minuta?');">
                                                                      <i class="fa fa-trash" aria-hidden="true"></i>
                                                             </asp:LinkButton>
                                                         </td>
@@ -194,7 +244,7 @@
                                 <span aria-hidden="true">×</span></button>
                             <h4 class="modal-title">Minutas</h4>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="modal_content">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Asunto</strong></h5>
@@ -224,10 +274,10 @@
                                  <div class="col-lg-12">
                                     <br />
                                     <div style="text-align: right;">
-                                        <asp:LinkButton ID="lnkpendientes" runat="server" CssClass="btn btn-success btn-flat" OnClick="lnkpendientes_Click">
+                                        <asp:LinkButton ID="lnkpendientes" OnClientClick="return Loading('modal_content');" runat="server" CssClass="btn btn-success btn-flat" OnClick="lnkpendientes_Click">
                                            <i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Pendientes
                                         </asp:LinkButton>
-                                        <asp:LinkButton ID="lnkparticipantes" runat="server" CssClass="btn btn-danger btn-flat" OnClick="lnkparticipantes_Click">
+                                        <asp:LinkButton ID="lnkparticipantes" OnClientClick="return Loading('modal_content');"  runat="server" CssClass="btn btn-danger btn-flat" OnClick="lnkparticipantes_Click">
                                            <i class="fa fa-users"></i>&nbsp;Participantes
                                         </asp:LinkButton>
                                     </div>
@@ -251,6 +301,7 @@
             </asp:UpdatePanel>
         </div>
     </div>
+
      <div class="modal fade bs-example-modal-lg" tabindex="-1" id="myModalParticipantes" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel9" runat="server">

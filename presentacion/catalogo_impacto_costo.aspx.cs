@@ -188,7 +188,7 @@ namespace presentacion
                     if (IC != null)
                     {
                         txtnombre.Text = IC.nombre;
-                        txtporcentaje.Text = IC.nombre;
+                        txtporcentaje.Text = IC.valor.ToString();
                         chkactivo.Checked = IC.activo;
                         ModalShow("#ModalImpactocosto");
                     }

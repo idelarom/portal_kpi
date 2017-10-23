@@ -214,7 +214,10 @@
             ModalCloseGlobal("#modal_historial_acciones");
             return true;
         }
-
+        function Loading(modal) {
+            var target = document.getElementById(modal);
+            var spinner = new Spinner(opts).spin(target);
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -392,7 +395,7 @@
                                 <span aria-hidden="true">×</span></button>
                             <h4 class="modal-title">Riesgo</h4>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="body_modal_riesgo">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Riesgo</strong></h5>
@@ -404,13 +407,13 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Probabilidad</strong></h5>
-                                    <asp:DropDownList ID="ddlprobabilidad" AutoPostBack="true" OnSelectedIndexChanged="ddlprobabilidad_SelectedIndexChanged"                                       
+                                    <asp:DropDownList ID="ddlprobabilidad" AutoPostBack="true" OnSelectedIndexChanged="ddlprobabilidad_SelectedIndexChanged"
                                         CssClass="form-control" runat="server">
                                     </asp:DropDownList>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-gavel" aria-hidden="true"></i>&nbsp;Impacto</strong></h5>
-                                    <asp:DropDownList ID="ddlimpacto_costo"  AutoPostBack="true" OnSelectedIndexChanged="ddlprobabilidad_SelectedIndexChanged"                                     
+                                    <asp:DropDownList ID="ddlimpacto_costo" AutoPostBack="true" OnSelectedIndexChanged="ddlprobabilidad_SelectedIndexChanged"
                                         CssClass="form-control" runat="server">
                                     </asp:DropDownList>
                                 </div>
@@ -421,16 +424,17 @@
                                     <asp:HiddenField ID="hdfvalor_riesgo" runat="server" />
                                     <asp:HiddenField ID="hdfid_estrategia" runat="server" />
                                     <asp:TextBox ID="txtestrategia" ReadOnly="true" CssClass=" form-control" runat="server"></asp:TextBox>
-                                   <%-- <asp:DropDownList ID="ddlestrategias" CssClass="form-control" Enabled="false" runat="server"></asp:DropDownList>--%>
+                                    <%-- <asp:DropDownList ID="ddlestrategias" CssClass="form-control" Enabled="false" runat="server"></asp:DropDownList>--%>
                                 </div>
-                                
+
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong>Detalles de la estrategia</strong></h5>
                                     <asp:TextBox ID="txtestrategia_det" TextMode="MultiLine" Rows="2" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Acciones</strong></h5>
-                                    <asp:LinkButton ID="lnkacciones" OnClick="lnkacciones_Click" CssClass="btn btn-success btn-flat" runat="server">Acciones</asp:LinkButton>
+                                    <asp:LinkButton ID="lnkacciones" OnClick="lnkacciones_Click" CssClass="btn btn-success btn-flat" 
+                                        OnClientClick="return Loading('body_modal_riesgo');" runat="server">Acciones</asp:LinkButton>
                                 </div>
                             </div>
                             <asp:HiddenField ID="hdf_id_proyecto_evaluacion" runat="server" />
@@ -530,8 +534,8 @@
                             <div class="row" id="div_cierre_actividad" runat="server" visible="false">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Accion</strong></h5>
-                                        <asp:TextBox ID="txtaccion_title" ReadOnly="true" TextMode="MultiLine" Rows="2" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                  
+                                    <asp:TextBox ID="txtaccion_title" ReadOnly="true" TextMode="MultiLine" Rows="2" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Documento</strong></h5>
@@ -570,57 +574,57 @@
                                 <div class="col-lg-12 col-xs-12">
                                     <div class="table table-responsive" style="height: 130px; overflow: scroll;">
                                         <div class="table table-responsive">
-                                        <table class="table table-responsive table-condensed  table-bordered" id="tabla_acciones">
-                                            <thead>
-                                                <tr style="font-size: 11px;">
-                                                    <th style="min-width: 80px; text-align: left;" scope="col"></th>
-                                                    <th style="min-width: 30px; text-align: left;" scope="col"></th>
-                                                    <th style="min-width: 30px; text-align: left;" scope="col"></th>
-                                                    <th style="min-width: 250px; text-align: left;" scope="col">Acción</th>
-                                                    <th style="min-width: 100px; text-align: left;" scope="col">Fecha Estimada</th>
-                                                    <th style="min-width: 100px; text-align: left;" scope="col">Fecha Real</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <asp:Repeater ID="repeater_acciones" runat="server">
-                                                    <ItemTemplate>
-                                                        <tr style="font-size: 11px">
-                                                            <td style="max-width: 30px; text-align: center">
-                                                                <asp:LinkButton ID="lnkresultado"
-                                                                    OnClick="lnkresultado_Click" Style="color: white;" runat="server" CommandName="View" CssClass="btn btn-primary btn-flat btn-xs"
-                                                                    CommandArgument='<%# Eval("id_actividad").ToString() %>'>
+                                            <table class="table table-responsive table-condensed  table-bordered" id="tabla_acciones">
+                                                <thead>
+                                                    <tr style="font-size: 11px;">
+                                                        <th style="min-width: 80px; text-align: left;" scope="col"></th>
+                                                        <th style="min-width: 30px; text-align: left;" scope="col"></th>
+                                                        <th style="min-width: 30px; text-align: left;" scope="col"></th>
+                                                        <th style="min-width: 250px; text-align: left;" scope="col">Acción</th>
+                                                        <th style="min-width: 100px; text-align: left;" scope="col">Fecha Estimada</th>
+                                                        <th style="min-width: 100px; text-align: left;" scope="col">Fecha Real</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <asp:Repeater ID="repeater_acciones" runat="server">
+                                                        <ItemTemplate>
+                                                            <tr style="font-size: 11px">
+                                                                <td style="max-width: 30px; text-align: center">
+                                                                    <asp:LinkButton ID="lnkresultado"
+                                                                        OnClick="lnkresultado_Click" Style="color: white;" runat="server" CommandName="View" CssClass="btn btn-primary btn-flat btn-xs"
+                                                                        CommandArgument='<%# Eval("id_actividad").ToString() %>'>
                                                                     Resultado
-                                                                </asp:LinkButton>
-                                                            </td>
-                                                            <td style="max-width: 30px; text-align: center">
-                                                                <asp:LinkButton Visible='<%#Convert.ToBoolean(Eval("terminada")) %>'
-                                                                     ID="lnkdescargararchivo" OnClientClick='<%# "return DownloadFile("+ DataBinder.Eval(Container.DataItem, "id_actividad").ToString()+");" %>'
-                                                                    OnClick="lnkdescargararchivo_Click" runat="server" CommandName="Download"
-                                                                    CommandArgument='<%# Eval("id_actividad").ToString() %>'>
+                                                                    </asp:LinkButton>
+                                                                </td>
+                                                                <td style="max-width: 30px; text-align: center">
+                                                                    <asp:LinkButton Visible='<%#Convert.ToBoolean(Eval("terminada")) %>'
+                                                                        ID="lnkdescargararchivo" OnClientClick='<%# "return DownloadFile("+ DataBinder.Eval(Container.DataItem, "id_actividad").ToString()+");" %>'
+                                                                        OnClick="lnkdescargararchivo_Click" runat="server" CommandName="Download"
+                                                                        CommandArgument='<%# Eval("id_actividad").ToString() %>'>
                                                                     <i class="fa fa-file-archive-o fa-2x" aria-hidden="true"></i>
-                                                                </asp:LinkButton>
-                                                            </td>
-                                                            <td style="max-width: 30px; text-align: center">
-                                                                <asp:LinkButton ID="lnkeliminarparticipante"
-                                                                    OnClientClick="return confirm('¿Desea Eliminar esta acción?');"
-                                                                    OnClick="lnkeliminarparticipante_Click" runat="server" CommandName="View"
-                                                                    CommandArgument='<%# Eval("id_actividad").ToString() %>'>
+                                                                    </asp:LinkButton>
+                                                                </td>
+                                                                <td style="max-width: 30px; text-align: center">
+                                                                    <asp:LinkButton ID="lnkeliminarparticipante"
+                                                                        OnClientClick="return confirm('¿Desea Eliminar esta acción?');"
+                                                                        OnClick="lnkeliminarparticipante_Click" runat="server" CommandName="View"
+                                                                        CommandArgument='<%# Eval("id_actividad").ToString() %>'>
                                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-                                                                </asp:LinkButton>
-                                                            </td>
-                                                             <td style="min-width: 250px; text-align: left;">                                                              
-                                                               <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>100?100:Eval("nombre").ToString().Length))+
+                                                                    </asp:LinkButton>
+                                                                </td>
+                                                                <td style="min-width: 250px; text-align: left;">
+                                                                    <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>100?100:Eval("nombre").ToString().Length))+
                                                                                      (Eval("nombre").ToString().Length>100?"...":"")    %>
-                                                            </td>
-                                                            <td style="min-width: 100px; text-align: left;"><%# Convert.ToDateTime(Eval("fecha_asignacion")).ToString("dd MMMM yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %></td>
-                                                           <td style="min-width: 100px; text-align: left;"><%#( !Convert.ToBoolean(Eval("terminada"))?"--Acción sin ejecutar": Convert.ToDateTime(Eval("fecha_ejecucion")).ToString("dd MMMM yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))) %></td>
-                                                           
-                                                        </tr>
-                                                    </ItemTemplate>
-                                                </asp:Repeater>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                                </td>
+                                                                <td style="min-width: 100px; text-align: left;"><%# Convert.ToDateTime(Eval("fecha_asignacion")).ToString("dd MMMM yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %></td>
+                                                                <td style="min-width: 100px; text-align: left;"><%#( !Convert.ToBoolean(Eval("terminada"))?"--Acción sin ejecutar": Convert.ToDateTime(Eval("fecha_ejecucion")).ToString("dd MMMM yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))) %></td>
+
+                                                            </tr>
+                                                        </ItemTemplate>
+                                                    </asp:Repeater>
+                                                </tbody>
+                                            </table>
+                                        </div>
 
 
                                     </div>
@@ -665,7 +669,7 @@
                                                         <tr style="font-size: 11px">
                                                             <td style="max-width: 30px; text-align: center">
                                                                 <asp:CheckBox ID="cbxseleccionado" AutoPostBack="false"
-                                                                    name='<%# Eval("riesgo") %>'  estrategia='<%# Eval("estrategia") %>' runat="server" />
+                                                                    name='<%# Eval("riesgo") %>' estrategia='<%# Eval("estrategia") %>' runat="server" />
                                                             </td>
                                                             <td style="min-width: 350px; text-align: left;"><%# Eval("riesgo") %></td>
 
@@ -693,7 +697,7 @@
         </div>
     </div>
 
-    
+
     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_historial_acciones" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Always">
@@ -724,10 +728,10 @@
                                                     <ItemTemplate>
                                                         <tr style="font-size: 11px">
                                                             <td style="min-width: 450px; text-align: left;">
-                                                               <a style="cursor:pointer;" onclick='<%# "return ViewLeccionesAprendidas("+@""""+Eval("nombre").ToString().Replace(@"""","'").Replace(System.Environment.NewLine,"").Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("\r", String.Empty)+@"""" +","+Eval("id_actividad_tipo")+");"%>'>
-                                                               <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>200?200:Eval("nombre").ToString().Length))+
+                                                                <a style="cursor: pointer;" onclick='<%# "return ViewLeccionesAprendidas("+@""""+Eval("nombre").ToString().Replace(@"""","'").Replace(System.Environment.NewLine,"").Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("\r", String.Empty)+@"""" +","+Eval("id_actividad_tipo")+");"%>'>
+                                                                    <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>200?200:Eval("nombre").ToString().Length))+
                                                                                      (Eval("nombre").ToString().Length>200?"...":"")    %>
-                                                               </a>
+                                                                </a>
                                                             </td>
                                                             <td style="min-width: 100px; text-align: left;"><%# Eval("tipo") %></td>
                                                             <td style="max-width: 30px; text-align: center">

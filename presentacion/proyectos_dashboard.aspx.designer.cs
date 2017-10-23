@@ -85,6 +85,24 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnkterminarproyecto;
         
         /// <summary>
+        /// Control lblnumriesgos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblnumriesgos;
+        
+        /// <summary>
+        /// Control lnkgo_riesgos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkgo_riesgos;
+        
+        /// <summary>
         /// Control lblrecursos.
         /// </summary>
         /// <remarks>
@@ -103,22 +121,22 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnkrecursos;
         
         /// <summary>
-        /// Control lblnumriesgos.
+        /// Control lblminutas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblnumriesgos;
+        protected global::System.Web.UI.WebControls.Label lblminutas;
         
         /// <summary>
-        /// Control lnkgo_riesgos.
+        /// Control lnkminutas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkgo_riesgos;
+        protected global::System.Web.UI.WebControls.LinkButton lnkminutas;
         
         /// <summary>
         /// Control hdfid_proyecto.

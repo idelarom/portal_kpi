@@ -85,7 +85,7 @@
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
                                     <th style=" min-width:400px; text-align: left;" scope="col">Nombre</th>
-                                    <th style=" min-width:60px; text-align: left;" scope="col">Porcentaje</th>
+                                    <th style=" min-width:60px; text-align: center;" scope="col">Valor</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,7 +105,7 @@
                                                 </a>
                                             </td>
                                             <td style="text-align: left;"><%# Eval("nombre") %></td>
-                                            <td style="text-align: left;"><%# Eval("porcentaje") %>&nbsp;%</td>
+                                            <td style="text-align: center;"><%# Eval("valor") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -139,8 +139,8 @@
                                     <asp:TextBox ID="txtestatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Porcentaje de probabilidad</strong></h5>
-                                    <asp:TextBox  onblur="ValidateRange(this,0,100,'El valor debe ser de 0 - 100 %');" ID="txtnumdias" TextMode="Number" CssClass=" form-control" Width="150px" runat="server"></asp:TextBox>
+                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Valor</strong></h5>
+                                    <asp:TextBox  onblur="ValidateRange(this,0,100,'El valor debe ser de 0 - 10');" ID="txtnumdias" TextMode="Number" CssClass=" form-control" Width="150px" runat="server"></asp:TextBox>
                                    <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
                                     <asp:CheckBox ID="chkactivo" runat="server" Checked="true" Visible="false" text="Activo"/>
                                 </div>

@@ -10,7 +10,11 @@
             document.getElementById('<%= lnkrecursos.ClientID%>').click();
             return true;
         }
-         function ConfirmwidgetProyectoModal(msg) {
+        function GoMinutas() {
+            document.getElementById('<%= lnkminutas.ClientID%>').click();
+            return true;
+        }
+        function ConfirmwidgetProyectoModal(msg) {
             if (confirm(msg)) {
                 $("#<%= LinkButton2.ClientID%>").show();
                 $("#<%= lnkguardarhistorial.ClientID%>").hide();
@@ -18,6 +22,9 @@
             } else {
                 return false;
             }
+        }
+        function Toggle() {
+            $("#div_iadicional").toggle(500);
         }
     </script>
 </asp:Content>
@@ -33,12 +40,12 @@
                     <h3 class="box-title">Información general</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" onclick="Toggle();">
+                            <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
-                <div class="box-body" style="">
+                <div class="box-body" style="display:none;" id="div_iadicional">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12  col-xs-12">
                             <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Tecnología(s)</strong></h5>
@@ -87,25 +94,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-blue" onclick="return GoRecursos();" style="cursor: pointer;">
-                <div class="inner">
-                    <h3>
-                        <asp:Label ID="lblrecursos" runat="server" Text="0"></asp:Label></h3>
-
-                    <p>Recursos relacionados</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-stalker"></i>
-                </div>
-                <asp:LinkButton ID="lnkrecursos" OnClick="lnkrecursos_Click" runat="server" CssClass="small-box-footer">
-                  
-              Administrar&nbsp;<i class="fa fa-arrow-circle-right"></i>
-                </asp:LinkButton>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+        
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-red" onclick="return GoRiesgos();" style="cursor: pointer;">
                 <div class="inner">
@@ -120,6 +110,43 @@
                 <asp:LinkButton ID="lnkgo_riesgos" OnClick="lnkgo_riesgos_Click" runat="server" CssClass="small-box-footer">
                   
               Evaluaciones&nbsp;<i class="fa fa-arrow-circle-right"></i>
+                </asp:LinkButton>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-blue" onclick="return GoRecursos();" style="cursor: pointer;">
+                <div class="inner">
+                    <h3>
+                        <asp:Label ID="lblrecursos" runat="server" Text="0"></asp:Label></h3>
+
+                    <p>Recursos</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-stalker"></i>
+                </div>
+                <asp:LinkButton ID="lnkrecursos" OnClick="lnkrecursos_Click" runat="server" CssClass="small-box-footer">
+                  
+              Recursos&nbsp;<i class="fa fa-arrow-circle-right"></i>
+                </asp:LinkButton>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green" onclick="return GoMinutas();" style="cursor: pointer;">
+                <div class="inner">
+                    <h3>
+                        <asp:Label ID="lblminutas" runat="server" Text="0"></asp:Label></h3>
+
+                    <p>Minutas</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ios-briefcase"></i>
+                </div>
+                <asp:LinkButton ID="lnkminutas" OnClick="lnkminutas_Click" runat="server" CssClass="small-box-footer">
+                  
+              Minutas&nbsp;<i class="fa fa-arrow-circle-right"></i>
                 </asp:LinkButton>
             </div>
         </div>

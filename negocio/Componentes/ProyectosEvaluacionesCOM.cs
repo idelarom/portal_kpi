@@ -41,7 +41,7 @@ namespace negocio.Componentes
                 {
                     proyectos_evaluaciones pevaluacion = context.proyectos_evaluaciones
                               .First(i => i.id_proyecto_evaluacion == id_proyecto_evaluacion_anterior);
-                    ICollection<riesgos> riesgos = pevaluacion.riesgos;
+                    List<riesgos> riesgos = pevaluacion.riesgos.ToList();
                     foreach (riesgos riesgo in riesgos)
                     {
                         if (riesgo.id_riesgos_estatus == 1 && riesgo.usuario_borrado == null)
@@ -53,18 +53,17 @@ namespace negocio.Componentes
                                 usuario = entidad.usuario,
                                 fecha_registro = DateTime.Now,
                                 id_riesgos_estatus = 1,
-                                id_riesgo_probabilidad = 1,
-                                id_riesgo_impacto = 1,
-                                id_riesgo_estrategia = 1
+                                id_riesgo_probabilidad = riesgo.id_riesgo_probabilidad,
+                                id_riesgo_impacto = riesgo.id_riesgo_impacto,
+                                id_riesgo_estrategia = riesgo.id_riesgo_estrategia,
+                                usuario_resp = riesgo.usuario_resp
                             };
                             context.riesgos.Add(new_riesgo);
+                            context.SaveChanges();
                         }
                     }
 
-                    context.SaveChanges();
                 }
-
-
                 return evaluacion.id_proyecto_evaluacion;
             }
             catch (DbEntityValidationException ex)

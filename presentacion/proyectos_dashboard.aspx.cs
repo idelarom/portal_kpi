@@ -47,6 +47,7 @@ namespace presentacion
                 {
                     CargarRiesgos(id_proyecto);
                     CargarRecursos(id_proyecto);
+                    CargarMinutas(id_proyecto);
                     DataRow proyecto = dt.Rows[0];
                     hdfid_proyecto.Value = id_proyecto.ToString();
                     lblproyect.Text = proyecto["proyecto"].ToString();
@@ -94,6 +95,21 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar información del proyecto(recursos): " + ex.Message, this);
+            }
+        }
+
+
+        private void CargarMinutas(int id_proyecto)
+        {
+            try
+            {
+                ProyectosMinutasCOM proyectos = new ProyectosMinutasCOM();
+                DataTable dt = proyectos.GetAll(id_proyecto);
+                lblminutas.Text = dt.Rows.Count.ToString();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del proyecto. " + ex.Message, this);
             }
         }
         protected void lnkgo_riesgos_Click(object sender, EventArgs e)
@@ -199,6 +215,11 @@ namespace presentacion
         {
             Response.Redirect("proyectos_recursos.aspx?id_proyecto=" + Request.QueryString["id_proyecto"]);
 
+        }
+
+        protected void lnkminutas_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("proyectos_minutas.aspx?id_proyecto=" + Request.QueryString["id_proyecto"]);
         }
     }
 }
