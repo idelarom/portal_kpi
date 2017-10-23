@@ -10,7 +10,16 @@
 namespace presentacion {
     
     
-    public partial class proyectos_dashboard {
+    public partial class proyectos_recursos {
+        
+        /// <summary>
+        /// Control lnkdashboard.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkdashboard;
         
         /// <summary>
         /// Control lblproyect.
@@ -31,33 +40,6 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Label lbltecnologia;
         
         /// <summary>
-        /// Control lblestatus.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblestatus;
-        
-        /// <summary>
-        /// Control lblperiodo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblperiodo;
-        
-        /// <summary>
-        /// Control lblempleado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblempleado;
-        
-        /// <summary>
         /// Control lblcped.
         /// </summary>
         /// <remarks>
@@ -76,93 +58,102 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.Label lblmonto;
         
         /// <summary>
-        /// Control lnkterminarproyecto.
+        /// Control lnkagregarempleadoaproyecto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkterminarproyecto;
+        protected global::System.Web.UI.WebControls.LinkButton lnkagregarempleadoaproyecto;
         
         /// <summary>
-        /// Control lblrecursos.
+        /// Control repeat_proyectos_empleados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblrecursos;
+        protected global::System.Web.UI.WebControls.Repeater repeat_proyectos_empleados;
         
         /// <summary>
-        /// Control lnkrecursos.
+        /// Control UpdatePanel15.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkrecursos;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel15;
         
         /// <summary>
-        /// Control lblnumriesgos.
+        /// Control txtbuscarempleadoproyecto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblnumriesgos;
+        protected global::System.Web.UI.WebControls.TextBox txtbuscarempleadoproyecto;
         
         /// <summary>
-        /// Control lnkgo_riesgos.
+        /// Control btnbuscarempleado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkgo_riesgos;
+        protected global::System.Web.UI.WebControls.LinkButton btnbuscarempleado;
         
         /// <summary>
-        /// Control hdfid_proyecto.
+        /// Control imgloadempleados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfid_proyecto;
+        protected global::System.Web.UI.WebControls.Image imgloadempleados;
         
         /// <summary>
-        /// Control UpdatePanel2.
+        /// Control lblbe.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblbe;
         
         /// <summary>
-        /// Control AsyncUpload1.
+        /// Control rdlempleadosproyecto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadAsyncUpload AsyncUpload1;
+        protected global::Telerik.Web.UI.RadListBox rdlempleadosproyecto;
         
         /// <summary>
-        /// Control LinkButton2.
+        /// Control lnkcargarempleados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+        protected global::System.Web.UI.WebControls.LinkButton lnkcargarempleados;
         
         /// <summary>
-        /// Control lnkguardarhistorial.
+        /// Control lnkguardarempleado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkguardarhistorial;
+        protected global::System.Web.UI.WebControls.LinkButton lnkguardarempleado;
+        
+        /// <summary>
+        /// Control hdfmotivos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfmotivos;
     }
 }

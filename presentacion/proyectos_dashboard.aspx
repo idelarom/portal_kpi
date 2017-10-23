@@ -6,6 +6,10 @@
             document.getElementById('<%= lnkgo_riesgos.ClientID%>').click();
             return true;
         }
+        function GoRecursos() {
+            document.getElementById('<%= lnkrecursos.ClientID%>').click();
+            return true;
+        }
          function ConfirmwidgetProyectoModal(msg) {
             if (confirm(msg)) {
                 $("#<%= LinkButton2.ClientID%>").show();
@@ -83,6 +87,24 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-blue" onclick="return GoRecursos();" style="cursor: pointer;">
+                <div class="inner">
+                    <h3>
+                        <asp:Label ID="lblrecursos" runat="server" Text="0"></asp:Label></h3>
+
+                    <p>Recursos relacionados</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-stalker"></i>
+                </div>
+                <asp:LinkButton ID="lnkrecursos" OnClick="lnkrecursos_Click" runat="server" CssClass="small-box-footer">
+                  
+              Administrar&nbsp;<i class="fa fa-arrow-circle-right"></i>
+                </asp:LinkButton>
+            </div>
+        </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-red" onclick="return GoRiesgos();" style="cursor: pointer;">

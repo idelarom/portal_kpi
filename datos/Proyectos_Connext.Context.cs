@@ -33,9 +33,13 @@ namespace datos
         public virtual DbSet<documentos> documentos { get; set; }
         public virtual DbSet<documentos_tipos> documentos_tipos { get; set; }
         public virtual DbSet<proyectos> proyectos { get; set; }
+        public virtual DbSet<proyectos_empleados> proyectos_empleados { get; set; }
         public virtual DbSet<proyectos_estatus> proyectos_estatus { get; set; }
         public virtual DbSet<proyectos_evaluaciones> proyectos_evaluaciones { get; set; }
         public virtual DbSet<proyectos_historial_tecnologias> proyectos_historial_tecnologias { get; set; }
+        public virtual DbSet<proyectos_minutas> proyectos_minutas { get; set; }
+        public virtual DbSet<proyectos_minutas_participantes> proyectos_minutas_participantes { get; set; }
+        public virtual DbSet<proyectos_minutas_pendientes> proyectos_minutas_pendientes { get; set; }
         public virtual DbSet<proyectos_periodos> proyectos_periodos { get; set; }
         public virtual DbSet<proyectos_tecnologias> proyectos_tecnologias { get; set; }
         public virtual DbSet<riesgos> riesgos { get; set; }

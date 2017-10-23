@@ -304,13 +304,6 @@ namespace presentacion
                         row["usuario"].ToString()
                         ));
                 }
-                //rtvListEmpleado.DataTextField = "Text";
-                //rtvListEmpleado.DataValueField = "Value";
-                //rtvListEmpleado.DataFieldID = "ID";
-                //rtvListEmpleado.DataFieldParentID = "ParentID";
-                //rtvListEmpleado.DataSource = siteData;
-                //rtvListEmpleado.DataBind();
-                //lblcountlistempleados.Text = siteData.Count.ToString();
             }
             catch (Exception ex)
             {
@@ -389,14 +382,6 @@ namespace presentacion
                 proyecto.folio_pmt = txtfolopmt.Text.Trim();
                 //CPED
                 proyecto.cped = txtcped.Text.Trim();
-                //string monto = txtmonto.Text;
-                //proyecto.costo = 0;
-                //if (txtmonto.Text != "")
-                //{
-                //    string[] costo = monto.Split('-');
-                //    proyecto.costo = Convert.ToDecimal(costo[0].Replace("$", "").Replace(",", "").Replace(" ", ""));
-                //    proyecto.tipo_moneda = costo[1];
-                //}  
                 
 
                 proyecto.costo_usd = Convert.ToDecimal(txtmonto.Text.Replace("$", "").Replace(",", "").Replace(" ", ""));
