@@ -122,11 +122,12 @@
         $(document).ready(function () {
             //if (location.protocol != 'https:' && location.hostname != "localhost") {
             //    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-            //} else {
+            //} else 
                 getLocation();
                 initGeolocation();
            // }
         });
+
         function initGeolocation() {
             $.getJSON('https://ipinfo.io', function (response) {
                 var ip = response.ip;
@@ -141,11 +142,6 @@
                 $('#<%= hdfip.ClientID%>').val(ip);
                 $('#<%= hdfregion.ClientID%>').val(region);
                 $('#<%= hdfproveedor.ClientID%>').val(proveedor);
-                //console.log(ip);
-                //console.log(region);
-                //console.log(lat);
-                //console.log(lon);
-                //console.log(proveedor);
             });
         }
 
@@ -165,8 +161,6 @@
                 var lon = coordenadas.longitude;
                 $('#<%= hdflatitud.ClientID%>').val(lat);
                 $('#<%= hdflongitud.ClientID%>').val(lon);
-                //console.log("lat: "+lat);
-                //console.log("lon: "+lon);
             };
 
             function error(error) {

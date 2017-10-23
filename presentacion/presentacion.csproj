@@ -247,6 +247,7 @@
     <Content Include="dist\img\photo2.png" />
     <Content Include="dist\img\photo3.jpg" />
     <Content Include="dist\img\photo4.jpg" />
+    <Content Include="dist\img\push.png" />
     <Content Include="dist\img\user.png" />
     <Content Include="dist\img\user1-128x128.jpg" />
     <Content Include="dist\img\user2-160x160.jpg" />
@@ -285,6 +286,7 @@
     <Content Include="img\logo_bar_sm.png" />
     <Content Include="img\logo_login.png" />
     <Content Include="img\mant.jpg" />
+    <Content Include="img\push.png" />
     <Content Include="img\user.png" />
     <Content Include="img\user_mini.png" />
     <Content Include="inicio.aspx" />

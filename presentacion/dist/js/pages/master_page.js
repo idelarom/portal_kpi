@@ -5,24 +5,42 @@
 });
 
 //DEVUELVE NOTIFICACION DE ESCRITORIO
-function NotificacionDesktop(title, Mensaje, img) {
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": true,
-        "progressBar": true,
-        "positionClass": "toast-top-full-width",
-        "preventDuplicates": true,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "500000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
+function NotificationDesktop(Mensaje, title) {
+    PlaySound('dist/sounds/notification.mp3');
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-full-width",
+            "preventDuplicates": true,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "500000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        Command: toastr["info"](Mensaje, title);
+    } else {
+        var options = {
+            body: Mensaje,
+            icon: "img/logo_login.png",
+            dir: "ltr",
+            tag: "PENDIENTE"
+        };
+        var notification = new Notification(title, options);
+        notification.onclick = function () {
+            notification.close();
+        };
+        setTimeout(function () {
+            notification.close();
+        }, 8000);
     }
-    Command: toastr["info"](Mensaje, title);
 }
 
 
