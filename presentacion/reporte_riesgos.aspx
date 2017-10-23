@@ -183,7 +183,7 @@
             </div>
         </div>
 
-         <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_historial_acciones" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+         <%--<div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_historial_acciones" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Always">
                 <Triggers>
@@ -238,7 +238,7 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
-    </div>
+    </div>--%>
 
          <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_acciones" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
@@ -257,7 +257,7 @@
                             <h4 class="modal-title">Acciones</h4>
                         </div>
                         <div class="modal-body">
-                            <div id="div_nueva_Accion" runat="server" visible="true">
+                          <%--  <div id="div_nueva_Accion" runat="server" visible="true">
                                 <div class="row">                                    
                                     <div class="col-lg-12 col-sm-12 col-xs-12">
                                         <br />
@@ -268,7 +268,7 @@
                                     </div>
 
                                 </div>
-                            </div>
+                            </div>--%>
                             <%--<div class="row" id="div_cierre_actividad" runat="server" visible="false">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Accion</strong></h5>
@@ -315,9 +315,9 @@
                                         <table class="table table-responsive table-condensed  table-bordered" id="tabla_acciones">
                                             <thead>
                                                 <tr style="font-size: 11px;">
-                                                    <th style="min-width: 80px; text-align: left;" scope="col"></th>
+                                                    <%--<th style="min-width: 80px; text-align: left;" scope="col"></th>
                                                     <th style="min-width: 30px; text-align: left;" scope="col"></th>
-                                                    <th style="min-width: 30px; text-align: left;" scope="col"></th>
+                                                    <th style="min-width: 30px; text-align: left;" scope="col"></th>--%>
                                                     <th style="min-width: 250px; text-align: left;" scope="col">Acción</th>
                                                     <th style="min-width: 100px; text-align: left;" scope="col">Fecha Estimada</th>
                                                     <th style="min-width: 100px; text-align: left;" scope="col">Fecha Real</th>

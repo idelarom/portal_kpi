@@ -52,7 +52,7 @@ namespace presentacion
             DataTable dt = new DataTable();
             try
             {
-              RiesgosCOM Riesgos = new RiesgosCOM();
+                RiesgosCOM Riesgos = new RiesgosCOM();
                 dt = Riesgos.proyectos_riesgos_reporte(num_empleado, ver_Todos_los_empleados, fecha_inicio, fecha_fin);
             }
             catch (Exception ex)
@@ -96,8 +96,8 @@ namespace presentacion
                 DataTable dt_riesgos = actividades.actividades_tecnologia(id_proyecto);
                 if (dt_riesgos.Rows.Count > 0)
                 {
-                    repeter_hisitorial_acciones.DataSource = dt_riesgos;
-                    repeter_hisitorial_acciones.DataBind();
+                    //repeter_hisitorial_acciones.DataSource = dt_riesgos;
+                    //repeter_hisitorial_acciones.DataBind();
                     ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
                     ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
                 }
@@ -112,7 +112,7 @@ namespace presentacion
         {
             try
             {
-                DateTime fechaInicial = Convert.ToDateTime(string.Format("{0:dd/MM/yyyy HH:mm:ss}", string.Format("{0:dd/MM/yyyy}",rdpfechainicial.SelectedDate) + " 00:00:00"));
+                DateTime fechaInicial = Convert.ToDateTime(string.Format("{0:dd/MM/yyyy HH:mm:ss}", string.Format("{0:dd/MM/yyyy}", rdpfechainicial.SelectedDate) + " 00:00:00"));
                 DateTime fechaFinal = Convert.ToDateTime(string.Format("{0:dd/MM/yyyy HH:mm:ss}", string.Format("{0:dd/MM/yyyy}", rdpfechafinal.SelectedDate) + " 23:59:59"));
 
 
@@ -236,30 +236,30 @@ namespace presentacion
             //CargarDatosFiltros("");
             CargarGridAcciones();
             //txtaccion.Text = "";
-            div_nueva_Accion.Visible = true;
+            //div_nueva_Accion.Visible = true;
             //div_cierre_actividad.Visible = false;
             //txtfilterempleado.Text = "";
             //txtfechaejecuacion.SelectedDate = DateTime.Now;
             ModalShow("#modal_acciones");
         }
 
-        protected void lnkcargarleccionesaprendidas_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                CargarAccionesHistorial(Convert.ToInt32(hdfid_proyecto.Value));//(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                ModalShow("#modal_historial_acciones");
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al visualizar resultado: " + ex.Message, this);
-            }
-            finally
-            {
-                //InicializarTablas();
-                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
-                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
-            }
-        }
+        //protected void lnkcargarleccionesaprendidas_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        CargarAccionesHistorial(Convert.ToInt32(hdfid_proyecto.Value));//(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+        //        ModalShow("#modal_historial_acciones");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Toast.Error("Error al visualizar resultado: " + ex.Message, this);
+        //    }
+        //    finally
+        //    {
+        //        //InicializarTablas();
+        //        ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
+        //        ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
+        //    }
+        //}
     }
 }
