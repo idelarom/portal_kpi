@@ -9,7 +9,10 @@ using System.Globalization;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 using Telerik.Web.UI;
+using System.Linq;
+using datos;
 
 namespace presentacion
 {
@@ -31,7 +34,8 @@ namespace presentacion
         {
             if (!IsPostBack)
             {
-                hdfsessionid.Value = Guid.NewGuid().ToString();
+                //hdfsessionid.Value = Guid.NewGuid().ToString();
+                hdfguid.Value = Guid.NewGuid().ToString();
                 ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
                 CargarDatosFiltros();
             }
@@ -67,19 +71,57 @@ namespace presentacion
             ModalShow("#myModal");
         }
 
+        private void CargarGridAcciones()
+        {
+            try
+            {
+                ActividadesCOM actividad = new ActividadesCOM();
+                //List<actividades> lstactividades = Session[hdfid_riesgo.Value + "list_actividades"] as List<datos.actividades>;//Session[hdfguid.Value + "list_actividades"] as List<datos.actividades>;
+
+                //repeater_acciones.DataSource = lstactividades;
+                repeater_acciones.DataSource = actividad.actividades_riesgo(Convert.ToInt32(hdfid_riesgo.Value));
+                repeater_acciones.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar grid de acciones: " + ex.Message, this);
+            }
+        }
+
+        private void CargarAccionesHistorial(int id_proyecto)
+        {
+            try
+            {
+                ActividadesCOM actividades = new ActividadesCOM();
+                DataTable dt_riesgos = actividades.actividades_tecnologia(id_proyecto);
+                if (dt_riesgos.Rows.Count > 0)
+                {
+                    repeter_hisitorial_acciones.DataSource = dt_riesgos;
+                    repeter_hisitorial_acciones.DataBind();
+                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del historial de acciones, " + ex.Message, this);
+            }
+        }
+
         protected void lnkguardar_Click(object sender, EventArgs e)
         {
             try
             {
-                DateTime fechaInicial = Convert.ToDateTime(rdpfechainicial.SelectedDate);
-                DateTime fechaFinal = Convert.ToDateTime(rdpfechafinal.SelectedDate);
+                DateTime fechaInicial = Convert.ToDateTime(string.Format("{0:dd/MM/yyyy HH:mm:ss}", string.Format("{0:dd/MM/yyyy}",rdpfechainicial.SelectedDate) + " 00:00:00"));
+                DateTime fechaFinal = Convert.ToDateTime(string.Format("{0:dd/MM/yyyy HH:mm:ss}", string.Format("{0:dd/MM/yyyy}", rdpfechafinal.SelectedDate) + " 23:59:59"));
 
-                if (fechaInicial > fechaFinal)
+
+                if (Convert.ToDateTime(string.Format("{0:dd/MM/yyyy}", fechaInicial)) > Convert.ToDateTime(string.Format("{0:dd/MM/yyyy}", fechaFinal)))
                 {
                     ModalShow("#myModal");
                     Toast.Error("La fecha inicial no puede ser mayor a la fecha final seleccionada.", this);
                 }
-                else if (fechaFinal > DateTime.Now)
+                else if (Convert.ToDateTime(string.Format("{0:dd/MM/yyyy}", fechaFinal)) > Convert.ToDateTime(string.Format("{0:dd/MM/yyyy}", DateTime.Now)))
                 {
                     ModalShow("#myModal");
                     Toast.Error("la fecha final no puede ser mayor a la fecha actual", this);
@@ -186,6 +228,37 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al exportar el reporte a excel: " + ex.Message, this);
+            }
+        }
+
+        protected void btnacciones_Click(object sender, EventArgs e)
+        {
+            //CargarDatosFiltros("");
+            CargarGridAcciones();
+            //txtaccion.Text = "";
+            div_nueva_Accion.Visible = true;
+            //div_cierre_actividad.Visible = false;
+            //txtfilterempleado.Text = "";
+            //txtfechaejecuacion.SelectedDate = DateTime.Now;
+            ModalShow("#modal_acciones");
+        }
+
+        protected void lnkcargarleccionesaprendidas_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CargarAccionesHistorial(Convert.ToInt32(hdfid_proyecto.Value));//(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                ModalShow("#modal_historial_acciones");
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al visualizar resultado: " + ex.Message, this);
+            }
+            finally
+            {
+                //InicializarTablas();
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
             }
         }
     }

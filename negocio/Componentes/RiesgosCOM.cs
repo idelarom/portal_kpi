@@ -497,6 +497,8 @@ namespace negocio.Componentes
                                orderby(r.riesgo)
                                select new
                                {
+                                   pt.id_proyecto_tecnologia,
+                                   tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,
@@ -510,7 +512,7 @@ namespace negocio.Componentes
                                    estrategia = rs.nombre,
                                    fecha_evaluacion = pe.fecha_evaluacion,
                                    proyecto = p.proyecto
-                               }).Distinct();
+                               });
                 dt = To.DataTable(riesgos.ToList());
                 return dt;
             }
@@ -547,22 +549,23 @@ namespace negocio.Componentes
                 }
                
                 Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                List<sp_get_tecnologias_historial_Result> tecnologias = db.sp_get_tecnologias_historial().ToList();
                 var riesgos = (from r in db.riesgos
                                join re in db.riesgos_estatus on r.id_riesgos_estatus equals re.id_riesgos_estatus
                                join rp in db.riesgos_probabilidad on r.id_riesgo_probabilidad equals rp.id_riesgo_probabilidad
                                join rs in db.riesgos_estrategia on r.id_riesgo_estrategia equals rs.id_riesgo_estrategia
                                join pe in db.proyectos_evaluaciones on r.id_proyecto_evaluacion equals pe.id_proyecto_evaluacion
                                join p in db.proyectos on pe.id_proyecto equals p.id_proyecto
-                               join pht in db.proyectos_historial_tecnologias on p.id_proyecto equals pht.id_proyecto
-                               join pt in db.proyectos_tecnologias on pht.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
+                               //join pht in db.proyectos_historial_tecnologias on p.id_proyecto equals pht.id_proyecto
+                               //join pt in db.proyectos_tecnologias on pht.id_proyecto_tecnologia equals pt.id_proyecto_tecnologia
                                where (p.usuario_borrado == null
                                  && (r.usuario_borrado==null)
                                   && (r.fecha_registro >= fecha_inicio && r.fecha_registro <= fecha_fin))
                                orderby r.id_riesgo ascending
                                select new
                                {
-                                   pt.id_proyecto_tecnologia,
-                                   tecnologia = pt.nombre,
+                                   //pt.id_proyecto_tecnologia,
+                                   //tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,
@@ -572,6 +575,7 @@ namespace negocio.Componentes
                                    r.id_riesgo_estrategia,
                                    estrategia = rs.nombre,
                                    fecha_evaluacion = pe.fecha_evaluacion,
+                                   id_proyecto = pe.id_proyecto,
                                    proyecto = p.proyecto,
                                    r.usuario
                                }).ToArray();
@@ -580,8 +584,8 @@ namespace negocio.Componentes
                                  select new
                                  {
                                      r.usuario,
-                                     r.id_proyecto_tecnologia,
-                                     r.tecnologia,
+                                     //r.id_proyecto_tecnologia,
+                                     //r.tecnologia,
                                      r.id_riesgo,
                                      r.riesgo,
                                      r.id_riesgos_estatus,
@@ -591,17 +595,20 @@ namespace negocio.Componentes
                                      r.id_riesgo_estrategia,
                                      r.estrategia,
                                      r.fecha_evaluacion,
+                                     r.id_proyecto,
                                      r.proyecto
                                    });
                 NAVISION dbnavision = new NAVISION();
                 var results = from r in riesgos
+                              join tec in tecnologias on r.id_proyecto equals tec.id_proyecto
                               join up in dbnavision.Employee on r.usuario.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
                               select new
                               {
+                                  tecnologia = tec.tecnologias,
                                   usuario = r.usuario,
                                   empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
-                                  r.id_proyecto_tecnologia,
-                                  r.tecnologia,
+                                  //r.id_proyecto_tecnologia,
+                                  //r.tecnologia,
                                   r.id_riesgo,
                                   r.riesgo,
                                   r.id_riesgos_estatus,
@@ -611,6 +618,7 @@ namespace negocio.Componentes
                                   r.id_riesgo_estrategia,
                                   r.estrategia,
                                   r.fecha_evaluacion,
+                                  r.id_proyecto,
                                   r.proyecto
                               };
                 dt = To.DataTable(results.ToList());
