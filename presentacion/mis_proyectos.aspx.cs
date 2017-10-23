@@ -481,12 +481,14 @@ namespace presentacion
                                       (proyecto.descripcion == "" || proyecto.descripcion == null ?proyecto.proyecto:proyecto.descripcion)+"</dd> " +
                                        "<p><strong>CPED</strong> <br/> " +
                                        proyecto.cped + "</p> " +
-                                       "<p><strong>Tecnología</strong><br/> " +
+                                       "<p><strong>Tecnología(s)</strong><br/> " +
                                      strtecnologias + "</p> " +
                                        "<p><strong>Costo</strong><br/> " +
                                        txtmonto.Text +" USD / "+ txtmontomn.Text + " MN</p> " +
                                        "<p><strong>Duración</strong><br/> " +
-                                      proyecto.duración+ " dia(s)</p> " +
+                                      proyecto.duración+ " dia(s). Del "+ 
+                                      Convert.ToDateTime(proyecto.fecha_inicio).ToString("dddd dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")) + " al "+
+                                      Convert.ToDateTime(proyecto.fecha_fin).ToString("dddd dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")) + "</p> " +
                                     "<br/><p>Este movimiento fue realizado por <strong>" +
                                     System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower()) 
                                     + "</strong> el dia <strong>" +

@@ -17,21 +17,28 @@ namespace negocio.Componentes
         {
             try
             {
-                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
-                string mess = "";
-                proyectos_empleados empleado = new proyectos_empleados
+                if (Exists(id_proyecto, usuario))
                 {
-                    id_proyecto = id_proyecto,
-                    usuario = usuario,
-                    administrador_proyecto = pm, 
-                    usuario_registro = usuario_registro,
-                    fecha_registro= DateTime.Now,
-                    activo=true
+                    return "El proyecto ya tiene como integrante al usuario: "+usuario;
+                }
+                else
+                {
+                    Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                    string mess = "";
+                    proyectos_empleados empleado = new proyectos_empleados
+                    {
+                        id_proyecto = id_proyecto,
+                        usuario = usuario,
+                        administrador_proyecto = pm,
+                        usuario_registro = usuario_registro,
+                        fecha_registro = DateTime.Now,
+                        activo = true
 
-                };
-                context.proyectos_empleados.Add(empleado);
-                context.SaveChanges();
-                return mess;
+                    };
+                    context.proyectos_empleados.Add(empleado);
+                    context.SaveChanges();
+                    return mess;
+                }
             }
             catch (DbEntityValidationException ex)
             {
@@ -61,6 +68,26 @@ namespace negocio.Componentes
                         .Select(x => x.ErrorMessage);
                 var fullErrorMessage = string.Join("; ", errorMessages);
                 return fullErrorMessage.ToString();
+            }
+        }
+        public bool Exists(int id_proyecto, string usuario)
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                var query  = context.proyectos_empleados
+                                .Where(i => i.id_proyecto == id_proyecto && i.usuario.ToUpper().Trim()== usuario.ToUpper().Trim() &&
+                                i.activo);
+                DataTable dt = To.DataTable(query.ToList());
+                return dt.Rows.Count > 0;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return false;
             }
         }
 

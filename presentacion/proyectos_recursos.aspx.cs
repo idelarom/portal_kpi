@@ -184,55 +184,77 @@ namespace presentacion
                         int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
                         string usuario_registro = Session["usuario"] as string;
                         vmensaje = proyectos.Agregar(id_proyecto, usuario, true, usuario_registro);
-                        if (vmensaje != "") { break; }
-                    }
-                }
-
-                if (vmensaje == "")
-                {
-                    ProyectosCOM proyectos = new ProyectosCOM();
-                    datos.proyectos proyecto = proyectos.proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                    if (proyecto != null)
-                    {
-                       
-                        string usuario_resp = proyecto.usuario_resp;
-                        EmpleadosCOM usuarios = new EmpleadosCOM();
-                        DataTable dt_usuario = usuarios.GetUsers();
-                        DataView dv = dt_usuario.DefaultView;
-                        dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
-                        DataTable dt_result = dv.ToTable();
-                        if (dt_result.Rows.Count > 0)
+                        if (vmensaje == "")
                         {
-                            string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
-                            DataRow usuario = dt_result.Rows[0];
-                            string mail_to = usuario["mail"].ToString() == "" ? "" : (usuario["mail"].ToString() + ";");
-                            string subject = "Módulo de proyectos - Proyecto relacionado";
-                            string mail = "<div>" + saludo + " <strong>" +
-                                System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
-                                + "</strong> <div>" +
-                                "<br>" +
-                                "<p>Le fue asignado el proyecto <strong>" + proyecto.proyecto + "</strong>" +
-                                "</p>" +
-                                   "<p><strong>Descripción</strong> <br/> " +
-                                  (proyecto.descripcion == "" || proyecto.descripcion == null ? proyecto.proyecto : proyecto.descripcion) + "</dd> " +
-                                   "<p><strong>CPED</strong> <br/> " +
-                                   proyecto.cped + "</p> " +
-                                   "<p><strong>Costo</strong><br/> " +
-                                   proyecto.costo_usd.ToString("C2") + " USD / " + proyecto.costo_mn.ToString("C2") + " MN</p> " +
-                                   "<p><strong>Duración</strong><br/> " +
-                                  proyecto.duración + " dia(s)</p> " +
-                                "<br/><p>Este movimiento fue realizado por <strong>" +
-                                System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
-                                + "</strong> el dia <strong>" +
-                                DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
-                                "</p>";
-                            CorreosCOM correos = new CorreosCOM();
-                            bool correct = correos.SendMail(mail, subject, mail_to);
+                            ProyectosCOM proyectos2 = new ProyectosCOM();
+                            datos.proyectos proyecto = proyectos2.proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                            if (proyecto != null)
+                            {
+                                string tecnologias = "";
+                                string usuario_resp = usuario;
+                                ICollection<datos.proyectos_historial_tecnologias> n = proyecto.proyectos_historial_tecnologias;
+                                foreach (datos.proyectos_historial_tecnologias tecnologia in n)
+                                {
+                                    if (tecnologia.activo)
+                                    {
+                                        datos.proyectos_tecnologias tecn =  tecnologia.proyectos_tecnologias;
+                                        tecnologias = tecnologias + tecn.nombre + ",";
+                                    }
+                                }
+                                if (tecnologias.Length > 1) { tecnologias = tecnologias.Substring(0,tecnologias.Length - 1); }
+
+                                EmpleadosCOM usuarios = new EmpleadosCOM();
+                                DataTable dt_usuario = usuarios.GetUsers();
+                                DataView dv = dt_usuario.DefaultView;
+                                dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
+                                DataTable dt_result = dv.ToTable();
+                                if (dt_result.Rows.Count > 0)
+                                {
+                                    string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+                                    DataRow drusuario = dt_result.Rows[0];
+                                    string mail_to = drusuario["mail"].ToString() == "" ? "" : (drusuario["mail"].ToString() + ";");
+                                    string subject = "Módulo de proyectos - Proyecto relacionado";
+                                    string mail = "<div>" + saludo + " <strong>" +
+                                        System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(drusuario["empleado"].ToString().ToLower())
+                                        + "</strong> <div>" +
+                                        "<br>" +
+                                        "<p>Le fue asignado el proyecto <strong>" + proyecto.proyecto + "</strong>" +
+                                        "</p>" +
+                                           "<p><strong>Descripción</strong> <br/> " +
+                                          (proyecto.descripcion == "" || proyecto.descripcion == null ? proyecto.proyecto : proyecto.descripcion) + "</dd> " +
+                                           "<p><strong>CPED</strong> <br/> " +
+                                           proyecto.cped + "</p> " +
+                                            "<p><strong>Tecnología(s)</strong><br/> " +
+                                             tecnologias + "</p> " +
+                                           "<p><strong>Costo</strong><br/> " +
+                                           proyecto.costo_usd.ToString("C2") + " USD / " + proyecto.costo_mn.ToString("C2") + " MN</p> " +
+                                           "<p><strong>Duración</strong><br/> " +
+                                      proyecto.duración + " dia(s). Del " +
+                                      Convert.ToDateTime(proyecto.fecha_inicio).ToString("dddd dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")) + " al " +
+                                      Convert.ToDateTime(proyecto.fecha_fin).ToString("dddd dd MMMM, yyyy", CultureInfo.CreateSpecificCulture("es-MX")) + "</p> " +
+                                        "<br/><p>Este movimiento fue realizado por <strong>" +
+                                        System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
+                                        + "</strong> el dia <strong>" +
+                                        DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                        "</p>";
+                                    CorreosCOM correos = new CorreosCOM();
+                                    bool correct = correos.SendMail(mail, subject, mail_to);
+                                    if (!correct) { break; }
+                                }
+                            }
+                            if (vmensaje != "") { break; }
                         }
                     }
-                    string url = "proyectos_recursos.aspx?id_proyecto=" + Request.QueryString["id_proyecto"];
-                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
-                        "AlertGO('Configuración Guardada Correctamente', '" + url + "');", true);
+                    if (vmensaje != "")
+                    {
+                        Toast.Error(vmensaje, this);
+                    }
+                    else
+                    {
+                        string url = "proyectos_recursos.aspx?id_proyecto=" + Request.QueryString["id_proyecto"];
+                        ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                            "AlertGO('Configuración Guardada Correctamente', '" + url + "');", true);
+                    }
                 }
                 else
                 {

@@ -416,6 +416,7 @@ namespace negocio.Componentes
             {
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool no_activos = false;
+                ver_Todos_los_empleados = ver_Todos_los_empleados;
                 DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
                 DataTable dt_empleados_subordinados = ds.Tables[0];
                 List<EmpleadoSubordinados> list_emp = new List<EmpleadoSubordinados>();
@@ -430,9 +431,13 @@ namespace negocio.Componentes
                 var proyectos = (from p in db.proyectos
                                  join est in db.proyectos_estatus on p.id_proyecto_estatus equals est.id_proyecto_estatus
                                  join period in db.proyectos_periodos on p.id_proyecto_periodo equals period.id_proyecto_periodo
-                                 where (p.usuario_borrado == null && (p.id_proyecto_estatus == (id_proyecto_estatus>0?id_proyecto_estatus:p.id_proyecto_estatus))) 
+                                 join e in db.proyectos_empleados on p.id_proyecto equals e.id_proyecto
+                                 where (p.usuario_borrado == null && e.activo &&
+                                 (p.id_proyecto_estatus == (id_proyecto_estatus>0?id_proyecto_estatus:p.id_proyecto_estatus))) 
                                  select new
                                  {
+                                     usuario_p = e.usuario,
+                                     p.usuario_resp,
                                      p.usuario,
                                      p.id_proyecto,
                                      p.id_proyecto_estatus,
@@ -446,14 +451,13 @@ namespace negocio.Componentes
                                      p.fecha_registro,
                                      p.fecha_inicio,
                                      p.fecha_fin,
-                                     p.usuario_resp,
                                      p.costo_mn,
                                      p.costo_usd,
                                      p.cped,
                                      p.tipo_moneda
                                  }).ToArray();
                 var tproyectos = (from p in proyectos
-                                  join emp in list_emp on p.usuario_resp.ToUpper() equals emp.Usuario
+                                  join emp in list_emp on p.usuario_p.ToUpper() equals emp.Usuario
                                   select new {
                                       p.usuario,
                                       p.id_proyecto,
@@ -472,10 +476,11 @@ namespace negocio.Componentes
                                       p.costo_mn,
                                       p.cped,
                                       p.costo_usd,
-                                      p.tipo_moneda
+                                      p.tipo_moneda,
+                                      p.usuario_p
                                   });
                 NAVISION dbnavision = new NAVISION();
-                var results = from p in tproyectos
+                var results = (from p in tproyectos
                               join tec in tecnologias on p.id_proyecto equals tec.id_proyecto
                               join up in dbnavision.Employee on p.usuario_resp.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
                               select new
@@ -499,7 +504,7 @@ namespace negocio.Componentes
                                   p.cped,
                                   p.costo_usd,
                                   p.tipo_moneda
-                              };
+                              }).Distinct();
                 dt = To.DataTable(results.ToList());
                 return dt;
             }

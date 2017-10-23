@@ -318,7 +318,7 @@
                                                                     <th style="min-width: 20px; text-align: center;" scope="col">Estatus</th>
                                                                     <th style="min-width: 60px; text-align: left;" scope="col">Probabilidad</th>
                                                                     <th style="min-width: 60px; text-align: left;" scope="col">Impacto</th>
-                                                                    <th style="min-width: 100px; text-align: left;" scope="col">Estrategia</th>
+                                                                    <th style="min-width: 140px; text-align: center;" scope="col">Estrategia de respuesta</th>
                                                                     <th style="min-width: 30px; text-align: left;" scope="col"></th>
                                                                 </tr>
                                                             </thead>
@@ -349,7 +349,7 @@
                                                                                     ID="ddlimpacto_costo_rep" runat="server">
                                                                                 </asp:DropDownList>
                                                                             </td>
-                                                                            <td style="text-align: left;">
+                                                                            <td style="text-align: center;">
                                                                                 <%# Eval("estrategia") %>
                                                                             </td>
                                                                             <td style="text-align: center;">
@@ -420,15 +420,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Estrategia</strong></h5>
+                                    <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Estrategia de respuesta</strong></h5>
                                     <asp:HiddenField ID="hdfvalor_riesgo" runat="server" />
                                     <asp:HiddenField ID="hdfid_estrategia" runat="server" />
                                     <asp:TextBox ID="txtestrategia" ReadOnly="true" CssClass=" form-control" runat="server"></asp:TextBox>
                                     <%-- <asp:DropDownList ID="ddlestrategias" CssClass="form-control" Enabled="false" runat="server"></asp:DropDownList>--%>
                                 </div>
-
+                                
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <h5><strong>Detalles de la estrategia</strong></h5>
+                                    <h5><strong>Comentarios de la estrategia</strong></h5>
                                     <asp:TextBox ID="txtestrategia_det" TextMode="MultiLine" Rows="2" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -472,7 +472,7 @@
                                 <span aria-hidden="true">×</span></button>
                             <h4 class="modal-title">Acciones</h4>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" id="body_modal_acciones">
                             <div id="div_nueva_Accion" runat="server" visible="true">
                                 <div class="row">
 
@@ -513,19 +513,19 @@
                                         <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control" runat="server">
                                         </asp:DropDownList>
                                     </div>
-                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12" style="text-align:right;">
                                         <br />
                                         <asp:LinkButton ID="lnkcargarleccionesaprendidas" OnClick="lnkcargarleccionesaprendidas_Click"
                                             CssClass="btn btn-success btn-flat btn-sm" runat="server">
                                             Lecciones aprendidas
                                         </asp:LinkButton>
-                                        <asp:LinkButton OnClientClick="return false;" ID="lnkcargando2" CssClass="btn btn-primary btn-flat pull-right btn-sm" runat="server" Style="display: none;">
+                                        <asp:LinkButton OnClientClick="return false;" ID="lnkcargando2" CssClass="btn btn-primary btn-flat btn-sm" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Agregando
                                         </asp:LinkButton>
                                         <asp:LinkButton ID="lnkguardaracciones" OnClientClick="return ConfirmwidgetProyectoModal2('¿Desea Guardar esta acción?');"
-                                            OnClick="lnkguardaracciones_Click" CssClass="btn btn-primary btn-flat pull-right btn-sm" runat="server">
-                                            Guardar&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                                            OnClick="lnkguardaracciones_Click" CssClass="btn btn-primary btn-flat btn-sm" runat="server">
+                                            Agregar&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
                                         </asp:LinkButton>
                                     </div>
 
@@ -554,18 +554,18 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <asp:CheckBox ID="cbxleccionesapren" Text="Lecciones aprendidas" runat="server" />
                                 </div>
-                                <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-xs-12" style="text-align:right;">
                                     <br />
-                                    <asp:LinkButton OnClick="lnkcancelar_Click" ID="lnkcancelar" CssClass="btn btn-danger btn-flat btn-sm"
+                                    <asp:LinkButton OnClick="lnkcancelar_Click" ID="lnkcancelar" CssClass="btn btn-danger btn-flat btn-sm" OnClientClick="return Loading('body_modal_acciones');"
                                         runat="server">
                                            Cancelar
                                     </asp:LinkButton>
-                                    <asp:LinkButton OnClientClick="return false;" ID="lnkguardaresultadosload" CssClass="btn btn-primary btn-flat pull-right btn-sm" runat="server" Style="display: none;">
+                                    <asp:LinkButton OnClientClick="return false;" ID="lnkguardaresultadosload" CssClass="btn btn-primary btn-flat btn-sm" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando
                                     </asp:LinkButton>
                                     <asp:LinkButton ID="lnkguardaresultados" OnClientClick="return ConfirmwidgetProyectoModal2('¿Desea Guardar el resultado?');"
-                                        OnClick="lnkguardaresultados_Click" CssClass="btn btn-primary btn-flat pull-right btn-sm" runat="server">
+                                        OnClick="lnkguardaresultados_Click" CssClass="btn btn-primary btn-flat btn-sm" runat="server">
                                             Guardar resultado&nbsp;<i class="fa fa-floppy-o" aria-hidden="true"></i>
                                     </asp:LinkButton>
                                 </div>
@@ -590,7 +590,7 @@
                                                         <ItemTemplate>
                                                             <tr style="font-size: 11px">
                                                                 <td style="max-width: 30px; text-align: center">
-                                                                    <asp:LinkButton ID="lnkresultado"
+                                                                    <asp:LinkButton ID="lnkresultado" OnClientClick="return Loading('body_modal_acciones');"
                                                                         OnClick="lnkresultado_Click" Style="color: white;" runat="server" CommandName="View" CssClass="btn btn-primary btn-flat btn-xs"
                                                                         CommandArgument='<%# Eval("id_actividad").ToString() %>'>
                                                                     Resultado

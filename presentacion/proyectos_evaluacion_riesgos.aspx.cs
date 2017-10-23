@@ -1526,6 +1526,8 @@ namespace presentacion
                         {
                             hdfid_estrategia.Value = Convert.ToInt32(estrategia["id_riesgo_estrategia"]).ToString();
                             txtestrategia.Text = estrategia["nombre"].ToString();
+
+                            txtestrategia_det.Text = estrategia["descripcion"].ToString();
                             break;
                         }
                     }

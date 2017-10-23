@@ -168,11 +168,11 @@
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 300px; text-align: left;" scope="col">Proyecto</th>
-                                    <th style="min-width:60px; text-align: left;" scope="col">Usuario</th>
+                                    <th style="min-width:40px; text-align: center;" scope="col">Usuario</th>
                                     <th style="min-width: 250px; text-align: left;" scope="col">Responsable</th>
-                                    <th style="min-width: 50px; text-align: left;" scope="col">Estatus</th>
-                                    <th style="min-width: 110px; text-align: left;" scope="col">Periodo evaluación</th>
-                                    <th style="min-width:140px; text-align: left;" scope="col">Tecnologia</th>
+                                    <th style="min-width: 40px; text-align: center;" scope="col">Estatus</th>
+                                    <th style="min-width: 110px; text-align: center;" scope="col">Periodo evaluación</th>
+                                    <th style="min-width:200px; text-align: left;" scope="col">Tecnologia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -196,10 +196,10 @@
                                                     <%# Eval("proyecto") %>
                                                 </a>
                                             </td>
-                                             <td style="text-align: left;"><%# Eval("usuario") %></td>
+                                             <td style="text-align: center;"><%# Eval("usuario") %></td>
                                              <td style="text-align: left;"><%# Eval("empleado") %></td>
-                                             <td style="text-align: left;"><%# Eval("estatus") %></td>
-                                             <td style="text-align: left;"><%# Eval("periodo") %></td>
+                                             <td style="text-align: center;"><%# Eval("estatus") %></td>
+                                             <td style="text-align: center;"><%# Eval("periodo") %></td>
                                              <td style="text-align: left;"><%# Eval("tecnologia") %></td>
                                         </tr>
                                     </ItemTemplate>

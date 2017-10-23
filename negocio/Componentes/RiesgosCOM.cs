@@ -497,8 +497,6 @@ namespace negocio.Componentes
                                orderby(r.riesgo)
                                select new
                                {
-                                   pt.id_proyecto_tecnologia,
-                                   tecnologia = pt.nombre,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,
@@ -512,7 +510,7 @@ namespace negocio.Componentes
                                    estrategia = rs.nombre,
                                    fecha_evaluacion = pe.fecha_evaluacion,
                                    proyecto = p.proyecto
-                               });
+                               }).Distinct();
                 dt = To.DataTable(riesgos.ToList());
                 return dt;
             }
