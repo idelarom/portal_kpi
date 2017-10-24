@@ -145,7 +145,7 @@
                                                 <td style="text-align: center;"><%# Eval("proyecto") %></td>
                                                 <td>
                                                     <a style="cursor: pointer;" onclick='<%# "return Open_actions("+@"""" + Eval("id_riesgo")+@""""+@",""" + Eval("id_proyecto") + @"""" + ");" %>'>
-                                                        <%# Eval("riesgo") %>
+                                                        <%# Eval("riesgo").ToString().Length>99?Eval("riesgo").ToString().Substring(0,99):Eval("riesgo").ToString() %>
                                                     </a>
                                                 </td>
                                                 <td style="text-align: center;"><%# Eval("tecnologia") %></td>                                                
@@ -160,7 +160,7 @@
                                                 <%--<td style="text-align: center;"><%# Eval("riesgo_costo") %></td>
                                                 <td style="text-align: center;"><%# Eval("riesgo_tiempo") %></td>--%>
                                                 <td style="text-align: center;"><%# Eval("estatus") %></td>
-                                            </tr>b
+                                            </tr>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </tbody>
@@ -327,29 +327,29 @@
                                                 <asp:Repeater ID="repeater_acciones" runat="server">
                                                     <ItemTemplate>
                                                         <tr style="font-size: 11px">
-                                                            <td style="max-width: 30px; text-align: center">
-                                                               <%-- <asp:LinkButton ID="lnkresultado"
+                                                              <%-- <td style="max-width: 30px; text-align: center">
+                                                             <asp:LinkButton ID="lnkresultado"
                                                                     OnClick="lnkresultado_Click" Style="color: white;" runat="server" CommandName="View" CssClass="btn btn-primary btn-flat btn-xs"
                                                                     CommandArgument='<%# Eval("id_actividad").ToString() %>'>
                                                                     Resultado
-                                                                </asp:LinkButton>--%>
-                                                            </td>
-                                                            <td style="max-width: 30px; text-align: center">
-                                                                <%--<asp:LinkButton Visible='<%#Convert.ToBoolean(Eval("terminada")) %>'
+                                                                </asp:LinkButton>
+                                                            </td>--%>
+                                                           <%-- <td style="max-width: 30px; text-align: center">
+                                                                <asp:LinkButton Visible='<%#Convert.ToBoolean(Eval("terminada")) %>'
                                                                      ID="lnkdescargararchivo" OnClientClick='<%# "return DownloadFile("+ DataBinder.Eval(Container.DataItem, "id_actividad").ToString()+");" %>'
                                                                     OnClick="lnkdescargararchivo_Click" runat="server" CommandName="Download"
                                                                     CommandArgument='<%# Eval("id_actividad").ToString() %>'>
                                                                     <i class="fa fa-file-archive-o fa-2x" aria-hidden="true"></i>
-                                                                </asp:LinkButton>--%>
-                                                            </td>
-                                                            <td style="max-width: 30px; text-align: center">
-                                                                <%--<asp:LinkButton ID="lnkeliminarparticipante"
+                                                                </asp:LinkButton>
+                                                            </td>--%>
+                                                             <%--<td style="max-width: 30px; text-align: center">
+                                                               <asp:LinkButton ID="lnkeliminarparticipante"
                                                                     OnClientClick="return confirm('¿Desea Eliminar esta acción?');"
                                                                     OnClick="lnkeliminarparticipante_Click" runat="server" CommandName="View"
                                                                     CommandArgument='<%# Eval("id_actividad").ToString() %>'>
                                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
-                                                                </asp:LinkButton>--%>
-                                                            </td>
+                                                                </asp:LinkButton>
+                                                            </td>--%>
                                                              <td style="min-width: 250px; text-align: left;">                                                              
                                                                <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>100?100:Eval("nombre").ToString().Length))+
                                                                                      (Eval("nombre").ToString().Length>100?"...":"")    %>
