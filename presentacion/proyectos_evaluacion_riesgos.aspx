@@ -517,7 +517,7 @@
                                         <br />
                                         <asp:LinkButton ID="lnkcargarleccionesaprendidas" OnClick="lnkcargarleccionesaprendidas_Click"
                                             CssClass="btn btn-success btn-flat btn-sm" runat="server">
-                                            Lecciones aprendidas
+                                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>&nbsp;Lecciones aprendidas
                                         </asp:LinkButton>
                                         <asp:LinkButton OnClientClick="return false;" ID="lnkcargando2" CssClass="btn btn-primary btn-flat btn-sm" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
@@ -580,7 +580,8 @@
                                                         <th style="min-width: 80px; text-align: left;" scope="col"></th>
                                                         <th style="min-width: 30px; text-align: left;" scope="col"></th>
                                                         <th style="min-width: 30px; text-align: left;" scope="col"></th>
-                                                        <th style="min-width: 250px; text-align: left;" scope="col">Acción</th>
+                                                        <th style="min-width: 150px; text-align: left;" scope="col">Acción</th>
+                                                        <th style="min-width: 220px; text-align: left;" scope="col">Empleado</th>
                                                         <th style="min-width: 100px; text-align: left;" scope="col">Fecha Estimada</th>
                                                         <th style="min-width: 100px; text-align: left;" scope="col">Fecha Real</th>
                                                     </tr>
@@ -612,9 +613,12 @@
                                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                                                     </asp:LinkButton>
                                                                 </td>
-                                                                <td style="min-width: 250px; text-align: left;">
-                                                                    <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>100?100:Eval("nombre").ToString().Length))+
-                                                                                     (Eval("nombre").ToString().Length>100?"...":"")    %>
+                                                                <td style="min-width: 150px; text-align: left;">
+                                                                    <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>50?50:Eval("nombre").ToString().Length))+
+                                                                                     (Eval("nombre").ToString().Length>50?"...":"")    %>
+                                                                </td>
+                                                                <td style="min-width: 220px; text-align: left;">
+                                                                    <%# Eval("empleado_resp").ToString()  %>
                                                                 </td>
                                                                 <td style="min-width: 100px; text-align: left;"><%# Convert.ToDateTime(Eval("fecha_asignacion")).ToString("dd MMMM yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %></td>
                                                                 <td style="min-width: 100px; text-align: left;"><%#( !Convert.ToBoolean(Eval("terminada"))?"--Acción sin ejecutar": Convert.ToDateTime(Eval("fecha_ejecucion")).ToString("dd MMMM yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))) %></td>
