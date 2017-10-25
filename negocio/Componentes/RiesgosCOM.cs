@@ -392,7 +392,31 @@ namespace negocio.Componentes
                 return fullErrorMessage.ToString();
             }
         }
+        /// <summary>
+        /// Devuelve una instancia de la clase riesgos
+        /// </summary>
+        /// <param name="id_proyecto_perido"></param>
+        /// <returns></returns>
+        public riesgos getriesgo(string riesgostr)
+        {
+            try
+            {
+                Proyectos_ConnextEntities db = new Proyectos_ConnextEntities();
+                riesgos riesgo = db.riesgos
+                               .First(i => i.riesgo.Trim().ToUpper() == riesgostr.ToUpper().Trim());
+                return riesgo;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return null;
+            }
+        }
 
+       
         /// <summary>
         /// Devuelve una instancia de la clase riesgos
         /// </summary>
@@ -654,6 +678,7 @@ namespace negocio.Componentes
                                orderby(r.riesgo)
                                select new
                                {
+                                   r.fecha_registro,
                                    r.id_riesgo,
                                    r.riesgo,
                                    r.id_riesgos_estatus,
@@ -707,7 +732,7 @@ namespace negocio.Componentes
                                orderby(r.fecha_registro)
                                select new
                                {
-                                   tecnologia = pt.nombre,
+                                   r.id_riesgo,
                                    pht.id_proyecto_tecnologia,
                                    r.riesgo,
                                    r.estrategia                                  
@@ -716,8 +741,7 @@ namespace negocio.Componentes
                               join tec in tbltecnologias on r.id_proyecto_tecnologia equals tec.id_proyecto_tecnologia
                               select new
                               {
-                                  r.riesgo,
-                                  r.estrategia
+                                  r.riesgo
                               }).Distinct();
                 dt = To.DataTable(result.ToList());
                 return dt;

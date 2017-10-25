@@ -47,6 +47,8 @@ namespace presentacion
                 //        lnkagregartodos_Click(null, null);
                 //    }
                 //}
+
+                lnkfiltros_Click(null, null);
             }
         }
 

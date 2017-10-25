@@ -34,6 +34,12 @@ namespace presentacion
             if (!IsPostBack)
             {
                 CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                if (ProyectoTerminado())
+                {
+                    lnkaddparticipante.Visible = false;
+                    lnkaddpendientes.Visible = false;
+                    lnkguardarminuta.Visible = false;
+                }
             }
         }
 
@@ -1024,5 +1030,65 @@ namespace presentacion
             }
         }
 
+        protected void btnevent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id_minuta = Convert.ToInt32(hdfid_minuta.Value);
+                datos.proyectos_minutas entidad = new datos.proyectos_minutas();
+                entidad.id_proyectomin = id_minuta;
+                ProyectosMinutasCOM minutas = new ProyectosMinutasCOM();
+                DataTable dt = minutas.Get(entidad);
+                if (dt.Rows.Count > 0)
+                {
+                    lnkaddparticipante.Visible = !Convert.ToBoolean(dt.Rows[0]["enviada"]);
+                    lnkaddpendientes.Visible = !Convert.ToBoolean(dt.Rows[0]["enviada"]);
+                    lnkguardarminuta.Visible = !Convert.ToBoolean(dt.Rows[0]["enviada"]);
+                    txtid_minuta.Text = id_minuta.ToString();
+                    rtxtasuntominuta.Text = dt.Rows[0]["asunto"].ToString();
+                    rtxtlugarminuta.Text = dt.Rows[0]["lugar"].ToString();
+                    rtxtpropositos.Text = dt.Rows[0]["propósito"].ToString();
+                    rtxtresultados.Text = dt.Rows[0]["resultados"].ToString();
+                    rtxtacuerdos.Text = dt.Rows[0]["acuerdos"].ToString();
+                    rdpfechaminuta.SelectedDate = Convert.ToDateTime(dt.Rows[0]["fecha"]);
+                }
+                DataTable dt_participantes = minutas.GetAllParticipante(id_minuta);
+                if (dt_participantes.Rows.Count > 0)
+                {
+                    DataView view = new System.Data.DataView(dt_participantes);
+                    DataTable selected = view.ToTable("Selected", false, "usuario", "nombre", "organización", "rol", "id_proyectominpart");
+
+
+                    ViewState["dt_participantes"] = selected;
+                    CargarParticipantes();
+                }
+                else
+                {
+                    ViewState["dt_participantes"] = null;
+                    CargarParticipantes();
+                }
+                DataTable dt_pendientes = minutas.GetAllPendientes(Convert.ToInt32(txtid_minuta.Text == "" ? "0" : txtid_minuta.Text));
+                if (dt_pendientes.Rows.Count > 0)
+                {
+                    DataView view = new System.Data.DataView(dt_pendientes);
+                    DataTable selected = view.ToTable("Selected", false, "usuario_resp", "responsable", "descripcion", "fecha_planeada", "id_proyectominpen", "avance");
+                    selected.Columns["fecha_planeada"].ColumnName = "fecha";
+                    selected.Columns["responsable"].ColumnName = "nombre";
+                    ViewState["dt_pendientes"] = selected;
+                    CargarPendientes();
+                }
+                else
+                {
+                    ViewState["dt_pendientes"] = null;
+                    CargarPendientes();
+                }
+                ModalShow("#myModalMinutas");
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar minuta: "+ ex.Message,this);
+            }
+
+        }
     }
 }

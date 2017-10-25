@@ -53,6 +53,8 @@ namespace negocio.Componentes
                                 usuario = entidad.usuario,
                                 fecha_registro = DateTime.Now,
                                 id_riesgos_estatus = 1,
+                                valor = riesgo.valor,
+                                estrategia = riesgo.estrategia,
                                 id_riesgo_probabilidad = riesgo.id_riesgo_probabilidad,
                                 id_riesgo_impacto = riesgo.id_riesgo_impacto,
                                 id_riesgo_estrategia = riesgo.id_riesgo_estrategia,

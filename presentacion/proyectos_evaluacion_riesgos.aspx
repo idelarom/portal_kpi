@@ -46,7 +46,7 @@
             else {
                 $(value).DataTable({
                     "paging": true,
-                    "pageLength": 8,
+                    "pageLength": 6,
                     "lengthChange": false,
                     "searching": true,
                     "ordering": true,
@@ -315,10 +315,11 @@
                                                                 <tr style="font-size: 11px;">
                                                                     <th style="min-width: 20px; text-align: left;" scope="col"></th>
                                                                     <th style="min-width: 350px; text-align: left;" scope="col">Riesgo</th>
+                                                                    <th style="min-width: 100px; text-align: left;" scope="col">Fecha</th>
                                                                     <th style="min-width: 20px; text-align: center;" scope="col">Estatus</th>
-                                                                    <th style="min-width: 60px; text-align: left;" scope="col">Probabilidad</th>
-                                                                    <th style="min-width: 60px; text-align: left;" scope="col">Impacto</th>
-                                                                    <th style="min-width: 140px; text-align: center;" scope="col">Estrategia de respuesta</th>
+                                                                    <th style="min-width: 50px; text-align: left;" scope="col">Probabilidad</th>
+                                                                    <th style="min-width: 50px; text-align: left;" scope="col">Impacto</th>
+                                                                    <th style="min-width: 130px; text-align: center;" scope="col">Estrategia de respuesta</th>
                                                                     <th style="min-width: 30px; text-align: left;" scope="col"></th>
                                                                 </tr>
                                                             </thead>
@@ -335,6 +336,10 @@
                                                                                 <%# Eval("riesgo").ToString().Substring(0,(Eval("riesgo").ToString().Length>120?120:Eval("riesgo").ToString().Length))+
                                                                                      (Eval("riesgo").ToString().Length>120?"...":"")    %>
 
+                                                                            </td>
+                                                                            
+                                                                            <td style="text-align: center;">
+                                                                                <%# Convert.ToDateTime(Eval("fecha_registro")).ToString("dddd dd MMMM, yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %>
                                                                             </td>
                                                                             <td style="text-align: center;"><%# Eval("estatus") %></td>
                                                                             <td style="text-align: left;">
@@ -428,8 +433,8 @@
                                 </div>
                                 
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <h5><strong>Comentarios de la estrategia</strong></h5>
-                                    <asp:TextBox ID="txtestrategia_det" TextMode="MultiLine" Rows="2" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <h5><strong>Detalles de la estrategia</strong></h5>
+                                    <asp:TextBox ID="txtestrategia_det" ReadOnly="true" TextMode="MultiLine" Rows="2" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Acciones</strong></h5>
@@ -632,7 +637,7 @@
 
 
                                     </div>
-                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar acciones</button>
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                                 </div>
                                 <asp:HiddenField ID="hdfid_riesgo" runat="server" />
                             </div>
@@ -664,7 +669,7 @@
                                             <thead>
                                                 <tr style="font-size: 11px;">
                                                     <th style="min-width: 30px; text-align: left;" scope="col">Seleccionar</th>
-                                                    <th style="min-width: 280px; text-align: left;" scope="col">Riesgo</th>
+                                                    <th style="min-width: 500px; text-align: left;" scope="col">Riesgo</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -673,10 +678,10 @@
                                                         <tr style="font-size: 11px">
                                                             <td style="max-width: 30px; text-align: center">
                                                                 <asp:CheckBox ID="cbxseleccionado" AutoPostBack="false"
-                                                                    name='<%# Eval("riesgo") %>' estrategia='<%# Eval("estrategia") %>' runat="server" />
+                                                                    name='<%# Eval("riesgo") %>' 
+                                                                    runat="server" />
                                                             </td>
-                                                            <td style="min-width: 350px; text-align: left;"><%# Eval("riesgo") %></td>
-
+                                                            <td style="min-width: 500px; text-align: left;"><%# Eval("riesgo") %></td>
                                                         </tr>
                                                     </ItemTemplate>
                                                 </asp:Repeater>
@@ -722,8 +727,9 @@
                                         <table class="table table-responsive table-condensed  table-bordered" id="tabla_historial_acciones">
                                             <thead>
                                                 <tr style="font-size: 11px;">
-                                                    <th style="min-width: 450px; text-align: left;" scope="col">Acción</th>
-                                                    <th style="min-width: 100px; text-align: left;" scope="col">Tipo</th>
+                                                    <th style="min-width: 250px; text-align: left;" scope="col">Acción</th>
+                                                    <th style="min-width: 150px; text-align: left;" scope="col">Resultado</th>
+                                                    <th style="min-width: 60px; text-align: left;" scope="col">Tipo</th>
                                                     <th style="min-width: 30px; text-align: left;" scope="col">Recomendada</th>
                                                 </tr>
                                             </thead>
@@ -731,13 +737,19 @@
                                                 <asp:Repeater ID="repeter_hisitorial_acciones" runat="server">
                                                     <ItemTemplate>
                                                         <tr style="font-size: 11px">
-                                                            <td style="min-width: 450px; text-align: left;">
+                                                            <td style="min-width: 250px; text-align: left;">
                                                                 <a style="cursor: pointer;" onclick='<%# "return ViewLeccionesAprendidas("+@""""+Eval("nombre").ToString().Replace(@"""","'").Replace(System.Environment.NewLine,"").Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("\r", String.Empty)+@"""" +","+Eval("id_actividad_tipo")+");"%>'>
-                                                                    <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>200?200:Eval("nombre").ToString().Length))+
-                                                                                     (Eval("nombre").ToString().Length>200?"...":"")    %>
+                                                                    <%# Eval("nombre").ToString().Substring(0,(Eval("nombre").ToString().Length>100?100:Eval("nombre").ToString().Length))+
+                                                                                     (Eval("nombre").ToString().Length>100?"...":"")    %>
+                                                                </a>
+                                                            </td> 
+                                                            <td style="min-width: 250px; text-align: left;">
+                                                                <a style="cursor: pointer;" onclick='<%# "return ViewLeccionesAprendidas("+@""""+Eval("nombre").ToString().Replace(@"""","'").Replace(System.Environment.NewLine,"").Replace("\n", String.Empty).Replace("\t", String.Empty).Replace("\r", String.Empty)+@"""" +","+Eval("id_actividad_tipo")+");"%>' >
+                                                                    <%# Eval("resultado").ToString().Substring(0,(Eval("resultado").ToString().Length>100?100:Eval("resultado").ToString().Length))+
+                                                                                     (Eval("resultado").ToString().Length>100?"...":"")    %>
                                                                 </a>
                                                             </td>
-                                                            <td style="min-width: 100px; text-align: left;"><%# Eval("tipo") %></td>
+                                                            <td style="min-width: 80px; text-align: left;"><%# Eval("tipo") %></td>
                                                             <td style="max-width: 30px; text-align: center">
                                                                 <asp:CheckBox ID="CheckBox1" AutoPostBack="false" Enabled="false"
                                                                     Checked='<%# Eval("recomendada") %>' runat="server" />

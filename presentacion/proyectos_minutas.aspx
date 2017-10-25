@@ -120,6 +120,14 @@
             var target = document.getElementById(modal);
             var spinner = new Spinner(opts).spin(target);
         }
+
+        function ViewMinuta(id){
+        
+            var hdfid_minuta = document.getElementById('<%= hdfid_minuta.ClientID %>');
+            hdfid_minuta.value = id;
+            
+            document.getElementById('<%= btnevent.ClientID%>').click();
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -214,7 +222,9 @@
                                                                      <i class="fa fa-trash" aria-hidden="true"></i>
                                                             </asp:LinkButton>
                                                         </td>
-                                                        <td><%# Eval("asunto").ToString() %></td>
+                                                        <td><a style="cursor:pointer;" onclick='<%# "return ViewMinuta("+ Eval("id_proyectomin").ToString() +");" %>'>
+                                                            <%# Eval("asunto").ToString() %></a>
+                                                        </td>
                                                         <td><%# Convert.ToDateTime(Eval("fecha")).ToString("dddd dd MMMM, yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %></td>
                                                         <td><%# Eval("lugar") %></td>
                                                         <td style="text-align:center;">
@@ -535,4 +545,6 @@
     </div>
     
     <asp:HiddenField ID="hdfmotivos" runat="server" />
+    <asp:HiddenField ID="hdfid_minuta" runat="server" />
+    <asp:Button ID="btnevent" runat="server" Text="Button" style="display:none;" OnClick="btnevent_Click" />
 </asp:Content>

@@ -166,6 +166,15 @@ namespace presentacion {
         protected global::Telerik.Web.UI.RadAsyncUpload AsyncUpload1;
         
         /// <summary>
+        /// Control txtcomentarioscierre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtcomentarioscierre;
+        
+        /// <summary>
         /// Control LinkButton2.
         /// </summary>
         /// <remarks>

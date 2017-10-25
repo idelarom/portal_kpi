@@ -221,7 +221,7 @@ namespace presentacion
                                         "<p>Le fue asignado el proyecto <strong>" + proyecto.proyecto + "</strong>" +
                                         "</p>" +
                                            "<p><strong>Descripción</strong> <br/> " +
-                                          (proyecto.descripcion == "" || proyecto.descripcion == null ? proyecto.proyecto : proyecto.descripcion) + "</dd> " +
+                                          (proyecto.descripcion == "" || proyecto.descripcion == null ? proyecto.proyecto : proyecto.descripcion) + "</p> " +
                                            "<p><strong>CPED</strong> <br/> " +
                                            proyecto.cped + "</p> " +
                                             "<p><strong>Tecnología(s)</strong><br/> " +
@@ -297,5 +297,7 @@ namespace presentacion
                 Toast.Error("Error al eliminar empleado. " + ex.Message, this);
             }
         }
+
+
     }
 }

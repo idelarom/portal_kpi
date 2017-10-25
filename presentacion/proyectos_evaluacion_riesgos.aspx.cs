@@ -33,6 +33,12 @@ namespace presentacion
                 AsyncUpload1.FileUploaded += new Telerik.Web.UI.FileUploadedEventHandler(AsyncUpload1_FileUploaded);
                 hdfguid.Value = Guid.NewGuid().ToString();
                 CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                lnkguardar.Visible = !ProyectoTerminado();
+                lnkguardarhistorial.Visible = !ProyectoTerminado();
+                lnkguardaresultados.Visible = !ProyectoTerminado();
+                lnkguardaracciones.Visible = !ProyectoTerminado();
+                lnkguardaracciones.Visible = !ProyectoTerminado();
+                lnkguardaracciones.Visible = !ProyectoTerminado();
             }
         }
 
@@ -381,11 +387,12 @@ namespace presentacion
         {
             string command = e.CommandName.ToLower();
             hdf_id_proyecto_evaluacion.Value = e.CommandArgument.ToString();
-            if (!ProyectoTerminado())
+
+            switch (command)
             {
-                switch (command)
-                {
-                    case "nuevo_riesgo":
+                case "nuevo_riesgo":
+                    if (!ProyectoTerminado())
+                    {
                         Session[hdfguid.Value + "list_actividades"] = null;
                         Session[hdfguid.Value + "list_documentos"] = null;
                         hdf_id_riesgo.Value = "";
@@ -396,22 +403,23 @@ namespace presentacion
                         hdfid_estrategia.Value = "";
                         hdfvalor_riesgo.Value = "";
                         ModalShow("#modal_riesgo");
-                        break;
-                    case "importar_riesgos":
-                        
-                        CargarRiesgosHistorial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                        ModalShow("#modal_historial");
-                        break;
-                }
+                    }
+                    else
+                    {
+                        Toast.Error("El proyecto ya fue cerrado y no puede generarse ninguna información adicional.", this);
 
-                InicializarTablas();
-            }
-            else
-            {
-                Toast.Error("El proyecto ya fue cerrado y no puede generarse ninguna información adicional.", this);
+                    }
+                    break;
+                case "importar_riesgos":
 
+                    CargarRiesgosHistorial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                    ModalShow("#modal_historial");
+                    break;
             }
-            
+
+            InicializarTablas();
+
+
         }
 
         protected void lnkeliminarevaluacion_Click(object sender, EventArgs e)
@@ -1409,7 +1417,7 @@ namespace presentacion
             {
                 if (!ProyectoTerminado())
                 {
-
+                    RiesgosCOM riesgos = new RiesgosCOM();
                     List<riesgos> list_riesgos = new List<riesgos>();
                     foreach (RepeaterItem item in repetaer_historial_riesgos.Items)
                     {
@@ -1418,28 +1426,29 @@ namespace presentacion
 
                         //INSERTAMOS LOS RIESGOS SELECCIONADOS
                         CheckBox cbx = item.FindControl("cbxseleccionado") as CheckBox;
-                        if (cbx.Checked)
+                        riesgos riesgo_ = riesgos.getriesgo(Convert.ToString(cbx.Attributes["name"]));
+                        if (cbx.Checked && riesgo_ != null)
                         {
+                            
                             riesgos riesgo = new riesgos
                             {
                                 id_proyecto_evaluacion = Convert.ToInt32(hdf_id_proyecto_evaluacion.Value),
                                 riesgo = cbx.Attributes["name"].ToString(),
                                 usuario = Session["usuario"] as string,
                                 fecha_registro = DateTime.Now,
-                                id_riesgos_estatus = 1,
-                                id_riesgo_probabilidad = 1,
-                                id_riesgo_impacto = 4,
-                                id_riesgo_estrategia = 1,
-                                valor = 1,
+                                id_riesgos_estatus = riesgo_.id_riesgos_estatus,
+                                id_riesgo_probabilidad = riesgo_.id_riesgo_probabilidad,
+                                id_riesgo_impacto = riesgo_.id_riesgo_impacto,
+                                id_riesgo_estrategia = riesgo_.id_riesgo_estrategia,
+                                valor = riesgo_.valor,
                                 usuario_resp = Session["usuario"] as string,
-                                estrategia = cbx.Attributes["estrategia"].ToString()
+                                estrategia = riesgo_.estrategia
                             };
                             list_riesgos.Add(riesgo);
                         }
                     }
                     if (list_riesgos.Count > 0)
                     {
-                        RiesgosCOM riesgos = new RiesgosCOM();
                         string vmensaje = "";
                         foreach (riesgos riesgo in list_riesgos)
                         {

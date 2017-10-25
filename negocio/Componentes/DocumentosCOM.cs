@@ -21,6 +21,7 @@ namespace negocio.Componentes
                 documento.id_actividad = entidad.id_actividad;
                 documento.id_proyecto = entidad.id_proyecto;
                 documento.path = entidad.path;
+                documento.comentarios = entidad.comentarios;
                 documento.nombre = entidad.nombre;
                 documento.tamaño = entidad.tamaño;
                 documento.publico = true;

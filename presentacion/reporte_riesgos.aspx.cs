@@ -38,6 +38,8 @@ namespace presentacion
                 hdfguid.Value = Guid.NewGuid().ToString();
                 ViewState[hdfsessionid.Value + "-dt_reporte"] = null;
                 CargarDatosFiltros();
+
+                lnkfiltros_Click(null, null);
             }
         }
 

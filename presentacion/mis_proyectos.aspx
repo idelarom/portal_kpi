@@ -5,6 +5,28 @@
         $(document).ready(function () {
             Init();
         });
+         var opts = {
+            lines: 13 // The number of lines to draw
+          , length: 28 // The length of each line
+          , width: 14 // The line thickness
+          , radius: 42 // The radius of the inner circle
+          , scale: 1 // Scales overall size of the spinner
+          , corners: 1 // Corner roundness (0..1)
+          , color: '#000' // #rgb or #rrggbb or array of colors
+          , opacity: 0.1 // Opacity of the lines
+          , rotate: 0 // The rotation offset
+          , direction: 1 // 1: clockwise, -1: counterclockwise
+          , speed: 1 // Rounds per second
+          , trail: 60 // Afterglow percentage
+          , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+          , zIndex: 10 // The z-index (defaults to 2000000000)
+          , className: 'spinner' // The CSS class to assign to the spinner
+          , top: '45%' // Top position relative to parent
+          , left: '50%' // Left position relative to parent
+          , shadow: true // Whether to render a shadow
+          , hwaccel: true // Whether to use hardware acceleration
+          , position: 'absolute' // Element positioning
+        };
         function Init() {
             $('.dvv').DataTable({
                 "paging": true,
@@ -54,6 +76,9 @@
             return true;
         }
         function EditarClick(id_permiso) {
+             $("#<%= table_proyectos.ClientID%>").show();
+        	var target = document.getElementById('<%= table_proyectos.ClientID %>');
+            var spinner = new Spinner(opts).spin(target);
             var hdfusuario = document.getElementById('<%= hdfid_proyecto.ClientID %>');
             hdfusuario.value = id_permiso;
             document.getElementById('<%= btneventgrid.ClientID%>').click();
@@ -112,117 +137,122 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <div class="row">
+    <div class="row">
         <div class="col-lg-12">
-                <h4 class="page-header">Mis proyectos</h4>
-          
+            <h4 class="page-header">Mis proyectos</h4>
+
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="box box-danger">
-                <div class="box-body"><asp:LinkButton ID="lnknuevoproyecto" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevoproyecto_Click">
+                <div class="box-body">
+                    <asp:LinkButton ID="lnknuevoproyecto" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevoproyecto_Click">
                 Nuevo proyecto&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
-            </asp:LinkButton>
-                     <div class="row">
-     <%--   <div class="col-lg-12">
-            <h4 class="page-header">
-                <i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;<asp:Label ID="lblproyect" runat="server" Text="Mis Proyecto"></asp:Label></h4>
-            <asp:LinkButton ID="lnknuevoproyecto" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevoproyecto_Click">
-                Nuevo proyecto&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
-            </asp:LinkButton>
-        </div>--%>
-        <div class="col-lg-12">
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Filtros</h3>
-
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body" style="">
+                    </asp:LinkButton>
                     <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-12">
-                        <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Filtro estatus</strong></h5>
-                            <asp:DropDownList ID="ddlstatus" MaxLength="250" CssClass=" form-control" runat="server" OnSelectedIndexChanged="ddlstatus_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                        <div class="col-lg-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Filtros</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body" style="">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-12">
+                                            <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Filtro estatus</strong></h5>
+                                            <asp:DropDownList ID="ddlstatus" MaxLength="250" CssClass=" form-control" runat="server" OnSelectedIndexChanged="ddlstatus_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-12">
+                                            <h5><strong><i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
+                                            <asp:DropDownList ID="ddltechnology" MaxLength="250" CssClass=" form-control" runat="server" OnSelectedIndexChanged="ddltechnology_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12">
-                            <h5><strong><i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
-                            <asp:DropDownList ID="ddltechnology" MaxLength="250" CssClass=" form-control" runat="server" OnSelectedIndexChanged="ddltechnology_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                        </div>
-                       
-                        
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-                   
+                  
+                           
                     <div class="table-responsive">
-                        <table class="dvv table no-margin table-condensed">
+                        <asp:UpdatePanel ID="wdwdwdw" runat="server">
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="btneliminar" EventName="Click" />
+                            </Triggers>
+                            <ContentTemplate>
+                                <div id="table_proyectos" runat="server" style="display: none;"></div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                        <table class="dvv table no-margin table-condensed" style="font-size: 12px">
                             <thead>
-                                <tr style="font-size: 12px;">
-                                    <th style="max-width: 20px; text-align: center;" scope="col"></th>
-                                    <th style="max-width: 20px; text-align: center;" scope="col"></th>
+                                <tr>
+                                    <th style="max-width: 10px; text-align: center;" scope="col"></th>
+                                    <th style="max-width: 10px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 300px; text-align: left;" scope="col">Proyecto</th>
-                                    <th style="min-width:40px; text-align: center;" scope="col">Usuario</th>
-                                    <th style="min-width: 250px; text-align: left;" scope="col">Responsable</th>
-                                    <th style="min-width: 40px; text-align: center;" scope="col">Estatus</th>
+                                    <th style="min-width: 40px; text-align: center;" scope="col">Usuario</th>
+                                    <th style="min-width: 210px; text-align: left;" scope="col">Responsable</th>
+                                    <th style="min-width: 30px; text-align: center;" scope="col">Estatus</th>
                                     <th style="min-width: 110px; text-align: center;" scope="col">Periodo evaluación</th>
-                                    <th style="min-width:200px; text-align: left;" scope="col">Tecnologia</th>
+                                    <th style="min-width: 180px; text-align: left;" scope="col">Tecnologia(s)</th>
                                 </tr>
                             </thead>
                             <tbody>
+
                                 <asp:Repeater ID="repeat_proyectos" runat="server">
                                     <ItemTemplate>
-                                        <tr style="font-size: 12px">
+                                        <tr>
                                             <td style="text-align: center;">
-                                                <a style="cursor: pointer;"
+                                                <a style="cursor: pointer;" class="btn btn-flat btn-primary btn-xs"
                                                     onclick='<%# "return EditarClick("+Eval("id_proyecto")+");" %>'>
                                                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: center;">
-                                                <a style="cursor: pointer;"
+                                                <a style="cursor: pointer;" class="btn btn-flat btn-danger btn-xs"
                                                     onclick='<%# "return ConfirmEntregableDelete("+Eval("id_proyecto")+");" %>'>
                                                     <i class="fa fa-handshake-o fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
-                                             <td>
+                                            <td style="text-align: left;">
                                                 <a style="cursor: pointer;" onclick='<%# "return opendashboardriesgos("+@"""" + Eval("id_proyecto") + @"""" + ");" %>'>
                                                     <%# Eval("proyecto") %>
                                                 </a>
                                             </td>
-                                             <td style="text-align: center;"><%# Eval("usuario") %></td>
-                                             <td style="text-align: left;"><%# Eval("empleado") %></td>
-                                             <td style="text-align: center;"><%# Eval("estatus") %></td>
-                                             <td style="text-align: center;"><%# Eval("periodo") %></td>
-                                             <td style="text-align: left;"><%# Eval("tecnologia") %></td>
+                                            <td style="text-align: center;"><%# Eval("usuario") %></td>
+                                            <td style="text-align: left;"><%# Eval("empleado") %></td>
+                                            <td style="text-align: center;"><%# Eval("estatus") %></td>
+                                            <td style="text-align: center;"><%# Eval("periodo") %></td>
+                                            <td style="text-align: left; font-size: 10px"><%# Eval("tecnologia") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-             <div class=" box-footer">
+            <div class=" box-footer">
 
-                    <asp:LinkButton ID="lnkgenerarpdf" CssClass="btn btn-danger btn-flat"
-                        OnClick="lnkgenerarpdf_Click" runat="server">
+                <asp:LinkButton ID="lnkgenerarpdf" CssClass="btn btn-danger btn-flat"
+                    OnClick="lnkgenerarpdf_Click" runat="server">
                         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Exportar a PDF
-                    </asp:LinkButton>
-                    <asp:LinkButton ID="lnkgenerarexcel" CssClass="btn btn-success btn-flat"
-                        OnClick="lnkgenerarexcel_Click" runat="server">
+                </asp:LinkButton>
+                <asp:LinkButton ID="lnkgenerarexcel" CssClass="btn btn-success btn-flat"
+                    OnClick="lnkgenerarexcel_Click" runat="server">
                         <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Exportar a Excel
-                    </asp:LinkButton>
-                </div>
+                </asp:LinkButton>
+            </div>
         </div>
     </div>
-    
+
     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_terminacion" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -245,37 +275,42 @@
                                         MaxFileSize="2097152" Width="100%"
                                         AutoAddFileInputs="false" Localization-Select="Seleccionar" Skin="Bootstrap" />
                                 </div>
+                                <div class="col-lg-12">
+                                    <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Comentarios de cierre</strong></h5>
+                                    <asp:TextBox ID="txtcomentarioscierre" CssClass=" form-control" TextMode="MultiLine"
+                                         Rows="2" runat="server"></asp:TextBox>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                                    <asp:LinkButton OnClientClick="return false;" ID="LinkButton2" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                            <asp:LinkButton OnClientClick="return false;" ID="LinkButton2" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Terminando
-                                    </asp:LinkButton>
-                                    <asp:LinkButton ID="lnkguardarhistorial"
-                                         OnClientClick="return ConfirmwidgetProyectoModal('¿Desea terminar este proyecto?');"
-                                        OnClick="lnkguardarhistorial_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="lnkguardarhistorial"
+                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea terminar este proyecto?');"
+                                OnClick="lnkguardarhistorial_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
                                             Terminar proyecto
-                                    </asp:LinkButton>
+                            </asp:LinkButton>
                         </div>
                     </div>
                 </ContentTemplate>
-                </asp:UpdatePanel>
-            </div>
-           </div>
+            </asp:UpdatePanel>
+        </div>
+    </div>
 
-       <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalCapturaProyectos" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalCapturaProyectos" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="lnknuevoproyecto" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btneventgrid" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btnopendashboard" EventName="Click" />
-                    <asp:PostBackTrigger ControlID="lnkguardar" />
-                     <asp:AsyncPostBackTrigger ControlID="txtcveop" EventName="TextChanged"/>
-                     <asp:AsyncPostBackTrigger ControlID="txtfolopmt" EventName="TextChanged" />
+                    <asp:AsyncPostBackTrigger ControlID="txtcveop" EventName="TextChanged" />
+                    <asp:AsyncPostBackTrigger ControlID="txtfolopmt" EventName="TextChanged" />
                     <asp:AsyncPostBackTrigger ControlID="txtcped" EventName="TextChanged" />
+                    <asp:PostBackTrigger ControlID="lnkguardar" />
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">
@@ -296,8 +331,9 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-play-circle-o" aria-hidden="true"></i>&nbsp;Tecnologia</strong></h5>
-                                    <telerik:RadComboBox RenderMode="Lightweight" ID="ddltegnologia" Width="100%" MaxLength="250" runat="server" 
-                                        CheckBoxes="True" Skin="Bootstrap"> </telerik:RadComboBox>
+                                    <telerik:RadComboBox RenderMode="Lightweight" ID="ddltegnologia" Width="100%" MaxLength="250" runat="server"
+                                        CheckBoxes="True" Skin="Bootstrap">
+                                    </telerik:RadComboBox>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo de evaluación </strong></h5>
@@ -311,7 +347,7 @@
                                     <h5><strong><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
                                     <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcveop_TextChanged" TextMode="Number" onkeypress="return validarEnteros(event);" AutoPostBack="true"></asp:TextBox>
                                 </div>
-                            </div>                             
+                            </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
@@ -333,13 +369,13 @@
                                 </div>
                             </div>
                             <div class="row">
-                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
-                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker> 
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
+                                    <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
-                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                                   <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
-                                    <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
+                                    <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
                             </div>
                             <div class="row">
@@ -364,7 +400,7 @@
                                         AutoPostBack="true" runat="server">
                                     </asp:DropDownList>
                                 </div>
-                                
+
                             </div>
                         </div>
 
@@ -380,14 +416,14 @@
                             </asp:LinkButton>
                         </div>
                 </ContentTemplate>
-                </asp:UpdatePanel>
-            </div>
-           </div>
+            </asp:UpdatePanel>
+        </div>
+    </div>
 
 
     <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display: none;" />
     <asp:Button ID="btneliminar" OnClick="btneliminar_Click" runat="server" Text="Button" Style="display: none;" />
-    <asp:Button ID="btnopendashboard" OnClick="btnopendashboard_Click" runat="server" Text="Button" Style="display: none;" />    
+    <asp:Button ID="btnopendashboard" OnClick="btnopendashboard_Click" runat="server" Text="Button" Style="display: none;" />
     <asp:HiddenField ID="hdfcommand" runat="server" />
     <asp:HiddenField ID="hdfid_proyecto" runat="server" />
 </asp:Content>

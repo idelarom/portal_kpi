@@ -175,6 +175,12 @@
                                         MaxFileSize="2097152" Width="100%"
                                         AutoAddFileInputs="false" Localization-Select="Seleccionar" Skin="Bootstrap" />
                                 </div>
+                                
+                                <div class="col-lg-12">
+                                    <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Comentarios de cierre</strong></h5>
+                                    <asp:TextBox ID="txtcomentarioscierre" CssClass=" form-control" TextMode="MultiLine"
+                                         Rows="2" runat="server"></asp:TextBox>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

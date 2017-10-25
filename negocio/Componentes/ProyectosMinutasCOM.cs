@@ -90,17 +90,22 @@ namespace negocio.Componentes
 
                 foreach (proyectos_minutas_participantes participante in participantes)
                 {
-                    proyectos_minutas_participantes vparticipante = participantes_historial
-                                                                .First(i => i.id_proyectominpart == participante.id_proyectominpart
+                    var query = context.proyectos_minutas_participantes
+                               .Where(i => i.id_proyectominpart == participante.id_proyectominpart
                                                                 && i.id_proyectomin == participante.id_proyectomin);
+                    DataTable dt = To.DataTable(query.ToList());
+                    
                     //si es null agregamos, si no es null editamos
-                    if (vparticipante == null)
+                    if (dt.Rows.Count == 0)
                     {
                         participante.fecha_registro = DateTime.Now;
                         context.proyectos_minutas_participantes.Add(participante);
                     }
                     else
                     {
+                        proyectos_minutas_participantes vparticipante = context.proyectos_minutas_participantes
+                                                                .First(i => i.id_proyectominpart == participante.id_proyectominpart
+                                                                && i.id_proyectomin == participante.id_proyectomin);
                         vparticipante.usuario_borrado = null;
                         vparticipante.fecha_borrado = null;
                         vparticipante.comentarios_borrado = null;
@@ -115,17 +120,21 @@ namespace negocio.Componentes
 
                 foreach (proyectos_minutas_pendientes pendiente in pendientes)
                 {
-                    proyectos_minutas_pendientes vpendiente = pendientes_historial
-                                                                .First(i => i.id_proyectominpen == pendiente.id_proyectominpen
+                    var query = context.proyectos_minutas_pendientes
+                              .Where(i => i.id_proyectominpen == pendiente.id_proyectominpen
                                                                 && i.id_proyectomin == pendiente.id_proyectomin);
+                    DataTable dt = To.DataTable(query.ToList());
                     //si es null agregamos, si no es null editamos
-                    if (vpendiente == null)
+                    if (dt.Rows.Count == 0)
                     {
                         pendiente.fecha_registro = DateTime.Now;
                         context.proyectos_minutas_pendientes.Add(pendiente);
                     }
                     else
                     {
+                        proyectos_minutas_pendientes vpendiente = context.proyectos_minutas_pendientes
+                                                                    .First(i => i.id_proyectominpen == pendiente.id_proyectominpen
+                                                                    && i.id_proyectomin == pendiente.id_proyectomin);
                         vpendiente.usuario_borrado = null;
                         vpendiente.fecha_borrado = null;
                         vpendiente.comentarios_borrado = null;

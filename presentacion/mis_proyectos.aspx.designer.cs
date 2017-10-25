@@ -40,6 +40,24 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.DropDownList ddltechnology;
         
         /// <summary>
+        /// Control wdwdwdw.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel wdwdwdw;
+        
+        /// <summary>
+        /// Control table_proyectos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl table_proyectos;
+        
+        /// <summary>
         /// Control repeat_proyectos.
         /// </summary>
         /// <remarks>
@@ -83,6 +101,15 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadAsyncUpload AsyncUpload1;
+        
+        /// <summary>
+        /// Control txtcomentarioscierre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtcomentarioscierre;
         
         /// <summary>
         /// Control LinkButton2.

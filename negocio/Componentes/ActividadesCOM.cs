@@ -192,6 +192,7 @@ namespace negocio.Componentes
                                    }).Distinct().Take(100).ToArray();
                 var result = (from a in actividades
                               join tec in tbltecnologias on a.id_proyecto_tecnologia equals tec.id_proyecto_tecnologia
+                              where(a.resultado != "")
                               select new {
                                   a.id_actividad,
                                   a.id_proyecto,

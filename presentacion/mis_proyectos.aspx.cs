@@ -478,7 +478,7 @@ namespace presentacion
                                     "<p>Le fue asignado el proyecto <strong>" + proyecto.proyecto + "</strong>"+
                                     "</p>" +
                                        "<p><strong>Descripción</strong> <br/> " +
-                                      (proyecto.descripcion == "" || proyecto.descripcion == null ?proyecto.proyecto:proyecto.descripcion)+"</dd> " +
+                                      (proyecto.descripcion == "" || proyecto.descripcion == null ?proyecto.proyecto:proyecto.descripcion)+"</p> " +
                                        "<p><strong>CPED</strong> <br/> " +
                                        proyecto.cped + "</p> " +
                                        "<p><strong>Tecnología(s)</strong><br/> " +
@@ -514,11 +514,12 @@ namespace presentacion
                         Cargarddltegnologia();
                         hdfid_proyecto.Value = "";
                         CargarProyectos(1);
+                        ModalClose("#ModalCapturaProyectos");
                         Toast.Success("proyecto agregado correctamente.", "Mensaje del sistema", this);
                     }
                     else
                     {
-                        ModalShow("#ModalProyectoestatus");
+                        ModalClose("#ModalCapturaProyectos");
                         Toast.Error("Error al procesar proyecto : " + vmensaje, this);
                     }
                 }
@@ -538,7 +539,7 @@ namespace presentacion
         protected void btneventgrid_Click(object sender, EventArgs e)
         {
             try
-            {            
+            {
                 int id_proyecto = Convert.ToInt32(hdfid_proyecto.Value == "" ? "0" : hdfid_proyecto.Value);
                 if (id_proyecto > 0)
                 {
@@ -554,7 +555,7 @@ namespace presentacion
 
                         txtnombreproyecto.Text = proyecto.proyecto;
                         txtdescripcion.Text = proyecto.descripcion;
-                        ddlperiodo.SelectedValue= proyecto.id_proyecto_periodo.ToString();
+                        ddlperiodo.SelectedValue = proyecto.id_proyecto_periodo.ToString();
                         ddlestatus.SelectedValue = proyecto.id_proyecto_estatus.ToString();
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
@@ -576,7 +577,7 @@ namespace presentacion
                         txtcveop.Text = proyecto.cveoport.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
                         Boolean permiso = Permisos(Session["usuario"] as string, 2);
-                        if (permiso==false)
+                        if (permiso == false)
                         {
                             txtcped.Enabled = false;
                         }
@@ -598,6 +599,9 @@ namespace presentacion
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar proyecto : " + ex.Message, this);
+            }
+            finally {
+                table_proyectos.Style["display"] = "none";
             }
         }
 
@@ -687,38 +691,48 @@ namespace presentacion
                     documento.contentType = funciones.ContentType(documento.extension);
                     documento.fecha = DateTime.Now;
                     documento.usuario = Session["usuario"] as string;
-
+                    documento.comentarios = txtcomentarioscierre.Text;
                     ProyectosCOM proyectos = new ProyectosCOM();
                     string vmensaje = proyectos.Cerrar(id_proyecto, Session["usuario"] as string, documento);
                     if (vmensaje == "")
                     {
                         proyectos proyecto = proyectos.proyecto(id_proyecto);
 
-                        string usuario_resp = proyecto.usuario_resp;
-                        EmpleadosCOM usuarios = new EmpleadosCOM();
-                        DataTable dt_usuario = usuarios.GetUsers();
-                        DataView dv = dt_usuario.DefaultView;
-                        dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
-                        DataTable dt_result = dv.ToTable();
-                        if (dt_result.Rows.Count > 0)
+                        //string usuario_resp = proyecto.usuario_resp;
+                        //EmpleadosCOM usuarios = new EmpleadosCOM();
+                        //DataTable dt_usuario = usuarios.GetUsers();
+                        //DataView dv = dt_usuario.DefaultView;
+                        //dv.RowFilter = "usuario_red = '" + usuario_resp.Trim().ToUpper() + "'";
+                        //DataTable dt_result = dv.ToTable();
+                        ProyectosEmpleadosCOM empleados = new ProyectosEmpleadosCOM();
+                        DataTable users = empleados.empleados_proyecto(id_proyecto);
+
+                        if (users.Rows.Count > 0)
                         {
-                            string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
-                            DataRow usuario = dt_result.Rows[0];
-                            string mail_to = usuario["mail"].ToString() == "" ? "" : (usuario["mail"].ToString() + ";");
-                            string subject = "Módulo de proyectos - Proyecto cerrado";
-                            string mail = "<div>" + saludo + " <strong>" +
-                                System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
-                                + "</strong> <div>" +
-                                "<br>" +
-                                "<p>Se le comunica que el proyecto <strong>" + proyecto.proyecto + "</strong>, fue cerrado el dia <strong>"
-                                + DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
-                                "</p>" +
-                                "<p>Este movimiento fue realizado por <strong>" + System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower()) + "</strong>" +
-                                " el dia <strong> " +
-                                DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
-                                "</p>";
-                            CorreosCOM correos = new CorreosCOM();
-                            bool correct = correos.SendMail(mail, subject, mail_to);
+                            foreach (DataRow row in users.Rows)
+                            {
+                                string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+                                DataRow usuario =row;
+                                string mail_to = usuario["correo"].ToString() == "" ? "" : (usuario["correo"].ToString() + ";");
+                                string subject = "Módulo de proyectos - Proyecto cerrado";
+                                string mail = "<div>" + saludo + " <strong>" +
+                                    System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["nombre"].ToString().ToLower())
+                                    + "</strong> <div>" +
+                                    "<br>" +
+                                    "<p>Se le comunica que el proyecto <strong>" + proyecto.proyecto + "</strong>, fue cerrado el dia <strong>"
+                                    + DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                    "</p>" +
+                                     "<p><strong>Documento de cierre</strong><br>" +
+                                    (txtcomentarioscierre.Text == "" ? "" : txtcomentarioscierre.Text) +
+                                    "<br><a href='https://apps.migesa.com.mx/portal_connext/" + name +
+                                                "' download>Descargar documento</a></p>" +
+                                    "<br><p>Este movimiento fue realizado por <strong>" + System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower()) + "</strong>" +
+                                    " el dia <strong> " +
+                                    DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                                    "</p>";
+                                CorreosCOM correos = new CorreosCOM();
+                                bool correct = correos.SendMail(mail, subject, mail_to);
+                            }
                         }
                         System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
                                     "AlertGO('Proyecto terminado correctamente.','mis_proyectos.aspx');", true);

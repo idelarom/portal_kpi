@@ -295,6 +295,7 @@
     <Content Include="mantenimiento.aspx" />
     <Content Include="mis_proyectos.aspx" />
     <Content Include="mis_publicaciones.aspx" />
+    <Content Include="organigrama_connext.aspx" />
     <Content Include="plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="plugins\bootstrap-slider\slider.css" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1434,6 +1435,13 @@
     </Compile>
     <Compile Include="mis_publicaciones.aspx.designer.cs">
       <DependentUpon>mis_publicaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="organigrama_connext.aspx.cs">
+      <DependentUpon>organigrama_connext.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="organigrama_connext.aspx.designer.cs">
+      <DependentUpon>organigrama_connext.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proyectos_dashboard.aspx.cs">
