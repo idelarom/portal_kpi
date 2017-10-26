@@ -19,8 +19,20 @@ namespace presentacion
     public class funciones
     {
 
-       
 
+        public static Boolean Permisos(string usuario, int id_permiso)
+        {
+            try
+            {
+                UsuariosCOM usuarioP = new UsuariosCOM();
+                Boolean permiso = usuarioP.ExistPermission(usuario, id_permiso);
+                return permiso;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
         public static string FirstCharToUpper(string input)
         {

@@ -47,6 +47,10 @@ namespace presentacion
             {
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
                 Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
+                if (funciones.Permisos(Session["usuario"] as string, 4))
+                {
+                    ver_Todos_los_empleados = true;
+                }
                 ProyectosCOM Proyectos = new ProyectosCOM();
                 dt = Proyectos.SelectAll(num_empleado, ver_Todos_los_empleados, id_proyecto_estatus);
             }
@@ -239,6 +243,10 @@ namespace presentacion
                 int NumJefe = Convert.ToInt32(Session["NumJefe"]);
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
                 Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
+                if (funciones.Permisos(Session["usuario"] as string, 4))
+                {
+                    ver_Todos_los_empleados = true;
+                }
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool no_activos = false;
                 DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
@@ -515,7 +523,9 @@ namespace presentacion
                         hdfid_proyecto.Value = "";
                         CargarProyectos(1);
                         ModalClose("#ModalCapturaProyectos");
-                        Toast.Success("proyecto agregado correctamente.", "Mensaje del sistema", this);
+                        System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                                    "AlertGO('Proyecto agregado correctamente.','mis_proyectos.aspx');", true);
+
                     }
                     else
                     {

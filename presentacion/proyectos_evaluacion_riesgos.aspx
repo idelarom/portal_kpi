@@ -172,6 +172,8 @@
                 return false;
             }
         }
+
+     
         function ConfirmLoadResultados(msg) {
             if (confirm(msg)) {
                 $("#<%= lnkguardaresultadosload.ClientID%>").show();
@@ -451,7 +453,7 @@
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando
                             </asp:LinkButton>
-                            <asp:LinkButton ID="lnkguardar" OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este riesgo?');"
+                            <asp:LinkButton ID="lnkguardar" OnClientClick="return ConfirmwidgetProyectoModal('¿Desea guardar este riesgo?');"
                                 OnClick="lnkguardar_Click" CssClass="btn btn-primary btn-flat" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                             </asp:LinkButton>
@@ -528,7 +530,7 @@
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Agregando
                                         </asp:LinkButton>
-                                        <asp:LinkButton ID="lnkguardaracciones" OnClientClick="return ConfirmwidgetProyectoModal2('¿Desea Guardar esta acción?');"
+                                        <asp:LinkButton ID="lnkguardaracciones" OnClientClick="return ConfirmwidgetProyectoModal2('¿Desea guardar esta acción?');"
                                             OnClick="lnkguardaracciones_Click" CssClass="btn btn-primary btn-flat btn-sm" runat="server">
                                             Agregar&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
                                         </asp:LinkButton>
@@ -569,7 +571,7 @@
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando
                                     </asp:LinkButton>
-                                    <asp:LinkButton ID="lnkguardaresultados" OnClientClick="return ConfirmwidgetProyectoModal2('¿Desea Guardar el resultado?');"
+                                    <asp:LinkButton ID="lnkguardaresultados" OnClientClick="return ConfirmLoadResultados('¿Desea guardar el resultado?');"
                                         OnClick="lnkguardaresultados_Click" CssClass="btn btn-primary btn-flat btn-sm" runat="server">
                                             Guardar resultado&nbsp;<i class="fa fa-floppy-o" aria-hidden="true"></i>
                                     </asp:LinkButton>

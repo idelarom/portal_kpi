@@ -91,6 +91,10 @@ namespace presentacion
                 int NumJefe = Convert.ToInt32(Session["NumJefe"]);
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
                 Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
+                if (funciones.Permisos(Session["usuario"] as string, 3))
+                {
+                    ver_Todos_los_empleados = true;
+                }
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 bool no_activos = false;
                 DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);

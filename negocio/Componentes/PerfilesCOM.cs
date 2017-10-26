@@ -72,13 +72,21 @@ namespace negocio.Componentes
             {
                 Model context = new Model();
                 IEnumerable<usuarios_perfiles> usuarios_perfiles = context.usuarios_perfiles
-                               .Where(s => s.usuario == usuario); 
+                               .Where(s => s.usuario.Trim().ToUpper() == usuario.Trim().ToUpper()); 
                 
                 foreach (usuarios_perfiles usuario_perfil in usuarios_perfiles)
                 {
                     usuario_perfil.usuario_borrado =usuario;
                     usuario_perfil.fecha_borrado = DateTime.Now;
                     usuario_perfil.comentarios_borrado ="BORRADO POR ACTUALIZACION";
+                }
+                IEnumerable<usuarios_widgets> usuarios_widgets = context.usuarios_widgets
+                            .Where(s => s.usuario.Trim().ToUpper() == usuario.Trim().ToUpper());
+                foreach (usuarios_widgets usuario_widget in usuarios_widgets)
+                {
+                    usuario_widget.usuario_borrado = usuario;
+                    usuario_widget.fecha_borrado = DateTime.Now;
+                    usuario_widget.comentarios_borrado = "BORRADO POR ACTUALIZACION";
                 }
                 context.SaveChanges();
                 return "";

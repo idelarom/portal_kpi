@@ -176,11 +176,16 @@ namespace presentacion
         {
             DataTable dt_orden = ViewState["dt_orden"] as DataTable;
 
+            DataTable dt_initial = dt_orden.Copy();
+            dt_initial.Rows.Clear();
             //SEPARAMOS LOS WIDGETS INNDIVIDUALES DE LOS GRUPALES
-            DataTable dt_indv = dt_orden.Select("individual = True").CopyToDataTable().Rows.Count > 0 ?
-                                  dt_orden.Select("individual = True").CopyToDataTable() : new DataTable();
-            DataTable dt_grupal = dt_orden.Select("individual = False").CopyToDataTable().Rows.Count > 0 ?
-                                    dt_orden.Select("individual = False").CopyToDataTable() : new DataTable();
+            int individuales = dt_orden.Select("individual = True").Length;
+            DataTable dt_indv = individuales > 0 ?
+                                  dt_orden.Select("individual = True").CopyToDataTable() : dt_initial;
+
+            int grupales= dt_orden.Select("individual = False").Length;
+            DataTable dt_grupal = grupales > 0 ?
+                                    dt_orden.Select("individual = False").CopyToDataTable() : dt_initial;
             //ASIGNAMOS LLAVE PRIMARIA PARA HACER MERGE
             dt_grupal.PrimaryKey = new DataColumn[] { dt_grupal.Columns["id_widget"] };
             dt_indv.PrimaryKey = new DataColumn[] { dt_indv.Columns["id_widget"] };

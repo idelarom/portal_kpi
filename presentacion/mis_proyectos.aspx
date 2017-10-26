@@ -110,7 +110,7 @@
             document.getElementById('<%= lnkgo_riesgos.ClientID%>').click();
             return true;
         }--%>
-         function ConfirmwidgetProyectoModal(msg) {
+         function ConfirmwidgetProyectoModal2(msg) {
             if (confirm(msg)) {
                 $("#<%= LinkButton2.ClientID%>").show();
                 $("#<%= lnkguardarhistorial.ClientID%>").hide();
@@ -133,6 +133,10 @@
             else {
                 return false;
             }
+        }
+
+        function Toggle() {
+            $("#div_iadicional").toggle(500);
         }
     </script>
 </asp:Content>
@@ -157,12 +161,12 @@
                                     <h3 class="box-title">Filtros</h3>
 
                                     <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                            <i class="fa fa-minus"></i>
+                                        <button type="button" class="btn btn-box-tool" onclick="Toggle();">
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
-                                <div class="box-body" style="">
+                                <div class="box-body"  style="display:none;" id="div_iadicional">
                                     <div class="row">
                                         <div class="col-lg-3 col-md-3 col-sm-12">
                                             <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Filtro estatus</strong></h5>
@@ -289,7 +293,7 @@
                                             <span class="sr-only">Loading...</span>&nbsp;Terminando
                             </asp:LinkButton>
                             <asp:LinkButton ID="lnkguardarhistorial"
-                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea terminar este proyecto?');"
+                                OnClientClick="return ConfirmwidgetProyectoModal2('¿Desea terminar este proyecto?');"
                                 OnClick="lnkguardarhistorial_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
                                             Terminar proyecto
                             </asp:LinkButton>
@@ -307,10 +311,10 @@
                     <asp:AsyncPostBackTrigger ControlID="lnknuevoproyecto" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btneventgrid" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btnopendashboard" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="lnkguardar" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="txtcveop" EventName="TextChanged" />
                     <asp:AsyncPostBackTrigger ControlID="txtfolopmt" EventName="TextChanged" />
                     <asp:AsyncPostBackTrigger ControlID="txtcped" EventName="TextChanged" />
-                    <asp:PostBackTrigger ControlID="lnkguardar" />
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">
@@ -335,11 +339,11 @@
                                         CheckBoxes="True" Skin="Bootstrap">
                                     </telerik:RadComboBox>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo de evaluación </strong></h5>
                                     <asp:DropDownList ID="ddlperiodo" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-braille" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                                     <asp:DropDownList ID="ddlestatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
@@ -349,7 +353,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                     <h5><strong><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Folio pmtracker</strong></h5>
                                     <asp:TextBox ID="txtfolopmt" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtfolopmt_TextChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
@@ -377,9 +381,7 @@
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
                                     <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-122">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-122">
                                     <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Empleado responsable del proyecto</strong>
                                         &nbsp; 
                                     </h6>
@@ -408,10 +410,10 @@
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
                             <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
-                                            <span class="sr-only">Loading...</span>&nbsp;Guardando...
+                                            <span class="sr-only">Loading...</span>&nbsp;Guardando
                             </asp:LinkButton>
                             <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
-                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este proyecto ?');" runat="server">
+                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea guardar este proyecto ?');" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                             </asp:LinkButton>
                         </div>
