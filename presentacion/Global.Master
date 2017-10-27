@@ -164,8 +164,8 @@
                                         <div class="pull-left">
                                             <asp:UpdatePanel ID="mp_up" runat="server">
                                                 <ContentTemplate>
-                                                    <a href="configuracion.aspx" class="btn btn-default btn-flat">
-                                                        <i class="fa fa-cogs"></i>&nbsp;Preferencias
+                                                    <a href="ayuda.aspx" class="btn btn-default btn-flat">
+                                                        <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Ayuda
                                                     </a>
                                                     <asp:LinkButton ID="lnkloadsinc_mp" runat="server" CssClass="btn btn-default btn-flat"
                                                         OnClientClick="return false;" Style="display: none;">

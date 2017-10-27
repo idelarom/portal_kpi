@@ -74,6 +74,14 @@ namespace negocio.Componentes
                 actividad.recomendada = entidad.recomendada;
                 actividad.terminada = true;
                 int id_actividad = actividad.id_actividad;
+                List<documentos> lstdocumentos = actividad.documentos.ToList();
+
+                foreach (documentos document in lstdocumentos) {
+                    document.usuario_borrado = entidad.usuario_edicion;
+                    document.fecha_borrado = DateTime.Now;
+                    document.comentarios_borrado = "BORRADO POR ACTUALIZACIÓN";
+                }
+
                 foreach (documentos documento in lstdocumento)
                 {
                     if (documento.id_actividad == entidad.id_actividad)

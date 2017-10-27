@@ -70,11 +70,10 @@ namespace presentacion
             {
                 AyudaCOM ayudas = new AyudaCOM();
                 DataTable dt = ayudas.SelectAll();
-                DataView dv = dt.DefaultView;
-                dv.RowFilter = "id_ayuda_padre = 0";
+              
                 ddlpadre.DataTextField = "titulo";
                 ddlpadre.DataValueField = "id_ayuda";
-                ddlpadre.DataSource = dv.ToTable();
+                ddlpadre.DataSource = dt;
                 ddlpadre.DataBind();
                 ddlpadre.Items.Insert(0, new ListItem("--Sin módulo padre", "0"));
             }
@@ -233,10 +232,10 @@ namespace presentacion
                     ModalShow("#ModalAyudas");
                     Toast.Error("Error al procesar ayudas : Ingrese un titulo", this);
                 }
-                else if (!fuparchivo.HasFile && ayuda.id_ayuda_padre != null)
+                else if (!fuparchivo.HasFile && ayuda.descripcion == "")
                 {
                     ModalShow("#ModalAyudas");
-                    Toast.Error("Debe incluir un archivo, si el módulo no es principal.", this);
+                    Toast.Error("Debe incluir un archivo.", this);
                 }
                 else if (fuparchivo.HasFile && extension != ".mp4" && extension != ".jpg"
                         && extension != ".png"

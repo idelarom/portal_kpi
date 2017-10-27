@@ -909,7 +909,6 @@ namespace presentacion
                         actividad.id_riesgo = id_riesgo;                      
                         actividad.usuario_edicion = Session["usuario"] as string;
                         actividad.resultado = txtresultado.Text;
-                        actividad.recomendada = true;
                         actividad.recomendada = cbxrecomendado.Checked;
                         List<documentos> lstdocumentos = new List<documentos>();
 

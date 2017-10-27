@@ -253,7 +253,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <asp:LinkButton OnClientClick="return confirm('¿Desea agregar una nueva evaluación.?');"
+            <asp:LinkButton OnClientClick="return confirm('¿Desea agregar una nueva evaluación?');"
                 OnClick="lnknuevaevaluacion_Click" ID="lnknuevaevaluacion" CssClass="btn btn-warning btn-flat"
                 runat="server">Nueva evaluación&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></asp:LinkButton>
         </div>
@@ -406,7 +406,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Riesgo</strong></h5>
-                                    <asp:TextBox ID="txtriesgo" TextMode="MultiLine" Rows="3" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtriesgo"  style="font-size:12px" TextMode="MultiLine" Rows="3" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
@@ -436,11 +436,11 @@
                                 
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong>Detalles de la estrategia</strong></h5>
-                                    <asp:TextBox ID="txtestrategia_det" ReadOnly="true" TextMode="MultiLine" Rows="2" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtestrategia_det" ReadOnly="true" TextMode="MultiLine" Rows="2" style="font-size:12px" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Acciones</strong></h5>
-                                    <asp:LinkButton ID="lnkacciones" OnClick="lnkacciones_Click" CssClass="btn btn-success btn-flat" 
+                                    <asp:LinkButton ID="lnkacciones" OnClick="lnkacciones_Click" CssClass="btn btn-success btn-flat btn-sm" 
                                         OnClientClick="return Loading('body_modal_riesgo');" runat="server">Acciones</asp:LinkButton>
                                 </div>
                             </div>
@@ -498,12 +498,10 @@
                                         <telerik:RadDatePicker ID="txtfechaejecuacion" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
                                     </div>
 
-                                </div>
-                                <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs12">
-                                        <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Empleado responsable</strong>
+                                        <h5><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Empleado responsable</strong>
                                             &nbsp; 
-                                        </h6>
+                                        </h5>
                                         <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
                                             <asp:TextBox
                                                 onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
@@ -545,24 +543,26 @@
 
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Resultado</strong></h5>
+                                    <asp:TextBox ID="txtresultado" CssClass="form-control"
+                                       style="font-size:12px;"  Rows="2" TextMode="MultiLine" runat="server"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Documento</strong></h5>
                                     <telerik:RadAsyncUpload RenderMode="Lightweight" ID="AsyncUpload1" runat="server"
                                         OnFileUploaded="AsyncUpload1_FileUploaded" PostbackTriggers="lnkguardaresultados"
                                         MaxFileSize="2097152" Width="100%"
                                         AutoAddFileInputs="false" Localization-Select="Seleccionar" Skin="Silk" />
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Resultado</strong></h5>
-                                    <asp:TextBox ID="txtresultado" CssClass="form-control" Rows="2" TextMode="MultiLine" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
                                     <asp:CheckBox ID="cbxrecomendado" Text="Recomendado" runat="server" />
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                    <asp:CheckBox ID="cbxleccionesapren" Text="Lecciones aprendidas" runat="server" />
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                     <asp:CheckBox ID="cbxleccionesapren" Text="Lecciones aprendidas" runat="server" />
                                 </div>
                                 <div class="col-lg-12 col-sm-12 col-xs-12" style="text-align:right;">
                                     <br />
+                                    
                                     <asp:LinkButton OnClick="lnkcancelar_Click" ID="lnkcancelar" CssClass="btn btn-danger btn-flat btn-sm" OnClientClick="return Loading('body_modal_acciones');"
                                         runat="server">
                                            Cancelar

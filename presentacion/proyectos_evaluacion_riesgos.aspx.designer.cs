@@ -364,15 +364,6 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.TextBox txtaccion_title;
         
         /// <summary>
-        /// Control AsyncUpload1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadAsyncUpload AsyncUpload1;
-        
-        /// <summary>
         /// Control txtresultado.
         /// </summary>
         /// <remarks>
@@ -380,6 +371,15 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtresultado;
+        
+        /// <summary>
+        /// Control AsyncUpload1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAsyncUpload AsyncUpload1;
         
         /// <summary>
         /// Control cbxrecomendado.
