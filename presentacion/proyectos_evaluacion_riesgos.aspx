@@ -340,7 +340,7 @@
 
                                                                             </td>
                                                                             
-                                                                            <td style="text-align: center;">
+                                                                            <td style="text-align: fecha;">
                                                                                 <%# Convert.ToDateTime(Eval("fecha_registro")).ToString("dddd dd MMMM, yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %>
                                                                             </td>
                                                                             <td style="text-align: center;"><%# Eval("estatus") %></td>
@@ -439,9 +439,10 @@
                                     <asp:TextBox ID="txtestrategia_det" ReadOnly="true" TextMode="MultiLine" Rows="2" style="font-size:12px" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Acciones</strong></h5>
+                                    <br />
                                     <asp:LinkButton ID="lnkacciones" OnClick="lnkacciones_Click" CssClass="btn btn-success btn-flat btn-sm" 
-                                        OnClientClick="return Loading('body_modal_riesgo');" runat="server">Acciones</asp:LinkButton>
+                                        OnClientClick="return Loading('body_modal_riesgo');" runat="server">
+                                        <i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Acciones</asp:LinkButton>
                                 </div>
                             </div>
                             <asp:HiddenField ID="hdf_id_proyecto_evaluacion" runat="server" />

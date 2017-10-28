@@ -200,10 +200,10 @@
                                     <th style="max-width: 10px; text-align: center;" scope="col"></th>
                                     <th style="max-width: 10px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 300px; text-align: left;" scope="col">Proyecto</th>
-                                    <th style="min-width: 40px; text-align: center;" scope="col">Usuario</th>
-                                    <th style="min-width: 210px; text-align: left;" scope="col">Responsable</th>
+                                    <th style="min-width: 30px; text-align: center;" scope="col">Usuario</th>
+                                    <th style="min-width: 240px; text-align: left;" scope="col">Responsable</th>
                                     <th style="min-width: 30px; text-align: center;" scope="col">Estatus</th>
-                                    <th style="min-width: 110px; text-align: center;" scope="col">Periodo evaluación</th>
+                                    <th style="min-width: 140px; text-align: center;" scope="col">Periodo evaluación</th>
                                     <th style="min-width: 180px; text-align: left;" scope="col">Tecnologia(s)</th>
                                 </tr>
                             </thead>
@@ -213,15 +213,15 @@
                                     <ItemTemplate>
                                         <tr>
                                             <td style="text-align: center;">
-                                                <a style="cursor: pointer;" class="btn btn-flat btn-primary btn-xs"
+                                                <a style="cursor: pointer; font-size:16px" class="btn btn-flat btn-primary btn-sm"
                                                     onclick='<%# "return EditarClick("+Eval("id_proyecto")+");" %>'>
-                                                    <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: center;">
-                                                <a style="cursor: pointer;" class="btn btn-flat btn-danger btn-xs"
+                                                <a style="cursor: pointer; font-size:16px" class="btn btn-flat btn-danger btn-sm"
                                                     onclick='<%# "return ConfirmEntregableDelete("+Eval("id_proyecto")+");" %>'>
-                                                    <i class="fa fa-handshake-o fa-2x" aria-hidden="true"></i>
+                                                    <i class="fa fa-handshake-o" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: left;">
@@ -374,17 +374,17 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
+                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h5>
                                     <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
-                                    <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
+                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h5>
                                     <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-122">
-                                    <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Empleado responsable del proyecto</strong>
+                                    <h5><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Empleado responsable del proyecto</strong>
                                         &nbsp; 
-                                    </h6>
+                                    </h5>
                                     <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
                                         <asp:TextBox
                                             onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
