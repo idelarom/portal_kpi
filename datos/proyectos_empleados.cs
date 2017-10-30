@@ -16,12 +16,13 @@ namespace datos
     {
         public decimal id_proyectoe { get; set; }
         public int id_proyecto { get; set; }
-        public bool administrador_proyecto { get; set; }
         public string usuario { get; set; }
         public bool activo { get; set; }
         public string usuario_registro { get; set; }
         public System.DateTime fecha_registro { get; set; }
+        public Nullable<int> id_proyecto_rol { get; set; }
     
         public virtual proyectos proyectos { get; set; }
+        public virtual proyectos_roles proyectos_roles { get; set; }
     }
 }

@@ -187,6 +187,7 @@
                                                 <th style="min-width: 20px"></th>
                                                 <th style="min-width: 20px"></th>
                                                 <th style="min-width: 20px"></th>
+                                                <th style="min-width: 20px;display:none;"></th>
                                                 <th style="min-width: 400px">Asunto</th>
                                                 <th style="min-width: 200px">Fecha</th>
                                                 <th style="min-width: 200px">Lugar</th>
@@ -220,6 +221,15 @@
                                                                 CommandArgument='<%# Eval("id_proyectomin") %>' Visible='<%# !Convert.ToBoolean(Eval("enviada")) %>' 
                                                                 OnClientClick="return ConfirmEntregableDelete('¿Desea eliminar la minuta?');">
                                                                      <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </asp:LinkButton>
+                                                        </td>
+                                                        <td style="text-align:center;display:none;">
+                                                            <asp:LinkButton ID="LinkButton1" runat="server" 
+                                                                OnClick="lnkeditminuta_Click" CommandName="Descargar" 
+                                                                CssClass="btn btn-info btn-flat"
+                                                                CommandArgument='<%# Eval("id_proyectomin") %>' 
+                                                              >
+                                                                    <i class="fa fa-download" aria-hidden="true"></i>
                                                             </asp:LinkButton>
                                                         </td>
                                                         <td><a style="cursor:pointer;" onclick='<%# "return ViewMinuta("+ Eval("id_proyectomin").ToString() +");" %>'>
@@ -460,7 +470,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <h5><strong><i class="fa fa-wrench" aria-hidden="true"></i>&nbsp;Avance</strong></h5>
 
-                                    <asp:TextBox ID="txtavancependientes" CssClass=" form-control" runat="server" type="number" onkeypress="return validarEnteros(event);"
+                                    <asp:TextBox ID="txtavancependientes" Text="0" CssClass=" form-control" runat="server" type="number" onkeypress="return validarEnteros(event);"
                                         onpaste="return false;"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12">

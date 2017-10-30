@@ -348,12 +348,13 @@ namespace negocio.Componentes
             return ds;
         }
 
-        public DataTable GetUsers()
+        public DataTable GetUsers(string usuario=null)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
-            Datos data = new Datos();
+            Datos data = new Datos(); 
+            listparameters.Add(new SqlParameter() { ParameterName = "@PUSUARIO", SqlDbType = SqlDbType.Int, Value = usuario });
             try
             {
                 //ds = data.datos_Clientes(listparameters);

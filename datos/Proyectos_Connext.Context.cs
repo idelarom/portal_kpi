@@ -47,6 +47,7 @@ namespace datos
         public virtual DbSet<riesgos_estrategia> riesgos_estrategia { get; set; }
         public virtual DbSet<riesgos_impactos> riesgos_impactos { get; set; }
         public virtual DbSet<riesgos_probabilidad> riesgos_probabilidad { get; set; }
+        public virtual DbSet<proyectos_roles> proyectos_roles { get; set; }
     
         public virtual ObjectResult<sp_get_cped_Result> sp_get_cped(string pdocumento)
         {

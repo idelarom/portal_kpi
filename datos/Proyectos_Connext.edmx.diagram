@@ -45,6 +45,8 @@
         <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_estrategia" ManuallyRouted="false" />
         <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_impactos" ManuallyRouted="false" />
         <AssociationConnector Association="Proyectos_ConnextModel.FK_riesgos_riesgos_probabilidad" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Proyectos_ConnextModel.proyectos_roles" Width="1.5" PointX="3.375" PointY="0.875" />
+        <AssociationConnector Association="Proyectos_ConnextModel.FK_proyectos_empleados_proyectos_roles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

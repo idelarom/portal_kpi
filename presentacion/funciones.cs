@@ -520,7 +520,7 @@ namespace presentacion
         public static StringBuilder TableDinamic(DataTable dt, string table_name)
         {
             StringBuilder html = new StringBuilder();
-            html.Append("<table id='" + table_name + "'  class='dt table table-responsive table-bordered- table-condensed' style='font-size:12px;font-family: Verdana;'>");
+            html.Append("<table id='" + table_name + "'  class='dt table table-responsive table-bordered- table-condensed' style='font-size:10px;font-family: Verdana;'>");
             html.Append("<thead>");
             html.Append("<tr>");
             foreach (DataColumn columna in dt.Columns)

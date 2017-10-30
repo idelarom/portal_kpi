@@ -143,11 +143,10 @@
                                     <thead>
                                         <tr>
                                             <th style="min-width: 20px"></th>
-                                            <th style="min-width: 80px">Usuario</th>
-                                            <th style="min-width: 250px">Empleado</th>
-                                            <th style="min-width: 40px; text-align: center;">PM</th>
-                                            <th style="min-width: 100px">Agregado por</th>
-                                            <th style="min-width: 150px">Agregado desde</th>
+                                            <th style="min-width: 40px">Usuario</th>
+                                            <th style="min-width: 240px">Empleado</th>
+                                            <th style="min-width: 180px; text-align: left;">Rol</th>
+                                            <th style="min-width: 100px">Agregado desde</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -163,12 +162,9 @@
                                                     </td>
                                                     <td style="text-align: left;"><%# Eval("usuario").ToString().ToUpper() %></td>
                                                     <td style="text-align: left;"><%# System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Eval("nombre").ToString().ToLower()) %></td>
-                                                    <td style="text-align: center;">
-                                                        <asp:CheckBox ID="CheckBox1"
-                                                            Checked='<%# Convert.ToBoolean(Eval("administrador_proyecto"))  %>'
-                                                            CssClass=" form-control" Enabled="false" runat="server" />
+                                                    <td style="text-align: left;">
+                                                        <%# Eval("rol").ToString() %>
                                                     </td>
-                                                    <td style="text-align: left;"><%# Eval("usuario_registro").ToString().ToUpper() %></td>
                                                     <td style="text-align: left;"><%# Convert.ToDateTime(Eval("fecha_registro")).ToString("dd MMMM yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %></td>
                                                 </tr>
                                             </ItemTemplate>
@@ -202,8 +198,14 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
+                                
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Perfil del empleado en el proyecto</strong></h5>
+                                    <asp:DropDownList ID="ddlperfil" CssClass=" form-control"
+                                         runat="server"></asp:DropDownList>
+                                </div>
                                 <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                                    <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Seleccione uno o mas empleados</strong></h5>
+                                    <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Seleccione un empleado</strong></h5>
                                     <div style="text-align: left;" class="input-group input-group-sm">
                                         <asp:TextBox ID="txtbuscarempleadoproyecto" CssClass="form-control" placeholder="Buscar"
                                             runat="server"></asp:TextBox>

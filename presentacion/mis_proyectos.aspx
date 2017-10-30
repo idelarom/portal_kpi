@@ -199,12 +199,12 @@
                                 <tr>
                                     <th style="max-width: 10px; text-align: center;" scope="col"></th>
                                     <th style="max-width: 10px; text-align: center;" scope="col"></th>
-                                    <th style="min-width: 300px; text-align: left;" scope="col">Proyecto</th>
+                                    <th style="min-width: 280px; text-align: left;" scope="col">Proyecto</th>
                                     <th style="min-width: 30px; text-align: center;" scope="col">Usuario</th>
-                                    <th style="min-width: 240px; text-align: left;" scope="col">Responsable</th>
+                                    <th style="min-width: 230px; text-align: left;" scope="col">Responsable</th>
                                     <th style="min-width: 30px; text-align: center;" scope="col">Estatus</th>
                                     <th style="min-width: 140px; text-align: center;" scope="col">Periodo evaluación</th>
-                                    <th style="min-width: 180px; text-align: left;" scope="col">Tecnologia(s)</th>
+                                    <th style="min-width: 170px; text-align: left;" scope="col">Tecnologia(s)</th>
                                 </tr>
                             </thead>
                             <tbody>

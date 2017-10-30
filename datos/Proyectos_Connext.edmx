@@ -125,7 +125,7 @@
           </Key>
           <Property Name="id_proyectoe" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_proyecto" Type="int" Nullable="false" />
-          <Property Name="administrador_proyecto" Type="bit" Nullable="false" />
+          <Property Name="id_proyecto_rol" Type="int" />
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="activo" Type="bit" Nullable="false" />
           <Property Name="usuario_registro" Type="varchar" MaxLength="50" Nullable="false" />
@@ -237,6 +237,15 @@
           <Property Name="dias" Type="tinyint" Nullable="false" />
           <Property Name="fecha" Type="datetime" Nullable="false" />
           <Property Name="usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="proyectos_roles">
+          <Key>
+            <PropertyRef Name="id_proyecto_rol" />
+          </Key>
+          <Property Name="id_proyecto_rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rol" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="administrador_proyecto" Type="bit" Nullable="false" />
           <Property Name="activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="proyectos_tecnologias">
@@ -397,6 +406,18 @@
             </Principal>
             <Dependent Role="proyectos_empleados">
               <PropertyRef Name="id_proyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proyectos_empleados_proyectos_roles">
+          <End Role="proyectos_roles" Type="Self.proyectos_roles" Multiplicity="0..1" />
+          <End Role="proyectos_empleados" Type="Self.proyectos_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos_roles">
+              <PropertyRef Name="id_proyecto_rol" />
+            </Principal>
+            <Dependent Role="proyectos_empleados">
+              <PropertyRef Name="id_proyecto_rol" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -580,6 +601,7 @@
           <EntitySet Name="proyectos_minutas_participantes" EntityType="Self.proyectos_minutas_participantes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_minutas_pendientes" EntityType="Self.proyectos_minutas_pendientes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_periodos" EntityType="Self.proyectos_periodos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proyectos_roles" EntityType="Self.proyectos_roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proyectos_tecnologias" EntityType="Self.proyectos_tecnologias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos" EntityType="Self.riesgos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="riesgos_estatus" EntityType="Self.riesgos_estatus" Schema="dbo" store:Type="Tables" />
@@ -612,6 +634,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_proyectos_empleados_proyectos" Association="Self.FK_proyectos_empleados_proyectos">
             <End Role="proyectos" EntitySet="proyectos" />
+            <End Role="proyectos_empleados" EntitySet="proyectos_empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proyectos_empleados_proyectos_roles" Association="Self.FK_proyectos_empleados_proyectos_roles">
+            <End Role="proyectos_roles" EntitySet="proyectos_roles" />
             <End Role="proyectos_empleados" EntitySet="proyectos_empleados" />
           </AssociationSet>
           <AssociationSet Name="FK_proyectos_evaluaciones_proyectos" Association="Self.FK_proyectos_evaluaciones_proyectos">
@@ -808,12 +834,13 @@
           </Key>
           <Property Name="id_proyectoe" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_proyecto" Type="Int32" Nullable="false" />
-          <Property Name="administrador_proyecto" Type="Boolean" Nullable="false" />
           <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <Property Name="usuario_registro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha_registro" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="proyectos" Relationship="Self.FK_proyectos_empleados_proyectos" FromRole="proyectos_empleados" ToRole="proyectos" />
+          <Property Name="id_proyecto_rol" Type="Int32" />
+          <NavigationProperty Name="proyectos_roles" Relationship="Proyectos_ConnextModel.FK_proyectos_empleados_proyectos_roles" FromRole="proyectos_empleados" ToRole="proyectos_roles" />
         </EntityType>
         <EntityType Name="proyectos_estatus">
           <Key>
@@ -1372,6 +1399,11 @@
             <Parameter Name="subject" Mode="In" Type="String" />
             <Parameter Name="mail_to" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="proyectos_roles" EntityType="Proyectos_ConnextModel.proyectos_roles" />
+          <AssociationSet Name="FK_proyectos_empleados_proyectos_roles" Association="Proyectos_ConnextModel.FK_proyectos_empleados_proyectos_roles">
+            <End Role="proyectos_roles" EntitySet="proyectos_roles" />
+            <End Role="proyectos_empleados" EntitySet="proyectos_empleados" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_get_cped_Result">
           <Property Type="String" Name="documento" Nullable="true" MaxLength="20" />
@@ -1383,6 +1415,28 @@
           <Property Type="Int32" Name="id_proyecto" Nullable="true" />
           <Property Type="String" Name="tecnologias" Nullable="true" MaxLength="8000" />
         </ComplexType>
+        <EntityType Name="proyectos_roles">
+          <Key>
+            <PropertyRef Name="id_proyecto_rol" />
+          </Key>
+          <Property Name="id_proyecto_rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rol" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="administrador_proyecto" Type="Boolean" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="proyectos_empleados" Relationship="Proyectos_ConnextModel.FK_proyectos_empleados_proyectos_roles" FromRole="proyectos_roles" ToRole="proyectos_empleados" />
+        </EntityType>
+        <Association Name="FK_proyectos_empleados_proyectos_roles">
+          <End Type="Proyectos_ConnextModel.proyectos_roles" Role="proyectos_roles" Multiplicity="0..1" />
+          <End Type="Proyectos_ConnextModel.proyectos_empleados" Role="proyectos_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proyectos_roles">
+              <PropertyRef Name="id_proyecto_rol" />
+            </Principal>
+            <Dependent Role="proyectos_empleados">
+              <PropertyRef Name="id_proyecto_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1512,9 +1566,9 @@
           <EntitySetMapping Name="proyectos_empleados">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_empleados">
               <MappingFragment StoreEntitySet="proyectos_empleados">
+                <ScalarProperty Name="id_proyecto_rol" ColumnName="id_proyecto_rol" />
                 <ScalarProperty Name="id_proyectoe" ColumnName="id_proyectoe" />
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
-                <ScalarProperty Name="administrador_proyecto" ColumnName="administrador_proyecto" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="activo" ColumnName="activo" />
                 <ScalarProperty Name="usuario_registro" ColumnName="usuario_registro" />
@@ -1739,6 +1793,16 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_send_mail" FunctionName="Proyectos_ConnextModel.Store.sp_send_mail" />
+          <EntitySetMapping Name="proyectos_roles">
+            <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_roles">
+              <MappingFragment StoreEntitySet="proyectos_roles">
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="administrador_proyecto" ColumnName="administrador_proyecto" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="id_proyecto_rol" ColumnName="id_proyecto_rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

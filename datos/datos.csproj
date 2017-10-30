@@ -708,6 +708,9 @@
     <Compile Include="proyectos_periodos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="proyectos_roles.cs">
+      <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
     <Compile Include="proyectos_tecnologias.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>

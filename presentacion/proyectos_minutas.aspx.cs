@@ -7,6 +7,12 @@ using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.text.html;
+using System.IO;
+using System.Net;
+using iTextSharp.text.html.simpleparser;
 
 namespace presentacion
 {
@@ -36,6 +42,7 @@ namespace presentacion
                 CargarInformacionInicial(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
                 if (ProyectoTerminado())
                 {
+                    lnknuevaminuta.Visible = false;
                     lnkaddparticipante.Visible = false;
                     lnkaddpendientes.Visible = false;
                     lnkguardarminuta.Visible = false;
@@ -123,13 +130,21 @@ namespace presentacion
 
         protected void lnknuevaminuta_Click(object sender, EventArgs e)
         {
+            lnkaddparticipante.Visible = true;
+            lnkaddpendientes.Visible = true;
+            lnkguardarminuta.Visible = true;
             rtxtasuntominuta.Text = "";
             rtxtlugarminuta.Text = "";
             rtxtpropositos.Text = "";
             txtid_minuta.Text = "";
+            rtxtpendiente.Text="";
+            rtxtresultados.Text = "";
+            rtxtacuerdos.Text = "";
             ViewState["dt_participantes"] = null;
             rdpfechaminuta.SelectedDate = null;
+            ViewState["dt_pendientes"] = null;
             CargarParticipantes();
+            CargarPendientes();
             ModalShow("#myModalMinutas");
         }
 
@@ -333,6 +348,7 @@ namespace presentacion
                     {
                         case "editar":
                         case "terminar":
+                        case "descargar":
                             datos.proyectos_minutas entidad = new datos.proyectos_minutas();
                             entidad.id_proyectomin = id_minuta;
                             ProyectosMinutasCOM minutas = new ProyectosMinutasCOM();
@@ -377,33 +393,21 @@ namespace presentacion
                                 ViewState["dt_pendientes"] = null;
                                 CargarPendientes();
                             }
-                            if (lnk.CommandName.ToLower() == "terminar")
+                            if (lnk.CommandName.ToLower() == "editar")
                             {
+                                ModalShow("#myModalMinutas");
+                            }
+                            else
+                            {
+                                string informacion = "";
                                 if (0 > 1) //(hdfid_cliente.Value == "" || hdfid_cliente.Value == "0")
                                 {
                                     vmensaje = "Para Enviar la Minuta, debe relacionar este proyecto a un cliente.";
                                 }
                                 else
                                 {
-                                    //CargarCorreosCliente();
                                     bool es_cliente = Convert.ToBoolean(Session["cliente"]);
                                     string correos_clientes = "";
-                                    //if (es_cliente)
-                                    //{
-                                    //    ProyectosEmpleadosCOM proyectos = new ProyectosEmpleadosCOM();
-                                    //    DataTable dt_empleados = proyectos.empleados_proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                                    //    string correos = "";
-                                    //    foreach (DataRow row in dt_empleados.Rows)
-                                    //    {
-                                    //        correos = correos + row["correo"].ToString().Trim() + ";";
-                                    //        Session["correo_pm"] = correos;
-                                    //    }
-                                    //    correos_clientes = Session["correo_pm"] as string;
-                                    //}
-                                    //else
-                                    //{
-                                    //    correos_clientes = Session["correo_clientes"] as string;
-                                    //}
                                     ProyectosEmpleadosCOM empleados = new ProyectosEmpleadosCOM();
                                     DataTable dt_empleados = empleados.empleados_proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
                                     DataTable dt_empleados_participantes = empleados.participantes_proyectos(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
@@ -435,10 +439,10 @@ namespace presentacion
 
                                         string mail_to = Session["correo_pm"] as string;
                                         string subject = "Módulo de proyectos - Nueva Minuta";
-                                        string informacion =
-                                                 "<h4 style='text-align:left;'>Asistente de trabajo y minutas</p><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
-                                                 "<br><br>" +
-                                                 "<table style='font-size: 12px;font-family: Verdana; '>" +
+                                        informacion =
+                                                 "<h5 style='text-align:left;'>Asistente de trabajo y minutas</h5><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                              
+                                                 "<table style='font-size: 11px;font-family: Verdana; '>" +
                                                  "<tr>" +
                                                      "<th style=' width:50px;background-color: #e53935 ;color:white;padding: 15px;text-align: left;'>Proyecto</th>" +
                                                      "<th style='width: 450px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + proyecto.proyecto + "</th>" +
@@ -456,25 +460,25 @@ namespace presentacion
                                                      "<th style='width: 450px;background-color: #eeeeee;padding: 15px;text-align: left;'>" + rtxtasuntominuta.Text.Trim() + "</th>" +
                                                      "</tr>" +
                                                  "</table>" +
-                                                 "<br><br>" +
-                                                 "<h4>Propósito de la junta</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 "<br>" +
+                                                 "<h5>Propósito de la junta</h5><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
                                                  "<p>" + rtxtpropositos.Text.Trim() + "</p>" +
-                                                 "<br><br>" +
-                                                 "<h4>Resultados (entregables) a obtener al terminar la reunión</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 "<br>" +
+                                                 "<h5>Resultados (entregables) a obtener al terminar la reunión</h5><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
                                                  "<p>" + rtxtresultados.Text.Trim() + "</p>" +
-                                                 "<br><br>" +
-                                                 "<h4>Personas que participan</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 "<br>" +
+                                                 "<h5>Personas que participan</h5><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
                                                  funciones.TableDinamic(dt_participantes2, "tab_parti") +
-                                                 "<br><br>" +
-                                                 "<h4>Acuerdos tomados y resoluciones</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 "<br>" +
+                                                 "<h5>Acuerdos tomados y resoluciones</h5><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
                                                  "<p>" + rtxtacuerdos.Text.Trim() + "</p>" +
-                                                 "<br><br>" +
-                                                 "<h4>Acciones a realizar y asuntos pendientes</h4><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
+                                                 "<br>" +
+                                                 "<h5>Acciones a realizar y asuntos pendientes</h5><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
                                                  funciones.TableDinamic(dt_pendientes2, "tab_pendinte");
 
-                                        string mail = "<div>" + saludo + "<div>" +
+                                        string mail = "<div style='font-size:12px;'>" + saludo + 
                                            "<br>" +
-                                           "<p>Se agrego una nueva Minuta para el proyecto <strong>" + proyecto.proyecto + "</strong>" +
+                                           "<p>Se agrego una nueva Minuta para el proyecto <strong>" + proyecto.proyecto + "</strong></p>" +"<div>" +
                                             informacion +
                                            "<br/><p>Este movimiento fue realizado por <strong>" +
                                            System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
@@ -484,24 +488,44 @@ namespace presentacion
                                         CorreosCOM sendcorreos = new CorreosCOM();
                                         bool correct = sendcorreos.SendMail(mail, subject, mail_to);
                                     }
-                                    //Enviamos correos
+                                }
+
+                                if (lnk.CommandName.ToLower() == "descargar")
+                                {
+                                    Document document = new Document(PageSize.A4, 80, 50, 30, 65);
+                                    PdfWriter.GetInstance(document, new FileStream(Server.MapPath("~/files/temp/1.pdf"), FileMode.Create));
+                                    string attachment = "attachment; filename=report.pdf";
+                                    Response.ClearContent();
+                                    Response.AddHeader("content-disposition", attachment);
+                                    Response.ContentType = "application/pdf";
+                                    StringWriter stw = new StringWriter();
+                                    HtmlTextWriter htextw = new HtmlTextWriter(stw);
+                                    
+                                    FontFactory.GetFont("Tahoma", 50, iTextSharp.text.BaseColor.BLUE);
+                                    PdfWriter.GetInstance(document, Response.OutputStream);
+                                    document.Open();
+
+                                    StringReader str = new StringReader(informacion);
+                                    HTMLWorker htmlworker = new HTMLWorker(document);
+                                    htmlworker.Parse(str);
+
+                                    document.Close();
+                                    Response.Write(document);
+                                }
+                                else {
 
                                     vmensaje = minutas.Enviar(id_minuta, Session["usuario"] as string);
+                                    if (vmensaje == "")
+                                    {
+                                        string url = "proyectos_minutas.aspx?id_proyecto=" + Request.QueryString["id_proyecto"];
+                                        ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                                            "AlertGO('Minuta enviada correctamente', '" + url + "');", true);
+                                    }
+                                    else
+                                    {
+                                        Toast.Error("Error al enviar minuta: " + vmensaje, this);
+                                    }
                                 }
-                                if (vmensaje == "")
-                                {
-                                    string url = "proyectos_minutas.aspx?id_proyecto=" + Request.QueryString["id_proyecto"];
-                                    ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
-                                        "AlertGO('Minuta enviada correctamente', '" + url + "');", true);
-                                }
-                                else
-                                {
-                                    Toast.Error("Error al enviar minuta: " + vmensaje, this);
-                                }
-                            }
-                            else
-                            {
-                                ModalShow("#myModalMinutas");
                             }
                             break;
 
@@ -911,7 +935,10 @@ namespace presentacion
                 ddlempleado_participante.DataTextField = "nombre";
                 ddlempleado_participante.DataSource = dt_empleados;
                 ddlempleado_participante.DataBind();
-
+                if (dt_empleados.Rows.Count == 1)
+                {                    
+                    ddlempleado_participante_SelectedIndexChanged(null,null);
+                }
                 //ddlempleado_a_consultar.Enabled = ver_Todos_los_empleados;
                 //div_filtro_empleados.Visible = ver_Todos_los_empleados;
             }
@@ -1001,21 +1028,34 @@ namespace presentacion
 
         protected void ddlempleado_participante_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ProyectoTerminado())
+            try
             {
-                Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+
+                if (ProyectoTerminado())
+                {
+                    Toast.Error("El proyecto fue terminado y no puede generarse información adicional.", this);
+                }
+                else
+                {
+                    rtxtnombreparticipante.ReadOnly = true;
+                    rtxtrol.ReadOnly = true;
+                    rtxtorganizacion.ReadOnly = true;
+                    string usuario = ddlempleado_participante.SelectedValue.ToString();
+                    string nombre = ddlempleado_participante.SelectedItem.ToString();
+                    rtxtnombreparticipante.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nombre.ToLower());
+                    hdf_usuario_participante.Value = usuario;
+
+                    EmpleadosCOM empleados = new EmpleadosCOM();
+                    DataTable dt = empleados.GetUsers(usuario.ToUpper());
+
+                    rtxtrol.Text = dt.Rows.Count > 0 ? System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(dt.Rows[0]["puesto"].ToString().ToLower())
+                        : "Empleado Connext";
+                    rtxtorganizacion.Text = "Connext";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                rtxtnombreparticipante.ReadOnly = true;
-                rtxtrol.ReadOnly = true;
-                rtxtorganizacion.ReadOnly = true;
-                string usuario = ddlempleado_participante.SelectedValue.ToString();
-                string nombre = ddlempleado_participante.SelectedItem.ToString();
-                rtxtnombreparticipante.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nombre.ToLower());
-                hdf_usuario_participante.Value = usuario;
-                rtxtrol.Text = "Empleado Connext";
-                rtxtorganizacion.Text = "Connext";
+                Toast.Error("Error al cargar información del empleado: " + ex.Message, this);
             }
         }
 

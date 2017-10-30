@@ -65,7 +65,7 @@ namespace negocio.Componentes
                     context.SaveChanges();
 
                     ProyectosEmpleadosCOM empleados = new ProyectosEmpleadosCOM();
-                    empleados.Agregar(proyecto.id_proyecto,proyecto.usuario_resp,true,proyecto.usuario);
+                    empleados.Agregar(proyecto.id_proyecto,1,proyecto.usuario_resp,proyecto.usuario);
                 }
                 return mess;
             }

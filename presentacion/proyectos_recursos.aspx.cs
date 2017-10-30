@@ -1,4 +1,5 @@
-﻿using negocio.Componentes;
+﻿using datos;
+using negocio.Componentes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -55,6 +56,7 @@ namespace presentacion
                 if (dt.Rows.Count > 0)
                 {
                     CargarRecursos(id_proyecto);
+                    Cargarroles();
                     DataRow proyecto = dt.Rows[0];
                     lblproyect.Text = proyecto["proyecto"].ToString();
                     lblmonto.Text = Convert.ToDecimal(proyecto["costo_usd"]).ToString("C2") + " USD / " + Convert.ToDecimal(proyecto["costo_mn"]).ToString("C2") + " MN";
@@ -77,6 +79,24 @@ namespace presentacion
                 DataTable dt = empleados.empleados_proyecto(id_proyecto);
                 repeat_proyectos_empleados.DataSource = dt;
                 repeat_proyectos_empleados.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del proyecto(recursos): " + ex.Message, this);
+            }
+        }
+
+        private void Cargarroles()
+        {
+            try
+            {
+                ProyectosEmpleadosCOM empleados = new ProyectosEmpleadosCOM();
+                List<proyectos_roles> list = empleados.list_proyectos_roles();
+                ddlperfil.DataValueField = "id_proyecto_rol";
+                ddlperfil.DataTextField = "rol";
+                ddlperfil.DataSource = list;
+                ddlperfil.DataBind();
+                ddlperfil.Items.Insert(0,new ListItem("--Seleccione un rol","0"));
             }
             catch (Exception ex)
             {
@@ -179,6 +199,8 @@ namespace presentacion
                     vmensaje = "El proyecto fue terminado y no puede generarse información adicional.";
                 }
 
+                int id_rol = Convert.ToInt32(ddlperfil.SelectedValue);
+                if (id_rol == 0) { vmensaje = "Seleccione un rol para el empleado"; }
                 if (vmensaje == "")
                 {
                     ProyectosEmpleadosCOM proyectos = new ProyectosEmpleadosCOM();
@@ -187,7 +209,7 @@ namespace presentacion
                         string usuario = item.Value;
                         int id_proyecto = Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"]));
                         string usuario_registro = Session["usuario"] as string;
-                        vmensaje = proyectos.Agregar(id_proyecto, usuario, true, usuario_registro);
+                        vmensaje = proyectos.Agregar(id_proyecto, id_rol,usuario, usuario_registro);
                         if (vmensaje == "")
                         {
                             ProyectosCOM proyectos2 = new ProyectosCOM();

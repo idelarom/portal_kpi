@@ -13,7 +13,7 @@ namespace negocio.Componentes
 {
     public class ProyectosEmpleadosCOM
     {
-        public string Agregar(int id_proyecto, string usuario, bool pm, string usuario_registro)
+        public string Agregar(int id_proyecto, int id_proyecto_rol, string usuario, string usuario_registro)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace negocio.Componentes
                     {
                         id_proyecto = id_proyecto,
                         usuario = usuario,
-                        administrador_proyecto = pm,
+                        id_proyecto_rol = id_proyecto_rol,
                         usuario_registro = usuario_registro,
                         fecha_registro = DateTime.Now,
                         activo = true
@@ -91,6 +91,26 @@ namespace negocio.Componentes
             }
         }
 
+        public List<proyectos_roles> list_proyectos_roles()
+        {
+            try
+            {
+                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
+                List<proyectos_roles> list= context.proyectos_roles
+                                .Where(i => i.activo).ToList();
+                return list;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return null;
+            }
+        }
+
+
         public DataTable empleados_proyecto(int id_proyecto)
         {
             try
@@ -115,23 +135,26 @@ namespace negocio.Componentes
                                 .Select(u => new
                                 {
                                     u.id_proyectoe,
+                                    u.id_proyecto_rol,
                                     u.usuario,
                                     u.id_proyecto,
                                     u.usuario_registro,
-                                    u.fecha_registro,
-                                    u.administrador_proyecto                                    
+                                    u.fecha_registro                                 
                                 })
                                 .OrderBy(u => u.usuario).ToArray();
 
                 var result = (from a in tblempleados
                               join p in context.proyectos on a.id_proyecto equals p.id_proyecto
                               join b in list_emp on a.usuario.ToUpper().Trim() equals b.Usuario.Trim().ToUpper()
+                              join c in context.proyectos_roles on a.id_proyecto_rol equals c.id_proyecto_rol
                               select new {
                                   a.id_proyectoe,
                                   a.usuario,
                                   a.usuario_registro,
                                   a.fecha_registro,
-                                  a.administrador_proyecto,
+                                  c.id_proyecto_rol,
+                                  c.administrador_proyecto,
+                                  c.rol,
                                   b.Nombre,
                                   b.Correo,
                                   b.Puesto,
