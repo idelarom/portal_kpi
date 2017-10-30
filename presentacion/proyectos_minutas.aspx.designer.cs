@@ -247,15 +247,6 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.DropDownList ddlempleado_participante;
         
         /// <summary>
-        /// Control div_addparticipante.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_addparticipante;
-        
-        /// <summary>
         /// Control rtxtnombreparticipante.
         /// </summary>
         /// <remarks>
@@ -301,6 +292,15 @@ namespace presentacion {
         protected global::System.Web.UI.WebControls.LinkButton lnkagregar;
         
         /// <summary>
+        /// Control lnkaddparticipante.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkaddparticipante;
+        
+        /// <summary>
         /// Control rgrid_participantes.
         /// </summary>
         /// <remarks>
@@ -317,15 +317,6 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdf_usuario_participante;
-        
-        /// <summary>
-        /// Control lnkaddparticipante.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkaddparticipante;
         
         /// <summary>
         /// Control UpdatePanel12.
@@ -436,6 +427,24 @@ namespace presentacion {
         protected global::Telerik.Web.UI.RadListBox rdlinvopendientes;
         
         /// <summary>
+        /// Control div2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div2;
+        
+        /// <summary>
+        /// Control lnkaddpendientes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkaddpendientes;
+        
+        /// <summary>
         /// Control grid_pendiente.
         /// </summary>
         /// <remarks>
@@ -452,15 +461,6 @@ namespace presentacion {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdf_id_proyectominpen;
-        
-        /// <summary>
-        /// Control lnkaddpendientes.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkaddpendientes;
         
         /// <summary>
         /// Control hdfmotivos.

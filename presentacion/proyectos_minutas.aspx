@@ -266,32 +266,32 @@
                         </div>
                         <div class="modal-body" id="modal_content">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Asunto</strong></h5>
                                     <telerik:RadTextBox ID="rtxtasuntominuta" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
 
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha</strong></h5>
                                     <telerik:RadDatePicker ID="rdpfechaminuta" Width="100%" Skin="Bootstrap" runat="server"></telerik:RadDatePicker>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;Lugar</strong></h5>
                                     <telerik:RadTextBox ID="rtxtlugarminuta" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-wrench" aria-hidden="true"></i>&nbsp;Propósito</strong></h5>
                                     <telerik:RadTextBox ID="rtxtpropositos" Width="100%" runat="server" TextMode="MultiLine" Rows="2" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;Resultados</strong></h5>
                                     <telerik:RadTextBox ID="rtxtresultados" Width="100%" runat="server" TextMode="MultiLine" Rows="2" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-hand-paper-o" aria-hidden="true"></i>&nbsp;Acuerdos</strong></h5>
                                     <telerik:RadTextBox ID="rtxtacuerdos" Width="100%" runat="server" TextMode="MultiLine" Rows="2" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
-                                 <div class="col-lg-12">
+                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <br />
                                     <div style="text-align: right;">
                                         <asp:LinkButton ID="lnkpendientes" OnClientClick="return Loading('modal_content');" runat="server" CssClass="btn btn-success btn-flat" OnClick="lnkpendientes_Click">
@@ -338,7 +338,7 @@
                         </div>
                         <div class="modal-body" style="width: 100%; height: 450px; overflow: scroll;">
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Empleado responsable</strong>
                                         &nbsp; 
                                     </h6>
@@ -358,31 +358,39 @@
                                     <asp:DropDownList Visible="true" AutoPostBack="true" OnSelectedIndexChanged="ddlempleado_participante_SelectedIndexChanged" ID="ddlempleado_participante" CssClass="form-control" runat="server">
                                     </asp:DropDownList>
                                 </div>
-                                <div id="div_addparticipante" runat="server" visible="true">
-                                    <div class="col-lg-12">
-                                        <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Nombre</strong></h5>
-                                        <telerik:RadTextBox ReadOnly="true" ID="rtxtnombreparticipante" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Rol</strong></h5>
-                                        <telerik:RadTextBox ReadOnly="true" ID="rtxtrol" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <h5><strong><i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;Organización</strong></h5>
-                                        <telerik:RadTextBox ReadOnly="true" ID="rtxtorganizacion" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Nombre</strong></h5>
+                                    <telerik:RadTextBox ReadOnly="true" ID="rtxtnombreparticipante" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
-                                <div class="col-lg-12" id="div_selectedinvo" runat="server" visible="true">
+
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Rol</strong></h5>
+                                    <telerik:RadTextBox ReadOnly="true" ID="rtxtrol" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h5><strong><i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;Organización</strong></h5>
+                                    <telerik:RadTextBox ReadOnly="true" ID="rtxtorganizacion" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12" id="div_selectedinvo" runat="server" visible="true" style="text-align: right;">
                                     <br />
-                                    <asp:LinkButton ID="lnkagregar" OnClick="lnkagregar_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
-                                        Agregar persona externa</asp:LinkButton>
+                                    <asp:LinkButton ID="lnkagregar" OnClick="lnkagregar_Click" CssClass="btn btn-danger btn-flat" runat="server">
+                                        Persona externa</asp:LinkButton>
+
+
+                                    <asp:LinkButton ID="lnkaddparticipante" CssClass="btn btn-primary btn-flat" OnClick="lnkaddparticipante_Click" OnClientClick="return confirm('¿Desea Agregar Este Participante?');" runat="server">
+                                            Agregar participante&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                                    </asp:LinkButton>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="table table-responsive">
 
                                         <telerik:RadGrid ID="rgrid_participantes" runat="server" Skin="Metro">
                                             <MasterTableView AutoGenerateColumns="false" CssClass="table table-responsive"
-                                                HeaderStyle-BackColor="White" HeaderStyle-ForeColor="Black" style="font-size:10px;"
+                                                HeaderStyle-BackColor="White" HeaderStyle-ForeColor="Black" Style="font-size: 10px;"
                                                 Width="100%">
                                                 <Columns>
 
@@ -417,10 +425,6 @@
                         </div>
                         <div class="modal-footer ">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-
-                            <asp:LinkButton ID="lnkaddparticipante" CssClass="btn btn-primary btn-flat" OnClick="lnkaddparticipante_Click" OnClientClick="return confirm('¿Desea Agregar Este Participante?');" runat="server">
-                                            Agregar participante&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
-                            </asp:LinkButton>
                         </div>
                     </div>
                 </ContentTemplate>
@@ -443,7 +447,7 @@
                         </div>
                         <div class="modal-body" style="width: 100%; height: 450px; overflow: scroll;">
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Empleado responsable</strong>
                                         &nbsp; 
                                     </h6>
@@ -463,21 +467,28 @@
                                     <asp:DropDownList Visible="true" ID="ddlempleado_a_consultar" CssClass="form-control" runat="server">
                                     </asp:DropDownList>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Planeada</strong></h5>
                                     <telerik:RadDatePicker ID="rdtfecha_planeada" Width="100%" Skin="Bootstrap" runat="server"></telerik:RadDatePicker>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-wrench" aria-hidden="true"></i>&nbsp;Avance</strong></h5>
 
                                     <asp:TextBox ID="txtavancependientes" Text="0" CssClass=" form-control" runat="server" type="number" onkeypress="return validarEnteros(event);"
                                         onpaste="return false;"></asp:TextBox>
                                 </div>
-                                <div class="col-lg-12">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Pendiente</strong></h5>
                                     <telerik:RadTextBox ID="rtxtpendiente" Width="100%" runat="server" Skin="Bootstrap" TextMode="MultiLine" Rows="2"></telerik:RadTextBox>
                                 </div>
-                                <div class="col-lg-12" id="involucrados" runat="server" visible="false">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="involucrados" runat="server" visible="false">
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Puede Seleccionar un Involucrado del Proyecto</strong></h5>
 
                                     <div style="height: 120px; overflow: scroll;">
@@ -485,12 +496,21 @@
                                         </telerik:RadListBox>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12" id="div2" runat="server" visible="true" style="text-align: right;">
+                                    <br />
+
+                                    <asp:LinkButton ID="lnkaddpendientes" CssClass="btn btn-primary btn-flat" OnClick="lnkaddpendientes_Click" OnClientClick="return confirm('¿Desea Agregar Este Pendiente?');" runat="server">
+                                            Agregar pendiente&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                                    </asp:LinkButton>
+                                </div>
                                 <div class="col-lg-12">
                                     <br />
                                     <div class="table table-responsive">
                                         <telerik:RadGrid ID="grid_pendiente" runat="server" Skin="Metro">
                                             <MasterTableView AutoGenerateColumns="false" CssClass="table table-responsive"
-                                                HeaderStyle-BackColor="White" HeaderStyle-ForeColor="Black" style="font-size:10px;"
+                                                HeaderStyle-BackColor="White" HeaderStyle-ForeColor="Black" Style="font-size: 10px;"
                                                 Width="100%">
                                                 <Columns>
                                                     <telerik:GridTemplateColumn>
@@ -543,10 +563,6 @@
                         </div>
                         <div class="modal-footer ">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-
-                            <asp:LinkButton ID="lnkaddpendientes" CssClass="btn btn-primary btn-flat" OnClick="lnkaddpendientes_Click" OnClientClick="return confirm('¿Desea Agregar Este Pendiente?');" runat="server">
-                                            Agregar pendiente&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
-                            </asp:LinkButton>
                         </div>
                     </div>
                 </ContentTemplate>

@@ -155,7 +155,15 @@
                 return false;
             }
         }
-
+        function ConfirmRiesgosHistorialProyectoModal(msg) {
+            if (confirm(msg)) {
+                $("#<%= lnkloadguardarhistorial.ClientID%>").show();
+                $("#<%= lnkguardarhistorial.ClientID%>").hide();
+                return true;
+            } else {
+                return false;
+            }
+        }
         function ChangedValue() {
             $("#<%= load_cumpli_compromisos.ClientID%>").show();
             var target = document.getElementById('<%= load_cumpli_compromisos.ClientID %>');
@@ -692,11 +700,11 @@
                                         </table>
                                     </div>
                                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                                    <asp:LinkButton OnClientClick="return false;" ID="LinkButton2" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                                    <asp:LinkButton OnClientClick="return false;" ID="lnkloadguardarhistorial" CssClass="btn btn-primary  pull-right btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando
                                     </asp:LinkButton>
-                                    <asp:LinkButton ID="lnkguardarhistorial" OnClientClick="return ConfirmwidgetProyectoModal('¿Desea importar los riesgos seleccionados?');"
+                                    <asp:LinkButton ID="lnkguardarhistorial" OnClientClick="return ConfirmRiesgosHistorialProyectoModal('¿Desea importar los riesgos seleccionados?');"
                                         OnClick="lnkguardarhistorial_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                                     </asp:LinkButton>

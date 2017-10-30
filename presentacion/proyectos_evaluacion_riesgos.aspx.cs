@@ -402,6 +402,7 @@ namespace presentacion
                         txtestrategia_det.Text = "";
                         hdfid_estrategia.Value = "";
                         hdfvalor_riesgo.Value = "";
+                        hdfid_riesgo.Value = "";
                         ModalShow("#modal_riesgo");
                     }
                     else
@@ -956,7 +957,7 @@ namespace presentacion
                                     System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario["empleado"].ToString().ToLower())
                                     + "</strong> <div>" +
                                     "<br>" +
-                                    "<p>Fue ingreso el resultado de una acción, dentro de una evaluación en el proyecto <strong>" + lblproyect.Text + "</strong>" +
+                                    "<p>Fue ingresado el resultado de una acción, dentro de una evaluación en el proyecto <strong>" + lblproyect.Text + "</strong>" +
                                     "</p>" +
                                     "<p>A continuación, se muestra la información completa:</p>" +
                                          "<p><strong>Riesgo</strong><br/> " +
@@ -965,6 +966,14 @@ namespace presentacion
                                        txtaccion_title.Text + "</p> " +
                                        "<p><strong>Resultado</strong><br/> " +
                                        txtresultado.Text + "</p> " +
+                                       "<p><strong>Fecha estimada de ejecución</strong><br/> " +
+                                       actividad.fecha_asignacion.ToString("dddd dd MMMM, yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</p> " +
+                                       "<p><strong>Fecha real de ejecución</strong><br/> " +
+                                       DateTime.Now.ToString("dddd dd MMMM, yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</p> " +
+                                       
+                                     "<p><strong>Documento de evidencia</strong>" +
+                                    "<br><a href='https://apps.migesa.com.mx/portal_connext/" + name +
+                                                "' download>Descargar documento</a></p>" +
                                     "<br/><p>Este movimiento fue realizado por <strong>" +
                                     System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
                                     + "</strong> el dia <strong>" +
@@ -1074,6 +1083,10 @@ namespace presentacion
                                       txtriesgo.Text + "</p> " +
                                        "<p><strong>Actividad/Acción</strong><br/> " +
                                        txtaccion.Text + "</p> " +
+                                       "<p><strong>Tipo</strong><br/> " +
+                                       ddltipo_actividad.SelectedItem + "</p> " +
+                                       "<p><strong>Fecha estimada de ejecución</strong><br/> " +
+                                       Convert.ToDateTime(txtfechaejecuacion.SelectedDate).ToString("dddd dd MMMM, yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</p> " +
                                     "<br/><p>Este movimiento fue realizado por <strong>" +
                                     System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Session["nombre"].ToString().ToLower())
                                     + "</strong> el dia <strong>" +
@@ -1497,6 +1510,8 @@ namespace presentacion
                 ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial');", true);
                 ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#tabla_historial_acciones');", true);
                 InicializarTablas();
+                lnkloadguardarhistorial.Style["display"] = "none";
+                lnkguardarhistorial.Visible = true;
             }
         }
 
