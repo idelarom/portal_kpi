@@ -373,6 +373,10 @@
                                     <h5><strong><i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;Organización</strong></h5>
                                     <telerik:RadTextBox ReadOnly="true" ID="rtxtorganizacion" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadTextBox>
                                 </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h5><strong><i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;Correo(s)</strong></h5>
+                                    <asp:TextBox ReadOnly="true" ID="rtxtcorreo" CssClass=" form-control" TextMode="Email" runat="server" ></asp:TextBox>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12" id="div_selectedinvo" runat="server" visible="true" style="text-align: right;">
@@ -407,13 +411,17 @@
                                                     <telerik:GridBoundColumn DataField="nombre" HeaderText="Participante" UniqueName="nombre"
                                                         Visible="true">
                                                     </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn DataField="correo" HeaderText="Correos" UniqueName="correo"
+                                                        Visible="true">
+                                                        <HeaderStyle Width="200px" />
+                                                    </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn DataField="rol" HeaderText="Rol" UniqueName="rol"
                                                         Visible="true">
                                                         <HeaderStyle Width="200px" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn DataField="organización" HeaderText="Organización" UniqueName="organizacion"
                                                         Visible="true">
-                                                        <HeaderStyle Width="200px" />
+                                                        <HeaderStyle Width="130px" />
                                                     </telerik:GridBoundColumn>
                                                 </Columns>
                                             </MasterTableView>

@@ -221,9 +221,9 @@ namespace negocio.Componentes
                 {
                     EmpleadoSubordinados empleado = new EmpleadoSubordinados();
                     empleado.Usuario = row["usuario"].ToString().ToUpper();
-                    empleado.Nombre = row["nombre"].ToString().ToUpper();
-                    empleado.Puesto = row["puesto"].ToString().ToUpper();
-                    empleado.Correo = row["correo"].ToString().ToUpper();
+                    empleado.Nombre = row["nombre"].ToString();
+                    empleado.Puesto = row["puesto"].ToString();
+                    empleado.Correo = row["correo"].ToString();
                     list_emp.Add(empleado);
                 }
                 var query = context.proyectos_minutas_pendientes
@@ -295,19 +295,22 @@ namespace negocio.Componentes
                 {
                     EmpleadoSubordinados empleado = new EmpleadoSubordinados();
                     empleado.Usuario = row["usuario"].ToString().ToUpper();
-                    empleado.Nombre = row["nombre"].ToString().ToUpper();
-                    empleado.Puesto = row["puesto"].ToString().ToUpper();
-                    empleado.Correo = row["correo"].ToString().ToUpper();
+                    empleado.Nombre = row["nombre"].ToString();
+                    empleado.Puesto = row["puesto"].ToString();
+                    empleado.Correo = row["correo"].ToString();
                     list_emp.Add(empleado);
                 }
+                //empleados
                 var query = context.proyectos_minutas_participantes
-                                .Where(s => s.id_proyectomin == id_proyectomin && s.usuario_borrado == null)
+                                .Where(s => s.id_proyectomin == id_proyectomin && s.usuario_borrado == null
+                                && s.usuario != "")
                                 .Select(u => new
                                 {
                                     u.id_proyectomin,
                                     u.id_proyectominpart,
                                     u.organización,
                                     u.rol,
+                                    u.correos,
                                     u.fecha_registro,
                                     u.usuario,
                                     u.usuario_edicion,
@@ -337,8 +340,31 @@ namespace negocio.Componentes
                                   u.usuario_borrado,
                                   u.comentarios_borrado,
                                   u.fecha_borrado
-                              });
-                dt = To.DataTable(result.ToList());
+                              }).ToArray();
+                //NO EMPLEADOS
+                var query2 = context.proyectos_minutas_participantes
+                               .Where(s => s.id_proyectomin == id_proyectomin && s.usuario_borrado == null
+                               && s.usuario == "")
+                               .Select(u => new
+                               {
+                                   Nombre = u.nombre,
+                                   Puesto = u.rol,
+                                   Correo = u.correos,
+                                   u.id_proyectomin,
+                                   u.id_proyectominpart,
+                                   u.organización,
+                                   u.rol,
+                                   u.fecha_registro,
+                                   u.usuario,
+                                   u.usuario_edicion,
+                                   u.fecha_edicion,
+                                   u.usuario_borrado,
+                                   u.comentarios_borrado,
+                                   u.fecha_borrado
+                               }).ToArray();
+
+                var resultUnion = Enumerable.Union(result, query2);
+                dt = To.DataTable(resultUnion.ToList());
                 return dt;
             }
             catch (Exception ex)

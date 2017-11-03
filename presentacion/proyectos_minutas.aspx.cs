@@ -248,7 +248,8 @@ namespace presentacion
                         rol = row["rol"].ToString(),
                         organización = row["organización"].ToString(),
                         usuario_registro = Session["usuario"] as string,
-                        fecha_registro = DateTime.Now
+                        fecha_registro = DateTime.Now,
+                        correos = row["correo"].ToString()
                     };
                     participantes.Add(participante);
                 }
@@ -316,6 +317,7 @@ namespace presentacion
                         usuario = row["usuario"].ToString().ToUpper(),
                         nombre = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(row["nombre"].ToString().ToLower()),
                         rol = row["rol"].ToString(),
+                        correos = row["correo"].ToString(),
                         organización = row["organización"].ToString(),
                         usuario_registro = Session["usuario"] as string,
                         fecha_registro = DateTime.Now
@@ -367,7 +369,7 @@ namespace presentacion
                             if (dt_participantes.Rows.Count > 0)
                             {
                                 DataView view = new System.Data.DataView(dt_participantes);
-                                DataTable selected = view.ToTable("Selected", false, "usuario", "nombre", "organización", "rol", "id_proyectominpart");
+                                DataTable selected = view.ToTable("Selected", false, "usuario","correo", "nombre", "organización", "rol", "id_proyectominpart");
 
 
                                 ViewState["dt_participantes"] = selected;
@@ -566,8 +568,10 @@ namespace presentacion
             rtxtnombreparticipante.ReadOnly = !rtxtnombreparticipante.ReadOnly;
             rtxtrol.ReadOnly = !rtxtrol.ReadOnly;
             rtxtorganizacion.ReadOnly = !rtxtorganizacion.ReadOnly;
+            rtxtcorreo.ReadOnly = !rtxtcorreo.ReadOnly;
             rtxtnombreparticipante.Text = "";
             rtxtrol.Text = "";
+            rtxtcorreo.Text = "";
             rtxtorganizacion.Text = "";
             hdf_usuario_participante.Value = "";
         }
@@ -625,7 +629,7 @@ namespace presentacion
             if (dt_participantes.Rows.Count > 0)
             {
                 DataView view = new System.Data.DataView(dt_participantes);
-                DataTable selected = view.ToTable("Selected", false, "usuario", "nombre", "organización", "rol", "id_proyectominpart");
+                DataTable selected = view.ToTable("Selected", false, "usuario","correo", "nombre", "organización", "rol", "id_proyectominpart");
 
 
                 ViewState["dt_participantes"] = selected;
@@ -666,11 +670,16 @@ namespace presentacion
                 {
                     Toast.Error("Error al cargar guardar participante: " + "Ingrese la Organización del Participante", this);
                 }
+                else if (rtxtcorreo.Text == "")
+                {
+                    Toast.Error("Error al cargar guardar participante: " + "Ingrese el Correo del participante", this);
+                }
                 else
                 {
-                    AddTableParticipantes(0, usuario, rtxtnombreparticipante.Text, rtxtrol.Text, rtxtorganizacion.Text, 0);
+                    AddTableParticipantes(0, usuario, rtxtcorreo.Text.Trim(), rtxtnombreparticipante.Text, rtxtrol.Text, rtxtorganizacion.Text, 0);
                     rtxtnombreparticipante.Text = "";
                     rtxtrol.Text = "";
+                    rtxtcorreo.Text = "";
                     hdf_usuario_participante.Value = "";
                     rtxtorganizacion.Text = "";
                 }
@@ -829,7 +838,7 @@ namespace presentacion
             }
         }
 
-        private String AddTableParticipantes(int id_proyectominpart, string usuario,string nombre, string rol, string organizacion, int id_pinvolucrado)
+        private String AddTableParticipantes(int id_proyectominpart, string usuario, string correo,string nombre, string rol, string organizacion, int id_pinvolucrado)
         {
             try
             {
@@ -838,6 +847,7 @@ namespace presentacion
                     DataTable ndt = new DataTable();
                     ndt.Columns.Add("usuario");
                     ndt.Columns.Add("nombre");
+                    ndt.Columns.Add("correo");
                     ndt.Columns.Add("rol");
                     ndt.Columns.Add("organización");
                     ndt.Columns.Add("id_proyectominpart");
@@ -849,6 +859,7 @@ namespace presentacion
                 DataRow row = dt.NewRow();
                 row["usuario"] = usuario;
                 row["nombre"] = nombre;
+                row["correo"] = correo;
                 row["rol"] = rol;
                 row["id_proyectominpart"] = id_proyectominpart;
                 row["organización"] = organizacion;
@@ -1040,6 +1051,7 @@ namespace presentacion
                     rtxtnombreparticipante.ReadOnly = true;
                     rtxtrol.ReadOnly = true;
                     rtxtorganizacion.ReadOnly = true;
+                    rtxtcorreo.ReadOnly = true;
                     string usuario = ddlempleado_participante.SelectedValue.ToString();
                     string nombre = ddlempleado_participante.SelectedItem.ToString();
                     rtxtnombreparticipante.Text = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(nombre.ToLower());
@@ -1047,7 +1059,7 @@ namespace presentacion
 
                     EmpleadosCOM empleados = new EmpleadosCOM();
                     DataTable dt = empleados.GetUsers(usuario.ToUpper());
-
+                    rtxtcorreo.Text = dt.Rows[0]["mail"].ToString();
                     rtxtrol.Text = dt.Rows.Count > 0 ? System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(dt.Rows[0]["puesto"].ToString().ToLower())
                         : "Empleado Connext";
                     rtxtorganizacion.Text = "Connext";
@@ -1100,7 +1112,7 @@ namespace presentacion
                 if (dt_participantes.Rows.Count > 0)
                 {
                     DataView view = new System.Data.DataView(dt_participantes);
-                    DataTable selected = view.ToTable("Selected", false, "usuario", "nombre", "organización", "rol", "id_proyectominpart");
+                    DataTable selected = view.ToTable("Selected", false, "usuario","correo", "nombre", "organización", "rol", "id_proyectominpart");
 
 
                     ViewState["dt_participantes"] = selected;

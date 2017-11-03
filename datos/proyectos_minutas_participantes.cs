@@ -27,6 +27,7 @@ namespace datos
         public Nullable<System.DateTime> fecha_borrado { get; set; }
         public string usuario_borrado { get; set; }
         public string comentarios_borrado { get; set; }
+        public string correos { get; set; }
     
         public virtual proyectos_minutas proyectos_minutas { get; set; }
     }

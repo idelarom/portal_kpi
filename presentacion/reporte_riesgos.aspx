@@ -93,7 +93,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">Dashboard Riesgos</h3>
+                <h3 class="page-header">Reporte de Riesgos</h3>
                 <asp:LinkButton OnClientClick="return false;" ID="nkcargandofiltros" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Cargando filtros
@@ -118,47 +118,33 @@
                             <table class="dvv table table-responsive table-condensed">
                                 <thead>
                                     <tr style="font-size: 11px;">
-                                        <th style="min-width: 80px; text-align: left;" scope="col">Usuario</th>
+                                        <th style="min-width: 250px; text-align: left;" scope="col">Riesgo</th>
+                                        <th style="min-width: 250px; text-align: left;" scope="col">Proyecto</th>
+                                        <th style="min-width: 40px; text-align: center;" scope="col">Usuario</th>
                                         <th style="min-width: 200px; text-align: left;" scope="col">Empleado</th>
-                                        <th style="min-width: 250px; text-align: center;" scope="col">Proyecto</th>
-                                        <th style="min-width: 250px; text-align: center;" scope="col">Riesgo</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">Tecnologia</th>                                        
-                                        <th style="min-width: 80px; text-align: left;" scope="col">Probabilidad</th>
-                                        <%--<th style="min-width: 100px; text-align: left;" scope="col">p_probabilidad</th>--%>
-                                       <%-- <th style="min-width: 100px; text-align: left;" scope="col">impacto_costo</th>--%>
-                                       <%-- <th style="min-width: 100px; text-align: left;" scope="col">p_impacto_costo</th>--%>
-                                       <%-- <th style="min-width: 80px; text-align: center;" scope="col">impacto_tiempo</th>--%>
-                                        <%--<th style="min-width: 100px; text-align: center;" scope="col">p_impacto_tiempo</th>--%>
-                                        <th style="min-width: 100px; text-align: center;" scope="col">estrategia</th>
-                                        <th style="min-width: 30px; text-align: center;" scope="col">fecha_evaluacion</th>
-                                        <%--<th style="min-width: 80px; text-align: center;" scope="col">riesgo_costo</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">riesgo_tiempo</th>--%>
+                                        <th style="min-width: 160px; text-align: center;" scope="col">Tecnología(s)</th>                                        
+                                        <th style="min-width: 80px; text-align: center;" scope="col">Probabilidad</th>
+                                        <th style="min-width: 100px; text-align: center;" scope="col">Estrategia</th>
+                                        <th style="min-width: 100px; text-align: center;" scope="col">Fecha de evaluación</th>
                                         <th style="min-width: 50px; text-align: center;" scope="col">Estatus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <asp:Repeater ID="repeater_reporte_riesgos" runat="server">
                                         <ItemTemplate>
-                                            <tr style="font-size: 11px">                                                
-                                                <td style="text-align: center;"><%# Eval("usuario") %></td>
-                                                <td style="text-align: center;"><%# Eval("empleado") %></td>
-                                                <td style="text-align: center;"><%# Eval("proyecto") %></td>
+                                            <tr style="font-size: 11px">   
                                                 <td>
                                                     <a style="cursor: pointer;" onclick='<%# "return Open_actions("+@"""" + Eval("id_riesgo")+@""""+@",""" + Eval("id_proyecto") + @"""" + ");" %>'>
                                                         <%# Eval("riesgo").ToString().Length>99?Eval("riesgo").ToString().Substring(0,99):Eval("riesgo").ToString() %>
                                                     </a>
                                                 </td>
+                                                <td style="text-align: left;"><%# Eval("proyecto") %></td>                                             
+                                                <td style="text-align: center;"><%# Eval("usuario") %></td>
+                                                <td style="text-align: center;"><%# Eval("empleado") %></td>
                                                 <td style="text-align: center;"><%# Eval("tecnologia") %></td>                                                
                                                 <td style="text-align: center;"><%# Eval("probabilidad") %></td>
-                                               <%-- <td style="text-align: center;"><%# Eval("p_probabilidad") %></td>--%>
-                                              <%--  <td style="text-align: center;"><%# Eval("impacto_costo") %></td>--%>
-                                               <%-- <td style="text-align: center;"><%# Eval("p_impacto_costo") %></td>--%>
-                                                <%--<td style="text-align: center;"><%# Eval("impacto_tiempo") %></td>--%>
-                                               <%-- <td style="text-align: center;"><%# Eval("p_impacto_tiempo") %></td>--%>
                                                 <td style="text-align: center;"><%# Eval("estrategia")%></td>
                                                 <td style="text-align: center;"><%# Eval("fecha_evaluacion", "{0:d}") %></td>
-                                                <%--<td style="text-align: center;"><%# Eval("riesgo_costo") %></td>
-                                                <td style="text-align: center;"><%# Eval("riesgo_tiempo") %></td>--%>
                                                 <td style="text-align: center;"><%# Eval("estatus") %></td>
                                             </tr>
                                         </ItemTemplate>

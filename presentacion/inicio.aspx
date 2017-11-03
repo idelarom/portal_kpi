@@ -333,13 +333,13 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table table-responsive" style="width: 100%;overflow: scroll;">
+                    <div class="table table-responsive" style="width: 100%;">
                         <table id="table_proyectos" class="dvv table table-responsive table-condensed">
                             <thead>
                                 <tr style="font-size: 12px;">
                                     <th style="min-width: 250px; text-align: left;" scope="col">Proyecto</th>
-                                    <th style="min-width: 50px; text-align: left;" scope="col">Estatus</th>
-                                    <th style="min-width: 190px; text-align: left;" scope="col">Empleado</th>
+                                    <th style="min-width: 50px; text-align: center;" scope="col">Estatus</th>
+                                    <th style="min-width: 200px; text-align: left;" scope="col">Empleado</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_table_proyectos"
@@ -352,7 +352,7 @@
 
                 <div class="box-footer clearfix">
                     <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_proyectos"
-                        onclick="CloseAjax('mis_proyectos.aspx');">Ver todos
+                        onclick="CloseAjax('mis_proyectos.aspx');">Ver todos mis proyectos
                     </a>
                 </div>
                 <!-- /.box-footer -->

@@ -177,41 +177,8 @@ namespace negocio.Componentes
         {
             try
             {
-                Proyectos_ConnextEntities context = new Proyectos_ConnextEntities();
-                EmpleadosCOM empleados = new EmpleadosCOM();
-                bool no_activos = false;
-                DataSet ds = empleados.sp_listado_empleados(0, true, no_activos);
-                DataTable dt_empleados_subordinados = ds.Tables[0];
-                List<EmpleadoSubordinados> list_emp = new List<EmpleadoSubordinados>();
-                foreach (DataRow row in dt_empleados_subordinados.Rows)
-                {
-                    EmpleadoSubordinados empleado = new EmpleadoSubordinados();
-                    empleado.Usuario = row["usuario"].ToString().ToUpper();
-                    empleado.Nombre = row["nombre"].ToString().ToUpper();
-                    empleado.Puesto = row["puesto"].ToString().ToUpper();
-                    empleado.Correo = row["correo"].ToString().ToUpper();
-                    list_emp.Add(empleado);
-                }
-                var tblempleados = (from pmp in context.proyectos_minutas_participantes
-                                    join pm in context.proyectos_minutas on pmp.id_proyectomin equals pm.id_proyectomin
-                                    where(pm.id_proyecto == id_proyecto && pm.usuario_borrado == null && pmp.usuario_borrado== null
-                                    && pmp.usuario != null && pmp.usuario != "")
-                                    select new {
-                                        pmp.usuario,
-                                        pm.id_proyecto
-                                    }).ToArray();
-
-                var result = (from a in tblempleados
-                              join p in context.proyectos on a.id_proyecto equals p.id_proyecto
-                              join b in list_emp on a.usuario.ToUpper().Trim() equals b.Usuario.Trim().ToUpper()
-                              select new
-                              {                                 
-                                  a.usuario,                                  
-                                  b.Nombre,
-                                  b.Correo,
-                                  b.Puesto
-                              });
-                DataTable dt = To.DataTable(result.ToList());
+                ProyectosMinutasCOM minutas = new ProyectosMinutasCOM();
+                DataTable dt = minutas.GetAllParticipante(id_proyecto);
                 return dt;
             }
             catch (DbEntityValidationException ex)

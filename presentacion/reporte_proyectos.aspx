@@ -109,20 +109,19 @@
                             <table class="dvv table table-responsive table-condensed">
                                 <thead>
                                     <tr style="font-size: 11px;">
-                                        <th style="min-width: 80px; text-align: left;" scope="col">Usuario</th>
-                                        <th style="min-width: 200px; text-align: left;" scope="col">Empleado</th>
-                                        <th style="min-width: 250px; text-align: center;" scope="col">Proyecto</th>
-                                        <%--<th style="min-width: 250px; text-align: center;" scope="col">Descripcion</th>--%>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">Tecnologia</th>
+                                        <th style="min-width: 250px; text-align: left;" scope="col">Proyecto</th>
+                                        <th style="min-width: 180px; text-align: center;" scope="col">Tecnología(s)</th>
+                                        <th style="min-width: 40px; text-align: center;" scope="col">Usuario</th>
+                                        <th style="min-width: 180px; text-align: left;" scope="col">Empleado</th>
                                         <th style="min-width: 60px; text-align: center;" scope="col">Periodo</th>
-                                        <th style="min-width: 80px; text-align: left;" scope="col">ClaveOP</th>
-                                        <th style="min-width: 100px; text-align: left;" scope="col">Folio pmtracker</th>
+                                        <th style="min-width: 80px; text-align: center;" scope="col">ClaveOP</th>
+                                        <th style="min-width: 100px; text-align: center;" scope="col">Folio pmtracker</th>
                                         <th style="min-width: 80px; text-align: center;" scope="col">CPED</th>
                                         <th style="min-width: 100px; text-align: center;" scope="col">Monto USD</th>
                                         <th style="min-width: 100px; text-align: center;" scope="col">Monto MN</th>
                                         <th style="min-width: 30px; text-align: center;" scope="col">Moneda</th>
                                         <th style="min-width: 80px; text-align: center;" scope="col">Fecha registro</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">fecha inicial</th>
+                                        <th style="min-width: 80px; text-align: center;" scope="col">Fecha inicial</th>
                                         <th style="min-width: 80px; text-align: center;" scope="col">Fecha final</th>
                                         <th style="min-width: 50px; text-align: center;" scope="col">Estatus</th>
                                     </tr>
@@ -130,16 +129,16 @@
                                 <tbody>
                                     <asp:Repeater ID="repeater_reporte_proyectos" runat="server">
                                         <ItemTemplate>
-                                            <tr style="font-size: 11px">                                                
-                                                <td style="text-align: center;"><%# Eval("usuario") %></td>
-                                                <td style="text-align: center;"><%# Eval("empleado") %></td>
+                                            <tr style="font-size: 11px">    
                                                 <td>
                                                     <a style="cursor: pointer;" onclick='<%# "return dashboardproyectos("+@"""" + Eval("id_proyecto") + @"""" + ");" %>'>
                                                         <%# Eval("proyecto") %>
                                                     </a>
-                                                </td>
+                                                </td>    
+                                                <td style="text-align: center;"><%# Eval("tecnologia") %></td>                                        
+                                                <td style="text-align: center;"><%# Eval("usuario") %></td>
+                                                <td style="text-align: left;"><%# Eval("empleado") %></td>
                                                <%-- <td style="text-align: center;"><%# Eval("descripcion") %></td>--%>
-                                                <td style="text-align: center;"><%# Eval("tecnologia") %></td>
                                                 <td style="text-align: center;"><%# Eval("periodo") %></td>
                                                 <td style="text-align: center;"><%# Eval("cveoport") %></td>
                                                 <td style="text-align: center;"><%# Eval("folio_pmt") %></td>

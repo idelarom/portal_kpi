@@ -86,69 +86,103 @@ namespace presentacion
                 DateTime fecha = Convert.ToDateTime(txtfecha.Text);
                 RecordatoriosCOM recordatorios = new RecordatoriosCOM();
                 DataTable dt = recordatorios.Get(usuario);
-                string eventos = "";
-                foreach (DataRow row in dt.Rows)
-                {
-                    row["fecha_end"] = row["fecha_end"] == DBNull.Value ? Convert.ToDateTime(row["fecha"]).AddMinutes(30) : row["fecha_end"];
-                    string color = Convert.ToBoolean(row["appointment"]) ? "#1565c0 " : "#f56954";
-                    string day_ = Convert.ToDateTime(row["fecha"]).Day.ToString();
-                    string month_ = (Convert.ToDateTime(row["fecha"]).Month).ToString();
-                    string year_ = Convert.ToDateTime(row["fecha"]).Year.ToString();
-                    string minutes_ = (Convert.ToDateTime(row["fecha"]).Minute).ToString();
-                    string minutes_finish = (Convert.ToDateTime(row["fecha_end"]).Minute).ToString();
-                    string hours = Convert.ToDateTime(row["fecha"]).Hour.ToString();
-                    string hours_ = Convert.ToDateTime(row["fecha_end"]).Hour.ToString();
-                    month_ = month_.Length == 1 ? "0" + month_ : month_;
-                    day_ = day_.Length == 1 ? "0" + day_ : day_;
-                    hours = hours.Length == 1 ? "0" + hours : hours;
-                    minutes_ = minutes_.Length == 1 ? "0" + minutes_ : minutes_;
-                    minutes_finish = minutes_finish.Length == 1 ? "0" + minutes_finish : minutes_finish;
-                    eventos = eventos + "  {title: '" + row["titulo"].ToString() + "'," +
-                                "start: '" + year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_ + ":00'," +
-                                "end:'" + year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_finish + ":00'," +
-                                "backgroundColor:'" + color + "'," +
-                                "borderColor: '" + color + "'," +
-                                "allday:false," +
-                                "id:" + row["id_recordatorio"].ToString() +
-                                "},";
-                }
-                eventos = eventos.Substring(0, eventos.Length - 1);
+                StringBuilder sb = new StringBuilder();
                 string day = fecha.Day.ToString();
                 string month = fecha.Month.ToString();
                 string year = fecha.Year.ToString();
                 month = month.Length == 1 ? "0" + month : month;
                 day = day.Length == 1 ? "0" + day : day;
-                StringBuilder sb = new StringBuilder();
-                sb.Append("<script type='text/javascript'>");
-                sb.Append(""
-                            + " $(function () {" +
-                                    " $('#calendar').fullCalendar({" +
-                                    "     locale: 'es'," +
-                                    "     dayClick: function(date, jsEvent, view) {" +
-                                    "         $('#" + hdffecha.ClientID + "').val(date.format());" +
-                                    "         document.getElementById('" + btncalendar.ClientID + "').click();" +
-                                    "     }," +
-                                    "     eventClick: function(calEvent, jsEvent, view) {" +
-                                    "         $('#" + hdffecha.ClientID + "').val(calEvent.start.format());" +
-                                    "         return EditRecordatorios(calEvent.id); }," +
-                                    "     header: {" +
-                                    "         left: 'prev,next today'," +
-                                    "         center: 'title'," +
-                                    "         right: 'month,agendaWeek,agendaDay'" +
-                                    "     }," +
-                                    "     buttonText: {" +
-                                    "         today: 'Hoy'," +
-                                    "         month: 'Mes'," +
-                                    "         week: 'Sem'," +
-                                    "         day: 'Dia'" +
-                                    "     }," +
-                                    "     events: [" + eventos + "]," +
-                                    "     editable: false," +
-                                    "     droppable: false" +
-                                    " });" +
-                                    " $('#calendar').fullCalendar('gotoDate', '" + year + "-" + month + "-" + day + "');" +
-                                " });");
-                sb.Append("</script>");
+                if (dt.Rows.Count > 0)
+                {
+                    string eventos = "";
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        row["fecha_end"] = row["fecha_end"] == DBNull.Value ? Convert.ToDateTime(row["fecha"]).AddMinutes(30) : row["fecha_end"];
+                        string color = Convert.ToBoolean(row["appointment"]) ? "#1565c0 " : "#f56954";
+                        string day_ = Convert.ToDateTime(row["fecha"]).Day.ToString();
+                        string month_ = (Convert.ToDateTime(row["fecha"]).Month).ToString();
+                        string year_ = Convert.ToDateTime(row["fecha"]).Year.ToString();
+                        string minutes_ = (Convert.ToDateTime(row["fecha"]).Minute).ToString();
+                        string minutes_finish = (Convert.ToDateTime(row["fecha_end"]).Minute).ToString();
+                        string hours = Convert.ToDateTime(row["fecha"]).Hour.ToString();
+                        string hours_ = Convert.ToDateTime(row["fecha_end"]).Hour.ToString();
+                        month_ = month_.Length == 1 ? "0" + month_ : month_;
+                        day_ = day_.Length == 1 ? "0" + day_ : day_;
+                        hours = hours.Length == 1 ? "0" + hours : hours;
+                        minutes_ = minutes_.Length == 1 ? "0" + minutes_ : minutes_;
+                        minutes_finish = minutes_finish.Length == 1 ? "0" + minutes_finish : minutes_finish;
+                        eventos = eventos + "  {title: '" + row["titulo"].ToString() + "'," +
+                                    "start: '" + year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_ + ":00'," +
+                                    "end:'" + year_ + "-" + month_ + "-" + day_ + "T" + hours + ":" + minutes_finish + ":00'," +
+                                    "backgroundColor:'" + color + "'," +
+                                    "borderColor: '" + color + "'," +
+                                    "allday:false," +
+                                    "id:" + row["id_recordatorio"].ToString() +
+                                    "},";
+                    }
+                    eventos = eventos.Substring(0, eventos.Length - 1);
+                   
+                    sb.Append("<script type='text/javascript'>");
+                    sb.Append(""
+                                + " $(function () {" +
+                                        " $('#calendar').fullCalendar({" +
+                                        "     locale: 'es'," +
+                                        "     dayClick: function(date, jsEvent, view) {" +
+                                        "         $('#" + hdffecha.ClientID + "').val(date.format());" +
+                                        "         document.getElementById('" + btncalendar.ClientID + "').click();" +
+                                        "     }," +
+                                        "     eventClick: function(calEvent, jsEvent, view) {" +
+                                        "         $('#" + hdffecha.ClientID + "').val(calEvent.start.format());" +
+                                        "         return EditRecordatorios(calEvent.id); }," +
+                                        "     header: {" +
+                                        "         left: 'prev,next today'," +
+                                        "         center: 'title'," +
+                                        "         right: 'month,agendaWeek,agendaDay'" +
+                                        "     }," +
+                                        "     buttonText: {" +
+                                        "         today: 'Hoy'," +
+                                        "         month: 'Mes'," +
+                                        "         week: 'Sem'," +
+                                        "         day: 'Dia'" +
+                                        "     }," +
+                                        "     events: [" + eventos + "]," +
+                                        "     editable: false," +
+                                        "     droppable: false" +
+                                        " });" +
+                                        " $('#calendar').fullCalendar('gotoDate', '" + year + "-" + month + "-" + day + "');" +
+                                    " });");
+                    sb.Append("</script>");
+                }
+                else {
+                    sb.Append("<script type='text/javascript'>");
+                    sb.Append(""
+                                + " $(function () {" +
+                                        " $('#calendar').fullCalendar({" +
+                                        "     locale: 'es'," +
+                                        "     dayClick: function(date, jsEvent, view) {" +
+                                        "         $('#" + hdffecha.ClientID + "').val(date.format());" +
+                                        "         document.getElementById('" + btncalendar.ClientID + "').click();" +
+                                        "     }," +
+                                        "     eventClick: function(calEvent, jsEvent, view) {" +
+                                        "         $('#" + hdffecha.ClientID + "').val(calEvent.start.format());" +
+                                        "         return EditRecordatorios(calEvent.id); }," +
+                                        "     header: {" +
+                                        "         left: 'prev,next today'," +
+                                        "         center: 'title'," +
+                                        "         right: 'month,agendaWeek,agendaDay'" +
+                                        "     }," +
+                                        "     buttonText: {" +
+                                        "         today: 'Hoy'," +
+                                        "         month: 'Mes'," +
+                                        "         week: 'Sem'," +
+                                        "         day: 'Dia'" +
+                                        "     }"+
+                                        " });" +
+                                        " $('#calendar').fullCalendar('gotoDate', '" + year + "-" + month + "-" + day + "');" +
+                                    " });");
+                    sb.Append("</script>");
+                }
+                
                 return sb;
             }
             catch (Exception ex)

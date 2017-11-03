@@ -197,6 +197,7 @@
           </Key>
           <Property Name="id_proyectominpart" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_proyectomin" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="correos" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="usuario" Type="varchar" MaxLength="50" />
           <Property Name="organización" Type="varchar" MaxLength="1000" />
@@ -928,6 +929,7 @@
           <Property Name="usuario_borrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="comentarios_borrado" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="proyectos_minutas" Relationship="Self.FK_proyectos_minutas_participantes_proyectos_minutas" FromRole="proyectos_minutas_participantes" ToRole="proyectos_minutas" />
+          <Property Name="correos" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="proyectos_minutas_pendientes">
           <Key>
@@ -1643,6 +1645,7 @@
           <EntitySetMapping Name="proyectos_minutas_participantes">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos_minutas_participantes">
               <MappingFragment StoreEntitySet="proyectos_minutas_participantes">
+                <ScalarProperty Name="correos" ColumnName="correos" />
                 <ScalarProperty Name="id_proyectominpart" ColumnName="id_proyectominpart" />
                 <ScalarProperty Name="id_proyectomin" ColumnName="id_proyectomin" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
