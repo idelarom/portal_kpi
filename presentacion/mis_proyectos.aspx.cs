@@ -368,7 +368,7 @@ namespace presentacion
                 proyecto.descripcion = txtdescripcion.Text;
                 proyecto.id_proyecto_periodo = Convert.ToInt32(ddlperiodo.SelectedValue);
                 proyecto.id_proyecto_estatus = Convert.ToInt32(ddlestatus.SelectedValue);
-                proyecto.cveoport = Convert.ToInt32(txtcveop.Text);
+                proyecto.cveoport = Convert.ToInt32(txtcveop.Text == ""?"0":txtcveop.Text);
                 proyecto.folio_pmt = txtfolopmt.Text;
 
                 if (id_proyecto > 0) { proyecto.id_proyecto = id_proyecto; }
@@ -390,10 +390,10 @@ namespace presentacion
                 proyecto.folio_pmt = txtfolopmt.Text.Trim();
                 //CPED
                 proyecto.cped = txtcped.Text.Trim();
-                
 
-                proyecto.costo_usd = Convert.ToDecimal(txtmonto.Text.Replace("$", "").Replace(",", "").Replace(" ", ""));
-                proyecto.costo_mn = Convert.ToDecimal(txtmontomn.Text.Replace("$", "").Replace(",", "").Replace(" ", ""));
+
+                proyecto.costo_usd = txtmonto.Text != "" ? Convert.ToDecimal(txtmonto.Text.Replace("$", "").Replace(",", "").Replace(" ", "")) : 0; ;
+                proyecto.costo_mn = txtmontomn.Text != ""? Convert.ToDecimal(txtmontomn.Text.Replace("$", "").Replace(",", "").Replace(" ", "")):0;
                 proyecto.tipo_moneda = txtmoneda.Text;
 
 
@@ -411,17 +411,22 @@ namespace presentacion
                         tecnologias.Add(tecnologia);
                     }
                 }
-                strtecnologias = strtecnologias.Substring(0,strtecnologias.Length-1);
+                strtecnologias = strtecnologias.Substring(0,strtecnologias.Length > 0 ? strtecnologias.Length - 1:0);
 
                 if (proyecto.proyecto == "")
                 {
                     ModalShow("#ModalCapturaProyectos");
-                    Toast.Error("Error al procesar proyecto : Ingrese un proyecto", this);
+                    Toast.Error("Error al procesar proyecto : Ingrese el nombre del proyecto", this);
                 }
                 else if (proyecto.descripcion == "")
                 {
                     ModalShow("#ModalCapturaProyectos");
-                    Toast.Error("Error al procesar estatus : Ingresela descripcion del proyecto", this);
+                    Toast.Error("Error al procesar estatus : Ingrese la descripción del proyecto", this);
+                }
+                else if (tecnologias.Count <= 0)
+                {
+                    ModalShow("#ModalCapturaProyectos");
+                    Toast.Error("Error al procesar tecnologia : Seleccione una tecnología ", this);
                 }
                 else if (proyecto.id_proyecto_periodo <=  0)
                 {
@@ -442,11 +447,6 @@ namespace presentacion
                 {
                     ModalShow("#ModalCapturaProyectos");
                     Toast.Error("Error al procesar folio pmtracker : Ingrese un folio pmtracker", this);
-                }
-                else if (tecnologias.Count <= 0)
-                {
-                    ModalShow("#ModalCapturaProyectos");
-                    Toast.Error("Error al procesar tecnologia : Seleccione una tecnologia ", this);
                 }
                 else if (proyecto.cped =="")
                 {
