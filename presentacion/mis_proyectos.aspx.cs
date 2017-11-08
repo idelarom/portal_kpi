@@ -564,10 +564,11 @@ namespace presentacion
                         Cargarddltegnologia();
 
                         txtnombreproyecto.Text = proyecto.proyecto;
+                        
                         txtdescripcion.Text = proyecto.descripcion;
                         ddlperiodo.SelectedValue = proyecto.id_proyecto_periodo.ToString();
                         ddlestatus.SelectedValue = proyecto.id_proyecto_estatus.ToString();
-                        txtcveop.Text = proyecto.cveoport.ToString();
+                        txtcveop.Text = proyecto.folio_op.ToString();
                         txtfolopmt.Text = proyecto.folio_pmt;
 
                         ICollection<proyectos_historial_tecnologias> tecnologias = proyecto.proyectos_historial_tecnologias;

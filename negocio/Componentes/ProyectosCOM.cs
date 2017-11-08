@@ -535,6 +535,7 @@ namespace negocio.Componentes
         public DataTable reporte_proyectos(int num_empleado, bool ver_Todos_los_empleados, int id_proyecto_estatus, DateTime fecha_inicio,
             DateTime fecha_fin)
         {
+            fecha_fin = fecha_fin.AddDays(1);
             DataTable dt = new DataTable();
             try
             {
@@ -579,6 +580,7 @@ namespace negocio.Componentes
                                      p.cped,
                                      p.tipo_moneda
                                  }).ToArray();
+                DataTable dtege = To.DataTable(proyectos.ToList());
                 var tproyectos = (from p in proyectos
                                   join emp in list_emp on p.usuario_resp.ToUpper() equals emp.Usuario
                                   select new
