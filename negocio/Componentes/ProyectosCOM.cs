@@ -36,7 +36,7 @@ namespace negocio.Componentes
                         proyecto = entidad.proyecto,
                         usuario_resp = entidad.usuario_resp,
                         descripcion = entidad.descripcion,
-                        cveoport = entidad.cveoport,
+                        folio_op = entidad.folio_op,
                         folio_pmt = entidad.folio_pmt,
                         id_cliente = entidad.id_cliente,
                         duración = entidad.duración,
@@ -96,7 +96,7 @@ namespace negocio.Componentes
                 proyecto.id_proyecto_estatus = entidad.id_proyecto_estatus;
                 proyecto.proyecto = entidad.proyecto;
                 proyecto.descripcion = entidad.descripcion;
-                proyecto.cveoport = entidad.cveoport;
+                proyecto.folio_op = entidad.folio_op;
                 proyecto.folio_pmt = entidad.folio_pmt;
                 proyecto.id_cliente = entidad.id_cliente;
                 proyecto.duración = entidad.duración;
@@ -354,6 +354,7 @@ namespace negocio.Componentes
                                      periodo = period.nombre,
                                      p.cveoport,
                                      p.folio_pmt,
+                                     p.folio_op,
                                      p.proyecto,
                                      p.descripcion,
                                      p.fecha_registro,
@@ -382,6 +383,7 @@ namespace negocio.Componentes
                                   p.folio_pmt,
                                   p.proyecto,
                                   p.descripcion,
+                                  p.folio_op,
                                   p.fecha_registro,
                                   p.fecha_inicio,
                                   p.fecha_fin,
@@ -454,6 +456,7 @@ namespace negocio.Componentes
                                      p.costo_mn,
                                      p.costo_usd,
                                      p.cped,
+                                     p.folio_op,
                                      p.tipo_moneda
                                  }).ToArray();
                 var tproyectos = (from p in proyectos
@@ -467,6 +470,7 @@ namespace negocio.Componentes
                                       p.periodo,
                                       p.cveoport,
                                       p.folio_pmt,
+                                      p.folio_op,
                                       p.proyecto,
                                       p.descripcion,
                                       p.fecha_registro,
@@ -502,6 +506,7 @@ namespace negocio.Componentes
                                   p.fecha_fin,
                                   p.costo_mn,
                                   p.cped,
+                                  p.folio_op,
                                   p.costo_usd,
                                   p.tipo_moneda
                               }).Distinct();
@@ -566,6 +571,7 @@ namespace negocio.Componentes
                                      p.descripcion,
                                      p.fecha_registro,
                                      p.fecha_inicio,
+                                     p.folio_op,
                                      p.fecha_fin,
                                      p.usuario_resp,
                                      p.costo_mn,
@@ -591,6 +597,7 @@ namespace negocio.Componentes
                                       p.fecha_inicio,
                                       p.fecha_fin,
                                       p.usuario_resp,
+                                      p.folio_op,
                                       p.costo_mn,
                                       p.cped,
                                       p.costo_usd,
@@ -617,6 +624,7 @@ namespace negocio.Componentes
                                   p.fecha_registro,
                                   p.fecha_inicio,
                                   p.fecha_fin,
+                                  p.folio_op,
                                   p.costo_mn,
                                   p.cped,
                                   p.costo_usd,
@@ -668,6 +676,7 @@ namespace negocio.Componentes
                                      periodo = period.nombre,
                                      p.cveoport,
                                      p.folio_pmt,
+                                     p.folio_op,
                                      p.proyecto,
                                      p.descripcion,
                                      p.fecha_registro,
@@ -688,6 +697,7 @@ namespace negocio.Componentes
                                       p.periodo,
                                       p.cveoport,
                                       p.folio_pmt,
+                                      p.folio_op,
                                       p.proyecto,
                                       p.descripcion,
                                       p.fecha_registro,
@@ -712,6 +722,7 @@ namespace negocio.Componentes
                                   p.periodo,
                                   p.cveoport,
                                   p.folio_pmt,
+                                  p.folio_op,
                                   p.proyecto,
                                   p.descripcion,
                                   p.fecha_registro,

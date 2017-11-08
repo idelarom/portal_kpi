@@ -348,8 +348,9 @@
                                     <asp:DropDownList ID="ddlestatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:DropDownList>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                    <h5><strong><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>&nbsp;Clave Oportunidad</strong></h5>
-                                    <asp:TextBox ID="txtcveop" MaxLength="250" CssClass=" form-control" runat="server" OnTextChanged="txtcveop_TextChanged" TextMode="Number" onkeypress="return validarEnteros(event);" AutoPostBack="true"></asp:TextBox>
+                                    <h5><strong><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>&nbsp;Número de OP</strong></h5>
+                                    <asp:TextBox ID="txtcveop" MaxLength="10" CssClass=" form-control" runat="server"
+                                         OnTextChanged="txtcveop_TextChanged"  AutoPostBack="true"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="row">

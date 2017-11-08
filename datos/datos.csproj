@@ -60,6 +60,21 @@
     <Compile Include="actividades_tipos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="bonds_log.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bonds_types.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bons_automatic_types.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="closing_dates.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="comments_types_payments.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
     <Compile Include="conexion.cs" />
     <Compile Include="correos_historial.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
@@ -70,6 +85,15 @@
     </Compile>
     <Compile Include="documentos_tipos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="employees_compensations.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="files_requests_bonds.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="group_leader.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ayudas.cs" />
     <Compile Include="Model\dispositivos_bloqueados.cs" />
@@ -665,6 +689,18 @@
     <Compile Include="OPTRACKER\UsuariosporAreas.cs">
       <DependentUpon>OPTracker.tt</DependentUpon>
     </Compile>
+    <Compile Include="payment_history.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="periodicity.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="periodicity_ranges.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="permissions_users_bonds_types.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proyectos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
@@ -714,6 +750,18 @@
     <Compile Include="proyectos_tecnologias.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="requests_automatic_status.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="requests_bonds.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="requests_bonds_Automatic.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="requests_status.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
     <Compile Include="riesgos.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
@@ -729,11 +777,32 @@
     <Compile Include="riesgos_probabilidad.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
+    <Compile Include="SICOEM.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SICOEM.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SICOEM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SICOEM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SICOEM.edmx</DependentUpon>
+    </Compile>
     <Compile Include="sp_get_cped_Result.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_get_tecnologias_historial_Result.cs">
       <DependentUpon>Proyectos_Connext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tab_reporte_bonos.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ReplaceBoss.cs">
+      <DependentUpon>SICOEM.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -759,6 +828,13 @@
     </EntityDeploy>
     <None Include="Proyectos_Connext.edmx.diagram">
       <DependentUpon>Proyectos_Connext.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="SICOEM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SICOEM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="SICOEM.edmx.diagram">
+      <DependentUpon>SICOEM.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -794,6 +870,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Proyectos_Connext.edmx</DependentUpon>
       <LastGenOutput>Proyectos_Connext.cs</LastGenOutput>
+    </Content>
+    <Content Include="SICOEM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SICOEM.edmx</DependentUpon>
+      <LastGenOutput>SICOEM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SICOEM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SICOEM.edmx</DependentUpon>
+      <LastGenOutput>SICOEM.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup />

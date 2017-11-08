@@ -207,10 +207,10 @@ namespace presentacion
             return vmensaje;
         }
 
-        private string cveOportunidad(int cveoport)
+        private string FolioOportunidad(string cveoport)
         {           
             OportunidadesCOM cveoportunidad = new OportunidadesCOM();
-            string vmensaje = cveoportunidad.ExistCveOport(cveoport);            
+            string vmensaje = cveoportunidad.ExistFolioOport(cveoport);            
             return vmensaje;
         }
 
@@ -368,7 +368,7 @@ namespace presentacion
                 proyecto.descripcion = txtdescripcion.Text;
                 proyecto.id_proyecto_periodo = Convert.ToInt32(ddlperiodo.SelectedValue);
                 proyecto.id_proyecto_estatus = Convert.ToInt32(ddlestatus.SelectedValue);
-                proyecto.cveoport = Convert.ToInt32(txtcveop.Text == ""?"0":txtcveop.Text);
+                proyecto.folio_op = txtcveop.Text;
                 proyecto.folio_pmt = txtfolopmt.Text;
 
                 if (id_proyecto > 0) { proyecto.id_proyecto = id_proyecto; }
@@ -386,7 +386,7 @@ namespace presentacion
                 proyecto.fecha_fin = fechaFinal;
                 int dias = ((fechaFinal - fechaInicial)).Days;
                 proyecto.duración = Convert.ToInt16(dias);
-                proyecto.cveoport = Convert.ToInt32(txtcveop.Text == "" ? "0" : txtcveop.Text);
+               
                 proyecto.folio_pmt = txtfolopmt.Text.Trim();
                 //CPED
                 proyecto.cped = txtcped.Text.Trim();
@@ -438,10 +438,10 @@ namespace presentacion
                     ModalShow("#ModalCapturaProyectos");
                     Toast.Error("Error al procesar estatus : Seleccione un estatus", this);
                 }
-                else if (proyecto.cveoport == 0)
+                else if (proyecto.folio_op == "")
                 {
                     ModalShow("#ModalCapturaProyectos");
-                    Toast.Error("Error al procesar folio pmtracker : Ingrese un folio pmtracker", this);
+                    Toast.Error("Error al procesar folio pmtracker : Ingrese un numero de oportunidad", this);
                 }
                 else if (proyecto.folio_pmt == "")
                 {
@@ -806,7 +806,7 @@ namespace presentacion
         {
             if (txtcveop.Text!="")
             {
-                string vmansaje = cveOportunidad(Convert.ToInt32(txtcveop.Text == "" ? "0" : txtcveop.Text));
+                string vmansaje = FolioOportunidad(txtcveop.Text);
                 if (vmansaje != "")
                 {
                     txtcveop.Text = "";

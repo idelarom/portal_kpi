@@ -30,7 +30,7 @@ namespace datos
         public Nullable<int> id_proyecto_estatus { get; set; }
         public string cped { get; set; }
         public string tipo_moneda { get; set; }
-        public int cveoport { get; set; }
+        public Nullable<int> cveoport { get; set; }
         public string folio_pmt { get; set; }
         public Nullable<int> id_cliente { get; set; }
         public string proyecto { get; set; }
@@ -58,6 +58,7 @@ namespace datos
         public string usuario_borrado { get; set; }
         public string comentarios_borrado { get; set; }
         public Nullable<System.DateTime> fecha_borrado { get; set; }
+        public string folio_op { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<actividades> actividades { get; set; }

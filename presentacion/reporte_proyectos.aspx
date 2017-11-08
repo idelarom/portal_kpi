@@ -114,8 +114,8 @@
                                         <th style="min-width: 40px; text-align: center;" scope="col">Usuario</th>
                                         <th style="min-width: 180px; text-align: left;" scope="col">Empleado</th>
                                         <th style="min-width: 60px; text-align: center;" scope="col">Periodo</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">ClaveOP</th>
-                                        <th style="min-width: 100px; text-align: center;" scope="col">Folio pmtracker</th>
+                                        <th style="min-width: 100px; text-align: center;" scope="col">Número OP</th>
+                                        <th style="min-width: 100px; text-align: center;" scope="col">Folio PM</th>
                                         <th style="min-width: 80px; text-align: center;" scope="col">CPED</th>
                                         <th style="min-width: 100px; text-align: center;" scope="col">Monto USD</th>
                                         <th style="min-width: 100px; text-align: center;" scope="col">Monto MN</th>
@@ -140,7 +140,7 @@
                                                 <td style="text-align: left;"><%# Eval("empleado") %></td>
                                                <%-- <td style="text-align: center;"><%# Eval("descripcion") %></td>--%>
                                                 <td style="text-align: center;"><%# Eval("periodo") %></td>
-                                                <td style="text-align: center;"><%# Eval("cveoport") %></td>
+                                                <td style="text-align: center;"><%# Eval("folio_op") %></td>
                                                 <td style="text-align: center;"><%# Eval("folio_pmt") %></td>
                                                 <td style="text-align: center;"><%# Eval("cped") %></td>
                                                 <td style="text-align: center;"><%# Eval("costo_usd","{0:C2}" ) %></td>

@@ -115,13 +115,13 @@
                             <thead>
                                 <tr style="font-size: 11px;">
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
-                                    <th style="min-width: 60px; text-align: left;" scope="col">Usuario</th>
-                                    <th style="min-width: 80px; text-align: left;" scope="col">No. Empleado</th>
+                                    <th style="min-width: 40px; text-align: left;" scope="col">Usuario</th>
+                                    <th style="min-width: 70px; text-align: left;" scope="col">No. Empleado</th>
                                     <th style="min-width: 200px; text-align: left;" scope="col">Nombre</th>
                                     <th style="min-width: 200px; text-align: left;" scope="col">Puesto</th>
-                                    <th style="min-width: 150px; text-align: left;" scope="col">Correo</th>
+                                    <th style="min-width: 100px; text-align: left;" scope="col">Correo</th>
                                     <th style="min-width: 150px; text-align: left;" scope="col">Perfil</th>
-                                    <th style="min-width: 60px; text-align: left;" scope="col">Delegados</th>
+                                    <th style="min-width: 40px; text-align: left;" scope="col">Delegados</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -141,7 +141,7 @@
                                             <td style="text-align: left;"><%# Eval("correo") %></td>
                                             <td style="text-align: left;"><%# Eval("Perfil") %></td>
                                             <td style="text-align: center;"> 
-                                                 <a style="cursor: pointer;min-width:60px" class="btn btn-primary btn-flat btn-xs" 
+                                                 <a style="cursor: pointer;min-width:40px" class="btn btn-primary btn-flat btn-xs" 
                                                     onclick='<%# "return DelegadosClick("+@""""+Eval("usuario")+@"""" +");" %>'>
                                                    <%# Eval("total_delegados") %>
                                                 </a>

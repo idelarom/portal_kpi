@@ -184,6 +184,7 @@
     <Content Include="catalogo_sesiones_usuario.aspx" />
     <Content Include="catalogo_usuarios.aspx" />
     <Content Include="catalogo_widgets.aspx" />
+    <Content Include="compensaciones_empleados.aspx" />
     <Content Include="configuracion.aspx" />
     <Content Include="configuracion_dashboard.aspx" />
     <Content Include="configuracion_portal.aspx" />
@@ -1346,6 +1347,13 @@
     </Compile>
     <Compile Include="catalogo_widgets.aspx.designer.cs">
       <DependentUpon>catalogo_widgets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="compensaciones_empleados.aspx.cs">
+      <DependentUpon>compensaciones_empleados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="compensaciones_empleados.aspx.designer.cs">
+      <DependentUpon>compensaciones_empleados.aspx</DependentUpon>
     </Compile>
     <Compile Include="configuracion.aspx.cs">
       <DependentUpon>configuracion.aspx</DependentUpon>

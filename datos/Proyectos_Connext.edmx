@@ -90,7 +90,8 @@
           <Property Name="id_proyecto_estatus" Type="int" />
           <Property Name="cped" Type="varchar" MaxLength="20" />
           <Property Name="tipo_moneda" Type="varchar" MaxLength="5" />
-          <Property Name="cveoport" Type="int" Nullable="false" />
+          <Property Name="cveoport" Type="int" />
+          <Property Name="folio_op" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="folio_pmt" Type="char" MaxLength="10" Nullable="false" />
           <Property Name="id_cliente" Type="int" />
           <Property Name="proyecto" Type="varchar" MaxLength="1000" Nullable="false" />
@@ -792,7 +793,7 @@
           <Property Name="id_proyecto_estatus" Type="Int32" />
           <Property Name="cped" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="tipo_moneda" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="cveoport" Type="Int32" Nullable="false" />
+          <Property Name="cveoport" Type="Int32" />
           <Property Name="folio_pmt" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="id_cliente" Type="Int32" />
           <Property Name="proyecto" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
@@ -828,6 +829,7 @@
           <NavigationProperty Name="proyectos_minutas" Relationship="Self.FK_proyectos_minutas_proyectos" FromRole="proyectos" ToRole="proyectos_minutas" />
           <NavigationProperty Name="proyectos_estatus" Relationship="Self.FK_proyectos_proyectos_estatus" FromRole="proyectos" ToRole="proyectos_estatus" />
           <NavigationProperty Name="proyectos_periodos" Relationship="Self.FK_proyectos_proyectos_periodos1" FromRole="proyectos" ToRole="proyectos_periodos" />
+          <Property Name="folio_op" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="proyectos_empleados">
           <Key>
@@ -1529,6 +1531,7 @@
           <EntitySetMapping Name="proyectos">
             <EntityTypeMapping TypeName="Proyectos_ConnextModel.proyectos">
               <MappingFragment StoreEntitySet="proyectos">
+                <ScalarProperty Name="folio_op" ColumnName="folio_op" />
                 <ScalarProperty Name="id_proyecto" ColumnName="id_proyecto" />
                 <ScalarProperty Name="id_proyecto_periodo" ColumnName="id_proyecto_periodo" />
                 <ScalarProperty Name="id_proyecto_estatus" ColumnName="id_proyecto_estatus" />

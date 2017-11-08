@@ -1,0 +1,1114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SICOEMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SICOEM.dbo.bonds_log' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="bonds_log">
+          <Key>
+            <PropertyRef Name="id_log" />
+          </Key>
+          <Property Name="id_log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employee_number" Type="nchar" MaxLength="10" />
+          <Property Name="id_bond_type" Type="int" />
+          <Property Name="id_bond_type_automatic" Type="int" />
+          <Property Name="amount_paid" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Periodicity" Type="int" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Enable" Type="bit" />
+        </EntityType>
+        <EntityType Name="bonds_types">
+          <Key>
+            <PropertyRef Name="id_bond_type" />
+          </Key>
+          <Property Name="id_bond_type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="20" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="20" />
+          <Property Name="id_periodicity" Type="int" />
+          <Property Name="amount_required" Type="bit" />
+          <Property Name="periodicity_required" Type="bit" />
+          <Property Name="enabled" Type="bit" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="week_detail_required" Type="bit" />
+          <Property Name="folio_pmtracker_required" Type="bit" />
+          <Property Name="project_name_required" Type="bit" />
+          <Property Name="customer_name_required" Type="bit" />
+          <Property Name="number_hours_required" Type="bit" />
+          <Property Name="authorization_amount_capture" Type="bit" />
+          <Property Name="grid_requisitions_required" Type="bit" />
+          <Property Name="period_date_of_capture" Type="bit" />
+          <Property Name="period_date_to_capture" Type="bit" />
+          <Property Name="comments_authorization_required" Type="bit" />
+          <Property Name="percentage_extra" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="month_select" Type="bit" />
+          <Property Name="files_required" Type="bit" />
+        </EntityType>
+        <EntityType Name="bons_automatic_types">
+          <Key>
+            <PropertyRef Name="IdBonds" />
+          </Key>
+          <Property Name="IdBonds" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameBonds" Type="nvarchar" MaxLength="50" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Create_by" Type="nvarchar" MaxLength="50" />
+          <Property Name="Enabled" Type="bit" />
+        </EntityType>
+        <EntityType Name="closing_dates">
+          <Key>
+            <PropertyRef Name="id_close_date" />
+          </Key>
+          <Property Name="id_close_date" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="close_date" Type="datetime" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="20" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="comments_types_payments">
+          <Key>
+            <PropertyRef Name="id_comment_type_payment" />
+          </Key>
+          <Property Name="id_comment_type_payment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+          <Property Name="partial" Type="bit" />
+          <Property Name="outstanding_paid" Type="bit" />
+          <Property Name="enabled" Type="bit" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="20" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="employees_compensations">
+          <Key>
+            <PropertyRef Name="id_employee_compensations" />
+          </Key>
+          <Property Name="id_employee_compensations" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employee_number" Type="int" Nullable="false" />
+          <Property Name="id_bond_type" Type="int" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="id_periodicity" Type="int" />
+          <Property Name="percentage_extra" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="20" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="files_requests_bonds">
+          <Key>
+            <PropertyRef Name="id_file_request_bond" />
+          </Key>
+          <Property Name="id_file_request_bond" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_request_bond" Type="int" />
+          <Property Name="path" Type="varchar" MaxLength="300" />
+          <Property Name="file_name" Type="varchar" MaxLength="200" />
+          <Property Name="content_type" Type="varchar" MaxLength="300" />
+          <Property Name="date_attach" Type="datetime" />
+          <Property Name="login" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SICOEM.dbo.group_leader' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="group_leader">
+          <Key>
+            <PropertyRef Name="Id_Group_Leader" />
+          </Key>
+          <Property Name="Id_Group_Leader" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee_Number" Type="int" />
+          <Property Name="NumGrupoBonoPMTracker" Type="int" />
+          <Property Name="Cost_Center" Type="int" />
+          <Property Name="percentage" Type="int" />
+          <Property Name="enabled" Type="bit" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="50" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="payment_history">
+          <Key>
+            <PropertyRef Name="id_payment_history" />
+          </Key>
+          <Property Name="id_payment_history" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_request_bond" Type="int" />
+          <Property Name="payment_date" Type="datetime" />
+          <Property Name="id_comment_type_payment" Type="int" />
+          <Property Name="observations" Type="varchar" MaxLength="500" />
+          <Property Name="paid_by" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="periodicity">
+          <Key>
+            <PropertyRef Name="id_periodicity" />
+          </Key>
+          <Property Name="id_periodicity" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="enabled" Type="bit" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="20" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="20" />
+          <Property Name="orden" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SICOEM.dbo.periodicity_ranges' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="periodicity_ranges">
+          <Key>
+            <PropertyRef Name="id_periodicity_ranges" />
+          </Key>
+          <Property Name="id_periodicity_ranges" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_periodicity" Type="int" />
+          <Property Name="mont_date_initial" Type="int" />
+          <Property Name="mont_date_finaly" Type="int" />
+          <Property Name="enabled" Type="bit" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="25" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SICOEM.dbo.permissions_users_bonds_types' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="permissions_users_bonds_types">
+          <Key>
+            <PropertyRef Name="login" />
+          </Key>
+          <Property Name="login" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="permission_request_bond" Type="varchar" MaxLength="50" />
+          <Property Name="permision_authorization_bond" Type="varchar" MaxLength="50" />
+          <Property Name="FiltroCC" Type="bit" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SICOEM.dbo.requests_automatic_status' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="requests_automatic_status">
+          <Key>
+            <PropertyRef Name="IdEstatus" />
+          </Key>
+          <Property Name="IdEstatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Desdripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Estatus" Type="int" />
+        </EntityType>
+        <EntityType Name="requests_bonds">
+          <Key>
+            <PropertyRef Name="id_request_bond" />
+          </Key>
+          <Property Name="id_request_bond" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employee_number" Type="int" />
+          <Property Name="authorization_amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="amount_paid" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="period_date_of" Type="datetime" />
+          <Property Name="period_date_to" Type="datetime" />
+          <Property Name="id_bond_type" Type="int" />
+          <Property Name="id_request_status" Type="int" />
+          <Property Name="number_hours" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="folio_pmtracker" Type="varchar" MaxLength="50" />
+          <Property Name="week" Type="int" />
+          <Property Name="month" Type="int" />
+          <Property Name="year" Type="int" />
+          <Property Name="selected_date" Type="datetime" />
+          <Property Name="requisition_comments" Type="varchar" MaxLength="250" />
+          <Property Name="authorization_comments" Type="varchar" MaxLength="250" />
+          <Property Name="close_date" Type="datetime" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="20" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="20" />
+          <Property Name="id_comment_type_payment" Type="int" />
+          <Property Name="observations" Type="varchar" MaxLength="500" />
+          <Property Name="payment_date" Type="datetime" />
+          <Property Name="paid_by" Type="varchar" MaxLength="20" />
+          <Property Name="pending_payment" Type="bit" />
+          <Property Name="CC_Cargo" Type="int" />
+          <Property Name="CC_Empleado" Type="int" />
+          <Property Name="id_request_bond_Automatic" Type="int" />
+          <Property Name="Cancel" Type="bit" />
+          <Property Name="Canceled_by" Type="nvarchar" MaxLength="50" />
+          <Property Name="Cancellation_date" Type="datetime" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SICOEM.dbo.requests_bonds_Automatic' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="requests_bonds_Automatic">
+          <Key>
+            <PropertyRef Name="Id_request_bond_automatic" />
+          </Key>
+          <Property Name="Id_request_bond_automatic" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee_number" Type="int" />
+          <Property Name="Employee" Type="nvarchar" MaxLength="100" />
+          <Property Name="CC_Empleado" Type="int" />
+          <Property Name="IdBonds" Type="int" />
+          <Property Name="NameBonds" Type="nvarchar" MaxLength="50" />
+          <Property Name="Id_Periodicity" Type="int" />
+          <Property Name="Occurrences" Type="int" />
+          <Property Name="CC_Cargo" Type="int" />
+          <Property Name="InitialDate" Type="datetime" />
+          <Property Name="FinalDate" Type="datetime" />
+          <Property Name="observations" Type="nvarchar" MaxLength="500" />
+          <Property Name="PendingOccurrences" Type="int" />
+          <Property Name="status" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Created_by" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDelete" Type="datetime" />
+          <Property Name="UpdateDelete_By" Type="nvarchar" MaxLength="20" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Update_by" Type="nvarchar" MaxLength="20" />
+          <Property Name="authorization_comments" Type="varchar" MaxLength="250" />
+          <Property Name="authorization_amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Authorization_by" Type="nvarchar" MaxLength="20" />
+          <Property Name="AuthorizationDate" Type="datetime" />
+          <Property Name="Delete_comments" Type="varchar" MaxLength="250" />
+          <Property Name="DeclinedDate" Type="datetime" />
+          <Property Name="Declined_By" Type="nvarchar" MaxLength="20" />
+          <Property Name="Declined_Comments" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="requests_status">
+          <Key>
+            <PropertyRef Name="id_request_status" />
+          </Key>
+          <Property Name="id_request_status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="20" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="modified_by" Type="varchar" MaxLength="20" />
+          <Property Name="enabled" Type="bit" />
+        </EntityType>
+        <EntityType Name="tab_reporte_bonos">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="8000" />
+          <Property Name="cc" Type="varchar" MaxLength="1000" />
+          <Property Name="Monto Bono" Type="varchar" MaxLength="250" />
+          <Property Name="KPI Individual" Type="varchar" MaxLength="250" />
+          <Property Name="KPI Grupo" Type="varchar" MaxLength="250" />
+          <Property Name="% Individual" Type="varchar" MaxLength="250" />
+          <Property Name="% Grupal" Type="varchar" MaxLength="250" />
+          <Property Name="Bono" Type="varchar" MaxLength="250" />
+          <Property Name="% Cump" Type="varchar" MaxLength="250" />
+          <Property Name="Total Final" Type="varchar" MaxLength="250" />
+          <Property Name="% Total Final" Type="varchar" MaxLength="250" />
+          <Property Name="% Preventa" Type="varchar" MaxLength="250" />
+          <Property Name="% Implementación" Type="varchar" MaxLength="250" />
+          <Property Name="% Soporte" Type="varchar" MaxLength="250" />
+          <Property Name="% Proyectos" Type="varchar" MaxLength="250" />
+          <Property Name="Preventa" Type="varchar" MaxLength="250" />
+          <Property Name="Implementacion" Type="varchar" MaxLength="250" />
+          <Property Name="Soporte" Type="varchar" MaxLength="250" />
+          <Property Name="Proyecto" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SICOEM.dbo.tbl_ReplaceBoss' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="tbl_ReplaceBoss">
+          <Key>
+            <PropertyRef Name="Id_CNSC_ReplaceBoss" />
+          </Key>
+          <Property Name="Id_CNSC_ReplaceBoss" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="40" />
+          <Property Name="Replaced" Type="varchar" MaxLength="150" />
+          <Property Name="CC" Type="varchar" MaxLength="300" />
+          <Property Name="BitActivo" Type="bit" />
+          <Property Name="FechaReg" Type="datetime" />
+          <Property Name="UsuarioReg" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityContainer Name="SICOEMModelStoreContainer">
+          <EntitySet Name="bonds_types" EntityType="Self.bonds_types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bons_automatic_types" EntityType="Self.bons_automatic_types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="closing_dates" EntityType="Self.closing_dates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comments_types_payments" EntityType="Self.comments_types_payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employees_compensations" EntityType="Self.employees_compensations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="files_requests_bonds" EntityType="Self.files_requests_bonds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="payment_history" EntityType="Self.payment_history" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="periodicity" EntityType="Self.periodicity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requests_bonds" EntityType="Self.requests_bonds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requests_status" EntityType="Self.requests_status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tab_reporte_bonos" EntityType="Self.tab_reporte_bonos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bonds_log" EntityType="Self.bonds_log" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [bonds_log].[id_log] AS [id_log], 
+    [bonds_log].[employee_number] AS [employee_number], 
+    [bonds_log].[id_bond_type] AS [id_bond_type], 
+    [bonds_log].[id_bond_type_automatic] AS [id_bond_type_automatic], 
+    [bonds_log].[amount_paid] AS [amount_paid], 
+    [bonds_log].[Periodicity] AS [Periodicity], 
+    [bonds_log].[CreateBy] AS [CreateBy], 
+    [bonds_log].[CreateDate] AS [CreateDate], 
+    [bonds_log].[UpdateBy] AS [UpdateBy], 
+    [bonds_log].[UpdateDate] AS [UpdateDate], 
+    [bonds_log].[Enable] AS [Enable]
+    FROM [dbo].[bonds_log] AS [bonds_log]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="group_leader" EntityType="Self.group_leader" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [group_leader].[Id_Group_Leader] AS [Id_Group_Leader], 
+    [group_leader].[Employee_Number] AS [Employee_Number], 
+    [group_leader].[NumGrupoBonoPMTracker] AS [NumGrupoBonoPMTracker], 
+    [group_leader].[Cost_Center] AS [Cost_Center], 
+    [group_leader].[percentage] AS [percentage], 
+    [group_leader].[enabled] AS [enabled], 
+    [group_leader].[created] AS [created], 
+    [group_leader].[created_by] AS [created_by], 
+    [group_leader].[modified] AS [modified], 
+    [group_leader].[modified_by] AS [modified_by]
+    FROM [dbo].[group_leader] AS [group_leader]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="periodicity_ranges" EntityType="Self.periodicity_ranges" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [periodicity_ranges].[id_periodicity_ranges] AS [id_periodicity_ranges], 
+    [periodicity_ranges].[id_periodicity] AS [id_periodicity], 
+    [periodicity_ranges].[mont_date_initial] AS [mont_date_initial], 
+    [periodicity_ranges].[mont_date_finaly] AS [mont_date_finaly], 
+    [periodicity_ranges].[enabled] AS [enabled], 
+    [periodicity_ranges].[created] AS [created], 
+    [periodicity_ranges].[created_by] AS [created_by], 
+    [periodicity_ranges].[modified] AS [modified], 
+    [periodicity_ranges].[modified_by] AS [modified_by]
+    FROM [dbo].[periodicity_ranges] AS [periodicity_ranges]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="permissions_users_bonds_types" EntityType="Self.permissions_users_bonds_types" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [permissions_users_bonds_types].[login] AS [login], 
+    [permissions_users_bonds_types].[permission_request_bond] AS [permission_request_bond], 
+    [permissions_users_bonds_types].[permision_authorization_bond] AS [permision_authorization_bond], 
+    [permissions_users_bonds_types].[FiltroCC] AS [FiltroCC]
+    FROM [dbo].[permissions_users_bonds_types] AS [permissions_users_bonds_types]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="requests_automatic_status" EntityType="Self.requests_automatic_status" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [requests_automatic_status].[IdEstatus] AS [IdEstatus], 
+    [requests_automatic_status].[Desdripcion] AS [Desdripcion], 
+    [requests_automatic_status].[Estatus] AS [Estatus]
+    FROM [dbo].[requests_automatic_status] AS [requests_automatic_status]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="requests_bonds_Automatic" EntityType="Self.requests_bonds_Automatic" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [requests_bonds_Automatic].[Id_request_bond_automatic] AS [Id_request_bond_automatic], 
+    [requests_bonds_Automatic].[Employee_number] AS [Employee_number], 
+    [requests_bonds_Automatic].[Employee] AS [Employee], 
+    [requests_bonds_Automatic].[CC_Empleado] AS [CC_Empleado], 
+    [requests_bonds_Automatic].[IdBonds] AS [IdBonds], 
+    [requests_bonds_Automatic].[NameBonds] AS [NameBonds], 
+    [requests_bonds_Automatic].[Id_Periodicity] AS [Id_Periodicity], 
+    [requests_bonds_Automatic].[Occurrences] AS [Occurrences], 
+    [requests_bonds_Automatic].[CC_Cargo] AS [CC_Cargo], 
+    [requests_bonds_Automatic].[InitialDate] AS [InitialDate], 
+    [requests_bonds_Automatic].[FinalDate] AS [FinalDate], 
+    [requests_bonds_Automatic].[observations] AS [observations], 
+    [requests_bonds_Automatic].[PendingOccurrences] AS [PendingOccurrences], 
+    [requests_bonds_Automatic].[status] AS [status], 
+    [requests_bonds_Automatic].[Amount] AS [Amount], 
+    [requests_bonds_Automatic].[Created] AS [Created], 
+    [requests_bonds_Automatic].[Created_by] AS [Created_by], 
+    [requests_bonds_Automatic].[UpdateDelete] AS [UpdateDelete], 
+    [requests_bonds_Automatic].[UpdateDelete_By] AS [UpdateDelete_By], 
+    [requests_bonds_Automatic].[UpdateDate] AS [UpdateDate], 
+    [requests_bonds_Automatic].[Update_by] AS [Update_by], 
+    [requests_bonds_Automatic].[authorization_comments] AS [authorization_comments], 
+    [requests_bonds_Automatic].[authorization_amount] AS [authorization_amount], 
+    [requests_bonds_Automatic].[Authorization_by] AS [Authorization_by], 
+    [requests_bonds_Automatic].[AuthorizationDate] AS [AuthorizationDate], 
+    [requests_bonds_Automatic].[Delete_comments] AS [Delete_comments], 
+    [requests_bonds_Automatic].[DeclinedDate] AS [DeclinedDate], 
+    [requests_bonds_Automatic].[Declined_By] AS [Declined_By], 
+    [requests_bonds_Automatic].[Declined_Comments] AS [Declined_Comments]
+    FROM [dbo].[requests_bonds_Automatic] AS [requests_bonds_Automatic]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_ReplaceBoss" EntityType="Self.tbl_ReplaceBoss" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_ReplaceBoss].[Id_CNSC_ReplaceBoss] AS [Id_CNSC_ReplaceBoss], 
+    [tbl_ReplaceBoss].[Login] AS [Login], 
+    [tbl_ReplaceBoss].[Replaced] AS [Replaced], 
+    [tbl_ReplaceBoss].[CC] AS [CC], 
+    [tbl_ReplaceBoss].[BitActivo] AS [BitActivo], 
+    [tbl_ReplaceBoss].[FechaReg] AS [FechaReg], 
+    [tbl_ReplaceBoss].[UsuarioReg] AS [UsuarioReg]
+    FROM [dbo].[tbl_ReplaceBoss] AS [tbl_ReplaceBoss]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SICOEMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="bonds_types">
+          <Key>
+            <PropertyRef Name="id_bond_type" />
+          </Key>
+          <Property Name="id_bond_type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="id_periodicity" Type="Int32" />
+          <Property Name="amount_required" Type="Boolean" />
+          <Property Name="periodicity_required" Type="Boolean" />
+          <Property Name="enabled" Type="Boolean" />
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="week_detail_required" Type="Boolean" />
+          <Property Name="folio_pmtracker_required" Type="Boolean" />
+          <Property Name="project_name_required" Type="Boolean" />
+          <Property Name="customer_name_required" Type="Boolean" />
+          <Property Name="number_hours_required" Type="Boolean" />
+          <Property Name="authorization_amount_capture" Type="Boolean" />
+          <Property Name="grid_requisitions_required" Type="Boolean" />
+          <Property Name="period_date_of_capture" Type="Boolean" />
+          <Property Name="period_date_to_capture" Type="Boolean" />
+          <Property Name="comments_authorization_required" Type="Boolean" />
+          <Property Name="percentage_extra" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="month_select" Type="Boolean" />
+          <Property Name="files_required" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="bons_automatic_types">
+          <Key>
+            <PropertyRef Name="IdBonds" />
+          </Key>
+          <Property Name="IdBonds" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameBonds" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Create_by" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Enabled" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="closing_dates">
+          <Key>
+            <PropertyRef Name="id_close_date" />
+          </Key>
+          <Property Name="id_close_date" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="close_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="comments_types_payments">
+          <Key>
+            <PropertyRef Name="id_comment_type_payment" />
+          </Key>
+          <Property Name="id_comment_type_payment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="partial" Type="Boolean" />
+          <Property Name="outstanding_paid" Type="Boolean" />
+          <Property Name="enabled" Type="Boolean" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="employees_compensations">
+          <Key>
+            <PropertyRef Name="id_employee_compensations" />
+          </Key>
+          <Property Name="id_employee_compensations" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employee_number" Type="Int32" Nullable="false" />
+          <Property Name="id_bond_type" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="id_periodicity" Type="Int32" />
+          <Property Name="percentage_extra" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="files_requests_bonds">
+          <Key>
+            <PropertyRef Name="id_file_request_bond" />
+          </Key>
+          <Property Name="id_file_request_bond" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_request_bond" Type="Int32" />
+          <Property Name="path" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="file_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="content_type" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="date_attach" Type="DateTime" Precision="3" />
+          <Property Name="login" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="payment_history">
+          <Key>
+            <PropertyRef Name="id_payment_history" />
+          </Key>
+          <Property Name="id_payment_history" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_request_bond" Type="Int32" />
+          <Property Name="payment_date" Type="DateTime" Precision="3" />
+          <Property Name="id_comment_type_payment" Type="Int32" />
+          <Property Name="observations" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="paid_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="periodicity">
+          <Key>
+            <PropertyRef Name="id_periodicity" />
+          </Key>
+          <Property Name="id_periodicity" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="enabled" Type="Boolean" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="orden" Type="Int32" />
+        </EntityType>
+        <EntityType Name="requests_bonds">
+          <Key>
+            <PropertyRef Name="id_request_bond" />
+          </Key>
+          <Property Name="id_request_bond" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employee_number" Type="Int32" />
+          <Property Name="authorization_amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="amount_paid" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="period_date_of" Type="DateTime" Precision="3" />
+          <Property Name="period_date_to" Type="DateTime" Precision="3" />
+          <Property Name="id_bond_type" Type="Int32" />
+          <Property Name="id_request_status" Type="Int32" />
+          <Property Name="number_hours" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="folio_pmtracker" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="week" Type="Int32" />
+          <Property Name="month" Type="Int32" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="selected_date" Type="DateTime" Precision="3" />
+          <Property Name="requisition_comments" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="authorization_comments" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="close_date" Type="DateTime" Precision="3" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="id_comment_type_payment" Type="Int32" />
+          <Property Name="observations" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="payment_date" Type="DateTime" Precision="3" />
+          <Property Name="paid_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pending_payment" Type="Boolean" />
+          <Property Name="CC_Cargo" Type="Int32" />
+          <Property Name="CC_Empleado" Type="Int32" />
+          <Property Name="id_request_bond_Automatic" Type="Int32" />
+          <Property Name="Cancel" Type="Boolean" />
+          <Property Name="Canceled_by" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Cancellation_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="requests_status">
+          <Key>
+            <PropertyRef Name="id_request_status" />
+          </Key>
+          <Property Name="id_request_status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="enabled" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tab_reporte_bonos">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="cc" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Monto_Bono" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="KPI_Individual" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="KPI_Grupo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="C__Individual" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="C__Grupal" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Bono" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="C__Cump" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Total_Final" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="C__Total_Final" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="C__Preventa" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="C__Implementación" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="C__Soporte" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="C__Proyectos" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Preventa" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Implementacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Soporte" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Proyecto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="bonds_log">
+          <Key>
+            <PropertyRef Name="id_log" />
+          </Key>
+          <Property Name="id_log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employee_number" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="id_bond_type" Type="Int32" />
+          <Property Name="id_bond_type_automatic" Type="Int32" />
+          <Property Name="amount_paid" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Periodicity" Type="Int32" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Enable" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="group_leader">
+          <Key>
+            <PropertyRef Name="Id_Group_Leader" />
+          </Key>
+          <Property Name="Id_Group_Leader" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_Number" Type="Int32" />
+          <Property Name="NumGrupoBonoPMTracker" Type="Int32" />
+          <Property Name="Cost_Center" Type="Int32" />
+          <Property Name="percentage" Type="Int32" />
+          <Property Name="enabled" Type="Boolean" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="periodicity_ranges">
+          <Key>
+            <PropertyRef Name="id_periodicity_ranges" />
+          </Key>
+          <Property Name="id_periodicity_ranges" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_periodicity" Type="Int32" />
+          <Property Name="mont_date_initial" Type="Int32" />
+          <Property Name="mont_date_finaly" Type="Int32" />
+          <Property Name="enabled" Type="Boolean" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="permissions_users_bonds_types">
+          <Key>
+            <PropertyRef Name="login" />
+          </Key>
+          <Property Name="login" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="permission_request_bond" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="permision_authorization_bond" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FiltroCC" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="requests_automatic_status">
+          <Key>
+            <PropertyRef Name="IdEstatus" />
+          </Key>
+          <Property Name="IdEstatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Desdripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Estatus" Type="Int32" />
+        </EntityType>
+        <EntityType Name="requests_bonds_Automatic">
+          <Key>
+            <PropertyRef Name="Id_request_bond_automatic" />
+          </Key>
+          <Property Name="Id_request_bond_automatic" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_number" Type="Int32" />
+          <Property Name="Employee" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CC_Empleado" Type="Int32" />
+          <Property Name="IdBonds" Type="Int32" />
+          <Property Name="NameBonds" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_Periodicity" Type="Int32" />
+          <Property Name="Occurrences" Type="Int32" />
+          <Property Name="CC_Cargo" Type="Int32" />
+          <Property Name="InitialDate" Type="DateTime" Precision="3" />
+          <Property Name="FinalDate" Type="DateTime" Precision="3" />
+          <Property Name="observations" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PendingOccurrences" Type="Int32" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Created_by" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDelete" Type="DateTime" Precision="3" />
+          <Property Name="UpdateDelete_By" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Update_by" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="authorization_comments" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="authorization_amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Authorization_by" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorizationDate" Type="DateTime" Precision="3" />
+          <Property Name="Delete_comments" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeclinedDate" Type="DateTime" Precision="3" />
+          <Property Name="Declined_By" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Declined_Comments" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_ReplaceBoss">
+          <Key>
+            <PropertyRef Name="Id_CNSC_ReplaceBoss" />
+          </Key>
+          <Property Name="Id_CNSC_ReplaceBoss" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Replaced" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CC" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="BitActivo" Type="Boolean" />
+          <Property Name="FechaReg" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioReg" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="SICOEMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="bonds_types" EntityType="Self.bonds_types" />
+          <EntitySet Name="bons_automatic_types" EntityType="Self.bons_automatic_types" />
+          <EntitySet Name="closing_dates" EntityType="Self.closing_dates" />
+          <EntitySet Name="comments_types_payments" EntityType="Self.comments_types_payments" />
+          <EntitySet Name="employees_compensations" EntityType="Self.employees_compensations" />
+          <EntitySet Name="files_requests_bonds" EntityType="Self.files_requests_bonds" />
+          <EntitySet Name="payment_history" EntityType="Self.payment_history" />
+          <EntitySet Name="periodicity" EntityType="Self.periodicity" />
+          <EntitySet Name="requests_bonds" EntityType="Self.requests_bonds" />
+          <EntitySet Name="requests_status" EntityType="Self.requests_status" />
+          <EntitySet Name="tab_reporte_bonos" EntityType="Self.tab_reporte_bonos" />
+          <EntitySet Name="bonds_log" EntityType="Self.bonds_log" />
+          <EntitySet Name="group_leader" EntityType="Self.group_leader" />
+          <EntitySet Name="periodicity_ranges" EntityType="Self.periodicity_ranges" />
+          <EntitySet Name="permissions_users_bonds_types" EntityType="Self.permissions_users_bonds_types" />
+          <EntitySet Name="requests_automatic_status" EntityType="Self.requests_automatic_status" />
+          <EntitySet Name="requests_bonds_Automatic" EntityType="Self.requests_bonds_Automatic" />
+          <EntitySet Name="tbl_ReplaceBoss" EntityType="Self.tbl_ReplaceBoss" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SICOEMModelStoreContainer" CdmEntityContainer="SICOEMEntities">
+          <EntitySetMapping Name="bonds_types">
+            <EntityTypeMapping TypeName="SICOEMModel.bonds_types">
+              <MappingFragment StoreEntitySet="bonds_types">
+                <ScalarProperty Name="id_bond_type" ColumnName="id_bond_type" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="id_periodicity" ColumnName="id_periodicity" />
+                <ScalarProperty Name="amount_required" ColumnName="amount_required" />
+                <ScalarProperty Name="periodicity_required" ColumnName="periodicity_required" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="week_detail_required" ColumnName="week_detail_required" />
+                <ScalarProperty Name="folio_pmtracker_required" ColumnName="folio_pmtracker_required" />
+                <ScalarProperty Name="project_name_required" ColumnName="project_name_required" />
+                <ScalarProperty Name="customer_name_required" ColumnName="customer_name_required" />
+                <ScalarProperty Name="number_hours_required" ColumnName="number_hours_required" />
+                <ScalarProperty Name="authorization_amount_capture" ColumnName="authorization_amount_capture" />
+                <ScalarProperty Name="grid_requisitions_required" ColumnName="grid_requisitions_required" />
+                <ScalarProperty Name="period_date_of_capture" ColumnName="period_date_of_capture" />
+                <ScalarProperty Name="period_date_to_capture" ColumnName="period_date_to_capture" />
+                <ScalarProperty Name="comments_authorization_required" ColumnName="comments_authorization_required" />
+                <ScalarProperty Name="percentage_extra" ColumnName="percentage_extra" />
+                <ScalarProperty Name="month_select" ColumnName="month_select" />
+                <ScalarProperty Name="files_required" ColumnName="files_required" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bons_automatic_types">
+            <EntityTypeMapping TypeName="SICOEMModel.bons_automatic_types">
+              <MappingFragment StoreEntitySet="bons_automatic_types">
+                <ScalarProperty Name="IdBonds" ColumnName="IdBonds" />
+                <ScalarProperty Name="NameBonds" ColumnName="NameBonds" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Create_by" ColumnName="Create_by" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="closing_dates">
+            <EntityTypeMapping TypeName="SICOEMModel.closing_dates">
+              <MappingFragment StoreEntitySet="closing_dates">
+                <ScalarProperty Name="id_close_date" ColumnName="id_close_date" />
+                <ScalarProperty Name="close_date" ColumnName="close_date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comments_types_payments">
+            <EntityTypeMapping TypeName="SICOEMModel.comments_types_payments">
+              <MappingFragment StoreEntitySet="comments_types_payments">
+                <ScalarProperty Name="id_comment_type_payment" ColumnName="id_comment_type_payment" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="partial" ColumnName="partial" />
+                <ScalarProperty Name="outstanding_paid" ColumnName="outstanding_paid" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees_compensations">
+            <EntityTypeMapping TypeName="SICOEMModel.employees_compensations">
+              <MappingFragment StoreEntitySet="employees_compensations">
+                <ScalarProperty Name="id_employee_compensations" ColumnName="id_employee_compensations" />
+                <ScalarProperty Name="employee_number" ColumnName="employee_number" />
+                <ScalarProperty Name="id_bond_type" ColumnName="id_bond_type" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="id_periodicity" ColumnName="id_periodicity" />
+                <ScalarProperty Name="percentage_extra" ColumnName="percentage_extra" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="files_requests_bonds">
+            <EntityTypeMapping TypeName="SICOEMModel.files_requests_bonds">
+              <MappingFragment StoreEntitySet="files_requests_bonds">
+                <ScalarProperty Name="id_file_request_bond" ColumnName="id_file_request_bond" />
+                <ScalarProperty Name="id_request_bond" ColumnName="id_request_bond" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="content_type" ColumnName="content_type" />
+                <ScalarProperty Name="date_attach" ColumnName="date_attach" />
+                <ScalarProperty Name="login" ColumnName="login" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment_history">
+            <EntityTypeMapping TypeName="SICOEMModel.payment_history">
+              <MappingFragment StoreEntitySet="payment_history">
+                <ScalarProperty Name="id_payment_history" ColumnName="id_payment_history" />
+                <ScalarProperty Name="id_request_bond" ColumnName="id_request_bond" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+                <ScalarProperty Name="id_comment_type_payment" ColumnName="id_comment_type_payment" />
+                <ScalarProperty Name="observations" ColumnName="observations" />
+                <ScalarProperty Name="paid_by" ColumnName="paid_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="periodicity">
+            <EntityTypeMapping TypeName="SICOEMModel.periodicity">
+              <MappingFragment StoreEntitySet="periodicity">
+                <ScalarProperty Name="id_periodicity" ColumnName="id_periodicity" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requests_bonds">
+            <EntityTypeMapping TypeName="SICOEMModel.requests_bonds">
+              <MappingFragment StoreEntitySet="requests_bonds">
+                <ScalarProperty Name="id_request_bond" ColumnName="id_request_bond" />
+                <ScalarProperty Name="employee_number" ColumnName="employee_number" />
+                <ScalarProperty Name="authorization_amount" ColumnName="authorization_amount" />
+                <ScalarProperty Name="amount_paid" ColumnName="amount_paid" />
+                <ScalarProperty Name="period_date_of" ColumnName="period_date_of" />
+                <ScalarProperty Name="period_date_to" ColumnName="period_date_to" />
+                <ScalarProperty Name="id_bond_type" ColumnName="id_bond_type" />
+                <ScalarProperty Name="id_request_status" ColumnName="id_request_status" />
+                <ScalarProperty Name="number_hours" ColumnName="number_hours" />
+                <ScalarProperty Name="folio_pmtracker" ColumnName="folio_pmtracker" />
+                <ScalarProperty Name="week" ColumnName="week" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="selected_date" ColumnName="selected_date" />
+                <ScalarProperty Name="requisition_comments" ColumnName="requisition_comments" />
+                <ScalarProperty Name="authorization_comments" ColumnName="authorization_comments" />
+                <ScalarProperty Name="close_date" ColumnName="close_date" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="id_comment_type_payment" ColumnName="id_comment_type_payment" />
+                <ScalarProperty Name="observations" ColumnName="observations" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+                <ScalarProperty Name="paid_by" ColumnName="paid_by" />
+                <ScalarProperty Name="pending_payment" ColumnName="pending_payment" />
+                <ScalarProperty Name="CC_Cargo" ColumnName="CC_Cargo" />
+                <ScalarProperty Name="CC_Empleado" ColumnName="CC_Empleado" />
+                <ScalarProperty Name="id_request_bond_Automatic" ColumnName="id_request_bond_Automatic" />
+                <ScalarProperty Name="Cancel" ColumnName="Cancel" />
+                <ScalarProperty Name="Canceled_by" ColumnName="Canceled_by" />
+                <ScalarProperty Name="Cancellation_date" ColumnName="Cancellation_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requests_status">
+            <EntityTypeMapping TypeName="SICOEMModel.requests_status">
+              <MappingFragment StoreEntitySet="requests_status">
+                <ScalarProperty Name="id_request_status" ColumnName="id_request_status" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tab_reporte_bonos">
+            <EntityTypeMapping TypeName="SICOEMModel.tab_reporte_bonos">
+              <MappingFragment StoreEntitySet="tab_reporte_bonos">
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="cc" ColumnName="cc" />
+                <ScalarProperty Name="Monto_Bono" ColumnName="Monto Bono" />
+                <ScalarProperty Name="KPI_Individual" ColumnName="KPI Individual" />
+                <ScalarProperty Name="KPI_Grupo" ColumnName="KPI Grupo" />
+                <ScalarProperty Name="C__Individual" ColumnName="% Individual" />
+                <ScalarProperty Name="C__Grupal" ColumnName="% Grupal" />
+                <ScalarProperty Name="Bono" ColumnName="Bono" />
+                <ScalarProperty Name="C__Cump" ColumnName="% Cump" />
+                <ScalarProperty Name="Total_Final" ColumnName="Total Final" />
+                <ScalarProperty Name="C__Total_Final" ColumnName="% Total Final" />
+                <ScalarProperty Name="C__Preventa" ColumnName="% Preventa" />
+                <ScalarProperty Name="C__Implementación" ColumnName="% Implementación" />
+                <ScalarProperty Name="C__Soporte" ColumnName="% Soporte" />
+                <ScalarProperty Name="C__Proyectos" ColumnName="% Proyectos" />
+                <ScalarProperty Name="Preventa" ColumnName="Preventa" />
+                <ScalarProperty Name="Implementacion" ColumnName="Implementacion" />
+                <ScalarProperty Name="Soporte" ColumnName="Soporte" />
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bonds_log">
+            <EntityTypeMapping TypeName="SICOEMModel.bonds_log">
+              <MappingFragment StoreEntitySet="bonds_log">
+                <ScalarProperty Name="id_log" ColumnName="id_log" />
+                <ScalarProperty Name="employee_number" ColumnName="employee_number" />
+                <ScalarProperty Name="id_bond_type" ColumnName="id_bond_type" />
+                <ScalarProperty Name="id_bond_type_automatic" ColumnName="id_bond_type_automatic" />
+                <ScalarProperty Name="amount_paid" ColumnName="amount_paid" />
+                <ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="group_leader">
+            <EntityTypeMapping TypeName="SICOEMModel.group_leader">
+              <MappingFragment StoreEntitySet="group_leader">
+                <ScalarProperty Name="Id_Group_Leader" ColumnName="Id_Group_Leader" />
+                <ScalarProperty Name="Employee_Number" ColumnName="Employee_Number" />
+                <ScalarProperty Name="NumGrupoBonoPMTracker" ColumnName="NumGrupoBonoPMTracker" />
+                <ScalarProperty Name="Cost_Center" ColumnName="Cost_Center" />
+                <ScalarProperty Name="percentage" ColumnName="percentage" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="periodicity_ranges">
+            <EntityTypeMapping TypeName="SICOEMModel.periodicity_ranges">
+              <MappingFragment StoreEntitySet="periodicity_ranges">
+                <ScalarProperty Name="id_periodicity_ranges" ColumnName="id_periodicity_ranges" />
+                <ScalarProperty Name="id_periodicity" ColumnName="id_periodicity" />
+                <ScalarProperty Name="mont_date_initial" ColumnName="mont_date_initial" />
+                <ScalarProperty Name="mont_date_finaly" ColumnName="mont_date_finaly" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="permissions_users_bonds_types">
+            <EntityTypeMapping TypeName="SICOEMModel.permissions_users_bonds_types">
+              <MappingFragment StoreEntitySet="permissions_users_bonds_types">
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="permission_request_bond" ColumnName="permission_request_bond" />
+                <ScalarProperty Name="permision_authorization_bond" ColumnName="permision_authorization_bond" />
+                <ScalarProperty Name="FiltroCC" ColumnName="FiltroCC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requests_automatic_status">
+            <EntityTypeMapping TypeName="SICOEMModel.requests_automatic_status">
+              <MappingFragment StoreEntitySet="requests_automatic_status">
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+                <ScalarProperty Name="Desdripcion" ColumnName="Desdripcion" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requests_bonds_Automatic">
+            <EntityTypeMapping TypeName="SICOEMModel.requests_bonds_Automatic">
+              <MappingFragment StoreEntitySet="requests_bonds_Automatic">
+                <ScalarProperty Name="Id_request_bond_automatic" ColumnName="Id_request_bond_automatic" />
+                <ScalarProperty Name="Employee_number" ColumnName="Employee_number" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+                <ScalarProperty Name="CC_Empleado" ColumnName="CC_Empleado" />
+                <ScalarProperty Name="IdBonds" ColumnName="IdBonds" />
+                <ScalarProperty Name="NameBonds" ColumnName="NameBonds" />
+                <ScalarProperty Name="Id_Periodicity" ColumnName="Id_Periodicity" />
+                <ScalarProperty Name="Occurrences" ColumnName="Occurrences" />
+                <ScalarProperty Name="CC_Cargo" ColumnName="CC_Cargo" />
+                <ScalarProperty Name="InitialDate" ColumnName="InitialDate" />
+                <ScalarProperty Name="FinalDate" ColumnName="FinalDate" />
+                <ScalarProperty Name="observations" ColumnName="observations" />
+                <ScalarProperty Name="PendingOccurrences" ColumnName="PendingOccurrences" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+                <ScalarProperty Name="UpdateDelete" ColumnName="UpdateDelete" />
+                <ScalarProperty Name="UpdateDelete_By" ColumnName="UpdateDelete_By" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Update_by" ColumnName="Update_by" />
+                <ScalarProperty Name="authorization_comments" ColumnName="authorization_comments" />
+                <ScalarProperty Name="authorization_amount" ColumnName="authorization_amount" />
+                <ScalarProperty Name="Authorization_by" ColumnName="Authorization_by" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="Delete_comments" ColumnName="Delete_comments" />
+                <ScalarProperty Name="DeclinedDate" ColumnName="DeclinedDate" />
+                <ScalarProperty Name="Declined_By" ColumnName="Declined_By" />
+                <ScalarProperty Name="Declined_Comments" ColumnName="Declined_Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ReplaceBoss">
+            <EntityTypeMapping TypeName="SICOEMModel.tbl_ReplaceBoss">
+              <MappingFragment StoreEntitySet="tbl_ReplaceBoss">
+                <ScalarProperty Name="Id_CNSC_ReplaceBoss" ColumnName="Id_CNSC_ReplaceBoss" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Replaced" ColumnName="Replaced" />
+                <ScalarProperty Name="CC" ColumnName="CC" />
+                <ScalarProperty Name="BitActivo" ColumnName="BitActivo" />
+                <ScalarProperty Name="FechaReg" ColumnName="FechaReg" />
+                <ScalarProperty Name="UsuarioReg" ColumnName="UsuarioReg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

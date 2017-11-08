@@ -17,21 +17,21 @@ namespace negocio.Componentes
         /// </summary>
         /// <param name="cveoport"></param>
         /// <returns></returns>
-        public String ExistCveOport(int cveoport)
+        public String ExistFolioOport(string cveoport)
         {
             DataTable dt = new DataTable();
             try
             {
                 OPTrackerEntities context = new OPTrackerEntities();
                 var query = context.Oportunidad
-                                .Where(s => s.CveOport == cveoport)
+                                .Where(s => s.Folio_Op.Trim().ToUpper() == cveoport.Trim().ToUpper())
                                 .Select(u => new
                                 {
                                     u.CveOport
                                 })
                                 .OrderBy(u => u.CveOport);
                 dt = To.DataTable(query.ToList());
-                return dt.Rows.Count > 0 ? "":"No existe ninguna oportunidad con clave: "+cveoport.ToString();
+                return dt.Rows.Count > 0 ? "":"No existe ninguna oportunidad con folio: "+cveoport.ToString();
             }
             catch (DbEntityValidationException ex)
             {
