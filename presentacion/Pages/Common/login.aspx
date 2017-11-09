@@ -60,6 +60,12 @@
         }
     </style>
     <script type="text/javascript">
+          function ConfirmwidgetProyectoModal() {
+            $("#<%= lnkcargando.ClientID%>").show();
+            $("#<%= lnkguardar.ClientID%>").hide();
+            return true;
+          }
+
         function ConfirmMinutaModal() {
             GetInfoDevice();
             $("#<%= lnkiniciandosession.ClientID%>").show();
@@ -218,9 +224,11 @@
                 <div class="col-xs-12" runat="server" id="div_cambiodomiinio" visible="true" style="font-size:12px">
                     <br />
                     <p>
-                        ¿No puedes ingresar?
-                    <asp:LinkButton ID="lnkcambiardominio" runat="server" OnClick="lnkcambiardominio_Click">
+                        ¿No puedes ingresar? <asp:LinkButton ID="lnkcambiardominio" Visible="false" runat="server" OnClick="lnkcambiardominio_Click">
                         Puedes cambiar el dominio de inicio
+                    </asp:LinkButton>
+                        <asp:LinkButton ID="lnkrecuperarcontraseña" runat="server" OnClick="lnkrecuperarcontraseña_Click">
+                         Recuperar contraseña
                     </asp:LinkButton>
                     </p>
                 </div>
@@ -256,4 +264,50 @@
             <asp:HiddenField ID="hdffinger" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
+    
+    <div class="modal fade  bs-example-modal-lg" id="modal_recuperar_contraseña" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog  modal-lg">
+            <asp:UpdatePanel ID="dedeed" runat="server" >
+                <Triggers> 
+                    <asp:AsyncPostBackTrigger ControlID="lnkrecuperarcontraseña" EventName="Click" />
+                </Triggers>
+                <ContentTemplate>
+                    
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Recuperar contraseña</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            Le enviaremos la información al correo electrónico relacionado a su cuenta. Si es empleado de la empresa,
+                            el correo es el utilizado internamente, en caso de ser usuario externo, deberá ser el que proporcionó para su cuenta.
+                            </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h5><strong><i class="fa fa-edge" aria-hidden="true"></i>&nbsp;Correo electrónico</strong></h5>
+                            <asp:TextBox ID="txtcorreo" TextMode="Email" CssClass=" form-control" runat="server"></asp:TextBox>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                    <asp:LinkButton OnClientClick="return false;" ID="lnkcargando" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>&nbsp;Enviando
+                    </asp:LinkButton>
+                    <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat"
+                        OnClientClick="return ConfirmwidgetProyectoModal();" OnClick="lnkguardar_Click" runat="server">
+                                            <i class="fa fa-share" aria-hidden="true"></i>&nbsp;Recuperar contraseña
+                    </asp:LinkButton>
+                </div>
+            </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </asp:Content>

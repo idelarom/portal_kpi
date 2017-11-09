@@ -73,8 +73,9 @@ namespace presentacion.Pages.Common
                     string finger_print = hdffinger.Value.Trim();
                     DataTable dt = empleados.GetLogin(username, finger_print);
                     string vmensaje = "";
-                    if (isValid && dt.Rows.Count > 0 && finger_print != "")
+                    if ((isValid || dt.Rows.Count > 0) && finger_print != "")
                     {
+                        isValid = true;
                         DataRow row = dt.Rows[0];
                         String os = hdfos.Value.Trim();
                         String os_vers = hdfosversion.Value.Trim();
@@ -94,27 +95,31 @@ namespace presentacion.Pages.Common
                         }
                         else
                         {
-                            DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));//path local
-                            DirectoryEntry directoryEntry = new DirectoryEntry("LDAP://" + dominio, username, password);
-                            //Create a searcher on your DirectoryEntry
-                            DirectorySearcher adSearch = new DirectorySearcher(directoryEntry);
-                            adSearch.SearchScope = SearchScope.Subtree;    //Look into all subtree during the search
-                            adSearch.Filter = "(&(ObjectClass=user)(sAMAccountName=" + username + "))";    //Filter information, here i'm looking at a user with given username
-                            SearchResult sResult = adSearch.FindOne();       //username is unique, so I want to find only one
-                            string name = dirInfo.ToString() + username + ".png";
-                            string imagen = "";
-                            if (!File.Exists(name))
-                            {
-                                if (sResult.Properties["thumbnailPhoto"].Count > 0)
+                            string adress = "";
+                            if (Convert.ToInt32(row["num_empleado"])>0) {
+                                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));//path local
+                                DirectoryEntry directoryEntry = new DirectoryEntry("LDAP://" + dominio, username, password);
+                                //Create a searcher on your DirectoryEntry
+                                DirectorySearcher adSearch = new DirectorySearcher(directoryEntry);
+                                adSearch.SearchScope = SearchScope.Subtree;    //Look into all subtree during the search
+                                adSearch.Filter = "(&(ObjectClass=user)(sAMAccountName=" + username + "))";    //Filter information, here i'm looking at a user with given username
+                                SearchResult sResult = adSearch.FindOne();       //username is unique, so I want to find only one
+                                string name = dirInfo.ToString() + username + ".png";
+                                string imagen = "";
+                                if (!File.Exists(name))
                                 {
-                                    byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
-                                    imagen = GuardarImagenUsuario(array_img, username + ".png");
+                                    if (sResult.Properties["thumbnailPhoto"].Count > 0)
+                                    {
+                                        byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
+                                        imagen = GuardarImagenUsuario(array_img, username + ".png");
+                                    }
                                 }
+
+                                adress = sResult.Properties["mail"][0].ToString();
                             }
-                                
-                            string adress = sResult.Properties["mail"][0].ToString();
-                            string nombre = (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
-                                        funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' '));
+                            string nombre = Convert.ToInt32(row["num_empleado"]) > 0?(funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
+                                        funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' ')):
+                            row["First_Name"].ToString().Trim() + " "+ row["Last_Name"].ToString().Trim();
                             string puesto = (row["puesto"].ToString().Trim());
                             string perfil = row["perfil"].ToString().Trim().ToLower();
                             //pasamos aminusculas
@@ -163,15 +168,35 @@ namespace presentacion.Pages.Common
                             e.activo = true;
                             e.device_fingerprint = finger_print;
                             int id_usuario_sesion = sesion.Exist(e.usuario, e.device_fingerprint) ? sesion.Editar(e):sesion.Agregar(e);
+                            UsuariosCOM usuarios_ = new UsuariosCOM();
+                            usuarios usuario = new usuarios {
+                                usuario = username.ToUpper().Trim(),
+                                contraseña = funciones.deTextoa64(password),
+                                puesto = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto),
+                                nombres =CultureInfo.InvariantCulture.TextInfo.ToTitleCase(row["First_Name"].ToString()),
+                                a_paterno = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(row["Last_Name"].ToString()),
+                                correo = row["Company_E_Mail"].ToString().Trim().ToLower(),
+                                usuario_alta = username.ToUpper().Trim(),
+                                No_ = Convert.ToInt32(row["num_empleado"]).ToString(),
+                                path_imagen = username + ".png"
+
+                            };
+                            if (!usuarios_.Exist(username))
+                            {
+                                usuarios_.Agregar(usuario);
+                            }
+                            else {
+                                usuarios_.Editar(usuario);
+                            }
                             if (id_usuario_sesion > 0)
                             {
-                                if (Convert.ToBoolean(row["sincronizacion_automatica"]))
-                                {
-                                    string mail = Session["mail"] as string;
-                                    string mail_user = username + mail.Replace(mail.Split('@')[0], "");
-                                    EWSHelper calendar = new EWSHelper();
-                                    calendar.GetAllCalendar(mail_user, password);
-                                }
+                                //if (Convert.ToBoolean(row["sincronizacion_automatica"]))
+                                //{
+                                //    string mail = Session["mail"] as string;
+                                //    string mail_user = username + mail.Replace(mail.Split('@')[0], "");
+                                //    EWSHelper calendar = new EWSHelper();
+                                //    calendar.GetAllCalendar(mail_user, password);
+                                //}
                                 Session["devices_conectados"] = UpdateDevices(username);
                                 Session["id_usuario_sesion"] = id_usuario_sesion;
                             }
@@ -248,6 +273,86 @@ namespace presentacion.Pages.Common
             {
                 Toast.Error("Error al actualizar la lista de dispositivos conectados: " + ex.Message, this.Page);
                 return 0;
+            }
+        }
+        private void ModalShow(string modalname)
+        {
+            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                             "ModalShow('" + modalname + "');", true);
+        }
+
+        private void ModalClose(string modalname)
+        {
+            System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                             "ModalCloseGlobal('" + modalname + "');", true);
+        }
+
+
+        protected void lnkrecuperarcontraseña_Click(object sender, EventArgs e)
+        {
+            txtcorreo.Text = "";
+            ModalShow("#modal_recuperar_contraseña");
+            txtcorreo.Focus();
+        }
+
+        protected void lnkguardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtcorreo.Text == "")
+                {
+                    Toast.Error("Ingrese el correo electrónico relacionado a su cuenta.", this.Page);
+                }
+                else if (!funciones.emailIsValid(txtcorreo.Text))
+                {
+                    Toast.Error("Ingrese un correo electrónico valido.", this.Page);
+                }
+                else {
+                    UsuariosCOM usuarios = new UsuariosCOM();
+                    usuarios usuario = usuarios.usuario_mail(txtcorreo.Text);
+                    if (usuario == null)
+                    {
+                        Toast.Error("No existe ningun usuario con el correo electrónico proporcionado.", this.Page);
+                    }
+                    else {
+                        string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
+                       
+                        string mail_to = usuario.correo;
+                        string subject = "Portal Connext | Recuperación de contraseña";
+                        string mail = "<div>" + saludo + " <strong>" +
+                            System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario.nombres.ToLower() + " "+usuario.a_paterno.ToLower().Trim() + " "+(usuario.a_materno==null?"": usuario.a_materno.ToLower().Trim()))
+                            + "</strong> <div>" +
+                            "<br>" +
+                            "<p>Se anexa la información para el inicio de sesión en el Portal Connext" +
+                            "</p>" +
+                            "<p>A continuación, se muestra la información completa:</p>" +
+                                 "<p><strong>Usuario</strong><br/> " +
+                             usuario.usuario + "</p> " +
+                               "<p><strong>Contraseña</strong><br/> " +
+                              funciones.de64aTexto(usuario.contraseña) + "</p> " +
+                               "<p><strong>Nombre</strong><br/> " +
+                                System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(usuario.nombres.ToLower() + " " + usuario.a_paterno.ToLower().Trim() + " " + (usuario.a_materno == null ? "" : usuario.a_materno.ToLower().Trim())) + "</p> " +
+                               "<p><strong>Correo electrónico</strong><br/> " +
+                              usuario.correo + "</p> " +
+                                "<p><strong>Puesto</strong><br/> " +
+                              (usuario.puesto==""?"--Información no proporcionada--":usuario.puesto) + "</p> " +
+                            "<br/><p>Este movimiento fue solicitado el dia <strong>" +
+                            DateTime.Now.ToString("dddd dd MMMM, yyyy hh:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) + "</strong>" +
+                            "</p>";
+                        CorreosCOM correos = new CorreosCOM();
+                        bool correct = correos.SendMail(mail, subject, mail_to);
+                        Toast.Success("Se envio la información al correo proporcionado.","Mensaje del sistema",this);
+                        ModalClose("#modal_recuperar_contraseña");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al enviar correo: " + ex.Message, this.Page);
+            }
+            finally {
+                lnkguardar.Visible = true;
+                lnkcargando.Style["display"] = "none";
             }
         }
     }

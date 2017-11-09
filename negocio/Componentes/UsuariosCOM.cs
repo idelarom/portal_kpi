@@ -31,6 +31,26 @@ namespace negocio.Componentes
             }
         }
 
+        public usuarios usuario_mail(string mail)
+        {
+            try
+            {
+                Model context = new Model();
+                List<usuarios>  list = context.usuarios
+                                .Where(i => i.correo.ToUpper().Trim() == mail.ToUpper().Trim()).ToList();
+                return list.Count > 0 ? list[0]:null;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return null;
+            }
+        }
+
+
         public DataSet sp_prueba_files()
         {
             DataSet ds = new DataSet();
@@ -88,6 +108,43 @@ namespace negocio.Componentes
                 return new DataTable();
             }
         }
+        public string Editar(usuarios entidad)
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                string mess = "";
+                if (entidad.No_ != "" && !empleados.Exists(entidad.No_))
+                {
+
+                    mess = "No existe el empleado con el numero: " + entidad.No_;
+                }
+                else
+                {
+                    Model context = new Model();
+                    usuarios usuario = context.usuarios
+                                    .First(i => i.usuario.ToUpper().Trim() == entidad.usuario.ToUpper().Trim());
+                    usuario.contraseña = entidad.contraseña;
+                    usuario.correo = entidad.correo;
+                    usuario.puesto = entidad.puesto;
+                    usuario.nombres = entidad.nombres;
+                    usuario.a_paterno = entidad.a_paterno;
+                    usuario.a_materno = entidad.a_materno;
+                    usuario.No_ = entidad.No_;
+                    usuario.path_imagen = entidad.path_imagen;
+                    context.SaveChanges();
+                }
+                return mess;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return fullErrorMessage.ToString();
+            }
+        }
 
         public string Agregar(usuarios entidad)
         {
@@ -95,7 +152,7 @@ namespace negocio.Componentes
             {
                 EmpleadosCOM empleados = new EmpleadosCOM();
                 string mess = "";
-                if (Exist(entidad.usuario, entidad.contraseña))
+                if (Exist(entidad.usuario))
                 {
                     mess = "Ya existe un usuario llamado: " + entidad.usuario;
                 }
@@ -114,7 +171,7 @@ namespace negocio.Componentes
                         nombres = entidad.nombres.ToUpper().Trim(),
                         puesto = entidad.puesto,
                         a_paterno = entidad.a_paterno.ToUpper().Trim(),
-                        a_materno = entidad.a_materno.ToUpper().Trim(),
+                        a_materno = entidad.a_materno,
                         correo = entidad.correo,
                         path_imagen = entidad.path_imagen,
                         activo = true,
@@ -208,14 +265,14 @@ namespace negocio.Componentes
             }
         }
 
-        public bool Exist(string usuario, string contraseña)
+        public bool Exist(string usuario)
         {
             DataTable dt = new DataTable();
             try
             {
                 Model context = new Model();
                 var query = context.usuarios
-                                .Where(s => s.usuario.ToUpper() == usuario.ToUpper() && s.activo && s.contraseña == contraseña )
+                                .Where(s => s.usuario.ToUpper() == usuario.ToUpper() && s.activo )
                                 .Select(u => new
                                 {
                                     u.id_usuario
