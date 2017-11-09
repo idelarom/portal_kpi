@@ -271,6 +271,7 @@
     <Content Include="img\push.png" />
     <Content Include="img\user.png" />
     <Content Include="img\user_mini.png" />
+    <Content Include="login.aspx" />
     <Content Include="Pages\Catalogs\catalogo_ayudas.aspx" />
     <Content Include="Pages\Catalogs\catalogo_impacto_costo.aspx" />
     <Content Include="Pages\Catalogs\catalogo_menus.aspx" />
@@ -1251,6 +1252,13 @@
     <Compile Include="Export.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="funciones.cs" />
+    <Compile Include="login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Catalogs\catalogo_ayudas.aspx.cs">
       <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
