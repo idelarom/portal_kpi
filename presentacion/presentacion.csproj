@@ -161,7 +161,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ayuda.aspx" />
     <Content Include="bootstrap\css\bootstrap-theme.css" />
     <Content Include="bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="bootstrap\css\bootstrap.css" />
@@ -170,24 +169,6 @@
     <Content Include="bootstrap\js\bootstrap.js" />
     <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="bootstrap\js\npm.js" />
-    <Content Include="catalogo_ayudas.aspx" />
-    <Content Include="catalogo_impacto_costo.aspx" />
-    <Content Include="catalogo_menus.aspx" />
-    <Content Include="catalogo_perfiles.aspx" />
-    <Content Include="catalogo_permisos.aspx" />
-    <Content Include="catalogo_proyectos_estatus.aspx" />
-    <Content Include="catalogo_proyectos_periodos.aspx" />
-    <Content Include="catalogo_proyectos_tecnologias.aspx" />
-    <Content Include="catalogo_riesgos_estatus.aspx" />
-    <Content Include="catalogo_riesgos_estrategias.aspx" />
-    <Content Include="catalogo_riesgos_probabilidad.aspx" />
-    <Content Include="catalogo_sesiones_usuario.aspx" />
-    <Content Include="catalogo_usuarios.aspx" />
-    <Content Include="catalogo_widgets.aspx" />
-    <Content Include="compensaciones_empleados.aspx" />
-    <Content Include="configuracion.aspx" />
-    <Content Include="configuracion_dashboard.aspx" />
-    <Content Include="configuracion_portal.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="dist\css\AdminLTE.css" />
     <Content Include="dist\css\AdminLTE.min.css" />
@@ -290,15 +271,42 @@
     <Content Include="img\push.png" />
     <Content Include="img\user.png" />
     <Content Include="img\user_mini.png" />
-    <Content Include="inicio.aspx" />
-    <Content Include="localizador.aspx" />
-    <Content Include="login.aspx" />
-    <Content Include="mantenimiento.aspx" />
-    <Content Include="mis_proyectos.aspx" />
-    <Content Include="mis_publicaciones.aspx" />
-    <Content Include="organigrama_connext.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_ayudas.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_impacto_costo.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_menus.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_perfiles.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_permisos.aspx" />
+    <Content Include="Pages\Catalogs\Catalogo_proyectos_estatus.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_proyectos_periodos.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_proyectos_tecnologias.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_riesgos_estatus.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_riesgos_estrategias.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_riesgos_probabilidad.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_sesiones_usuario.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_usuarios.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_widgets.aspx" />
+    <Content Include="Pages\Common\ayuda.aspx" />
+    <Content Include="Pages\Common\configuracion.aspx" />
+    <Content Include="Pages\Common\configuracion_dashboard.aspx" />
+    <Content Include="Pages\Common\configuracion_portal.aspx" />
     <Content Include="Pages\Common\inicio.aspx" />
+    <Content Include="Pages\Common\localizador.aspx" />
     <Content Include="Pages\Common\login.aspx" />
+    <Content Include="Pages\Common\mantenimiento.aspx" />
+    <Content Include="Pages\Common\recordatorios.aspx" />
+    <Content Include="Pages\Common\Service.asmx" />
+    <Content Include="Pages\Proyectos\mis_proyectos.aspx" />
+    <Content Include="Pages\Proyectos\proyectos_dashboard.aspx" />
+    <Content Include="Pages\Proyectos\proyectos_evaluacion_riesgos.aspx" />
+    <Content Include="Pages\Proyectos\proyectos_minutas.aspx" />
+    <Content Include="Pages\Proyectos\proyectos_recursos.aspx" />
+    <Content Include="Pages\Reports\reporte_dashboard_bonos_kpi.aspx" />
+    <Content Include="Pages\Reports\reporte_dashboard_compromisos_kpi.aspx" />
+    <Content Include="Pages\Reports\reporte_performance_comercial.aspx" />
+    <Content Include="Pages\Reports\reporte_performance_ingenieria_netdiario.aspx" />
+    <Content Include="Pages\Reports\reporte_performance_preventa.aspx" />
+    <Content Include="Pages\Reports\reporte_proyectos.aspx" />
+    <Content Include="Pages\Reports\reporte_riesgos.aspx" />
     <Content Include="plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="plugins\bootstrap-slider\slider.css" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -1226,158 +1234,12 @@
     <Content Include="primitive\js\touch\jquery.ui.touch-punch.js" />
     <Content Include="primitive\primitives.latest.css" />
     <Content Include="primitive\primitives.min.js" />
-    <Content Include="proyectos_dashboard.aspx" />
-    <Content Include="proyectos_evaluacion_riesgos.aspx" />
-    <Content Include="proyectos_minutas.aspx" />
-    <Content Include="proyectos_recursos.aspx" />
-    <Content Include="recordatorios.aspx" />
-    <Content Include="reporte_dashboard_bonos_kpi.aspx" />
-    <Content Include="reporte_dashboard_compromisos_kpi.aspx" />
-    <Content Include="reporte_performance_comercial.aspx" />
-    <Content Include="reporte_performance_ingenieria_netdiario.aspx" />
-    <Content Include="reporte_performance_preventa.aspx" />
-    <Content Include="reporte_proyectos.aspx" />
-    <Content Include="reporte_riesgos.aspx" />
-    <Content Include="Service.asmx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alert.cs" />
-    <Compile Include="ayuda.aspx.cs">
-      <DependentUpon>ayuda.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ayuda.aspx.designer.cs">
-      <DependentUpon>ayuda.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_ayudas.aspx.cs">
-      <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_ayudas.aspx.designer.cs">
-      <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_impacto_costo.aspx.cs">
-      <DependentUpon>catalogo_impacto_costo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_impacto_costo.aspx.designer.cs">
-      <DependentUpon>catalogo_impacto_costo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_menus.aspx.cs">
-      <DependentUpon>catalogo_menus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_menus.aspx.designer.cs">
-      <DependentUpon>catalogo_menus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_perfiles.aspx.cs">
-      <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_perfiles.aspx.designer.cs">
-      <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_permisos.aspx.cs">
-      <DependentUpon>catalogo_permisos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_permisos.aspx.designer.cs">
-      <DependentUpon>catalogo_permisos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_proyectos_estatus.aspx.cs">
-      <DependentUpon>catalogo_proyectos_estatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_proyectos_estatus.aspx.designer.cs">
-      <DependentUpon>catalogo_proyectos_estatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_proyectos_periodos.aspx.cs">
-      <DependentUpon>catalogo_proyectos_periodos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_proyectos_periodos.aspx.designer.cs">
-      <DependentUpon>catalogo_proyectos_periodos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_proyectos_tecnologias.aspx.cs">
-      <DependentUpon>catalogo_proyectos_tecnologias.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_proyectos_tecnologias.aspx.designer.cs">
-      <DependentUpon>catalogo_proyectos_tecnologias.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_riesgos_estatus.aspx.cs">
-      <DependentUpon>catalogo_riesgos_estatus.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_riesgos_estatus.aspx.designer.cs">
-      <DependentUpon>catalogo_riesgos_estatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_riesgos_estrategias.aspx.cs">
-      <DependentUpon>catalogo_riesgos_estrategias.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_riesgos_estrategias.aspx.designer.cs">
-      <DependentUpon>catalogo_riesgos_estrategias.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_riesgos_probabilidad.aspx.cs">
-      <DependentUpon>catalogo_riesgos_probabilidad.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_riesgos_probabilidad.aspx.designer.cs">
-      <DependentUpon>catalogo_riesgos_probabilidad.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_sesiones_usuario.aspx.cs">
-      <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_sesiones_usuario.aspx.designer.cs">
-      <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_usuarios.aspx.cs">
-      <DependentUpon>catalogo_usuarios.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_usuarios.aspx.designer.cs">
-      <DependentUpon>catalogo_usuarios.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="catalogo_widgets.aspx.cs">
-      <DependentUpon>catalogo_widgets.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="catalogo_widgets.aspx.designer.cs">
-      <DependentUpon>catalogo_widgets.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="compensaciones_empleados.aspx.cs">
-      <DependentUpon>compensaciones_empleados.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="compensaciones_empleados.aspx.designer.cs">
-      <DependentUpon>compensaciones_empleados.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="configuracion.aspx.cs">
-      <DependentUpon>configuracion.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="configuracion.aspx.designer.cs">
-      <DependentUpon>configuracion.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="configuracion_dashboard.aspx.cs">
-      <DependentUpon>configuracion_dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="configuracion_dashboard.aspx.designer.cs">
-      <DependentUpon>configuracion_dashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="configuracion_portal.aspx.cs">
-      <DependentUpon>configuracion_portal.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="configuracion_portal.aspx.designer.cs">
-      <DependentUpon>configuracion_portal.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1389,69 +1251,131 @@
     <Compile Include="Export.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="funciones.cs" />
-    <Compile Include="Global.Master.cs">
-      <DependentUpon>Global.Master</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_ayudas.aspx.cs">
+      <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Global.Master.designer.cs">
-      <DependentUpon>Global.Master</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_ayudas.aspx.designer.cs">
+      <DependentUpon>catalogo_ayudas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="inicio.aspx.cs">
-      <DependentUpon>inicio.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="inicio.aspx.designer.cs">
-      <DependentUpon>inicio.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="localizador.aspx.cs">
-      <DependentUpon>localizador.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_impacto_costo.aspx.cs">
+      <DependentUpon>catalogo_impacto_costo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="localizador.aspx.designer.cs">
-      <DependentUpon>localizador.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_impacto_costo.aspx.designer.cs">
+      <DependentUpon>catalogo_impacto_costo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="login.aspx.cs">
-      <DependentUpon>login.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_menus.aspx.cs">
+      <DependentUpon>catalogo_menus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="login.aspx.designer.cs">
-      <DependentUpon>login.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_menus.aspx.designer.cs">
+      <DependentUpon>catalogo_menus.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login.Master.cs">
-      <DependentUpon>Login.Master</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_perfiles.aspx.cs">
+      <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Login.Master.designer.cs">
-      <DependentUpon>Login.Master</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_perfiles.aspx.designer.cs">
+      <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="mantenimiento.aspx.cs">
-      <DependentUpon>mantenimiento.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_permisos.aspx.cs">
+      <DependentUpon>catalogo_permisos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mantenimiento.aspx.designer.cs">
-      <DependentUpon>mantenimiento.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_permisos.aspx.designer.cs">
+      <DependentUpon>catalogo_permisos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="mis_proyectos.aspx.cs">
-      <DependentUpon>mis_proyectos.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_proyectos_estatus.aspx.cs">
+      <DependentUpon>Catalogo_proyectos_estatus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mis_proyectos.aspx.designer.cs">
-      <DependentUpon>mis_proyectos.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\Catalogo_proyectos_estatus.aspx.designer.cs">
+      <DependentUpon>Catalogo_proyectos_estatus.aspx</DependentUpon>
     </Compile>
-    <Compile Include="mis_publicaciones.aspx.cs">
-      <DependentUpon>mis_publicaciones.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_proyectos_periodos.aspx.cs">
+      <DependentUpon>catalogo_proyectos_periodos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="mis_publicaciones.aspx.designer.cs">
-      <DependentUpon>mis_publicaciones.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_proyectos_periodos.aspx.designer.cs">
+      <DependentUpon>catalogo_proyectos_periodos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="organigrama_connext.aspx.cs">
-      <DependentUpon>organigrama_connext.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_proyectos_tecnologias.aspx.cs">
+      <DependentUpon>catalogo_proyectos_tecnologias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="organigrama_connext.aspx.designer.cs">
-      <DependentUpon>organigrama_connext.aspx</DependentUpon>
+    <Compile Include="Pages\Catalogs\catalogo_proyectos_tecnologias.aspx.designer.cs">
+      <DependentUpon>catalogo_proyectos_tecnologias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_riesgos_estatus.aspx.cs">
+      <DependentUpon>catalogo_riesgos_estatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_riesgos_estatus.aspx.designer.cs">
+      <DependentUpon>catalogo_riesgos_estatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_riesgos_estrategias.aspx.cs">
+      <DependentUpon>catalogo_riesgos_estrategias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_riesgos_estrategias.aspx.designer.cs">
+      <DependentUpon>catalogo_riesgos_estrategias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_riesgos_probabilidad.aspx.cs">
+      <DependentUpon>catalogo_riesgos_probabilidad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_riesgos_probabilidad.aspx.designer.cs">
+      <DependentUpon>catalogo_riesgos_probabilidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_sesiones_usuario.aspx.cs">
+      <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_sesiones_usuario.aspx.designer.cs">
+      <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_usuarios.aspx.cs">
+      <DependentUpon>catalogo_usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_usuarios.aspx.designer.cs">
+      <DependentUpon>catalogo_usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_widgets.aspx.cs">
+      <DependentUpon>catalogo_widgets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_widgets.aspx.designer.cs">
+      <DependentUpon>catalogo_widgets.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Common\ayuda.aspx.cs">
+      <DependentUpon>ayuda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Common\ayuda.aspx.designer.cs">
+      <DependentUpon>ayuda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Common\configuracion.aspx.cs">
+      <DependentUpon>configuracion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Common\configuracion.aspx.designer.cs">
+      <DependentUpon>configuracion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Common\configuracion_dashboard.aspx.cs">
+      <DependentUpon>configuracion_dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Common\configuracion_dashboard.aspx.designer.cs">
+      <DependentUpon>configuracion_dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Common\configuracion_portal.aspx.cs">
+      <DependentUpon>configuracion_portal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Common\configuracion_portal.aspx.designer.cs">
+      <DependentUpon>configuracion_portal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Common\inicio.aspx.cs">
       <DependentUpon>inicio.aspx</DependentUpon>
@@ -1459,6 +1383,13 @@
     </Compile>
     <Compile Include="Pages\Common\inicio.aspx.designer.cs">
       <DependentUpon>inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Common\localizador.aspx.cs">
+      <DependentUpon>localizador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Common\localizador.aspx.designer.cs">
+      <DependentUpon>localizador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Common\login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
@@ -1474,6 +1405,24 @@
     <Compile Include="Pages\Common\Login.Master.designer.cs">
       <DependentUpon>Login.Master</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Common\mantenimiento.aspx.cs">
+      <DependentUpon>mantenimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Common\mantenimiento.aspx.designer.cs">
+      <DependentUpon>mantenimiento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Common\recordatorios.aspx.cs">
+      <DependentUpon>recordatorios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Common\recordatorios.aspx.designer.cs">
+      <DependentUpon>recordatorios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Common\Service.asmx.cs">
+      <DependentUpon>Service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Pages\MP\Global.Master.cs">
       <DependentUpon>Global.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1481,95 +1430,91 @@
     <Compile Include="Pages\MP\Global.Master.designer.cs">
       <DependentUpon>Global.Master</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Proyectos\mis_proyectos.aspx.cs">
+      <DependentUpon>mis_proyectos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Proyectos\mis_proyectos.aspx.designer.cs">
+      <DependentUpon>mis_proyectos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Proyectos\proyectos_dashboard.aspx.cs">
+      <DependentUpon>proyectos_dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Proyectos\proyectos_dashboard.aspx.designer.cs">
+      <DependentUpon>proyectos_dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Proyectos\proyectos_evaluacion_riesgos.aspx.cs">
+      <DependentUpon>proyectos_evaluacion_riesgos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Proyectos\proyectos_evaluacion_riesgos.aspx.designer.cs">
+      <DependentUpon>proyectos_evaluacion_riesgos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Proyectos\proyectos_minutas.aspx.cs">
+      <DependentUpon>proyectos_minutas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Proyectos\proyectos_minutas.aspx.designer.cs">
+      <DependentUpon>proyectos_minutas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Proyectos\proyectos_recursos.aspx.cs">
+      <DependentUpon>proyectos_recursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Proyectos\proyectos_recursos.aspx.designer.cs">
+      <DependentUpon>proyectos_recursos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_dashboard_bonos_kpi.aspx.cs">
+      <DependentUpon>reporte_dashboard_bonos_kpi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_dashboard_bonos_kpi.aspx.designer.cs">
+      <DependentUpon>reporte_dashboard_bonos_kpi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_dashboard_compromisos_kpi.aspx.cs">
+      <DependentUpon>reporte_dashboard_compromisos_kpi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_dashboard_compromisos_kpi.aspx.designer.cs">
+      <DependentUpon>reporte_dashboard_compromisos_kpi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_performance_comercial.aspx.cs">
+      <DependentUpon>reporte_performance_comercial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_performance_comercial.aspx.designer.cs">
+      <DependentUpon>reporte_performance_comercial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_performance_ingenieria_netdiario.aspx.cs">
+      <DependentUpon>reporte_performance_ingenieria_netdiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_performance_ingenieria_netdiario.aspx.designer.cs">
+      <DependentUpon>reporte_performance_ingenieria_netdiario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_performance_preventa.aspx.cs">
+      <DependentUpon>reporte_performance_preventa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_performance_preventa.aspx.designer.cs">
+      <DependentUpon>reporte_performance_preventa.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_proyectos.aspx.cs">
+      <DependentUpon>reporte_proyectos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_proyectos.aspx.designer.cs">
+      <DependentUpon>reporte_proyectos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_riesgos.aspx.cs">
+      <DependentUpon>reporte_riesgos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Reports\reporte_riesgos.aspx.designer.cs">
+      <DependentUpon>reporte_riesgos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="proyectos_dashboard.aspx.cs">
-      <DependentUpon>proyectos_dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="proyectos_dashboard.aspx.designer.cs">
-      <DependentUpon>proyectos_dashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="proyectos_evaluacion_riesgos.aspx.cs">
-      <DependentUpon>proyectos_evaluacion_riesgos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="proyectos_evaluacion_riesgos.aspx.designer.cs">
-      <DependentUpon>proyectos_evaluacion_riesgos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="proyectos_minutas.aspx.cs">
-      <DependentUpon>proyectos_minutas.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="proyectos_minutas.aspx.designer.cs">
-      <DependentUpon>proyectos_minutas.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="proyectos_recursos.aspx.cs">
-      <DependentUpon>proyectos_recursos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="proyectos_recursos.aspx.designer.cs">
-      <DependentUpon>proyectos_recursos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="recordatorios.aspx.cs">
-      <DependentUpon>recordatorios.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="recordatorios.aspx.designer.cs">
-      <DependentUpon>recordatorios.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="reporte_dashboard_bonos_kpi.aspx.cs">
-      <DependentUpon>reporte_dashboard_bonos_kpi.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="reporte_dashboard_bonos_kpi.aspx.designer.cs">
-      <DependentUpon>reporte_dashboard_bonos_kpi.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="reporte_dashboard_compromisos_kpi.aspx.cs">
-      <DependentUpon>reporte_dashboard_compromisos_kpi.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="reporte_dashboard_compromisos_kpi.aspx.designer.cs">
-      <DependentUpon>reporte_dashboard_compromisos_kpi.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="reporte_performance_comercial.aspx.cs">
-      <DependentUpon>reporte_performance_comercial.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="reporte_performance_comercial.aspx.designer.cs">
-      <DependentUpon>reporte_performance_comercial.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="reporte_performance_ingenieria_netdiario.aspx.cs">
-      <DependentUpon>reporte_performance_ingenieria_netdiario.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="reporte_performance_ingenieria_netdiario.aspx.designer.cs">
-      <DependentUpon>reporte_performance_ingenieria_netdiario.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="reporte_performance_preventa.aspx.cs">
-      <DependentUpon>reporte_performance_preventa.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="reporte_performance_preventa.aspx.designer.cs">
-      <DependentUpon>reporte_performance_preventa.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="reporte_proyectos.aspx.cs">
-      <DependentUpon>reporte_proyectos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="reporte_proyectos.aspx.designer.cs">
-      <DependentUpon>reporte_proyectos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="reporte_riesgos.aspx.cs">
-      <DependentUpon>reporte_riesgos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="reporte_riesgos.aspx.designer.cs">
-      <DependentUpon>reporte_riesgos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Service.asmx.cs">
-      <DependentUpon>Service.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Toast.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1616,8 +1561,6 @@
     <Content Include="plugins\datatables\extensions\TableTools\Readme.md" />
     <Content Include="plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="plugins\input-mask\phone-codes\phone-codes.json" />
-    <Content Include="Global.Master" />
-    <Content Include="Login.Master" />
     <Content Include="primitive\codemirror\LICENSE" />
     <Content Include="Pages\Common\Login.Master" />
     <Content Include="Pages\MP\Global.Master" />
@@ -1650,7 +1593,6 @@
     <Folder Include="files\users\" />
     <Folder Include="img\helps\" />
     <Folder Include="img\users\" />
-    <Folder Include="Pages\Catalogs\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />

@@ -352,7 +352,7 @@
 
                 <div class="box-footer clearfix">
                     <a class="btn btn-sm btn-danger btn-flat pull-right" id="link_proyectos"
-                        onclick="CloseAjax('mis_proyectos.aspx');">Ver todos mis proyectos
+                        onclick="CloseAjax('../../Pages/Proyectos/mis_proyectos.aspx');">Ver todos mis proyectos
                     </a>
                 </div>
                 <!-- /.box-footer -->

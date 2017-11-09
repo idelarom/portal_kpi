@@ -169,7 +169,7 @@
                         title: "No sabemos donde estas :(",
                         text: "Para utilizar todas las herramientas del portal, debes permitir detectar tu ubicación. Es posible que tu navegador no sea compatible con esta funcionalidad.",
 
-                        imageUrl: "img/local.png",
+                        imageUrl: "../../img/local.png",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
                         confirmButtonText: "Recargar",

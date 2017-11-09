@@ -21,7 +21,7 @@ namespace presentacion.Pages.MP
                 Session.Clear();
                 Session.RemoveAll();
                 Session.Abandon();
-                Response.Redirect("login.aspx");
+                Response.Redirect("../../Pages/Common/login.aspx");
             }
             if (!IsPostBack)
             {
@@ -130,7 +130,7 @@ namespace presentacion.Pages.MP
 
         protected void lnkcerrarsession_Click(object sender, EventArgs e)
         {
-            string url = "login.aspx";
+            string url = "../../Pages/Common/login.aspx";
             EmpleadosCOM empleados = new EmpleadosCOM();
             DataSet ds = empleados.sp_eliminar_usuario_sesiones(Convert.ToInt32(Session["id_usuario_sesion"]), false);
             Session.Clear();

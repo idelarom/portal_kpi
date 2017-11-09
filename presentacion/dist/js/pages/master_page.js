@@ -206,7 +206,7 @@ function ShowNewDevice() {
 
 function CargarNuevosDispositivos() {
     $.ajax({
-        url: 'Service.asmx/checaItem',
+        url: '../../Pages/Common/Service.asmx/checaItem',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
@@ -251,7 +251,7 @@ function CargarNotificaciones() {
     var usuario = $("#hdf_mp_usuario").val();
     console.log(usuario);
     $.ajax({
-        url: 'Service.asmx/GetAvisos',
+        url: '../../Pages/Common/Service.asmx/GetAvisos',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",

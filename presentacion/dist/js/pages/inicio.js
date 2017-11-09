@@ -141,7 +141,7 @@ function IniciarWidgets() {
     //guardamos esta ejecucion en un array
     var ajax_ejecutados = [];
     var call = $.ajax({
-        url: 'inicio.aspx/getDivs',
+        url: '../../Pages/Common/inicio.aspx/getDivs',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
@@ -194,7 +194,7 @@ function CargarDashboardbonosIndividual() {
     var usuario = User();// $('#ContentPlaceHolder1_hdf_usuario').val();
     //guardamos esta ejecucion en un array
     var call = $.ajax({
-        url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues_Individual',
+        url: '../../Pages/Reports/reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues_Individual',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
@@ -247,7 +247,7 @@ function CargarDashboardbonos() {
     var ver_Todos_empleados = VerTodosEmpleados(); //$('#ContentPlaceHolder1_hdf_ver_Todos_empleados').val();
     //guardamos esta ejecucion en un array
     var call = $.ajax({
-        url: 'reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues',
+        url: '../../Pages/Reports/reporte_dashboard_bonos_kpi.aspx/GetDashboardBonosValues',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
@@ -267,13 +267,13 @@ function CargarDashboardbonos() {
                 if (cadena.length > 1) {
                     cadena = cadena.substring(0, cadena.length - 1);
                     cadena = btoa(cadena);
-                    $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx?list=' + cadena)
+                    $('#link_dashboard_kpi').attr('href', '../../Pages/Reports/reporte_dashboard_bonos_kpi.aspx?list=' + cadena)
                 } else {
-                    $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx?list=' + cadena)
+                    $('#link_dashboard_kpi').attr('href', '../../Pages/Reports/reporte_dashboard_bonos_kpi.aspx?list=' + cadena)
                 }
                 Init('#table_dashboard_kpi');
             } else {
-                $('#link_dashboard_kpi').attr('href', 'reporte_dashboard_bonos_kpi.aspx');
+                $('#link_dashboard_kpi').attr('href', '../../Pages/Reports/reporte_dashboard_bonos_kpi.aspx');
             }
             spinner.stop();
         },
@@ -296,7 +296,7 @@ function CargarPerformanceIngenieriaIndividual() {
     var usuario = User();// $('#ContentPlaceHolder1_hdf_usuario').val();
     //guardamos esta ejecucion en un array
     var call = $.ajax({
-        url: 'reporte_performance_ingenieria_netdiario.aspx/GetPerformanceIngenieria_Individual',
+        url: '../../Pages/Reports/reporte_performance_ingenieria_netdiario.aspx/GetPerformanceIngenieria_Individual',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
@@ -352,7 +352,7 @@ function CargarPerformanceIngenieria() {
     var ver_Todos_empleados = VerTodosEmpleados(); //$('#ContentPlaceHolder1_hdf_ver_Todos_empleados').val();
     //guardamos esta ejecucion en un array
     var call = $.ajax({
-        url: 'reporte_performance_ingenieria_netdiario.aspx/GetPerformanceIngenieriaValues',
+        url: '../../Pages/Reports/reporte_performance_ingenieria_netdiario.aspx/GetPerformanceIngenieriaValues',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
@@ -373,13 +373,13 @@ function CargarPerformanceIngenieria() {
                 if (cadena.length > 1) {
                     cadena = cadena.substring(0, cadena.length - 1);
                     cadena = btoa(cadena);
-                    $('#link_dashboard_kpi').attr('href', 'reporte_performance_ingenieria_netdiario.aspx?list=' + cadena)
+                    $('#link_dashboard_kpi').attr('href', '../../Pages/Reports/reporte_performance_ingenieria_netdiario.aspx?list=' + cadena)
                 } else {
-                    $('#link_dashboard_kpi').attr('href', 'reporte_performance_ingenieria_netdiario.aspx?list=' + cadena)
+                    $('#link_dashboard_kpi').attr('href', '../../Pages/Reports/reporte_performance_ingenieria_netdiario.aspx?list=' + cadena)
                 }
                 Init('#table_dashboard_kpi');
             } else {
-                $('#link_dashboard_kpi').attr('href', 'reporte_performance_ingenieria_netdiario.aspx');
+                $('#link_dashboard_kpi').attr('href', '../../Pages/Reports/reporte_performance_ingenieria_netdiario.aspx');
             }
             spinner.stop();
         },
@@ -401,7 +401,7 @@ function CargarDashboardCompromisosIndividual() {
     var usuario = User();// $('#ContentPlaceHolder1_hdf_usuario').val();
     //guardamos esta ejecucion en un array
     var call = $.ajax({
-        url: 'reporte_dashboard_compromisos_kpi.aspx/GetDashboardCompromisos_Individual',
+        url: '../../Pages/Reports/reporte_dashboard_compromisos_kpi.aspx/GetDashboardCompromisos_Individual',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
@@ -452,27 +452,30 @@ function CargarProyectos() {
 
     var num_empleado = NumEmpleado();// $('#ContentPlaceHolder1_hdf_usuario').val();
     //guardamos esta ejecucion en un array
+
     var call = $.ajax({
-        url: 'Service.asmx/ProyectosWidget',
+        url: '../../Pages/Common/Service.asmx/ProyectosWidget',
         contentType: "application/json; charset=utf-8",
         type: "POST",
         dataType: "json",
         data: "{num_empleado:" + num_empleado + "}",
         success: function (response) {
+
             var performance = JSON.parse(response.d);
+
             if (performance.length > 0) {
                 var cadena = '';
                 for (indice = 0; indice < performance.length; indice++) {
                     var id_proyecto = btoa(performance[indice].id_proyecto);
                     $('#table_proyectos').find('tbody').append('' +
                         '<tr>' +
-                            '<td><a href="proyectos_dashboard.aspx?id_proyecto=' + id_proyecto + '">' + performance[indice].proyecto + '</a></td>' +
+                            '<td><a href="../../Pages/Proyectos/proyectos_dashboard.aspx?id_proyecto=' + id_proyecto + '">' + performance[indice].proyecto + '</a></td>' +
                             '<td style="text-align: center;"><span class="label label-success">' + performance[indice].estatus + '</span></td>' +
                             '<td>' + performance[indice].empleado + '</td>' +
                         '</tr>');
                 }
             }
-            $('#link_proyectos').attr('href', 'mis_proyectos.aspx');
+            $('#link_proyectos').attr('href', '../../Pages/Proyectos/mis_proyectos.aspx');
             spinner.stop();
         },
         error: function (result, status, err) {
