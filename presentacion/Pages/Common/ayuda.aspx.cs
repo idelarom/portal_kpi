@@ -105,10 +105,10 @@ namespace presentacion.Pages.Common
                     if (ayuda.video)
                     {
                         string url = HttpContext.Current.Request.Url.AbsoluteUri;
-                        url = url.Replace("ayuda.aspx","");
+                        url = url.Replace("Pages/Common/ayuda.aspx","");
                         codigo = "<div align='center' style='max-height:400px' class='embed-responsive embed-responsive-16by9'>" +    
                                     "<video class='embed-responsive-item' controls>"+
-                                     "   <source src='"+ url + ayuda.src + "'  type='video/mp4'>" +
+                                     "   <source src='"+ url+ ayuda.src + "'  type='video/mp4'>" +
                                     "</video>"+
                                    " </div>";
                         PlaceHolder1.Visible = true;
