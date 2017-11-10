@@ -1,9 +1,33 @@
 ﻿<%@ Page Title="Catalogo Usuarios" Language="C#" MasterPageFile="~/Pages/MP/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_usuarios.aspx.cs" Inherits="presentacion.Pages.Catalogs.catalogo_usuarios" %>
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
             Init();
         });
+        var opts = {
+            lines: 13 // The number of lines to draw
+         , length: 28 // The length of each line
+         , width: 14 // The line thickness
+         , radius: 42 // The radius of the inner circle
+         , scale: 1 // Scales overall size of the spinner
+         , corners: 1 // Corner roundness (0..1)
+         , color: '#000' // #rgb or #rrggbb or array of colors
+         , opacity: 0.1 // Opacity of the lines
+         , rotate: 0 // The rotation offset
+         , direction: 1 // 1: clockwise, -1: counterclockwise
+         , speed: 1 // Rounds per second
+         , trail: 60 // Afterglow percentage
+         , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+         , zIndex: 10 // The z-index (defaults to 2000000000)
+         , className: 'spinner' // The CSS class to assign to the spinner
+         , top: '45%' // Top position relative to parent
+         , left: '50%' // Left position relative to parent
+         , shadow: true // Whether to render a shadow
+         , hwaccel: true // Whether to use hardware acceleration
+         , position: 'absolute' // Element positioning
+        };
         function Init() {
             $('.dvv').DataTable({
                 "paging": true,
@@ -44,10 +68,19 @@
             var hdfnum_empleado = document.getElementById('<%= hdfnum_empleado.ClientID %>');
             hdfnum_empleado.value = no_;
             hdfusuario.value = usuario;
+            $("#<%= div_load.ClientID%>").show();
+            var target = document.getElementById('<%= div_load.ClientID %>');
+            var spinner = new Spinner(opts).spin(target);
             document.getElementById('<%= btnver.ClientID%>').click();
             return false;
         }
-        
+        function ViewUserInfo() {
+            ModalCloseGlobal('#modal_usuarrios');
+            $("#<%= div_load.ClientID%>").show();
+            var target = document.getElementById('<%= div_load.ClientID %>');
+            var spinner = new Spinner(opts).spin(target);
+            return true;
+        }
         function DelegadosClick(usuario) {
             var hdfusuario = document.getElementById('<%= hdfusuario.ClientID %>');
             hdfusuario.value = usuario;
@@ -55,44 +88,53 @@
             return false;
         }
 
-        function ChangedTextLoad3()
-        {
-            $("#<%= imgmenu.ClientID%>").show();
-            $("#<%= lblmenu.ClientID%>").show();
-            return true;
-        }
-        function ChangedTextLoadadd()
-        {
-            $("#<%= imgloadempleado.ClientID%>").show();
-            $("#<%= lblbemp.ClientID%>").show();
-            return true;
-        }
-        function ChangedTextLoadperfil()
-        {
-            $("#<%= imgperfil.ClientID%>").show();
-            $("#<%= lblperfilb.ClientID%>").show();
-            return true;
-        }
-        function ChangedTextLoad4()
-        {
-            $("#<%= imgpermiso.ClientID%>").show();
-            $("#<%= lblpermiso.ClientID%>").show();
-            return true;
-        }
-        function ChangedTextLoad2() {
-            $("#<%= imgloadempleado_.ClientID%>").show();
-            $("#<%= lblbe2.ClientID%>").show();
-            return true;
-        }
-        function ConfirmEmpleadoProyectoModal(msg) {
-            if (confirm(msg)) {
-                $("#<%= lnkcargando.ClientID%>").show();
-                $("#<%= lnkguardar.ClientID%>").hide();
+            function ChangedTextLoad3()
+            {
+                $("#<%= imgmenu.ClientID%>").show();
+                $("#<%= lblmenu.ClientID%>").show();
                 return true;
-            } else {
-                return false;
             }
-        }
+            function ChangedTextLoadadd()
+            {
+                $("#<%= imgloadempleado.ClientID%>").show();
+                $("#<%= lblbemp.ClientID%>").show();
+                return true;
+            }
+            function ChangedTextLoadperfil()
+            {
+                $("#<%= imgperfil.ClientID%>").show();
+                $("#<%= lblperfilb.ClientID%>").show();
+                return true;
+            }
+            function ChangedTextLoad4()
+            {
+                $("#<%= imgpermiso.ClientID%>").show();
+                $("#<%= lblpermiso.ClientID%>").show();
+                return true;
+            }
+            function ChangedTextLoad2() {
+                $("#<%= imgloadempleado_.ClientID%>").show();
+                $("#<%= lblbe2.ClientID%>").show();
+                return true;
+            }
+            function ConfirmEmpleadoProyectoModal(msg) {
+                if (confirm(msg)) {
+                    $("#<%= lnkcargando.ClientID%>").show();
+                    $("#<%= lnkguardar.ClientID%>").hide();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function ConfirmNewUser(msg) {
+                if (confirm(msg)) {
+                    $("#<%= lnkloadusernew.ClientID%>").show();
+                    $("#<%= lnkguardarempleado.ClientID%>").hide();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -103,15 +145,24 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
+
             <div class="box box-danger">
                 <div class="box-body">
-            
-                  
-            <asp:LinkButton ID="lnknuevousuario" CssClass="btn btn-primary btn-flat" OnClick="lnknuevousuario_Click" runat="server">
+                     <asp:UpdatePanel ID="wdwdwdw" runat="server">
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="btnver" EventName="Click" />
+                            </Triggers>
+                         <ContentTemplate>
+                             <div id="div_load" runat="server" style="display: none;">
+                             </div>
+                         </ContentTemplate>
+                        </asp:UpdatePanel>
+
+                    <asp:LinkButton ID="lnknuevousuario" CssClass="btn btn-primary btn-flat" OnClick="lnknuevousuario_Click" runat="server">
                Nuevo usuario&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
-            </asp:LinkButton>
+                    </asp:LinkButton>
                     <div class="table-responsive">
-                        <table class="dvv table no-margin table-condensed">
+                        <table class="dvv table no-margin table-condensed" id="tabla_users" >
                             <thead>
                                 <tr style="font-size: 11px;">
                                     <th style="max-width: 20px; text-align: center;" scope="col"></th>
@@ -129,7 +180,7 @@
                                     <ItemTemplate>
                                         <tr style="font-size: 11px">
                                             <td style="text-align: center;">
-                                                <a style="cursor: pointer;" 
+                                                <a style="cursor: pointer;"
                                                     onclick='<%# "return EditarClick("+@""""+Eval("usuario")+@"""" +","+Eval("num_empleado")+");" %>'>
                                                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                                 </a>
@@ -140,10 +191,10 @@
                                             <td style="text-align: left;"><%# Eval("Puesto") %></td>
                                             <td style="text-align: left;"><%# Eval("correo") %></td>
                                             <td style="text-align: left;"><%# Eval("Perfil") %></td>
-                                            <td style="text-align: center;"> 
-                                                 <a style="cursor: pointer;min-width:40px" class="btn btn-primary btn-flat btn-xs" 
+                                            <td style="text-align: center;">
+                                                <a style="cursor: pointer; min-width: 40px" class="btn btn-primary btn-flat btn-xs"
                                                     onclick='<%# "return DelegadosClick("+@""""+Eval("usuario")+@"""" +");" %>'>
-                                                   <%# Eval("total_delegados") %>
+                                                    <%# Eval("total_delegados") %>
                                                 </a>
                                             </td>
                                         </tr>
@@ -355,6 +406,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <Triggers>
+                    
+                    <asp:AsyncPostBackTrigger ControlID="lnkinfoadicional" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btndelegados" EventName="Click" />
                 </Triggers>
                 <ContentTemplate>
@@ -453,12 +506,12 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <h6><strong><i class="fa fa-key" aria-hidden="true"></i>&nbsp;Contraseña</strong>
                                     </h6>
-                                    <asp:TextBox ID="txtcontra" MaxLength="250" TextMode="Password"  CssClass="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtcontra" MaxLength="250"   CssClass="form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <h6><strong><i class="fa fa-key" aria-hidden="true"></i>&nbsp;Confirmar contraseña</strong>
                                     </h6>
-                                    <asp:TextBox ID="txtconfirmacontra" TextMode="Password"  MaxLength="250"  CssClass="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtconfirmacontra"   MaxLength="250"  CssClass="form-control" runat="server"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="row">
@@ -480,17 +533,26 @@
 
                             </div>
                             <div class="row">
-                                
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
                                     <h6><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Puesto</strong>
                                     </h6>
                                     <asp:TextBox ID="txtpuesto" CssClass="form-control" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <asp:CheckBox ID="cbxtemporal" Text="Usuario temporal" AutoPostBack="true"
+                                        OnCheckedChanged="cbxtemporal_CheckedChanged" runat="server" />
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12" id="div_fecha_vencimiento" runat="server" visible="false">
+                                    <h6><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;Fecha vencimiento de usuario</strong>
+                                    </h6>
+                                    <telerik:RadDatePicker ID="rdpfecha_vencimiento" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12" style="display: none;">
                                     <h6><strong><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Empleado</strong>
                                         &nbsp; 
-                                        <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
                                     </h6>
+
+                                    <asp:CheckBox ID="cbxnoactivo" Text="Ver no Activos" Checked="true" runat="server" />
                                     <div class="input-group input-group-sm">
                                         <asp:TextBox
                                             onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
@@ -511,12 +573,15 @@
                         </div>
                         <div class="modal-footer ">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
-                            <asp:LinkButton OnClientClick="return false;" ID="LinkButton3" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                             <asp:LinkButton ID="lnkinfoadicional" CssClass="btn btn-danger btn-flat"
+                                        OnClientClick="return ViewUserInfo();"
+                                        OnClick="lnkinfoadicional_Click" runat="server">Información adicional</asp:LinkButton>
+                            <asp:LinkButton OnClientClick="return false;" ID="lnkloadusernew" CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando...
                             </asp:LinkButton>
                             <asp:LinkButton ID="lnkguardarempleado" CssClass="btn btn-primary btn-flat" OnClick="lnkguardarempleado_Click"
-                                OnClientClick="return ConfirmEmpleadoProyectoModal('¿Desea Guardar esta información?');" runat="server">
+                                OnClientClick="return ConfirmNewUser('¿Desea Guardar esta información?');" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                             </asp:LinkButton>
                         </div>

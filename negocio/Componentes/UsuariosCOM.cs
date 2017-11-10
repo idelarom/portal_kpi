@@ -12,6 +12,35 @@ namespace negocio.Componentes
 {
     public class UsuariosCOM
     {
+        public string perfil(string usuario_)
+        {
+            try
+            {
+                Model db = new Model();
+                var results = (from a in db.usuarios_perfiles
+                            join b in db.perfiles on a.id_perfil equals b.id_perfil
+                            where(a.usuario_borrado == null && a.usuario.ToUpper() == usuario_.ToUpper())
+                            select new {
+                                b.perfil
+                            });
+                DataTable dt = To.DataTable(results.ToList());
+                string usuario = "--Sin perfil relacionado";
+                if (dt.Rows.Count > 0)
+                {
+                    usuario = dt.Rows[0]["perfil"].ToString();
+                }
+                return usuario;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return "--Sin perfil relacionado";
+            }
+
+        }
         public usuarios usuario(string usuario_)
         {
             try
@@ -131,6 +160,8 @@ namespace negocio.Componentes
                     usuario.a_paterno = entidad.a_paterno;
                     usuario.a_materno = entidad.a_materno;
                     usuario.No_ = entidad.No_;
+                    usuario.temporal = entidad.temporal;
+                    usuario.fecha_vencimiento = entidad.fecha_vencimiento;
                     usuario.path_imagen = entidad.path_imagen;
                     context.SaveChanges();
                 }
@@ -166,12 +197,14 @@ namespace negocio.Componentes
                     {
                         usuario = entidad.usuario.ToUpper().Trim(),
                         No_ = entidad.No_,
-                        
+
                         contraseña = entidad.contraseña,
                         nombres = entidad.nombres.ToUpper().Trim(),
                         puesto = entidad.puesto,
                         a_paterno = entidad.a_paterno.ToUpper().Trim(),
                         a_materno = entidad.a_materno,
+                        temporal = entidad.temporal,
+                        fecha_vencimiento = entidad.fecha_vencimiento,
                         correo = entidad.correo,
                         path_imagen = entidad.path_imagen,
                         activo = true,

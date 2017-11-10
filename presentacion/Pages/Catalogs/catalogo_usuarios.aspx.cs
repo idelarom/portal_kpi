@@ -219,7 +219,8 @@ namespace presentacion.Pages.Catalogs
                     LlenarInformacionModal();
                     ModalShow("#ModalEmpleado");
                 }
-                else {
+                else
+                {
                     UsuariosCOM usuarios = new UsuariosCOM();
                     string usuario_ = hdfusuario.Value;
                     usuarios usuario = new usuarios();
@@ -234,6 +235,9 @@ namespace presentacion.Pages.Catalogs
                         txtamaterno.Text = usuario.a_materno;
                         txtcorreo.Text = usuario.correo;
                         txtpuesto.Text = usuario.puesto;
+                        cbxtemporal.Checked = usuario.temporal;
+                        div_fecha_vencimiento.Visible = usuario.temporal;
+                        rdpfecha_vencimiento.SelectedDate = usuario.fecha_vencimiento;
                         CargarDatosFiltros("");
                         if (ddlempleado_a_consultar.Items.FindByValue(usuario.No_) != null)
                         {
@@ -241,14 +245,18 @@ namespace presentacion.Pages.Catalogs
                         }
                         ModalShow("#modal_usuarrios");
                     }
-                    else{
-                        Toast.Error("Ocurrio un error al busca la información del usuario. Intentelo nuevamente.",this);
+                    else
+                    {
+                        Toast.Error("Ocurrio un error al busca la información del usuario. Intentelo nuevamente.", this);
                     }
                 }
             }
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar usuario: " + ex.Message, this);
+            }
+            finally {
+                div_load.Style["display"] = "none";
             }
         }
 
@@ -860,12 +868,15 @@ namespace presentacion.Pages.Catalogs
             txtcorreo.Text="";
             txtpuesto.Text="";
             hdfnum_empleado.Value = "";
+            cbxtemporal.Checked = false;
+            div_fecha_vencimiento.Visible = false;
+            rdpfecha_vencimiento.SelectedDate = DateTime.Now.AddDays(7);
             CargarDatosFiltros("");
             ModalShow("#modal_usuarrios");
         }
 
         private String Guardar(string usuario, string No_, string contraseña, string nombres, string apaterno, string amaterno,
-            string correo, string path_imagen, string puesto)
+            string correo, string path_imagen, string puesto, bool temporal, DateTime? fecha_vencimiento)
         {
             try
             {
@@ -881,8 +892,10 @@ namespace presentacion.Pages.Catalogs
                 usuario_.correo = correo;
                 usuario_.path_imagen = path_imagen;
                 usuario_.puesto = puesto;
+                usuario_.temporal = temporal;
+                usuario_.fecha_vencimiento = fecha_vencimiento;
                 usuario_.usuario_alta = Session["usuario"] as string;
-                vmensaje = usuarios.Agregar(usuario_);
+                vmensaje = hdfusuario.Value == "" ? usuarios.Agregar(usuario_) : usuarios.Editar(usuario_);
                 return vmensaje;
             }
             catch (Exception ex)
@@ -901,13 +914,14 @@ namespace presentacion.Pages.Catalogs
                 string apaterno = txtapaterno.Text;
                 string amaterno = txtamaterno.Text;
                 string correo = txtcorreo.Text;
-                string No_ = ddlempleado_a_consultar.SelectedValue.ToString()=="0"?"":ddlempleado_a_consultar.SelectedValue.ToString();
+                string No_ = "";// ddlempleado_a_consultar.SelectedValue.ToString()=="0"?"":ddlempleado_a_consultar.SelectedValue.ToString();
                 string puesto = txtpuesto.Text;
                 string path_imagen = "";
                 string vmensaje = "";
+                Boolean temporal = cbxtemporal.Checked;
 
-                
-                 
+                if (!temporal) { rdpfecha_vencimiento.SelectedDate = null; } 
+
                 if (usuario == "")
                 {
                     txtusuario.Focus();
@@ -919,12 +933,12 @@ namespace presentacion.Pages.Catalogs
                     txtconfirmacontra.Focus();
                     vmensaje = "Las contraseña no coinciden.";
                 }
-                else if(usuario.Length < 5)
+                else if (usuario.Length < 5)
                 {
                     txtusuario.Focus();
                     vmensaje = "Ingrese un usuario de al menos 5 caracteres.";
                 }
-                else if(No_ == "" && nombres == "" && apaterno == "")
+                else if (No_ == "" && nombres == "" && apaterno == "")
                 {
                     txtnombres.Focus();
                     vmensaje = "Si no selecciona un empleado, ingrese un nombre y apellidos para el usuario.";
@@ -934,8 +948,13 @@ namespace presentacion.Pages.Catalogs
                     txtcorreo.Focus();
                     vmensaje = "Ingrese un correo.";
                 }
-                else {
-                    vmensaje = Guardar(usuario,No_,contraseña,nombres,apaterno,amaterno,correo,path_imagen,puesto);
+                else if (temporal && !rdpfecha_vencimiento.SelectedDate.HasValue)
+                {
+                    vmensaje = "Ingrese la fecha de vencimiento del usuario temporal.";
+                }
+                else
+                {
+                    vmensaje = Guardar(usuario, No_, contraseña, nombres, apaterno, amaterno, correo, path_imagen, puesto, temporal, rdpfecha_vencimiento.SelectedDate);
                 }
 
                 if (vmensaje == "")
@@ -963,6 +982,79 @@ namespace presentacion.Pages.Catalogs
             catch (Exception ex)
             {
                 Toast.Error("Error al guardar usuario: " + ex.Message, this);
+            }
+        }
+
+        protected void cbxtemporal_CheckedChanged(object sender, EventArgs e)
+        {
+            div_fecha_vencimiento.Visible = !div_fecha_vencimiento.Visible;
+        }
+
+        protected void lnkinfoadicional_Click(object sender, EventArgs e)
+        {
+            div_addperfil.Visible = false;
+            div_menus.Visible = false;
+            div_permiso.Visible = false;
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));
+                string usuario = hdfusuario.Value;
+                string imagen = usuario + ".png";
+                if (imagen != "" && File.Exists(dirInfo.ToString().Trim() + imagen))
+                {
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    img_employee.ImageUrl = "~/img/users/" + imagen + "?date=" + date;
+                }
+                else
+                {
+                    imagen = "user.png";
+                    DateTime localDate = DateTime.Now;
+                    string date = localDate.ToString();
+                    date = date.Replace("/", "_");
+                    date = date.Replace(":", "_");
+                    date = date.Replace(" ", "");
+                    img_employee.ImageUrl = "~/img/" + imagen + "?date=" + date;
+                }
+                usuarios user = new usuarios();
+                UsuariosCOM usuarios = new UsuariosCOM();
+                user = usuarios.usuario(usuario);
+                if (user != null)
+                {
+
+                    lblnombre.Text = user.nombres + " " + user.a_paterno + " " + user.a_materno;
+                    lblpuesto.Text = user.puesto;
+                    lblusuario.Text = user.usuario;
+                    lblperfil.Text = usuarios.perfil(usuario);
+
+                    //cargos los menus disponibles para el usuario
+                    CargarMenus(usuario);
+
+                    CargarPermisos(usuario);
+
+                    CargarDelegados(usuario);
+                    //cargamos los perfiles
+                    CargarListadoPerfiles("");
+
+                    //cargamos los permisos
+                    CargarListadoPermisos("");
+                    ModalShow("#ModalEmpleado");
+                }
+                else
+                {
+
+                    Toast.Error("Error al guardar usuario: No se encontro la información.", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar usuario: " + ex.Message, this);
+            }
+            finally {
+                div_load.Style["display"] = "none";
             }
         }
     }

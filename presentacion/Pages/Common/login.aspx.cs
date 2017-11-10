@@ -171,6 +171,8 @@ namespace presentacion.Pages.Common
                             UsuariosCOM usuarios_ = new UsuariosCOM();
                             usuarios usuario = new usuarios {
                                 usuario = username.ToUpper().Trim(),
+                                temporal = false,
+                                fecha_vencimiento=null,
                                 contraseña = funciones.deTextoa64(password),
                                 puesto = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto),
                                 nombres =CultureInfo.InvariantCulture.TextInfo.ToTitleCase(row["First_Name"].ToString()),

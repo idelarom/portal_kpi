@@ -46,6 +46,10 @@ namespace datos.Model
         [StringLength(50)]
         public string usuario_alta { get; set; }
 
+        public bool temporal { get; set; }
+
+        public DateTime? fecha_vencimiento { get; set; }
+
         public DateTime fecha { get; set; }
 
         [StringLength(50)]

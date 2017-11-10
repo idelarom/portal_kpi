@@ -246,6 +246,8 @@
     <Content Include="dist\js\demo.js" />
     <Content Include="dist\js\gmap.js" />
     <Content Include="dist\js\jquery.dynatable.js" />
+    <Content Include="dist\js\jquery.geolocation.js" />
+    <Content Include="dist\js\jquery.geolocation.min.js" />
     <Content Include="dist\js\loading.js" />
     <Content Include="dist\js\pages\dashboard.js" />
     <Content Include="dist\js\pages\dashboard2.js" />

@@ -13,6 +13,24 @@ namespace presentacion.Pages.Catalogs {
     public partial class catalogo_usuarios {
         
         /// <summary>
+        /// Control wdwdwdw.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel wdwdwdw;
+        
+        /// <summary>
+        /// Control div_load.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_load;
+        
+        /// <summary>
         /// Control lnknuevousuario.
         /// </summary>
         /// <remarks>
@@ -481,6 +499,33 @@ namespace presentacion.Pages.Catalogs {
         protected global::System.Web.UI.WebControls.TextBox txtpuesto;
         
         /// <summary>
+        /// Control cbxtemporal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxtemporal;
+        
+        /// <summary>
+        /// Control div_fecha_vencimiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_fecha_vencimiento;
+        
+        /// <summary>
+        /// Control rdpfecha_vencimiento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker rdpfecha_vencimiento;
+        
+        /// <summary>
         /// Control cbxnoactivo.
         /// </summary>
         /// <remarks>
@@ -535,13 +580,22 @@ namespace presentacion.Pages.Catalogs {
         protected global::System.Web.UI.WebControls.DropDownList ddlempleado_a_consultar;
         
         /// <summary>
-        /// Control LinkButton3.
+        /// Control lnkinfoadicional.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
+        protected global::System.Web.UI.WebControls.LinkButton lnkinfoadicional;
+        
+        /// <summary>
+        /// Control lnkloadusernew.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkloadusernew;
         
         /// <summary>
         /// Control lnkguardarempleado.
