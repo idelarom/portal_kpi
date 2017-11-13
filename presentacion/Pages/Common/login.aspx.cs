@@ -192,13 +192,6 @@ namespace presentacion.Pages.Common
                             }
                             if (id_usuario_sesion > 0)
                             {
-                                //if (Convert.ToBoolean(row["sincronizacion_automatica"]))
-                                //{
-                                //    string mail = Session["mail"] as string;
-                                //    string mail_user = username + mail.Replace(mail.Split('@')[0], "");
-                                //    EWSHelper calendar = new EWSHelper();
-                                //    calendar.GetAllCalendar(mail_user, password);
-                                //}
                                 Session["devices_conectados"] = UpdateDevices(username);
                                 Session["id_usuario_sesion"] = id_usuario_sesion;
                             }
