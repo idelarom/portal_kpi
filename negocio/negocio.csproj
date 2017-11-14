@@ -82,6 +82,7 @@
     <Compile Include="Componentes\RiesgosEstrategiaCOM.cs" />
     <Compile Include="Componentes\RiesgosImpactoCostosCOM.cs" />
     <Compile Include="Componentes\RiesgosProbabilidadCOM.cs" />
+    <Compile Include="Componentes\TipoBonosCOM.cs" />
     <Compile Include="Componentes\To.cs" />
     <Compile Include="Componentes\UsuariosCOM.cs" />
     <Compile Include="Componentes\UsuariosConfiguracionesCOM.cs" />

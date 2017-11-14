@@ -88,7 +88,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <asp:Repeater ID="repeat_riesgosestrategias" runat="server">
+                                <asp:Repeater ID="repeat_bonds_type" runat="server">
                                     <ItemTemplate>
                                         <tr style="font-size: 12px">
                                             <td style="text-align: center;">
