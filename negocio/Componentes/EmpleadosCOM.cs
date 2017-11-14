@@ -282,6 +282,24 @@ namespace negocio.Componentes
             return ds;
         }
 
+        
+        public DataSet sp_GetEmployeeEnabledForEmployeeNumber(int employee_number, int TipoConsulta)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@pNumEmpleado", SqlDbType = SqlDbType.Int, Value = employee_number });
+            listparameters.Add(new SqlParameter() { ParameterName = "@pTipoConsulta", SqlDbType = SqlDbType.Int, Value = TipoConsulta });
+            try
+            {
+                ds = data.enviar("Sps_ConsultaEmpleadosNAVISION", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
         public DataSet sp_eliminar_usuario_sesiones(int id_usuario_sesion, Boolean bloquear)
         {
             //string usuario, string os, string os_version, string browser, string device,
