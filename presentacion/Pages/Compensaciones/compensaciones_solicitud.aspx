@@ -66,10 +66,14 @@
         , hwaccel: true // Whether to use hardware acceleration
         , position: 'absolute' // Element positioning
         };
-        function ChangedTextLoad2() {
-            $("#<%= imgloadempleado.ClientID%>").show();
-            $("#<%= lblbemp.ClientID%>").show();
-            return true;
+      function ConfirmLoadResultados(msg) {
+            if (confirm(msg)) {
+                $("#<%= lnkguardaresultadosload.ClientID%>").show();
+                $("#<%= lnkguardaresultados.ClientID%>").hide();
+                return true;
+            } else {
+                return false;
+            }
         }
         function Load() {
             $("#<%= load.ClientID%>").show();
@@ -85,13 +89,32 @@
             }
         }
         function ValuesPMTracker(folio, proyecto, cliente) {
-            var txtPMTrackerNumberImplementations = document.getElementById('<%= txtPMTrackerNumberImplementations.ClientID %>');
-            txtPMTrackerNumberImplementations.value = folio;
-            var txtProjectNameImplementations = document.getElementById('<%= txtProjectNameImplementations.ClientID %>');
-            txtProjectNameImplementations.value = proyecto;
-            var txtCustomerNameImplementations = document.getElementById('<%= txtCustomerNameImplementations.ClientID %>');
-            txtCustomerNameImplementations.value = cliente;
+            var hdnfolio = document.getElementById('<%= hdnfolio.ClientID %>');
+            hdnfolio.value = folio;
+            var hdnproyecto = document.getElementById('<%= hdnproyecto.ClientID %>');
+            hdnproyecto.value = proyecto;
+            var hdncliente = document.getElementById('<%= hdncliente.ClientID %>');
+            hdncliente.value = cliente;
             ModalCloseGlobal("#modal_proyectos");
+            document.getElementById('<%= lnkproyecto.ClientID%>').click();
+        }
+        function ValuesCC(CC, DESC) {
+            var hdndesc_cc = document.getElementById('<%= hdndesc_cc.ClientID %>');
+            hdndesc_cc.value = CC+" - "+DESC;
+            var hdnCC_Cargo = document.getElementById('<%= hdnCC_Cargo.ClientID %>');
+            hdnCC_Cargo.value = CC;
+            ModalCloseGlobal("#modal_cc");
+            document.getElementById('<%= lnkcc.ClientID%>').click();
+        }
+        
+        function ValuesEmpleado(no_, name) {
+            var hdnEmployeeNumber = document.getElementById('<%= hdnEmployeeNumber.ClientID %>');
+            hdnEmployeeNumber.value = no_;
+            var txtfilterempleado = document.getElementById('<%= txtfilterempleado.ClientID %>');
+            txtfilterempleado.value = name;
+            Load();
+            document.getElementById('<%= btncargarempleado.ClientID%>').click();
+            ModalCloseGlobal("#modal_empleados");
         }
     </script>
 </asp:Content>
@@ -103,14 +126,16 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <h3>Solicitud de bonos</h3>
                 </div>
+
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="box box-default">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Tipo de bono</strong></h5>
-                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true" 
-                                        OnSelectedIndexChanged="cbBonds_Types_SelectedIndexChanged" CssClass=" form-control" runat="server"></asp:DropDownList>
+                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true"
+                                        OnSelectedIndexChanged="cbBonds_Types_SelectedIndexChanged" CssClass=" form-control" runat="server">
+                                    </asp:DropDownList>
                                 </div>
                             </div>
                         </div>
@@ -124,26 +149,60 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="trWeek" runat="server">
                                     <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Seleccione una fecha de una semana</strong></h5>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-12">
+                                            <telerik:RadDatePicker OnSelectedDateChanged="calDateSupport_SelectedDateChanged" AutoPostBack="true" ID="calDateSupport" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadDatePicker>
+
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                            <div class="table table-responsive">
+                                                <table id="table_fechas" class=" table table-responsive table-bordered table-condensed"
+                                                    style="font-size: 12px">
+                                                    <thead style="background-color: #DE3230; color: white;">
+                                                        <tr>
+                                                            <th style="min-width: 50px; text-align: center;" scope="col"></th>
+                                                            <th style="min-width: 180px; text-align: left;" scope="col">Dias trabajados</th>
+                                                            <th style="min-width: 80px; text-align: center;" scope="col">Monto</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <asp:Repeater ID="repeater_fechas_Soporte" runat="server">
+                                                            <ItemTemplate>
+                                                                <tr>
+                                                                    <td style="text-align: center;">
+                                                                        <asp:CheckBox ID="cbx_checkday" Checked="true" Text="Seleccionar" AutoPostBack="true" runat="server" OnCheckedChanged="cbx_checkday_CheckedChanged"
+                                                                            amount='<%# Eval("amount") %>' />
+                                                                    </td>
+                                                                    <td>
+                                                                        <%# Convert.ToDateTime(Eval("date")).ToString("dddd dd MMMM, yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %>
+                                                                    </td>
+                                                                    <td style="text-align: center;">
+                                                                        <%# Convert.ToDecimal(Eval("amount")).ToString("C2") %>
+                                                                    </td>
+                                                                </tr>
+                                                            </ItemTemplate>
+                                                        </asp:Repeater>
+                                                    </tbody>
+                                                </table>
+                                                <h5 style="text-align: right;">Monto total autorizado: <strong>
+                                                    <asp:Label CssClass=" label label-danger" ID="lblmonto_total_autorizadp" runat="server" Text="$ 0.00"></asp:Label></strong></h5>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
-                                    <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Seleccione el empleado</strong>
+                                    <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Empleado</strong>
                                     </h5>
                                     <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
-                                        <asp:TextBox
-                                            onfocus="this.select();" ID="txtfilterempleado" CssClass=" form-control"
-                                            placeholder="Ingrese un filtro" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="txtfilterempleado" CssClass=" form-control" ReadOnly="true"
+                                            runat="server"></asp:TextBox>
                                         <span class="input-group-btn">
                                             <asp:LinkButton ID="lnksearch" CssClass="btn btn-primary btn-flat"
-                                                OnClientClick="return ChangedTextLoad2();" OnClick="lnksearch_Click" runat="server">
+                                                OnClientClick="return Load();" OnClick="lnksearch_Click" runat="server">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
                                             </asp:LinkButton>
                                         </span>
                                     </div>
-                                    <asp:Image ID="imgloadempleado" Style="display: none;" ImageUrl="~/img/load.gif" runat="server" />
-                                    <label id="lblbemp" runat="server" style="display: none; color: #1565c0">Buscando Empleados</label>
-                                    <asp:DropDownList Visible="true" ID="ddlempleado" CssClass="form-control"
-                                        AutoPostBack="true" OnSelectedIndexChanged="ddlempleado_SelectedIndexChanged" runat="server">
-                                    </asp:DropDownList>
                                 </div>
                             </div>
                             <div class="row">
@@ -189,24 +248,33 @@
                                 <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo del bono</strong></h5>
                                     <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="tblMonthSelect" runat="server">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="tblMonthSelect" runat="server">
                                             <div class="row">
-                                                <h6><strong><asp:Label ID="lblTitleMonth" runat="server" Text="Mes:"></asp:Label></strong></h6>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <h6><strong>
+                                                        <asp:Label ID="lblTitleMonth" runat="server" Text="Mes:"></asp:Label></strong></h6>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <asp:DropDownList ID="cbInitialMonth" CssClass="form-control" AutoPostBack="true"
                                                         OnSelectedIndexChanged="cbInitialMonth_SelectedIndexChanged"
                                                         runat="server">
                                                     </asp:DropDownList>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <asp:DropDownList ID="cbInitialYear" CssClass="form-control" AutoPostBack="true"
                                                         OnSelectedIndexChanged="cbInitialMonth_SelectedIndexChanged"
                                                         runat="server">
                                                     </asp:DropDownList>
                                                 </div>
+
                                             </div>
-                                            <div class="row" id="trFinalizeMonth" runat="server" visible="false">
-                                                <h6><strong>Mes final</strong></h6>
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="trFinalizeMonth" runat="server" visible="false">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <h6><strong>Mes final:</strong></h6>
+                                                </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <asp:DropDownList ID="cbFinalizeMonth" CssClass="form-control"
                                                         runat="server">
@@ -246,7 +314,7 @@
 
                                         <asp:TextBox ID="txtCC_Cargo" CssClass=" form-control" runat="server"></asp:TextBox>
                                         <span class="input-group-btn">
-                                            <asp:LinkButton ID="lnksearchcc" CssClass="btn btn-primary btn-flat"
+                                            <asp:LinkButton ID="lnksearchcc" OnClientClick="return Load();" CssClass="btn btn-primary btn-flat"
                                                 OnClick="lnksearchcc_Click" runat="server">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
                                             </asp:LinkButton>
@@ -256,6 +324,17 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Comentarios</strong></h5>
                                     <asp:TextBox ID="txtComments" TextMode="MultiLine" Rows="3" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <asp:LinkButton ID="lnkadjuntarfiles" OnClick="lnkadjuntarfiles_Click" CssClass="btn btn-success btn-flat" runat="server">
+                                        <i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Adjuntar archivos</asp:LinkButton>
+                                    <asp:LinkButton ID="lnksolicitar" CssClass="btn btn-primary btn-flat" runat="server">
+                                         <i class="fa fa-bookmark" aria-hidden="true"></i>&nbsp;Solicitar</asp:LinkButton>
+                                    <asp:LinkButton ID="lnkcancelar" OnClick="lnkcancelar_Click" OnClientClick="return confirm('¿Desea cancelar la solicitud?');" CssClass="btn btn-danger btn-flat" runat="server">
+                                          <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancelar</asp:LinkButton>
                                 </div>
                             </div>
                         </div>
@@ -273,56 +352,164 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_proyectos" role="dialog" 
+
+            <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_proyectos" role="dialog"
                 aria-labelledby="mySmallModalLabel">
                 <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title">Seleccione un proyecto</h4>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Seleccione un proyecto</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class=" table table-responsive">
+                                        <table id="table_proyectos" class=" table table-responsive table-bordered table-condensed" style="font-size: 12px">
+                                            <thead>
+                                                <tr>
+                                                    <th style="min-width: 50px; text-align: left;" scope="col"></th>
+                                                    <th style="min-width: 80px; text-align: left;" scope="col"># Proyecto</th>
+                                                    <th style="min-width: 300px; text-align: left;" scope="col">Nombre Proyecto</th>
+                                                    <th style="min-width: 200px; text-align: left;" scope="col">Cliente</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="repeat_proyectos" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td>
+                                                                <a class="btn btn-primary btn-flat btn-xs"
+                                                                    onclick='<%# "return ValuesPMTracker("+@""""+ Eval("folio").ToString()+@""""+@","""+ Eval("nombre_proyecto").ToString()+@""""+@","""+ Eval("nombre_cliente").ToString()+@""""+");" %>'>Seleccionar</a>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("folio") %>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("nombre_proyecto") %>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("nombre_cliente") %>
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <table id="table_proyectos" class=" table no-margin table-condensed" style="font-size: 12px">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="min-width: 50px; text-align: left;" scope="col"></th>
-                                                        <th style="min-width: 80px; text-align: left;" scope="col"># Proyecto</th>
-                                                        <th style="min-width: 300px; text-align: left;" scope="col">Nombre Proyecto</th>
-                                                        <th style="min-width: 200px; text-align: left;" scope="col">Cliente</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <asp:Repeater ID="repeat_proyectos" runat="server">
-                                                        <ItemTemplate>
-                                                            <tr>
-                                                                <td>
-                                                                    <a class="btn btn-primary btn-flat btn-xs"
-                                                                         onclick='<%# "return ValuesPMTracker("+@""""+ Eval("folio").ToString()+@""""+@","""+ Eval("nombre_proyecto").ToString()+@""""+@","""+ Eval("nombre_cliente").ToString()+@""""+");" %>' >
-                                                                        Seleccionar</a>
-                                                                </td>
-                                                                <td>
-                                                                    <%# Eval("folio") %>
-                                                                </td>
-                                                                <td>
-                                                                    <%# Eval("nombre_proyecto") %>
-                                                                </td>
-                                                                <td>
-                                                                    <%# Eval("nombre_cliente") %>
-                                                                </td>
-                                                            </tr>
-                                                        </ItemTemplate>
-                                                    </asp:Repeater>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_empleados" role="dialog"
+                aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Seleccione un empleado</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class=" table table-responsive">
+                                        <table id="table_empleados" class=" table table-responsive table-bordered table-condensed" style="font-size: 12px">
+                                            <thead>
+                                                <tr>
+                                                    <th style="min-width: 50px; text-align: left;" scope="col"></th>
+                                                    <th style="min-width: 60px; text-align: left;" scope="col"># Empleado</th>
+                                                    <th style="min-width: 60px; text-align: left;" scope="col">CC</th>
+                                                    <th style="min-width: 500px; text-align: left;" scope="col">Empleado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="repeater_empleados" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td>
+                                                                <a class="btn btn-primary btn-flat btn-xs"
+                                                                    onclick='<%# "return ValuesEmpleado("+@""""+ Eval("employee_number").ToString()+@""""+@","""+ Eval("full_name").ToString()+@""""+");" %>'>Seleccionar</a>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("employee_number") %>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("id_cost_center") %>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("full_name") %>
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_cc" role="dialog"
+                aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Seleccione un Centro de Costos</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table table-responsive">
+
+                                        <table id="table_cc" class=" table table-responsive table-bordered table-condensed" style="font-size: 12px">
+                                            <thead>
+                                                <tr>
+                                                    <th style="min-width: 50px; text-align: left;" scope="col"></th>
+                                                    <th style="min-width: 700px; text-align: left;" scope="col">Centro de Costos</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="repetaer_cc" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td>
+
+                                                                <a class="btn btn-primary btn-flat btn-xs"
+                                                                    onclick='<%# "return ValuesCC("+@""""+ Eval("CC").ToString()+@""""+@","""+ Eval("DESC_CC").ToString()+@""""+");" %>'>Seleccionar</a>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("CC").ToString().Trim()+" - "+Eval("DESC_CC").ToString().Trim() %>
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div>          
+            
+            <asp:HiddenField ID="hdfguid" runat="server" />
+            <asp:HiddenField ID="hdndesc_cc" runat="server" />
+            <asp:HiddenField ID="hdnfolio" runat="server" />
+            <asp:HiddenField ID="hdnproyecto" runat="server" />
+            <asp:HiddenField ID="hdncliente" runat="server" />
             <input id="hdnAuthorizationAmount" runat="server" type="Hidden" />
             <input id="hdnValidateAmount" runat="server" type="hidden" />
             <input id="hdnMontoOriginal" runat="server" type="Hidden" />
@@ -337,6 +524,93 @@
             <input id="hdnIdTypeBonds" runat="server" type="hidden" />
             <input id="hdnFilesRequeried" runat="server" type="hidden" />
             <input id="hdnSubio" runat="server" type="hidden" />
+            <input id="hdnEmployeeNumber" runat="server" type="hidden" />
+            <asp:Button ID="btncargarempleado" Style="display: none;" OnClick="btncargarempleado_Click" runat="server" Text="Button" />
+            <asp:Button ID="lnkcc" Style="display: none;" OnClick="lnkcc_Click" runat="server" Text="Button" />
+            <asp:Button ID="lnkproyecto" Style="display: none;" OnClick="lnkproyecto_Click" runat="server" Text="Button" />
         </ContentTemplate>
     </asp:UpdatePanel>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_archivos" role="dialog"
+        aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Always">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="lnkadjuntarfiles" EventName="Click" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Seleccione un archivo</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h5><strong><i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Documento</strong></h5>
+                                    <telerik:RadAsyncUpload RenderMode="Lightweight" ID="AsyncUpload1" runat="server"
+                                        OnFileUploaded="AsyncUpload1_FileUploaded" PostbackTriggers="lnkguardaresultados"
+                                        MaxFileSize="2097152" Width="100%"
+                                        AutoAddFileInputs="false" Localization-Select="Seleccionar" Skin="Bootstrap" />
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <br />
+                                    <asp:LinkButton OnClientClick="return false;" ID="lnkguardaresultadosload" CssClass=" pull-rightbtn btn-primary btn-flat btn-sm" runat="server" Style="display: none;">
+                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>&nbsp;Guardando
+                                    </asp:LinkButton>
+                                    <asp:LinkButton ID="lnkguardaresultados" OnClientClick="return ConfirmLoadResultados('¿Desea guardar el resultado?');"
+                                        OnClick="lnkguardaresultados_Click" CssClass="btn btn-primary btn-flat btn-sm pull-right" runat="server">
+                                            Guardar documento&nbsp;<i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                    </asp:LinkButton>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="table table-responsive">
+                                        <table id="table_archivos" class=" table table-responsive table-bordered table-condensed" 
+                                            >
+                                            <thead>
+                                                <tr>
+                                                    <th style="max-width: 10px; text-align: center;" scope="col"></th>
+                                                    <th style="max-width: 10px; text-align: center;" scope="col"></th>
+                                                    <th style="min-width: 350px; text-align: left;" scope="col">Documento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="repeater_archivos" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td style="text-align: center;">
+                                                                <asp:LinkButton OnClientClick="return confirm('¿Desea eliminar este archivo de la solicitud?');" OnClick="lnkdeletefile_Click"  class="btn btn-primary btn-flat btn-xs"
+                                                                     ID="lnkdeletefile" runat="server"
+                                                                    file_name='<%# Eval("file_name").ToString().Trim() %>'>
+                                                                    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                                                </asp:LinkButton>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <asp:LinkButton ID="lnkdownloadfile" OnClick="lnkdownloadfile_Click" runat="server"  class="btn btn-success btn-flat btn-xs"
+                                                                    path='<%# Eval("path").ToString().Trim() %>'>
+                                                                    <i class="fa fa-download fa-2x" aria-hidden="true"></i></asp:LinkButton>
+                                                               
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("file_name").ToString().Trim() %>
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
 </asp:Content>

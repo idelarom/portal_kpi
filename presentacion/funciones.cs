@@ -40,7 +40,13 @@ namespace presentacion
                 return false;
             }
         }
-
+        public static DateTime FirstDateInWeek(DateTime dt, DayOfWeek weekStartDay)
+        {
+            DateTime dt2 = new DateTime();
+            while (dt.DayOfWeek != weekStartDay)
+                dt = dt.AddDays(-1);
+            return dt;
+        }
         public static Boolean Permisos(string usuario, int id_permiso)
         {
             try
@@ -430,7 +436,7 @@ namespace presentacion
             dt.Columns.Add("value");
             dt.Columns.Add("name");
 
-            for (int i = (DateTime.Now.Year-5); i <= (DateTime.Today.Year+1); i++)
+            for (int i = (DateTime.Now.Year-1); i <= (DateTime.Today.Year+1); i++)
             {
                 DataRow row = dt.NewRow();
                 row["value"] = i;

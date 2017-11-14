@@ -1,7 +1,10 @@
-﻿using negocio.Componentes;
+﻿using datos;
+using negocio.Componentes;
 using negocio.Componentes.Compensaciones;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -42,50 +45,60 @@ namespace presentacion.Pages.Compensaciones
         /// </summary>
         private void ClearFields()
         {
+            hdndesc_cc.Value = "";
+            hdnfolio.Value = "";
+            hdnproyecto.Value = "";
+            hdncliente.Value = "";
+            Session[hdfguid.Value + "list_documentos"] = null;
+            //this.ClientScript.RegisterStartupScript(this.GetType(), "execute ClearFields", "<script language='javascript'>ClearFields();</script>");
+            this.txtAuthorizationAmount.Text = "";
+            txtfilterempleado.Text = "";
+            this.txtComments.Text = "";
+            hdnEmployeeNumber.Value = "";
+            this.txtCustomerNameImplementations.Text = "";
+            if (!this.tblMonthSelect.Visible)
+            {
+                this.txtPeriodDateOf.SelectedDate = null;
+                this.txtPeriodDateTo.SelectedDate = null;
+            }
+            trFinalizeMonth.Visible = false;
+            lblTitleMonth.Text = "Mes:";
+            this.txtNumberHoursImplementations.Text = "";
+            this.txtPMTrackerNumberImplementations.Text = "";
+            this.txtProjectNameImplementations.Text = "";
+            this.hdnAuthorizationAmount.Value = "";
+            this.hdnFilesRequeried.Value = "";
+            this.hdnFinalizeYear.Value = "";
+            this.hdnIdPeriodicity.Value = "";
+            this.hdnMonto.Value = "";
+            this.hdnSubio.Value = "";
+            this.txtPeriodDateOf.SelectedDate = null;
+            this.txtPeriodDateTo.SelectedDate = null;
+            this.hdnCC_Cargo.Value = string.Empty;
+            this.txtCC_Cargo.Text = string.Empty;
+            this.txtCC_Emp.Text = string.Empty;
+
+            hdnMontoOriginal.Value = "";
+            hdnauthorization_total_bonds.Value = "";
+            hdnauthorization_total_amount.Value = "";
+
             LoadInitalYears();
             LoadInitialMonths();
-            //this.ClientScript.RegisterStartupScript(this.GetType(), "execute ClearFields", "<script language='javascript'>ClearFields();</script>");
-            //this.txtAuthorizationAmount.Text = "";
-            //this.txtComments.Text = "";
-            //this.txtCustomerNameImplementations.Text = "";
-            //if (!this.tblMonthSelect.Visible)
-            //{
-            //    this.txtPeriodDateOf.Text = "";
-            //    this.txtPeriodDateTo.Text = "";
-            //}
-            //this.txtEmployeeName.Text = "";
-            //this.txtNumberHoursImplementations.Text = "";
-            //this.txtPMTrackerNumberImplementations.Text = "";
-            //this.txtProjectNameImplementations.Text = "";
-            //this.hdnEmployeeNumber.Value = "";
-            //this.hdnAuthorizationAmount.Value = "";
-            //this.hdnFilesRequeried.Value = "";
-            //this.hdnFinalizeYear.Value = "";
-            //this.hdnIdPeriodicity.Value = "";
-            //this.hdnMonto.Value = "";
-            //this.hdnSubio.Value = "";
-            //this.hdnLogin.Value = "";
-            //this.cPeriodDateOf.SelectedDate = null;
-            //this.cPeriodDateTo.SelectedDate = null;
-            //this.hdnCC_Cargo.Value = string.Empty;
-            //this.txtCC_Cargo.Text = string.Empty;
-            //this.txtCC_Emp.Text = string.Empty;
+            cbInitialMonth_SelectedIndexChanged(null,null);
 
-            //hdnMontoOriginal.Value = "";
-            //hdnauthorization_total_bonds.Value = "";
-            //hdnauthorization_total_amount.Value = "";
         }
 
         private DataTable informacion_empleado(int no_)
         {
             try
             {
-                DataSet ds = listado_empleados();
+                BonosCOM bonos = new BonosCOM();
+                DataSet ds = bonos.sp_GetEmployeeForBondType(Convert.ToInt32(cbBonds_Types.SelectedValue));
                 DataTable dt_empleados = new DataTable();
                 if (ds.Tables.Count > 0)
                 {
                     DataView dv_empleados = ds.Tables[0].DefaultView;
-                    dv_empleados.RowFilter = "num_empleado = " + no_.ToString() + "";
+                    dv_empleados.RowFilter = "employee_number = " + no_.ToString() + "";
                    
                     dt_empleados = dv_empleados.ToTable();
                 }
@@ -129,42 +142,13 @@ namespace presentacion.Pages.Compensaciones
             try
             {
                 int num_empleado = Convert.ToInt32(Session["num_empleado"]);
-                Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
 
-                DataSet ds = listado_empleados();
-                DataTable dt_empleados = new DataTable();
-                if (filtro != "")
-                {
-                    DataView dv_empleados = ds.Tables[0].DefaultView;
-                    dv_empleados.RowFilter = "nombre like '%" + filtro + "%'";
-                    if (dv_empleados.ToTable().Rows.Count <= 0)
-                    {
-                        dv_empleados.RowFilter = "usuario like '%" + filtro + "%'";
-                    }
-                    dt_empleados = dv_empleados.ToTable();
-                }
-                else
-                {
-                    dt_empleados = ds.Tables[0];
-                }
-                ddlempleado.DataValueField = "num_empleado";
-                ddlempleado.DataTextField = "nombre";
-                ddlempleado.DataSource = dt_empleados;
-                ddlempleado.DataBind();
-                ddlempleado.Items.Insert(0,new ListItem("--Seleccione un empleado--","0"));
-                if (!ver_Todos_los_empleados)
-                {
-                    ddlempleado.SelectedValue = num_empleado.ToString();
-                    //lnkagregartodos_Click(null, null);
-                }
-
-                ddlempleado.Enabled = ver_Todos_los_empleados;
-                div_filtro_empleados.Visible = ver_Todos_los_empleados;
-                if (dt_empleados.Rows.Count == 1)
-                {
-                    ddlempleado.SelectedIndex = 1;
-                    ddlempleado_SelectedIndexChanged(null,null);
-                }
+                BonosCOM bonos = new BonosCOM();
+                DataSet ds = bonos.sp_GetEmployeeForBondType(Convert.ToInt32(cbBonds_Types.SelectedValue));
+                DataTable dt_empleados = ds.Tables[0];
+                repeater_empleados.DataSource = dt_empleados;
+                repeater_empleados.DataBind();
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#table_empleados');", true);
             }
             catch (Exception ex)
             {
@@ -382,8 +366,25 @@ namespace presentacion.Pages.Compensaciones
                 this.cbInitialMonth.SelectedValue = this.cbFinalizeMonth.SelectedValue;
                 this.cbInitialYear.SelectedValue = (Convert.ToInt32(this.cbFinalizeYear.SelectedValue) - 1).ToString();
             }
+            string date_initial = this.cbInitialYear.SelectedValue +"-"+ this.cbInitialMonth.SelectedValue.PadLeft(2, '0') +"-01";
+            string date_final = "";
+            if (this.cbFinalizeYear.SelectedValue != "")
+            {
+                date_final = this.cbFinalizeYear.SelectedValue + "-" + this.cbFinalizeMonth.SelectedValue.PadLeft(2, '0') + "-" + System.DateTime.DaysInMonth(Convert.ToInt32(this.cbFinalizeYear.SelectedValue), Convert.ToInt32(this.cbFinalizeMonth.SelectedValue)).ToString().PadLeft(2, '0');
+            }
+            this.txtPeriodDateOf.SelectedDate = Convert.ToDateTime(date_initial);
+
+            if (date_final == "")
+            {
+
+                this.txtPeriodDateTo.SelectedDate = Convert.ToDateTime(date_initial).AddMonths(1).AddDays(-1);
+            }
+            else {
+                this.txtPeriodDateTo.SelectedDate = Convert.ToDateTime(date_final);
+            }
+
         }
-        
+
 
         private void CargarInformacionBonoEmpleado(int no_)
         {
@@ -487,7 +488,158 @@ namespace presentacion.Pages.Compensaciones
             }
         }
 
-        #endregion Funciones
+
+        /// <summary>
+        /// Selecciona la semana del dia seleccionado
+        /// </summary>
+        /// <param name="selectedDate"></param>
+        /// <param name="toolTip"></param>
+        /// <param name="cssClass"></param>
+        private void SelectedWeek(System.DateTime selectedDate, string toolTip, string cssClass)
+        {
+            try
+            {
+                BonosCOM bonos = new BonosCOM();
+                DataSet ds = bonos.sp_GetBondsTypesEnabledAndID(Convert.ToInt32(cbBonds_Types.SelectedValue));
+                this.hdnAuthorizationAmount.Value = ds.Tables[0].Rows[0]["amount"].ToString();
+                this.txtAuthorizationAmount.Text = Convert.ToDecimal(ds.Tables[0].Rows[0]["amount"]).ToString("C2");
+
+                DataTable TableJobDays = new DataTable();
+                TableJobDays.Columns.Add("id");
+                TableJobDays.Columns.Add("date");
+                TableJobDays.Columns.Add("amount");
+
+                DateTime first_date = funciones.FirstDateInWeek(selectedDate, DayOfWeek.Monday);
+
+                for (int i = 0; i < 7; i++)
+                {
+                    DataRow new_row = TableJobDays.NewRow();
+                    new_row["id"] = i+1;
+                    DateTime fecha = first_date.AddDays(i);
+                    new_row["date"] = fecha;
+                    new_row["amount"] = Math.Round(Convert.ToDecimal(ds.Tables[0].Rows[0]["amount"]) / Convert.ToDecimal(7), 2);
+                    TableJobDays.Rows.Add(new_row);
+                }
+                txtPeriodDateOf.SelectedDate = first_date;
+                txtPeriodDateTo.SelectedDate = first_date.AddDays(6);
+
+                this.repeater_fechas_Soporte.DataSource = TableJobDays;
+                this.repeater_fechas_Soporte.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error(ex.Message,this);
+            }
+        }
+        
+        /// <summary>
+        /// Calcula el total del monto autorizado para soporte
+        /// </summary>
+        private void CalcularMontoTotalAutorizadoSoporte()
+        {
+            try
+            {
+                decimal total = 0;
+                foreach (RepeaterItem item in repeater_fechas_Soporte.Items)
+                {
+                    CheckBox cbx = item.FindControl("cbx_checkday") as CheckBox;
+                    if (cbx.Checked)
+                    {
+                        decimal value = Convert.ToDecimal(cbx.Attributes["amount"].ToString());
+                        total = total + value;
+                    }
+                }
+                total = Math.Round(total,0);
+                lblmonto_total_autorizadp.Text = total.ToString("C2");
+                txtAuthorizationAmount.Text = total.ToString("C2");
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información de soporte: " + ex.Message, this);
+            }
+        }
+
+        /// <summary>
+        /// Guarda temporalmente un documento
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="file_name"></param>
+        /// <param name="content_type"></param>
+        public void AgregarDocumento(string path, string file_name, string content_type)
+        {
+            try
+            {
+                if (Session[hdfguid.Value + "list_documentos"] == null)
+                {
+                    List<files_requests_bonds> list_fr = new List<files_requests_bonds>();
+                    Session[hdfguid.Value + "list_documentos"] = list_fr;
+                }
+                List<files_requests_bonds> list = Session[hdfguid.Value + "list_documentos"] as List<files_requests_bonds>;
+                files_requests_bonds file = new files_requests_bonds();
+                file.path = path;
+                file.file_name = file_name;
+                file.content_type = content_type;
+                list.Add(file);
+                Session[hdfguid.Value + "list_documentos"] = list;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al guardar archivo: " + ex.Message, this);
+            }
+
+        }
+
+        /// <summary>
+        /// Elimina un documento
+        /// </summary>
+        /// <param name="file_name"></param>
+        public void EliminarDocumento(string file_name)
+        {
+            try
+            {
+                if (Session[hdfguid.Value + "list_documentos"] == null)
+                {
+                    List<files_requests_bonds> list_fr = new List<files_requests_bonds>();
+                    Session[hdfguid.Value + "list_documentos"] = list_fr;
+                }
+                List<files_requests_bonds> list = Session[hdfguid.Value + "list_documentos"] as List<files_requests_bonds>;
+
+                foreach (files_requests_bonds file in list)
+                {
+                    if (file.file_name.ToString().Trim().Equals(file_name.Trim()))
+                    {
+                        list.Remove(file);
+                        break;
+                    }
+                }
+                Session[hdfguid.Value + "list_documentos"] = list;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al guardar archivo: " + ex.Message, this);
+            }
+
+        }
+
+        public void CargarTablaArchivos()
+        {
+            try
+            {
+                if (Session[hdfguid.Value + "list_documentos"] == null)
+                {
+                    List<files_requests_bonds> list_fr = new List<files_requests_bonds>();
+                    Session[hdfguid.Value + "list_documentos"] = list_fr;
+                }
+                List<files_requests_bonds> list = Session[hdfguid.Value + "list_documentos"] as List<files_requests_bonds>;
+                repeater_archivos.DataSource = list;
+                repeater_archivos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar archivos: " + ex.Message, this);
+            }
+        }
+
         private void ModalShow(string modalname)
         {
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
@@ -500,14 +652,17 @@ namespace presentacion.Pages.Compensaciones
                              "ModalCloseGlobal('" + modalname + "');", true);
         }
 
+        #endregion Funciones
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 string usuario = Session["usuario"] as string;
+                hdfguid.Value = Guid.NewGuid().ToString();
+                AsyncUpload1.FileUploaded += new Telerik.Web.UI.FileUploadedEventHandler(AsyncUpload1_FileUploaded);
                 CargarTiposBonos(usuario.ToUpper());
                 ClearFields();
-                CargarEmpleados("");
                 hdnMontoOriginal.Value = "";
                 hdnauthorization_total_bonds.Value = "";
                 hdnauthorization_total_amount.Value = "";
@@ -516,13 +671,10 @@ namespace presentacion.Pages.Compensaciones
 
         protected void lnksearch_Click(object sender, EventArgs e)
         {
-            string filter = txtfilterempleado.Text;
             try
             {
-                if (filter.Length == 0 || filter.Length > 3)
-                {
-                    CargarEmpleados(filter);
-                }
+                CargarEmpleados("");
+                ModalShow("#modal_empleados");
             }
             catch (Exception ex)
             {
@@ -530,41 +682,10 @@ namespace presentacion.Pages.Compensaciones
             }
             finally
             {
-                imgloadempleado.Style["display"] = "none";
-                lblbemp.Style["display"] = "none";
+                load.Style["display"] = "none";
             }
         }
-
-        protected void ddlempleado_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int no_ = Convert.ToInt32(ddlempleado.SelectedValue);
-                if (no_ > 0)
-                {
-                    DataTable dtempleado = informacion_empleado(no_);
-                    if (dtempleado.Rows.Count > 0)
-                    {
-                        DataRow empleado = dtempleado.Rows[0];
-                        txtCC_Cargo.Text = empleado["cc"].ToString();
-                        txtCC_Emp.Text = empleado["cc"].ToString();
-                        CargarInformacionBonoEmpleado(no_);
-                    }
-                    else {
-
-                        Toast.Error("Error al cargar información del empleado.", this);
-                    }
-                }
-                else {
-                    Toast.Error("Seleccione una opción valida.", this);
-                }
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al cargar información del empleado: " + ex.Message, this);
-            }
-        }
-
+        
         protected void lnksearchpmTracker_Click(object sender, EventArgs e)
         {
             try
@@ -592,46 +713,51 @@ namespace presentacion.Pages.Compensaciones
         protected void txtAuthorizationAmount_TextChanged(object sender, EventArgs e)
         {
             bool correct = true;
-            txtAuthorizationAmount.Text = txtAuthorizationAmount.Text == "" ? "0.00" : txtAuthorizationAmount.Text;
-            if (cbBonds_Types.SelectedValue == "1")
+            int no_ = Convert.ToInt32(hdnEmployeeNumber.Value==""?"0": hdnEmployeeNumber.Value);
+            if (no_ > 0)
             {
-                decimal monto_roiginal = (string.IsNullOrEmpty(hdnMontoOriginal.Value) ? 0 : Convert.ToDecimal(hdnMontoOriginal.Value));
-                decimal monto_actual = Convert.ToDecimal(txtAuthorizationAmount.Text.Replace("$", ""));
-
-                if (monto_actual > monto_roiginal)
+                txtAuthorizationAmount.Text = txtAuthorizationAmount.Text == "" ? "0.00" : txtAuthorizationAmount.Text;
+                if (cbBonds_Types.SelectedValue == "1")
                 {
-                    correct = false;
-                    float price = float.Parse(monto_roiginal.ToString());
+                    decimal monto_roiginal = (string.IsNullOrEmpty(hdnMontoOriginal.Value) ? 0 : Convert.ToDecimal(hdnMontoOriginal.Value));
+                    decimal monto_actual = Convert.ToDecimal(txtAuthorizationAmount.Text.Replace("$", ""));
+
+                    if (monto_actual > monto_roiginal)
+                    {
+                        correct = false;
+                        float price = float.Parse(monto_roiginal.ToString());
+                        txtAuthorizationAmount.Text = string.Format("{0:C}", price);
+                        Toast.Error("El monto no puede exceder a " + string.Format("{0:C}", price), this);
+                    }
+                }
+                decimal monto_actual1 = Convert.ToDecimal(txtAuthorizationAmount.Text.Replace("$", ""));
+
+                string text = monto_actual1.ToString();
+                if (correct)
+                {
+                    float price = float.Parse(text);
                     txtAuthorizationAmount.Text = string.Format("{0:C}", price);
-                    Toast.Error("El monto no puede exceder a " + string.Format("{0:C}", price),this);
+                    decimal value_MOUNT = default(decimal);
+                    value_MOUNT = Convert.ToDecimal(price);
+                    if ((value_MOUNT < 0))
+                    {
+                        Toast.Error("El monto debe ser mayor a $ 0.00", this);
+                    }
                 }
             }
-            decimal monto_actual1 = Convert.ToDecimal(txtAuthorizationAmount.Text.Replace("$", ""));
-
-            string text = monto_actual1.ToString();
-            if (correct)
+            else
             {
-                float price = float.Parse(text);
-                txtAuthorizationAmount.Text = string.Format("{0:C}", price);
-                decimal value_MOUNT = default(decimal);
-                value_MOUNT = Convert.ToDecimal(price);
-                if ((value_MOUNT < 0))
-                {
-                    Toast.Error("El monto debe ser mayor a $ 0.00", this);
-                }
+                txtAuthorizationAmount.Text = "";
+                Toast.Info("Seleccione un empleado","Mensaje del sistema", this);
             }
+          
         }
 
         protected void cbInitialMonth_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                int months_toadd = 1;
-                DateTime fecha_inicial = Convert.ToDateTime(cbInitialYear.SelectedValue+"-"+(Convert.ToInt32(cbInitialMonth.SelectedValue).ToString("00")) +"-01");
-                DateTime fecha_inicial_B = fecha_inicial.AddMonths(months_toadd);
-                DateTime fecha_final = fecha_inicial_B.AddMonths(1).AddDays(-1);
-                txtPeriodDateOf.SelectedDate = fecha_inicial;
-                txtPeriodDateTo.SelectedDate = fecha_final;
+                SelectedMonthAndYear();
             }
             catch (Exception ex)
             {
@@ -695,20 +821,15 @@ namespace presentacion.Pages.Compensaciones
                     this.txtPeriodDateOf.Attributes.Add("readonly", "true");
                     this.txtPeriodDateTo.Attributes.Add("readonly", "true");
 
-                    //if (this.trWeek.Visible)
-                    //{
-                    //    SelectedWeek(selectedDate, string.Empty, string.Empty);
-                    //    if (Session["SelectedDate"] != null)
-                    //    {
-                    //        IFormatProvider culture = new System.Globalization.CultureInfo("es-MX", true);
-                    //        selectedDate = DateTime.Parse(Session["SelectedDate"].ToString(), culture, System.Globalization.DateTimeStyles.NoCurrentDateDefault);
-                    //    }
-                    //    SetScheduledDate();
-                    //}
-                    //else
-                    //{
-                    //    LoadBondsRequests();
-                    //}
+                    if (this.trWeek.Visible)
+                    {
+                        calDateSupport.SelectedDate = DateTime.Now;
+                        calDateSupport_SelectedDateChanged(null,null);
+                    }
+                    else
+                    {
+                        //LoadBondsRequests();
+                    }
                 }
 
 
@@ -721,7 +842,232 @@ namespace presentacion.Pages.Compensaciones
 
         protected void lnksearchcc_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string filter = "";
+                BonosCOM bonos = new BonosCOM();
+                DataSet ds = bonos.sp_Get_Tbl_Estructura_CC("","");
+                DataTable dt = ds.Tables[0];
+                repetaer_cc.DataSource = dt;
+                repetaer_cc.DataBind();
+                ModalShow("#modal_cc");
+                ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "InitPagging('#table_cc');", true);
+
+                ModalShow("#modal_cc");
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar centro de costos: " + ex.Message, this);
+            }
+            finally
+            {
+                load.Style["display"] = "none";
+            }
+
         }
 
+        protected void calDateSupport_SelectedDateChanged(object sender, Telerik.Web.UI.Calendar.SelectedDateChangedEventArgs e)
+        {
+            ClearFields();
+            DateTime selectedDate = Convert.ToDateTime(this.calDateSupport.SelectedDate);
+            SelectedWeek(selectedDate, string.Empty, string.Empty);
+            CalcularMontoTotalAutorizadoSoporte();
+        }
+
+        protected void cbx_checkday_CheckedChanged(object sender, EventArgs e)
+        {
+            CalcularMontoTotalAutorizadoSoporte();
+        }
+
+        protected void btncargarempleado_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int no_ = Convert.ToInt32(hdnEmployeeNumber.Value == "" ? "0" : hdnEmployeeNumber.Value);
+                if (no_ > 0)
+                {
+                    DataTable dtempleado = informacion_empleado(no_);
+                    if (dtempleado.Rows.Count > 0)
+                    {
+                        DataRow empleado = dtempleado.Rows[0];
+                        txtCC_Cargo.Text = empleado["cc_name"].ToString();
+                        txtCC_Emp.Text = empleado["cc_name"].ToString();
+                        CargarInformacionBonoEmpleado(no_);
+                        hdnEmployeeNumber.Value = no_.ToString();
+                        txtfilterempleado.Text = empleado["full_name"].ToString();
+                    }
+                    else
+                    {
+                        Toast.Error("Error al cargar información del empleado.", this);
+                    }
+                }
+                else
+                {
+                    Toast.Error("Ocurrio un error al seleccionar empleado, intentelo nuevamente.", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del empleado: " + ex.Message, this);
+            }
+            finally {
+                load.Style["display"] = "none";
+            }
+        }
+
+        protected void lnkcancelar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("compensaciones_solicitud.aspx");
+        }
+
+        protected void lnkadjuntarfiles_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int no_ = Convert.ToInt32(hdnEmployeeNumber.Value == "" ? "0" : hdnEmployeeNumber.Value);
+
+                if (no_ == 0)
+                {
+                    Toast.Error("Seleccione un empleado.", this);
+                }
+                else {
+
+                    CargarTablaArchivos();
+                    ModalShow("#modal_archivos");
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar documentos: " + ex.Message, this);
+            }
+            finally
+            {
+                load.Style["display"] = "none";
+            }
+        }
+
+        protected void lnkguardaresultados_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int r = AsyncUpload1.UploadedFiles.Count;
+                if (r == 0)
+                {
+                    Toast.Error("Error al guardar documento: Seleccione un documento.", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al guardar resultado: " + ex.Message, this);
+            }
+            finally
+            {
+                //InicializarTablas();
+            }
+
+        }
+
+        protected void AsyncUpload1_FileUploaded(object sender, Telerik.Web.UI.FileUploadedEventArgs e)
+        {
+            try
+            {
+                //GUARDAMOS LOS RESULTADOS DE LA ACTIVIDAD
+                int r = AsyncUpload1.UploadedFiles.Count;
+                int no_ = Convert.ToInt32(hdnEmployeeNumber.Value == "" ? "0" : hdnEmployeeNumber.Value);
+                
+                if (no_ == 0)
+                {
+                    Toast.Error("Seleccione un empleado.", this);
+                }
+                else
+                {
+                    string name = "";
+                    DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/"));//path localDateTime localDate = DateTime.Now;
+                    string path_local = "files/documents/temp/";
+                    string directory = dirInfo.ToString() + path_local;
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+                    
+                    name = Path.GetFileNameWithoutExtension(e.File.FileName) + Path.GetExtension(e.File.FileName);
+                    e.File.SaveAs(directory + name.Trim());
+                    AgregarDocumento(directory + name.Trim(),name.Trim(),e.File.ContentType);
+                    CargarTablaArchivos();
+                    Toast.Success("Documento guardado correctamente.","Mensaje del sistema",this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al guardar documento: " + ex.Message, this);
+            }
+            finally
+            {
+            }
+        }
+
+        protected void lnkdeletefile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LinkButton lnk = sender as LinkButton;
+                string file = lnk.Attributes["file_name"].ToString();
+                EliminarDocumento(file);
+                CargarTablaArchivos();
+                Toast.Success("Documento eliminado correctamente.", "Mensaje del sistema", this);
+
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al eliminar documento: " + ex.Message, this);
+            }
+            finally {
+                ModalShow("#modal_archivos");
+            }
+        }
+
+        protected void lnkdownloadfile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LinkButton lnk = sender as LinkButton;
+                string path = lnk.Attributes["path"].ToString();
+                if (File.Exists(path))
+                {
+                    Response.ContentType = "doc/docx";
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(path));
+                    Response.TransmitFile(path);
+                    Response.End();
+                }
+                else
+                {
+                    Toast.Error("No es encuentra el documento especificado", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al descargar documento: " + ex.Message, this);
+            }
+        }
+
+        protected void lnkcc_Click(object sender, EventArgs e)
+        {
+            LinkButton lnk = sender as LinkButton;
+            string desc_cc = hdndesc_cc.Value;
+            string cc = hdnCC_Cargo.Value;
+            txtCC_Cargo.Text = desc_cc;
+            hdnCC_Cargo.Value = cc;
+            //ModalClose("#modal_cc");
+        }
+
+        protected void lnkproyecto_Click(object sender, EventArgs e)
+        {
+            LinkButton lnk = sender as LinkButton;
+            txtPMTrackerNumberImplementations.Text = hdnfolio.Value;
+            txtProjectNameImplementations.Text = hdnproyecto.Value;
+            txtCustomerNameImplementations.Text = hdncliente.Value;
+            //ModalClose("#modal_proyectos");
+
+        }
     }
 }

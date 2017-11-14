@@ -13,10 +13,7 @@ namespace presentacion.Pages.MP
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            this.Page.MaintainScrollPositionOnPostBack = true;
-            string usuario = (Session["usuario"] as string) == null ? "" : (Session["usuario"] as string);
-            String puesto = (Session["puesto"] as string) == null ? "" : (Session["puesto"] as string);
-            if (usuario == "" || puesto == "")
+            if (Session["usuario"] == null)
             {
                 Session.Clear();
                 Session.RemoveAll();
