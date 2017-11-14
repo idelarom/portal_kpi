@@ -430,7 +430,7 @@ namespace presentacion
             dt.Columns.Add("value");
             dt.Columns.Add("name");
 
-            for (int i = 2000; i <= DateTime.Today.Year; i++)
+            for (int i = (DateTime.Now.Year-5); i <= (DateTime.Today.Year+1); i++)
             {
                 DataRow row = dt.NewRow();
                 row["value"] = i;

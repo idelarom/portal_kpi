@@ -197,8 +197,8 @@
                         <table class="dvv table no-margin table-condensed" style="font-size: 12px">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 10px; text-align: center;" scope="col"></th>
-                                    <th style="max-width: 10px; text-align: center;" scope="col"></th>
+                                    <th style="min-width: 10px; text-align: center;" scope="col"></th>
+                                    <th style="min-width: 10px; text-align: center;" scope="col"></th>
                                     <th style="min-width: 280px; text-align: left;" scope="col">Proyecto</th>
                                     <th style="min-width: 30px; text-align: center;" scope="col">Usuario</th>
                                     <th style="min-width: 230px; text-align: left;" scope="col">Responsable</th>

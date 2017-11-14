@@ -1251,6 +1251,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="enumerators.cs" />
     <Compile Include="EWSHelper.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="Extensions.cs" />
