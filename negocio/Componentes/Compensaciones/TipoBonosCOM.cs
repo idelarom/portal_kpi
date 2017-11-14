@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
 
-namespace negocio.Componentes
+namespace negocio.Componentes.Compensaciones
 {
     public class TipoBonosCOM
     {

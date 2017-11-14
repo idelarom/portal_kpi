@@ -54,6 +54,7 @@
     <Compile Include="Componentes\ActividadesTiposCOM.cs" />
     <Compile Include="Componentes\AyudaCOM.cs" />
     <Compile Include="Componentes\Compensaciones\BonosCOM.cs" />
+    <Compile Include="Componentes\Compensaciones\TipoComentariosPagoCOM.cs" />
     <Compile Include="Componentes\ConfiguracionDashboardCOM.cs" />
     <Compile Include="Componentes\CorreosCOM.cs" />
     <Compile Include="Componentes\CpedCOM.cs" />
@@ -83,7 +84,8 @@
     <Compile Include="Componentes\RiesgosEstrategiaCOM.cs" />
     <Compile Include="Componentes\RiesgosImpactoCostosCOM.cs" />
     <Compile Include="Componentes\RiesgosProbabilidadCOM.cs" />
-    <Compile Include="Componentes\TipoBonosCOM.cs" />
+    <Compile Include="Componentes\Compensaciones\TipoBonosAutomaticosCOM.cs" />
+    <Compile Include="Componentes\Compensaciones\TipoBonosCOM.cs" />
     <Compile Include="Componentes\To.cs" />
     <Compile Include="Componentes\UsuariosCOM.cs" />
     <Compile Include="Componentes\UsuariosConfiguracionesCOM.cs" />
