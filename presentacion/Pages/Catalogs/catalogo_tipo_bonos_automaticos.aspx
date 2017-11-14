@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MP/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_tipo_bonos.aspx.cs" Inherits="presentacion.Pages.Catalogs.catalogo_tipo_bonos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MP/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_tipo_bonos_automaticos.aspx.cs" Inherits="presentacion.Pages.Catalogs.catalogo_tipo_bonos_automaticos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
       <script type="text/javascript">
         $(document).ready(function () {
@@ -68,7 +68,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-          <h4 class="page-header">Catálogo tipo de bonos</h4>          
+          <h4 class="page-header">Catálogo tipo de bonos automaticos</h4>          
         </div>
     </div>
     <div class="row">
@@ -84,7 +84,6 @@
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
                                     <th style=" min-width:400px; text-align: left;" scope="col">Tipo de bono</th>
-                                     <th style=" min-width:400px; text-align: left;" scope="col">Descripcion</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,18 +92,17 @@
                                         <tr style="font-size: 12px">
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return EditarClick("+Eval("id_bond_type")+");" %>'>
+                                                    onclick='<%# "return EditarClick("+Eval("IdBonds")+");" %>'>
                                                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_bond_type")+");" %>'>
+                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("IdBonds")+");" %>'>
                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
-                                            <td style="text-align: left;"><%# Eval("name") %></td>
-                                            <td style="text-align: left;"><%# Eval("description") %></td>
+                                            <td style="text-align: left;"><%# Eval("NameBonds") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -129,7 +127,7 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Detalles del tipo de bono</h4>
+                            <h4 class="modal-title">Detalles del tipo de bono automatico</h4>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -137,75 +135,7 @@
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Nombre del bono</strong></h5>
                                     <asp:TextBox ID="txtbono" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
-                                    <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
-                            </div>  
-
-                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Monto de configuracion</strong></h5>
-                                    <asp:TextBox ID="txtmonto" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Porcentaje extra</strong></h5>
-                                    <asp:TextBox ID="txtporcentaje" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
-                            </div>  
-
-                             <h5><strong><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Requerimientos</strong></h5> 
-                             <div class="row">
-                                 <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkRmonto" runat="server" Checked="false" Visible="true" text="cantidad"/>
-                                </div>  
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkperiodicidad" runat="server" Checked="false" Visible="true" text="periodicidad"/>
-                                </div>                                
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chksemana" runat="server" Checked="false" Visible="true" text="detalle de la semana"/>
-                                </div>
-                                  <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkfolipm" runat="server" Checked="false" Visible="true" text="folio pmtracker"/>
-                                </div>                                  
                             </div>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkproyecto" runat="server" Checked="false" Visible="true" text="nombre del proyecto"/>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkcliente" runat="server" Checked="false" Visible="true" text="nombre del cliente"/>
-                                </div>                                
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkhoras" runat="server" Checked="false" Visible="true" text="número de horas"/>
-                                </div>
-                                 <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkcamount" runat="server" Checked="false" Visible="true" text="captura de cantidad de auto."/>
-                                </div>
-                            </div>
-                           <div class="row">                               
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkgrid" runat="server" Checked="false" Visible="true" text="requisiciones de cuadrícula"/>
-                                </div> 
-                               <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <asp:CheckBox ID="chkinperiodo" runat="server" Checked="false" Visible="true" text="fecha inicio período captura"/>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                   <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
-                                    <asp:CheckBox ID="chkfinperiodo" runat="server" Checked="false" Visible="true" text="fecha fin período capturar"/>
-                                </div> 
-                               <div class="col-lg-3 col-md-4 col-sm-12">
-                                   <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
-                                    <asp:CheckBox ID="chkmesselect" runat="server" Checked="false" Visible="true" text=" mes seleccionado"/>
-                                </div> 
-                           </div>
-                              <div class="row">   
-                                    <div class="col-lg-3 col-md-4 col-sm-12">
-                                   <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
-                                    <asp:CheckBox ID="chkfile" runat="server" Checked="false" Visible="true" text="files_required "/>
-                                </div> 
-                              </div> 
                         </div>
 
                         <div class="modal-footer ">
@@ -228,3 +158,4 @@
      <asp:HiddenField ID="hdfcommand" runat="server" />
      <asp:HiddenField ID="hdfid_bond_type" runat="server" />
 </asp:Content>
+

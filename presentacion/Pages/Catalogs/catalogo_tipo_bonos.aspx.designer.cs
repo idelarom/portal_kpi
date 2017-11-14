@@ -22,13 +22,13 @@ namespace presentacion.Pages.Catalogs {
         protected global::System.Web.UI.WebControls.LinkButton lnknuevotipobono;
         
         /// <summary>
-        /// Control repeat_riesgosestrategias.
+        /// Control repeat_bonds_type.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeat_riesgosestrategias;
+        protected global::System.Web.UI.WebControls.Repeater repeat_bonds_type;
         
         /// <summary>
         /// Control UpdatePanel15.
@@ -40,22 +40,22 @@ namespace presentacion.Pages.Catalogs {
         protected global::System.Web.UI.UpdatePanel UpdatePanel15;
         
         /// <summary>
-        /// Control txtestatus.
+        /// Control txtbono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtestatus;
+        protected global::System.Web.UI.WebControls.TextBox txtbono;
         
         /// <summary>
-        /// Control TextBox1.
+        /// Control txtdescripcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox txtdescripcion;
         
         /// <summary>
         /// Control txtmonto.
@@ -175,6 +175,24 @@ namespace presentacion.Pages.Catalogs {
         protected global::System.Web.UI.WebControls.CheckBox chkfinperiodo;
         
         /// <summary>
+        /// Control chkmesselect.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkmesselect;
+        
+        /// <summary>
+        /// Control chkfile.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkfile;
+        
+        /// <summary>
         /// Control lnkcargando.
         /// </summary>
         /// <remarks>
@@ -220,12 +238,12 @@ namespace presentacion.Pages.Catalogs {
         protected global::System.Web.UI.WebControls.HiddenField hdfcommand;
         
         /// <summary>
-        /// Control hdfid_proyecto_tecnologia.
+        /// Control hdfid_bond_type.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfid_proyecto_tecnologia;
+        protected global::System.Web.UI.WebControls.HiddenField hdfid_bond_type;
     }
 }
