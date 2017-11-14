@@ -286,6 +286,7 @@
     <Content Include="Pages\Catalogs\catalogo_riesgos_estrategias.aspx" />
     <Content Include="Pages\Catalogs\catalogo_riesgos_probabilidad.aspx" />
     <Content Include="Pages\Catalogs\catalogo_sesiones_usuario.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_tipo_bonos.aspx" />
     <Content Include="Pages\Catalogs\catalogo_usuarios.aspx" />
     <Content Include="Pages\Catalogs\catalogo_widgets.aspx" />
     <Content Include="Pages\Common\ayuda.aspx" />
@@ -1346,6 +1347,13 @@
     </Compile>
     <Compile Include="Pages\Catalogs\catalogo_sesiones_usuario.aspx.designer.cs">
       <DependentUpon>catalogo_sesiones_usuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_tipo_bonos.aspx.cs">
+      <DependentUpon>catalogo_tipo_bonos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_tipo_bonos.aspx.designer.cs">
+      <DependentUpon>catalogo_tipo_bonos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Catalogs\catalogo_usuarios.aspx.cs">
       <DependentUpon>catalogo_usuarios.aspx</DependentUpon>
