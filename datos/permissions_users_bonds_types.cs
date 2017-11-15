@@ -18,5 +18,6 @@ namespace datos
         public string permission_request_bond { get; set; }
         public string permision_authorization_bond { get; set; }
         public Nullable<bool> FiltroCC { get; set; }
+        public Nullable<bool> Enabled { get; set; }
     }
 }

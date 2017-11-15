@@ -81,6 +81,12 @@
             var spinner = new Spinner(opts).spin(target);
             return true;
         }
+        function Load2() {
+            $("#<%= load2.ClientID%>").show();
+        	var target = document.getElementById('<%= load2.ClientID %>');
+            var spinner = new Spinner(opts).spin(target);
+            return true;
+        }
         function control_clear(control) {
             var valor = control.value;
 
@@ -128,12 +134,14 @@
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    
+                                      <div id="load2" runat="server" style="display: none;"></div>
                     <div class="box box-default">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Tipo de bono</strong></h5>
-                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true"
+                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true" onchange="Load2();"
                                         OnSelectedIndexChanged="cbBonds_Types_SelectedIndexChanged" CssClass=" form-control" runat="server">
                                     </asp:DropDownList>
                                 </div>
@@ -238,7 +246,7 @@
                             <div class="row">
                                 <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12" id="trAuthorizationAmount" runat="server">
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Importe bono</strong></h5>
-                                    <asp:TextBox ID="txtAuthorizationAmount" onfocus="control_clear(this)" AutoPostBack="true"
+                                    <asp:TextBox ID="txtAuthorizationAmount" onfocus="$(this).select();" AutoPostBack="true"
                                         OnTextChanged="txtAuthorizationAmount_TextChanged"
                                         CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
@@ -247,7 +255,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo del bono</strong></h5>
-                                    <div class="row">
+                                    <div class="row" style="padding:5px;">
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="tblMonthSelect" runat="server">
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -262,7 +270,7 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <asp:DropDownList ID="cbInitialYear" CssClass="form-control" AutoPostBack="true"
-                                                        OnSelectedIndexChanged="cbInitialMonth_SelectedIndexChanged"
+                                                        OnSelectedIndexChanged="cbInitialYear_SelectedIndexChanged"
                                                         runat="server">
                                                     </asp:DropDownList>
                                                 </div>
@@ -423,9 +431,9 @@
                                             <thead>
                                                 <tr>
                                                     <th style="min-width: 50px; text-align: left;" scope="col"></th>
-                                                    <th style="min-width: 60px; text-align: left;" scope="col"># Empleado</th>
-                                                    <th style="min-width: 60px; text-align: left;" scope="col">CC</th>
                                                     <th style="min-width: 500px; text-align: left;" scope="col">Empleado</th>
+                                                    <th style="min-width: 60px; text-align: center;" scope="col"># Empleado</th>
+                                                    <th style="min-width: 50px; text-align: center;" scope="col">CC</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -437,13 +445,13 @@
                                                                     onclick='<%# "return ValuesEmpleado("+@""""+ Eval("employee_number").ToString()+@""""+@","""+ Eval("full_name").ToString()+@""""+");" %>'>Seleccionar</a>
                                                             </td>
                                                             <td>
+                                                                <%# Eval("full_name") %>
+                                                            </td>
+                                                            <td style="min-width: 60px; text-align: center;">
                                                                 <%# Eval("employee_number") %>
                                                             </td>
-                                                            <td>
+                                                            <td style="min-width: 50px; text-align: center;">
                                                                 <%# Eval("id_cost_center") %>
-                                                            </td>
-                                                            <td>
-                                                                <%# Eval("full_name") %>
                                                             </td>
                                                         </tr>
                                                     </ItemTemplate>
@@ -555,7 +563,7 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <br />
-                                    <asp:LinkButton OnClientClick="return false;" ID="lnkguardaresultadosload" CssClass=" pull-rightbtn btn-primary btn-flat btn-sm" runat="server" Style="display: none;">
+                                    <asp:LinkButton OnClientClick="return false;" ID="lnkguardaresultadosload" CssClass=" pull-right btn btn-primary btn-flat btn-sm" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando
                                     </asp:LinkButton>
@@ -573,6 +581,7 @@
                                                     <th style="max-width: 10px; text-align: center;" scope="col"></th>
                                                     <th style="max-width: 10px; text-align: center;" scope="col"></th>
                                                     <th style="min-width: 350px; text-align: left;" scope="col">Documento</th>
+                                                    <th style="min-width: 150px; text-align: left;" scope="col">Tamaño (megabytes)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -580,20 +589,26 @@
                                                     <ItemTemplate>
                                                         <tr>
                                                             <td style="text-align: center;">
-                                                                <asp:LinkButton OnClientClick="return confirm('¿Desea eliminar este archivo de la solicitud?');" OnClick="lnkdeletefile_Click"  class="btn btn-primary btn-flat btn-xs"
+                                                                <asp:LinkButton 
+                                                                    OnClientClick="return confirm('¿Desea eliminar este archivo de la solicitud?');" 
+                                                                    OnClick="lnkdeletefile_Click"  class="btn btn-primary btn-flat btn-xs"
                                                                      ID="lnkdeletefile" runat="server"
                                                                     file_name='<%# Eval("file_name").ToString().Trim() %>'>
-                                                                    <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+                                                                  Eliminar
                                                                 </asp:LinkButton>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <asp:LinkButton ID="lnkdownloadfile" OnClick="lnkdownloadfile_Click" runat="server"  class="btn btn-success btn-flat btn-xs"
+                                                                <asp:LinkButton ID="lnkdownloadfile" OnClick="lnkdownloadfile_Click" 
+                                                                    runat="server"  class="btn btn-success btn-flat btn-xs"
                                                                     path='<%# Eval("path").ToString().Trim() %>'>
-                                                                    <i class="fa fa-download fa-2x" aria-hidden="true"></i></asp:LinkButton>
+                                                                   Descargar</asp:LinkButton>
                                                                
                                                             </td>
                                                             <td>
                                                                 <%# Eval("file_name").ToString().Trim() %>
+                                                            </td>
+                                                            <td>
+                                                                <%# Math.Round((Convert.ToDecimal(Eval("size"))/1000000),2).ToString()+" mb" %>
                                                             </td>
                                                         </tr>
                                                     </ItemTemplate>

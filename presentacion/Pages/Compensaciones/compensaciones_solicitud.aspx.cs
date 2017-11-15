@@ -356,7 +356,7 @@ namespace presentacion.Pages.Compensaciones
             if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.monthly).ToString())
             {
                 // es mensual
-                this.cbInitialMonth.SelectedValue = (Convert.ToInt32(this.cbFinalizeMonth.SelectedValue) - 1).ToString();
+                this.cbInitialMonth.SelectedValue = (Convert.ToInt32(this.cbFinalizeMonth.SelectedValue)).ToString();
                 this.cbInitialYear.SelectedValue = this.cbFinalizeYear.SelectedValue;
             }
 
@@ -368,7 +368,7 @@ namespace presentacion.Pages.Compensaciones
             }
             string date_initial = this.cbInitialYear.SelectedValue +"-"+ this.cbInitialMonth.SelectedValue.PadLeft(2, '0') +"-01";
             string date_final = "";
-            if (this.cbFinalizeYear.SelectedValue != "")
+            if (this.cbFinalizeYear.SelectedValue != "" && this.cbFinalizeMonth.SelectedValue != "")
             {
                 date_final = this.cbFinalizeYear.SelectedValue + "-" + this.cbFinalizeMonth.SelectedValue.PadLeft(2, '0') + "-" + System.DateTime.DaysInMonth(Convert.ToInt32(this.cbFinalizeYear.SelectedValue), Convert.ToInt32(this.cbFinalizeMonth.SelectedValue)).ToString().PadLeft(2, '0');
             }
@@ -565,7 +565,7 @@ namespace presentacion.Pages.Compensaciones
         /// <param name="path"></param>
         /// <param name="file_name"></param>
         /// <param name="content_type"></param>
-        public void AgregarDocumento(string path, string file_name, string content_type)
+        public void AgregarDocumento(string path, string file_name, string content_type, decimal size)
         {
             try
             {
@@ -578,6 +578,7 @@ namespace presentacion.Pages.Compensaciones
                 files_requests_bonds file = new files_requests_bonds();
                 file.path = path;
                 file.file_name = file_name;
+                file.size = size;
                 file.content_type = content_type;
                 list.Add(file);
                 Session[hdfguid.Value + "list_documentos"] = list;
@@ -757,12 +758,93 @@ namespace presentacion.Pages.Compensaciones
         {
             try
             {
+                
+                if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.monthly).ToString())
+                {//si es mensual
+                    cbFinalizeMonth.SelectedValue = (Convert.ToInt32(cbInitialMonth.SelectedValue)).ToString();
+                } else if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.bimestral).ToString())
+                {//si es bimestral
+                    if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    {
+                        //si es diciembre  
+                        cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.January).ToString();
+                        cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
+                    }
+                    else {
+                        cbFinalizeMonth.SelectedValue = (Convert.ToInt32(cbInitialMonth.SelectedValue) + 2).ToString();
+                    }
+                }
+                else if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.quarterly).ToString())
+                {//si es trimestral
+                    if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    {
+                        //si es diciembre  
+                        cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.February).ToString();
+                        cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    {
+                        //si es noviembre  
+                        cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.January).ToString();
+                        cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
+                    }
+                    else
+                    {
+                        cbFinalizeMonth.SelectedValue = (Convert.ToInt32(cbInitialMonth.SelectedValue) + 2).ToString();
+                    }
+                }
+                else if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.quarterly).ToString())
+                {//si es semestral
+                    if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    {
+                        //si es diciembre  
+                        cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.May).ToString();
+                        cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    {
+                        //si es noviembre  
+                        cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.April).ToString();
+                        cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    {
+                        //si es octubre  
+                        cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.March).ToString();
+                        cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    {
+                        //si es septiembre  
+                        cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.February).ToString();
+                        cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    {
+                        //si es agosto  
+                        cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.January).ToString();
+                        cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
+                    }
+                    else
+                    {
+                        cbFinalizeMonth.SelectedValue = (Convert.ToInt32(cbInitialMonth.SelectedValue) + 6).ToString();
+                    }
+                }
+                else if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.quarterly).ToString())
+                {//si es anual
+                    cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) + 1).ToString();
+                }
                 SelectedMonthAndYear();
             }
             catch (Exception ex)
             {
                 Toast.Error("Error al calcular fechas: " + ex.Message, this);
             }
+        }
+
+        protected void cbInitialYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
         protected void cbBonds_Types_SelectedIndexChanged(object sender, EventArgs e)
@@ -809,6 +891,8 @@ namespace presentacion.Pages.Compensaciones
                         this.trFinalizeMonth.Visible = false;
                         LoadInitialMonths();
                         LoadInitalYears();
+                        LoadFinalizeMonths();
+                        LoadFinalizeYears();
                         cbInitialMonth_SelectedIndexChanged(null, null);
                     }
                     else
@@ -824,7 +908,7 @@ namespace presentacion.Pages.Compensaciones
                     if (this.trWeek.Visible)
                     {
                         calDateSupport.SelectedDate = DateTime.Now;
-                        calDateSupport_SelectedDateChanged(null,null);
+                        calDateSupport_SelectedDateChanged(null, null);
                     }
                     else
                     {
@@ -837,6 +921,9 @@ namespace presentacion.Pages.Compensaciones
             catch (Exception ex)
             {
                 Toast.Error("Error al cargar solicitud: " + ex.Message, this);
+            }
+            finally {
+                load2.Style["display"] = "none";
             }
         }
 
@@ -992,7 +1079,7 @@ namespace presentacion.Pages.Compensaciones
                     
                     name = Path.GetFileNameWithoutExtension(e.File.FileName) + Path.GetExtension(e.File.FileName);
                     e.File.SaveAs(directory + name.Trim());
-                    AgregarDocumento(directory + name.Trim(),name.Trim(),e.File.ContentType);
+                    AgregarDocumento(directory + name.Trim(),name.Trim(),e.File.ContentType, Convert.ToDecimal(e.File.ContentLength));
                     CargarTablaArchivos();
                     Toast.Success("Documento guardado correctamente.","Mensaje del sistema",this);
                 }
@@ -1069,5 +1156,7 @@ namespace presentacion.Pages.Compensaciones
             //ModalClose("#modal_proyectos");
 
         }
+
+      
     }
 }

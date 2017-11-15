@@ -1,6 +1,7 @@
 ﻿using datos;
 using datos.Model;
 using negocio.Componentes;
+using negocio.Componentes.Compensaciones;
 using System;
 using System.Collections.Generic;
 using System.Data;

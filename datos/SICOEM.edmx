@@ -115,6 +115,7 @@ advertencia 6002: La tabla o vista 'SICOEM.dbo.bonds_log' no tiene definida ning
           <Property Name="content_type" Type="varchar" MaxLength="300" />
           <Property Name="date_attach" Type="datetime" />
           <Property Name="login" Type="varchar" MaxLength="20" />
+          <Property Name="size" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SICOEM.dbo.group_leader' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -184,6 +185,7 @@ advertencia 6002: La tabla o vista 'SICOEM.dbo.permissions_users_bonds_types' no
           <Property Name="permission_request_bond" Type="varchar" MaxLength="50" />
           <Property Name="permision_authorization_bond" Type="varchar" MaxLength="50" />
           <Property Name="FiltroCC" Type="bit" />
+          <Property Name="Enabled" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SICOEM.dbo.requests_automatic_status' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -380,7 +382,8 @@ advertencia 6002: La tabla o vista 'SICOEM.dbo.tbl_ReplaceBoss' no tiene definid
     [permissions_users_bonds_types].[login] AS [login], 
     [permissions_users_bonds_types].[permission_request_bond] AS [permission_request_bond], 
     [permissions_users_bonds_types].[permision_authorization_bond] AS [permision_authorization_bond], 
-    [permissions_users_bonds_types].[FiltroCC] AS [FiltroCC]
+    [permissions_users_bonds_types].[FiltroCC] AS [FiltroCC], 
+    [permissions_users_bonds_types].[Enabled] AS [Enabled]
     FROM [dbo].[permissions_users_bonds_types] AS [permissions_users_bonds_types]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="requests_automatic_status" EntityType="Self.requests_automatic_status" store:Type="Tables" store:Schema="dbo">
@@ -531,6 +534,7 @@ advertencia 6002: La tabla o vista 'SICOEM.dbo.tbl_ReplaceBoss' no tiene definid
           <Property Name="content_type" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="date_attach" Type="DateTime" Precision="3" />
           <Property Name="login" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="size" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="payment_history">
           <Key>
@@ -686,6 +690,7 @@ advertencia 6002: La tabla o vista 'SICOEM.dbo.tbl_ReplaceBoss' no tiene definid
           <Property Name="permission_request_bond" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="permision_authorization_bond" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FiltroCC" Type="Boolean" />
+          <Property Name="Enabled" Type="Boolean" />
         </EntityType>
         <EntityType Name="requests_automatic_status">
           <Key>
@@ -856,6 +861,7 @@ advertencia 6002: La tabla o vista 'SICOEM.dbo.tbl_ReplaceBoss' no tiene definid
           <EntitySetMapping Name="files_requests_bonds">
             <EntityTypeMapping TypeName="SICOEMModel.files_requests_bonds">
               <MappingFragment StoreEntitySet="files_requests_bonds">
+                <ScalarProperty Name="size" ColumnName="size" />
                 <ScalarProperty Name="id_file_request_bond" ColumnName="id_file_request_bond" />
                 <ScalarProperty Name="id_request_bond" ColumnName="id_request_bond" />
                 <ScalarProperty Name="path" ColumnName="path" />
@@ -1023,6 +1029,7 @@ advertencia 6002: La tabla o vista 'SICOEM.dbo.tbl_ReplaceBoss' no tiene definid
           <EntitySetMapping Name="permissions_users_bonds_types">
             <EntityTypeMapping TypeName="SICOEMModel.permissions_users_bonds_types">
               <MappingFragment StoreEntitySet="permissions_users_bonds_types">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="permission_request_bond" ColumnName="permission_request_bond" />
                 <ScalarProperty Name="permision_authorization_bond" ColumnName="permision_authorization_bond" />

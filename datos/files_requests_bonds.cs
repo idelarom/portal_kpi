@@ -21,5 +21,6 @@ namespace datos
         public string content_type { get; set; }
         public Nullable<System.DateTime> date_attach { get; set; }
         public string login { get; set; }
+        public Nullable<decimal> size { get; set; }
     }
 }
