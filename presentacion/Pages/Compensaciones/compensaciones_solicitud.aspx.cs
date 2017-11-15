@@ -88,6 +88,11 @@ namespace presentacion.Pages.Compensaciones
 
         }
 
+        /// <summary>
+        /// Carga la informacion de un empleado
+        /// </summary>
+        /// <param name="no_"></param>
+        /// <returns></returns>
         private DataTable informacion_empleado(int no_)
         {
             try
@@ -108,33 +113,10 @@ namespace presentacion.Pages.Compensaciones
             {
                 return new DataTable();
             }
-        }
-
-        private DataSet listado_empleados()
-        {
-            try
-            {
-                int NumJefe = Convert.ToInt32(Session["NumJefe"]);
-                int num_empleado = Convert.ToInt32(Session["num_empleado"]);
-                Boolean ver_Todos_los_empleados = Convert.ToBoolean(Session["ver_Todos_los_empleados"]);
-                if (funciones.Permisos(Session["usuario"] as string, 4))
-                {
-                    ver_Todos_los_empleados = true;
-                }
-                EmpleadosCOM empleados = new EmpleadosCOM();
-                bool no_activos = false;
-                DataSet ds = empleados.sp_listado_empleados(num_empleado, ver_Todos_los_empleados, no_activos);
-                return ds;
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al iniciar busqueda de empleados: " + ex.Message, this);
-                return new DataSet();
-            }
-        }
+        }        
 
         /// <summary>
-        /// arga el listado de empleados
+        /// Carga el listado de empleados
         /// </summary>
         /// <param name="filtro"></param>
         protected void CargarEmpleados(string filtro)
@@ -159,6 +141,9 @@ namespace presentacion.Pages.Compensaciones
             }
         }
         
+        /// <summary>
+        /// Carga el combo de los años inicial
+        /// </summary>
         private void LoadInitalYears()
         {
 
@@ -180,6 +165,9 @@ namespace presentacion.Pages.Compensaciones
             }
         }
 
+        /// <summary>
+        /// Carga el combo de los meses inicial
+        /// </summary>
         private void LoadInitialMonths()
         {
             DataTable TableMonths = funciones.meses();
@@ -198,6 +186,10 @@ namespace presentacion.Pages.Compensaciones
                 this.cbInitialYear.SelectedValue = (DateTime.Now.Year-1).ToString();
             }
         }
+
+        /// <summary>
+        /// Carga el combo de los años final
+        /// </summary>
         private void LoadFinalizeYears()
         {
 
@@ -226,6 +218,9 @@ namespace presentacion.Pages.Compensaciones
 
         }
 
+        /// <summary>
+        /// Carga el combo de los meses final
+        /// </summary>
         private void LoadFinalizeMonths()
         {
             DataTable TableMonths = funciones.meses();
@@ -245,8 +240,10 @@ namespace presentacion.Pages.Compensaciones
             }
 
         }
-
-        // calcula la fecha inicial a partir de la fecha final, con respecto al tipo de periodo de bono
+        
+        /// <summary>
+        /// Calcula la fecha inicial a partir de la fecha final, con respecto al tipo de periodo de bono
+        /// </summary>
         private void SelectedMonthAndYear()
         {
             if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.quarterly).ToString())
@@ -384,8 +381,11 @@ namespace presentacion.Pages.Compensaciones
             }
 
         }
-
-
+        
+        /// <summary>
+        /// Carga la configuración de un bono por empleado
+        /// </summary>
+        /// <param name="no_"></param>
         private void CargarInformacionBonoEmpleado(int no_)
         {
             try
@@ -487,8 +487,7 @@ namespace presentacion.Pages.Compensaciones
                 Toast.Error("Error al cargar información del bono: "+ex.Message,this);
             }
         }
-
-
+        
         /// <summary>
         /// Selecciona la semana del dia seleccionado
         /// </summary>
@@ -622,6 +621,9 @@ namespace presentacion.Pages.Compensaciones
 
         }
 
+        /// <summary>
+        /// Carga los archivos en el grid de documentos
+        /// </summary>
         public void CargarTablaArchivos()
         {
             try
@@ -758,8 +760,8 @@ namespace presentacion.Pages.Compensaciones
         {
             try
             {
-                
-                if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.monthly).ToString())
+
+                if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.monthly).ToString() || this.hdnIdPeriodicity.Value == "")
                 {//si es mensual
                     cbFinalizeMonth.SelectedValue = (Convert.ToInt32(cbInitialMonth.SelectedValue)).ToString();
                 } else if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.bimestral).ToString())
@@ -801,25 +803,25 @@ namespace presentacion.Pages.Compensaciones
                         cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.May).ToString();
                         cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
                     }
-                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.November)))
                     {
                         //si es noviembre  
                         cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.April).ToString();
                         cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
                     }
-                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.October)))
                     {
                         //si es octubre  
                         cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.March).ToString();
                         cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
                     }
-                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.September)))
                     {
                         //si es septiembre  
                         cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.February).ToString();
                         cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) + 1).ToString();
                     }
-                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.December)))
+                    else if ((Convert.ToInt32(cbInitialMonth.SelectedValue) == ((int)enumerators.Months.August)))
                     {
                         //si es agosto  
                         cbFinalizeMonth.SelectedValue = ((int)enumerators.Months.January).ToString();
@@ -844,6 +846,92 @@ namespace presentacion.Pages.Compensaciones
 
         protected void cbInitialYear_SelectedIndexChanged(object sender, EventArgs e)
         {
+            try
+            {
+
+                if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.monthly).ToString() || this.hdnIdPeriodicity.Value=="")
+                {//si es mensual
+                    cbInitialMonth.SelectedValue = (Convert.ToInt32(cbFinalizeMonth.SelectedValue)).ToString();
+                }
+                else if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.bimestral).ToString())
+                {//si es bimestral
+                    if ((Convert.ToInt32(cbFinalizeMonth.SelectedValue) == ((int)enumerators.Months.January)))
+                    {
+                        //si es diciembre  
+                        cbInitialMonth.SelectedValue = ((int)enumerators.Months.December).ToString();
+                        cbInitialYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) - 1).ToString();
+                    }
+                    else
+                    {
+                        cbInitialMonth.SelectedValue = (Convert.ToInt32(cbFinalizeMonth.SelectedValue) - 2).ToString();
+                    }
+                }
+                else if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.quarterly).ToString())
+                {//si es trimestral
+                    if ((Convert.ToInt32(cbFinalizeMonth.SelectedValue) == ((int)enumerators.Months.February)))
+                    {
+                        //si es Febrero  
+                        cbInitialMonth.SelectedValue = ((int)enumerators.Months.December).ToString();
+                        cbInitialYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) - 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbFinalizeMonth.SelectedValue) == ((int)enumerators.Months.January)))
+                    {
+                        //si es Enero  
+                        cbInitialMonth.SelectedValue = ((int)enumerators.Months.November).ToString();
+                        cbInitialYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) - 1).ToString();
+                    }
+                    else
+                    {
+                        cbInitialMonth.SelectedValue = (Convert.ToInt32(cbFinalizeMonth.SelectedValue) - 2).ToString();
+                    }
+                }
+                else if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.quarterly).ToString())
+                {//si es semestral
+                    if ((Convert.ToInt32(cbFinalizeMonth.SelectedValue) == ((int)enumerators.Months.May)))
+                    {
+                        //si es Mayo  
+                        cbInitialMonth.SelectedValue = ((int)enumerators.Months.December).ToString();
+                        cbInitialYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) - 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbFinalizeMonth.SelectedValue) == ((int)enumerators.Months.April)))
+                    {
+                        //si es Abril  
+                        cbInitialMonth.SelectedValue = ((int)enumerators.Months.November).ToString();
+                        cbInitialYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) - 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbFinalizeMonth.SelectedValue) == ((int)enumerators.Months.March)))
+                    {
+                        //si es Marzo  
+                        cbInitialMonth.SelectedValue = ((int)enumerators.Months.October).ToString();
+                        cbInitialYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) - 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbFinalizeMonth.SelectedValue) == ((int)enumerators.Months.February)))
+                    {
+                        //si es Febrero  
+                        cbInitialMonth.SelectedValue = ((int)enumerators.Months.September).ToString();
+                        cbInitialYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) - 1).ToString();
+                    }
+                    else if ((Convert.ToInt32(cbFinalizeMonth.SelectedValue) == ((int)enumerators.Months.January)))
+                    {
+                        //si es Enero  
+                        cbInitialMonth.SelectedValue = ((int)enumerators.Months.August).ToString();
+                        cbInitialYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) - 1).ToString();
+                    }
+                    else
+                    {
+                        cbInitialMonth.SelectedValue = (Convert.ToInt32(cbFinalizeMonth.SelectedValue) - 6).ToString();
+                    }
+                }
+                else if (this.hdnIdPeriodicity.Value == ((int)enumerators.Periodicity.quarterly).ToString())
+                {//si es anual
+                    cbInitialYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) - 1).ToString();
+                }
+                SelectedMonthAndYear();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al calcular fechas: " + ex.Message, this);
+            }
 
         }
 
@@ -1157,6 +1245,102 @@ namespace presentacion.Pages.Compensaciones
 
         }
 
-      
+        protected void lnksolicitar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string vmensaje = "";
+                List<files_requests_bonds> list = Session[hdfguid.Value + "list_documentos"] as List<files_requests_bonds>;
+                string Texto = "NO-" + hdnEmployeeNumber.Value;
+
+                int num_empleado = Convert.ToInt32(hdnEmployeeNumber.Value==""?"0":hdnEmployeeNumber.Value);
+                decimal monto_actual = Convert.ToDecimal(txtAuthorizationAmount.Text.Replace("$", "").Replace(",", ""));
+                DateTime? period_date_of = txtPeriodDateOf.SelectedDate;
+                DateTime? period_date_to = txtPeriodDateTo.SelectedDate;
+                string comentarios = txtComments.Text;
+                string cc = hdnCC_Cargo.Value;
+                string cc_cargo = hdnCC_Cargo.Value;
+                
+                bool number_hours_required = this.trNumberHours.Visible;
+                bool folio_pmtracker_required = this.trFolioPMTracker.Visible;
+                bool soporte = trWeek.Visible;
+
+                int dia_soporte = calDateSupport.SelectedDate == null ? 0 : Convert.ToDateTime(calDateSupport.SelectedDate).Day;
+                int mes_soporte = calDateSupport.SelectedDate == null ? 0 : Convert.ToDateTime(calDateSupport.SelectedDate).Month;
+                int año_soporte = calDateSupport.SelectedDate == null ? 0 : Convert.ToDateTime(calDateSupport.SelectedDate).Year;
+
+                string folio_pm = txtPMTrackerNumberImplementations.Text.Trim();
+                decimal hours_pm = Convert.ToDecimal(txtNumberHoursImplementations.Text==""?"0": txtNumberHoursImplementations.Text);
+                //VALIDACINES
+                if (num_empleado == 0)
+                {
+                    vmensaje = "Seleccione un empleado.";
+                }
+                else if (monto_actual == 0)
+                {
+                    vmensaje = "Ingrese un monto mayor a $ 0.00.";
+                }
+                else if (soporte && (dia_soporte==0 || mes_soporte==0 || año_soporte==0))
+                {
+                    vmensaje = "Seleccione una semana para la fecha de soporte.";
+                }
+                else if (number_hours_required && folio_pm == "")
+                {
+                    vmensaje = "Seleccione un proyecto PM Tracker.";
+                }
+                else if (number_hours_required && hours_pm == 0)
+                {
+                    vmensaje = "Ingrese la cantidad de horas de implementación.";
+                }
+                else if (period_date_of== null || period_date_to == null)
+                {
+                    vmensaje = "Hay un problema con las fechas.";
+                }
+                else if (cc_cargo == "")
+                {
+                    vmensaje = "Seleccione un Centro de Costos valido.";
+                }
+                else if (comentarios == "")
+                {
+                    vmensaje = "Los comentarios son requeridos en la solicitud.";
+
+                }
+                else if (((hdnFilesRequeried.Value.Trim().ToUpper() == "TRUE") & (hdnSubio.Value == Texto.ToString())) && list.Count == 0)
+                {
+                    //Si no se ha cargado archivo y es requerido
+                    vmensaje = "Para el Bono de " + this.cbBonds_Types.SelectedItem.Text + " es necesario adjuntar un archivo.";
+                }
+
+                //Se valida que el empleado tenga un monto por periodo valido
+                if (vmensaje =="" && Convert.ToInt32(this.cbBonds_Types.SelectedValue) == 1)
+                {
+                    //'codigo agregado por RCA
+                    decimal monto_roiginal = (string.IsNullOrEmpty(hdnMontoOriginal.Value) ? 0 : Convert.ToDecimal(hdnMontoOriginal.Value));
+
+                    decimal monto_total_autorizado = (string.IsNullOrEmpty(hdnauthorization_total_amount.Value) ? 0 : Convert.ToDecimal(hdnauthorization_total_amount.Value));
+                    decimal Direfencia = (monto_roiginal - monto_total_autorizado);
+
+                    if (Direfencia <= 0)
+                    {
+                        vmensaje = "Ya se le ha otorgado el monto completo de  " + monto_roiginal.ToString("C2") + " correspondiente a este periodo.";
+                    }
+                    else if (Direfencia >= 1 & Direfencia < monto_roiginal & monto_actual > Direfencia)
+                    {
+                        vmensaje = "Solo tiene un monto disponible " + Direfencia.ToString("C2") + " de un total de " + monto_roiginal.ToString("C2");                       
+                    }
+                }
+
+                //Si hay algun mensaje de error
+                if (vmensaje != "")
+                {
+                    Toast.Error(vmensaje,this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al guardar solicitud: " + ex.Message, this);
+            }
+        }
+        
     }
 }
