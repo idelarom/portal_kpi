@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MP/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_tipo_bonos.aspx.cs" Inherits="presentacion.Pages.Catalogs.catalogo_tipo_bonos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/MP/Global.Master" AutoEventWireup="true" CodeBehind="catalogo_estatus_solicitud_bonos.aspx.cs" Inherits="presentacion.Pages.Catalogs.catalogo_estatus_solicitud_bonos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
       <script type="text/javascript">
         $(document).ready(function () {
@@ -39,8 +39,8 @@
             });
         }
         function ConfirmEntregableDelete(id_permiso) {
-            if (confirm('¿Desea eliminar este tipo de bono?')) {
-                var hdfusuario = document.getElementById('<%= hdfid_bond_type.ClientID %>');
+            if (confirm('¿Desea eliminar este estatus?')) {
+                var hdfusuario = document.getElementById('<%= hdfid_request_status.ClientID %>');
                 hdfusuario.value = id_permiso;
                 document.getElementById('<%= btneliminar.ClientID%>').click();
                 return true;
@@ -49,7 +49,7 @@
             }
         }
         function EditarClick(id_permiso) {
-            var hdfusuario = document.getElementById('<%= hdfid_bond_type.ClientID %>');
+            var hdfusuario = document.getElementById('<%= hdfid_request_status.ClientID %>');
             hdfusuario.value = id_permiso;
             document.getElementById('<%= btneventgrid.ClientID%>').click();
             return false;
@@ -68,14 +68,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="col-lg-12">
-          <h4 class="page-header">Catálogo tipo de bonos</h4>          
+          <h4 class="page-header">Catálogo estatus de la solicitud de bonos</h4>          
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="box box-danger">
-                <div class="box-body"><asp:LinkButton ID="lnknuevotipobono" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevotipobono_Click">
-                Nuevo Tipo de bono&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+                <div class="box-body"><asp:LinkButton ID="lnknuevoestatus" CssClass="btn btn-primary btn-flat" runat="server" OnClick="lnknuevoestatus_Click">
+                Nuevo Estatus de la solicitud&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
             </asp:LinkButton>
                     <div class="table-responsive">
                         <table class="dvv table no-margin table-condensed">
@@ -83,23 +83,23 @@
                                 <tr style="font-size: 12px;">
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
                                     <th style="width: 20px; text-align: center;" scope="col"></th>
-                                    <th style=" min-width:400px; text-align: left;" scope="col">Tipo de bono</th>
-                                     <th style=" min-width:400px; text-align: left;" scope="col">Descripcion</th>
+                                    <th style=" min-width:80px; text-align: left;" scope="col">tipo estatus</th>
+                                    <th style=" min-width:80px; text-align: left;" scope="col">Descripcion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <asp:Repeater ID="repeat_bonds_type" runat="server">
+                                <asp:Repeater ID="repeat_requests_status" runat="server">
                                     <ItemTemplate>
                                         <tr style="font-size: 12px">
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return EditarClick("+Eval("id_bond_type")+");" %>'>
+                                                    onclick='<%# "return EditarClick("+Eval("id_request_status")+");" %>'>
                                                     <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                             <td style="text-align: center;">
                                                 <a style="cursor: pointer;"
-                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_bond_type")+");" %>'>
+                                                    onclick='<%# "return ConfirmEntregableDelete("+Eval("id_request_status")+");" %>'>
                                                     <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
                                                 </a>
                                             </td>
@@ -116,11 +116,11 @@
 
         </div>
     </div>
-       <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalTipoBonos" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+       <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalEstatusSolicitud" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel15" runat="server">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="lnknuevotipobono" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="lnknuevoestatus" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="btneventgrid" EventName="Click" />
                     <asp:PostBackTrigger ControlID="lnkguardar" />
                 </Triggers>
@@ -129,83 +129,19 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span></button>
-                            <h4 class="modal-title">Detalles del tipo de bono</h4>
+                            <h4 class="modal-title">Detalles del estatus</h4>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Nombre del bono</strong></h5>
-                                    <asp:TextBox ID="txtbono" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Nombre del estatus</strong></h5>
+                                    <asp:TextBox ID="txtestatus" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Descripcion</strong></h5>
                                     <asp:TextBox ID="txtdescripcion" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                            </div>  
-
-                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Monto de configuracion</strong></h5>
-                                    <asp:TextBox ID="txtmonto" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <h5><strong><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Porcentaje extra</strong></h5>
-                                    <asp:TextBox ID="txtporcentaje" MaxLength="250" CssClass=" form-control" runat="server"></asp:TextBox>
-                                </div>
-                            </div>  
-
-                             <h5><strong><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Requerimientos</strong></h5> 
-                             <div class="row">
-                                 <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkRmonto" runat="server" Checked="false" Visible="true" text="cantidad"/>
-                                </div>  
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkperiodicidad" runat="server" Checked="false" Visible="true" text="periodicidad"/>
-                                </div>                                
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chksemana" runat="server" Checked="false" Visible="true" text="detalle de la semana"/>
-                                </div>
-                                  <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkfolipm" runat="server" Checked="false" Visible="true" text="folio pmtracker"/>
-                                </div>                                  
                             </div>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkproyecto" runat="server" Checked="false" Visible="true" text="nombre del proyecto"/>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkcliente" runat="server" Checked="false" Visible="true" text="nombre del cliente"/>
-                                </div>                                
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkhoras" runat="server" Checked="false" Visible="true" text="número de horas"/>
-                                </div>
-                                 <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkcamount" runat="server" Checked="false" Visible="true" text="captura de cantidad de auto."/>
-                                </div>
-                            </div>
-                           <div class="row">                               
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <asp:CheckBox ID="chkgrid" runat="server" Checked="false" Visible="true" text="requisiciones de cuadrícula"/>
-                                </div> 
-                               <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <asp:CheckBox ID="chkinperiodo" runat="server" Checked="false" Visible="true" text="fecha inicio período captura"/>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                   <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
-                                    <asp:CheckBox ID="chkfinperiodo" runat="server" Checked="false" Visible="true" text="fecha fin período capturar"/>
-                                </div> 
-                               <div class="col-lg-3 col-md-4 col-sm-12">
-                                   <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
-                                    <asp:CheckBox ID="chkmesselect" runat="server" Checked="false" Visible="true" text=" mes seleccionado"/>
-                                </div> 
-                           </div>
-                              <div class="row">   
-                                    <div class="col-lg-3 col-md-4 col-sm-12">
-                                   <%-- <h5><strong><i class="fa fa-comment-o" aria-hidden="true"></i>&nbsp;Activo</strong></h5>--%>
-                                    <asp:CheckBox ID="chkfile" runat="server" Checked="false" Visible="true" text="files_required "/>
-                                </div> 
-                              </div> 
                         </div>
 
                         <div class="modal-footer ">
@@ -215,7 +151,7 @@
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando...
                             </asp:LinkButton>
                             <asp:LinkButton ID="lnkguardar" CssClass="btn btn-primary btn-flat" OnClick="lnkguardar_Click"
-                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este tipo de bono?');" runat="server">
+                                OnClientClick="return ConfirmwidgetProyectoModal('¿Desea Guardar este estatus?');" runat="server">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Guardar
                             </asp:LinkButton>
                         </div>
@@ -226,5 +162,6 @@
     <asp:Button ID="btneventgrid" OnClick="btneventgrid_Click" runat="server" Text="Button" Style="display: none;" />
     <asp:Button ID="btneliminar" OnClick="btneliminar_Click" runat="server" Text="Button" Style="display: none;" />
      <asp:HiddenField ID="hdfcommand" runat="server" />
-     <asp:HiddenField ID="hdfid_bond_type" runat="server" />
+     <asp:HiddenField ID="hdfid_request_status" runat="server" />
 </asp:Content>
+

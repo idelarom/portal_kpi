@@ -1,6 +1,6 @@
 ﻿using datos;
 using datos.Model;
-using negocio.Componentes;
+using negocio.Componentes.Compensaciones;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -118,6 +118,7 @@ namespace presentacion.Pages.Catalogs
                 if (id_bond_type > 0) { bono.IdBonds = id_bond_type; }
                 bono.NameBonds = txtbono.Text;               
                 bono.Create_by = Session["usuario"] as string;
+                bono.Created = DateTime.Now;
                 if (bono.NameBonds == "")
                 {
                     ModalShow("#ModalTipoBonos");

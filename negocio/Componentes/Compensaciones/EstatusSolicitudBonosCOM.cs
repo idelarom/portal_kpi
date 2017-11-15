@@ -7,25 +7,25 @@ using System.Linq;
 
 namespace negocio.Componentes.Compensaciones
 {
-    public class TipoComentariosPagoCOM
+    public class EstatusSolicitudBonosCOM
     {
         /// <summary>
         /// Agrega una instancia de bonds_types
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Agregar(comments_types_payments entidad)
+        public string Agregar(requests_status entidad)
         {
             try
             {
                 string mess = "";
-                if (Exist(entidad.description))
+                if (Exist(entidad.name))
                 {
-                    mess = "Ya existe un comentario llamado: " + entidad.description;
+                    mess = "Ya existe un estatus llamado: " + entidad.name;
                 }
                 else
                 {
-                    comments_types_payments comentario = new comments_types_payments
+                    requests_status estatus = new requests_status
                     {
                         description = entidad.description,
                         created = DateTime.Now,
@@ -33,7 +33,7 @@ namespace negocio.Componentes.Compensaciones
                         enabled = true,
                     };
                     SICOEMEntities sicoem = new SICOEMEntities();
-                    sicoem.comments_types_payments.Add(comentario);
+                    sicoem.requests_status.Add(estatus);
                     sicoem.SaveChanges();
                 }
                 return mess;
@@ -53,14 +53,14 @@ namespace negocio.Componentes.Compensaciones
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Editar(comments_types_payments entidad)
+        public string Editar(requests_status entidad)
         {
             try
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
-                comments_types_payments bono = sicoem.comments_types_payments
-                                .First(i => i.id_comment_type_payment == entidad.id_comment_type_payment);
-                bono.description = entidad.description;
+                requests_status bono = sicoem.requests_status
+                                .First(i => i.id_request_status == entidad.id_request_status);
+                bono.name = entidad.name;
                 sicoem.SaveChanges();
                 return "";
             }
@@ -79,13 +79,13 @@ namespace negocio.Componentes.Compensaciones
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Eliminar(int id_comment_type_payment)
+        public string Eliminar(int id_request_status)
         {
             try
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
-                comments_types_payments bono = sicoem.comments_types_payments
-                                .First(i => i.id_comment_type_payment == id_comment_type_payment);
+                requests_status bono = sicoem.requests_status
+                                .First(i => i.id_request_status == id_request_status);
                 bono.enabled = false;
                 sicoem.SaveChanges();
                 return "";
@@ -105,19 +105,19 @@ namespace negocio.Componentes.Compensaciones
         /// </summary>
         /// <param name="titulo"></param>
         /// <returns></returns>
-        public bool Exist(string Comentario)
+        public bool Exist(string nameestatus)
         {
             DataTable dt = new DataTable();
             try
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
-                var query = sicoem.comments_types_payments
-                                .Where(s => s.description.ToUpper() == Comentario.ToUpper() && s.enabled == true)
+                var query = sicoem.requests_status
+                                .Where(s => s.name.ToUpper() == nameestatus.ToUpper() && s.enabled == true)
                                 .Select(u => new
                                 {
-                                    u.id_comment_type_payment
+                                    u.id_request_status
                                 })
-                                .OrderBy(u => u.id_comment_type_payment);
+                                .OrderBy(u => u.id_request_status);
                 dt = To.DataTable(query.ToList());
                 return dt.Rows.Count > 0;
             }
@@ -136,14 +136,14 @@ namespace negocio.Componentes.Compensaciones
         /// </summary>
         /// <param name="idbonds"></param>
         /// <returns></returns>
-        public comments_types_payments Comentario(int id_comment_type_payment)
+        public requests_status estatus(int id_request_status)
         {
             try
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
-                comments_types_payments Comentario = sicoem.comments_types_payments
-                                .First(i => i.id_comment_type_payment == id_comment_type_payment);
-                return Comentario;
+                requests_status estatus = sicoem.requests_status
+                                .First(i => i.id_request_status == id_request_status);
+                return estatus;
             }
             catch (DbEntityValidationException ex)
             {
@@ -166,14 +166,15 @@ namespace negocio.Componentes.Compensaciones
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
 
-                var query = sicoem.comments_types_payments
+                var query = sicoem.requests_status
                                 .Where(s => s.enabled == true)
                                 .Select(u => new
                                 {
-                                    u.id_comment_type_payment,
+                                    u.id_request_status,
+                                    u.name,
                                     u.description
                                 })
-                                .OrderBy(u => u.id_comment_type_payment);
+                                .OrderBy(u => u.id_request_status);
                 dt = To.DataTable(query.ToList());
                 return dt;
             }

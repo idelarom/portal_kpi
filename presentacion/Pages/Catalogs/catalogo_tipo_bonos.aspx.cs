@@ -1,6 +1,6 @@
 ﻿using datos;
 using datos.Model;
-using negocio.Componentes;
+using negocio.Componentes.Compensaciones;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -217,7 +217,9 @@ namespace presentacion.Pages.Catalogs
                 bono.month_select = chkmesselect.Checked;
                 bono.files_required = chkfile.Checked;
                 bono.created_by = Session["usuario"] as string;
+                bono.created = DateTime.Now;
                 bono.modified_by = Session["usuario"] as string;
+                bono.modified = DateTime.Now;
                 if (bono.name == "")
                 {
                     ModalShow("#ModalTipoBonos");
