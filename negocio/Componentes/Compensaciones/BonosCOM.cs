@@ -86,6 +86,42 @@ namespace negocio.Componentes.Compensaciones
             }
             return ds;
         }
+
+
+        public DataSet sp_Get_Tbl_Estructura_CC(string cc, string descripcion)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@CC", SqlDbType = SqlDbType.Int, Value = cc });
+            listparameters.Add(new SqlParameter() { ParameterName = "@Desc_CC", SqlDbType = SqlDbType.Int, Value = descripcion });
+            try
+            {
+                ds = data.enviar("sp_Get_Tbl_Estructura_CC", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+        public DataSet sp_GetEmployeeForBondType(int id_bond_type)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_bond_type", SqlDbType = SqlDbType.Int, Value = id_bond_type });
+            try
+            {
+                ds = data.enviar("sp_GetEmployeeForBondType", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
         
+
     }
 }

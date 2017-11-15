@@ -84,23 +84,9 @@ namespace negocio.Componentes.Compensaciones
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
                 permissions_users_bonds_types permiso = sicoem.permissions_users_bonds_types
-                                 .First(i => i.login == login);
-                permiso.enabled = false;
+                                 .First(i => i.login.ToString() == login.ToString());
+                permiso.Enabled = false;
                 sicoem.SaveChanges();
-
-
-
-                Emp e = (from permissions_users_bonds_types in sicoem.permissions_users_bonds_types
-
-                         where permissions_users_bonds_types.Enabled == false
-             select e1).First();
-                //Change the Employee Name in memory
-                e.Name = “Changed Name”;
-                //Save to database
-                ctx.SaveChanges();
-
-
-
                 return "";
             }
             catch (DbEntityValidationException ex)
