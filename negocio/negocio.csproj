@@ -55,6 +55,7 @@
     <Compile Include="Componentes\AyudaCOM.cs" />
     <Compile Include="Componentes\Compensaciones\BonosCOM.cs" />
     <Compile Include="Componentes\Compensaciones\EstatusSolicitudBonosCOM.cs" />
+    <Compile Include="Componentes\Compensaciones\PeriodicidadCOM.cs" />
     <Compile Include="Componentes\Compensaciones\PermisosUsuariosCOM.cs" />
     <Compile Include="Componentes\Compensaciones\TipoComentariosPagoCOM.cs" />
     <Compile Include="Componentes\ConfiguracionDashboardCOM.cs" />
