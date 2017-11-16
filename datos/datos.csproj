@@ -113,6 +113,7 @@
     <Compile Include="Model\publicaciones_likes.cs" />
     <Compile Include="Model\recordatorios.cs" />
     <Compile Include="Model\recordatorios_usuarios_adicionales.cs" />
+    <Compile Include="Model\rutas_archivos.cs" />
     <Compile Include="Model\usuarios.cs" />
     <Compile Include="Model\usuarios_configuraciones.cs" />
     <Compile Include="Model\usuarios_delegados.cs" />

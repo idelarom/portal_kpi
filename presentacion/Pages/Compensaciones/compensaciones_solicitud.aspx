@@ -102,6 +102,7 @@
             var hdncliente = document.getElementById('<%= hdncliente.ClientID %>');
             hdncliente.value = cliente;
             ModalCloseGlobal("#modal_proyectos");
+            Load();
             document.getElementById('<%= lnkproyecto.ClientID%>').click();
         }
         function ValuesCC(CC, DESC) {
@@ -110,6 +111,7 @@
             var hdnCC_Cargo = document.getElementById('<%= hdnCC_Cargo.ClientID %>');
             hdnCC_Cargo.value = CC;
             ModalCloseGlobal("#modal_cc");
+            Load();
             document.getElementById('<%= lnkcc.ClientID%>').click();
         }
         
@@ -121,6 +123,12 @@
             Load();
             document.getElementById('<%= btncargarempleado.ClientID%>').click();
             ModalCloseGlobal("#modal_empleados");
+        }
+        function Download(path) {
+            var hdfpath = document.getElementById('<%= hdfpath.ClientID %>');
+            hdfpath.value = path;
+            console.log(path);
+            document.getElementById('<%= lnkdescargas.ClientID%>').click();
         }
     </script>
 </asp:Content>
@@ -158,19 +166,19 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="trWeek" runat="server">
                                     <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Seleccione una fecha de una semana</strong></h5>
                                     <div class="row">
-                                        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-12">
+                                        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                                             <telerik:RadDatePicker OnSelectedDateChanged="calDateSupport_SelectedDateChanged" AutoPostBack="true" ID="calDateSupport" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadDatePicker>
 
                                         </div>
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                        <div class="col-lg-4 col-md-5 col-sm-8 col-xs-12">
                                             <div class="table table-responsive">
-                                                <table id="table_fechas" class=" table table-responsive table-bordered table-condensed"
-                                                    style="font-size: 12px">
-                                                    <thead style="background-color: #DE3230; color: white;">
+                                                <table id="table_fechas" class="table table-responsive table-bordered table-condensed table-hover table-striped"
+                                                    style="font-size: 11px">
+                                                    <thead style="background-color: #dd4b39; color: white;">
                                                         <tr>
-                                                            <th style="min-width: 50px; text-align: center;" scope="col"></th>
-                                                            <th style="min-width: 180px; text-align: left;" scope="col">Dias trabajados</th>
-                                                            <th style="min-width: 80px; text-align: center;" scope="col">Monto</th>
+                                                            <th style="min-width: 30px; text-align: center;" scope="col"></th>
+                                                            <th style="min-width: 140px; text-align: left;" scope="col">Dias trabajados</th>
+                                                            <th style="min-width: 50px; text-align: center;" scope="col">Monto</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -178,7 +186,7 @@
                                                             <ItemTemplate>
                                                                 <tr>
                                                                     <td style="text-align: center;">
-                                                                        <asp:CheckBox ID="cbx_checkday" Checked="true" Text="Seleccionar" AutoPostBack="true" runat="server" OnCheckedChanged="cbx_checkday_CheckedChanged"
+                                                                        <asp:CheckBox ID="cbx_checkday" style="cursor:pointer;" Checked="true" Text="Seleccionar" AutoPostBack="true" runat="server" OnCheckedChanged="cbx_checkday_CheckedChanged"
                                                                             amount='<%# Eval("amount") %>' />
                                                                     </td>
                                                                     <td>
@@ -192,16 +200,18 @@
                                                         </asp:Repeater>
                                                     </tbody>
                                                 </table>
-                                                <h5 style="text-align: right;">Monto total autorizado: <strong>
-                                                    <asp:Label CssClass=" label label-danger" ID="lblmonto_total_autorizadp" runat="server" Text="$ 0.00"></asp:Label></strong></h5>
                                             </div>
+                                            <a class="btn btn-block btn-social btn-google" style="text-align:right;">
+                                                <i class="fa fa-money"></i>Monto total autorizado: <strong>
+                                                    <asp:Label ID="lblmonto_total_autorizadp"  runat="server" Text="$ 0.00"></asp:Label></strong>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Empleado</strong>
                                     </h5>
-                                    <div class="input-group input-group-sm" runat="server" id="div_filtro_empleados">
+                                    <div class="input-group" runat="server" id="div_filtro_empleados">
                                         <asp:TextBox ID="txtfilterempleado" CssClass=" form-control" ReadOnly="true"
                                             runat="server"></asp:TextBox>
                                         <span class="input-group-btn">
@@ -216,23 +226,26 @@
                             <div class="row">
                                 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12" id="trFolioPMTracker" runat="server">
                                     <h5><strong><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Folio PM Tracker</strong></h5>
-                                    <div class="input-group input-group-sm" runat="server">
+                                    <div class="input-group" runat="server">
                                         <asp:TextBox
                                             onfocus="this.select();" ID="txtPMTrackerNumberImplementations" CssClass=" form-control"
                                             ReadOnly="false" runat="server"></asp:TextBox>
                                         <span class="input-group-btn">
-                                            <asp:LinkButton ID="lnksearchpmTracker" CssClass="btn btn-primary btn-flat" OnClientClick="return Load();"
+                                            <asp:LinkButton ID="lnksearchpmTracker" CssClass="btn btn-primary btn-flat"
+                                                 OnClientClick="return Load();"
                                                 OnClick="lnksearchpmTracker_Click" runat="server">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
                                             </asp:LinkButton>
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-md-9 col-sm-8 col-xs-12" id="trProjectName" runat="server">
+                                <div class="col-lg-4 col-md-5 col-sm-8 col-xs-12" id="trProjectName" runat="server">
                                     <h5><strong><i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;Nombre proyecto</strong></h5>
                                     <asp:TextBox ID="txtProjectNameImplementations" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12" id="trCustomerName" runat="server">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12" id="trCustomerName" runat="server">
                                     <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Nombre cliente</strong></h5>
                                     <asp:TextBox ID="txtCustomerNameImplementations" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
@@ -248,7 +261,7 @@
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Importe bono</strong></h5>
                                     <asp:TextBox ID="txtAuthorizationAmount" onfocus="$(this).select();" AutoPostBack="true"
                                         OnTextChanged="txtAuthorizationAmount_TextChanged"
-                                        CssClass=" form-control" runat="server"></asp:TextBox>
+                                        CssClass=" form-control" runat="server" ></asp:TextBox>
                                 </div>
 
                             </div>
@@ -299,10 +312,10 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <br />
                                             <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <telerik:RadDatePicker ID="txtPeriodDateOf" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadDatePicker>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <telerik:RadDatePicker ID="txtPeriodDateTo" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadDatePicker>
                                                 </div>
                                             </div>
@@ -319,7 +332,7 @@
 
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;CC Cargo</strong></h5>
-                                    <div class="input-group input-group-sm" runat="server">
+                                    <div class="input-group" runat="server">
 
                                         <asp:TextBox ID="txtCC_Cargo" CssClass=" form-control" runat="server"></asp:TextBox>
                                         <span class="input-group-btn">
@@ -330,7 +343,9 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Comentarios</strong></h5>
                                     <asp:TextBox ID="txtComments" TextMode="MultiLine" Rows="3" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
@@ -357,7 +372,40 @@
                     <div class="box box-default">
                         <div class="box-body" id="trGridRequisitions" runat="server" visible="false">
                             <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class=" table table-responsive">
+                                        <table id="table_bonos" class=" table table-responsive table-bordered table-condensed" style="font-size: 12px">
+                                            <thead>
+                                                <tr>
+                                                    <th style="min-width: 50px; text-align: left;" scope="col"></th>
+                                                    <th style="min-width: 80px; text-align: left;" scope="col"># Proyecto</th>
+                                                    <th style="min-width: 300px; text-align: left;" scope="col">Nombre Proyecto</th>
+                                                    <th style="min-width: 200px; text-align: left;" scope="col">Cliente</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="gridBondsRequisitions" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td>
+                                                                <a class="btn btn-primary btn-flat btn-xs"
+                                                                    onclick='<%# "return ValuesPMTracker("+@""""+ Eval("folio").ToString()+@""""+@","""+ Eval("nombre_proyecto").ToString()+@""""+@","""+ Eval("nombre_cliente").ToString()+@""""+");" %>'>Seleccionar</a>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("folio") %>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("nombre_proyecto") %>
+                                                            </td>
+                                                            <td>
+                                                                <%# Eval("nombre_cliente") %>
+                                                            </td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -540,6 +588,7 @@
             <asp:Button ID="btncargarempleado" Style="display: none;" OnClick="btncargarempleado_Click" runat="server" Text="Button" />
             <asp:Button ID="lnkcc" Style="display: none;" OnClick="lnkcc_Click" runat="server" Text="Button" />
             <asp:Button ID="lnkproyecto" Style="display: none;" OnClick="lnkproyecto_Click" runat="server" Text="Button" />
+            <asp:Button ID="lnkdescargas" Style="display: none;" OnClick="lnkdescargas_Click" runat="server" Text="Button" />
         </ContentTemplate>
     </asp:UpdatePanel>
     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_archivos" role="dialog"
@@ -548,6 +597,7 @@
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Always">
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="lnkadjuntarfiles" EventName="Click" />
+                    <asp:PostBackTrigger ControlID="lnkdescargas" />
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">
@@ -602,10 +652,9 @@
                                                                 </asp:LinkButton>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <asp:LinkButton ID="lnkdownloadfile" OnClick="lnkdownloadfile_Click" 
-                                                                    runat="server"  class="btn btn-success btn-flat btn-xs"
-                                                                    path='<%# Eval("path").ToString().Trim() %>'>
-                                                                   Descargar</asp:LinkButton>
+                                                                <a style="cursor:pointer;" class="btn btn-success btn-flat btn-xs" 
+                                                                    onclick='<%#"return Download("+@""""+ Eval("path").ToString().Replace(@"\","/").Trim()+@""""+");" %>'>
+                                                                   Descargar</a>
                                                                
                                                             </td>
                                                             <td>
@@ -621,6 +670,7 @@
                                         </table>
                                     </div>
                                 </div>
+            <asp:HiddenField ID="hdfpath" runat="server" />
                             </div>
                         </div>
                         <div class="modal-footer">

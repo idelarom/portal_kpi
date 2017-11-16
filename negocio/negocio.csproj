@@ -88,6 +88,7 @@
     <Compile Include="Componentes\RiesgosProbabilidadCOM.cs" />
     <Compile Include="Componentes\Compensaciones\TipoBonosAutomaticosCOM.cs" />
     <Compile Include="Componentes\Compensaciones\TipoBonosCOM.cs" />
+    <Compile Include="Componentes\RutasArchivosCOM.cs" />
     <Compile Include="Componentes\To.cs" />
     <Compile Include="Componentes\UsuariosCOM.cs" />
     <Compile Include="Componentes\UsuariosConfiguracionesCOM.cs" />

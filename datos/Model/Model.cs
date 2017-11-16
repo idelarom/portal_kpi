@@ -29,6 +29,7 @@
         public virtual DbSet<publicaciones_likes> publicaciones_likes { get; set; }
         public virtual DbSet<recordatorios> recordatorios { get; set; }
         public virtual DbSet<recordatorios_usuarios_adicionales> recordatorios_usuarios_adicionales { get; set; }
+        public virtual DbSet<rutas_archivos> rutas_archivos { get; set; }
         public virtual DbSet<usuarios> usuarios { get; set; }
         public virtual DbSet<usuarios_configuraciones> usuarios_configuraciones { get; set; }
         public virtual DbSet<usuarios_delegados> usuarios_delegados { get; set; }
@@ -343,6 +344,14 @@
 
             modelBuilder.Entity<recordatorios_usuarios_adicionales>()
                 .Property(e => e.nombre)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<rutas_archivos>()
+                .Property(e => e.descripcion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<rutas_archivos>()
+                .Property(e => e.path)
                 .IsUnicode(false);
 
             modelBuilder.Entity<usuarios>()

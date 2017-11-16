@@ -45,6 +45,7 @@ namespace presentacion.Pages.Compensaciones
         /// </summary>
         private void ClearFields()
         {
+            txtAuthorizationAmount.BorderColor = System.Drawing.Color.Silver;
             hdndesc_cc.Value = "";
             hdnfolio.Value = "";
             hdnproyecto.Value = "";
@@ -381,7 +382,42 @@ namespace presentacion.Pages.Compensaciones
             }
 
         }
-        
+
+        private void LoadBondsRequests()
+        {
+            try
+            {
+                gridBondsRequisitions.DataSource = LoadBondsRequestsData().Tables[0];
+                gridBondsRequisitions.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar historial de bonos. ",this);
+            }
+        }
+
+        private DataSet LoadBondsRequestsData()
+        {
+            try
+            {
+                int id_immediate_boss = 0;
+                id_immediate_boss = Convert.ToInt32(Session["employee_number"]);
+                BonosCOM bonos = new BonosCOM();
+                return bonos.sp_GetRequests_Bonds(Convert.ToInt32(this.cbBonds_Types.SelectedValue),
+                    (int)enumerators.bonds_status.request,
+                    null,
+                    null,
+                    id_immediate_boss);
+            }
+            catch (Exception ex)
+            {
+                return new DataSet();
+            }
+       
+            
+
+        }
+
         /// <summary>
         /// Carga la configuración de un bono por empleado
         /// </summary>
@@ -410,6 +446,8 @@ namespace presentacion.Pages.Compensaciones
                             txtCC_Cargo.Text = hdnCC_Cargo.Value;
                         }
                     }
+
+                    hdnCC_Cargo.Value = dsEmpleado.Tables[0].Rows[0]["cc"].ToString();
                 }
 
                 if (ds.Tables[0].Rows.Count > 0)
@@ -471,7 +509,13 @@ namespace presentacion.Pages.Compensaciones
                             hdnMontoOriginal.Value = amountValidate.ToString();
                             hdnauthorization_total_bonds.Value = authorization_total_bonds.ToString();
                             hdnauthorization_total_amount.Value = authorization_total_amount.ToString();
-                            txtAuthorizationAmount.Text = Convert.ToDecimal(ds.Tables[0].Rows[0]["amount"]).ToString();
+                            //'codigo agregado por RCA
+                            decimal monto_roiginal = (string.IsNullOrEmpty(hdnMontoOriginal.Value) ? 0 : Convert.ToDecimal(hdnMontoOriginal.Value));
+
+                            decimal monto_total_autorizado = (string.IsNullOrEmpty(hdnauthorization_total_amount.Value) ? 0 : Convert.ToDecimal(hdnauthorization_total_amount.Value));
+                            decimal Direfencia = (monto_roiginal - monto_total_autorizado);
+
+                            txtAuthorizationAmount.Text = Direfencia.ToString("C2");
                             hdnValidateAmount.Value = Convert.ToDecimal(ds.Tables[0].Rows[0]["amount"]).ToString();
                         }
                     }
@@ -575,7 +619,7 @@ namespace presentacion.Pages.Compensaciones
                 }
                 List<files_requests_bonds> list = Session[hdfguid.Value + "list_documentos"] as List<files_requests_bonds>;
                 files_requests_bonds file = new files_requests_bonds();
-                file.path = path;
+                file.path = path.Replace(@"\","/");
                 file.file_name = file_name;
                 file.size = size;
                 file.content_type = content_type;
@@ -716,10 +760,39 @@ namespace presentacion.Pages.Compensaciones
         protected void txtAuthorizationAmount_TextChanged(object sender, EventArgs e)
         {
             bool correct = true;
+            txtAuthorizationAmount.BorderColor = System.Drawing.Color.Green;
             int no_ = Convert.ToInt32(hdnEmployeeNumber.Value==""?"0": hdnEmployeeNumber.Value);
             if (no_ > 0)
             {
                 txtAuthorizationAmount.Text = txtAuthorizationAmount.Text == "" ? "0.00" : txtAuthorizationAmount.Text;
+                decimal monto_actual1 = Convert.ToDecimal(txtAuthorizationAmount.Text == "" ? "0.00" : txtAuthorizationAmount.Text.Replace("$", ""));
+                if (Convert.ToInt32(this.cbBonds_Types.SelectedValue) == 1)
+                {
+                    //'codigo agregado por RCA
+                    decimal monto_roiginal = (string.IsNullOrEmpty(hdnMontoOriginal.Value) ? 0 : Convert.ToDecimal(hdnMontoOriginal.Value));
+
+                    decimal monto_total_autorizado = (string.IsNullOrEmpty(hdnauthorization_total_amount.Value) ? 0 : Convert.ToDecimal(hdnauthorization_total_amount.Value));
+                    decimal Direfencia = (monto_roiginal - monto_total_autorizado);
+
+                    if (Direfencia <= 0)
+                    {
+                        correct = false;
+                        txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");
+                        Toast.Error("Ya se le ha otorgado el monto completo de  " + monto_roiginal.ToString("C2") + " correspondiente a este periodo.", this);
+                        txtAuthorizationAmount.Focus();
+                        txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                    }
+                    else if (Direfencia >= 1 & Direfencia < monto_roiginal & monto_actual1 > Direfencia)
+                    {
+                        correct = false;
+                        txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");
+                        Toast.Error("Solo tiene un monto disponible " + Direfencia.ToString("C2") + " de un total de " + monto_roiginal.ToString("C2"), this);
+                        txtAuthorizationAmount.Focus();
+                        txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                    }
+                }
                 if (cbBonds_Types.SelectedValue == "1")
                 {
                     decimal monto_roiginal = (string.IsNullOrEmpty(hdnMontoOriginal.Value) ? 0 : Convert.ToDecimal(hdnMontoOriginal.Value));
@@ -731,9 +804,10 @@ namespace presentacion.Pages.Compensaciones
                         float price = float.Parse(monto_roiginal.ToString());
                         txtAuthorizationAmount.Text = string.Format("{0:C}", price);
                         Toast.Error("El monto no puede exceder a " + string.Format("{0:C}", price), this);
+                        txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
                     }
                 }
-                decimal monto_actual1 = Convert.ToDecimal(txtAuthorizationAmount.Text.Replace("$", ""));
 
                 string text = monto_actual1.ToString();
                 if (correct)
@@ -745,7 +819,10 @@ namespace presentacion.Pages.Compensaciones
                     if ((value_MOUNT < 0))
                     {
                         Toast.Error("El monto debe ser mayor a $ 0.00", this);
+                        txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
                     }
+                   
                 }
             }
             else
@@ -837,6 +914,11 @@ namespace presentacion.Pages.Compensaciones
                     cbFinalizeYear.SelectedValue = (Convert.ToInt32(cbFinalizeYear.SelectedValue) + 1).ToString();
                 }
                 SelectedMonthAndYear();
+                int no_ = Convert.ToInt32(hdnEmployeeNumber.Value==""?"0":hdnEmployeeNumber.Value);
+                if (no_ > 0)
+                {
+                    CargarInformacionBonoEmpleado(no_);
+                }
             }
             catch (Exception ex)
             {
@@ -927,6 +1009,11 @@ namespace presentacion.Pages.Compensaciones
                     cbInitialYear.SelectedValue = (Convert.ToInt32(cbInitialYear.SelectedValue) - 1).ToString();
                 }
                 SelectedMonthAndYear();
+                int no_ = Convert.ToInt32(hdnEmployeeNumber.Value == "" ? "0" : hdnEmployeeNumber.Value);
+                if (no_ > 0)
+                {
+                    CargarInformacionBonoEmpleado(no_);
+                }
             }
             catch (Exception ex)
             {
@@ -1200,31 +1287,7 @@ namespace presentacion.Pages.Compensaciones
                 ModalShow("#modal_archivos");
             }
         }
-
-        protected void lnkdownloadfile_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                LinkButton lnk = sender as LinkButton;
-                string path = lnk.Attributes["path"].ToString();
-                if (File.Exists(path))
-                {
-                    Response.ContentType = "doc/docx";
-                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(path));
-                    Response.TransmitFile(path);
-                    Response.End();
-                }
-                else
-                {
-                    Toast.Error("No es encuentra el documento especificado", this);
-                }
-            }
-            catch (Exception ex)
-            {
-                Toast.Error("Error al descargar documento: " + ex.Message, this);
-            }
-        }
-
+        
         protected void lnkcc_Click(object sender, EventArgs e)
         {
             LinkButton lnk = sender as LinkButton;
@@ -1232,6 +1295,7 @@ namespace presentacion.Pages.Compensaciones
             string cc = hdnCC_Cargo.Value;
             txtCC_Cargo.Text = desc_cc;
             hdnCC_Cargo.Value = cc;
+            load.Style["display"] = "none";
             //ModalClose("#modal_cc");
         }
 
@@ -1241,6 +1305,7 @@ namespace presentacion.Pages.Compensaciones
             txtPMTrackerNumberImplementations.Text = hdnfolio.Value;
             txtProjectNameImplementations.Text = hdnproyecto.Value;
             txtCustomerNameImplementations.Text = hdncliente.Value;
+            load.Style["display"] = "none";
             //ModalClose("#modal_proyectos");
 
         }
@@ -1250,11 +1315,12 @@ namespace presentacion.Pages.Compensaciones
             try
             {
                 string vmensaje = "";
-                List<files_requests_bonds> list = Session[hdfguid.Value + "list_documentos"] as List<files_requests_bonds>;
+                List<files_requests_bonds> list = Session[hdfguid.Value + "list_documentos"]==null?new List<files_requests_bonds>():
+                                                    Session[hdfguid.Value + "list_documentos"] as List<files_requests_bonds>;
                 string Texto = "NO-" + hdnEmployeeNumber.Value;
 
                 int num_empleado = Convert.ToInt32(hdnEmployeeNumber.Value==""?"0":hdnEmployeeNumber.Value);
-                decimal monto_actual = Convert.ToDecimal(txtAuthorizationAmount.Text.Replace("$", "").Replace(",", ""));
+                decimal monto_actual = txtAuthorizationAmount.Text==""?0: Convert.ToDecimal(txtAuthorizationAmount.Text.Replace("$", "").Replace(",", ""));
                 DateTime? period_date_of = txtPeriodDateOf.SelectedDate;
                 DateTime? period_date_to = txtPeriodDateTo.SelectedDate;
                 string comentarios = txtComments.Text;
@@ -1274,6 +1340,7 @@ namespace presentacion.Pages.Compensaciones
                 //VALIDACINES
                 if (num_empleado == 0)
                 {
+                    lnksearch_Click(null,null);
                     vmensaje = "Seleccione un empleado.";
                 }
                 else if (monto_actual == 0)
@@ -1284,8 +1351,9 @@ namespace presentacion.Pages.Compensaciones
                 {
                     vmensaje = "Seleccione una semana para la fecha de soporte.";
                 }
-                else if (number_hours_required && folio_pm == "")
+                else if (folio_pmtracker_required && folio_pm == "")
                 {
+                    lnkproyecto_Click(null, null);
                     vmensaje = "Seleccione un proyecto PM Tracker.";
                 }
                 else if (number_hours_required && hours_pm == 0)
@@ -1307,6 +1375,7 @@ namespace presentacion.Pages.Compensaciones
                 }
                 else if (((hdnFilesRequeried.Value.Trim().ToUpper() == "TRUE") & (hdnSubio.Value == Texto.ToString())) && list.Count == 0)
                 {
+                    lnkadjuntarfiles_Click(null, null);
                     //Si no se ha cargado archivo y es requerido
                     vmensaje = "Para el Bono de " + this.cbBonds_Types.SelectedItem.Text + " es necesario adjuntar un archivo.";
                 }
@@ -1329,11 +1398,79 @@ namespace presentacion.Pages.Compensaciones
                         vmensaje = "Solo tiene un monto disponible " + Direfencia.ToString("C2") + " de un total de " + monto_roiginal.ToString("C2");                       
                     }
                 }
+                if (vmensaje == "")
+                {
+                    requests_bonds request_bond = new requests_bonds();
+                    request_bond.employee_number = num_empleado;
+                    request_bond.period_date_of = period_date_of;
+                    request_bond.period_date_to = period_date_to;
+                    request_bond.authorization_amount = monto_actual;
+                    request_bond.id_request_status = (int)enumerators.bonds_status.request;
+                    request_bond.id_bond_type = Convert.ToInt32(cbBonds_Types.SelectedValue);
+                    request_bond.requisition_comments = this.txtComments.Text.Trim();
+                    request_bond.created_by = Session["usuario"] as string;
+                    request_bond.CC_Empleado = Convert.ToInt32(cc);
+                    request_bond.CC_Cargo = Convert.ToInt32(cc_cargo);
+                    if (this.trWeek.Visible)
+                    {
+                        request_bond.week = dia_soporte;
+                        request_bond.month = mes_soporte;
+                        request_bond.year = año_soporte;
+                        request_bond.selected_date =period_date_to;
+
+                    }
+
+                    if (folio_pmtracker_required)
+                    {
+                        request_bond.folio_pmtracker = folio_pm;
+                    }
+                    if (number_hours_required)
+                    {
+                        request_bond.number_hours = hours_pm;
+                    }
+                    BonosCOM bonos = new BonosCOM();
+                    DataSet ds = bonos.Agregar(request_bond);
+                    if (ds.Tables.Count == 0)
+                    {
+                        vmensaje = "Ocurrio un error al solicitar bono.";
+                    }
+                    else if (ds.Tables[0].Rows.Count == 0)
+                    {
+                        vmensaje = "Ocurrio un error al solicitar bono.";
+                    }
+                    else {
+                        int id_request_bonds = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
+                        RutasArchivosCOM rutas = new RutasArchivosCOM();
+                        string path_local = @rutas.path(1);
+                        string directory = path_local+id_request_bonds.ToString()+@"\";
+                        if (!Directory.Exists(directory))
+                        {
+                            Directory.CreateDirectory(directory);
+                        }
+                        foreach (files_requests_bonds file in list)
+                        {
+                            string source = file.path;
+                            string path = directory + file.file_name;
+                            file.login = Session["usuario"] as string;
+                            file.path = "UploadedFiles/" + id_request_bonds.ToString()+"/";
+                            file.id_request_bond = id_request_bonds;
+                            int id_file_request = bonos.AgregarArchivo(file);
+                            if (id_file_request > 0)
+                            {
+                                File.Copy(source, path,true);
+                            }
+                        }
+                    }
+                }
 
                 //Si hay algun mensaje de error
                 if (vmensaje != "")
                 {
-                    Toast.Error(vmensaje,this);
+                    Toast.Error(vmensaje, this);
+                }
+                else {
+                    System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                  "AlertGO('El bono del empleado ha sido solicitado correctamente.', 'compensaciones_solicitud.aspx');", true);
                 }
             }
             catch (Exception ex)
@@ -1341,6 +1478,33 @@ namespace presentacion.Pages.Compensaciones
                 Toast.Error("Error al guardar solicitud: " + ex.Message, this);
             }
         }
-        
+
+        protected void lnkdescargas_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                string path = hdfpath.Value;
+                if (File.Exists(path))
+                {
+                    Response.ContentType = "doc/docx";
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(path));
+                    Response.TransmitFile(path);
+                    Response.End();
+                }
+                else
+                {
+                    ModalShow("#modal_archivos");
+                    Toast.Error("No es encuentra el documento especificado", this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al descargar documento: " + ex.Message, this);
+            }
+            finally {
+                load.Style["display"] = "none";
+            }
+        }
     }
 }

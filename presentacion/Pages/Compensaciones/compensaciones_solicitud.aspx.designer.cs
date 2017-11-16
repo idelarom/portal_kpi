@@ -373,6 +373,15 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl trGridRequisitions;
         
         /// <summary>
+        /// Control gridBondsRequisitions.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater gridBondsRequisitions;
+        
+        /// <summary>
         /// Control repeat_proyectos.
         /// </summary>
         /// <remarks>
@@ -607,6 +616,15 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.WebControls.Button lnkproyecto;
         
         /// <summary>
+        /// Control lnkdescargas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button lnkdescargas;
+        
+        /// <summary>
         /// Control UpdatePanel1.
         /// </summary>
         /// <remarks>
@@ -650,5 +668,14 @@ namespace presentacion.Pages.Compensaciones {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater repeater_archivos;
+        
+        /// <summary>
+        /// Control hdfpath.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfpath;
     }
 }
