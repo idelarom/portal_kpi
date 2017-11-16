@@ -270,7 +270,6 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <asp:DropDownList ID="cbInitialYear" CssClass="form-control" AutoPostBack="true"
-                                                        OnSelectedIndexChanged="cbInitialYear_SelectedIndexChanged"
                                                         runat="server">
                                                     </asp:DropDownList>
                                                 </div>
@@ -285,6 +284,8 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <asp:DropDownList ID="cbFinalizeMonth" CssClass="form-control"
+                                                        
+                                                        OnSelectedIndexChanged="cbInitialYear_SelectedIndexChanged" AutoPostBack="true"
                                                         runat="server">
                                                     </asp:DropDownList>
                                                 </div>
@@ -339,8 +340,11 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <asp:LinkButton ID="lnkadjuntarfiles" OnClick="lnkadjuntarfiles_Click" CssClass="btn btn-success btn-flat" runat="server">
                                         <i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Adjuntar archivos</asp:LinkButton>
-                                    <asp:LinkButton ID="lnksolicitar" CssClass="btn btn-primary btn-flat" runat="server">
-                                         <i class="fa fa-bookmark" aria-hidden="true"></i>&nbsp;Solicitar</asp:LinkButton>
+                                    <asp:LinkButton ID="lnksolicitar" CssClass="btn btn-primary btn-flat" runat="server"  OnClientClick="return confirm('¿Desea guardar esta solicitud?');"
+                                         OnClick="lnksolicitar_Click">
+                                         <i class="fa fa-bookmark" aria-hidden="true">
+
+                                         </i>&nbsp;Solicitar</asp:LinkButton>
                                     <asp:LinkButton ID="lnkcancelar" OnClick="lnkcancelar_Click" OnClientClick="return confirm('¿Desea cancelar la solicitud?');" CssClass="btn btn-danger btn-flat" runat="server">
                                           <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancelar</asp:LinkButton>
                                 </div>
