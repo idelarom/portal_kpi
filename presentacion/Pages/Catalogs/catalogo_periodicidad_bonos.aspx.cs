@@ -116,7 +116,7 @@ namespace presentacion.Pages.Catalogs
                 int id_periodicity = Convert.ToInt32(hdfid_periodicity.Value == "" ? "0" : hdfid_periodicity.Value);
                 periodicity Periodicidad = new periodicity();
 
-                if (id_periodicity > 0) { bono.id_periodicity = id_periodicity; }
+                if (id_periodicity > 0) { Periodicidad.id_periodicity = id_periodicity; }
                 Periodicidad.name = txtperiodicidad.Text;
                 Periodicidad.description = txtdescripcion.Text;
                 Periodicidad.created_by = Session["usuario"] as string;

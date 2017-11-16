@@ -359,7 +359,7 @@ namespace presentacion.Pages.Catalogs
         {
             try
             {
-                string login = hdflogin.Value == "" ? "0" : hdflogin.Value);
+                string login = hdflogin.Value == "" ? "0" : hdflogin.Value;
                 permissions_users_bonds_types permiso = new permissions_users_bonds_types();
                 permiso.login = login;
                 string vmensaje = Eliminar(login);
