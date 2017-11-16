@@ -279,7 +279,9 @@
     <Content Include="Pages\Catalogs\catalogo_impacto_costo.aspx" />
     <Content Include="Pages\Catalogs\catalogo_menus.aspx" />
     <Content Include="Pages\Catalogs\catalogo_perfiles.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_periodicidad_bonos.aspx" />
     <Content Include="Pages\Catalogs\catalogo_permisos.aspx" />
+    <Content Include="Pages\Catalogs\catalogo_permisos_usuarios_bonos.aspx" />
     <Content Include="Pages\Catalogs\Catalogo_proyectos_estatus.aspx" />
     <Content Include="Pages\Catalogs\catalogo_proyectos_periodos.aspx" />
     <Content Include="Pages\Catalogs\catalogo_proyectos_tecnologias.aspx" />
@@ -1302,12 +1304,26 @@
     <Compile Include="Pages\Catalogs\catalogo_perfiles.aspx.designer.cs">
       <DependentUpon>catalogo_perfiles.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_periodicidad_bonos.aspx.cs">
+      <DependentUpon>catalogo_periodicidad_bonos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_periodicidad_bonos.aspx.designer.cs">
+      <DependentUpon>catalogo_periodicidad_bonos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Catalogs\catalogo_permisos.aspx.cs">
       <DependentUpon>catalogo_permisos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\Catalogs\catalogo_permisos.aspx.designer.cs">
       <DependentUpon>catalogo_permisos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_permisos_usuarios_bonos.aspx.cs">
+      <DependentUpon>catalogo_permisos_usuarios_bonos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Catalogs\catalogo_permisos_usuarios_bonos.aspx.designer.cs">
+      <DependentUpon>catalogo_permisos_usuarios_bonos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Catalogs\catalogo_proyectos_estatus.aspx.cs">
       <DependentUpon>Catalogo_proyectos_estatus.aspx</DependentUpon>

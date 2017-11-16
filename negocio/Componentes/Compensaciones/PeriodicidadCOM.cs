@@ -1,5 +1,4 @@
 ﻿using datos;
-using datos.NAVISION;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,33 +6,33 @@ using System.Data.Entity.Validation;
 using System.Linq;
 namespace negocio.Componentes.Compensaciones
 {
-    public class PermisosUsuariosCOM
+    public class PeriodicidadCOM
     {
         /// <summary>
         /// Agrega una instancia de bonds_types
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Agregar(permissions_users_bonds_types entidad)
+        public string Agregar(periodicity entidad)
         {
             try
             {
                 string mess = "";
-                if (Exist(entidad.login))
+                if (Exist(entidad.name))
                 {
-                    mess = "Ya existe un estatus llamado: " + entidad.login;
+                    mess = "Ya existe un estatus llamado: " + entidad.name;
                 }
                 else
                 {
-                    permissions_users_bonds_types permiso = new permissions_users_bonds_types
+                    periodicity periodicidad = new periodicity
                     {
-                        login = entidad.login,
-                        permission_request_bond = entidad.permission_request_bond,
-                        permision_authorization_bond = entidad.permision_authorization_bond,
-                        FiltroCC = entidad.FiltroCC
+                        name = entidad.name,
+                        created = DateTime.Now,
+                        created_by = entidad.created_by.ToUpper(),
+                        enabled = true,
                     };
                     SICOEMEntities sicoem = new SICOEMEntities();
-                    sicoem.permissions_users_bonds_types.Add(permiso);
+                    sicoem.periodicity.Add(periodicidad);
                     sicoem.SaveChanges();
                 }
                 return mess;
@@ -53,14 +52,14 @@ namespace negocio.Componentes.Compensaciones
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Editar(permissions_users_bonds_types entidad)
+        public string Editar(periodicity entidad)
         {
             try
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
-                permissions_users_bonds_types permiso = sicoem.permissions_users_bonds_types
-                                .First(i => i.login == entidad.login);
-                permiso.login = entidad.login;
+                periodicity Periodicidad = sicoem.periodicity
+                                .First(i => i.id_periodicity == entidad.id_periodicity);
+                Periodicidad.name = entidad.name;
                 sicoem.SaveChanges();
                 return "";
             }
@@ -79,14 +78,14 @@ namespace negocio.Componentes.Compensaciones
         /// </summary>
         /// <param name="entidad"></param>
         /// <returns></returns>
-        public string Eliminar(string login)
+        public string Eliminar(int id_periodicity)
         {
             try
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
-                permissions_users_bonds_types permiso = sicoem.permissions_users_bonds_types
-                                 .First(i => i.login.ToString() == login.ToString());
-                permiso.Enabled = false;
+                periodicity Periodicidad = sicoem.periodicity
+                                .First(i => i.id_periodicity == id_periodicity);
+                Periodicidad.enabled = false;
                 sicoem.SaveChanges();
                 return "";
             }
@@ -105,19 +104,19 @@ namespace negocio.Componentes.Compensaciones
         /// </summary>
         /// <param name="titulo"></param>
         /// <returns></returns>
-        public bool Exist(string login)
+        public bool Exist(string Periodicidad)
         {
             DataTable dt = new DataTable();
             try
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
-                var query = sicoem.permissions_users_bonds_types
-                                .Where(s => s.login.ToUpper() == login.ToUpper() && s.Enabled == true)
+                var query = sicoem.periodicity
+                                .Where(s => s.name.ToUpper() == Periodicidad.ToUpper() && s.enabled == true)
                                 .Select(u => new
                                 {
-                                    u.login
+                                    u.id_periodicity
                                 })
-                                .OrderBy(u => u.login);
+                                .OrderBy(u => u.id_periodicity);
                 dt = To.DataTable(query.ToList());
                 return dt.Rows.Count > 0;
             }
@@ -134,17 +133,16 @@ namespace negocio.Componentes.Compensaciones
         /// <summary>
         /// Devuelve una instancia de la clase riesgos_estatus
         /// </summary>
-        /// <param name="idbonds"></param>
+        /// <param name="id_proyecto_perido"></param>
         /// <returns></returns>
-        public permissions_users_bonds_types Permisos(string login)
+        public periodicity Periodicidad(int id_periodicity)
         {
             try
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
-                permissions_users_bonds_types Permiso = sicoem.permissions_users_bonds_types
-                                .First(i => i.login == login);
-                return Permiso;
-
+                periodicity Periodicidad = sicoem.periodicity
+                                .First(i => i.id_periodicity == id_periodicity);
+                return Periodicidad;
             }
             catch (DbEntityValidationException ex)
             {
@@ -167,27 +165,16 @@ namespace negocio.Componentes.Compensaciones
             {
                 SICOEMEntities sicoem = new SICOEMEntities();
 
-                var query = sicoem.permissions_users_bonds_types
-                                .Where(s => s.Enabled == true)
+                var query = sicoem.periodicity
+                                .Where(s => s.enabled == true)
                                 .Select(u => new
                                 {
-                                    u.login,
-                                    u.permission_request_bond,
-                                    u.permision_authorization_bond,
-                                    u.FiltroCC,
-                                }).ToArray();
-                NAVISION dbnavision = new NAVISION();
-                var results = from p in query
-                              join up in dbnavision.Employee on p.login.ToUpper().Trim() equals up.Usuario_Red.ToUpper().Trim()
-                              select new
-                              {
-                                  p.login,
-                                  empleado = up.First_Name.Trim() + " " + up.Last_Name.Trim(),
-                                  p.permission_request_bond,
-                                  p.permision_authorization_bond,
-                                  p.FiltroCC,
-                              };
-                dt = To.DataTable(results.ToList());
+                                    u.id_periodicity,
+                                    u.name,
+                                    u.description
+                                })
+                                .OrderBy(u => u.id_periodicity);
+                dt = To.DataTable(query.ToList());
                 return dt;
             }
             catch (DbEntityValidationException ex)
