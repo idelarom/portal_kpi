@@ -45,6 +45,8 @@ namespace presentacion.Pages.Compensaciones
         /// </summary>
         private void ClearFields()
         {
+            amount_correct.Visible = false;
+            amount_error.Visible = false;
             hdnIdRequestBond.Value = "";
             txtAuthorizationAmount.BorderColor = System.Drawing.Color.Silver;
             hdndesc_cc.Value = "";
@@ -907,7 +909,7 @@ namespace presentacion.Pages.Compensaciones
                     else if (Direfencia >= 1 & Direfencia < monto_roiginal & monto_actual1 > Direfencia)
                     {
                         correct = false;
-                        txtAuthorizationAmount.Text = Direfencia.ToString("C2");
+                        txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");// Direfencia.ToString("C2");
                         Toast.Info("Solo tiene un monto disponible " + Direfencia.ToString("C2") + " de un total de " + monto_roiginal.ToString("C2"),"Mensaje del sistema.", this);
                         txtAuthorizationAmount.Focus();
                         txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
@@ -923,7 +925,7 @@ namespace presentacion.Pages.Compensaciones
                     {
                         correct = false;
                         float price = float.Parse(monto_roiginal.ToString());
-                        txtAuthorizationAmount.Text = string.Format("{0:C}", price);
+                        txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");// string.Format("{0:C}", price);
                         Toast.Error("El monto no puede exceder a " + string.Format("{0:C}", price), this);
                         txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
                         txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
@@ -937,20 +939,28 @@ namespace presentacion.Pages.Compensaciones
                     txtAuthorizationAmount.Text = string.Format("{0:C}", price);
                     decimal value_MOUNT = default(decimal);
                     value_MOUNT = Convert.ToDecimal(price);
-                    if ((value_MOUNT < 0))
+                    if ((value_MOUNT <= 0))
                     {
+                        txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");
+                        correct = false;
                         Toast.Error("El monto debe ser mayor a $ 0.00", this);
                         txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
                         txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
                     }
                 }
+
+                amount_correct.Visible = correct;
+                amount_error.Visible = !correct;
             }
             else
             {
+                amount_correct.Visible = false; 
+                amount_error.Visible=false;
+                txtAuthorizationAmount.BorderColor = System.Drawing.Color.Silver;
                 txtAuthorizationAmount.Text = "";
                 Toast.Info("Seleccione un empleado", "Mensaje del sistema", this);
             }
-
+            amount_load.Style["display"] = "none"; 
             InitTables();
         }
 
@@ -1528,6 +1538,11 @@ namespace presentacion.Pages.Compensaciones
 
                 string folio_pm = txtPMTrackerNumberImplementations.Text.Trim();
                 decimal hours_pm = Convert.ToDecimal(txtNumberHoursImplementations.Text == "" ? "0" : txtNumberHoursImplementations.Text);
+
+                txtAuthorizationAmount.BorderColor = System.Drawing.Color.Green;
+                amount_correct.Visible = true;
+                amount_error.Visible = false;
+
                 //VALIDACINES
                 if (num_empleado == 0)
                 {
@@ -1536,6 +1551,9 @@ namespace presentacion.Pages.Compensaciones
                 }
                 else if (monto_actual == 0)
                 {
+                    txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                    amount_correct.Visible = false;
+                    amount_error.Visible = true;
                     vmensaje = "Ingrese un monto mayor a $ 0.00.";
                 }
                 else if (soporte && (dia_soporte == 0 || mes_soporte == 0 || año_soporte == 0))
@@ -1579,12 +1597,19 @@ namespace presentacion.Pages.Compensaciones
                     decimal monto_total_autorizado = (string.IsNullOrEmpty(hdnauthorization_total_amount.Value) ? 0 : Convert.ToDecimal(hdnauthorization_total_amount.Value));
                     decimal Direfencia = (monto_roiginal - monto_total_autorizado);
 
+                   
                     if (Direfencia <= 0)
                     {
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                        amount_correct.Visible = false;
+                        amount_error.Visible = true;
                         vmensaje = "Ya se le ha otorgado el monto completo de  " + monto_roiginal.ToString("C2") + " correspondiente a este periodo.";
                     }
                     else if (Direfencia >= 1 & Direfencia < monto_roiginal & monto_actual > Direfencia)
                     {
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                        amount_correct.Visible = false;
+                        amount_error.Visible = true;
                         vmensaje = "Solo tiene un monto disponible " + Direfencia.ToString("C2") + " de un total de " + monto_roiginal.ToString("C2");
                     }
                 }

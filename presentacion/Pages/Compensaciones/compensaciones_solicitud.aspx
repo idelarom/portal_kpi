@@ -183,6 +183,12 @@
             document.getElementById('<%= btnviewrequest.ClientID%>').click();
             Load3();
         }
+        function LoadAmount() {
+            $("#<%= amount_correct.ClientID%>").hide();
+            $("#<%= amount_error.ClientID%>").hide();
+            $("#<%= amount_load.ClientID%>").show();
+            return true;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -315,15 +321,27 @@
                             <div class="row">
                                 <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12" id="trNumberHours" runat="server">
                                     <h5><strong><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;Cantidad de horas</strong></h5>
-                                    <asp:TextBox ID="txtNumberHoursImplementations" CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtNumberHoursImplementations" TextMode="Number" CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12" id="trAuthorizationAmount" runat="server">
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Importe bono</strong></h5>
-                                    <asp:TextBox ID="txtAuthorizationAmount" onfocus="$(this).select();" AutoPostBack="true"
-                                        OnTextChanged="txtAuthorizationAmount_TextChanged"
-                                        CssClass=" form-control" runat="server"></asp:TextBox>
+                                    <div class="input-group">
+                                        <asp:TextBox ID="txtAuthorizationAmount" onfocus="$(this).select();" onchange="LoadAmount();"  AutoPostBack="true"
+                                            OnTextChanged="txtAuthorizationAmount_TextChanged"
+                                            CssClass=" form-control" runat="server"></asp:TextBox>
+                                        <span id="amount_correct" visible="false" style="border-color:Green; color:Green;"  runat="server"  class="input-group-addon">
+                                            <i class="fa fa-check"></i></span>
+                                        <span id="amount_error" visible="false" runat="server" style="border-color:Red; color:red;" class="input-group-addon">
+                                            <i class="fa fa-times"></i></span>
+                                        <span id="amount_load"  runat="server" style="display:none; border-color: Blue; color: Blue;" class="input-group-addon">
+                                            <i class="fa fa-spinner fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>
+
+                                        </span>
+                                    </div>
+                                    
                                 </div>
 
                             </div>
@@ -571,8 +589,8 @@
                                         <table id="table_empleados" class=" table table-responsive table-bordered table-condensed" style="font-size: 12px">
                                             <thead>
                                                 <tr>
-                                                    <th style="min-width: 50px; text-align: left;" scope="col"></th>
-                                                    <th style="min-width: 500px; text-align: left;" scope="col">Empleado</th>
+                                                    <th style="min-width: 50px;max-width: 50px; text-align: left;" scope="col"></th>
+                                                    <th style="min-width: 350px; text-align: left;" scope="col">Empleado</th>
                                                     <th style="min-width: 60px; text-align: center;" scope="col"># Empleado</th>
                                                     <th style="min-width: 50px; text-align: center;" scope="col">CC</th>
                                                 </tr>
@@ -625,8 +643,8 @@
                                         <table id="table_cc" class=" table table-responsive table-bordered table-condensed" style="font-size: 12px">
                                             <thead>
                                                 <tr>
-                                                    <th style="min-width: 50px; text-align: left;" scope="col"></th>
-                                                    <th style="min-width: 700px; text-align: left;" scope="col">Centro de Costos</th>
+                                                    <th style="min-width: 50px;max-width: 50px; text-align: left;" scope="col"></th>
+                                                    <th style="min-width: 500px; text-align: left;" scope="col">Centro de Costos</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

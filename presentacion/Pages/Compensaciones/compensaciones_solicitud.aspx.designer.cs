@@ -220,6 +220,33 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.WebControls.TextBox txtAuthorizationAmount;
         
         /// <summary>
+        /// Control amount_correct.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl amount_correct;
+        
+        /// <summary>
+        /// Control amount_error.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl amount_error;
+        
+        /// <summary>
+        /// Control amount_load.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl amount_load;
+        
+        /// <summary>
         /// Control tblMonthSelect.
         /// </summary>
         /// <remarks>
