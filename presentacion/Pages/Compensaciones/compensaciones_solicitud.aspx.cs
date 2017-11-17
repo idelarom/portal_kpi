@@ -1407,17 +1407,17 @@ namespace presentacion.Pages.Compensaciones
                         RutasArchivosCOM rutas = new RutasArchivosCOM();
                         string path_local2 = @rutas.path(1);
                         string directory2 = path_local2 + id_request_bonds.ToString() + @"\";
-                        if (!Directory.Exists(directory2))
+                        if (!Directory.Exists(@directory2))
                         {
-                            Directory.CreateDirectory(directory2);
+                            Directory.CreateDirectory(@directory2);
                         }
                         files_requests_bonds file = new files_requests_bonds();
-                        file.path = directory2 + name.Trim().Replace(@"\", "/");
+                        file.path = @directory2 + name.Trim().Replace(@"\", "/");
                         file.file_name = name.Trim();
                         file.size = Convert.ToDecimal(e.File.ContentLength);
                         file.content_type = e.File.ContentType;
                         string source = file.path;
-                        string path = directory2 + file.file_name;
+                        string path = @directory2 + file.file_name;
                         file.login = Session["usuario"] as string;
                         file.path = "UploadedFiles/" + id_request_bonds.ToString() + "/";
                         file.id_request_bond = id_request_bonds;
@@ -1684,18 +1684,18 @@ namespace presentacion.Pages.Compensaciones
                 string path_local = dirInfo+"files/documents/temp/";
                 string server = @rutas.path(1);
                 int id_request = Convert.ToInt32(hdnIdRequestBond.Value == "" ? "0" : hdnIdRequestBond.Value);
-                string path = id_request > 0 ? server + id_request.ToString()+"/"+ filename : path_local + filename;
-                if (File.Exists(path))
+                string path = id_request > 0 ? @server + id_request.ToString() + "\\" + filename : path_local + filename;
+                if (File.Exists(@path))
                 {
                     Response.ContentType = "doc/docx";
-                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(path));
-                    Response.TransmitFile(path);
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(@path));
+                    Response.TransmitFile(@path);
                     Response.End();
                 }
                 else
                 {
                     ModalShow("#modal_archivos");
-                    Toast.Error("No es encuentra el documento especificado", this);
+                    Toast.Error("No es encuentra el documento especificado en la ruta: "+ path, this);
                 }
             }
             catch (Exception ex)
