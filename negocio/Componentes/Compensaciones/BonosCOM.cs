@@ -33,6 +33,25 @@ namespace negocio.Componentes.Compensaciones
             }
         }
 
+        public List<files_requests_bonds> get_files(int id_request)
+        {
+            try
+            {
+                SICOEMEntities context = new SICOEMEntities();
+
+                List<files_requests_bonds> list = context.files_requests_bonds.Where(i => i.id_request_bond == id_request).ToList();
+                return list;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                return new List<files_requests_bonds>();
+            }
+        }
+
         public DataSet Agregar(requests_bonds bono)
         {
             DataSet ds = new DataSet();

@@ -3,6 +3,47 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
+        function Init(value) {
+            if ($.fn.dataTable.isDataTable(value)) {
+                table = $(value).DataTable();
+            }
+            else {
+                $(value).DataTable({
+                    "paging": true,
+                    "pageLength": 10,
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "language": {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    }
+                });
+            }
+
+        }
         function InitPagging(value) {
             if ($.fn.dataTable.isDataTable(value)) {
                 table = $(value).DataTable();
@@ -45,11 +86,11 @@
 
         }
         var opts = {
-            lines: 13 // The number of lines to draw
+          lines: 13 // The number of lines to draw
         , length: 28 // The length of each line
         , width: 14 // The line thickness
         , radius: 42 // The radius of the inner circle
-        , scale: 1 // Scales overall size of the spinner
+        , scale: 1.4 // Scales overall size of the spinner
         , corners: 1 // Corner roundness (0..1)
         , color: '#000' // #rgb or #rrggbb or array of colors
         , opacity: 0.1 // Opacity of the lines
@@ -83,7 +124,13 @@
         }
         function Load2() {
             $("#<%= load2.ClientID%>").show();
-        	var target = document.getElementById('<%= load2.ClientID %>');
+            var target = document.getElementById('<%= load2.ClientID %>');
+            var spinner = new Spinner(opts).spin(target);
+            return true;
+        }
+        function Load3() {
+            $("#<%= load3.ClientID%>").show();
+        	var target = document.getElementById('<%= load3.ClientID %>');
             var spinner = new Spinner(opts).spin(target);
             return true;
         }
@@ -130,6 +177,12 @@
             console.log(path);
             document.getElementById('<%= lnkdescargas.ClientID%>').click();
         }
+        function ViewBond(id_bond) {
+            var hdnIdRequestBond = document.getElementById('<%= hdnIdRequestBond.ClientID %>');
+            hdnIdRequestBond.value = id_bond;
+            document.getElementById('<%= btnviewrequest.ClientID%>').click();
+            Load3();
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -142,9 +195,9 @@
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    
-                                      <div id="load2" runat="server" style="display: none;"></div>
-                    <div class="box box-default">
+
+                    <div id="load2" runat="server" style="display: none;"></div>
+                    <div class="box box-danger">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
@@ -159,9 +212,18 @@
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="box box-default">
-                        <div class="box-body" id="tblInformationRequisitions" runat="server" visible="false">
                             <div id="load" runat="server" style="display: none;"></div>
+                    <div class="box box-danger" id="tblInformationRequisitions" runat="server" visible="false">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Solicitud</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="trWeek" runat="server">
                                     <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Seleccione una fecha de una semana</strong></h5>
@@ -186,7 +248,7 @@
                                                             <ItemTemplate>
                                                                 <tr>
                                                                     <td style="text-align: center;">
-                                                                        <asp:CheckBox ID="cbx_checkday" style="cursor:pointer;" Checked="true" Text="Seleccionar" AutoPostBack="true" runat="server" OnCheckedChanged="cbx_checkday_CheckedChanged"
+                                                                        <asp:CheckBox ID="cbx_checkday" Style="cursor: pointer;" Checked="true" Text="Seleccionar" AutoPostBack="true" runat="server" OnCheckedChanged="cbx_checkday_CheckedChanged"
                                                                             amount='<%# Eval("amount") %>' />
                                                                     </td>
                                                                     <td>
@@ -201,9 +263,9 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <a class="btn btn-block btn-social btn-google" style="text-align:right;">
+                                            <a class="btn btn-block btn-social btn-google" style="text-align: right;">
                                                 <i class="fa fa-money"></i>Monto total autorizado: <strong>
-                                                    <asp:Label ID="lblmonto_total_autorizadp"  runat="server" Text="$ 0.00"></asp:Label></strong>
+                                                    <asp:Label ID="lblmonto_total_autorizadp" runat="server" Text="$ 0.00"></asp:Label></strong>
                                             </a>
                                         </div>
                                     </div>
@@ -232,7 +294,7 @@
                                             ReadOnly="false" runat="server"></asp:TextBox>
                                         <span class="input-group-btn">
                                             <asp:LinkButton ID="lnksearchpmTracker" CssClass="btn btn-primary btn-flat"
-                                                 OnClientClick="return Load();"
+                                                OnClientClick="return Load();"
                                                 OnClick="lnksearchpmTracker_Click" runat="server">
                                                 <i class="fa fa-search" aria-hidden="true"></i>
                                             </asp:LinkButton>
@@ -261,14 +323,14 @@
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Importe bono</strong></h5>
                                     <asp:TextBox ID="txtAuthorizationAmount" onfocus="$(this).select();" AutoPostBack="true"
                                         OnTextChanged="txtAuthorizationAmount_TextChanged"
-                                        CssClass=" form-control" runat="server" ></asp:TextBox>
+                                        CssClass=" form-control" runat="server"></asp:TextBox>
                                 </div>
 
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Periodo del bono</strong></h5>
-                                    <div class="row" style="padding:5px;">
+                                    <div class="row" style="padding: 5px;">
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="tblMonthSelect" runat="server">
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -297,7 +359,6 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                     <asp:DropDownList ID="cbFinalizeMonth" CssClass="form-control"
-                                                        
                                                         OnSelectedIndexChanged="cbInitialYear_SelectedIndexChanged" AutoPostBack="true"
                                                         runat="server">
                                                     </asp:DropDownList>
@@ -343,7 +404,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <h5><strong><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Comentarios</strong></h5>
@@ -355,8 +416,8 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <asp:LinkButton ID="lnkadjuntarfiles" OnClick="lnkadjuntarfiles_Click" CssClass="btn btn-success btn-flat" runat="server">
                                         <i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Adjuntar archivos</asp:LinkButton>
-                                    <asp:LinkButton ID="lnksolicitar" CssClass="btn btn-primary btn-flat" runat="server"  OnClientClick="return confirm('¿Desea guardar esta solicitud?');"
-                                         OnClick="lnksolicitar_Click">
+                                    <asp:LinkButton ID="lnksolicitar" CssClass="btn btn-primary btn-flat" runat="server" OnClientClick="return confirm('¿Desea guardar esta solicitud?');"
+                                        OnClick="lnksolicitar_Click">
                                          <i class="fa fa-bookmark" aria-hidden="true">
 
                                          </i>&nbsp;Solicitar</asp:LinkButton>
@@ -369,18 +430,33 @@
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="box box-default">
-                        <div class="box-body" id="trGridRequisitions" runat="server" visible="false">
+                    <div class="box box-danger" id="trGridRequisitions" runat="server" visible="false">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Listado de bonos</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class=" table table-responsive">
-                                        <table id="table_bonos" class=" table table-responsive table-bordered table-condensed" style="font-size: 12px">
+                                        <div id="load3" runat="server" style="display: none;"></div>
+                                        <table id="table_bonos" class=" table table-responsive table-bordered table-condensed"
+                                            style="font-size: 12px">
                                             <thead>
                                                 <tr>
-                                                    <th style="min-width: 50px; text-align: left;" scope="col"></th>
-                                                    <th style="min-width: 80px; text-align: left;" scope="col"># Proyecto</th>
-                                                    <th style="min-width: 300px; text-align: left;" scope="col">Nombre Proyecto</th>
-                                                    <th style="min-width: 200px; text-align: left;" scope="col">Cliente</th>
+                                                    <th style="min-width: 20px; text-align: left;" scope="col"></th>
+                                                    <th style="min-width: 30px; text-align: center;" scope="col"># Sol.</th>
+                                                    <th style="min-width: 100px; text-align: center;" scope="col">Fecha</th>
+                                                    <th style="min-width: 80px; text-align: center;" scope="col">Tipo</th>
+                                                    <th style="min-width: 190px; text-align: left;" scope="col">Empleado</th>
+                                                    <th style="min-width: 100px; text-align: center;" scope="col">Monto</th>
+                                                    <th style="min-width: 200px; text-align: left;" scope="col">CC Cargo</th>
+                                                    <th style="min-width: 190px; text-align: left;" scope="col">Solicitante</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -388,17 +464,30 @@
                                                     <ItemTemplate>
                                                         <tr>
                                                             <td>
-                                                                <a class="btn btn-primary btn-flat btn-xs"
-                                                                    onclick='<%# "return ValuesPMTracker("+@""""+ Eval("folio").ToString()+@""""+@","""+ Eval("nombre_proyecto").ToString()+@""""+@","""+ Eval("nombre_cliente").ToString()+@""""+");" %>'>Seleccionar</a>
+                                                                <a class="btn btn-success btn-flat btn-xs"
+                                                                    onclick='<%# "return ViewBond("+ Eval("id_request_bond").ToString()+");" %>'>Archivos
+                                                                </a>
+                                                            </td>
+                                                            <td style="min-width: 30px; text-align: center;">
+                                                                <%# Eval("id_request_bond") %>
+                                                            </td>
+                                                            <td style="min-width: 100px; text-align: center;">
+                                                                <%# Convert.ToDateTime(Eval("created")).ToString("dd MMMM, yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %>
+                                                            </td>
+                                                            <td style="min-width: 100px; text-align: center;">
+                                                                <%# System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Eval("bond_name").ToString().ToLower())%>
                                                             </td>
                                                             <td>
-                                                                <%# Eval("folio") %>
+                                                                <%# System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Eval("full_name").ToString().ToLower()) %>
+                                                            </td>
+                                                            <td style="min-width: 100px; text-align: center;">
+                                                                <%# Convert.ToDecimal(Eval("authorization_amount")).ToString("C2") %>
                                                             </td>
                                                             <td>
-                                                                <%# Eval("nombre_proyecto") %>
+                                                                <%# Eval("CC_Cargo") %>
                                                             </td>
                                                             <td>
-                                                                <%# Eval("nombre_cliente") %>
+                                                                <%# System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Eval("created_by").ToString().ToLower()) %>
                                                             </td>
                                                         </tr>
                                                     </ItemTemplate>
@@ -563,8 +652,8 @@
                         </div>
                     </div>
                 </div>
-            </div>          
-            
+            </div>
+
             <asp:HiddenField ID="hdfguid" runat="server" />
             <asp:HiddenField ID="hdndesc_cc" runat="server" />
             <asp:HiddenField ID="hdnfolio" runat="server" />
@@ -589,6 +678,7 @@
             <asp:Button ID="lnkcc" Style="display: none;" OnClick="lnkcc_Click" runat="server" Text="Button" />
             <asp:Button ID="lnkproyecto" Style="display: none;" OnClick="lnkproyecto_Click" runat="server" Text="Button" />
             <asp:Button ID="lnkdescargas" Style="display: none;" OnClick="lnkdescargas_Click" runat="server" Text="Button" />
+            <asp:Button ID="btnviewrequest" Style="display: none;" OnClick="btnviewrequest_Click" runat="server" Text="Button" />
         </ContentTemplate>
     </asp:UpdatePanel>
     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_archivos" role="dialog"
@@ -596,6 +686,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Always">
                 <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnviewrequest" EventName="Click" />
                     <asp:AsyncPostBackTrigger ControlID="lnkadjuntarfiles" EventName="Click" />
                     <asp:PostBackTrigger ControlID="lnkdescargas" />
                 </Triggers>
@@ -653,7 +744,7 @@
                                                             </td>
                                                             <td style="text-align: center;">
                                                                 <a style="cursor:pointer;" class="btn btn-success btn-flat btn-xs" 
-                                                                    onclick='<%#"return Download("+@""""+ Eval("path").ToString().Replace(@"\","/").Trim()+@""""+");" %>'>
+                                                                    onclick='<%#"return Download("+@""""+ Eval("file_name").ToString().Replace(@"\","/").Trim()+@""""+");" %>'>
                                                                    Descargar</a>
                                                                
                                                             </td>

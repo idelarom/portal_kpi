@@ -40,15 +40,6 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.WebControls.DropDownList cbBonds_Types;
         
         /// <summary>
-        /// Control tblInformationRequisitions.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tblInformationRequisitions;
-        
-        /// <summary>
         /// Control load.
         /// </summary>
         /// <remarks>
@@ -56,6 +47,15 @@ namespace presentacion.Pages.Compensaciones {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl load;
+        
+        /// <summary>
+        /// Control tblInformationRequisitions.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tblInformationRequisitions;
         
         /// <summary>
         /// Control trWeek.
@@ -373,6 +373,15 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl trGridRequisitions;
         
         /// <summary>
+        /// Control load3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load3;
+        
+        /// <summary>
         /// Control gridBondsRequisitions.
         /// </summary>
         /// <remarks>
@@ -623,6 +632,15 @@ namespace presentacion.Pages.Compensaciones {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button lnkdescargas;
+        
+        /// <summary>
+        /// Control btnviewrequest.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnviewrequest;
         
         /// <summary>
         /// Control UpdatePanel1.
