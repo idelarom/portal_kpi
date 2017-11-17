@@ -249,7 +249,6 @@ function LoadSinc(msg) {
 
 function CargarNotificaciones() {
     var usuario = $("#hdf_mp_usuario").val();
-    console.log(usuario);
     $.ajax({
         url: '../../Pages/Common/Service.asmx/GetAvisos',
         contentType: "application/json; charset=utf-8",
