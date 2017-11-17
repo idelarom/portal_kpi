@@ -1712,9 +1712,21 @@ namespace presentacion.Pages.Compensaciones
                 string path = id_request > 0 ? @server + id_request.ToString() + "\\" + filename : path_local + filename;
                 if (File.Exists(@path))
                 {
-                    Response.ContentType = "doc/docx";
-                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(@path));
-                    Response.TransmitFile(@path);
+                    //Response.ContentType = "doc/docx";
+                    //Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(@path));
+                    //Response.TransmitFile(@path);
+                    //Response.End();
+                    // Limpiamos la salida
+                    Response.Clear();
+                    // Con esto le decimos al browser que la salida sera descargable
+                    Response.ContentType = "application/octet-stream";
+                    // esta linea es opcional, en donde podemos cambiar el nombre del fichero a descargar (para que sea diferente al original)
+                    Response.AddHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(@path));
+                    // Escribimos el fichero a enviar
+                    Response.WriteFile(@path);
+                    // volcamos el stream
+                    Response.Flush();
+                    // Enviamos todo el encabezado ahora
                     Response.End();
                 }
                 else
