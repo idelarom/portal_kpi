@@ -464,7 +464,7 @@ namespace presentacion.Pages.Compensaciones
                     {
                         if (hdnCC_Cargo.Value != txtCC_Cargo.Text)
                         {
-                            txtCC_Cargo.Text = hdnCC_Cargo.Value;
+                            txtCC_Cargo.Text = txtCC_Emp.Text;
                         }
                     }
 
@@ -913,7 +913,7 @@ namespace presentacion.Pages.Compensaciones
                         Toast.Info("Solo tiene un monto disponible " + Direfencia.ToString("C2") + " de un total de " + monto_roiginal.ToString("C2"),"Mensaje del sistema.", this);
                         txtAuthorizationAmount.Focus();
                         txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
-                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Green;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
                     }
                 }
                 if (cbBonds_Types.SelectedValue == "1")
@@ -1597,7 +1597,6 @@ namespace presentacion.Pages.Compensaciones
                     decimal monto_total_autorizado = (string.IsNullOrEmpty(hdnauthorization_total_amount.Value) ? 0 : Convert.ToDecimal(hdnauthorization_total_amount.Value));
                     decimal Direfencia = (monto_roiginal - monto_total_autorizado);
 
-                   
                     if (Direfencia <= 0)
                     {
                         txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
@@ -1696,6 +1695,8 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
+                lnksolicitar.Visible = true;
+                lnkloadsolicitar.Style["display"] = "none";
             }
         }
 

@@ -373,6 +373,15 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.WebControls.LinkButton lnkadjuntarfiles;
         
         /// <summary>
+        /// Control lnkloadsolicitar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkloadsolicitar;
+        
+        /// <summary>
         /// Control lnksolicitar.
         /// </summary>
         /// <remarks>

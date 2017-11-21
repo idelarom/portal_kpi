@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="Solicitud" Language="C#" MasterPageFile="~/Pages/MP/Global.Master" AutoEventWireup="true" CodeBehind="compensaciones_solicitud.aspx.cs" Inherits="presentacion.Pages.Compensaciones.compensaciones_solicitud" %>
-
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         function Init(value) {
@@ -107,12 +107,23 @@
         , hwaccel: true // Whether to use hardware acceleration
         , position: 'absolute' // Element positioning
         };
-      function ConfirmLoadResultados(msg) {
+        function ConfirmLoadResultados(msg) {
             if (confirm(msg)) {
                 $("#<%= lnkguardaresultadosload.ClientID%>").show();
                 $("#<%= lnkguardaresultados.ClientID%>").hide();
                 return true;
-            } else {
+            }
+            else {
+                return false;
+            }
+        }
+        function ConfirmLoadSave(msg) {
+            if (confirm(msg)) {
+                $("#<%= lnkloadsolicitar.ClientID%>").show();
+                $("#<%= lnksolicitar.ClientID%>").hide();
+                return true;
+            }
+            else {
                 return false;
             }
         }
@@ -276,7 +287,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Empleado</strong>
                                     </h5>
                                     <div class="input-group" runat="server" id="div_filtro_empleados">
@@ -432,14 +443,26 @@
                             <br />
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <asp:LinkButton ID="lnkadjuntarfiles" OnClick="lnkadjuntarfiles_Click" CssClass="btn btn-success btn-flat" runat="server">
+                                    <asp:LinkButton ID="lnkadjuntarfiles" OnClick="lnkadjuntarfiles_Click"
+                                        CssClass="btn btn-success btn-flat" runat="server">
                                         <i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Adjuntar archivos</asp:LinkButton>
-                                    <asp:LinkButton ID="lnksolicitar" CssClass="btn btn-primary btn-flat" runat="server" OnClientClick="return confirm('¿Desea guardar esta solicitud?');"
+
+                                    <asp:LinkButton OnClientClick="return false;" ID="lnkloadsolicitar"
+                                         CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>&nbsp;Solicitando
+                                    </asp:LinkButton>
+
+                                    <asp:LinkButton ID="lnksolicitar" CssClass="btn btn-primary btn-flat" runat="server"
+                                        OnClientClick="return ConfirmLoadSave('¿Desea guardar esta solicitud?');"
                                         OnClick="lnksolicitar_Click">
                                          <i class="fa fa-bookmark" aria-hidden="true">
-
                                          </i>&nbsp;Solicitar</asp:LinkButton>
-                                    <asp:LinkButton ID="lnkcancelar" OnClick="lnkcancelar_Click" OnClientClick="return confirm('¿Desea cancelar la solicitud?');" CssClass="btn btn-danger btn-flat" runat="server">
+
+
+                                    <asp:LinkButton ID="lnkcancelar" OnClick="lnkcancelar_Click"
+                                        OnClientClick="return confirm('¿Desea cancelar la solicitud?');" CssClass="btn btn-danger btn-flat"
+                                        runat="server">
                                           <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancelar</asp:LinkButton>
                                 </div>
                             </div>
@@ -726,11 +749,12 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <br />
-                                    <asp:LinkButton OnClientClick="return false;" ID="lnkguardaresultadosload" CssClass=" pull-right btn btn-primary btn-flat btn-sm" runat="server" Style="display: none;">
+                                    <asp:LinkButton OnClientClick="return false;" ID="lnkguardaresultadosload" CssClass="btn btn-primary btn-flat btn-sm pull-right" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando
                                     </asp:LinkButton>
-                                    <asp:LinkButton ID="lnkguardaresultados" OnClientClick="return ConfirmLoadResultados('¿Desea guardar el resultado?');"
+                                    <asp:LinkButton ID="lnkguardaresultados"
+                                         OnClientClick="return ConfirmLoadResultados('¿Desea guardar el resultado?');"
                                         OnClick="lnkguardaresultados_Click" CssClass="btn btn-primary btn-flat btn-sm pull-right" runat="server">
                                             Guardar documento&nbsp;<i class="fa fa-floppy-o" aria-hidden="true"></i>
                                     </asp:LinkButton>
