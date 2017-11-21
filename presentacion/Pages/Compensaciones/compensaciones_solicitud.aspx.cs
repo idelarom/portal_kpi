@@ -47,8 +47,8 @@ namespace presentacion.Pages.Compensaciones
         {
             amount_correct.Visible = false;
             amount_error.Visible = false;
-            hdnIdRequestBond.Value = "";
             txtAuthorizationAmount.BorderColor = System.Drawing.Color.Silver;
+            hdnIdRequestBond.Value = "";
             hdndesc_cc.Value = "";
             hdnfolio.Value = "";
             hdnproyecto.Value = "";
@@ -729,6 +729,7 @@ namespace presentacion.Pages.Compensaciones
                 file.path = path.Replace(@"\", "/");
                 file.file_name = file_name;
                 file.size = size;
+                file.date_attach = DateTime.Now;
                 file.content_type = content_type;
                 list.Add(file);
                 Session[hdfguid.Value + "list_documentos"] = list;
@@ -902,7 +903,7 @@ namespace presentacion.Pages.Compensaciones
                         correct = false;
                         txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");
                         Toast.Error("Ya se le ha otorgado el monto completo de  " + monto_roiginal.ToString("C2") + " correspondiente a este periodo.", this);
-                        txtAuthorizationAmount.Focus();
+                       
                         txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
                         txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
                     }
@@ -911,7 +912,7 @@ namespace presentacion.Pages.Compensaciones
                         correct = false;
                         txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");// Direfencia.ToString("C2");
                         Toast.Info("Solo tiene un monto disponible " + Direfencia.ToString("C2") + " de un total de " + monto_roiginal.ToString("C2"),"Mensaje del sistema.", this);
-                        txtAuthorizationAmount.Focus();
+                        
                         txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
                         txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
                     }
@@ -1233,6 +1234,10 @@ namespace presentacion.Pages.Compensaciones
                     {
                         LoadBondsRequests();
                     }
+
+                    amount_correct.Visible = false;
+                    amount_error.Visible = false;
+                    txtAuthorizationAmount.BorderColor = System.Drawing.Color.Silver;
                 }
             }
             catch (Exception ex)
@@ -1509,6 +1514,9 @@ namespace presentacion.Pages.Compensaciones
             txtCustomerNameImplementations.Text = hdncliente.Value;
             load.Style["display"] = "none";
             InitTables();
+            amount_correct.Visible = false;
+            amount_error.Visible = false;
+            txtAuthorizationAmount.BorderColor = System.Drawing.Color.Silver;
         }
 
         protected void lnksolicitar_Click(object sender, EventArgs e)
