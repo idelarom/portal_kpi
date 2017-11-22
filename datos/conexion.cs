@@ -120,6 +120,9 @@ namespace datos
                     case 9:
                         cadena = System.Configuration.ConfigurationManager.ConnectionStrings["Proyectos_ConnextEntities"].ToString();
                         break;
+                    case 10:
+                        cadena = System.Configuration.ConfigurationManager.ConnectionStrings["SiinfoNetConnectionString"].ToString();
+                        break; 
                 }
             }
             catch (Exception ex)

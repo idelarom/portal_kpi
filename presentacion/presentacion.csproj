@@ -304,6 +304,7 @@
     <Content Include="Pages\Common\mantenimiento.aspx" />
     <Content Include="Pages\Common\recordatorios.aspx" />
     <Content Include="Pages\Common\Service.asmx" />
+    <Content Include="Pages\Compensaciones\compensaciones_autorizacion.aspx" />
     <Content Include="Pages\Compensaciones\compensaciones_empleados.aspx" />
     <Content Include="Pages\Compensaciones\compensaciones_solicitud.aspx" />
     <Content Include="Pages\Proyectos\mis_proyectos.aspx" />
@@ -1483,6 +1484,13 @@
     <Compile Include="Pages\Common\Service.asmx.cs">
       <DependentUpon>Service.asmx</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pages\Compensaciones\compensaciones_autorizacion.aspx.cs">
+      <DependentUpon>compensaciones_autorizacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Compensaciones\compensaciones_autorizacion.aspx.designer.cs">
+      <DependentUpon>compensaciones_autorizacion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Compensaciones\compensaciones_empleados.aspx.cs">
       <DependentUpon>compensaciones_empleados.aspx</DependentUpon>

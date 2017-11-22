@@ -12,7 +12,7 @@
                 $(value).DataTable({
                     "paging": true,
                     "pageLength": 10,
-                    "lengthChange": false,
+                    "lengthChange": true,
                     "searching": true,
                     "ordering": true,
                     "info": true,

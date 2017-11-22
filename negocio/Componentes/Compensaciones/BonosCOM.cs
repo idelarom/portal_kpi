@@ -95,8 +95,8 @@ namespace negocio.Componentes.Compensaciones
             Datos data = new Datos();
             listparameters.Add(new SqlParameter() { ParameterName = "@id_bond_type", SqlDbType = SqlDbType.Int, Value = id_bond_type });
             listparameters.Add(new SqlParameter() { ParameterName = "@id_request_status", SqlDbType = SqlDbType.Int, Value = id_request_status });
-            listparameters.Add(new SqlParameter() { ParameterName = "@employee_number", SqlDbType = SqlDbType.Int, Value = id_request_bond });
-            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_bond", SqlDbType = SqlDbType.Int, Value = employee_number });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_bond", SqlDbType = SqlDbType.Int, Value = id_request_bond });
+            listparameters.Add(new SqlParameter() { ParameterName = "@employee_number", SqlDbType = SqlDbType.Int, Value = employee_number });
             listparameters.Add(new SqlParameter() { ParameterName = "@id_immediate_boss", SqlDbType = SqlDbType.Int, Value = id_immediate_boss });
             listparameters.Add(new SqlParameter() { ParameterName = "@period_date_of", SqlDbType = SqlDbType.Int, Value = period_date_of });
             listparameters.Add(new SqlParameter() { ParameterName = "@period_date_to", SqlDbType = SqlDbType.Int, Value = period_date_to });
@@ -159,6 +159,23 @@ namespace negocio.Componentes.Compensaciones
             try
             {
                 ds = data.enviar("sp_GetConnextProjectsForLogin", listparameters, false, 6);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+        public DataSet sp_Validate_User(string usuario)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@login", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_system", SqlDbType = SqlDbType.Int, Value = 2 });
+            try
+            {
+                ds = data.enviar("sp_Validate_User", listparameters, false, 10);
             }
             catch (Exception ex)
             {

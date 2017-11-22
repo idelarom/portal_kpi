@@ -413,7 +413,7 @@ namespace presentacion.Pages.Compensaciones
             {
                 int? id_immediate_boss = null;
                 id_immediate_boss = Convert.ToInt32(Session["num_empleado"]);
-                if (Convert.ToInt32(Session["id_perfil"]) == 1)//administrador
+                if (Convert.ToInt32(Session["id_profile"]) == (int)enumerators.profiles_compensations.administrador)//administrador
                 {
                     id_immediate_boss = null;
                 }
