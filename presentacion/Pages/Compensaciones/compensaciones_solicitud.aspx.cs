@@ -793,6 +793,17 @@ namespace presentacion.Pages.Compensaciones
             }
         }
 
+        /// <summary>
+        /// Desbloquea el hilo actual
+        /// </summary>
+        private void UnBlockUI()
+        {
+            load.Style["display"] = "none";
+            load2.Style["display"] = "none";
+            load3.Style["display"] = "none";
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "UnBlockUI();", true);
+        }
+
         private void ModalShow(string modalname)
         {
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
@@ -813,6 +824,16 @@ namespace presentacion.Pages.Compensaciones
             {
                 string usuario = Session["usuario"] as string;
                 hdfguid.Value = Guid.NewGuid().ToString();
+                BonosCOM bonos = new BonosCOM();
+                DataTable dtValidateUser = bonos.sp_Validate_User(usuario).Tables[0];
+                if (dtValidateUser.Rows.Count > 0)
+                {
+                    Session["id_profile"] = Convert.ToInt32(dtValidateUser.Rows[0]["id_profile"]);
+                }
+                else
+                {
+                    Session["id_profile"] = 0;
+                }
                 AsyncUpload1.FileUploaded += new Telerik.Web.UI.FileUploadedEventHandler(AsyncUpload1_FileUploaded);
                 CargarTiposBonos(usuario.ToUpper());
                 ClearFields();
@@ -836,7 +857,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -862,7 +883,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -961,7 +982,7 @@ namespace presentacion.Pages.Compensaciones
                 txtAuthorizationAmount.Text = "";
                 Toast.Info("Seleccione un empleado", "Mensaje del sistema", this);
             }
-            amount_load.Style["display"] = "none"; 
+            amount_load.Style["display"]="none"; 
             InitTables();
         }
 
@@ -1247,7 +1268,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load2.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1273,7 +1294,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1333,7 +1354,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1365,7 +1386,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1386,6 +1407,8 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
+                lnkguardaresultados.Visible = true;
+                lnkguardaresultadosload.Style["display"] = "none";
             }
         }
 
@@ -1467,6 +1490,8 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
+                lnkguardaresultados.Visible = true;
+                lnkguardaresultadosload.Style["display"] = "none";
             }
         }
 
@@ -1502,7 +1527,7 @@ namespace presentacion.Pages.Compensaciones
             string cc = hdnCC_Cargo.Value;
             txtCC_Cargo.Text = desc_cc;
             hdnCC_Cargo.Value = cc;
-            load.Style["display"] = "none";
+            UnBlockUI();
             InitTables();
         }
 
@@ -1512,7 +1537,7 @@ namespace presentacion.Pages.Compensaciones
             txtPMTrackerNumberImplementations.Text = hdnfolio.Value;
             txtProjectNameImplementations.Text = hdnproyecto.Value;
             txtCustomerNameImplementations.Text = hdncliente.Value;
-            load.Style["display"] = "none";
+            UnBlockUI();
             InitTables();
             amount_correct.Visible = false;
             amount_error.Visible = false;
@@ -1705,6 +1730,7 @@ namespace presentacion.Pages.Compensaciones
                 InitTables();
                 lnksolicitar.Visible = true;
                 lnkloadsolicitar.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1751,7 +1777,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1780,7 +1806,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load3.Style["display"] = "none";
+                UnBlockUI();
             }
         }
     }

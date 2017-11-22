@@ -108,6 +108,7 @@
         , hwaccel: true // Whether to use hardware acceleration
         , position: 'absolute' // Element positioning
         };
+
         function ConfirmLoadResultados(msg) {
             if (confirm(msg)) {
                 $("#<%= lnkguardaresultadosload.ClientID%>").show();
@@ -129,29 +130,25 @@
             }
         }
         function Load() {
-            $("#<%= load.ClientID%>").show();
+            <%-- $("#<%= load.ClientID%>").show();
         	var target = document.getElementById('<%= load.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+            var spinner = new Spinner(opts).spin(target);--%>
+            BlockUI();
             return true;
         }
         function Load2() {
-            $("#<%= load2.ClientID%>").show();
+            <%--$("#<%= load2.ClientID%>").show();
             var target = document.getElementById('<%= load2.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+            var spinner = new Spinner(opts).spin(target);--%>
+            BlockUI();
             return true;
         }
         function Load3() {
-            $("#<%= load3.ClientID%>").show();
+            <%--$("#<%= load3.ClientID%>").show();
         	var target = document.getElementById('<%= load3.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+            var spinner = new Spinner(opts).spin(target);--%>
+            BlockUI();
             return true;
-        }
-        function control_clear(control) {
-            var valor = control.value;
-
-            if (valor.length > 0) {
-                control.value = "";
-            }
         }
         function ValuesPMTracker(folio, proyecto, cliente) {
             var hdnfolio = document.getElementById('<%= hdnfolio.ClientID %>');
@@ -220,7 +217,7 @@
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Tipo de bono</strong></h5>
-                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true" onchange="Load2();"
+                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true" onchange="BlockUI();"
                                         OnSelectedIndexChanged="cbBonds_Types_SelectedIndexChanged" CssClass=" form-control" runat="server">
                                     </asp:DropDownList>
                                 </div>

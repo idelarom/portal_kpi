@@ -100,6 +100,7 @@ namespace presentacion.Pages.Compensaciones
                 return new DataSet();
             }
         }
+
         /// <summary>
         /// Guarda temporalmente un documento
         /// </summary>
@@ -184,6 +185,70 @@ namespace presentacion.Pages.Compensaciones
             }
         }
 
+        /// <summary>
+        /// Procesa la solicitud de un bono
+        /// </summary>
+        /// <param name="bono"></param>
+        private void ProcessBond(requests_bonds bono)
+        {
+            try
+            {
+                BonosCOM bonos = new BonosCOM();
+                DataSet ds = bonos.sp_Update_Request_Bond(bono);
+                System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
+                 "AlertGO('El bono del empleado ha sido "+(bono.id_request_status == (int)enumerators.bonds_status.authorization?"autorizado":"rechazado")+" con éxito.', 'compensaciones_autorizacion.aspx');", true);
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al procesar solicitud: " + ex.Message, this);
+            }
+        }
+
+        private string GetMonthName(int month_number)
+        {
+            string month_name = string.Empty;
+            switch (month_number)
+            {
+                case 1:
+                    month_name = "Enero";
+                    break;
+                case 2:
+                    month_name = "Febrero";
+                    break;
+                case 3:
+                    month_name = "Marzo";
+                    break;
+                case 4:
+                    month_name = "Abril";
+                    break;
+                case 5:
+                    month_name = "Mayo";
+                    break;
+                case 6:
+                    month_name = "Junio";
+                    break;
+                case 7:
+                    month_name = "Julio";
+                    break;
+                case 8:
+                    month_name = "Agosto";
+                    break;
+                case 9:
+                    month_name = "Septiembre";
+                    break;
+                case 10:
+                    month_name = "Octubre";
+                    break;
+                case 11:
+                    month_name = "Noviembre";
+                    break;
+                case 12:
+                    month_name = "Diciembre";
+                    break;
+            }
+            return month_name;
+        }
+
         private void ModalShow(string modalname)
         {
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
@@ -194,6 +259,16 @@ namespace presentacion.Pages.Compensaciones
         {
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
                              "ModalCloseGlobal('" + modalname + "');", true);
+        }
+
+        /// <summary>
+        /// Desbloquea el hilo actual
+        /// </summary>
+        private void UnBlockUI()
+        {
+
+            load2.Style["display"] = "none";
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "UnBlockUI();", true);
         }
         #endregion
 
@@ -219,8 +294,7 @@ namespace presentacion.Pages.Compensaciones
             }
 
         }
-
-
+        
         protected void cbBonds_Types_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -234,7 +308,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load2.Style["display"] = "none";
+                 UnBlockUI();
             }
         }
 
@@ -262,7 +336,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load2.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -309,7 +383,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load2.Style["display"] = "none";
+                UnBlockUI();
             }
         }
         
@@ -430,6 +504,292 @@ namespace presentacion.Pages.Compensaciones
             {
                 InitTables();
                 ModalShow("#modal_archivos");
+            }
+        }
+
+        protected void btnprocessrequest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id_bonds = Convert.ToInt32(hdnIdRequestBond.Value);
+                int id_tipo_bono = Convert.ToInt32(hdnid_tipo_bono.Value);
+                txtRequisitionNumber.Text = "";
+                txtBondType.Text = "";
+                txtEmployeeName.Text = "";
+                hdnEmployeeNumber.Value = "";
+                txtCC_Cargo.Text = "";
+                tdAuthorizationComments.Text = "";
+                txtAuthorizationAmount.BorderColor = System.Drawing.Color.Green;
+                amount_correct.Visible = true;
+                amount_error.Visible = false;
+                txtCC_Emp.Text = "";
+                txtComments.Text = "";
+                txtCC_Cargo.Text = "";
+                txtPeriodDateOf.SelectedDate = null;
+                txtPeriodDateTo.SelectedDate = null;
+                txtAuthorizationAmount.Text = "";
+                this.trInformationImplementations.Visible = false;
+                this.txtPMTrackerNumberImplementations.Text = "";
+                this.txtNumberHoursImplementations.Text = "";
+                this.txtProjectNameImplementations.Text = "";
+                this.txtCustomerNameImplementations.Text = "";
+                this.trInformationSupport.Visible = false;
+                this.txtMonthSupport.Text = "";
+                this.txtWeekSupport.Text = "";
+                this.txtYearSupport.Text = "";
+                BonosCOM bonos = new BonosCOM();
+                DataSet ds = bonos.sp_GetRequests_Bonds(null,null, id_bonds);
+                DataSet dsConfigurations = bonos.sp_GetBondsTypesEnabledAndID(id_tipo_bono);
+                if (ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        DataRow bono = ds.Tables[0].Rows[0];
+                        txtRequisitionNumber.Text = id_bonds.ToString();
+                        txtRequisitionDate.Text = Convert.ToDateTime(bono["created"]).ToString("dd MMMM, yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"));
+                        txtBondType.Text = bono["bond_name"].ToString();
+                        txtEmployeeName.Text = bono["full_name"].ToString();
+                        hdnEmployeeNumber.Value = bono["employee_number"].ToString();
+                        txtCC_Cargo.Text = bono["CC_Cargo"].ToString();
+                        txtCC_Emp.Text = bono["CC_Empleado"].ToString();
+                        txtComments.Text = bono["requisition_comments"].ToString();
+                        txtPeriodDateOf.SelectedDate = Convert.ToDateTime(bono["period_date_of"]);
+                        txtPeriodDateTo.SelectedDate = Convert.ToDateTime(bono["period_date_to"]);
+                        txtAuthorizationAmount.Text = Convert.ToDecimal(bono["authorization_amount"]).ToString("C2");
+
+                        if (Convert.ToBoolean(dsConfigurations.Tables[0].Rows[0]["folio_pmtracker_required"]))
+                        {
+                            this.trInformationImplementations.Visible = true;
+                            this.txtPMTrackerNumberImplementations.Text = dsConfigurations.Tables[0].Rows[0]["folio_pmtracker"].ToString();
+                            this.txtNumberHoursImplementations.Text = dsConfigurations.Tables[0].Rows[0]["number_hours"].ToString();
+                            DataSet dsPMTracker = bonos.sp_GetConnextProjectsForFolio(dsConfigurations.Tables[0].Rows[0]["folio_pmtracker"].ToString());
+                            if ((dsPMTracker != null))
+                            {
+                                this.txtProjectNameImplementations.Text = dsPMTracker.Tables[0].Rows[0]["nombre_proyecto"].ToString();
+                                this.txtCustomerNameImplementations.Text = dsPMTracker.Tables[0].Rows[0]["nombre_cliente"].ToString();
+                            }
+                        }
+                        else
+                        {
+                            this.trInformationImplementations.Visible = false;
+                        }
+
+                        if (Convert.ToBoolean(dsConfigurations.Tables[0].Rows[0]["week_detail_required"]))
+                        {
+                            this.trInformationSupport.Visible = true;
+                            this.txtMonthSupport.Text = GetMonthName(Convert.ToInt32(bono["month"]));
+                            this.txtWeekSupport.Text = bono["week"].ToString();
+                            this.txtYearSupport.Text = bono["year"].ToString();
+                        }
+                        else
+                        {
+                            this.trInformationSupport.Visible = false;
+                        }
+                        txtAuthorizationAmount_TextChanged(null,null);
+                        ModalShow("#modal_bonos");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al cargar información del bono: " + ex.Message, this);
+            }
+            finally
+            {
+                UnBlockUI();
+                InitTables();
+            }
+        }
+
+        protected void txtAuthorizationAmount_TextChanged(object sender, EventArgs e)
+        {
+            bool correct = true;
+            int id_tipo_bono = Convert.ToInt32(hdnid_tipo_bono.Value);
+            int id_request = Convert.ToInt32(hdnIdRequestBond.Value);
+            txtAuthorizationAmount.BorderColor = System.Drawing.Color.Green;
+            int no_ = Convert.ToInt32(hdnEmployeeNumber.Value == "" ? "0" : hdnEmployeeNumber.Value);
+            if (no_ > 0)
+            {
+                DataSet ds = new DataSet();
+                DataSet dsEmpleado = new DataSet();
+                hdnMontoOriginal.Value = "";
+                BonosCOM bonos = new BonosCOM();
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                //Obtiene bonos del empleado por tipo de bono
+                ds = bonos.sp_GetEmployeesCompensationsForEmployeeNumberAndBondType(
+                    no_, id_tipo_bono, Convert.ToDateTime(this.txtPeriodDateOf.SelectedDate), id_request);
+                decimal percentage = (Convert.ToDecimal(ds.Tables[0].Rows[0]["percentage_extra"]) / Convert.ToDecimal(100));
+                decimal amountValidate = (Convert.ToDecimal(ds.Tables[0].Rows[0]["amount"]) * percentage);
+                decimal authorization_total_bonds = Convert.ToDecimal(ds.Tables[1].Rows[0]["total_bonos"]);
+                decimal authorization_total_amount = Convert.ToDecimal(ds.Tables[1].Rows[0]["total_monto"]);
+                hdnMontoOriginal.Value = amountValidate.ToString();
+                hdnauthorization_total_bonds.Value = authorization_total_bonds.ToString();
+                hdnauthorization_total_amount.Value = authorization_total_amount.ToString();
+
+                txtAuthorizationAmount.Text = txtAuthorizationAmount.Text == "" ? "0.00" : txtAuthorizationAmount.Text;
+                decimal monto_actual1 = Convert.ToDecimal(txtAuthorizationAmount.Text == "" ? "0.00" : txtAuthorizationAmount.Text.Replace("$", ""));
+                //'codigo agregado por RCA
+                decimal monto_roiginal = (string.IsNullOrEmpty(hdnMontoOriginal.Value) ? 0 : Convert.ToDecimal(hdnMontoOriginal.Value));
+
+                decimal monto_total_autorizado = (string.IsNullOrEmpty(hdnauthorization_total_amount.Value) ? 0 : Convert.ToDecimal(hdnauthorization_total_amount.Value));
+                decimal Direfencia = (monto_roiginal - monto_total_autorizado);
+
+                if (id_tipo_bono == 1)
+                {
+                    
+                    if (Direfencia <= 0)
+                    {
+                        correct = false;
+                        txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");
+                        Toast.Error("Ya se le ha otorgado el monto completo de  " + monto_roiginal.ToString("C2") + " correspondiente a este periodo.", this);
+
+                        txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                    }
+                    else if (Direfencia >= 1 & Direfencia < monto_roiginal & monto_actual1 > Direfencia)
+                    {
+                        correct = false;
+                        txtAuthorizationAmount.Text = Direfencia.ToString("C2");// Direfencia.ToString("C2");
+                        Toast.Info("Solo tiene un monto disponible " + Direfencia.ToString("C2") + " de un total de " + monto_roiginal.ToString("C2"), "Mensaje del sistema.", this);
+
+                        txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Green;
+                    }
+                }
+                if (id_tipo_bono == 1)
+                {
+                    decimal monto_actual = Convert.ToDecimal(txtAuthorizationAmount.Text.Replace("$", ""));
+
+                    if (monto_actual > monto_roiginal)
+                    {
+                        correct = false;
+                        float price = float.Parse(monto_roiginal.ToString());
+                        txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");// string.Format("{0:C}", price);
+                        Toast.Error("El monto no puede exceder a " + string.Format("{0:C}", price), this);
+                        txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                    }
+                }
+
+                string text = monto_actual1.ToString();
+                if (correct)
+                {
+                    float price = float.Parse(text);
+                    txtAuthorizationAmount.Text = string.Format("{0:C}", price);
+                    decimal value_MOUNT = default(decimal);
+                    value_MOUNT = Convert.ToDecimal(price);
+                    if ((value_MOUNT <= 0))
+                    {
+                        txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");
+                        correct = false;
+                        Toast.Error("El monto debe ser mayor a $ 0.00", this);
+                        txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                    }
+                }
+
+                correct = txtAuthorizationAmount.BorderColor == System.Drawing.Color.Green;
+                amount_correct.Visible = correct;
+                amount_error.Visible = !correct;
+            }
+            amount_load.Style["display"] = "none";
+            InitTables();
+        }
+
+        protected void lnkautorizar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtAuthorizationAmount.BorderColor = System.Drawing.Color.Green;
+
+                amount_correct.Visible = true;
+                amount_error.Visible = false;
+                int id_bonds = Convert.ToInt32(hdnIdRequestBond.Value==""?"0":hdnIdRequestBond.Value);
+                decimal amount = Convert.ToDecimal(txtAuthorizationAmount.Text==""?"0":txtAuthorizationAmount.Text.Replace("$","").Replace(",",""));
+                if (id_bonds == 0)
+                {
+                    Toast.Error("Error al procesar solicitud", this);
+                }
+                else if (tdAuthorizationComments.Text == "")
+                {
+                    Toast.Error("Error al procesar solicitud: Ingrese comentarios de autorización", this);
+                }
+                else if (amount == 0)
+                {
+                    txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                    txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                    amount_correct.Visible = false;
+                    amount_error.Visible = true;
+                    Toast.Error("Error al procesar solicitud: Ingrese un monto valido.", this);
+                }
+                else {
+                    requests_bonds bono = new requests_bonds();
+                    bono.id_request_bond = id_bonds;
+                    bono.authorization_amount = amount;
+                    bono.modified_by = Session["usuario"] as string;
+                    bono.authorization_comments = tdAuthorizationComments.Text;
+                    bono.id_request_status = (int)enumerators.bonds_status.authorization;
+                    ProcessBond(bono);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al procesar solicitud: " + ex.Message, this);
+            }
+            finally
+            {
+                InitTables();
+                load_modal.Style["display"] = "none";
+            }
+
+        }
+
+        protected void lnkrechazarsolicitud_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                txtAuthorizationAmount.BorderColor = System.Drawing.Color.Green;
+
+                amount_correct.Visible = true;
+                amount_error.Visible = false;
+                int id_bonds = Convert.ToInt32(hdnIdRequestBond.Value == "" ? "0" : hdnIdRequestBond.Value);
+                decimal amount = Convert.ToDecimal(txtAuthorizationAmount.Text == "" ? "0" : txtAuthorizationAmount.Text.Replace("$", "").Replace(",", ""));
+                if (id_bonds == 0)
+                {
+                    Toast.Error("Error al procesar solicitud", this);
+                }
+                else if (tdAuthorizationComments.Text == "")
+                {
+                    Toast.Error("Error al procesar solicitud: Ingrese comentarios de autorización", this);
+                }
+                else if (amount == 0)
+                {
+                    txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
+                    txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
+                    amount_correct.Visible = false;
+                    amount_error.Visible = true;
+                    Toast.Error("Error al procesar solicitud: Ingrese un monto valido.", this);
+                }
+                else
+                {
+                    requests_bonds bono = new requests_bonds();
+                    bono.id_request_bond = id_bonds;
+                    bono.authorization_amount = amount;
+                    bono.modified_by = Session["usuario"] as string;
+                    bono.authorization_comments = tdAuthorizationComments.Text;
+                    bono.id_request_status = (int)enumerators.bonds_status.not_approved;
+                    ProcessBond(bono);
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al procesar solicitud: " + ex.Message, this);
+            }
+            finally
+            {
+                InitTables();
+                load_modal.Style["display"] = "none";
             }
         }
     }

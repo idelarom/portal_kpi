@@ -68,10 +68,23 @@
        , hwaccel: true // Whether to use hardware acceleration
        , position: 'absolute' // Element positioning
         };
+        function ConfirmLoadSave(msg) {
+            if (confirm(msg)) {
+
+                $("#<%= load_modal.ClientID%>").show();
+                var target = document.getElementById('<%= load_modal.ClientID %>');
+                var spinner = new Spinner(opts).spin(target);
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
         function Load2() {
-            $("#<%= load2.ClientID%>").show();
+           <%-- $("#<%= load2.ClientID%>").show();
             var target = document.getElementById('<%= load2.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+            var spinner = new Spinner(opts).spin(target);--%>
+            BlockUI();
             return true;
         }
         function ViewBond(id_bond) {
@@ -80,7 +93,14 @@
             document.getElementById('<%= btnviewrequest.ClientID%>').click();
             Load2();
         }
-                
+        function ProcessBond(id_bond, id_tipo_bono) {
+            var hdnIdRequestBond = document.getElementById('<%= hdnIdRequestBond.ClientID %>');
+            hdnIdRequestBond.value = id_bond;
+            var hdnid_tipo_bono = document.getElementById('<%= hdnid_tipo_bono.ClientID %>');
+            hdnid_tipo_bono.value = id_tipo_bono;
+            document.getElementById('<%= btnprocessrequest.ClientID%>').click();
+            Load2();
+        }
         function Download(id_bond, path) {
             var hdnIdRequestBond = document.getElementById('<%= hdnIdRequestBond.ClientID %>');
             hdnIdRequestBond.value = id_bond;
@@ -100,6 +120,12 @@
                 return false;
             }
         }
+        function LoadAmount() {
+            $("#<%= amount_correct.ClientID%>").hide();
+            $("#<%= amount_error.ClientID%>").hide();
+            $("#<%= amount_load.ClientID%>").show();
+            return true;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -108,7 +134,7 @@
 
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <h3>Aurtorizar bonos</h3>
+                    <h3>Autorización de bonos</h3>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="box box-danger">
@@ -116,7 +142,7 @@
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Tipo de bono</strong></h5>
-                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true" onchange="Load2();"
+                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true" onchange="BlockUI();"
                                         OnSelectedIndexChanged="cbBonds_Types_SelectedIndexChanged" CssClass=" form-control" runat="server">
                                     </asp:DropDownList>
                                 </div>
@@ -151,11 +177,11 @@
                                                     <th style="max-width: 20px; text-align: left;" scope="col"></th>
                                                     <th style="min-width: 30px; text-align: center;" scope="col"># Sol.</th>
                                                     <th style="min-width: 90px; text-align: center;" scope="col">Fecha</th>
-                                                    <th style="min-width: 80px; text-align: center;" scope="col">Tipo</th>
-                                                    <th style="min-width: 190px; text-align: left;" scope="col">Empleado</th>
-                                                    <th style="min-width: 80px; text-align: center;" scope="col">Monto</th>
-                                                    <th style="min-width: 200px; text-align: left;" scope="col">CC Cargo</th>
-                                                    <th style="min-width: 190px; text-align: left;" scope="col">Solicitante</th>
+                                                    <th style="min-width: 50px; text-align: center;" scope="col">Tipo</th>
+                                                    <th style="min-width: 180px; text-align: left;" scope="col">Empleado</th>
+                                                    <th style="min-width: 60px; text-align: center;" scope="col">Monto</th>
+                                                    <th style="min-width: 150px; text-align: left;" scope="col">CC Cargo</th>
+                                                    <th style="min-width: 180px; text-align: left;" scope="col">Solicitante</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -164,7 +190,7 @@
                                                         <tr>
                                                             <td>
                                                                 <a class="btn btn-primary btn-flat btn-xs"
-                                                                    onclick='<%# "return ViewBond("+ Eval("id_request_bond").ToString()+");" %>'>Autorizar
+                                                                    onclick='<%# "return ProcessBond("+ Eval("id_request_bond").ToString()+","+Eval("id_bond_type").ToString()+");" %>'>Autorizar
                                                                 </a>
                                                             </td>
                                                             <td>
@@ -187,7 +213,7 @@
                                                             <td style="min-width: 100px; text-align: center;">
                                                                 <%# Convert.ToDecimal(Eval("authorization_amount")).ToString("C2") %>
                                                             </td>
-                                                            <td>
+                                                            <td style="font-size:10px">
                                                                 <%# Eval("CC_Cargo") %>
                                                             </td>
                                                             <td>
@@ -205,13 +231,162 @@
                     </div>
                 </div>
             </div>
+           
             <asp:HiddenField ID="hdfguid" runat="server" />
+            <input id="hdnMontoOriginal" runat="server" type="Hidden" />
+            <input id="hdnauthorization_total_amount" runat="server" type="Hidden" />
+            <input id="hdnauthorization_total_bonds" runat="server" type="Hidden" />
+            <input id="hdnEmployeeNumber" runat="server" type="hidden" />
+            <input id="hdnid_tipo_bono" runat="server" type="hidden" />
             <input id="hdnIdRequestBond" runat="server" type="hidden" />
+            <asp:Button ID="btnprocessrequest" Style="display: none;" OnClick="btnprocessrequest_Click" runat="server" Text="Button" />
             <asp:Button ID="btnviewrequest" Style="display: none;" OnClick="btnviewrequest_Click" runat="server" Text="Button" />
             <asp:Button ID="lnkdescargas" Style="display: none;" OnClick="lnkdescargas_Click" runat="server" Text="Button" />
         </ContentTemplate>
     </asp:UpdatePanel>
-    
+     
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_bonos" role="dialog"
+        aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="txtAuthorizationAmount" EventName="TextChanged" />
+                    <asp:AsyncPostBackTrigger ControlID="btnprocessrequest"  EventName="Click" />
+                </Triggers>
+                <ContentTemplate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Detalles de la solicitud</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="load_modal" runat="server" style="display:none;"></div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+                                    <h5><strong><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Solicitud</strong></h5>
+                                    <asp:Label ID="txtRequisitionNumber" runat="server" Text=""></asp:Label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-7">
+                                    <h5><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha</strong></h5>
+                                    <asp:Label ID="txtRequisitionDate" runat="server" Text=""></asp:Label>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <h5><strong><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Tipo de bono</strong></h5>
+                                    <asp:Label ID="txtBondType" runat="server" Text=""></asp:Label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Empleado</strong>
+                                    </h5>
+                                    <asp:Label ID="txtEmployeeName" runat="server" Text=""></asp:Label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="trInformationImplementations" runat="server">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="trFolioPMTracker" runat="server">
+                                            <h5><strong><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Folio PM Tracker</strong></h5>
+                                            <asp:Label ID="txtPMTrackerNumberImplementations" runat="server" Text=""></asp:Label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" id="trProjectName" runat="server">
+                                            <h5><strong><i class="fa fa-cubes" aria-hidden="true"></i>&nbsp;Nombre proyecto</strong></h5>
+                                            <asp:Label ID="txtProjectNameImplementations" runat="server" Text=""></asp:Label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" id="trCustomerName" runat="server">
+                                            <h5><strong><i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;Nombre cliente</strong></h5>
+                                            <asp:Label ID="txtCustomerNameImplementations" runat="server" Text=""></asp:Label>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="trNumberHours" runat="server">
+                                            <h5><strong><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;Cantidad de horas</strong></h5>
+                                            <asp:Label ID="txtNumberHoursImplementations" runat="server" Text=""></asp:Label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h5><strong><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;Periodo del bono</strong>
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                            <telerik:RadDatePicker ID="txtPeriodDateOf" Enabled="false" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadDatePicker>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                            <telerik:RadDatePicker ID="txtPeriodDateTo" Enabled="false" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadDatePicker>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="trInformationSupport" runat="server">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <h6><strong>Semana:</strong>
+                                                        <asp:Label ID="txtWeekSupport" runat="server" Text=""></asp:Label>
+                                                    </h6>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <h6><strong>Mes:</strong>
+                                                        <asp:Label ID="txtMonthSupport" runat="server" Text=""></asp:Label>
+                                                    </h6>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <h6><strong>Año:</strong>
+                                                        <asp:Label ID="txtYearSupport" runat="server" Text=""></asp:Label>
+                                                    </h6>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="trAuthorizationAmount" runat="server">
+                                    <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Monto autorizado</strong></h5>
+                                    <div class="input-group">
+                                        <asp:TextBox ID="txtAuthorizationAmount" onfocus="control_clear(this);" onchange="LoadAmount();" AutoPostBack="true"
+                                            OnTextChanged="txtAuthorizationAmount_TextChanged"
+                                            CssClass=" form-control" runat="server"></asp:TextBox>
+                                        <span id="amount_correct" visible="false" style="border-color: Green; color: Green;" runat="server" class="input-group-addon">
+                                            <i class="fa fa-check"></i></span>
+                                        <span id="amount_error" visible="false" runat="server" style="border-color: Red; color: red;" class="input-group-addon">
+                                            <i class="fa fa-times"></i></span>
+                                        <span id="amount_load" runat="server" style="display: none; border-color: Blue; color: Blue;" class="input-group-addon">
+                                            <i class="fa fa-spinner fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>
+
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                    <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;CC Empleado</strong></h5>
+                                    <asp:TextBox ID="txtCC_Emp" ReadOnly="true" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                    <h5><strong><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;CC Cargo</strong></h5>
+                                    <asp:TextBox ID="txtCC_Cargo" ReadOnly="true" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h5><strong><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Comentarios de la solicitud</strong></h5>
+                                    <asp:TextBox ID="txtComments" ReadOnly="true" TextMode="MultiLine" Rows="2" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h5><strong><i class="fa fa-comments-o" aria-hidden="true"></i>&nbsp;Comentarios de autorización</strong></h5>
+                                    <asp:TextBox ID="tdAuthorizationComments" TextMode="MultiLine" Rows="2" CssClass=" form-control" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="text-align:right   ">
+                            <asp:LinkButton ID="lnkrechazarsolicitud" CssClass="btn btn-flat btn-danger"
+                                OnClientClick="return ConfirmLoadSave('¿Desea rechazar esta solicitud?');" OnClick="lnkrechazarsolicitud_Click"  
+                                runat="server"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Rechazar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkautorizar" CssClass="btn btn-flat btn-primary"
+                                OnClientClick="return ConfirmLoadSave('¿Desea autorizar esta solicitud?');" OnClick="lnkautorizar_Click"  
+                                runat="server"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Autorizar</asp:LinkButton>
+
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
     <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_archivos" role="dialog"
         aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">

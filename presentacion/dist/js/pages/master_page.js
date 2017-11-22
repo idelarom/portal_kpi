@@ -4,6 +4,33 @@
 
 });
 
+function BlockUI() {
+    $.blockUI({
+        message: '<h3>Cargando</h1>',
+        css: {
+            border: 'none',
+            padding: '15px',
+            left: '25%',
+            width:'50%',
+            backgroundColor: '#000',
+            '-webkit-border-radius': '10px',
+            '-moz-border-radius': '10px',
+            opacity: .5,
+            color: '#fff'
+        }
+    });
+}
+
+function UnBlockUI() {
+    $.unblockUI();
+}
+function control_clear(control) {
+    var valor = control.value;
+
+    if (valor.length > 0) {
+        control.value = "";
+    }
+}
 //DEVUELVE NOTIFICACION DE ESCRITORIO
 function NotificationDesktop(Mensaje, title) {
     PlaySound('dist/sounds/notification.mp3');
