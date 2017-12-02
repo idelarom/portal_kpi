@@ -10,7 +10,7 @@
 namespace presentacion.Pages.Compensaciones {
     
     
-    public partial class compensaciones_solicitud {
+    public partial class compensaciones_autorizacion {
         
         /// <summary>
         /// Control uusus.
@@ -22,15 +22,6 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.UpdatePanel uusus;
         
         /// <summary>
-        /// Control load2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load2;
-        
-        /// <summary>
         /// Control cbBonds_Types.
         /// </summary>
         /// <remarks>
@@ -40,85 +31,184 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.WebControls.DropDownList cbBonds_Types;
         
         /// <summary>
-        /// Control load.
+        /// Control trGridRequisitions.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trGridRequisitions;
         
         /// <summary>
-        /// Control tblInformationRequisitions.
+        /// Control load2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tblInformationRequisitions;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load2;
         
         /// <summary>
-        /// Control trWeek.
+        /// Control gridBondsRequisitions.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trWeek;
+        protected global::System.Web.UI.WebControls.Repeater gridBondsRequisitions;
         
         /// <summary>
-        /// Control calDateSupport.
+        /// Control hdfguid.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker calDateSupport;
+        protected global::System.Web.UI.WebControls.HiddenField hdfguid;
         
         /// <summary>
-        /// Control repeater_fechas_Soporte.
+        /// Control hdnMontoOriginal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeater_fechas_Soporte;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnMontoOriginal;
         
         /// <summary>
-        /// Control lblmonto_total_autorizadp.
+        /// Control hdnauthorization_total_amount.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblmonto_total_autorizadp;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnauthorization_total_amount;
         
         /// <summary>
-        /// Control div_filtro_empleados.
+        /// Control hdnauthorization_total_bonds.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_filtro_empleados;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnauthorization_total_bonds;
         
         /// <summary>
-        /// Control txtfilterempleado.
+        /// Control hdnEmployeeNumber.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtfilterempleado;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnEmployeeNumber;
         
         /// <summary>
-        /// Control lnksearch.
+        /// Control hdnid_tipo_bono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnksearch;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnid_tipo_bono;
+        
+        /// <summary>
+        /// Control hdnIdRequestBond.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnIdRequestBond;
+        
+        /// <summary>
+        /// Control btnprocessrequest.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnprocessrequest;
+        
+        /// <summary>
+        /// Control btnviewrequest.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnviewrequest;
+        
+        /// <summary>
+        /// Control lnkdescargas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button lnkdescargas;
+        
+        /// <summary>
+        /// Control UpdatePanel2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        
+        /// <summary>
+        /// Control load_modal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load_modal;
+        
+        /// <summary>
+        /// Control txtRequisitionNumber.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtRequisitionNumber;
+        
+        /// <summary>
+        /// Control txtRequisitionDate.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtRequisitionDate;
+        
+        /// <summary>
+        /// Control txtBondType.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtBondType;
+        
+        /// <summary>
+        /// Control txtEmployeeName.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtEmployeeName;
+        
+        /// <summary>
+        /// Control trInformationImplementations.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trInformationImplementations;
         
         /// <summary>
         /// Control trFolioPMTracker.
@@ -136,16 +226,7 @@ namespace presentacion.Pages.Compensaciones {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPMTrackerNumberImplementations;
-        
-        /// <summary>
-        /// Control lnksearchpmTracker.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnksearchpmTracker;
+        protected global::System.Web.UI.WebControls.Label txtPMTrackerNumberImplementations;
         
         /// <summary>
         /// Control trProjectName.
@@ -163,7 +244,7 @@ namespace presentacion.Pages.Compensaciones {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProjectNameImplementations;
+        protected global::System.Web.UI.WebControls.Label txtProjectNameImplementations;
         
         /// <summary>
         /// Control trCustomerName.
@@ -181,7 +262,7 @@ namespace presentacion.Pages.Compensaciones {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCustomerNameImplementations;
+        protected global::System.Web.UI.WebControls.Label txtCustomerNameImplementations;
         
         /// <summary>
         /// Control trNumberHours.
@@ -199,7 +280,61 @@ namespace presentacion.Pages.Compensaciones {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumberHoursImplementations;
+        protected global::System.Web.UI.WebControls.Label txtNumberHoursImplementations;
+        
+        /// <summary>
+        /// Control txtPeriodDateOf.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtPeriodDateOf;
+        
+        /// <summary>
+        /// Control txtPeriodDateTo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker txtPeriodDateTo;
+        
+        /// <summary>
+        /// Control trInformationSupport.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trInformationSupport;
+        
+        /// <summary>
+        /// Control txtWeekSupport.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtWeekSupport;
+        
+        /// <summary>
+        /// Control txtMonthSupport.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtMonthSupport;
+        
+        /// <summary>
+        /// Control txtYearSupport.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label txtYearSupport;
         
         /// <summary>
         /// Control trAuthorizationAmount.
@@ -247,87 +382,6 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl amount_load;
         
         /// <summary>
-        /// Control tblMonthSelect.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tblMonthSelect;
-        
-        /// <summary>
-        /// Control lblTitleMonth.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitleMonth;
-        
-        /// <summary>
-        /// Control cbInitialMonth.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cbInitialMonth;
-        
-        /// <summary>
-        /// Control cbInitialYear.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cbInitialYear;
-        
-        /// <summary>
-        /// Control trFinalizeMonth.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trFinalizeMonth;
-        
-        /// <summary>
-        /// Control cbFinalizeMonth.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cbFinalizeMonth;
-        
-        /// <summary>
-        /// Control cbFinalizeYear.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cbFinalizeYear;
-        
-        /// <summary>
-        /// Control txtPeriodDateOf.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker txtPeriodDateOf;
-        
-        /// <summary>
-        /// Control txtPeriodDateTo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker txtPeriodDateTo;
-        
-        /// <summary>
         /// Control txtCC_Emp.
         /// </summary>
         /// <remarks>
@@ -346,15 +400,6 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.WebControls.TextBox txtCC_Cargo;
         
         /// <summary>
-        /// Control lnksearchcc.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnksearchcc;
-        
-        /// <summary>
         /// Control txtComments.
         /// </summary>
         /// <remarks>
@@ -364,319 +409,31 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.WebControls.TextBox txtComments;
         
         /// <summary>
-        /// Control lnkadjuntarfiles.
+        /// Control tdAuthorizationComments.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkadjuntarfiles;
+        protected global::System.Web.UI.WebControls.TextBox tdAuthorizationComments;
         
         /// <summary>
-        /// Control lnkloadsolicitar.
+        /// Control lnkrechazarsolicitud.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkloadsolicitar;
+        protected global::System.Web.UI.WebControls.LinkButton lnkrechazarsolicitud;
         
         /// <summary>
-        /// Control lnksolicitar.
+        /// Control lnkautorizar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnksolicitar;
-        
-        /// <summary>
-        /// Control lnkcancelar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkcancelar;
-        
-        /// <summary>
-        /// Control trGridRequisitions.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trGridRequisitions;
-        
-        /// <summary>
-        /// Control load3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl load3;
-        
-        /// <summary>
-        /// Control gridBondsRequisitions.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater gridBondsRequisitions;
-        
-        /// <summary>
-        /// Control repeat_proyectos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeat_proyectos;
-        
-        /// <summary>
-        /// Control repeater_empleados.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeater_empleados;
-        
-        /// <summary>
-        /// Control repetaer_cc.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repetaer_cc;
-        
-        /// <summary>
-        /// Control hdfguid.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdfguid;
-        
-        /// <summary>
-        /// Control hdndesc_cc.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdndesc_cc;
-        
-        /// <summary>
-        /// Control hdnfolio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnfolio;
-        
-        /// <summary>
-        /// Control hdnproyecto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnproyecto;
-        
-        /// <summary>
-        /// Control hdncliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdncliente;
-        
-        /// <summary>
-        /// Control hdnAuthorizationAmount.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnAuthorizationAmount;
-        
-        /// <summary>
-        /// Control hdnValidateAmount.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnValidateAmount;
-        
-        /// <summary>
-        /// Control hdnMontoOriginal.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnMontoOriginal;
-        
-        /// <summary>
-        /// Control hdnauthorization_total_amount.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnauthorization_total_amount;
-        
-        /// <summary>
-        /// Control hdnauthorization_total_bonds.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnauthorization_total_bonds;
-        
-        /// <summary>
-        /// Control hdnIdPeriodicity.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnIdPeriodicity;
-        
-        /// <summary>
-        /// Control hdnIdRequestBond.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnIdRequestBond;
-        
-        /// <summary>
-        /// Control hdnMonto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnMonto;
-        
-        /// <summary>
-        /// Control hdnInitialYear.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnInitialYear;
-        
-        /// <summary>
-        /// Control hdnFinalizeYear.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnFinalizeYear;
-        
-        /// <summary>
-        /// Control hdnCC_Cargo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnCC_Cargo;
-        
-        /// <summary>
-        /// Control hdnIdTypeBonds.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnIdTypeBonds;
-        
-        /// <summary>
-        /// Control hdnFilesRequeried.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnFilesRequeried;
-        
-        /// <summary>
-        /// Control hdnSubio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnSubio;
-        
-        /// <summary>
-        /// Control hdnEmployeeNumber.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnEmployeeNumber;
-        
-        /// <summary>
-        /// Control btncargarempleado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btncargarempleado;
-        
-        /// <summary>
-        /// Control lnkcc.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lnkcc;
-        
-        /// <summary>
-        /// Control lnkproyecto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lnkproyecto;
-        
-        /// <summary>
-        /// Control lnkdescargas.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lnkdescargas;
-        
-        /// <summary>
-        /// Control btnviewrequest.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnviewrequest;
+        protected global::System.Web.UI.WebControls.LinkButton lnkautorizar;
         
         /// <summary>
         /// Control UpdatePanel1.

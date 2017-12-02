@@ -47,8 +47,8 @@ namespace presentacion.Pages.Compensaciones
         {
             amount_correct.Visible = false;
             amount_error.Visible = false;
-            hdnIdRequestBond.Value = "";
             txtAuthorizationAmount.BorderColor = System.Drawing.Color.Silver;
+            hdnIdRequestBond.Value = "";
             hdndesc_cc.Value = "";
             hdnfolio.Value = "";
             hdnproyecto.Value = "";
@@ -413,7 +413,7 @@ namespace presentacion.Pages.Compensaciones
             {
                 int? id_immediate_boss = null;
                 id_immediate_boss = Convert.ToInt32(Session["num_empleado"]);
-                if (Convert.ToInt32(Session["id_perfil"]) == 1)//administrador
+                if (Convert.ToInt32(Session["id_profile"]) == (int)enumerators.profiles_compensations.administrador)//administrador
                 {
                     id_immediate_boss = null;
                 }
@@ -464,7 +464,7 @@ namespace presentacion.Pages.Compensaciones
                     {
                         if (hdnCC_Cargo.Value != txtCC_Cargo.Text)
                         {
-                            txtCC_Cargo.Text = hdnCC_Cargo.Value;
+                            txtCC_Cargo.Text = txtCC_Emp.Text;
                         }
                     }
 
@@ -729,6 +729,7 @@ namespace presentacion.Pages.Compensaciones
                 file.path = path.Replace(@"\", "/");
                 file.file_name = file_name;
                 file.size = size;
+                file.date_attach = DateTime.Now;
                 file.content_type = content_type;
                 list.Add(file);
                 Session[hdfguid.Value + "list_documentos"] = list;
@@ -792,6 +793,17 @@ namespace presentacion.Pages.Compensaciones
             }
         }
 
+        /// <summary>
+        /// Desbloquea el hilo actual
+        /// </summary>
+        private void UnBlockUI()
+        {
+            load.Style["display"] = "none";
+            load2.Style["display"] = "none";
+            load3.Style["display"] = "none";
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "UnBlockUI();", true);
+        }
+
         private void ModalShow(string modalname)
         {
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),
@@ -812,6 +824,16 @@ namespace presentacion.Pages.Compensaciones
             {
                 string usuario = Session["usuario"] as string;
                 hdfguid.Value = Guid.NewGuid().ToString();
+                BonosCOM bonos = new BonosCOM();
+                DataTable dtValidateUser = bonos.sp_Validate_User(usuario).Tables[0];
+                if (dtValidateUser.Rows.Count > 0)
+                {
+                    Session["id_profile"] = Convert.ToInt32(dtValidateUser.Rows[0]["id_profile"]);
+                }
+                else
+                {
+                    Session["id_profile"] = 0;
+                }
                 AsyncUpload1.FileUploaded += new Telerik.Web.UI.FileUploadedEventHandler(AsyncUpload1_FileUploaded);
                 CargarTiposBonos(usuario.ToUpper());
                 ClearFields();
@@ -835,7 +857,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -861,7 +883,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -902,7 +924,7 @@ namespace presentacion.Pages.Compensaciones
                         correct = false;
                         txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");
                         Toast.Error("Ya se le ha otorgado el monto completo de  " + monto_roiginal.ToString("C2") + " correspondiente a este periodo.", this);
-                        txtAuthorizationAmount.Focus();
+                       
                         txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
                         txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
                     }
@@ -911,9 +933,9 @@ namespace presentacion.Pages.Compensaciones
                         correct = false;
                         txtAuthorizationAmount.Text = Convert.ToDecimal("0.00").ToString("C2");// Direfencia.ToString("C2");
                         Toast.Info("Solo tiene un monto disponible " + Direfencia.ToString("C2") + " de un total de " + monto_roiginal.ToString("C2"),"Mensaje del sistema.", this);
-                        txtAuthorizationAmount.Focus();
+                        
                         txtAuthorizationAmount.BorderStyle = BorderStyle.Solid;
-                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Green;
+                        txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
                     }
                 }
                 if (cbBonds_Types.SelectedValue == "1")
@@ -960,7 +982,7 @@ namespace presentacion.Pages.Compensaciones
                 txtAuthorizationAmount.Text = "";
                 Toast.Info("Seleccione un empleado", "Mensaje del sistema", this);
             }
-            amount_load.Style["display"] = "none"; 
+            amount_load.Style["display"]="none"; 
             InitTables();
         }
 
@@ -1233,6 +1255,10 @@ namespace presentacion.Pages.Compensaciones
                     {
                         LoadBondsRequests();
                     }
+
+                    amount_correct.Visible = false;
+                    amount_error.Visible = false;
+                    txtAuthorizationAmount.BorderColor = System.Drawing.Color.Silver;
                 }
             }
             catch (Exception ex)
@@ -1242,7 +1268,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load2.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1268,7 +1294,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1328,7 +1354,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1360,7 +1386,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1381,6 +1407,8 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
+                lnkguardaresultados.Visible = true;
+                lnkguardaresultadosload.Style["display"] = "none";
             }
         }
 
@@ -1462,6 +1490,8 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
+                lnkguardaresultados.Visible = true;
+                lnkguardaresultadosload.Style["display"] = "none";
             }
         }
 
@@ -1497,7 +1527,7 @@ namespace presentacion.Pages.Compensaciones
             string cc = hdnCC_Cargo.Value;
             txtCC_Cargo.Text = desc_cc;
             hdnCC_Cargo.Value = cc;
-            load.Style["display"] = "none";
+            UnBlockUI();
             InitTables();
         }
 
@@ -1507,8 +1537,11 @@ namespace presentacion.Pages.Compensaciones
             txtPMTrackerNumberImplementations.Text = hdnfolio.Value;
             txtProjectNameImplementations.Text = hdnproyecto.Value;
             txtCustomerNameImplementations.Text = hdncliente.Value;
-            load.Style["display"] = "none";
+            UnBlockUI();
             InitTables();
+            amount_correct.Visible = false;
+            amount_error.Visible = false;
+            txtAuthorizationAmount.BorderColor = System.Drawing.Color.Silver;
         }
 
         protected void lnksolicitar_Click(object sender, EventArgs e)
@@ -1597,7 +1630,6 @@ namespace presentacion.Pages.Compensaciones
                     decimal monto_total_autorizado = (string.IsNullOrEmpty(hdnauthorization_total_amount.Value) ? 0 : Convert.ToDecimal(hdnauthorization_total_amount.Value));
                     decimal Direfencia = (monto_roiginal - monto_total_autorizado);
 
-                   
                     if (Direfencia <= 0)
                     {
                         txtAuthorizationAmount.BorderColor = System.Drawing.Color.Red;
@@ -1696,6 +1728,9 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
+                lnksolicitar.Visible = true;
+                lnkloadsolicitar.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1712,9 +1747,21 @@ namespace presentacion.Pages.Compensaciones
                 string path = id_request > 0 ? @server + id_request.ToString() + "\\" + filename : path_local + filename;
                 if (File.Exists(@path))
                 {
-                    Response.ContentType = "doc/docx";
-                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(@path));
-                    Response.TransmitFile(@path);
+                    //Response.ContentType = "doc/docx";
+                    //Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(@path));
+                    //Response.TransmitFile(@path);
+                    //Response.End();
+                    // Limpiamos la salida
+                    Response.Clear();
+                    // Con esto le decimos al browser que la salida sera descargable
+                    Response.ContentType = "application/octet-stream";
+                    // esta linea es opcional, en donde podemos cambiar el nombre del fichero a descargar (para que sea diferente al original)
+                    Response.AddHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(@path));
+                    // Escribimos el fichero a enviar
+                    Response.WriteFile(@path);
+                    // volcamos el stream
+                    Response.Flush();
+                    // Enviamos todo el encabezado ahora
                     Response.End();
                 }
                 else
@@ -1730,7 +1777,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -1759,7 +1806,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load3.Style["display"] = "none";
+                UnBlockUI();
             }
         }
     }

@@ -158,7 +158,7 @@ namespace presentacion
                 }
                 // volcamos el stream
                 httpResponse.Flush();
-                httpResponse.End();
+                httpResponse.Close();
                 return "";
             }
             catch (Exception ex)

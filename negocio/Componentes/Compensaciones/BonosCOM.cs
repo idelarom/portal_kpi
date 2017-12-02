@@ -95,8 +95,8 @@ namespace negocio.Componentes.Compensaciones
             Datos data = new Datos();
             listparameters.Add(new SqlParameter() { ParameterName = "@id_bond_type", SqlDbType = SqlDbType.Int, Value = id_bond_type });
             listparameters.Add(new SqlParameter() { ParameterName = "@id_request_status", SqlDbType = SqlDbType.Int, Value = id_request_status });
-            listparameters.Add(new SqlParameter() { ParameterName = "@employee_number", SqlDbType = SqlDbType.Int, Value = id_request_bond });
-            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_bond", SqlDbType = SqlDbType.Int, Value = employee_number });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_bond", SqlDbType = SqlDbType.Int, Value = id_request_bond });
+            listparameters.Add(new SqlParameter() { ParameterName = "@employee_number", SqlDbType = SqlDbType.Int, Value = employee_number });
             listparameters.Add(new SqlParameter() { ParameterName = "@id_immediate_boss", SqlDbType = SqlDbType.Int, Value = id_immediate_boss });
             listparameters.Add(new SqlParameter() { ParameterName = "@period_date_of", SqlDbType = SqlDbType.Int, Value = period_date_of });
             listparameters.Add(new SqlParameter() { ParameterName = "@period_date_to", SqlDbType = SqlDbType.Int, Value = period_date_to });
@@ -149,6 +149,47 @@ namespace negocio.Componentes.Compensaciones
             return ds;
         }
 
+        public DataSet sp_GetConnextProjectsForFolio(string folio)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@folio", SqlDbType = SqlDbType.Int, Value = folio });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_GetConnextProjectsForFolio", listparameters, false, 6);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
+        public DataSet sp_Update_Request_Bond(requests_bonds bono)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@authorization_amount", SqlDbType = SqlDbType.Int, Value = bono.authorization_amount });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_status", SqlDbType = SqlDbType.Int, Value = bono.id_request_status });
+            listparameters.Add(new SqlParameter() { ParameterName = "@authorization_comments", SqlDbType = SqlDbType.Int, Value = bono.authorization_comments });
+            listparameters.Add(new SqlParameter() { ParameterName = "@modified_by", SqlDbType = SqlDbType.Int, Value = bono.modified_by });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_bond", SqlDbType = SqlDbType.Int, Value = bono.id_request_bond });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_Update_Request_Bond", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
+        
         public DataSet sp_GetConnextProjectsForLogin(string usuario, string nombre_proyecto)
         {
             DataSet ds = new DataSet();
@@ -166,9 +207,114 @@ namespace negocio.Componentes.Compensaciones
             }
             return ds;
         }
+        public DataSet sp_Validate_User(string usuario)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@login", SqlDbType = SqlDbType.Int, Value = usuario });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_system", SqlDbType = SqlDbType.Int, Value = 2 });
+            try
+            {
+                ds = data.enviar("sp_Validate_User", listparameters, false, 10);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+        public DataSet sp_GetRequests_Bonds_PaymentDatails()
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            try
+            {
+                ds = data.enviar("sp_GetRequests_Bonds_PaymentDatails", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
+        
+        public DataSet sp_Payment_Request_BondForEmployeeNumber(string paid_by, int employee_number, int id_comment_type_payment)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@paid_by", SqlDbType = SqlDbType.Int, Value = paid_by });
+            listparameters.Add(new SqlParameter() { ParameterName = "@employee_number", SqlDbType = SqlDbType.Int, Value = employee_number });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_comment_type_payment", SqlDbType = SqlDbType.Int, Value = id_comment_type_payment });
+            try
+            {
+                ds = data.enviar("sp_Payment_Request_BondForEmployeeNumber", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
+        public DataSet sp_Payment_Resquest_BondForID(decimal amount_paid, string observations, string paid_by, int id_request_bond)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@paid_by", SqlDbType = SqlDbType.Int, Value = paid_by });
+            listparameters.Add(new SqlParameter() { ParameterName = "@amount_paid", SqlDbType = SqlDbType.Int, Value = amount_paid });
+            listparameters.Add(new SqlParameter() { ParameterName = "@observations", SqlDbType = SqlDbType.Int, Value = observations });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_bond", SqlDbType = SqlDbType.Int, Value = id_request_bond });
+            try
+            {
+                ds = data.enviar("sp_Payment_Resquest_BondForID", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
+        public DataSet sp_GetRequests_Bonds_Payment()
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            try
+            {
+                ds = data.enviar("sp_GetRequests_Bonds_Payment", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
+        public DataSet sp_Get_Comments_Types_Payments()
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            try
+            {
+                ds = data.enviar("sp_Get_Comments_Types_Payments", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
 
 
-        public DataSet sp_GetEmployeesCompensationsForEmployeeNumberAndBondType(int employee_number, int id_bond_type,DateTime period_date_of)
+        public DataSet sp_GetEmployeesCompensationsForEmployeeNumberAndBondType(int employee_number, int id_bond_type,DateTime period_date_of,
+            int id_request_bond = 0)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> listparameters = new List<SqlParameter>();
@@ -176,6 +322,7 @@ namespace negocio.Componentes.Compensaciones
             listparameters.Add(new SqlParameter() { ParameterName = "@employee_number", SqlDbType = SqlDbType.Int, Value = employee_number });
             listparameters.Add(new SqlParameter() { ParameterName = "@id_bond_type", SqlDbType = SqlDbType.Int, Value = id_bond_type });
             listparameters.Add(new SqlParameter() { ParameterName = "@period_date_of", SqlDbType = SqlDbType.Int, Value = period_date_of });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_bond", SqlDbType = SqlDbType.Int, Value = id_request_bond });
             try
             {
                 ds = data.enviar("sp_GetEmployeesCompensationsForEmployeeNumberAndBondType", listparameters, false, 4);

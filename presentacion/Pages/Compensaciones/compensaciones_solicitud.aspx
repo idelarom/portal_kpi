@@ -1,17 +1,18 @@
 ﻿<%@ Page Title="Solicitud" Language="C#" MasterPageFile="~/Pages/MP/Global.Master" AutoEventWireup="true" CodeBehind="compensaciones_solicitud.aspx.cs" Inherits="presentacion.Pages.Compensaciones.compensaciones_solicitud" %>
-
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         function Init(value) {
             if ($.fn.dataTable.isDataTable(value)) {
                 table = $(value).DataTable();
+
             }
             else {
                 $(value).DataTable({
                     "paging": true,
                     "pageLength": 10,
-                    "lengthChange": false,
+                    "lengthChange": true,
                     "searching": true,
                     "ordering": true,
                     "info": true,
@@ -107,39 +108,47 @@
         , hwaccel: true // Whether to use hardware acceleration
         , position: 'absolute' // Element positioning
         };
-      function ConfirmLoadResultados(msg) {
+
+        function ConfirmLoadResultados(msg) {
             if (confirm(msg)) {
                 $("#<%= lnkguardaresultadosload.ClientID%>").show();
                 $("#<%= lnkguardaresultados.ClientID%>").hide();
                 return true;
-            } else {
+            }
+            else {
+                return false;
+            }
+        }
+        function ConfirmLoadSave(msg) {
+            if (confirm(msg)) {
+                $("#<%= lnkloadsolicitar.ClientID%>").show();
+                $("#<%= lnksolicitar.ClientID%>").hide();
+                return true;
+            }
+            else {
                 return false;
             }
         }
         function Load() {
-            $("#<%= load.ClientID%>").show();
+            <%-- $("#<%= load.ClientID%>").show();
         	var target = document.getElementById('<%= load.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+            var spinner = new Spinner(opts).spin(target);--%>
+            BlockUI();
             return true;
         }
         function Load2() {
-            $("#<%= load2.ClientID%>").show();
+            <%--$("#<%= load2.ClientID%>").show();
             var target = document.getElementById('<%= load2.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+            var spinner = new Spinner(opts).spin(target);--%>
+            BlockUI();
             return true;
         }
         function Load3() {
-            $("#<%= load3.ClientID%>").show();
+            <%--$("#<%= load3.ClientID%>").show();
         	var target = document.getElementById('<%= load3.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+            var spinner = new Spinner(opts).spin(target);--%>
+            BlockUI();
             return true;
-        }
-        function control_clear(control) {
-            var valor = control.value;
-
-            if (valor.length > 0) {
-                control.value = "";
-            }
         }
         function ValuesPMTracker(folio, proyecto, cliente) {
             var hdnfolio = document.getElementById('<%= hdnfolio.ClientID %>');
@@ -208,7 +217,7 @@
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Tipo de bono</strong></h5>
-                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true" onchange="Load2();"
+                                    <asp:DropDownList ID="cbBonds_Types" AutoPostBack="true" onchange="BlockUI();"
                                         OnSelectedIndexChanged="cbBonds_Types_SelectedIndexChanged" CssClass=" form-control" runat="server">
                                     </asp:DropDownList>
                                 </div>
@@ -276,7 +285,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Empleado</strong>
                                     </h5>
                                     <div class="input-group" runat="server" id="div_filtro_empleados">
@@ -328,7 +337,7 @@
                                 <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12" id="trAuthorizationAmount" runat="server">
                                     <h5><strong><i class="fa fa-money" aria-hidden="true"></i>&nbsp;Importe bono</strong></h5>
                                     <div class="input-group">
-                                        <asp:TextBox ID="txtAuthorizationAmount" onfocus="$(this).select();" onchange="LoadAmount();"  AutoPostBack="true"
+                                        <asp:TextBox ID="txtAuthorizationAmount"  onfocus="control_clear(this)" onchange="LoadAmount();"  AutoPostBack="true"
                                             OnTextChanged="txtAuthorizationAmount_TextChanged"
                                             CssClass=" form-control" runat="server"></asp:TextBox>
                                         <span id="amount_correct" visible="false" style="border-color:Green; color:Green;"  runat="server"  class="input-group-addon">
@@ -355,13 +364,13 @@
                                                     <h6><strong>
                                                         <asp:Label ID="lblTitleMonth" runat="server" Text="Mes:"></asp:Label></strong></h6>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-7">
                                                     <asp:DropDownList ID="cbInitialMonth" CssClass="form-control" AutoPostBack="true"
                                                         OnSelectedIndexChanged="cbInitialMonth_SelectedIndexChanged"
                                                         runat="server">
                                                     </asp:DropDownList>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-5">
                                                     <asp:DropDownList ID="cbInitialYear" CssClass="form-control" AutoPostBack="true"
                                                         runat="server">
                                                     </asp:DropDownList>
@@ -375,26 +384,28 @@
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <h6><strong>Mes final:</strong></h6>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-7">
                                                     <asp:DropDownList ID="cbFinalizeMonth" CssClass="form-control"
                                                         OnSelectedIndexChanged="cbInitialYear_SelectedIndexChanged" AutoPostBack="true"
                                                         runat="server">
                                                     </asp:DropDownList>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-5">
                                                     <asp:DropDownList ID="cbFinalizeYear" CssClass="form-control"
                                                         runat="server">
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
                                         </div>
+                                       
+                                    </div>
+                                    <div class="row"  style="padding: 5px;">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <br />
                                             <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                     <telerik:RadDatePicker ID="txtPeriodDateOf" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadDatePicker>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                     <telerik:RadDatePicker ID="txtPeriodDateTo" Width="100%" runat="server" Skin="Bootstrap"></telerik:RadDatePicker>
                                                 </div>
                                             </div>
@@ -432,14 +443,26 @@
                             <br />
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <asp:LinkButton ID="lnkadjuntarfiles" OnClick="lnkadjuntarfiles_Click" CssClass="btn btn-success btn-flat" runat="server">
+                                    <asp:LinkButton ID="lnkadjuntarfiles" OnClick="lnkadjuntarfiles_Click"
+                                        CssClass="btn btn-success btn-flat" runat="server">
                                         <i class="fa fa-file-archive-o" aria-hidden="true"></i>&nbsp;Adjuntar archivos</asp:LinkButton>
-                                    <asp:LinkButton ID="lnksolicitar" CssClass="btn btn-primary btn-flat" runat="server" OnClientClick="return confirm('¿Desea guardar esta solicitud?');"
+
+                                    <asp:LinkButton OnClientClick="return false;" ID="lnkloadsolicitar"
+                                         CssClass="btn btn-primary btn-flat" runat="server" Style="display: none;">
+                                            <i class="fa fa-refresh fa-spin fa-fw"></i>
+                                            <span class="sr-only">Loading...</span>&nbsp;Solicitando
+                                    </asp:LinkButton>
+
+                                    <asp:LinkButton ID="lnksolicitar" CssClass="btn btn-primary btn-flat" runat="server"
+                                        OnClientClick="return ConfirmLoadSave('¿Desea guardar esta solicitud?');"
                                         OnClick="lnksolicitar_Click">
                                          <i class="fa fa-bookmark" aria-hidden="true">
-
                                          </i>&nbsp;Solicitar</asp:LinkButton>
-                                    <asp:LinkButton ID="lnkcancelar" OnClick="lnkcancelar_Click" OnClientClick="return confirm('¿Desea cancelar la solicitud?');" CssClass="btn btn-danger btn-flat" runat="server">
+
+
+                                    <asp:LinkButton ID="lnkcancelar" OnClick="lnkcancelar_Click"
+                                        OnClientClick="return confirm('¿Desea cancelar la solicitud?');" CssClass="btn btn-danger btn-flat"
+                                        runat="server">
                                           <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancelar</asp:LinkButton>
                                 </div>
                             </div>
@@ -546,7 +569,7 @@
                                                 <asp:Repeater ID="repeat_proyectos" runat="server">
                                                     <ItemTemplate>
                                                         <tr>
-                                                            <td>
+                                                            <td style="text-align:center;">
                                                                 <a class="btn btn-primary btn-flat btn-xs"
                                                                     onclick='<%# "return ValuesPMTracker("+@""""+ Eval("folio").ToString()+@""""+@","""+ Eval("nombre_proyecto").ToString()+@""""+@","""+ Eval("nombre_cliente").ToString()+@""""+");" %>'>Seleccionar</a>
                                                             </td>
@@ -599,7 +622,7 @@
                                                 <asp:Repeater ID="repeater_empleados" runat="server">
                                                     <ItemTemplate>
                                                         <tr>
-                                                            <td>
+                                                            <td style="text-align:center;">
                                                                 <a class="btn btn-primary btn-flat btn-xs"
                                                                     onclick='<%# "return ValuesEmpleado("+@""""+ Eval("employee_number").ToString()+@""""+@","""+ Eval("full_name").ToString()+@""""+");" %>'>Seleccionar</a>
                                                             </td>
@@ -651,7 +674,7 @@
                                                 <asp:Repeater ID="repetaer_cc" runat="server">
                                                     <ItemTemplate>
                                                         <tr>
-                                                            <td>
+                                                            <td style="text-align:center;">
 
                                                                 <a class="btn btn-primary btn-flat btn-xs"
                                                                     onclick='<%# "return ValuesCC("+@""""+ Eval("CC").ToString()+@""""+@","""+ Eval("DESC_CC").ToString()+@""""+");" %>'>Seleccionar</a>
@@ -726,25 +749,27 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <br />
-                                    <asp:LinkButton OnClientClick="return false;" ID="lnkguardaresultadosload" CssClass=" pull-right btn btn-primary btn-flat btn-sm" runat="server" Style="display: none;">
+                                    <asp:LinkButton OnClientClick="return false;" ID="lnkguardaresultadosload" CssClass="btn btn-primary btn-flat pull-right" runat="server" Style="display: none;">
                                             <i class="fa fa-refresh fa-spin fa-fw"></i>
                                             <span class="sr-only">Loading...</span>&nbsp;Guardando
                                     </asp:LinkButton>
-                                    <asp:LinkButton ID="lnkguardaresultados" OnClientClick="return ConfirmLoadResultados('¿Desea guardar el resultado?');"
-                                        OnClick="lnkguardaresultados_Click" CssClass="btn btn-primary btn-flat btn-sm pull-right" runat="server">
+                                    <asp:LinkButton ID="lnkguardaresultados"
+                                        OnClientClick="return ConfirmLoadResultados('¿Desea guardar el resultado?');"
+                                        OnClick="lnkguardaresultados_Click" CssClass="btn btn-primary btn-flat pull-right" runat="server">
                                             Guardar documento&nbsp;<i class="fa fa-floppy-o" aria-hidden="true"></i>
                                     </asp:LinkButton>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="table table-responsive">
-                                        <table id="table_archivos" class=" table table-responsive table-bordered table-condensed" 
-                                            >
+                                        <table id="table_archivos" class=" table table-responsive table-bordered table-condensed"
+                                            style="font-size: 12px;">
                                             <thead>
                                                 <tr>
                                                     <th style="max-width: 10px; text-align: center;" scope="col"></th>
                                                     <th style="max-width: 10px; text-align: center;" scope="col"></th>
-                                                    <th style="min-width: 350px; text-align: left;" scope="col">Documento</th>
-                                                    <th style="min-width: 150px; text-align: left;" scope="col">Tamaño (megabytes)</th>
+                                                    <th style="min-width: 200px; text-align: left;" scope="col">Documento</th>
+                                                    <th style="min-width: 90px; text-align: center;" scope="col">Tamaño</th>
+                                                    <th style="min-width: 240px; text-align: left;" scope="col">Fecha de carga</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -752,25 +777,27 @@
                                                     <ItemTemplate>
                                                         <tr>
                                                             <td style="text-align: center;">
-                                                                <asp:LinkButton 
-                                                                    OnClientClick="return confirm('¿Desea eliminar este archivo de la solicitud?');" 
-                                                                    OnClick="lnkdeletefile_Click"  class="btn btn-primary btn-flat btn-xs"
-                                                                     ID="lnkdeletefile" runat="server"
+                                                                <asp:LinkButton
+                                                                    OnClientClick="return confirm('¿Desea eliminar este archivo de la solicitud?');"
+                                                                    OnClick="lnkdeletefile_Click" class="btn btn-primary btn-flat btn-xs"
+                                                                    ID="lnkdeletefile" runat="server"
                                                                     file_name='<%# Eval("file_name").ToString().Trim() %>'>
                                                                   Eliminar
                                                                 </asp:LinkButton>
                                                             </td>
                                                             <td style="text-align: center;">
-                                                                <a style="cursor:pointer;" class="btn btn-success btn-flat btn-xs" 
-                                                                    onclick='<%#"return Download("+@""""+ Eval("file_name").ToString().Replace(@"\","/").Trim()+@""""+");" %>'>
-                                                                   Descargar</a>
-                                                               
+                                                                <a style="cursor: pointer;" class="btn btn-success btn-flat btn-xs"
+                                                                    onclick='<%#"return Download("+@""""+ Eval("file_name").ToString().Replace(@"\","/").Trim()+@""""+");" %>'>Descargar</a>
+
                                                             </td>
                                                             <td>
                                                                 <%# Eval("file_name").ToString().Trim() %>
                                                             </td>
-                                                            <td>
+                                                            <td style="text-align: center;">
                                                                 <%# Math.Round((Convert.ToDecimal(Eval("size"))/1000000),2).ToString()+" mb" %>
+                                                            </td>
+                                                            <td>
+                                                                <%# Convert.ToDateTime(Eval("date_attach")).ToString("dddd dd MMMM, yyyy h:mm:ss tt", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX")) %>
                                                             </td>
                                                         </tr>
                                                     </ItemTemplate>
@@ -779,7 +806,7 @@
                                         </table>
                                     </div>
                                 </div>
-            <asp:HiddenField ID="hdfpath" runat="server" />
+                                <asp:HiddenField ID="hdfpath" runat="server" />
                             </div>
                         </div>
                         <div class="modal-footer">
