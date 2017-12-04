@@ -704,6 +704,8 @@ namespace presentacion.Pages.Compensaciones
             {
                 Toast.Info("El porcentaje extra debe de ser mayor o igual al 100%", "Aviso del sistema", this);
             }
+
+            UnBlockUI();
         }
 
         protected void btnValidachinchkSelected_Click(object sender, EventArgs e)
@@ -762,6 +764,7 @@ namespace presentacion.Pages.Compensaciones
                     }
                 }
             }
+            UnBlockUI();
         }
 
         protected void lnknuevoEmpleado_Click(object sender, EventArgs e)
@@ -769,6 +772,7 @@ namespace presentacion.Pages.Compensaciones
             LoadBondsTypes();
             this.tblemployees.Visible = false;
             this.tblInformationEmployeeBonds.Visible = true;
+            UnBlockUI();
         }
 
         protected void lnkguardarconfigbond_Click(object sender, EventArgs e)
@@ -844,7 +848,8 @@ namespace presentacion.Pages.Compensaciones
         catch(Exception ex){
                 Toast.Error("Error al guardar solicitud: " + ex.Message, this);
             }
-}
+            UnBlockUI();
+        }
 
         protected void lnkcancelarconfigbond_Click(object sender, EventArgs e)
         {
@@ -857,6 +862,7 @@ namespace presentacion.Pages.Compensaciones
             this.tblemployees.Visible = false;
             this.tblInformationEmployeeBonds.Visible = false;
             this.tblInformationEmployeeBondsAuto.Visible = true;
+            UnBlockUI();
         }
 
         protected void btnConfiguracionAuto_Click(object sender, EventArgs e)
@@ -890,6 +896,7 @@ namespace presentacion.Pages.Compensaciones
                     this.tblInformationEmployeeBondsAuto.Visible = true;
                 }
             }
+            UnBlockUI();
         }
 
         protected void lnksearchCCC_Click(object sender, EventArgs e)
@@ -963,6 +970,7 @@ namespace presentacion.Pages.Compensaciones
 
             }
 
+            UnBlockUI();
         }
 
         protected void btneliminar_Click(object sender, EventArgs e)
@@ -1018,7 +1026,8 @@ namespace presentacion.Pages.Compensaciones
             else
             {
                 Toast.Warning("No se puede mostrar el boton de cancelar por que la solicitud " + Id_request_bond + " no tiene alguno de los estatus requeridos para cancelar que son Solicitada y Autorizada", "", this);
-            }    
+            }
+            UnBlockUI();
         }
 
         protected void ddlOcurrencias_SelectedIndexChanged(object sender, EventArgs e)
@@ -1070,6 +1079,7 @@ namespace presentacion.Pages.Compensaciones
                 ddlAnoFinal.SelectedValue = Convert.ToInt32(PartFecha[2]).ToString();
                 hdfFechaFinalAuto.Value = FechaFinal;
             }
+            UnBlockUI();
         }
 
         protected void lnksolicitaryguardar_Click(object sender, EventArgs e)
@@ -1270,6 +1280,7 @@ namespace presentacion.Pages.Compensaciones
                 }
             }
 
+            UnBlockUI();
         }
 
         protected void txtMonto_TextChanged(object sender, EventArgs e)
@@ -1286,6 +1297,7 @@ namespace presentacion.Pages.Compensaciones
                 Toast.Warning("El Monto debe ser mayor a cero ", "Mensaje del sistema", this);
             }
 
+            UnBlockUI();
         }
 
         protected void lnkcancelarSol_Click(object sender, EventArgs e)
@@ -1389,6 +1401,7 @@ namespace presentacion.Pages.Compensaciones
                     Toast.Warning("No se puede cancelar la solicitud porque no tiene el estatus de Solicitada o Autorizada ", "Aviso del sistema    ", this);
                 }
             }
+            UnBlockUI();
         }
 
         protected void btnDetalle_Click(object sender, EventArgs e)
@@ -1399,6 +1412,7 @@ namespace presentacion.Pages.Compensaciones
             repeater_Detalle_sol.DataSource = dt;
             repeater_Detalle_sol.DataBind();
             ModalShow("#modal_Detalle_sol");
+            UnBlockUI();
 
         }
     }
