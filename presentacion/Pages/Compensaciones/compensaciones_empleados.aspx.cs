@@ -27,12 +27,30 @@ namespace presentacion.Pages.Compensaciones
                              "ModalCloseGlobal('" + modalname + "');", true);
         }
 
+        protected void Page_Init(object sender, EventArgs e)
+        {
+
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), " BlockUI();", true);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+
                 Cargar_empleados();
             }
+        }
+
+        /// <summary>
+        /// Desbloquea el hilo actual
+        /// </summary>
+        private void UnBlockUI()
+        {
+            load.Style["display"] = "none";
+            load2.Style["display"] = "none";
+            load3.Style["display"] = "none";
+            ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "UnBlockUI();", true);
         }
 
         private void InitTables()
@@ -59,6 +77,8 @@ namespace presentacion.Pages.Compensaciones
             DataTable dt = Cargar_Empleados_compensaciones(null, null, 1);
             repeat_employees_compensations.DataSource = dt;
             repeat_employees_compensations.DataBind();
+
+            ScriptManager.RegisterClientScriptBlock(this, GetType(), Guid.NewGuid().ToString(), " BlockUI();", true);
             InitTables();
         }
 
@@ -486,7 +506,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
@@ -515,6 +535,7 @@ namespace presentacion.Pages.Compensaciones
             LoadBondsTypes();
             this.tblemployees.Visible = false;
             this.tblInformationEmployeeBonds.Visible = true;
+            UnBlockUI();
         }
 
         protected void repeater_Bonds_Definition_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -885,7 +906,7 @@ namespace presentacion.Pages.Compensaciones
             finally
             {
                 InitTables();
-                load.Style["display"] = "none";
+                UnBlockUI();
             }
         }
 
