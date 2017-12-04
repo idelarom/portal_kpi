@@ -9,7 +9,7 @@
             else {
                 $(value).DataTable({
                     "paging": true,
-                    "pageLength": 10,
+                    "pageLength": 100,
                     "lengthChange": true,
                     "searching": true,
                     "ordering": true,
@@ -184,7 +184,7 @@
                                                             </td>
                                                             <td style="text-align:center;">
                                                                 <asp:CheckBox ID="cbxseleccionar" Text="Seleccionar" runat="server"
-                                                                     employee_number=' <%# Eval("employee_number") %>' />
+                                                                     employee_number='<%# Eval("employee_number") %>' />
                                                             </td>
                                                             <td>
                                                                 <%# System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(Eval("full_name").ToString().ToLower()) %>
@@ -216,6 +216,7 @@
                 </div>
             </div>
             <asp:HiddenField ID="hdf_numemployee" runat="server" />
+            <asp:HiddenField ID="hdfguid" runat="server" />
             <asp:Button ID="btnview" style="display:none;" OnClick="btnview_Click" runat="server" Text="Button" />
             <asp:Button ID="btncheckedchanged" style="display:none;" OnClick="btncheckedchanged_Click" runat="server" Text="Button" />
         </ContentTemplate>

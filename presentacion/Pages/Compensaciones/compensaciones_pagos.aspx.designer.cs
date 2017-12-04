@@ -85,6 +85,15 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.WebControls.HiddenField hdf_numemployee;
         
         /// <summary>
+        /// Control hdfguid.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdfguid;
+        
+        /// <summary>
         /// Control btnview.
         /// </summary>
         /// <remarks>
