@@ -308,6 +308,7 @@
     <Content Include="Pages\Compensaciones\compensaciones_autorizacion.aspx" />
     <Content Include="Pages\Compensaciones\compensaciones_empleados.aspx" />
     <Content Include="Pages\Compensaciones\compensaciones_pagos.aspx" />
+    <Content Include="Pages\Compensaciones\compensaciones_reporte.aspx" />
     <Content Include="Pages\Compensaciones\compensaciones_solicitud.aspx" />
     <Content Include="Pages\Proyectos\mis_proyectos.aspx" />
     <Content Include="Pages\Proyectos\proyectos_dashboard.aspx" />
@@ -1507,6 +1508,13 @@
     </Compile>
     <Compile Include="Pages\Compensaciones\compensaciones_pagos.aspx.designer.cs">
       <DependentUpon>compensaciones_pagos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Compensaciones\compensaciones_reporte.aspx.cs">
+      <DependentUpon>compensaciones_reporte.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Compensaciones\compensaciones_reporte.aspx.designer.cs">
+      <DependentUpon>compensaciones_reporte.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Compensaciones\compensaciones_solicitud.aspx.cs">
       <DependentUpon>compensaciones_solicitud.aspx</DependentUpon>
