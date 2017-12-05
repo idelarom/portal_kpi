@@ -45,7 +45,7 @@
                     }
                 });
             }
-
+            UnBlockUI();
         }
         function InitPagging(value) {
             if ($.fn.dataTable.isDataTable(value)) {
@@ -110,22 +110,16 @@
         , hwaccel: true // Whether to use hardware acceleration
         , position: 'absolute' // Element positioning
         };
-         function Load() {
-            $("#<%= load.ClientID%>").show();
-        	var target = document.getElementById('<%= load.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+        function Load() {
+            BlockUI();
             return true;
-         }
-         function Load2() {
-            $("#<%= load2.ClientID%>").show();
-            var target = document.getElementById('<%= load2.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+        }
+        function Load2() {
+            BlockUI();
             return true;
         }
         function Load3() {
-            $("#<%= load3.ClientID%>").show();
-        	var target = document.getElementById('<%= load3.ClientID %>');
-            var spinner = new Spinner(opts).spin(target);
+            BlockUI();
             return true;
         }
        function Empleado_configuracionClick(numEmpleado) {
@@ -260,9 +254,9 @@
                                                 <tr style="font-size: 12px;">
                                                     <th style="width: 20px; text-align: center;" scope="col"></th>
                                                     <th style="min-width: 15px; text-align: left;" scope="col">Numero de empleado</th>
-                                                    <th style="min-width: 100px; text-align: left;" scope="col">Nombre</th>
-                                                    <th style="min-width: 100px; text-align: left;" scope="col">Jefe inmediato</th>
-                                                    <th style="min-width: 12px; text-align: left;" scope="col">Activo</th>
+                                                    <th style="min-width: 200px; text-align: left;" scope="col">Nombre</th>
+                                                    <th style="min-width: 200px; text-align: left;" scope="col">Jefe inmediato</th>
+                                                    <th style="min-width: 12px; text-align: center;" scope="col">Activo</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -278,7 +272,7 @@
                                                             <td style="text-align: left;"><%# Eval("NumEmpleado") %></td>
                                                             <td style="text-align: left;"><%# Eval("NomFull") %></td>
                                                             <td style="text-align: left;"><%# Eval("JefeInmediato") %></td> 
-                                                            <td>                                                                  
+                                                            <td style="text-align:center;">                                                                  
                                                                  <asp:CheckBox ID="chkIncludePdf" runat="server" Checked='<%# Convert.ToBoolean(Eval("Enabled"))%>' Enabled="false" />
                                                             </td>
                                                         </tr>
@@ -362,51 +356,51 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="table table-responsive">
-                                        <table class="dvv table table-responsive table-condensed">
+                                        <table class="dvv table table-responsive table-condensed table-responsive">
                                             <thead>
                                                 <tr style="font-size: 12px;">
                                                     <th style="width: 20px; text-align: center;" scope="col"></th>
-                                                    <th style="min-width: 15px; text-align: left; display:none" scope="col">id_bond_type</th>
+                                                    <th style="min-width: 15px; text-align: left; display: none" scope="col">id_bond_type</th>
                                                     <th style="min-width: 15px; text-align: left;" scope="col">Tipo de bono</th>
                                                     <th style="min-width: 100px; text-align: left;" scope="col">Monto</th>
                                                     <th style="min-width: 100px; text-align: left;" scope="col">Porcentaje maximo para pago</th>
                                                     <th style="min-width: 12px; text-align: left;" scope="col">Monto maximo</th>
-                                                     <th style="min-width: 12px; text-align: left;" scope="col">Periodicidad</th>
-                                                    <th style="min-width: 15px; text-align: left; display:none" scope="col" visible="false">amount_required</th>
-                                                    <th style="min-width: 15px; text-align: left; display:none" scope="col" visible="false">periodicity_required</th>
+                                                    <th style="min-width: 12px; text-align: left;" scope="col">Periodicidad</th>
+                                                    <th style="min-width: 15px; text-align: left; display: none" scope="col" visible="false">amount_required</th>
+                                                    <th style="min-width: 15px; text-align: left; display: none" scope="col" visible="false">periodicity_required</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <asp:Repeater ID="repeater_Bonds_Definition" runat="server" OnItemDataBound="repeater_Bonds_Definition_ItemDataBound">
                                                     <ItemTemplate>
                                                         <tr style="font-size: 12px">
-                                                            <td>                                                                  
-                                                                 <asp:CheckBox ID="chkSelected" onclick="OnSelect()" runat="server" />
+                                                            <td>
+                                                                <asp:CheckBox ID="chkSelected" onclick="OnSelect()" runat="server" />
                                                             </td>
-                                                            
-                                                             <td style="display:none">
+
+                                                            <td style="display: none">
                                                                 <asp:Label ID="lblid_bond_type" runat="server" Text='<%# Eval("id_bond_type") %>'></asp:Label>
                                                             </td>
                                                             <td>
-                                                              <asp:Literal ID="lbtnAuto" runat="server"></asp:Literal>                
+                                                                <asp:Literal ID="lbtnAuto" runat="server"></asp:Literal>
                                                             </td>
                                                             <td>
                                                                 <asp:TextBox ID="txtAmount" runat="server"></asp:TextBox>
                                                             </td>
                                                             <td>
-                                                                <asp:TextBox ID="txtPorcentaje" runat="server" OnTextChanged="txtPorcentaje_TextChanged" AutoPostBack ="true"></asp:TextBox>
+                                                                <asp:TextBox ID="txtPorcentaje" runat="server" OnTextChanged="txtPorcentaje_TextChanged" AutoPostBack="true"></asp:TextBox>
                                                             </td>
                                                             <td>
                                                                 <asp:TextBox ID="txtAmountMax" runat="server"></asp:TextBox>
-                                                            </td> 
+                                                            </td>
                                                             <td>
                                                                 <asp:DropDownList ID="ddlPeriodicity" runat="server"></asp:DropDownList>
                                                             </td>
-                                                            <td  style="display:none">
+                                                            <td style="display: none">
                                                                 <asp:Label ID="lblamount_required" runat="server" Text='<%# Eval("amount_required") %>'></asp:Label>
-                                                            </td> 
-                                                            <td  style="display:none">
-                                                                 <asp:Label ID="lblperiodicity_required" runat="server" Text='<%# Eval("periodicity_required") %>'></asp:Label>
+                                                            </td>
+                                                            <td style="display: none">
+                                                                <asp:Label ID="lblperiodicity_required" runat="server" Text='<%# Eval("periodicity_required") %>'></asp:Label>
                                                             </td>
                                                         </tr>
                                                     </ItemTemplate>
@@ -578,7 +572,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="table table-responsive">
-                                        <table class="dvv table table-responsive table-condensed">
+                                        <table class="dvv table table-responsive table-condensed table-bordered">
                                             <thead>
                                                 <tr style="font-size: 12px;">
                                                     <th style="width: 20px; text-align: center;" scope="col"></th>

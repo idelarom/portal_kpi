@@ -176,11 +176,19 @@ namespace presentacion.Pages.Compensaciones
 
         protected void cbxseleccionartodo_CheckedChanged(object sender, EventArgs e)
         {
+            Session[hdfguid.Value + "list_bonds"] = null;
+            List<int> list_id = new List<int>();
             foreach (RepeaterItem item in gridBondsPayments.Items)
             {
                 CheckBox cbx = item.FindControl("cbxseleccionar") as CheckBox;
                 cbx.Checked = cbxseleccionartodo.Checked;
+                int employee_number = Convert.ToInt32(cbx.Attributes["employee_number"]);
+                if (cbxseleccionartodo.Checked)
+                {
+                    list_id.Add(employee_number);
+                }
             }
+            Session[hdfguid.Value + "list_bonds"] = list_id;
             InitTables();
         }
 
