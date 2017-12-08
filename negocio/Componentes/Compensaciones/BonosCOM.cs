@@ -367,7 +367,56 @@ namespace negocio.Componentes.Compensaciones
             }
             return ds;
         }
-        
+
+        //Bonos Uautomaticos
+
+        public DataSet sp_GetRequests_Bonds_Automatics(int? id_bond_type = null,
+           int? id_request_status = null, int? id_request_bond = null, int? employee_number = null,
+           int? id_immediate_boss = null, DateTime? period_date_of = null, DateTime? period_date_to = null)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_bond_type", SqlDbType = SqlDbType.Int, Value = id_bond_type });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_status", SqlDbType = SqlDbType.Int, Value = id_request_status });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_bond", SqlDbType = SqlDbType.Int, Value = id_request_bond });
+            listparameters.Add(new SqlParameter() { ParameterName = "@employee_number", SqlDbType = SqlDbType.Int, Value = employee_number });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_immediate_boss", SqlDbType = SqlDbType.Int, Value = id_immediate_boss });
+            listparameters.Add(new SqlParameter() { ParameterName = "@period_date_of", SqlDbType = SqlDbType.Int, Value = period_date_of });
+            listparameters.Add(new SqlParameter() { ParameterName = "@period_date_to", SqlDbType = SqlDbType.Int, Value = period_date_to });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_GetRequests_Bonds_Automatics", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
+
+        public DataSet sp_Update_Request_Bond_Automatic(requests_bonds bono)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> listparameters = new List<SqlParameter>();
+            Datos data = new Datos();
+            listparameters.Add(new SqlParameter() { ParameterName = "@authorization_amount", SqlDbType = SqlDbType.Int, Value = bono.authorization_amount });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_status", SqlDbType = SqlDbType.Int, Value = bono.id_request_status });
+            listparameters.Add(new SqlParameter() { ParameterName = "@authorization_comments", SqlDbType = SqlDbType.Int, Value = bono.authorization_comments });
+            listparameters.Add(new SqlParameter() { ParameterName = "@modified_by", SqlDbType = SqlDbType.Int, Value = bono.modified_by });
+            listparameters.Add(new SqlParameter() { ParameterName = "@id_request_bond", SqlDbType = SqlDbType.Int, Value = bono.id_request_bond });
+            try
+            {
+                //ds = data.datos_Clientes(listparameters);
+                ds = data.enviar("sp_Update_Request_Bond_Automatic", listparameters, false, 4);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ds;
+        }
 
     }
 }
