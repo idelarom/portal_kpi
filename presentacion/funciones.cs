@@ -20,6 +20,7 @@ namespace presentacion
     public class funciones
     {
 
+        
         public static bool emailIsValid(string email)
         {
             string expresion;

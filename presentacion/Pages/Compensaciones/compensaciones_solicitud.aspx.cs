@@ -804,6 +804,7 @@ namespace presentacion.Pages.Compensaciones
             ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(), "UnBlockUI();", true);
         }
 
+
         private void ModalShow(string modalname)
         {
             System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), Guid.NewGuid().ToString(),

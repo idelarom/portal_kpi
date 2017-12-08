@@ -1,11 +1,18 @@
 ﻿using negocio.Componentes;
 using Newtonsoft.Json;
+using datos.Model;
+using datos.NAVISION;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
+using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 
 namespace presentacion.Pages.MP
 {
@@ -13,7 +20,7 @@ namespace presentacion.Pages.MP
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null)
+            if (Session["usuario"] == null && Request.QueryString["u"] == null)
             {
                 Session.Clear();
                 Session.RemoveAll();
@@ -21,11 +28,260 @@ namespace presentacion.Pages.MP
                 Response.Redirect("../../Pages/Common/login.aspx");
             }
         }
+
+        private Boolean Login(string usuario, string password)
+        {
+            try
+            {
+                bool retur = true;
+                if (usuario == "")
+                {
+                    Toast.Info("Ingrese Usuario", "Mensaje del Sistema", this.Page);
+                    retur = false;
+                }
+                else if (password == "")
+                {
+                    Toast.Info("Ingrese Contraseña", "Mensaje del Sistema", this.Page);
+                    retur = false;
+                }
+                else if (!LoginActive(usuario, password, "migesa.net"))
+                {
+                    retur = false;
+                }
+                return retur;
+            }
+            catch (Exception ex)
+            {
+                Alert.ShowAlertInfo(ex.Message, "Mensaje del Sistema", this.Page);
+                return false;
+            }
+        }
+
+        private Boolean LoginActive(string username, string password, string dominio)
+        {
+            try
+            {
+                // create a "principal context" - e.g. your domain (could be machine, too)
+                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, dominio))
+                {
+                    Boolean isValid = false;
+                    // validate the credentials
+                    isValid = pc.ValidateCredentials(username, password);
+
+                    Employee entidad = new Employee();
+                    entidad.Usuario_Red = username.Trim();
+                    EmpleadosCOM empleados = new EmpleadosCOM();
+                    string finger_print = "e";
+                    DataTable dt = empleados.GetLogin(username, finger_print);
+                    string vmensaje = "";
+                    if ((isValid || dt.Rows.Count > 0) && finger_print != "")
+                    {
+                        isValid = true;
+                        DataRow row = dt.Rows[0];
+                        String os = "VENTANA EMERGENTE";
+                        String os_vers = "VENTANA EMERGENTE";
+                        String browser = "VENTANA EMERGENTE";
+                        String device = "VENTANA EMERGENTE";
+                        String ip = "";
+                        String lat = "";
+                        String lon = "";
+                        String region = "";
+                        String proveedor = "";
+                        String modelo = "";
+                        bool bloqueado = Convert.ToBoolean(row["dispositivo_bloqueado"]);
+                        if (bloqueado)
+                        {
+                            vmensaje = "Este dispostivo(" + device + " " + modelo + " " + os + " " + os_vers + ") fue bloqueado para el inicio de sesión. Si usted no realizo esta configuración, comuniquese al departamento de sistemas.";
+                            isValid = false;
+                        }
+                        else
+                        {
+                            string adress = "";
+                            if (Convert.ToInt32(row["num_empleado"]) > 0)
+                            {
+                                DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));//path local
+                                DirectoryEntry directoryEntry = new DirectoryEntry("LDAP://" + dominio, username, password);
+                                //Create a searcher on your DirectoryEntry
+                                DirectorySearcher adSearch = new DirectorySearcher(directoryEntry);
+                                adSearch.SearchScope = SearchScope.Subtree;    //Look into all subtree during the search
+                                adSearch.Filter = "(&(ObjectClass=user)(sAMAccountName=" + username + "))";    //Filter information, here i'm looking at a user with given username
+                                SearchResult sResult = adSearch.FindOne();       //username is unique, so I want to find only one
+                                string name = dirInfo.ToString() + username + ".png";
+                                string imagen = "";
+                                if (!File.Exists(name))
+                                {
+                                    if (sResult.Properties["thumbnailPhoto"].Count > 0)
+                                    {
+                                        byte[] array_img = sResult.Properties["thumbnailPhoto"][0] as byte[];    //Get the property info
+                                        imagen = GuardarImagenUsuario(array_img, username + ".png");
+                                    }
+                                }
+
+                                adress = sResult.Properties["mail"][0].ToString();
+                            }
+                            string nombre = Convert.ToInt32(row["num_empleado"]) > 0 ? (funciones.SplitLastIndex(row["First_Name"].ToString().Trim(), ' ') + " " +
+                                        funciones.SplitLastIndex(row["Last_Name"].ToString().Trim(), ' ')) :
+                            row["First_Name"].ToString().Trim() + " " + row["Last_Name"].ToString().Trim();
+                            string puesto = (row["puesto"].ToString().Trim());
+                            string perfil = row["perfil"].ToString().Trim().ToLower();
+                            //pasamos aminusculas
+                            nombre = nombre.ToLower();
+                            puesto = puesto.ToLower();
+                            nombre = nombre.Replace("  ", " ");
+                            //pasamos a estilos title
+                            Session["mail"] = adress;
+                            Session["imagen"] = username + ".png";
+                            Session["usuario"] = username;
+                            Session["password"] = password;
+                            Session["contraseña"] = password;
+                            string nombre_pro = row["nombre_provicional"].ToString();
+                            Session["nombre"] = nombre_pro != "" ? nombre_pro : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(nombre);
+                            Session["correo"] = row["Company_E_Mail"].ToString().Trim().ToLower();
+                            Session["puesto"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto);
+                            Session["perfil"] = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(perfil);
+                            Session["id_perfil"] = Convert.ToInt32(row["id_perfil"]);
+                            Session["NumJefe"] = Convert.ToInt32(row["NumJefe"]);
+                            Session["num_empleado"] = Convert.ToInt32(row["num_empleado"]);
+                            Session["mostrar_recordatorios"] = Convert.ToBoolean(row["mostrar_recordatorios"]);
+                            Session["alerta_inicio_sesion"] = Convert.ToBoolean(row["alerta_inicio_sesion"]);
+                            bool ver_Todos = Convert.ToBoolean(row["ver_todos_empleados"]);
+                            Session["ver_Todos_los_empleados"] = ver_Todos;
+                            DateTime fecha_inicio_sesion = DateTime.Now;
+                            Session["os"] = os;
+                            Session["os_vers"] = os_vers;
+                            Session["browser"] = browser;
+                            Session["device"] = device;
+                            Session["ip"] = ip;
+                            Session["fecha_inicio_sesion"] = fecha_inicio_sesion;
+                            usuarios_sesiones e = new usuarios_sesiones();
+                            UsuariosSesionesCOM sesion = new UsuariosSesionesCOM();
+                            e.usuario = username.Trim().ToUpper();
+                            e.os = os;
+                            e.os_version = os_vers;
+                            e.navegador = browser;
+                            e.fecha_inicio_sesion = DateTime.Now;
+                            e.ip = ip;
+                            e.device = device;
+                            e.latitud = lat;
+                            e.longitud = lon;
+                            e.region = region;
+                            e.proveedor = proveedor;
+                            e.model = modelo;
+                            e.activo = true;
+                            e.device_fingerprint = finger_print;
+                            int id_usuario_sesion = sesion.Exist(e.usuario, e.device_fingerprint) ? sesion.Editar(e) : sesion.Agregar(e);
+                            UsuariosCOM usuarios_ = new UsuariosCOM();
+                            usuarios usuario = new usuarios
+                            {
+                                usuario = username.ToUpper().Trim(),
+                                temporal = false,
+                                fecha_vencimiento = null,
+                                contraseña = funciones.deTextoa64(password),
+                                puesto = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(puesto),
+                                nombres = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(row["First_Name"].ToString()),
+                                a_paterno = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(row["Last_Name"].ToString()),
+                                correo = row["Company_E_Mail"].ToString().Trim().ToLower(),
+                                usuario_alta = username.ToUpper().Trim(),
+                                No_ = Convert.ToInt32(row["num_empleado"]).ToString(),
+                                path_imagen = username + ".png"
+
+                            };
+                            if (!usuarios_.Exist(username))
+                            {
+                                usuarios_.Agregar(usuario);
+                            }
+                            else
+                            {
+                                usuarios_.Editar(usuario);
+                            }
+                            if (id_usuario_sesion > 0)
+                            {
+                                Session["devices_conectados"] = UpdateDevices(username);
+                                Session["id_usuario_sesion"] = id_usuario_sesion;
+                            }
+                            else
+                            {
+                                vmensaje = "No se pudo registrar el inicio de sesión en el servidor. Intentelo nuevamente.";
+                                isValid = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        vmensaje = "Credenciales invalidas";
+                    }
+
+                    if (vmensaje != "")
+                    {
+                        Toast.Error(vmensaje, this.Page);
+                        isValid = false;
+                    }
+                    return isValid;
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.Error(ex.Message, this.Page);
+                return false;
+            }
+        }
+
+        protected int UpdateDevices(string usuario)
+        {
+            try
+            {
+                EmpleadosCOM empleados = new EmpleadosCOM();
+                DataTable dt = empleados.sp_usuario_sesiones(usuario, false).Tables[0];
+                return dt.Rows.Count;
+            }
+            catch (Exception ex)
+            {
+                Toast.Error("Error al actualizar la lista de dispositivos conectados: " + ex.Message, this.Page);
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Guarda un byte[] como imagen en una ruta especificada
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="name_image"></param>
+        /// <returns></returns>
+        protected String GuardarImagenUsuario(byte[] array, string name_image)
+        {
+            System.Drawing.Image imagen = byteArrayToImage(array);
+            DirectoryInfo dirInfo = new DirectoryInfo(Server.MapPath("~/img/users/"));//path local
+            string name = dirInfo.ToString() + name_image;
+            imagen.Save(name);
+            return name_image;
+        }
+
+        /// <summary>
+        /// IDELAROM: Convierte un byte en imagen
+        /// </summary>
+        /// <param name="byteArrayIn"></param>
+        /// <returns></returns>
+        public System.Drawing.Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            System.Drawing.Image returnImage = System.Drawing.Image.FromStream(ms);
+            return returnImage;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Page.MaintainScrollPositionOnPostBack = true;
             string usuario = (Session["usuario"] as string) == null ? "" : (Session["usuario"] as string);
             String puesto = (Session["puesto"] as string) == null ? "" : (Session["puesto"] as string);
+            if (Request.QueryString["u"] != null)
+            {
+                if (!Login(funciones.de64aTexto(Request.QueryString["u"]), funciones.de64aTexto(Request.QueryString["c"])))
+                {
+                    Response.Redirect("../../Pages/Common/login.aspx");
+                }
+            }
+            usuario = (Session["usuario"] as string) == null ? "" : (Session["usuario"] as string);
+            puesto = (Session["puesto"] as string) == null ? "" : (Session["puesto"] as string);
             if (usuario == "" || puesto == "")
             {
                 Session.Clear();

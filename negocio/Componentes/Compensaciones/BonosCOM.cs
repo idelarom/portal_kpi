@@ -333,8 +333,7 @@ namespace negocio.Componentes.Compensaciones
             }
             return ds;
         }
-
-
+        
         public DataSet sp_Get_Tbl_Estructura_CC(string cc, string descripcion)
         {
             DataSet ds = new DataSet();
