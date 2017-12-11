@@ -269,9 +269,9 @@ namespace presentacion.Pages.Compensaciones
             }
             else
             {
-                ddlMesInicial.SelectedValue = (MesActual + 1).ToString();
+                ddlMesInicial.SelectedValue = (MesActual + (MesActual < 12 ?1:0)).ToString();
                 ddlAnoInicial.SelectedValue = AñoActual.ToString();
-                ddlMesFinal.SelectedValue =(MesActual + 1).ToString();
+                ddlMesFinal.SelectedValue =(MesActual + (MesActual < 12 ? 1 : 0)).ToString();
                 ddlAnoFinal.SelectedValue = AñoActual.ToString();
             }
 
