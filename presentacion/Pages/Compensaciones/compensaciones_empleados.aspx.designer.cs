@@ -76,6 +76,24 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tblInformationEmployeeBonds;
         
         /// <summary>
+        /// Control trCustomerName.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trCustomerName;
+        
+        /// <summary>
+        /// Control txtNumEmpleado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNumEmpleado;
+        
+        /// <summary>
         /// Control div_filtro_empleados.
         /// </summary>
         /// <remarks>
@@ -103,22 +121,22 @@ namespace presentacion.Pages.Compensaciones {
         protected global::System.Web.UI.WebControls.LinkButton lnksearch;
         
         /// <summary>
-        /// Control trCustomerName.
+        /// Control Div2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trCustomerName;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div2;
         
         /// <summary>
-        /// Control txtNumEmpleado.
+        /// Control txtCC.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumEmpleado;
+        protected global::System.Web.UI.WebControls.TextBox txtCC;
         
         /// <summary>
         /// Control Div1.
@@ -137,24 +155,6 @@ namespace presentacion.Pages.Compensaciones {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtJefe;
-        
-        /// <summary>
-        /// Control Div2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div2;
-        
-        /// <summary>
-        /// Control txtCC.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCC;
         
         /// <summary>
         /// Control Div3.

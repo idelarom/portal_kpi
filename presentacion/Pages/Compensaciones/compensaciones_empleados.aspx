@@ -289,10 +289,10 @@
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div id="load" runat="server" style="display: none;"></div>
+                    <div id="load" runat="server" style="display: none;"></div>
                     <div class="box box-danger" id="tblInformationEmployeeBonds" runat="server" visible="false">
                         <div class="box-header with-border">
-                            <h3 class="box-title">solicitud de registro de empleado</h3>
+                            <h3 class="box-title">Solicitud de registro de empleado</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -302,7 +302,12 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" id="trCustomerName" runat="server">
+                                    <h5><strong><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;Numero de empleado</strong></h5>
+                                    <asp:TextBox ID="txtNumEmpleado" CssClass=" form-control" runat="server" ReadOnly="True"></asp:TextBox>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-8 col-xs-12">
                                     <h5><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Empleado</strong>
                                     </h5>
                                     <div class="input-group" runat="server" id="div_filtro_empleados">
@@ -317,37 +322,28 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" id="trCustomerName" runat="server">
-                                    <h5><strong><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;Numero de empleado</strong></h5>
-                                    <asp:TextBox ID="txtNumEmpleado" CssClass=" form-control" runat="server" ReadOnly="True"></asp:TextBox>
+                            <div class="row">
+                                
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" id="Div2" runat="server">
+                                    <h5><strong><i class="fa fa-cc" aria-hidden="true"></i>&nbsp;Centro de costos</strong></h5>
+                                    <asp:TextBox ID="txtCC" CssClass=" form-control" runat="server" ReadOnly="True"></asp:TextBox>
                                 </div>
-                            </div>
-                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" id="Div1" runat="server">
+                                <div class="col-lg-4 col-md-5 col-sm-8 col-xs-12" id="Div1" runat="server">
                                     <h5><strong><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Jefe Inmediato</strong></h5>
                                     <asp:TextBox ID="txtJefe" CssClass=" form-control" runat="server" ReadOnly="True"></asp:TextBox>
                                 </div>
                             </div>
-                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" id="Div2" runat="server">
-                                    <h5><strong><i class="fa fa-cc" aria-hidden="true"></i>&nbsp;Centro de costos</strong></h5>
-                                    <asp:TextBox ID="txtCC" CssClass=" form-control" runat="server" ReadOnly="True"></asp:TextBox>
-                                </div>
-                            </div>
-                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" id="Div3" runat="server">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" id="Div3" runat="server">
                                     <h5><strong><i class="fa fa-universal-access" aria-hidden="true"></i>&nbsp;Usuario de red</strong></h5>
                                     <asp:TextBox ID="txtUser" CssClass=" form-control" runat="server" ReadOnly="True"></asp:TextBox>
                                 </div>
-                            </div>
-                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" id="Div4" runat="server">
+                                <div class="col-lg-4 col-md-5 col-sm-8 col-xs-12" id="Div4" runat="server">
                                     <h5><strong><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;Email</strong></h5>
                                     <asp:TextBox ID="txtEmail" CssClass=" form-control" runat="server" ReadOnly="True"></asp:TextBox>
                                 </div>
                             </div>
-                             <div class="row">
+                            <div class="row">
                                 <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" id="Div5" runat="server">
                                     <h5><strong><i class="fa fa-check-square" aria-hidden="true"></i>&nbsp;Estatus</strong></h5>
                                     <asp:CheckBox ID="chkActivo" CssClass=" form-control" runat="server" Enabled="false" />
@@ -355,8 +351,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
+                                    <br />
                                     <div class="table table-responsive">
-                                        <table class="dvv table table-responsive table-condensed table-responsive">
+                                        <table class="dvv table table-responsive table-condensed table-responsive table-bordered">
                                             <thead>
                                                 <tr style="font-size: 12px;">
                                                     <th style="width: 20px; text-align: center;" scope="col"></th>
@@ -408,10 +405,10 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>                                 
+                                </div>
                             </div>
-                            
-                             <div class="row">
+
+                            <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <asp:LinkButton ID="lnkguardarconfigbond" CssClass="btn btn-primary btn-flat" runat="server" OnClientClick="return confirm('¿Desea guardar esta solicitud?');" OnClick="lnkguardarconfigbond_Click">
                                          <i class="fa fa-bookmark" aria-hidden="true">
