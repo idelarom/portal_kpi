@@ -49,6 +49,7 @@ namespace presentacion.Pages.Compensaciones
                     Session["id_profile"] = 0;
                     Session["employee_number"] = Convert.ToInt32(dtValidateUser.Rows[0]["employee_number"]);
                 }
+                lnkfiltros_Click(null,null);
             } 
         }
 

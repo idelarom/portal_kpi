@@ -207,6 +207,7 @@ namespace negocio.Componentes.Compensaciones
             }
             return ds;
         }
+
         public DataSet sp_Validate_User(string usuario)
         {
             DataSet ds = new DataSet();

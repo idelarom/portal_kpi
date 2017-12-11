@@ -110,32 +110,32 @@
                             <table class="dvv table table-responsive table-condensed">
                                 <thead>
                                     <tr style="font-size: 11px;">
-                                        <th style="min-width: 85px; text-align: left;" scope="col">Archivos</th>
-                                        <th style="min-width: 100px; text-align: left;" scope="col">Solicitud</th>
+                                        <th style="max-width: 40px; text-align: center;" scope="col">Archivos</th>
+                                        <th style="min-width: 60px; text-align: center;" scope="col">Solicitud</th>
                                         <th style="min-width: 40px; text-align: center;" scope="col">Fecha</th>
-                                         <th style="min-width: 80px; text-align: center;" scope="col">Tipo de bono</th> 
-                                        <th style="min-width: 150px; text-align: left;" scope="col">Empleado</th>
-                                        <th style="min-width: 160px; text-align: center;" scope="col">Monto</th>                                        
+                                        <th style="min-width: 80px; text-align: center;" scope="col">Tipo de bono</th>
+                                        <th style="min-width: 150px; text-align: center;" scope="col">Empleado</th>
+                                        <th style="min-width: 80px; text-align: center;" scope="col">Monto</th>
                                         <th style="min-width: 50px; text-align: center;" scope="col">Estatus</th>
                                         <th style="min-width: 50px; text-align: center;" scope="col">CC cargo</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">Solicitado por</th>
-                                        <th style="min-width: 80px; text-align: center;" scope="col">Autorizado/rechazado por</th>
+                                        <th style="min-width: 120px; text-align: center;" scope="col">Solicitado por</th>
+                                        <th style="min-width: 120px; text-align: center;" scope="col">Autorizado/rechazado por</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <asp:Repeater ID="repeater_reporte_bonos" runat="server">
                                         <ItemTemplate>
                                             <tr style="font-size: 11px">   
-                                                <td>
+                                                <td style="text-align:center">
                                                     <a class="btn btn-success btn-flat btn-xs"
                                                         onclick='<%# "return Open_files("+ Eval("id_request_bond").ToString()+");" %>'>Archivos
                                                     </a>
                                                 </td>
-                                                <td style="text-align: left;"><%# Eval("id_request_bond") %></td>                                             
+                                                <td style="text-align: center;"><%# Eval("id_request_bond") %></td>                                             
                                                 <td style="text-align: center;"><%# Eval("created", "{0:d}") %></td>
                                                 <td style="text-align: center;"><%# Eval("bond_name") %></td>
                                                 <td style="text-align: center;"><%# Eval("full_name") %></td>                                                
-                                                <td style="text-align: center;"><%# Eval("authorization_amount") %></td>
+                                                <td style="text-align: center;"><%# Convert.ToDecimal(Eval("authorization_amount")).ToString("C2") %></td>
                                                 <td style="text-align: center;"><%# Eval("request_status_name")%></td>
                                                 <td style="text-align: center;"><%# Eval("CC_Cargo") %></td>
                                                 <td style="text-align: center;"><%# Eval("created_by") %></td>
@@ -189,11 +189,11 @@
                                 </div>
                             </div>  
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6  col-xs-6">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Inicial</strong></h6>
                                     <telerik:RadDatePicker ID="rdpfechainicial" runat="server" Width="100%" Skin="Bootstrap"></telerik:RadDatePicker>                                     
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12"  style="font-size:10px;">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"  style="font-size:10px;">
                                     <h6><strong><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Fecha Final</strong></h6>
                                     <telerik:RadDatePicker ID="rdpfechafinal" runat="server" Width="100%"  Skin="Bootstrap"></telerik:RadDatePicker>
                                 </div>
