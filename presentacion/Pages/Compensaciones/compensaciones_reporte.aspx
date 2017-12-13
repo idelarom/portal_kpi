@@ -76,9 +76,21 @@
              var hdfid_request_bond = document.getElementById('<%= hdfid_request_bond.ClientID %>');
              hdfid_request_bond.value = id_request_bond;
              document.getElementById('<%= btnviewrequest.ClientID%>').click();
+             return false
          }
-       
+
+        function Download(path) {
+            var hdfpath = document.getElementById('<%= hdfpath.ClientID %>');
+            hdfpath.value = path;
+            console.log(path);
+            document.getElementById('<%= lnkdescargas.ClientID%>').click();
+        }
     </script>
+     <style type="text/css">
+         .auto-style1 {
+             width: 75px;
+         }
+     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div id="div_body_reportedashboard">
@@ -111,7 +123,7 @@
                                 <thead>
                                     <tr style="font-size: 11px;">
                                         <th style="max-width: 40px; text-align: center;" scope="col">Archivos</th>
-                                        <th style="min-width: 60px; text-align: center;" scope="col">Solicitud</th>
+                                        <th style="min-width: 60px; text-align: center;" scope="col" class="auto-style1">Solicitud</th>
                                         <th style="min-width: 40px; text-align: center;" scope="col">Fecha</th>
                                         <th style="min-width: 80px; text-align: center;" scope="col">Tipo de bono</th>
                                         <th style="min-width: 150px; text-align: center;" scope="col">Empleado</th>
@@ -120,16 +132,20 @@
                                         <th style="min-width: 50px; text-align: center;" scope="col">CC cargo</th>
                                         <th style="min-width: 120px; text-align: center;" scope="col">Solicitado por</th>
                                         <th style="min-width: 120px; text-align: center;" scope="col">Autorizado/rechazado por</th>
+                                         <th style="min-width: 15px; text-align: left; display: none" scope="col">Archivo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <asp:Repeater ID="repeater_reporte_bonos" runat="server">
+                                    <asp:Repeater ID="repeater_reporte_bonos" runat="server" OnItemDataBound="repeater_reporte_bonos_ItemDataBound">
                                         <ItemTemplate>
                                             <tr style="font-size: 11px">   
-                                                <td style="text-align:center">
-                                                    <a class="btn btn-success btn-flat btn-xs"
+                                                <%--<td style="text-align: center">
+                                                    <a class="btn btn-success btn-flat btn-xs"  id="repLinkFiles"
                                                         onclick='<%# "return Open_files("+ Eval("id_request_bond").ToString()+");" %>'>Archivos
                                                     </a>
+                                                </td>--%>
+                                                <td>
+                                                    <asp:LinkButton ID="repLinkFiles" class="btn btn-success btn-flat btn-xs" runat="server" OnClientClick='<%# "return Open_files("+ Eval("id_request_bond").ToString()+");" %>'>Archivos</asp:LinkButton>
                                                 </td>
                                                 <td style="text-align: center;"><%# Eval("id_request_bond") %></td>                                             
                                                 <td style="text-align: center;"><%# Eval("created", "{0:d}") %></td>
@@ -140,6 +156,9 @@
                                                 <td style="text-align: center;"><%# Eval("CC_Cargo") %></td>
                                                 <td style="text-align: center;"><%# Eval("created_by") %></td>
                                                 <td style="text-align: center;"><%# Eval("modified_by") %></td>
+                                                <td style="display: none">
+                                                    <asp:Label ID="lblArchivo" runat="server" Text='<%# Eval("Archivo") %>'></asp:Label>
+                                                </td>
                                             </tr>
                                         </ItemTemplate>
                                     </asp:Repeater>
@@ -149,10 +168,10 @@
                     </div>
                     <div class=" box-footer">
 
-                        <asp:LinkButton ID="lnkgenerarpdf" CssClass="btn btn-danger btn-flat"
+                       <%-- <asp:LinkButton ID="lnkgenerarpdf" CssClass="btn btn-danger btn-flat"
                             OnClick="lnkgenerarpdf_Click" runat="server">
                         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Exportar a PDF
-                        </asp:LinkButton>
+                        </asp:LinkButton>--%>
                         <asp:LinkButton ID="lnkgenerarexcel" CssClass="btn btn-success btn-flat"
                             OnClick="lnkgenerarexcel_Click" runat="server">
                         <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Exportar a Excel
@@ -239,14 +258,14 @@
         </div>
     </div>
 
-           <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_archivos" role="dialog"
+        <div class="modal fade bs-example-modal-lg" tabindex="-1" id="modal_archivos" role="dialog"
         aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg" role="document">
             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Always">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="btnviewrequest" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="btnviewrequest" EventName="Click" />                    
                     <%--<asp:AsyncPostBackTrigger ControlID="lnkadjuntarfiles" EventName="Click" />--%>
-                    <asp:PostBackTrigger ControlID="lnkdescargas" />
+                    <asp:PostBackTrigger ControlID="lnkdescargas" />                 
                 </Triggers>
                 <ContentTemplate>
                     <div class="modal-content">

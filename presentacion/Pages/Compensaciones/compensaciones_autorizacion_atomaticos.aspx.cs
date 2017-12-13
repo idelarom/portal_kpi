@@ -312,25 +312,32 @@ namespace presentacion.Pages.Compensaciones
         {
             try
             {
-                if (ViewState[hdfguid.Value + "-dt_reporte"] != null)
+                if (txtCommentstodos.Text == "")
                 {
-                    DataTable dt = new DataTable();
-                    dt = ViewState[hdfguid.Value + "-dt_reporte"] as DataTable;
-
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        string id_bonds = row["id"].ToString();
-                        string amount = row["amount"].ToString();
-
-                        requests_bonds bono = new requests_bonds();
-                        bono.id_request_bond = Convert.ToInt32(id_bonds);
-                        bono.authorization_amount = Convert.ToDecimal(amount);
-                        bono.modified_by = Session["usuario"] as string;
-                        bono.authorization_comments = tdAuthorizationComments.Text;
-                        bono.id_request_status = (int)enumerators.bonds_status.not_approved;
-                        ProcessBond(bono);
-                    }
+                    Toast.Error("Error al procesar solicitud: Ingrese comentarios de autorización", this);
                 }
+                else
+                {
+                    if (ViewState[hdfguid.Value + "-dt_reporte"] != null)
+                    {
+                        DataTable dt = new DataTable();
+                        dt = ViewState[hdfguid.Value + "-dt_reporte"] as DataTable;
+
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            string id_bonds = row["id"].ToString();
+                            string amount = row["amount"].ToString();
+
+                            requests_bonds bono = new requests_bonds();
+                            bono.id_request_bond = Convert.ToInt32(id_bonds);
+                            bono.authorization_amount = Convert.ToDecimal(amount);
+                            bono.modified_by = Session["usuario"] as string;
+                            bono.authorization_comments = txtCommentstodos.Text;
+                            bono.id_request_status = (int)enumerators.bonds_status.not_approved;
+                            ProcessBond(bono);
+                        }
+                    }
+                }               
             }
             catch (Exception ex)
             {
@@ -347,23 +354,30 @@ namespace presentacion.Pages.Compensaciones
         {
             try
             {
-                if (ViewState[hdfguid.Value + "-dt_reporte"] != null)
+                if (txtCommentstodos.Text == "")
                 {
-                    DataTable dt = new DataTable();
-                    dt = ViewState[hdfguid.Value + "-dt_reporte"] as DataTable;
-
-                    foreach (DataRow row in dt.Rows)
+                    Toast.Error("Error al procesar solicitud: Ingrese comentarios de autorización", this);
+                }
+                else
+                {
+                    if (ViewState[hdfguid.Value + "-dt_reporte"] != null)
                     {
-                        string id_bonds = row["id"].ToString();
-                        string amount = row["amount"].ToString();
+                        DataTable dt = new DataTable();
+                        dt = ViewState[hdfguid.Value + "-dt_reporte"] as DataTable;
 
-                        requests_bonds bono = new requests_bonds();
-                        bono.id_request_bond = Convert.ToInt32(id_bonds);
-                        bono.authorization_amount = Convert.ToDecimal(amount);
-                        bono.modified_by = Session["usuario"] as string;
-                        bono.authorization_comments = tdAuthorizationComments.Text;
-                        bono.id_request_status = (int)enumerators.bonds_status.authorization;
-                        ProcessBond(bono);
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            string id_bonds = row["id_request_bond"].ToString();
+                            string amount = row["authorization_amount"].ToString();
+
+                            requests_bonds bono = new requests_bonds();
+                            bono.id_request_bond = Convert.ToInt32(id_bonds);
+                            bono.authorization_amount = Convert.ToDecimal(amount);
+                            bono.modified_by = Session["usuario"] as string;  
+                            bono.authorization_comments = txtCommentstodos.Text;
+                            bono.id_request_status = (int)enumerators.bonds_status.authorization;
+                            ProcessBond(bono);
+                        }
                     }
                 }
             }
