@@ -37,7 +37,20 @@ namespace presentacion.Pages.Compensaciones
         {
             if (!IsPostBack)
             {
-
+                string usuario = Session["usuario"] as string;
+                hdfguid.Value = Guid.NewGuid().ToString();
+                BonosCOM bonos = new BonosCOM();
+                DataTable dtValidateUser =  bonos.sp_Validate_User(usuario).Tables[0];
+                if (dtValidateUser.Rows.Count > 0)
+                {
+                    Session["id_profile"] = Convert.ToInt32(dtValidateUser.Rows[0]["id_profile"]);
+                    Session["employee_number"] = Convert.ToInt32(dtValidateUser.Rows[0]["employee_number"]);
+                }
+                else
+                {
+                    Session["id_profile"] = 0;
+                    Session["employee_number"] = Convert.ToInt32(dtValidateUser.Rows[0]["employee_number"]);
+                }
                 Cargar_empleados();
             }
         }
@@ -269,10 +282,20 @@ namespace presentacion.Pages.Compensaciones
             }
             else
             {
-                ddlMesInicial.SelectedValue = (MesActual + (MesActual < 12 ?1:0)).ToString();
-                ddlAnoInicial.SelectedValue = AñoActual.ToString();
-                ddlMesFinal.SelectedValue =(MesActual + (MesActual < 12 ? 1 : 0)).ToString();
-                ddlAnoFinal.SelectedValue = AñoActual.ToString();
+                if (MesActual == 12)
+                {
+                    ddlMesInicial.SelectedValue = "1";// (MesActual + (MesActual == 12 ? 1 : 0)).ToString();
+                    ddlAnoInicial.SelectedValue = (AñoActual + 1).ToString();
+                    ddlMesFinal.SelectedValue = "1";// (MesActual + (MesActual == 12 ? 1 : 0)).ToString();
+                    ddlAnoFinal.SelectedValue = (AñoActual + 1).ToString();
+                }
+                else
+                {
+                    ddlMesInicial.SelectedValue = (MesActual + (MesActual < 12 ? 1 : 0)).ToString();
+                    ddlAnoInicial.SelectedValue = AñoActual.ToString();
+                    ddlMesFinal.SelectedValue = (MesActual + (MesActual < 12 ? 1 : 0)).ToString();
+                    ddlAnoFinal.SelectedValue = AñoActual.ToString();
+                }
             }
 
         }
@@ -599,8 +622,7 @@ namespace presentacion.Pages.Compensaciones
                         }
                     }
                 }
-
-                if (ViewState["checked_auto"] != null)
+                if (ViewState["checked_auto"] != null && lblid_bond_type.Text == "5")
                 {
                     chkSelected.Checked = ExistInTable(bond_type);
                 }
@@ -723,44 +745,56 @@ namespace presentacion.Pages.Compensaciones
                 }              
                 if (Bono == "Automático")
                 {
-                    if (chkSelected.Checked == true & Convert.ToUInt32(hdfCantBondsAuto.Value) <= 0)
+                    string usuario = Session["usuario"] as string;
+                    //TipoBonosCOM Bonos = new TipoBonosCOM();
+                    BonosCOM bonos = new BonosCOM();
+                    DataTable dt = new DataTable();                   
+                    dt = bonos.tipos_bonos(true, usuario).Tables[0]; //Bonos.SelectAll();
+                    if (dt.Rows[4]["id_bond_type"].ToString().Contains("5"))
                     {
-                        LoadBondsAutomaticTypes();
-                        LoadPeriodicityTypes();
-                        LoadOcurrencias();
-                        LoadMesAno();
-                        DataTable DT;
-                        CompensacionesEmpleadosCOM Datos = new CompensacionesEmpleadosCOM();
-                        DT = Datos.sp_OptenerDatostoRequestsBondsAutomatic(Convert.ToInt32(txtNumEmpleado.Text.Trim()), null).Tables[0];
-                        foreach (DataRow row in DT.Rows)
+                        if (chkSelected.Checked == true & Convert.ToUInt32(hdfCantBondsAuto.Value) <= 0)
                         {
-                            if (Convert.ToString(row["Empleado"]) == "EL EMPLEADO NO EXISTE O ESTA DADO DE BAJA")
+                            LoadBondsAutomaticTypes();
+                            LoadPeriodicityTypes();
+                            LoadOcurrencias();
+                            LoadMesAno();
+                            DataTable DT;
+                            CompensacionesEmpleadosCOM Datos = new CompensacionesEmpleadosCOM();
+                            DT = Datos.sp_OptenerDatostoRequestsBondsAutomatic(Convert.ToInt32(txtNumEmpleado.Text.Trim()), null).Tables[0];
+                            foreach (DataRow row in DT.Rows)
                             {
-                                Toast.Info("El empleado que acaba de seleccionar no existe o esta dado de baja, favor verifique su selección ", "Informacion del sistema", this);
+                                if (Convert.ToString(row["Empleado"]) == "EL EMPLEADO NO EXISTE O ESTA DADO DE BAJA")
+                                {
+                                    Toast.Info("El empleado que acaba de seleccionar no existe o esta dado de baja, favor verifique su selección ", "Informacion del sistema", this);
 
+                                }
+                                else
+                                {
+                                    txtNombEmpleadoAuto.Text = Convert.ToString(row["Empleado"]);
+                                    txtNumEmpleadoAuto.Text = Convert.ToString(row["No_"]);
+                                    txtCCAuto.Text = Convert.ToString(row["Centro de Costos"]);
+                                    txtCCCAuto.Text = Convert.ToString(row["Centro de Costos"]);
+                                    txtRCCC.Text = Convert.ToString(row["ResponsableCC"]);
+                                    repeater_solicitud_auto.DataSource = Datos.sp_GetRequests_Bonds_Automatic_Type(Convert.ToInt32(row["No_"].ToString().Trim())).Tables[0];
+                                    repeater_solicitud_auto.DataBind();
+                                    hdfComandAutomaticos.Value = "Solicitar";
+                                    this.tblemployees.Visible = false;
+                                    this.tblInformationEmployeeBonds.Visible = false;
+                                    this.tblInformationEmployeeBondsAuto.Visible = true;
+                                }
                             }
-                            else
-                            {
-                                txtNombEmpleadoAuto.Text = Convert.ToString(row["Empleado"]);
-                                txtNumEmpleadoAuto.Text = Convert.ToString(row["No_"]);
-                                txtCCAuto.Text = Convert.ToString(row["Centro de Costos"]);
-                                txtCCCAuto.Text = Convert.ToString(row["Centro de Costos"]);
-                                txtRCCC.Text = Convert.ToString(row["ResponsableCC"]);
-                                repeater_solicitud_auto.DataSource = Datos.sp_GetRequests_Bonds_Automatic_Type(Convert.ToInt32(row["No_"].ToString().Trim())).Tables[0];
-                                repeater_solicitud_auto.DataBind();
-                                hdfComandAutomaticos.Value = "Solicitar";
-                                this.tblemployees.Visible = false;
-                                this.tblInformationEmployeeBonds.Visible = false;
-                                this.tblInformationEmployeeBondsAuto.Visible = true;
-                            }
+                            break;
                         }
-                        break;
+                        else if (chkSelected.Checked == false & Convert.ToUInt32(hdfCantBondsAuto.Value) > 0)
+                        {
+                            LoadBondsTypes();
+                            Toast.Info("El empleado ya tiene uno o varios Bonos automaticos dados de alta, por lo tanto la casilla no puede ser deseleccionada", "Aviso del sistema", this);
+                            break;
+                        }
                     }
-                    else if (chkSelected.Checked == false & Convert.ToUInt32(hdfCantBondsAuto.Value) > 0)
+                    else
                     {
-                        LoadBondsTypes();
-                        Toast.Info("El empleado ya tiene uno o varios Bonos automaticos dados de alta, por lo tanto la casilla no puede ser deseleccionada", "Aviso del sistema", this);
-                        break;                        
+                        Toast.Warning("No tienes permisos para solicitar el tipo de bono automatico, favor comunicate con el area de sistemas correspondiente", "Alerta del sistema", this);
                     }
                 }
             }
@@ -860,25 +894,26 @@ namespace presentacion.Pages.Compensaciones
         {
             LimpiarControlesSolicitudBonosAutomaticos();
             this.tblemployees.Visible = false;
-            this.tblInformationEmployeeBonds.Visible = false;
-            this.tblInformationEmployeeBondsAuto.Visible = true;
-            UnBlockUI();
+            this.tblInformationEmployeeBonds.Visible = true;
+            this.tblInformationEmployeeBondsAuto.Visible = false;            
+           UnBlockUI();
+            btnConfiguracion_Click(null, null);
         }
 
         protected void btnConfiguracionAuto_Click(object sender, EventArgs e)
-        {
+        {           
             LoadBondsAutomaticTypes();
             LoadPeriodicityTypes();
             LoadOcurrencias();
             LoadMesAno();
             DataTable DT;
             CompensacionesEmpleadosCOM Datos = new CompensacionesEmpleadosCOM();
-            DT = Datos.sp_OptenerDatostoRequestsBondsAutomatic(Convert.ToInt32(txtNumEmpleado.Text.Trim()),null).Tables[0];
+            DT = Datos.sp_OptenerDatostoRequestsBondsAutomatic(Convert.ToInt32(txtNumEmpleado.Text.Trim()), null).Tables[0];
             foreach (DataRow row in DT.Rows)
             {
                 if (Convert.ToString(row["Empleado"]) == "EL EMPLEADO NO EXISTE O ESTA DADO DE BAJA")
                 {
-                    Toast.Info("El empleado que acaba de seleccionar no existe o esta dado de baja, favor verifique su selección ","Informacion del sistema", this);
+                    Toast.Info("El empleado que acaba de seleccionar no existe o esta dado de baja, favor verifique su selección ", "Informacion del sistema", this);
 
                 }
                 else

@@ -543,13 +543,13 @@
                                </div>
                             </div>
                              <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
                                     <h5><strong><i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;Comentarios</strong></h5>
                                     <asp:TextBox ID="txtComtarios" CssClass=" form-control" runat="server" TextMode="MultiLine" Rows="3"></asp:TextBox>
                                 </div>
                             </div>
                               <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12" id="div_comentscancel" runat="server" visible="false">
+                                <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12" id="div_comentscancel" runat="server" visible="false">
                                     <h5><strong><i class="fa fa-sticky-note" aria-hidden="true"></i>&nbsp;Comentarios de la cancelacion</strong></h5>
                                     <asp:TextBox ID="txtcomentarioscancela" CssClass=" form-control" runat="server" TextMode="MultiLine" Rows="3"></asp:TextBox>
                                 </div>
@@ -560,7 +560,7 @@
                                         OnClick="lnksolicitaryguardar_Click">
                                          <i class="fa fa-bookmark" aria-hidden="true">
                                          </i>&nbsp;Solicitar</asp:LinkButton>
-                                    <asp:LinkButton ID="lnkcancelar" OnClick="lnkcancelar_Click" OnClientClick="return confirm('¿Desea cancelar la solicitud?');" CssClass="btn btn-warning btn-flat" runat="server">
+                                    <asp:LinkButton ID="lnkcancelar" OnClick="lnkcancelar_Click" OnClientClick="return confirm('¿Desea cancelar la edicion de la solicitud?');" CssClass="btn btn-warning btn-flat" runat="server">
                                           <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancelar edicion</asp:LinkButton>
                                     <asp:LinkButton ID="lnkcancelarSol" OnClick="lnkcancelarSol_Click" OnClientClick="return confirm('¿Desea cancelar la solicitud?');" CssClass="btn btn-danger btn-flat" runat="server" Visible="False">
                                           <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancelar Solicitud</asp:LinkButton>
@@ -812,7 +812,7 @@
             <asp:HiddenField ID="hdfComentarios" runat="server" />
             <asp:HiddenField ID="hdfFecha_Inicial" runat="server" />
             <asp:HiddenField ID="hdfFecha_Final" runat="server" />
-
+            <asp:HiddenField ID="hdfguid" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
 
