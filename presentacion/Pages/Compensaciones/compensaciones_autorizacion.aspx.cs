@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO; 
-using System.Web.UI;lnkguardaresultados_Click
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace presentacion.Pages.Compensaciones
