@@ -412,7 +412,8 @@ namespace presentacion.Pages.Proyectos
                                     string correos_clientes = "";
                                     ProyectosEmpleadosCOM empleados = new ProyectosEmpleadosCOM();
                                     DataTable dt_empleados = empleados.empleados_proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
-                                    DataTable dt_empleados_participantes = empleados.participantes_proyectos(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
+                                    ProyectosMinutasCOM min = new ProyectosMinutasCOM();
+                                    DataTable dt_empleados_participantes = min.GetAllParticipante(id_minuta);
                                     string correos = "";
                                     foreach (DataRow row in dt_empleados.Rows)
                                     {
@@ -427,6 +428,7 @@ namespace presentacion.Pages.Proyectos
                                     // correos_clientes = Session["correo_pm"] as string;
                                     if (Session["correo_pm"] != null)
                                     {
+
                                         ProyectosCOM proyectos = new ProyectosCOM();
                                         datos.proyectos proyecto = proyectos.proyecto(Convert.ToInt32(funciones.de64aTexto(Request.QueryString["id_proyecto"])));
                                         string saludo = DateTime.Now.Hour > 13 ? "Buenas tardes" : "Buenos dias";
@@ -440,6 +442,7 @@ namespace presentacion.Pages.Proyectos
                                         dt_pendientes2.Columns["descripcion"].ColumnName = "pendiente";
 
                                         string mail_to = Session["correo_pm"] as string;
+                                        mail_to = mail_to + (Session["correo"]==null?"" : (Session["correo"] as string +";"));
                                         string subject = "Módulo de proyectos - Nueva Minuta";
                                         informacion =
                                                  "<h5 style='text-align:left;'>Asistente de trabajo y minutas</h5><HR NOSHADE WIDTH=400 SIZE=6 COLOR='#e53935' style='border: 2px;border-color:red;width:100%; '>" +
