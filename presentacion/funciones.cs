@@ -437,7 +437,7 @@ namespace presentacion
             dt.Columns.Add("value");
             dt.Columns.Add("name");
 
-            for (int i = (DateTime.Now.Year-1); i <= (DateTime.Today.Year+1); i++)
+            for (int i = (DateTime.Now.Year-2); i <= (DateTime.Today.Year+1); i++)
             {
                 DataRow row = dt.NewRow();
                 row["value"] = i;

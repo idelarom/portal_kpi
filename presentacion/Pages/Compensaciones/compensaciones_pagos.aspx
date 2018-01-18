@@ -8,8 +8,7 @@
             }
             else {
                 $(value).DataTable({
-                    "paging": true,
-                    "pageLength": 100,
+                    "paging": false,
                     "lengthChange": true,
                     "searching": true,
                     "ordering": true,
