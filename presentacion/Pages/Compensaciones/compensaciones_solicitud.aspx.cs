@@ -229,7 +229,7 @@ namespace presentacion.Pages.Compensaciones
             this.cbFinalizeMonth.DataTextField = "name";
             this.cbFinalizeMonth.DataValueField = "value";
             this.cbFinalizeMonth.DataBind();
-            if (DateTime.Now.Month == 1)
+            if (DateTime.Now.Month != 1)
             {
                 this.cbFinalizeMonth.SelectedValue = DateTime.Now.Month.ToString();
             }
