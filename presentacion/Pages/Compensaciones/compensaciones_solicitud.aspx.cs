@@ -180,7 +180,7 @@ namespace presentacion.Pages.Compensaciones
             this.cbInitialMonth.DataBind();
             if (DateTime.Now.Month != 1)
             {
-                this.cbInitialMonth.SelectedValue = DateTime.Now.Month.ToString();
+                this.cbInitialMonth.SelectedValue = (DateTime.Now.Month-1).ToString();
             }
             else
             {
