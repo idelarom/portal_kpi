@@ -750,7 +750,15 @@ namespace presentacion.Pages.Compensaciones
                     BonosCOM bonos = new BonosCOM();
                     DataTable dt = new DataTable();                   
                     dt = bonos.tipos_bonos(true, usuario).Tables[0]; //Bonos.SelectAll();
-                    if (dt.Rows[4]["id_bond_type"].ToString().Contains("5"))
+                    bool bonos_automaticos = false;
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        if (row["id_bond_type"].ToString().Equals("5"))
+                        {
+                            bonos_automaticos = true;
+                        }
+                    }
+                    if (bonos_automaticos)
                     {
                         if (chkSelected.Checked == true & Convert.ToUInt32(hdfCantBondsAuto.Value) <= 0)
                         {

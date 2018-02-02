@@ -236,7 +236,7 @@ namespace presentacion.Pages.Compensaciones
             else
             {
                 this.cbFinalizeMonth.SelectedValue = "12";
-                this.cbFinalizeMonth.SelectedValue = (DateTime.Now.Year - 1).ToString();
+                this.cbFinalizeYear.SelectedValue = (DateTime.Now.Year - 1).ToString();
             }
         }
 
