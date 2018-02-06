@@ -234,6 +234,7 @@ function CargarDashboardbonosIndividual() {
             spinner2.stop();
         }
     });
+    $('#link_desgdashboard_kpi').attr('href', '../../Pages/Reports/reporte_dashboard_bonos_kpi.aspx?filter=1')
     xhrRequests.push(call);
 }
 
@@ -339,6 +340,7 @@ function CargarPerformanceIngenieriaIndividual() {
             spinner2.stop();
         }
     });
+    $('#link_dashboard_kpi').attr('href', '../../Pages/Reports/reporte_performance_ingenieria_netdiario.aspx?filter=1')
     xhrRequests.push(call);
 }
 
