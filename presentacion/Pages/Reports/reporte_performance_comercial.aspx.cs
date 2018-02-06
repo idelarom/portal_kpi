@@ -336,9 +336,9 @@ namespace presentacion.Pages.Reports
                 {
                     dt_empleados = ds.Tables[0];
                 }
-                DataView dv2 = dt_empleados.DefaultView;
-                dv2.RowFilter = "clave_ventas <> ''";
-                DataTable dt_final = dv2.ToTable();
+                //DataView dv2 = dt_empleados.DefaultView;
+                //dv2.RowFilter = "clave_ventas <> ''";
+                DataTable dt_final = dt_empleados;
                 ddlempleado_a_consultar.DataValueField = "clave_ventas";
                 ddlempleado_a_consultar.DataTextField = "nombre";
                 ddlempleado_a_consultar.DataSource = dt_final;
@@ -397,7 +397,7 @@ namespace presentacion.Pages.Reports
                 if (clave_empleado=="")
                 {
                     div_reporte.Visible = false;
-                    Toast.Error("Seleccione un empleado para poder realizar el reporte.", this);
+                    Toast.Error("Seleccione un empleado con Clave de venta, para poder realizar el reporte.", this);
                 }
                 else
                 {
